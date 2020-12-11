@@ -3,6 +3,7 @@ using System.Collections;
 
 public enum UIPanelType
 {
+    StartChoose,
     Hero,
     Build,
     BuildingForge,

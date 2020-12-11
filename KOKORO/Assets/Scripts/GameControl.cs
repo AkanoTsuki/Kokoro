@@ -5,9 +5,13 @@ using System.IO;
 public class GameControl : MonoBehaviour
 {
 
+
+    //no save
+    public bool IsNewGame = false;
+
     //save data
     public int heroIndex = 0;
-    public string playerName = "";
+    public string playerName = "AAA";
     public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
     public Dictionary<int, HeroObject> heroDic = new Dictionary<int, HeroObject>();
 
@@ -60,12 +64,12 @@ public class GameControl : MonoBehaviour
             this.playerName = t1.playerName;
             this.itemDic = t1.itemDic;
             this.heroDic = t1.heroDic;
-            //IsNewGame = false;
+            IsNewGame = false;
         }
         else
         {
             print("文件不存在." + filename);
-            //IsNewGame = true;
+            IsNewGame = true;
         }
 
     }
@@ -93,9 +97,9 @@ public class GameControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("1heroDic.Count=" + heroDic.Count);
-        CreateHero(1);
-        Debug.Log("2heroDic.Count=" + heroDic.Count);
+        //Debug.Log("1heroDic.Count=" + heroDic.Count);
+        //CreateHero(1);
+        //Debug.Log("2heroDic.Count=" + heroDic.Count);
     }
 
     // Update is called once per frame
@@ -103,9 +107,14 @@ public class GameControl : MonoBehaviour
     {
         
     }
-
-
     public void CreateHero(int pid)
+    {
+        heroDic.Add(heroIndex,GenerateHero(heroIndex, pid,Random.Range(0,2)));
+        heroIndex++;
+    }
+
+    //pid:
+    public HeroObject GenerateHero(int heroID,int pid,int sexCode)
     {
 
         int hp = SetAttr(Attribute.Hp, pid);
@@ -115,7 +124,18 @@ public class GameControl : MonoBehaviour
         int atkMax = SetAttr(Attribute.AtkMax, pid);
         int atkMin = atkMax - 2;
 
-
+        string name = "";
+        string pic = "";
+        if (sexCode == 0)
+        {
+            name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
+            pic = DataManager.mHeroDict[pid].PicMan;
+        }
+        else
+        {
+            name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
+            pic = DataManager.mHeroDict[pid].PicWoman;
+        }
         int mAtkMax = SetAttr(Attribute.MAtkMax, pid);
         int mAtkMin = mAtkMax - 2;
         int def = SetAttr(Attribute.Def, pid);
@@ -158,25 +178,91 @@ public class GameControl : MonoBehaviour
         int workSundry = SetAttr(Attribute.WorkSundry, pid);
 
 
-        heroDic.Add(heroIndex,new HeroObject(heroIndex,"jack",1,0,0,"",hp,mp,hpRenew,mpRenew,atkMin,atkMax,mAtkMin,mAtkMax,def,mDef,hit,dod,criR,criD,spd,
+       return new HeroObject(heroID, name, pid, 1,0,0, pic, hp,mp,hpRenew,mpRenew,atkMin,atkMax,mAtkMin,mAtkMax,def,mDef,hit,dod,criR,criD,spd,
          windDam,fireDam,waterDam,groundDam,lightDam,darkDam,windRes,fireRes,waterRes,groundRes,lightRes,darkRes,dizzyRes,confusionRes,poisonRes,sleepRes,goldGet,expGet,itemGet,
-         workPlanting,workFeeding,workFishing,workHunting,workMining,workQuarrying,workFelling,workBuild,workMakeWeapon,workMakeArmor,workMakeJewelry,workSundry));
+         workPlanting,workFeeding,workFishing,workHunting,workMining,workQuarrying,workFelling,workBuild,workMakeWeapon,workMakeArmor,workMakeJewelry,workSundry,
+         -1,-1,-1,-1,-1,-1,-1,-1,-1);
 
 }
     public int SetAttr(Attribute attr, int pid)
     {
-        //Debug.Log("attr=" + attr);
+        int rank = 0;
+
+        switch (attr)
+        {
+            case Attribute.Hp:rank = DataManager.mCreateHeroTypeDict[pid].Hp;break;
+            case Attribute.Mp: rank = DataManager.mCreateHeroTypeDict[pid].Mp; break;
+
+            case Attribute.AtkMax: rank = DataManager.mCreateHeroTypeDict[pid].AtkMax; break;
+            case Attribute.MAtkMax: rank = DataManager.mCreateHeroTypeDict[pid].MAtkMax; break;
+
+            case Attribute.Def: rank = DataManager.mCreateHeroTypeDict[pid].Def; break;
+            case Attribute.MDef: rank = DataManager.mCreateHeroTypeDict[pid].MDef; break;
+
+            case Attribute.Hit: rank = DataManager.mCreateHeroTypeDict[pid].Hit; break;
+            case Attribute.Dod: rank = DataManager.mCreateHeroTypeDict[pid].Dod; break;
+            case Attribute.CriR: rank = DataManager.mCreateHeroTypeDict[pid].CriR; break;
+
+
+            case Attribute.WorkPlanting: rank = DataManager.mCreateHeroTypeDict[pid].WorkPlanting; break;
+            case Attribute.WorkFeeding: rank = DataManager.mCreateHeroTypeDict[pid].WorkFeeding; break;
+            case Attribute.WorkFishing: rank = DataManager.mCreateHeroTypeDict[pid].WorkFishing; break;
+            case Attribute.WorkHunting: rank = DataManager.mCreateHeroTypeDict[pid].WorkHunting; break;
+            case Attribute.WorkFelling: rank = DataManager.mCreateHeroTypeDict[pid].WorkFelling; break;
+            case Attribute.WorkQuarrying: rank = DataManager.mCreateHeroTypeDict[pid].WorkQuarrying; break;
+            case Attribute.WorkMining: rank = DataManager.mCreateHeroTypeDict[pid].WorkMining; break;
+            case Attribute.WorkBuild: rank = DataManager.mCreateHeroTypeDict[pid].WorkBuild; break;
+            case Attribute.WorkMakeWeapon: rank = DataManager.mCreateHeroTypeDict[pid].WorkMakeWeapon; break;
+            case Attribute.WorkMakeArmor: rank = DataManager.mCreateHeroTypeDict[pid].WorkMakeArmor; break;
+            case Attribute.WorkMakeJewelry: rank = DataManager.mCreateHeroTypeDict[pid].WorkMakeJewelry; break;
+            case Attribute.WorkSundry: rank = DataManager.mCreateHeroTypeDict[pid].WorkSundry; break;
+            default:
+                rank = 0; break;
+        }
+
         int probabilityCount = DataManager.cCreateHeroRankDict[attr].Probability.GetLength(1);
         int ran = Random.Range(0, 100);
         for (int i = 0; i < probabilityCount; i++)
         {
-            if (ran < DataManager.cCreateHeroRankDict[attr].Probability[pid, i] + (i != 0 ? DataManager.cCreateHeroRankDict[attr].Probability[pid, i - 1] : 0))
+            //Debug.Log("pid=" + pid + "  i=" + i + "  probabilityCount=" + probabilityCount + "  attr=" + attr.ToString());
+           // Debug.Log("DataManager.cCreateHeroRankDict[attr].Probability[pid, i]=" + DataManager.cCreateHeroRankDict[attr].Probability[pid, i]);
+            //Debug.Log("DataManager.cCreateHeroRankDict[attr].Probability[pid, i - 1]=" + DataManager.cCreateHeroRankDict[attr].Probability[pid, i - 1]);
+            
+            if (ran < DataManager.cCreateHeroRankDict[attr].Probability[rank, i] + (i != 0 ? DataManager.cCreateHeroRankDict[attr].Probability[rank, i - 1] : 0))
             {
                 return Random.Range(DataManager.cCreateHeroRankDict[attr].Value1[i], DataManager.cCreateHeroRankDict[attr].Value2[i]);
                 
             }
         }
         return 0;
+    }
+
+
+
+    public string ValueToRank(int value)
+    {
+        switch (value)
+        {
+            case 10:return "E  ";
+            case 20: return "D  ";
+            case 30: return "C  ";
+            case 50: return "B  ";
+            case 70: return "A  ";
+            case 90: return "S  "; 
+            case 120: return "SS "; 
+            case 150: return "SSS";
+            default:
+                return "null";
+        }
+    }
+    public string OutputSignStr(string str, int count)
+    {
+        string tempStr = "";
+        for (int i = 0; i < count; i++)
+        {
+            tempStr += str;
+        }
+        return tempStr;
     }
 
 }
