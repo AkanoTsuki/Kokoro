@@ -22,7 +22,7 @@ public class GameControlInStartMenu : MonoBehaviour
     }
     void Start()
     {  
-        gc.Load();
+        
         SetButtonState();
     }
 
@@ -31,7 +31,7 @@ public class GameControlInStartMenu : MonoBehaviour
     public void ToNewGame()
     {
         //SoundManager._instance.PlayingSound("ButtonClick1");
-        if (gc.IsNewGame)//没检测到存档
+        if (!gc.CheckSaveFile())//没检测到存档
         { SceneManager.LoadScene("A2_NewGame"); }
         else//检测到存档
         {
@@ -45,6 +45,7 @@ public class GameControlInStartMenu : MonoBehaviour
 
     public void ToContinue()
     {
+        gc.Load();
         SceneManager.LoadScene("A3_Play");
         
 
@@ -52,15 +53,16 @@ public class GameControlInStartMenu : MonoBehaviour
 
     void SetButtonState()
     {
-        if (gc.IsNewGame)//没有检测到存档文件
+        if (gc.CheckSaveFile())//检测到存档文件
         {
             toNewGameButton.interactable = true;
-            toContinueButton.interactable = false;
+            toContinueButton.interactable = true;
         }
         else
         {
             toNewGameButton.interactable = true;
-            toContinueButton.interactable = true;
+            toContinueButton.interactable = false;
+            
         }
     }
 
@@ -68,7 +70,6 @@ public class GameControlInStartMenu : MonoBehaviour
     public void Confirm()
     {
         gc.Delete();
-        gc.IsNewGame = true;
         SceneManager.LoadScene("A2_NewGame");
     }
     public void Cancel()

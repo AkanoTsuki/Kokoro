@@ -2,7 +2,8 @@
   "HeroType": [
     {
       "ID": 0,
-      "Name": "战士-0",
+      "Name": "勇士",
+      "Color": "FF6355",
       "Hp": 2,
       "Mp": 0,
       "HpRenew": 0,
@@ -52,7 +53,8 @@
     },
     {
       "ID": 1,
-      "Name": "魔法师",
+      "Name": "魔法使",
+      "Color": "0B84FF",
       "Hp": 0,
       "Mp": 2,
       "HpRenew": 0,
@@ -102,7 +104,8 @@
     },
     {
       "ID": 2,
-      "Name": "弓箭手",
+      "Name": "神射手",
+      "Color": "29FF1C",
       "Hp": 1,
       "Mp": 1,
       "HpRenew": 0,
@@ -152,7 +155,8 @@
     },
     {
       "ID": 3,
-      "Name": "种植家",
+      "Name": "耐劳者",
+      "Color": "FFB139",
       "Hp": 0,
       "Mp": 0,
       "HpRenew": 0,
@@ -202,7 +206,8 @@
     },
     {
       "ID": 4,
-      "Name": "锻造大师",
+      "Name": "制作大师",
+      "Color": "EAA2F8",
       "Hp": 0,
       "Mp": 0,
       "HpRenew": 0,
@@ -252,7 +257,8 @@
     },
     {
       "ID": 5,
-      "Name": "打杂王",
+      "Name": "打杂",
+      "Color": "55DFFF",
       "Hp": 0,
       "Mp": 0,
       "HpRenew": 0,
@@ -304,7 +310,7 @@
   "Hero": [
     {
       "ID": 0,
-      "Name": "主角-勇往直前",
+      "Name": "勇士",
       "PicMan": "vampire_1",
       "PicWoman": "vampire_2",
       "Hp": 100,
@@ -381,7 +387,7 @@
     },
     {
       "ID": 1,
-      "Name": "主角-智慧源泉",
+      "Name": "魔法使",
       "PicMan": "vampire_1",
       "PicWoman": "vampire_2",
       "Hp": 50,
@@ -458,7 +464,7 @@
     },
     {
       "ID": 2,
-      "Name": "主角-百步穿杨",
+      "Name": "神射手",
       "PicMan": "vampire_1",
       "PicWoman": "vampire_2",
       "Hp": 70,
@@ -535,7 +541,7 @@
     },
     {
       "ID": 3,
-      "Name": "主角-永不停歇",
+      "Name": "耐劳者",
       "PicMan": "vampire_1",
       "PicWoman": "vampire_2",
       "Hp": 60,
@@ -612,7 +618,7 @@
     },
     {
       "ID": 4,
-      "Name": "主角-铁火撞击",
+      "Name": "制作大师",
       "PicMan": "vampire_1",
       "PicWoman": "vampire_2",
       "Hp": 60,
@@ -689,7 +695,7 @@
     },
     {
       "ID": 5,
-      "Name": "主角-有条不紊",
+      "Name": "打杂",
       "PicMan": "vampire_1",
       "PicWoman": "vampire_2",
       "Hp": 60,
@@ -5363,7 +5369,18 @@
     {
       "ID": 0,
       "Name": "湖畔地区",
-      "Des": "湖畔地区介绍",
+      "Des": "位于半岛中部，浮月之湖西侧，有大片的平原。",
+      "BigMapX": -256,
+      "BigMapY": 914,
+      "BigMapDesX": 1024,
+      "BigMapDesY": -1163,
+      "StartGrid": [
+        16,
+        29,
+        35,
+        39,
+        44
+      ],
       "Grass": [
         5,
         10,
@@ -5409,7 +5426,18 @@
     {
       "ID": 1,
       "Name": "高原地区",
-      "Des": "高原地区介绍",
+      "Des": "西北部高原地区，矿产丰富",
+      "BigMapX": -36,
+      "BigMapY": 456,
+      "BigMapDesX": 774,
+      "BigMapDesY": -687,
+      "StartGrid": [
+        12,
+        18,
+        33,
+        43,
+        32
+      ],
       "Grass": [
         5,
         10,
@@ -5455,7 +5483,18 @@
     {
       "ID": 2,
       "Name": "雪原地区",
-      "Des": "雪原地区介绍",
+      "Des": "半岛北部山脉，大部分地方常年被冰雪覆盖",
+      "BigMapX": -36,
+      "BigMapY": 36,
+      "BigMapDesX": 759,
+      "BigMapDesY": -157,
+      "StartGrid": [
+        12,
+        12,
+        30,
+        24,
+        28
+      ],
       "Grass": [
         5,
         10,
@@ -5501,7 +5540,18 @@
     {
       "ID": 3,
       "Name": "山林地区",
-      "Des": "山林地区介绍",
+      "Des": "东北部地区，有大片原始森林，东侧有部分海岸",
+      "BigMapX": -529,
+      "BigMapY": 256,
+      "BigMapDesX": 1461,
+      "BigMapDesY": -512,
+      "StartGrid": [
+        12,
+        17,
+        38,
+        35,
+        27
+      ],
       "Grass": [
         5,
         10,
@@ -5547,7 +5597,18 @@
     {
       "ID": 4,
       "Name": "荒漠地区",
-      "Des": "荒漠地区介绍",
+      "Des": "西南部小半岛，大部分地区已经是荒漠",
+      "BigMapX": 264,
+      "BigMapY": 1286,
+      "BigMapDesX": 500,
+      "BigMapDesY": -1429,
+      "StartGrid": [
+        12,
+        17,
+        27,
+        33,
+        21
+      ],
       "Grass": [
         5,
         10,
@@ -5593,7 +5654,18 @@
     {
       "ID": 5,
       "Name": "从林地区",
-      "Des": "从林地区介绍",
+      "Des": "南部热带丛林，境内有半岛唯一的火山，南侧为狭长的沙滩",
+      "BigMapX": -290,
+      "BigMapY": 1286,
+      "BigMapDesX": 870,
+      "BigMapDesY": -1652,
+      "StartGrid": [
+        12,
+        14,
+        27,
+        28,
+        29
+      ],
       "Grass": [
         5,
         10,
@@ -5639,7 +5711,18 @@
     {
       "ID": 6,
       "Name": "河原地区",
-      "Des": "河原地区介绍",
+      "Des": "半岛东南部，境内河流穿越大片草原，土地肥沃",
+      "BigMapX": -700,
+      "BigMapY": 800,
+      "BigMapDesX": 1600,
+      "BigMapDesY": -1010,
+      "StartGrid": [
+        12,
+        18,
+        31,
+        28,
+        16
+      ],
       "Grass": [
         5,
         10,

@@ -325,6 +325,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76db1a7928ac704fa152733a7a1bc59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsNewGame: 0
+  nowCheckingDistrictID: 0
+  countHour: 0
+  heroIndex: 0
   playerName: 
 --- !u!114 &559004349
 MonoBehaviour:

@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//交互小标签类型
+public enum LabelType
+{
+    NewGameLeader,
+    NewGameHero,
+    Item,
+    BuildingA,
+    HeroInDis,
+    BuildingInBuild,
+}
+
 public enum HeroType
 {
     Warrior,
@@ -123,15 +134,17 @@ public class ItemObject
     private int ObjectID;
     private int PrototypeID;
     private string Name;
+    private string Pic;
     private int Rank;
     private List<ItemAttribute> Attr;
     private string Des;
     private int Cost;
-    public ItemObject(int objectID, int prototypeID, string name, int rank, List<ItemAttribute> attr, string des, int cost)
+    public ItemObject(int objectID, int prototypeID, string name, string pic, int rank, List<ItemAttribute> attr, string des, int cost)
     {
         this.ObjectID = objectID;
         this.PrototypeID = prototypeID;
         this.Name = name;
+        this.Pic = pic;
         this.Rank = rank;
         this.Attr = attr;
         this.Des = des;
@@ -140,6 +153,7 @@ public class ItemObject
     public int objectID { get { return ObjectID; } }
     public int prototypeID { get { return PrototypeID; } }
     public string name { get { return Name; } }
+    public string pic { get { return Pic; } }
     public int rank { get { return Rank; } }
     public List<ItemAttribute> attr { get { return Attr; } }
     public string des { get { return Des; } }
@@ -152,6 +166,7 @@ public class CreateHeroType
 {
     public int ID;
     public string Name;
+    public string Color;
     public int Hp;//级别 0 1 2
     public int Mp;
     public int HpRenew;
@@ -357,7 +372,7 @@ public class HeroObject
     private int EquipNeck;
     private int EquipFinger1;
     private int EquipFinger2;
-
+    private int WorkerInBuilding;
     public HeroObject(int id, string name, int type,  int level, int exp,int sex,string pic,
         int hp, int mp, int hpRenew, int mpRenew,
         int atkMin, int atkMax, int mAtkMin, int mAtkMax, int def, int mDef,
@@ -369,7 +384,7 @@ public class HeroObject
         int workPlanting, int workFeeding, int workFishing, int workHunting, int workMining, int workQuarrying, int workFelling, int workBuild,
         int workMakeWeapon, int workMakeArmor, int workMakeJewelry,
         int workSundry,
-        int equipWeapon, int equipHead, int equipBody, int equipHand, int equipLower, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2)
+        int equipWeapon, int equipHead, int equipBody, int equipHand, int equipLower, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2,int workerInBuilding)
     {
         this.ID = id;
         this.Name = name;
@@ -433,8 +448,8 @@ public class HeroObject
         this.EquipNeck = equipNeck;
         this.EquipFinger1 = equipFinger1;
         this.EquipFinger2 = equipFinger2;
-
-}
+        this.WorkerInBuilding = workerInBuilding;
+    }
     public int id { get { return ID; } }
     public string name { get { return Name; } set { Name = value; } }
     public int type { get { return Type; } }
@@ -497,6 +512,7 @@ public class HeroObject
     public int equipNeck { get { return EquipNeck; } set { EquipNeck = value; } }
     public int equipFinger1 { get { return EquipFinger1; } set { EquipFinger1 = value; } }
     public int equipFinger2 { get { return EquipFinger2; } set { EquipFinger2 = value; } }
+    public int workerInBuilding { get { return WorkerInBuilding; } set { WorkerInBuilding = value; } }
 }
 
 
@@ -515,12 +531,18 @@ public class CreateHeroRank
     public int[] value2 { get { return Value2; } }
     public int[,] probability { get { return Probability; } }
 }
+
 [System.Serializable]
 public class DistrictPrototype
 {
     public int ID;
     public string Name;
     public string Des;
+    public int BigMapX;
+    public int BigMapY;
+    public int BigMapDesX;
+    public int BigMapDesY;
+    public List<int> StartGrid;
     public List<int> Grass;
     public List<int> Wood;
     public List<int> Water;
@@ -533,9 +555,11 @@ public class DistrictPrototype
     public int ELight;
     public int EDark;
 }
+
 [System.Serializable]
 public class DistrictGridPrototype
 {
+    public int ID;
     public string Name;
     public int DistrictID;
     public int Level;
@@ -545,36 +569,173 @@ public class DistrictGridPrototype
 
 public class DistrictObject
 {
-    public int ID;
-    public string Name;
-    public string Des;
-    public int[] TotalGrass;
-    public int[] TotalWood;
-    public int[] TotalWater;
-    public int[] TotalStone;
-    public int[] TotalMetal;
-    public int UsedGrass;
-    public int UsedWood;
-    public int UsedWater;
-    public int UsedStone;
-    public int UsedMetal;
-    public List<int> BuildingList;
-    public int EWind;
-    public int EFire;
-    public int EWater;
-    public int EGround;
-    public int ELight;
-    public int EDark;
+    private int ID;
+    private string Name;
+    private string BaseName;
+    private string Des;
+    private bool IsOpen;
+    private int Level;
+    private int People;
+    private int PeopleLimit;
+    private int GridEmpty;
+    private int GridUsed;
+    private int TotalGrass;
+    private int TotalWood;
+    private int TotalWater;
+    private int TotalStone;
+    private int TotalMetal;
+    private int UsedGrass;
+    private int UsedWood;
+    private int UsedWater;
+    private int UsedStone;
+    private int UsedMetal;
+    private List<int> BuildingList;
+    private List<int> HeroList;
+    private int EWind;
+    private int EFire;
+    private int EWater;
+    private int EGround;
+    private int ELight;
+    private int EDark;
+    private int RFoodCereal;//现有库存
+    private int RFoodVegetable;
+    private int RFoodFruit;
+    private int RFoodMeat;
+    private int RFoodFish;
+    private int RStuffWood;
+    private int RStuffMetal;
+    private int RStuffStone;
+    private int RStuffLeather;
+    private int RStuffTwine;
+    private int RStuffCloth;
+    private int RStuffBone;
+    private int RProductWeapon;
+    private int RProductArmor;
+    private int RProductJewelry;
+    private int RFoodLimit;//库存上限
+    private int RStuffLimit;
+    private int RProductLimit;
+
+    public DistrictObject(int id, string name, string baseName, string des, bool isOpen, int level, int people, int peopleLimit, int gridEmpty, int gridUsed,
+        int totalGrass, int totalWood, int totalWater, int totalStone, int totalMetal, int usedGrass, int usedWood, int usedWater, int usedStone, int usedMetal, List<int> buildingList, List<int> heroList,
+        int eWind, int eFire, int eWater, int eGround, int eLight, int eDark,
+        int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, 
+        int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
+        int rProductWeapon, int rProductArmor, int rProductJewelry,
+        int rFoodLimit, int rStuffLimit, int rProductLimit)
+    {
+        this.ID=id;
+        this.Name= name;
+        this.BaseName= baseName;
+     this.Des= des;
+     this.IsOpen= isOpen;
+     this.Level= level;
+     this.People= people;
+     this.PeopleLimit= peopleLimit;
+     this.GridEmpty= gridEmpty;
+     this.GridUsed= gridUsed;
+     this.TotalGrass= totalGrass;
+     this.TotalWood= totalWood;
+     this.TotalWater= totalWater;
+     this.TotalStone= totalStone;
+     this.TotalMetal= totalMetal;
+     this.UsedGrass= usedGrass;
+     this.UsedWood= usedWood;
+     this.UsedWater= usedWater;
+     this.UsedStone= usedStone;
+     this.UsedMetal= usedMetal;
+     this.BuildingList= buildingList;
+        this.HeroList = heroList;
+        this.EWind= eWind;
+     this.EFire= eFire;
+     this.EWater= eWater;
+     this.EGround= eGround;
+     this.ELight= eLight;
+     this.EDark= eDark;
+     this.RFoodCereal= rFoodCereal;//现有库存
+     this.RFoodVegetable= rFoodVegetable;
+     this.RFoodFruit= rFoodFruit;
+     this.RFoodMeat= rFoodMeat;
+     this.RFoodFish= rFoodFish;
+     this.RStuffWood= rStuffWood;
+     this.RStuffMetal= rStuffMetal;
+     this.RStuffStone= rStuffStone;
+     this.RStuffLeather= rStuffLeather;
+     this.RStuffTwine= rStuffTwine;
+     this.RStuffCloth= rStuffCloth;
+     this.RStuffBone= rStuffBone;
+     this.RProductWeapon= rProductWeapon;
+     this.RProductArmor= rProductArmor;
+     this.RProductJewelry= rProductJewelry;
+     this.RFoodLimit= rFoodLimit;//库存上限
+     this.RStuffLimit= rStuffLimit;
+     this.RProductLimit= rProductLimit;
+}
+    public int id { get { return ID; } }
+    public string name { get { return Name; }  }
+    public string baseName { get { return BaseName; } set { BaseName = value; } }
+    public string des { get { return Des; } set { Des = value; } }
+    public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
+    public int level { get { return Level; } set { Level = value; } }
+    public int people { get { return People; } set { People = value; } }
+    public int peopleLimit { get { return PeopleLimit; } set { PeopleLimit = value; } }
+    public int gridEmpty { get { return GridEmpty; } set { GridEmpty = value; } }
+    public int gridUsed { get { return GridUsed; } set { GridUsed = value; } }
+    public int totalGrass { get { return TotalGrass; } set { TotalGrass = value; } }
+    public int totalWood { get { return TotalWood; } set { TotalWood = value; } }
+    public int totalWater { get { return TotalWater; } set { TotalWater = value; } }
+    public int totalStone { get { return TotalStone; } set { TotalStone = value; } }
+    public int totalMetal { get { return TotalMetal; } set { TotalMetal = value; } }
+    public int usedGrass { get { return UsedGrass; } set { UsedGrass = value; } }
+    public int usedWood { get { return UsedWood; } set { UsedWood = value; } }
+    public int usedWater { get { return UsedWater; } set { UsedWater = value; } }
+    public int usedStone { get { return UsedStone; } set { UsedStone = value; } }
+    public int usedMetal { get { return UsedMetal; } set { UsedMetal = value; } }
+    public List<int> buildingList { get { return BuildingList; } set { BuildingList = value; } }
+    public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
+    public int eWind { get { return EWind; } set { EWind = value; } }
+    public int eFire { get { return EFire; } set { EFire = value; } }
+    public int eWater { get { return EWater; } set { EWater = value; } }
+    public int eGround { get { return EGround; } set { EGround = value; } }
+    public int eLight { get { return ELight; } set { ELight = value; } }
+    public int eDark { get { return EDark; } set { EDark = value; } }
+    public int rFoodCereal { get { return RFoodCereal; } set { RFoodCereal = value; } }
+    public int rFoodVegetable { get { return RFoodVegetable; } set { RFoodVegetable = value; } }
+    public int rFoodFruit { get { return RFoodFruit; } set { RFoodFruit = value; } }
+    public int rFoodMeat { get { return RFoodMeat; } set { RFoodMeat = value; } }
+    public int rFoodFish { get { return RFoodFish; } set { RFoodFish = value; } }
+    public int rStuffWood { get { return RStuffWood; } set { RStuffWood = value; } }
+    public int rStuffMetal { get { return RStuffMetal; } set { RStuffMetal = value; } }
+    public int rStuffStone { get { return RStuffStone; } set { RStuffStone = value; } }
+    public int rStuffLeather { get { return RStuffLeather; } set { RStuffLeather = value; } }
+    public int rStuffTwine { get { return RStuffTwine; } set { RStuffTwine = value; } }
+    public int rStuffCloth { get { return RStuffCloth; } set { RStuffCloth = value; } }
+    public int rStuffBone { get { return RStuffBone; } set { RStuffBone = value; } }
+    public int rProductWeapon { get { return RProductWeapon; } set { RProductWeapon = value; } }
+    public int rProductArmor { get { return RProductArmor; } set { RProductArmor = value; } }
+    public int rProductJewelry { get { return RProductJewelry; } set { RProductJewelry = value; } }
+    public int rFoodLimit { get { return RFoodLimit; } set { RFoodLimit = value; } }
+    public int rStuffLimit { get { return RStuffLimit; } set { RStuffLimit = value; } }
+    public int rProductLimit { get { return RProductLimit; } set { RProductLimit = value; } }
+
 }
 
 public class DistrictGridObject
 {
-    public string Name;
-    public int DistrictID;
-    public int Level;
-    public int BuildingID;//-2未开放 -1未使用
-    public int X;
-    public int Y;
+    private int ID;
+    private string Pic;
+    private int BuildingID;//-2未开放 -1未使用
+
+    public DistrictGridObject(int id, string pic, int buildingID)
+    {
+        this.ID = id;
+        this.Pic = pic;
+        this.BuildingID = buildingID;
+    }
+    public int id { get { return ID; } }
+    public string pic { get { return Pic; } set { Pic = value; } }
+    public int buildingID { get { return BuildingID; } set { BuildingID = value; } }
+
 }
 
 
@@ -586,20 +747,22 @@ public class BuildingPrototype
     public string Name;
     public string MainPic;
     public string MapPic;
+    public string Des;
     public int Level;
     public int NeedGold;
     public int NeedWood;
     public int NeedStone;
     public int NeedMetal;
     public int Expense;
+    public int UpgradeTo;
     public int Grid;
     public int NatureGrass;
     public int NatureWood;
     public int NatureWater;
     public int NatureStone;
     public int NatureMetal;
-    public int People;
-    public int Worker;
+    public int People;//提供人口
+    public int Worker;//工人上限
     public int EWind;
     public int EFire;
     public int EWater;
@@ -607,6 +770,93 @@ public class BuildingPrototype
     public int ELight;
     public int EDark;
 }
+
+//建筑实例
+public class BuildingObject
+{
+    private int ID;
+    private string Name;
+    private string MainPic;
+    private string MapPic;
+    private string Des;
+    private int Level;
+    private int Expense;
+    private int UpgradeTo;//升级后的建筑原型ID
+    private bool IsOpen;
+    private List<int> GridList;//占用格子ID
+    private List<int> HeroList;
+    private int NatureGrass;
+    private int NatureWood;
+    private int NatureWater;
+    private int NatureStone;
+    private int NatureMetal;
+    private int People;//提供人口
+    private int Worker;//工人上限
+    private int WorkerNow;
+    private int EWind;
+    private int EFire;
+    private int EWater;
+    private int EGround;
+    private int ELight;
+    private int EDark;
+    public BuildingObject(int id, string name, string mainPic, string mapPic, string des, int level, int expense, int upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
+        int natureGrass, int natureWood, int natureWater, int natureStone, int natureMetal, int people, int worker, int workerNow,
+        int eWind, int eFire, int eWater, int eGround, int eLight, int eDark)
+    {
+        this.ID = id;
+        this.Name = name;
+    this.MainPic = mainPic;
+   this.MapPic = mapPic;
+        this.Des = des;
+        this.Level = level;
+    this.Expense = expense;
+    this.UpgradeTo = upgradeTo;
+    this.IsOpen = isOpen;
+    this.GridList = gridList;
+   this.HeroList = heroList;
+    this.NatureGrass = natureGrass;
+    this.NatureWood = natureWood;
+    this.NatureWater = natureWater;
+    this.NatureStone = natureStone;
+    this.NatureMetal = natureMetal;
+    this.People = people;
+    this.Worker = worker;
+    this.WorkerNow = workerNow;
+    this.EWind = eWind;
+    this.EFire = eFire;
+    this.EWater = eWater;
+    this.EGround = eGround;
+    this.ELight = eLight;
+    this.EDark = eDark;
+}
+    public int id{ get { return ID; } }
+    public string name{ get { return Name; } }
+    public string mainPic { get { return MainPic; } }
+    public string mapPic { get { return MapPic; } }
+    public string des { get { return Des; } }
+    public int level { get { return Level; } }
+    public int expense { get { return Expense; } }
+    public int upgradeTo { get { return UpgradeTo; } }
+    public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
+    public List<int> gridList { get { return GridList; } set { GridList = value; } }
+    public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
+    public int natureGrass { get { return NatureGrass; } }
+    public int natureWood { get { return NatureWood; } }
+    public int natureWater { get { return NatureWater; } }
+    public int natureStone { get { return NatureStone; } }
+    public int natureMetal { get { return NatureMetal; } }
+    public int people { get { return People; } }
+    public int worker { get { return Worker; } }
+    public int workerNow { get { return WorkerNow; } set { WorkerNow = value; } }
+    public int eWind { get { return EWind; } }
+    public int eFire { get { return EFire; } }
+    public int eWater { get { return EWater; } }
+    public int eGround { get { return EGround; } }
+    public int eLight { get { return ELight; } }
+    public int eDark { get { return EDark; } }
+
+}
+
 
 //地牢原型
 [System.Serializable]
