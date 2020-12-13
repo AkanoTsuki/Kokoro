@@ -11,6 +11,7 @@ public enum LabelType
     BuildingA,
     HeroInDis,
     BuildingInBuild,
+    Message
 }
 
 public enum HeroType
@@ -102,6 +103,14 @@ public enum AttributeSource
     Basic,
     RandomAdd,
     LemmaAdd
+}
+
+
+public enum LogType
+{
+    Info,
+    BuildDone,
+    ProduceDone
 }
 
 public class ItemAttribute
@@ -775,6 +784,7 @@ public class BuildingPrototype
 public class BuildingObject
 {
     private int ID;
+    private int DistrictID;
     private string Name;
     private string MainPic;
     private string MapPic;
@@ -799,11 +809,12 @@ public class BuildingObject
     private int EGround;
     private int ELight;
     private int EDark;
-    public BuildingObject(int id, string name, string mainPic, string mapPic, string des, int level, int expense, int upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
+    public BuildingObject(int id, int districtID,string name, string mainPic, string mapPic, string des, int level, int expense, int upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
         int natureGrass, int natureWood, int natureWater, int natureStone, int natureMetal, int people, int worker, int workerNow,
         int eWind, int eFire, int eWater, int eGround, int eLight, int eDark)
     {
         this.ID = id;
+        this.DistrictID = districtID;
         this.Name = name;
     this.MainPic = mainPic;
    this.MapPic = mapPic;
@@ -830,6 +841,7 @@ public class BuildingObject
     this.EDark = eDark;
 }
     public int id{ get { return ID; } }
+    public int districtID { get { return DistrictID; } }
     public string name{ get { return Name; } }
     public string mainPic { get { return MainPic; } }
     public string mapPic { get { return MapPic; } }
@@ -877,6 +889,36 @@ public class MonsterPrototype
     public string Name;
     public int Level;
     public string Des;
+}
+
+//日志消息示例
+public class LogObject
+{
+    private int ID;
+    private LogType Type;
+    private int CountHour;
+    private string Text;
+    private int Value1;
+    private int Value2;
+    private int Value3;
+    public LogObject(int id, LogType type, int countHour, string text, int value1, int value2, int value3)
+    {
+        this.ID = id;
+        this.Type = type;
+        this.CountHour = countHour;
+        this.Text = text;
+        this.Value1 = value1;
+        this.Value2 = value2;
+        this.Value3 = value3;
+    }
+    public int id { get { return ID; } }
+    public LogType type { get { return Type; } }
+    public int countHour { get { return CountHour; } }
+    public string text { get { return Text; } }
+    public int value1 { get { return Value1; } }
+    public int value2 { get { return Value2; } }
+    public int value3 { get { return Value3; } }
+
 }
 
 

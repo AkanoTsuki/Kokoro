@@ -116,8 +116,9 @@ public class GameControlInNewGame : MonoBehaviour
             gc.districtDic[i] = new DistrictObject(i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des, temp_districtID == i, 1, 10, 20, DataManager.mDistrictDict[i].StartGrid[0], 0,
                 DataManager.mDistrictDict[i].Grass[0], DataManager.mDistrictDict[i].Wood[0], DataManager.mDistrictDict[i].Water[0], DataManager.mDistrictDict[i].Stone[0], DataManager.mDistrictDict[i].Metal[0],
                 0, 0, 0, 0, 0, new List<int> { }, temp_districtID == i? new List<int> { 0,1,2,3,4,5}: new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 500, 500, 50);
+                0, 0, 0, 0, 0, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 5000, 5000, 50);
         }
+        gc.gold = 5000;
         gc.nowCheckingDistrictID = temp_districtID;
         gc.Save();
         SceneManager.LoadScene("A3_Play");

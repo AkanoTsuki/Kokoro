@@ -7,22 +7,29 @@ public class GameControl : MonoBehaviour
 
 
     //no save
-    public bool IsNewGame = false;
+    public int timeS = 0;
+    public int timeHour = 0;
+    public int timeDay = 1;
+    public int timeWeek = 1;
+    public int timeMonth = 1;
+    public int timeSeason = 1;
+    public int timeYear = 1;
 
     //save data
     public int gold=0;
     public int nowCheckingDistrictID = 0;
-    public int countHour = 0;//时间戳，基准时间单位：小时
+    public int standardTime = 0;//时间戳，基准时间单位：小时
     public int heroIndex = 0;
     public int itemIndex = 0;
     public int buildingIndex = 0;
+    public int logIndex = 0;
     public string playerName = "AAA";
     public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
     public Dictionary<int, HeroObject> heroDic = new Dictionary<int, HeroObject>();
     public DistrictObject[] districtDic = new DistrictObject[7];
     public Dictionary<int, DistrictGridObject> districtGridDic = new Dictionary<int, DistrictGridObject>();
     public Dictionary<int, BuildingObject> buildingDic = new Dictionary<int, BuildingObject>();
-
+    public Dictionary<int, LogObject> logDic = new Dictionary<int, LogObject>();
 
     /// <summary>
     /// 用作存档的数据类
@@ -32,16 +39,18 @@ public class GameControl : MonoBehaviour
     {
         public int gold = 0;
         public int nowCheckingDistrictID = 0;
-        public int countHour = 0;
+        public int standardTime = 0;
         public int heroIndex = 0;
         public int itemIndex = 0;
         public int buildingIndex = 0;
+        public int logIndex = 0;
         public string playerName = "";
         public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
         public Dictionary<int, HeroObject> heroDic = new Dictionary<int, HeroObject>();
         public DistrictObject[] districtDic = new DistrictObject[7];
         public Dictionary<int, DistrictGridObject> districtGridDic = new Dictionary<int, DistrictGridObject>();
         public Dictionary<int, BuildingObject> buildingDic = new Dictionary<int, BuildingObject>();
+        public Dictionary<int, LogObject> logDic = new Dictionary<int, LogObject>();
     }
 
 
@@ -58,17 +67,18 @@ public class GameControl : MonoBehaviour
 
         t.gold = this.gold;
         t.nowCheckingDistrictID = this.nowCheckingDistrictID;
-        t.countHour = this.countHour;
+        t.standardTime = this.standardTime;
         t.heroIndex = this.heroIndex;
         t.itemIndex = this.itemIndex;
         t.buildingIndex = this.buildingIndex;
-        t.playerName = this.playerName;
+        t.logIndex = this.logIndex;
+    t.playerName = this.playerName;
         t.itemDic = this.itemDic;
         t.heroDic = this.heroDic;
         t.districtDic = this.districtDic;
         t.districtGridDic = this.districtGridDic;
         t.buildingDic = this.buildingDic;
-
+        t.logDic= this.logDic;
 
         //保存数据
         IOHelper.SetData(filename, t);
@@ -92,23 +102,24 @@ public class GameControl : MonoBehaviour
 
             this.gold = t1.gold;
             this.nowCheckingDistrictID = t1.nowCheckingDistrictID;
-            this.countHour = t1.countHour;
+            this.standardTime = t1.standardTime;
             this.heroIndex = t1.heroIndex;
             this.itemIndex = t1.itemIndex;
             this.buildingIndex = t1.buildingIndex;
+            this.logIndex = t1.logIndex;
             this.playerName = t1.playerName;
             this.itemDic = t1.itemDic;
             this.heroDic = t1.heroDic;
             this.districtDic = t1.districtDic;
             this.districtGridDic = t1.districtGridDic;
             this.buildingDic = t1.buildingDic;
-
-            IsNewGame = false;
+            this.logDic = t1.logDic;
+           
         }
         else
         {
             print("文件不存在." + filename);
-            IsNewGame = true;
+           
         }
 
     }
@@ -377,15 +388,17 @@ public class GameControl : MonoBehaviour
 
             }
         }
-        Debug.Log("  ran=" + ran);
+       
         return 0;
     }
 
 
     public void Build( int buildingId)
     {
+       // Debug.Log(" Build（） buildingId=" + buildingId);
         if (DataManager.mBuildingDict[buildingId].NeedWood > districtDic[nowCheckingDistrictID].rStuffWood)
         {
+            CreateLog(LogType.Info, "[系统]木料不足，还缺" + (DataManager.mBuildingDict[buildingId].NeedWood - districtDic[nowCheckingDistrictID].rStuffWood).ToString(), -1, -1, -1);
             return;
         }
         if (DataManager.mBuildingDict[buildingId].NeedStone > districtDic[nowCheckingDistrictID].rStuffStone)
@@ -429,13 +442,19 @@ public class GameControl : MonoBehaviour
 
         List<int> grid = new List<int> { };
         int count = DataManager.mBuildingDict[buildingId].Grid;
+
+
         foreach (KeyValuePair<int, DistrictGridObject> kvp in districtGridDic)
         {
-            if (DataManager.mDistrictGridDict[kvp.Value.id].DistrictID == nowCheckingDistrictID&& DataManager.mDistrictGridDict[kvp.Value.id].Level<= districtDic[nowCheckingDistrictID].level)
+            if (DataManager.mDistrictGridDict[kvp.Value.id].DistrictID == nowCheckingDistrictID&& 
+                DataManager.mDistrictGridDict[kvp.Value.id].Level<= districtDic[nowCheckingDistrictID].level&&
+                 kvp.Value.buildingID==-1)
             {
                 grid.Add(kvp.Value.id);
                 districtGridDic[kvp.Value.id].buildingID = buildingIndex;
                 districtGridDic[kvp.Value.id].pic = DataManager.mBuildingDict[buildingId].MapPic;
+
+              
                 count--;
             }
             if (count == 0)
@@ -443,6 +462,12 @@ public class GameControl : MonoBehaviour
                 break;
             }
         }
+        Debug.Log("grid.count=" + grid.Count );
+        for (int i = 0; i < grid.Count; i++)
+        {
+            districtGridDic[grid[i]].buildingID = buildingIndex;
+        }
+
 
         districtDic[nowCheckingDistrictID].rStuffWood -= DataManager.mBuildingDict[buildingId].NeedWood;
         districtDic[nowCheckingDistrictID].rStuffStone -= DataManager.mBuildingDict[buildingId].NeedStone;
@@ -455,16 +480,46 @@ public class GameControl : MonoBehaviour
         districtDic[nowCheckingDistrictID].usedStone += DataManager.mBuildingDict[buildingId].NatureStone;
         districtDic[nowCheckingDistrictID].usedMetal += DataManager.mBuildingDict[buildingId].NatureMetal;
 
+        districtDic[nowCheckingDistrictID].eWind += DataManager.mBuildingDict[buildingId].EWind;
+        districtDic[nowCheckingDistrictID].eFire += DataManager.mBuildingDict[buildingId].EFire;
+        districtDic[nowCheckingDistrictID].eWater += DataManager.mBuildingDict[buildingId].EWater;
+        districtDic[nowCheckingDistrictID].eGround += DataManager.mBuildingDict[buildingId].EGround;
+        districtDic[nowCheckingDistrictID].eLight += DataManager.mBuildingDict[buildingId].ELight;
+        districtDic[nowCheckingDistrictID].eDark += DataManager.mBuildingDict[buildingId].EDark;
+
+        districtDic[nowCheckingDistrictID].peopleLimit += DataManager.mBuildingDict[buildingId].People;
+
+
         districtDic[nowCheckingDistrictID].gridEmpty -= count;
         districtDic[nowCheckingDistrictID].gridUsed+= count;
+        districtDic[nowCheckingDistrictID].buildingList.Add(buildingIndex);
 
 
-        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, DataManager.mBuildingDict[buildingId].MapPic, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, true, grid, new List<int> { },
+
+        Debug.Log("buildingDic.count="+ buildingDic.Count+"  buildingIndex=" + buildingIndex);
+        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, DataManager.mBuildingDict[buildingId].MapPic, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, true, grid, new List<int> { },
             DataManager.mBuildingDict[buildingId].NatureGrass, DataManager.mBuildingDict[buildingId].NatureWood, DataManager.mBuildingDict[buildingId].NatureWater, DataManager.mBuildingDict[buildingId].NatureStone, DataManager.mBuildingDict[buildingId].NatureMetal,
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark));
+
+        AreaMapPanel.Instance.AddIconByBuilding(buildingIndex);
+
+        DistrictMainPanel.Instance.UpdateNatureInfo(districtDic[nowCheckingDistrictID]);
+        DistrictMainPanel.Instance.UpdateOutputInfo(districtDic[nowCheckingDistrictID]);
+        DistrictMainPanel.Instance.UpdateCultureInfo(districtDic[nowCheckingDistrictID]);
+        DistrictMainPanel.Instance.UpdateBuildingInfo(districtDic[nowCheckingDistrictID]);
+
+        BuildPanel.Instance.UpdateAllInfo(this);
+        
+        buildingIndex++;
     }
 
+    public void CreateLog(LogType logType,string text, int value1, int value2, int value3)
+    {
+        logDic.Add(logIndex, new LogObject(logIndex, logType,standardTime, text, value1, value2, value3));
+        logIndex++;
+        MessagePanel.Instance.AddMessage(logDic[logIndex - 1]);
+    }
 
     public string ValueToRank(int value)
     {

@@ -15,6 +15,9 @@ public enum UIPanelType
     AdventureFight,
     Equip,
     Inventory,
-    EconomicStatistics
+    EconomicStatistics,
+    Message,
+    AreaMap,
+    PlayMain
 
 }
