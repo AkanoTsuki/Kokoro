@@ -14,6 +14,17 @@ public enum LabelType
     Message
 }
 
+public enum Element
+{
+    None,
+    Wind,
+    Fire,
+    Water,
+    Ground,
+    Light,
+    Dark
+}
+
 public enum HeroType
 {
     Warrior,
@@ -135,6 +146,44 @@ public class ItemPrototype
 {
     public int ID;
     public string Name;
+    public string Pic;
+    public string TypeBig;
+    public string TypeSmall;
+    public int Rank;
+    public int Hp;
+    public int Mp;
+    public int HpRenew;
+    public int MpRenew;
+    public int AtkMin;
+    public int AtkMax;
+    public int MAtkMin;
+    public int MAtkMax;
+    public int Def;
+    public int MDef;
+    public int Hit;
+    public int Dod;
+    public int CriR;
+    public int CriD;
+    public int Spd;
+    public int WindDam;
+    public int FireDam;
+    public int WaterDam;
+    public int GroundDam;
+    public int LightDam;
+    public int DarkDam;
+    public int WindRes;
+    public int FireRes;
+    public int WaterRes;
+    public int GroundRes;
+    public int LightRes;
+    public int DarkRes;
+    public int DizzyRes;
+    public int ConfusionRes;
+    public int PoisonRes;
+    public int SleepRes;
+    public int GoldGet;
+    public int ExpGet;
+    public int ItemGet;
 }
 
 //物品实例
@@ -167,6 +216,66 @@ public class ItemObject
     public List<ItemAttribute> attr { get { return Attr; } }
     public string des { get { return Des; } }
     public int cost { get { return Cost; } }
+}
+
+
+//技能原型
+[System.Serializable]
+public class SkillPrototype
+{
+    public int ID;
+    public string Name;
+    public string Pic;
+    public List<int> Element;
+    public string Des;
+    public int Mp;
+    public int Probability;
+    public int Max;
+    public bool FlagDamage;
+    public int Atk;
+    public int MAtk;
+    public int Sword;
+    public int Axe;
+    public int Spear;
+    public int Hammer;
+    public int Bow;
+    public int Staff;
+    public int Wind;
+    public int Fire;
+    public int Water;
+    public int Ground;
+    public int Light;
+    public int Dark;
+    public bool FlagDebuff;
+    public int Dizzy;
+    public int DizzyValue;
+    public int Confusion;
+    public int ConfusionValue;
+    public int Poison;
+    public int PoisonValue;
+    public int Sleep;
+    public int SleepValue;
+    public int Cure;
+    public bool FlagBuff;
+    public int UpAtk;
+    public int UpMAtk;
+    public int UpDef;
+    public int UpMDef;
+    public int UpHit;
+    public int UpDod;
+    public int UpCriD;
+    public int UpWindDam;
+    public int UpFireDam;
+    public int UpWaterDam;
+    public int UpGroundDam;
+    public int UpLightDam;
+    public int UpDarkDam;
+    public int UpWindRes;
+    public int UpFireRes;
+    public int UpWaterRes;
+    public int UpGroundRes;
+    public int UpLightRes;
+    public int UpDarkRes;
 }
 
 //英雄原型T

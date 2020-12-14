@@ -14,6 +14,7 @@ public class DataManager
         public List<CreateHeroType> HeroType;
         public List<HeroPrototype> Hero;
         public List<ItemPrototype> Item;
+        public List<SkillPrototype> Skill;
         public List<DistrictPrototype> District;
         public List<DistrictGridPrototype> DistrictGrid;
         public List<BuildingPrototype> Building;
@@ -27,6 +28,7 @@ public class DataManager
     public static Dictionary<Attribute, CreateHeroRank> cCreateHeroRankDict = new Dictionary<Attribute, CreateHeroRank>();
 
     public static Dictionary<int, ItemPrototype> mItemDict = new Dictionary<int, ItemPrototype>();
+    public static Dictionary<int, SkillPrototype> mSkillDict = new Dictionary<int, SkillPrototype>();
     public static Dictionary<int, HeroPrototype> mHeroDict = new Dictionary<int, HeroPrototype>();
 
     public static Dictionary<int, DistrictPrototype> mDistrictDict = new Dictionary<int, DistrictPrototype>();
@@ -88,6 +90,9 @@ public class DataManager
         if (jsonObject.Item == null){Debug.LogError("Item data null");}
         foreach (ItemPrototype item in jsonObject.Item){ mItemDict[item.ID] = item;}
 
+        if (jsonObject.Skill == null) { Debug.LogError("Skill data null"); }
+        foreach (SkillPrototype item in jsonObject.Skill) { mSkillDict[item.ID] = item; }
+
         if (jsonObject.District == null) { Debug.LogError("District data null"); }
         foreach (DistrictPrototype item in jsonObject.District) { mDistrictDict[item.ID] = item; }
 
@@ -126,7 +131,9 @@ public class GameDataConfig : MonoBehaviour
         //Debug.Log(DataManager.mBuildingDict[5].Name);
         //Debug.Log(DataManager.mMonsterDict[1].Name);
         //Debug.Log(DataManager.mDistrictDict[2].Water[1]);
-        //Debug.Log(DataManager.mDistrictGridDict["64,79"].X);
+        Debug.Log(DataManager.mSkillDict[31].Name);
+        Debug.Log(DataManager.mSkillDict[31].FlagDamage);
+        Debug.Log(DataManager.mItemDict[46].Name);
     }
 
 }
