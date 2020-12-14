@@ -16,13 +16,16 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.AreaMap);
         AreaMapPanel.Instance.OnShow(DataManager.mDistrictDict[gc.nowCheckingDistrictID].BigMapX, DataManager.mDistrictDict[gc.nowCheckingDistrictID].BigMapY);
         UIManager.Instance.InitPanel(UIPanelType.DistrictMain);
+        UIManager.Instance.InitPanel(UIPanelType.Building);
         UIManager.Instance.InitPanel(UIPanelType.Hero);
         UIManager.Instance.InitPanel(UIPanelType.Build);
         UIManager.Instance.InitPanel(UIPanelType.Message);
         MessagePanel.Instance.OnShow(0, 26);
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
         PlayMainPanel.Instance.OnShow();
-        InvokeRepeating("TimeFlow", 0.1f, 0.1f);
+
+
+        //InvokeRepeating("TimeFlow", 0.1f, 0.1f);
     }
 
     // Update is called once per frame

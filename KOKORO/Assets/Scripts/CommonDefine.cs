@@ -8,7 +8,7 @@ public enum LabelType
     NewGameLeader,
     NewGameHero,
     Item,
-    BuildingA,
+    BuildingInDistrictMain,
     HeroInDis,
     BuildingInBuild,
     Message
@@ -194,16 +194,18 @@ public class ItemObject
     private string Name;
     private string Pic;
     private int Rank;
+    private int Level;
     private List<ItemAttribute> Attr;
     private string Des;
     private int Cost;
-    public ItemObject(int objectID, int prototypeID, string name, string pic, int rank, List<ItemAttribute> attr, string des, int cost)
+    public ItemObject(int objectID, int prototypeID, string name, string pic, int rank, int level, List<ItemAttribute> attr, string des, int cost)
     {
         this.ObjectID = objectID;
         this.PrototypeID = prototypeID;
         this.Name = name;
         this.Pic = pic;
         this.Rank = rank;
+        this.Level = level;
         this.Attr = attr;
         this.Des = des;
         this.Cost = cost;
@@ -213,6 +215,7 @@ public class ItemObject
     public string name { get { return Name; } }
     public string pic { get { return Pic; } }
     public int rank { get { return Rank; } }
+    public int level { get { return Level; } set { Level = value; } }
     public List<ItemAttribute> attr { get { return Attr; } }
     public string des { get { return Des; } }
     public int cost { get { return Cost; } }
@@ -695,6 +698,7 @@ public class DistrictObject
     private int Level;
     private int People;
     private int PeopleLimit;
+    private int Worker;
     private int GridEmpty;
     private int GridUsed;
     private int TotalGrass;
@@ -734,7 +738,7 @@ public class DistrictObject
     private int RStuffLimit;
     private int RProductLimit;
 
-    public DistrictObject(int id, string name, string baseName, string des, bool isOpen, int level, int people, int peopleLimit, int gridEmpty, int gridUsed,
+    public DistrictObject(int id, string name, string baseName, string des, bool isOpen, int level, int people, int peopleLimit, int worker, int gridEmpty, int gridUsed,
         int totalGrass, int totalWood, int totalWater, int totalStone, int totalMetal, int usedGrass, int usedWood, int usedWater, int usedStone, int usedMetal, List<int> buildingList, List<int> heroList,
         int eWind, int eFire, int eWater, int eGround, int eLight, int eDark,
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, 
@@ -750,7 +754,8 @@ public class DistrictObject
      this.Level= level;
      this.People= people;
      this.PeopleLimit= peopleLimit;
-     this.GridEmpty= gridEmpty;
+        this.Worker = worker;
+        this.GridEmpty= gridEmpty;
      this.GridUsed= gridUsed;
      this.TotalGrass= totalGrass;
      this.TotalWood= totalWood;
@@ -797,6 +802,7 @@ public class DistrictObject
     public int level { get { return Level; } set { Level = value; } }
     public int people { get { return People; } set { People = value; } }
     public int peopleLimit { get { return PeopleLimit; } set { PeopleLimit = value; } }
+    public int worker { get { return Worker; } set { Worker = value; } }
     public int gridEmpty { get { return GridEmpty; } set { GridEmpty = value; } }
     public int gridUsed { get { return GridUsed; } set { GridUsed = value; } }
     public int totalGrass { get { return TotalGrass; } set { TotalGrass = value; } }
@@ -865,6 +871,7 @@ public class BuildingPrototype
     public string Name;
     public string MainPic;
     public string MapPic;
+    public string PanelType;
     public string Des;
     public int Level;
     public int NeedGold;
@@ -897,6 +904,7 @@ public class BuildingObject
     private string Name;
     private string MainPic;
     private string MapPic;
+    private string PanelType;
     private string Des;
     private int Level;
     private int Expense;
@@ -918,7 +926,7 @@ public class BuildingObject
     private int EGround;
     private int ELight;
     private int EDark;
-    public BuildingObject(int id, int districtID,string name, string mainPic, string mapPic, string des, int level, int expense, int upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
+    public BuildingObject(int id, int districtID,string name, string mainPic, string mapPic, string panelType, string des, int level, int expense, int upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
         int natureGrass, int natureWood, int natureWater, int natureStone, int natureMetal, int people, int worker, int workerNow,
         int eWind, int eFire, int eWater, int eGround, int eLight, int eDark)
     {
@@ -927,6 +935,7 @@ public class BuildingObject
         this.Name = name;
     this.MainPic = mainPic;
    this.MapPic = mapPic;
+        this.PanelType = panelType;
         this.Des = des;
         this.Level = level;
     this.Expense = expense;
@@ -954,6 +963,7 @@ public class BuildingObject
     public string name{ get { return Name; } }
     public string mainPic { get { return MainPic; } }
     public string mapPic { get { return MapPic; } }
+    public string panelType { get { return PanelType; } }
     public string des { get { return Des; } }
     public int level { get { return Level; } }
     public int expense { get { return Expense; } }
@@ -1005,16 +1015,16 @@ public class LogObject
 {
     private int ID;
     private LogType Type;
-    private int CountHour;
+    private int StandardTime;
     private string Text;
     private int Value1;
     private int Value2;
     private int Value3;
-    public LogObject(int id, LogType type, int countHour, string text, int value1, int value2, int value3)
+    public LogObject(int id, LogType type, int standardTime, string text, int value1, int value2, int value3)
     {
         this.ID = id;
         this.Type = type;
-        this.CountHour = countHour;
+        this.StandardTime = standardTime;
         this.Text = text;
         this.Value1 = value1;
         this.Value2 = value2;
@@ -1022,7 +1032,7 @@ public class LogObject
     }
     public int id { get { return ID; } }
     public LogType type { get { return Type; } }
-    public int countHour { get { return CountHour; } }
+    public int standardTime { get { return StandardTime; } }
     public string text { get { return Text; } }
     public int value1 { get { return Value1; } }
     public int value2 { get { return Value2; } }

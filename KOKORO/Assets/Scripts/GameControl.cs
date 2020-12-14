@@ -22,6 +22,7 @@ public class GameControl : MonoBehaviour
     public int heroIndex = 0;
     public int itemIndex = 0;
     public int buildingIndex = 0;
+    public bool[] buildingUnlock=new bool[73] ; 
     public int logIndex = 0;
     public string playerName = "AAA";
     public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
@@ -43,6 +44,7 @@ public class GameControl : MonoBehaviour
         public int heroIndex = 0;
         public int itemIndex = 0;
         public int buildingIndex = 0;
+        public bool[] buildingUnlock = new bool[73];
         public int logIndex = 0;
         public string playerName = "";
         public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
@@ -71,6 +73,7 @@ public class GameControl : MonoBehaviour
         t.heroIndex = this.heroIndex;
         t.itemIndex = this.itemIndex;
         t.buildingIndex = this.buildingIndex;
+        t.buildingUnlock = this.buildingUnlock;
         t.logIndex = this.logIndex;
     t.playerName = this.playerName;
         t.itemDic = this.itemDic;
@@ -106,6 +109,7 @@ public class GameControl : MonoBehaviour
             this.heroIndex = t1.heroIndex;
             this.itemIndex = t1.itemIndex;
             this.buildingIndex = t1.buildingIndex;
+            this.buildingUnlock = t1.buildingUnlock;
             this.logIndex = t1.logIndex;
             this.playerName = t1.playerName;
             this.itemDic = t1.itemDic;
@@ -363,60 +367,61 @@ public class GameControl : MonoBehaviour
 
         int probabilityCount = DataManager.cCreateHeroRankDict[attr].Probability.GetLength(1);
 
-        //Debug.Log("  probabilityCount=" + probabilityCount );
         int ran = Random.Range(0, 100);
         int lj = 0;
         for (int i = 0; i < probabilityCount; i++)
         {
-            //Debug.Log("pid=" + pid + "  i=" + i + "  probabilityCount=" + probabilityCount + "  attr=" + attr.ToString());
-            // Debug.Log("DataManager.cCreateHeroRankDict[attr].Probability[pid, i]=" + DataManager.cCreateHeroRankDict[attr].Probability[pid, i]);
-            //Debug.Log("DataManager.cCreateHeroRankDict[attr].Probability[pid, i - 1]=" + DataManager.cCreateHeroRankDict[attr].Probability[pid, i - 1]);
             lj += DataManager.cCreateHeroRankDict[attr].Probability[rank, i];
 
             if (ran < lj)
             {
-                //Debug.Log("符合  DataManager.cCreateHeroRankDict[attr].Probability[rank, i]=" + DataManager.cCreateHeroRankDict[attr].Probability[rank, i]);
-                //Debug.Log("符合   DataManager.cCreateHeroRankDict[attr].Value1[i]=" + DataManager.cCreateHeroRankDict[attr].Value1[i]);
-                //Debug.Log("符合   DataManager.cCreateHeroRankDict[attr].Value2[i=" + DataManager.cCreateHeroRankDict[attr].Value2[i]);
                 return Random.Range(DataManager.cCreateHeroRankDict[attr].Value1[i], DataManager.cCreateHeroRankDict[attr].Value2[i]);
-
-            }
-            else
-            {
-                //Debug.Log("rank=" + rank + "  i=" + i + "  attr=" + attr.ToString());
-                //Debug.Log("不符合  Probability[rank, i]=" + DataManager.cCreateHeroRankDict[attr].Probability[rank, i]+ " Value1[i]=" + DataManager.cCreateHeroRankDict[attr].Value1[i]+ " Value2[i]=" + DataManager.cCreateHeroRankDict[attr].Value2[i]);
-
             }
         }
        
         return 0;
     }
 
+    public ItemObject GenerateItemByRandom(int itemID)
+    {
+        //随机提升等级，每个等级提升基础数据5%，上限5
+        int upLevel = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            int ran = Random.Range(0, 100);
+            if (ran < 20)
+            {
+                upLevel++;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        List<ItemAttribute> attrList = new List<ItemAttribute> { };
+
+        if (DataManager.mItemDict[itemID].AtkMax != 0){attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMax * (1f + upLevel * 0.05f)))); }
+        if (DataManager.mItemDict[itemID].AtkMin != 0){attrList.Add(new ItemAttribute(Attribute.AtkMin, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMin * (1f + upLevel * 0.05f))));}
+        if (DataManager.mItemDict[itemID].MAtkMax != 0){attrList.Add(new ItemAttribute(Attribute.MAtkMax, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].MAtkMax * (1f + upLevel * 0.05f))));}
+        if (DataManager.mItemDict[itemID].MAtkMin != 0){attrList.Add(new ItemAttribute(Attribute.MAtkMin, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].MAtkMin * (1f + upLevel * 0.05f))));}
+        
+        if (DataManager.mItemDict[itemID].AtkMax != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMax * (1f + upLevel * 0.05f)))); }
+        if (DataManager.mItemDict[itemID].AtkMax != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMax * (1f + upLevel * 0.05f)))); }
+
+        if (DataManager.mItemDict[itemID].AtkMax != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMax * (1f + upLevel * 0.05f)))); }
+        if (DataManager.mItemDict[itemID].AtkMax != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMax * (1f + upLevel * 0.05f)))); }
+
+        return null;
+    }
+
+
 
     public void Build( int buildingId)
     {
        // Debug.Log(" Build（） buildingId=" + buildingId);
-        if (DataManager.mBuildingDict[buildingId].NeedWood > districtDic[nowCheckingDistrictID].rStuffWood)
-        {
-            CreateLog(LogType.Info, "[系统]木料不足，还缺" + (DataManager.mBuildingDict[buildingId].NeedWood - districtDic[nowCheckingDistrictID].rStuffWood).ToString(), -1, -1, -1);
-            return;
-        }
-        if (DataManager.mBuildingDict[buildingId].NeedStone > districtDic[nowCheckingDistrictID].rStuffStone)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[buildingId].NeedMetal > districtDic[nowCheckingDistrictID].rStuffMetal)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[buildingId].NeedGold > gold)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[buildingId].Grid > districtDic[nowCheckingDistrictID].gridEmpty)
-        {
-            return;
-        }
+
+
         if (DataManager.mBuildingDict[buildingId].NatureGrass > districtDic[nowCheckingDistrictID].totalGrass- districtDic[nowCheckingDistrictID].usedGrass)
         {
             return;
@@ -497,7 +502,7 @@ public class GameControl : MonoBehaviour
 
 
         Debug.Log("buildingDic.count="+ buildingDic.Count+"  buildingIndex=" + buildingIndex);
-        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, DataManager.mBuildingDict[buildingId].MapPic, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, true, grid, new List<int> { },
+        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, DataManager.mBuildingDict[buildingId].MapPic, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, true, grid, new List<int> { },
             DataManager.mBuildingDict[buildingId].NatureGrass, DataManager.mBuildingDict[buildingId].NatureWood, DataManager.mBuildingDict[buildingId].NatureWater, DataManager.mBuildingDict[buildingId].NatureStone, DataManager.mBuildingDict[buildingId].NatureMetal,
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark));

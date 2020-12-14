@@ -15,7 +15,11 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             btn.onClick.AddListener(delegate () { gc.Build(index); });
         }
+        else if (labelType == LabelType.BuildingInDistrictMain)
+        {
+            btn.onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index],  686,-88,-45); });
         }
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

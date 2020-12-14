@@ -113,11 +113,33 @@ public class GameControlInNewGame : MonoBehaviour
         gc.heroIndex = 6;
         for (int i = 0; i < 7; i++)
         {
-            gc.districtDic[i] = new DistrictObject(i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des, temp_districtID == i, 1, 10, 20, DataManager.mDistrictDict[i].StartGrid[0], 0,
+            gc.districtDic[i] = new DistrictObject(i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des, temp_districtID == i, 1, 10, 20,0, DataManager.mDistrictDict[i].StartGrid[0], 0,
                 DataManager.mDistrictDict[i].Grass[0], DataManager.mDistrictDict[i].Wood[0], DataManager.mDistrictDict[i].Water[0], DataManager.mDistrictDict[i].Stone[0], DataManager.mDistrictDict[i].Metal[0],
                 0, 0, 0, 0, 0, new List<int> { }, temp_districtID == i? new List<int> { 0,1,2,3,4,5}: new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
                 0, 0, 0, 0, 0, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 5000, 5000, 50);
         }
+
+        gc.buildingUnlock[0]= true;
+        gc.buildingUnlock[3]= true;
+        gc.buildingUnlock[9]= true;
+        gc.buildingUnlock[10]= true;
+        gc.buildingUnlock[11]= true;
+        gc.buildingUnlock[12]= true;
+        gc.buildingUnlock[13]= true;
+        gc.buildingUnlock[14]= true;
+        gc.buildingUnlock[15]= true;
+        gc.buildingUnlock[16]= true;
+        gc.buildingUnlock[19]= true;
+        gc.buildingUnlock[22]= true;
+        gc.buildingUnlock[27]= true;
+        gc.buildingUnlock[32]= true;
+        gc.buildingUnlock[37]= true;
+        gc.buildingUnlock[42]= true;
+        gc.buildingUnlock[47]= true;
+        gc.buildingUnlock[48]= true;
+        gc.buildingUnlock[49]= true;
+        gc.buildingUnlock[65]= true;
+
         gc.gold = 5000;
         gc.nowCheckingDistrictID = temp_districtID;
         gc.Save();

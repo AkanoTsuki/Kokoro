@@ -45,7 +45,7 @@ public class BuildPanel : BasePanel
         List <BuildingPrototype> temp = new List<BuildingPrototype> { };
         foreach (KeyValuePair<int, BuildingPrototype> kvp in DataManager.mBuildingDict)
         {
-            if (DataManager.mBuildingDict[kvp.Key].Level == 1)
+            if (DataManager.mBuildingDict[kvp.Key].Level == 1&&gc.buildingUnlock[kvp.Key])
             {
                 temp.Add(DataManager.mBuildingDict[kvp.Key]);
             }
@@ -65,7 +65,8 @@ public class BuildPanel : BasePanel
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/BuildingPic/" + temp[i].MainPic);
             go.transform.GetChild(1).GetComponent<Text>().text = temp[i].Name+ CheckNeedToStr("grid", temp[i].Grid) ;
-            go.transform.GetChild(2).GetComponent<Text>().text =  CheckNeedToStr("wood", temp[i].NeedWood) + CheckNeedToStr("stone", temp[i].NeedStone)  + CheckNeedToStr("metal", temp[i].NeedMetal) + CheckNeedToStr("gold", temp[i].NeedGold) + "\n☀维持费 " + temp[i].Expense + "金/月\n" + temp[i].Des ;
+            go.transform.GetChild(2).GetComponent<Text>().text =  CheckNeedToStr("wood", temp[i].NeedWood) + CheckNeedToStr("stone", temp[i].NeedStone)  + CheckNeedToStr("metal", temp[i].NeedMetal) + CheckNeedToStr("gold", temp[i].NeedGold) + 
+                "\n☀维持费 " + temp[i].Expense + "金/月\n" + temp[i].Des ;
 
             if (!CheckStuff(temp[i].Grid <= gc.districtDic[gc.nowCheckingDistrictID].gridEmpty,
                 temp[i].NeedWood<= gc.districtDic[gc.nowCheckingDistrictID].rStuffWood, 
@@ -93,7 +94,7 @@ public class BuildPanel : BasePanel
         switch (type)
         {
             case "grid": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].gridEmpty ? "red>" : "white>") + "[占地 " + value + "]</color>";
-            case "wood":return  " <color="+ (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffWood ? "red>" : "white>" )+ "木材" + value + "</color>" ;
+            case "wood":return  "<color="+ (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffWood ? "red>" : "white>" )+ "木材" + value + "</color>" ;
             case "stone": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffStone ? "red>" : "white>") + "石料" + value + "</color>";
             case "metal": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal ? "red>" : "white>") + "金属" + value + "</color>";
             case "gold": return " <color=" + (value > gc.gold ? "red>" : "white>") + "金币" + value + "</color>";

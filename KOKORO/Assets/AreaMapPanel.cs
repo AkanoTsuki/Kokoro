@@ -71,13 +71,23 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public void AddIconByGrid(int districtID,int buildingID,int gridX, int gridY)
     {
         Debug.Log("AddIconByGrid() districtID=" + districtID + " buildingID=" + buildingID);
+        
         string str = "";
-        switch (districtID)
+        if (buildingID == 59 || buildingID == 60 || buildingID == 61 ||
+            buildingID == 62 || buildingID == 63 || buildingID == 64)
         {
-            case 2: str = "Snow_"; break;
-            case 4: str = "Sand_"; break;
-            default: str = "Red_"; break;
+            str = "BuildingPic/"+ gc.buildingDic[buildingID].name;
         }
+        else
+        {
+            switch (districtID)
+            {
+                case 2: str = "BuildingMap/Snow_"; break;
+                case 4: str = "BuildingMap/Sand_"; break;
+                default: str = "BuildingMap/Red_"; break;
+            }
+        }
+        
 
 
         GameObject go;
@@ -85,7 +95,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
         go = Instantiate(Resources.Load("Prefab/UILabel/Label_MapGrid")) as GameObject;
         go.transform.SetParent(buildingGo.transform);
         go.GetComponent<RectTransform>().anchoredPosition = new Vector3(gridX * 16f, gridY * -16f, 0f);
-        go.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/BuildingMap/" + str + gc.buildingDic[buildingID].mapPic);
+        go.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/" + str + gc.buildingDic[buildingID].mapPic);
         go.name = gridX +","+ gridY;
 
     }
