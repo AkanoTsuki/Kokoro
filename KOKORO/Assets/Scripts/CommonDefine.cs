@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 //库存资源类型
 public enum StuffType
 {
-Cereal,
-Vegetable,
-Fruit,
-Meat,
-Fish,
-Wood,
-Stone,
-Metal,
-Leather,
-Cloth,
-Twine,
-Bone,
+    Cereal,
+    Vegetable,
+    Fruit,
+    Meat,
+    Fish,
+    Wood,
+    Stone,
+    Metal,
+    Leather,
+    Cloth,
+    Twine,
+    Bone,
 }
 
 //交互小标签类型
@@ -55,8 +53,11 @@ public enum HeroType
 public enum ItemTypeBig
 {
     Weapon,
-    Armor
+    Armor,
+    Jewelry,
+    Subhand
 }
+
 public enum ItemTypeSmall
 {
     Sword,
@@ -71,11 +72,16 @@ public enum ItemTypeSmall
     BodyL,
     HandH,
     HandL,
-    LowerH,
-    LowerL,
+    BackH,
+    BackL,
     FootH,
-    FootL
+    FootL,
+    Neck,
+    Finger,
+    Shield,
+    Dorlach
 }
+
 public enum Attribute
 {
     Hp,
@@ -133,7 +139,6 @@ public enum AttributeSource
     LemmaAdd
 }
 
-
 public enum LogType
 {
     Info,
@@ -171,45 +176,45 @@ public class ItemPrototype
     public int ID;
     public string Name;
     public string Pic;
-    public string TypeBig;
-    public string TypeSmall;
+    public ItemTypeBig TypeBig;
+    public ItemTypeSmall TypeSmall;
     public string Des;
     public int Cost;
-    public int Rank;
+    public byte Rank;
     public int Hp;
     public int Mp;
-    public int HpRenew;
-    public int MpRenew;
-    public int AtkMin;
-    public int AtkMax;
-    public int MAtkMin;
-    public int MAtkMax;
-    public int Def;
-    public int MDef;
-    public int Hit;
-    public int Dod;
-    public int CriR;
-    public int CriD;
-    public int Spd;
-    public int WindDam;
-    public int FireDam;
-    public int WaterDam;
-    public int GroundDam;
-    public int LightDam;
-    public int DarkDam;
-    public int WindRes;
-    public int FireRes;
-    public int WaterRes;
-    public int GroundRes;
-    public int LightRes;
-    public int DarkRes;
-    public int DizzyRes;
-    public int ConfusionRes;
-    public int PoisonRes;
-    public int SleepRes;
-    public int GoldGet;
-    public int ExpGet;
-    public int ItemGet;
+    public short HpRenew;
+    public short MpRenew;
+    public short AtkMin;
+    public short AtkMax;
+    public short MAtkMin;
+    public short MAtkMax;
+    public short Def;
+    public short MDef;
+    public short Hit;
+    public short Dod;
+    public short CriR;
+    public short CriD;
+    public short Spd;
+    public short WindDam;
+    public short FireDam;
+    public short WaterDam;
+    public short GroundDam;
+    public short LightDam;
+    public short DarkDam;
+    public short WindRes;
+    public short FireRes;
+    public short WaterRes;
+    public short GroundRes;
+    public short LightRes;
+    public short DarkRes;
+    public short DizzyRes;
+    public short ConfusionRes;
+    public short PoisonRes;
+    public short SleepRes;
+    public byte GoldGet;
+    public byte ExpGet;
+    public byte ItemGet;
 }
 
 //物品实例
@@ -219,12 +224,12 @@ public class ItemObject
     private int PrototypeID;
     private string Name;
     private string Pic;
-    private int Rank;
-    private int Level;
+    private byte Rank;
+    private byte Level;
     private List<ItemAttribute> Attr;
     private string Des;
     private int Cost;
-    public ItemObject(int objectID, int prototypeID, string name, string pic, int rank, int level, List<ItemAttribute> attr, string des, int cost)
+    public ItemObject(int objectID, int prototypeID, string name, string pic, byte rank, byte level, List<ItemAttribute> attr, string des, int cost)
     {
         this.ObjectID = objectID;
         this.PrototypeID = prototypeID;
@@ -240,8 +245,8 @@ public class ItemObject
     public int prototypeID { get { return PrototypeID; } }
     public string name { get { return Name; } }
     public string pic { get { return Pic; } }
-    public int rank { get { return Rank; } }
-    public int level { get { return Level; } set { Level = value; } }
+    public byte rank { get { return Rank; } }
+    public byte level { get { return Level; } set { Level = value; } }
     public List<ItemAttribute> attr { get { return Attr; } }
     public string des { get { return Des; } }
     public int cost { get { return Cost; } }
@@ -257,200 +262,196 @@ public class SkillPrototype
     public string Pic;
     public List<int> Element;
     public string Des;
-    public int Mp;
-    public int Probability;
-    public int Max;
+    public short Mp;//消耗魔法
+    public byte Probability;
+    public byte Max;
     public bool FlagDamage;
-    public int Atk;
-    public int MAtk;
-    public int Sword;
-    public int Axe;
-    public int Spear;
-    public int Hammer;
-    public int Bow;
-    public int Staff;
-    public int Wind;
-    public int Fire;
-    public int Water;
-    public int Ground;
-    public int Light;
-    public int Dark;
+    public short Atk;
+    public short MAtk;
+    public short Sword;
+    public short Axe;
+    public short Spear;
+    public short Hammer;
+    public short Bow;
+    public short Staff;
+    public short Wind;
+    public short Fire;
+    public short Water;
+    public short Ground;
+    public short Light;
+    public short Dark;
     public bool FlagDebuff;
-    public int Dizzy;
-    public int DizzyValue;
-    public int Confusion;
-    public int ConfusionValue;
-    public int Poison;
-    public int PoisonValue;
-    public int Sleep;
-    public int SleepValue;
-    public int Cure;
+    public short Dizzy;
+    public short DizzyValue;
+    public short Confusion;
+    public short ConfusionValue;
+    public short Poison;
+    public short PoisonValue;
+    public short Sleep;
+    public short SleepValue;
+    public short Cure;
     public bool FlagBuff;
-    public int UpAtk;
-    public int UpMAtk;
-    public int UpDef;
-    public int UpMDef;
-    public int UpHit;
-    public int UpDod;
-    public int UpCriD;
-    public int UpWindDam;
-    public int UpFireDam;
-    public int UpWaterDam;
-    public int UpGroundDam;
-    public int UpLightDam;
-    public int UpDarkDam;
-    public int UpWindRes;
-    public int UpFireRes;
-    public int UpWaterRes;
-    public int UpGroundRes;
-    public int UpLightRes;
-    public int UpDarkRes;
+    public short UpAtk;
+    public short UpMAtk;
+    public short UpDef;
+    public short UpMDef;
+    public short UpHit;
+    public short UpDod;
+    public short UpCriD;
+    public short UpWindDam;
+    public short UpFireDam;
+    public short UpWaterDam;
+    public short UpGroundDam;
+    public short UpLightDam;
+    public short UpDarkDam;
+    public short UpWindRes;
+    public short UpFireRes;
+    public short UpWaterRes;
+    public short UpGroundRes;
+    public short UpLightRes;
+    public short UpDarkRes;
 }
 
 //英雄原型T
 [System.Serializable]
 public class CreateHeroType
 {
-    public int ID;
+    public short ID;
     public string Name;
     public string Color;
-    public int Hp;//级别 0 1 2
-    public int Mp;
-    public int HpRenew;
-    public int MpRenew;
-    public int AtkMin;
-    public int AtkMax;
-    public int MAtkMin;
-    public int MAtkMax;
-    public int Def;
-    public int MDef;
-    public int Hit;
-    public int Dod;
-    public int CriR;
-    public int CriD;
-    public int Spd;
-    public int WindDam;
-    public int FireDam;
-    public int WaterDam;
-    public int GroundDam;
-    public int LightDam;
-    public int DarkDam;
-    public int WindRes;
-    public int FireRes;
-    public int WaterRes;
-    public int GroundRes;
-    public int LightRes;
-    public int DarkRes;
-    public int DizzyRes;
-    public int ConfusionRes;
-    public int PoisonRes;
-    public int SleepRes;
-    public int GoldGet;
-    public int ExpGet;
-    public int ItemGet;
-    public int WorkPlanting;
-    public int WorkFeeding;
-    public int WorkFishing;
-    public int WorkHunting;
-    public int WorkMining;
-    public int WorkQuarrying;
-    public int WorkFelling;
-    public int WorkBuild;
-    public int WorkMakeWeapon;
-    public int WorkMakeArmor;
-    public int WorkMakeJewelry;
-    public int WorkSundry;
-
+    public byte Hp;//级别 0 1 2
+    public byte Mp;
+    public byte HpRenew;
+    public byte MpRenew;
+    public byte AtkMin;
+    public byte AtkMax;
+    public byte MAtkMin;
+    public byte MAtkMax;
+    public byte Def;
+    public byte MDef;
+    public byte Hit;
+    public byte Dod;
+    public byte CriR;
+    public byte CriD;
+    public byte Spd;
+    public byte WindDam;
+    public byte FireDam;
+    public byte WaterDam;
+    public byte GroundDam;
+    public byte LightDam;
+    public byte DarkDam;
+    public byte WindRes;
+    public byte FireRes;
+    public byte WaterRes;
+    public byte GroundRes;
+    public byte LightRes;
+    public byte DarkRes;
+    public byte DizzyRes;
+    public byte ConfusionRes;
+    public byte PoisonRes;
+    public byte SleepRes;
+    public byte GoldGet;
+    public byte ExpGet;
+    public byte ItemGet;
+    public byte WorkPlanting;
+    public byte WorkFeeding;
+    public byte WorkFishing;
+    public byte WorkHunting;
+    public byte WorkMining;
+    public byte WorkQuarrying;
+    public byte WorkFelling;
+    public byte WorkBuild;
+    public byte WorkMakeWeapon;
+    public byte WorkMakeArmor;
+    public byte WorkMakeJewelry;
+    public byte WorkSundry;
 }
 
 //英雄原型
 [System.Serializable]
 public class HeroPrototype
 {
-    public int ID;
-
+    public short ID;
     public string Name;
     public string PicMan;
     public string PicWoman;
     public int Hp;
     public int Mp;
-    public int HpRenew;
-    public int MpRenew;
-    public int AtkMin;
-    public int AtkMax;
-    public int MAtkMin;
-    public int MAtkMax;
-    public int Def;
-    public int MDef;
-    public int Hit;
-    public int Dod;
-    public int CriR;
-    public int CriD;
+    public short HpRenew;
+    public short MpRenew;
+    public short AtkMin;
+    public short AtkMax;
+    public short MAtkMin;
+    public short MAtkMax;
+    public short Def;
+    public short MDef;
+    public short Hit;
+    public short Dod;
+    public short CriR;
+    public short CriD;
 
-    public int HpGD;
-    public int MpGD;
-    public int HpRenewGD;
-    public int MpRenewGD;
-    public int AtkMinGD;
-    public int AtkMaxGD;
-    public int MAtkMinGD;
-    public int MAtkMaxGD;
-    public int DefGD;
-    public int MDefGD;
-    public int HitGD;
-    public int DodGD;
-    public int CriRGD;
-    public int CriDGD;
+    public short HpGD;
+    public short MpGD;
+    public short HpRenewGD;
+    public short MpRenewGD;
+    public short AtkMinGD;
+    public short AtkMaxGD;
+    public short MAtkMinGD;
+    public short MAtkMaxGD;
+    public short DefGD;
+    public short MDefGD;
+    public short HitGD;
+    public short DodGD;
+    public short CriRGD;
+    public short CriDGD;
 
-    public int HpGU;
-    public int MpGU;
-    public int HpRenewGU;
-    public int MpRenewGU;
-    public int AtkMinGU;
-    public int AtkMaxGU;
-    public int MAtkMinGU;
-    public int MAtkMaxGU;
-    public int DefGU;
-    public int MDefGU;
-    public int HitGU;
-    public int DodGU;
-    public int CriRGU;
-    public int CriDGU;
+    public short HpGU;
+    public short MpGU;
+    public short HpRenewGU;
+    public short MpRenewGU;
+    public short AtkMinGU;
+    public short AtkMaxGU;
+    public short MAtkMinGU;
+    public short MAtkMaxGU;
+    public short DefGU;
+    public short MDefGU;
+    public short HitGU;
+    public short DodGU;
+    public short CriRGU;
+    public short CriDGU;
 
-    public int Spd;
-    public int WindDam;
-    public int FireDam;
-    public int WaterDam;
-    public int GroundDam;
-    public int LightDam;
-    public int DarkDam;
-    public int WindRes;
-    public int FireRes;
-    public int WaterRes;
-    public int GroundRes;
-    public int LightRes;
-    public int DarkRes;
-    public int DizzyRes;
-    public int ConfusionRes;
-    public int PoisonRes;
-    public int SleepRes;
-    public int GoldGet;
-    public int ExpGet;
-    public int ItemGet;
-    public int WorkPlanting;
-    public int WorkFeeding;
-    public int WorkFishing;
-    public int WorkHunting;
-    public int WorkMining;
-    public int WorkQuarrying;
-    public int WorkFelling;
-    public int WorkBuild;
-    public int WorkMakeWeapon;
-    public int WorkMakeArmor;
-    public int WorkMakeJewelry;
-    public int WorkSundry;
-
-
+    public short Spd;
+    public short WindDam;
+    public short FireDam;
+    public short WaterDam;
+    public short GroundDam;
+    public short LightDam;
+    public short DarkDam;
+    public short WindRes;
+    public short FireRes;
+    public short WaterRes;
+    public short GroundRes;
+    public short LightRes;
+    public short DarkRes;
+    public short DizzyRes;
+    public short ConfusionRes;
+    public short PoisonRes;
+    public short SleepRes;
+    public byte GoldGet;
+    public byte ExpGet;
+    public byte ItemGet;
+    public byte WorkPlanting;
+    public byte WorkFeeding;
+    public byte WorkFishing;
+    public byte WorkHunting;
+    public byte WorkMining;
+    public byte WorkQuarrying;
+    public byte WorkFelling;
+    public byte WorkBuild;
+    public byte WorkMakeWeapon;
+    public byte WorkMakeArmor;
+    public byte WorkMakeJewelry;
+    public byte WorkSundry;
 }
 
 //英雄实例
@@ -459,79 +460,80 @@ public class HeroObject
     
     private int ID;
     private string Name;
-    private int Type;//来源类型“herotype表”
-    private int Level;
+    private short Type;//来源类型“herotype表”
+    private short Level;
     private int Exp;
-    private int Sex;
+    private byte Sex;
     private string Pic;
-    private int Hp;//级别 0 1 2
+    private int Hp;
     private int Mp;
-    private int HpRenew;
-    private int MpRenew;
-    private int AtkMin;
-    private int AtkMax;
-    private int MAtkMin;
-    private int MAtkMax;
-    private int Def;
-    private int MDef;
-    private int Hit;
-    private int Dod;
-    private int CriR;
-    private int CriD;
-    private int Spd;
-    private int WindDam;
-    private int FireDam;
-    private int WaterDam;
-    private int GroundDam;
-    private int LightDam;
-    private int DarkDam;
-    private int WindRes;
-    private int FireRes;
-    private int WaterRes;
-    private int GroundRes;
-    private int LightRes;
-    private int DarkRes;
-    private int DizzyRes;
-    private int ConfusionRes;
-    private int PoisonRes;
-    private int SleepRes;
-    private int GoldGet;
-    private int ExpGet;
-    private int ItemGet;
-    private int WorkPlanting;
-    private int WorkFeeding;
-    private int WorkFishing;
-    private int WorkHunting;
-    private int WorkMining;
-    private int WorkQuarrying;
-    private int WorkFelling;
-    private int WorkBuild;
-    private int WorkMakeWeapon;
-    private int WorkMakeArmor;
-    private int WorkMakeJewelry;
-    private int WorkSundry;
+    private short HpRenew;
+    private short MpRenew;
+    private short AtkMin;
+    private short AtkMax;
+    private short MAtkMin;
+    private short MAtkMax;
+    private short Def;
+    private short MDef;
+    private short Hit;
+    private short Dod;
+    private short CriR;
+    private short CriD;
+    private short Spd;
+    private short WindDam;
+    private short FireDam;
+    private short WaterDam;
+    private short GroundDam;
+    private short LightDam;
+    private short DarkDam;
+    private short WindRes;
+    private short FireRes;
+    private short WaterRes;
+    private short GroundRes;
+    private short LightRes;
+    private short DarkRes;
+    private short DizzyRes;
+    private short ConfusionRes;
+    private short PoisonRes;
+    private short SleepRes;
+    private byte GoldGet;
+    private byte ExpGet;
+    private byte ItemGet;
+    private byte WorkPlanting;
+    private byte WorkFeeding;
+    private byte WorkFishing;
+    private byte WorkHunting;
+    private byte WorkMining;
+    private byte WorkQuarrying;
+    private byte WorkFelling;
+    private byte WorkBuild;
+    private byte WorkMakeWeapon;
+    private byte WorkMakeArmor;
+    private byte WorkMakeJewelry;
+    private byte WorkSundry;
     private int EquipWeapon;
+    private int EquipSubhand;
     private int EquipHead;
     private int EquipBody;
     private int EquipHand;
-    private int EquipLower;
+    private int EquipBack;
     private int EquipFoot;
     private int EquipNeck;
     private int EquipFinger1;
     private int EquipFinger2;
     private int WorkerInBuilding;
-    public HeroObject(int id, string name, int type,  int level, int exp,int sex,string pic,
-        int hp, int mp, int hpRenew, int mpRenew,
-        int atkMin, int atkMax, int mAtkMin, int mAtkMax, int def, int mDef,
-        int hit, int dod, int criR, int criD, int spd,
-        int windDam, int fireDam, int waterDam, int groundDam, int LightDam, int darkDam,
-        int windRes, int fireRes, int waterRes, int groundRes, int LightRes, int darkRes,
-        int dizzyRes, int confusionRes, int poisonRes, int sleepRes,
-        int goldGet, int expGet, int itemGet,
-        int workPlanting, int workFeeding, int workFishing, int workHunting, int workMining, int workQuarrying, int workFelling, int workBuild,
-        int workMakeWeapon, int workMakeArmor, int workMakeJewelry,
-        int workSundry,
-        int equipWeapon, int equipHead, int equipBody, int equipHand, int equipLower, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2,int workerInBuilding)
+    public HeroObject(int id, string name, short type, short level, int exp,byte sex,string pic,
+        int hp, int mp, short hpRenew, short mpRenew,
+        short atkMin, short atkMax, short mAtkMin, short mAtkMax, short def, short mDef,
+        short hit, short dod, short criR, short criD, short spd,
+        short windDam, short fireDam, short waterDam, short groundDam, short LightDam, short darkDam,
+        short windRes, short fireRes, short waterRes, short groundRes, short LightRes, short darkRes,
+        short dizzyRes, short confusionRes, short poisonRes, short sleepRes,
+        byte goldGet, byte expGet, byte itemGet,
+        byte workPlanting, byte workFeeding, byte workFishing, byte workHunting, byte workMining, byte workQuarrying, byte workFelling, byte workBuild,
+        byte workMakeWeapon, byte workMakeArmor, byte workMakeJewelry,
+        byte workSundry,
+        int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2,int workerInBuilding)
     {
         this.ID = id;
         this.Name = name;
@@ -587,10 +589,11 @@ public class HeroObject
         this.WorkMakeJewelry = workMakeJewelry;
         this.WorkSundry = workSundry;
         this.EquipWeapon = equipWeapon;
+        this.EquipSubhand = equipSubhand;
         this.EquipHead = equipHead;
         this.EquipBody = equipBody;
         this.EquipHand = equipHand;
-        this.EquipLower = equipLower;
+        this.EquipBack = equipBack;
         this.EquipFoot = equipFoot;
         this.EquipNeck = equipNeck;
         this.EquipFinger1 = equipFinger1;
@@ -599,62 +602,63 @@ public class HeroObject
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } set { Name = value; } }
-    public int type { get { return Type; } }
-    public int level { get { return Level; } set { Level = value; } }
+    public short type { get { return Type; } }
+    public short level { get { return Level; } set { Level = value; } }
     public int exp { get { return Exp; } set { Exp = value; } }
-    public int sex { get { return Sex; } set { Sex = value; } }
+    public byte sex { get { return Sex; } set { Sex = value; } }
     public string pic { get { return Pic; } set { Pic = value; } }
     public int hp { get { return Hp; } set { Hp = value; } }
     public int mp { get { return Mp; } set { Mp = value; } }
-    public int hpRenew { get { return HpRenew; } set { HpRenew = value; } }
-    public int mpRenew { get { return MpRenew; } set { MpRenew = value; } }
-    public int atkMin { get { return AtkMin; } set { AtkMin = value; } }
-    public int atkMax { get { return AtkMax; } set { AtkMax = value; } }
-    public int mAtkMin { get { return MAtkMin; } set { MAtkMin = value; } }
-    public int mAtkMax { get { return MAtkMax; } set { MAtkMax = value; } }
-    public int def { get { return Def; } set { Def = value; } }
-    public int mDef { get { return MDef; } set { MDef = value; } }
-    public int hit { get { return Hit; } set { Hit = value; } }
-    public int dod { get { return Dod; } set { Dod = value; } }
-    public int criR { get { return CriR; } set { CriR = value; } }
-    public int criD { get { return CriD; } set { CriD = value; } }
-    public int spd { get { return Spd; } set { Spd = value; } }
-    public int windDam { get { return WindDam; } set { WindDam = value; } }
-    public int fireDam { get { return FireDam; } set { FireDam = value; } }
-    public int waterDam { get { return WaterDam; } set { WaterDam = value; } }
-    public int groundDam { get { return GroundDam; } set { GroundDam = value; } }
-    public int lightDam { get { return LightDam; } set { LightDam = value; } }
-    public int darkDam { get { return DarkDam; } set { DarkDam = value; } }
-    public int windRes { get { return WindRes; } set { WindRes = value; } }
-    public int fireRes { get { return FireRes; } set { FireRes = value; } }
-    public int waterRes { get { return WaterRes; } set { WaterRes = value; } }
-    public int groundRes { get { return GroundRes; } set { GroundRes = value; } }
-    public int lightRes { get { return LightRes; } set { LightRes = value; } }
-    public int darkRes { get { return DarkRes; } set { DarkRes = value; } }
-    public int dizzyRes { get { return DizzyRes; } set { DizzyRes = value; } }
-    public int confusionRes { get { return ConfusionRes; } set { ConfusionRes = value; } }
-    public int poisonRes { get { return PoisonRes; } set { PoisonRes = value; } }
-    public int sleepRes { get { return SleepRes; } set { SleepRes = value; } }
-    public int goldGet { get { return GoldGet; } set { GoldGet = value; } }
-    public int expGet { get { return ExpGet; } set { ExpGet = value; } }
-    public int itemGet { get { return ItemGet; } set { ItemGet = value; } }
-    public int workPlanting { get { return WorkPlanting; } set { WorkPlanting = value; } }
-    public int workFeeding { get { return WorkFeeding; } set { WorkFeeding = value; } }
-    public int workFishing { get { return WorkFishing; } set { WorkFishing = value; } }
-    public int workHunting { get { return WorkHunting; } set { WorkHunting = value; } }
-    public int workMining { get { return WorkMining; } set { WorkMining = value; } }
-    public int workQuarrying { get { return WorkQuarrying; } set { WorkQuarrying = value; } }
-    public int workFelling { get { return WorkFelling; } set { WorkFelling = value; } }
-    public int workBuild { get { return WorkBuild; } set { WorkBuild = value; } }
-    public int workMakeWeapon { get { return WorkMakeWeapon; } set { WorkMakeWeapon = value; } }
-    public int workMakeArmor { get { return WorkMakeArmor; } set { WorkMakeArmor = value; } }
-    public int workMakeJewelry { get { return WorkMakeJewelry; } set { WorkMakeJewelry = value; } }
-    public int workSundry { get { return WorkSundry; } set { WorkSundry = value; } }
+    public short hpRenew { get { return HpRenew; } set { HpRenew = value; } }
+    public short mpRenew { get { return MpRenew; } set { MpRenew = value; } }
+    public short atkMin { get { return AtkMin; } set { AtkMin = value; } }
+    public short atkMax { get { return AtkMax; } set { AtkMax = value; } }
+    public short mAtkMin { get { return MAtkMin; } set { MAtkMin = value; } }
+    public short mAtkMax { get { return MAtkMax; } set { MAtkMax = value; } }
+    public short def { get { return Def; } set { Def = value; } }
+    public short mDef { get { return MDef; } set { MDef = value; } }
+    public short hit { get { return Hit; } set { Hit = value; } }
+    public short dod { get { return Dod; } set { Dod = value; } }
+    public short criR { get { return CriR; } set { CriR = value; } }
+    public short criD { get { return CriD; } set { CriD = value; } }
+    public short spd { get { return Spd; } set { Spd = value; } }
+    public short windDam { get { return WindDam; } set { WindDam = value; } }
+    public short fireDam { get { return FireDam; } set { FireDam = value; } }
+    public short waterDam { get { return WaterDam; } set { WaterDam = value; } }
+    public short groundDam { get { return GroundDam; } set { GroundDam = value; } }
+    public short lightDam { get { return LightDam; } set { LightDam = value; } }
+    public short darkDam { get { return DarkDam; } set { DarkDam = value; } }
+    public short windRes { get { return WindRes; } set { WindRes = value; } }
+    public short fireRes { get { return FireRes; } set { FireRes = value; } }
+    public short waterRes { get { return WaterRes; } set { WaterRes = value; } }
+    public short groundRes { get { return GroundRes; } set { GroundRes = value; } }
+    public short lightRes { get { return LightRes; } set { LightRes = value; } }
+    public short darkRes { get { return DarkRes; } set { DarkRes = value; } }
+    public short dizzyRes { get { return DizzyRes; } set { DizzyRes = value; } }
+    public short confusionRes { get { return ConfusionRes; } set { ConfusionRes = value; } }
+    public short poisonRes { get { return PoisonRes; } set { PoisonRes = value; } }
+    public short sleepRes { get { return SleepRes; } set { SleepRes = value; } }
+    public byte goldGet { get { return GoldGet; } set { GoldGet = value; } }
+    public byte expGet { get { return ExpGet; } set { ExpGet = value; } }
+    public byte itemGet { get { return ItemGet; } set { ItemGet = value; } }
+    public byte workPlanting { get { return WorkPlanting; } set { WorkPlanting = value; } }
+    public byte workFeeding { get { return WorkFeeding; } set { WorkFeeding = value; } }
+    public byte workFishing { get { return WorkFishing; } set { WorkFishing = value; } }
+    public byte workHunting { get { return WorkHunting; } set { WorkHunting = value; } }
+    public byte workMining { get { return WorkMining; } set { WorkMining = value; } }
+    public byte workQuarrying { get { return WorkQuarrying; } set { WorkQuarrying = value; } }
+    public byte workFelling { get { return WorkFelling; } set { WorkFelling = value; } }
+    public byte workBuild { get { return WorkBuild; } set { WorkBuild = value; } }
+    public byte workMakeWeapon { get { return WorkMakeWeapon; } set { WorkMakeWeapon = value; } }
+    public byte workMakeArmor { get { return WorkMakeArmor; } set { WorkMakeArmor = value; } }
+    public byte workMakeJewelry { get { return WorkMakeJewelry; } set { WorkMakeJewelry = value; } }
+    public byte workSundry { get { return WorkSundry; } set { WorkSundry = value; } }
     public int equipWeapon { get { return EquipWeapon; } set { equipWeapon = value; } }
+    public int equipSubhand { get { return EquipSubhand; } set { equipSubhand = value; } }
     public int equipHead { get { return EquipHead; } set { EquipHead = value; } }
     public int equipBody { get { return EquipBody; } set { EquipBody = value; } }
     public int equipHand { get { return EquipHand; } set { EquipHand = value; } }
-    public int equipLower { get { return EquipLower; } set { EquipLower = value; } }
+    public int equipBack { get { return EquipBack; } set { EquipBack = value; } }
     public int equipFoot { get { return EquipFoot; } set { EquipFoot = value; } }
     public int equipNeck { get { return EquipNeck; } set { EquipNeck = value; } }
     public int equipFinger1 { get { return EquipFinger1; } set { EquipFinger1 = value; } }
@@ -667,8 +671,8 @@ public class CreateHeroRank
 {
     public int[] Value1;
     public int[] Value2;
-    public int[,] Probability;
-    public CreateHeroRank(int[] value1,int[] value2,int[,] probability)
+    public byte[,] Probability;
+    public CreateHeroRank(int[] value1,int[] value2, byte[,] probability)
     {
         this.Value1 = value1;
         this.Value2 = value2;
@@ -676,31 +680,31 @@ public class CreateHeroRank
     }
     public int[] value1 { get { return Value1; } }
     public int[] value2 { get { return Value2; } }
-    public int[,] probability { get { return Probability; } }
+    public byte[,] probability { get { return Probability; } }
 }
 
 [System.Serializable]
 public class DistrictPrototype
 {
-    public int ID;
+    public short ID;
     public string Name;
     public string Des;
-    public int BigMapX;
-    public int BigMapY;
-    public int BigMapDesX;
-    public int BigMapDesY;
-    public List<int> StartGrid;
-    public List<int> Grass;
-    public List<int> Wood;
-    public List<int> Water;
-    public List<int> Stone;
-    public List<int> Metal;
-    public int EWind;
-    public int EFire;
-    public int EWater;
-    public int EGround;
-    public int ELight;
-    public int EDark;
+    public short BigMapX;
+    public short BigMapY;
+    public short BigMapDesX;
+    public short BigMapDesY;
+    public List<short> StartGrid;
+    public List<short> Grass;
+    public List<short> Wood;
+    public List<short> Water;
+    public List<short> Stone;
+    public List<short> Metal;
+    public short EWind;
+    public short EFire;
+    public short EWater;
+    public short EGround;
+    public short ELight;
+    public short EDark;
 }
 
 [System.Serializable]
@@ -708,43 +712,43 @@ public class DistrictGridPrototype
 {
     public int ID;
     public string Name;
-    public int DistrictID;
-    public int Level;
-    public int X;
-    public int Y;
+    public short DistrictID;
+    public byte Level;
+    public short X;
+    public short Y;
 }
 
 public class DistrictObject
 {
-    private int ID;
+    private short ID;
     private string Name;
     private string BaseName;
     private string Des;
     private bool IsOpen;
-    private int Level;
-    private int People;
-    private int PeopleLimit;
-    private int Worker;
-    private int GridEmpty;
-    private int GridUsed;
-    private int TotalGrass;
-    private int TotalWood;
-    private int TotalWater;
-    private int TotalStone;
-    private int TotalMetal;
-    private int UsedGrass;
-    private int UsedWood;
-    private int UsedWater;
-    private int UsedStone;
-    private int UsedMetal;
+    private byte Level;
+    private short People;
+    private short PeopleLimit;
+    private short Worker;
+    private short GridEmpty;
+    private short GridUsed;
+    private short TotalGrass;
+    private short TotalWood;
+    private short TotalWater;
+    private short TotalStone;
+    private short TotalMetal;
+    private short UsedGrass;
+    private short UsedWood;
+    private short UsedWater;
+    private short UsedStone;
+    private short UsedMetal;
     private List<int> BuildingList;
     private List<int> HeroList;
-    private int EWind;
-    private int EFire;
-    private int EWater;
-    private int EGround;
-    private int ELight;
-    private int EDark;
+    private short EWind;
+    private short EFire;
+    private short EWater;
+    private short EGround;
+    private short ELight;
+    private short EDark;
     private int RFoodCereal;//现有库存
     private int RFoodVegetable;
     private int RFoodFruit;
@@ -764,9 +768,9 @@ public class DistrictObject
     private int RStuffLimit;
     private int RProductLimit;
 
-    public DistrictObject(int id, string name, string baseName, string des, bool isOpen, int level, int people, int peopleLimit, int worker, int gridEmpty, int gridUsed,
-        int totalGrass, int totalWood, int totalWater, int totalStone, int totalMetal, int usedGrass, int usedWood, int usedWater, int usedStone, int usedMetal, List<int> buildingList, List<int> heroList,
-        int eWind, int eFire, int eWater, int eGround, int eLight, int eDark,
+    public DistrictObject(short id, string name, string baseName, string des, bool isOpen, byte level, short people, short peopleLimit, short worker, short gridEmpty, short gridUsed,
+        short totalGrass, short totalWood, short totalWater, short totalStone, short totalMetal, short usedGrass, short usedWood, short usedWater, short usedStone, short usedMetal, List<int> buildingList, List<int> heroList,
+        short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish,
         int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
         int rProductWeapon, int rProductArmor, int rProductJewelry,
@@ -825,30 +829,30 @@ public class DistrictObject
     public string baseName { get { return BaseName; } set { BaseName = value; } }
     public string des { get { return Des; } set { Des = value; } }
     public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
-    public int level { get { return Level; } set { Level = value; } }
-    public int people { get { return People; } set { People = value; } }
-    public int peopleLimit { get { return PeopleLimit; } set { PeopleLimit = value; } }
-    public int worker { get { return Worker; } set { Worker = value; } }
-    public int gridEmpty { get { return GridEmpty; } set { GridEmpty = value; } }
-    public int gridUsed { get { return GridUsed; } set { GridUsed = value; } }
-    public int totalGrass { get { return TotalGrass; } set { TotalGrass = value; } }
-    public int totalWood { get { return TotalWood; } set { TotalWood = value; } }
-    public int totalWater { get { return TotalWater; } set { TotalWater = value; } }
-    public int totalStone { get { return TotalStone; } set { TotalStone = value; } }
-    public int totalMetal { get { return TotalMetal; } set { TotalMetal = value; } }
-    public int usedGrass { get { return UsedGrass; } set { UsedGrass = value; } }
-    public int usedWood { get { return UsedWood; } set { UsedWood = value; } }
-    public int usedWater { get { return UsedWater; } set { UsedWater = value; } }
-    public int usedStone { get { return UsedStone; } set { UsedStone = value; } }
-    public int usedMetal { get { return UsedMetal; } set { UsedMetal = value; } }
+    public byte level { get { return Level; } set { Level = value; } }
+    public short people { get { return People; } set { People = value; } }
+    public short peopleLimit { get { return PeopleLimit; } set { PeopleLimit = value; } }
+    public short worker { get { return Worker; } set { Worker = value; } }
+    public short gridEmpty { get { return GridEmpty; } set { GridEmpty = value; } }
+    public short gridUsed { get { return GridUsed; } set { GridUsed = value; } }
+    public short totalGrass { get { return TotalGrass; } set { TotalGrass = value; } }
+    public short totalWood { get { return TotalWood; } set { TotalWood = value; } }
+    public short totalWater { get { return TotalWater; } set { TotalWater = value; } }
+    public short totalStone { get { return TotalStone; } set { TotalStone = value; } }
+    public short totalMetal { get { return TotalMetal; } set { TotalMetal = value; } }
+    public short usedGrass { get { return UsedGrass; } set { UsedGrass = value; } }
+    public short usedWood { get { return UsedWood; } set { UsedWood = value; } }
+    public short usedWater { get { return UsedWater; } set { UsedWater = value; } }
+    public short usedStone { get { return UsedStone; } set { UsedStone = value; } }
+    public short usedMetal { get { return UsedMetal; } set { UsedMetal = value; } }
     public List<int> buildingList { get { return BuildingList; } set { BuildingList = value; } }
     public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
-    public int eWind { get { return EWind; } set { EWind = value; } }
-    public int eFire { get { return EFire; } set { EFire = value; } }
-    public int eWater { get { return EWater; } set { EWater = value; } }
-    public int eGround { get { return EGround; } set { EGround = value; } }
-    public int eLight { get { return ELight; } set { ELight = value; } }
-    public int eDark { get { return EDark; } set { EDark = value; } }
+    public short eWind { get { return EWind; } set { EWind = value; } }
+    public short eFire { get { return EFire; } set { EFire = value; } }
+    public short eWater { get { return EWater; } set { EWater = value; } }
+    public short eGround { get { return EGround; } set { EGround = value; } }
+    public short eLight { get { return ELight; } set { ELight = value; } }
+    public short eDark { get { return EDark; } set { EDark = value; } }
     public int rFoodCereal { get { return RFoodCereal; } set { RFoodCereal = value; } }
     public int rFoodVegetable { get { return RFoodVegetable; } set { RFoodVegetable = value; } }
     public int rFoodFruit { get { return RFoodFruit; } set { RFoodFruit = value; } }
@@ -867,7 +871,6 @@ public class DistrictObject
     public int rFoodLimit { get { return RFoodLimit; } set { RFoodLimit = value; } }
     public int rStuffLimit { get { return RStuffLimit; } set { RStuffLimit = value; } }
     public int rProductLimit { get { return RProductLimit; } set { RProductLimit = value; } }
-
 }
 
 public class DistrictGridObject
@@ -875,7 +878,6 @@ public class DistrictGridObject
     private int ID;
     private string Pic;
     private int BuildingID;//-2未开放 -1未使用
-
     public DistrictGridObject(int id, string pic, int buildingID)
     {
         this.ID = id;
@@ -885,7 +887,6 @@ public class DistrictGridObject
     public int id { get { return ID; } }
     public string pic { get { return Pic; } set { Pic = value; } }
     public int buildingID { get { return BuildingID; } set { BuildingID = value; } }
-
 }
 
 
@@ -893,128 +894,127 @@ public class DistrictGridObject
 [System.Serializable]
 public class BuildingPrototype
 {
-    public int ID;
+    public short ID;
     public string Name;
     public string MainPic;
     public string MapPic;
     public string PanelType;
     public string Des;
-    public int Level;
-    public int NeedGold;
-    public int NeedWood;
-    public int NeedStone;
-    public int NeedMetal;
+    public byte Level;
+    public short NeedGold;
+    public short NeedWood;
+    public short NeedStone;
+    public short NeedMetal;
     public int Expense;
-    public int UpgradeTo;
-    public int Grid;
-    public int NatureGrass;
-    public int NatureWood;
-    public int NatureWater;
-    public int NatureStone;
-    public int NatureMetal;
-    public int People;//提供人口
-    public int Worker;//工人上限
-    public int EWind;
-    public int EFire;
-    public int EWater;
-    public int EGround;
-    public int ELight;
-    public int EDark;
+    public short UpgradeTo;
+    public byte Grid;
+    public byte NatureGrass;
+    public byte NatureWood;
+    public byte NatureWater;
+    public byte NatureStone;
+    public byte NatureMetal;
+    public short People;//提供人口
+    public short Worker;//工人上限
+    public byte EWind;
+    public byte EFire;
+    public byte EWater;
+    public byte EGround;
+    public byte ELight;
+    public byte EDark;
 }
 
 //建筑实例
 public class BuildingObject
 {
     private int ID;
-    private int DistrictID;
-    private int PrototypeID;
+    private short DistrictID;
+    private short PrototypeID;
     private string Name;
     private string MainPic;
     private string MapPic;
     private string PanelType;
     private string Des;
-    private int Level;
+    private byte Level;
     private int Expense;
-    private int UpgradeTo;//升级后的建筑原型ID
+    private short UpgradeTo;//升级后的建筑原型ID
     private bool IsOpen;
     private List<int> GridList;//占用格子ID
     private List<int> HeroList;
-    private int NatureGrass;
-    private int NatureWood;
-    private int NatureWater;
-    private int NatureStone;
-    private int NatureMetal;
-    private int People;//提供人口
-    private int Worker;//工人上限
-    private int WorkerNow;
-    private int EWind;
-    private int EFire;
-    private int EWater;
-    private int EGround;
-    private int ELight;
-    private int EDark;
-    public BuildingObject(int id, int prototypeID, int districtID,string name, string mainPic, string mapPic, string panelType, string des, int level, int expense, int upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
-        int natureGrass, int natureWood, int natureWater, int natureStone, int natureMetal, int people, int worker, int workerNow,
-        int eWind, int eFire, int eWater, int eGround, int eLight, int eDark)
+    private byte NatureGrass;
+    private byte NatureWood;
+    private byte NatureWater;
+    private byte NatureStone;
+    private byte NatureMetal;
+    private short People;//提供人口
+    private short Worker;//工人上限
+    private short WorkerNow;
+    private byte EWind;
+    private byte EFire;
+    private byte EWater;
+    private byte EGround;
+    private byte ELight;
+    private byte EDark;
+    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, string mapPic, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
+        byte natureGrass, byte natureWood, byte natureWater, byte natureStone, byte natureMetal, short people, short worker, short workerNow,
+        byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark)
     {
         this.ID = id;
         this.PrototypeID = prototypeID;
         this.DistrictID = districtID;
         this.Name = name;
-    this.MainPic = mainPic;
-   this.MapPic = mapPic;
+        this.MainPic = mainPic;
+        this.MapPic = mapPic;
         this.PanelType = panelType;
         this.Des = des;
         this.Level = level;
-    this.Expense = expense;
-    this.UpgradeTo = upgradeTo;
-    this.IsOpen = isOpen;
-    this.GridList = gridList;
-   this.HeroList = heroList;
-    this.NatureGrass = natureGrass;
-    this.NatureWood = natureWood;
-    this.NatureWater = natureWater;
-    this.NatureStone = natureStone;
-    this.NatureMetal = natureMetal;
-    this.People = people;
-    this.Worker = worker;
-    this.WorkerNow = workerNow;
-    this.EWind = eWind;
-    this.EFire = eFire;
-    this.EWater = eWater;
-    this.EGround = eGround;
-    this.ELight = eLight;
-    this.EDark = eDark;
-}
+        this.Expense = expense;
+        this.UpgradeTo = upgradeTo;
+        this.IsOpen = isOpen;
+        this.GridList = gridList;
+        this.HeroList = heroList;
+        this.NatureGrass = natureGrass;
+        this.NatureWood = natureWood;
+        this.NatureWater = natureWater;
+        this.NatureStone = natureStone;
+        this.NatureMetal = natureMetal;
+        this.People = people;
+        this.Worker = worker;
+        this.WorkerNow = workerNow;
+        this.EWind = eWind;
+        this.EFire = eFire;
+        this.EWater = eWater;
+        this.EGround = eGround;
+        this.ELight = eLight;
+        this.EDark = eDark;
+    }
     public int id{ get { return ID; } }
-    public int prototypeID { get { return PrototypeID; } }
-    public int districtID { get { return DistrictID; } }
+    public short prototypeID { get { return PrototypeID; } }
+    public short districtID { get { return DistrictID; } }
     public string name{ get { return Name; } }
     public string mainPic { get { return MainPic; } }
     public string mapPic { get { return MapPic; } }
     public string panelType { get { return PanelType; } }
     public string des { get { return Des; } }
-    public int level { get { return Level; } }
+    public byte level { get { return Level; } }
     public int expense { get { return Expense; } }
-    public int upgradeTo { get { return UpgradeTo; } }
+    public short upgradeTo { get { return UpgradeTo; } }
     public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
     public List<int> gridList { get { return GridList; } set { GridList = value; } }
     public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
-    public int natureGrass { get { return NatureGrass; } }
-    public int natureWood { get { return NatureWood; } }
-    public int natureWater { get { return NatureWater; } }
-    public int natureStone { get { return NatureStone; } }
-    public int natureMetal { get { return NatureMetal; } }
-    public int people { get { return People; } }
-    public int worker { get { return Worker; } }
-    public int workerNow { get { return WorkerNow; } set { WorkerNow = value; } }
-    public int eWind { get { return EWind; } }
-    public int eFire { get { return EFire; } }
-    public int eWater { get { return EWater; } }
-    public int eGround { get { return EGround; } }
-    public int eLight { get { return ELight; } }
-    public int eDark { get { return EDark; } }
-
+    public byte natureGrass { get { return NatureGrass; } }
+    public byte natureWood { get { return NatureWood; } }
+    public byte natureWater { get { return NatureWater; } }
+    public byte natureStone { get { return NatureStone; } }
+    public byte natureMetal { get { return NatureMetal; } }
+    public short people { get { return People; } }
+    public short worker { get { return Worker; } }
+    public short workerNow { get { return WorkerNow; } set { WorkerNow = value; } }
+    public byte eWind { get { return EWind; } }
+    public byte eFire { get { return EFire; } }
+    public byte eWater { get { return EWater; } }
+    public byte eGround { get { return EGround; } }
+    public byte eLight { get { return ELight; } }
+    public byte eDark { get { return EDark; } }
 }
 
 
@@ -1022,9 +1022,9 @@ public class BuildingObject
 [System.Serializable]
 public class DungeonPrototype
 {
-    public int ID;
+    public short ID;
     public string Name;
-    public int Level;
+    public byte Level;
     public string Des;
     public string Monster;
 }
@@ -1033,9 +1033,9 @@ public class DungeonPrototype
 [System.Serializable]
 public class MonsterPrototype
 {
-    public int ID;
+    public short ID;
     public string Name;
-    public int Level;
+    public byte Level;
     public string Des;
 }
 
@@ -1049,7 +1049,6 @@ public class LogObject
     private int Value1;
     private int Value2;
     private int Value3;
-
     public LogObject(int id, LogType type, int standardTime, string text, int value1, int value2, int value3)
     {
         this.ID = id;
@@ -1059,7 +1058,6 @@ public class LogObject
         this.Value1 = value1;
         this.Value2 = value2;
         this.Value3 = value3;
-
     }
     public int id { get { return ID; } }
     public LogType type { get { return Type; } }
@@ -1068,7 +1066,6 @@ public class LogObject
     public int value1 { get { return Value1; } }
     public int value2 { get { return Value2; } }
     public int value3 { get { return Value3; } }
-
 }
 
 
@@ -1131,17 +1128,13 @@ public class ProduceEquipPrototype
     public byte InputBone;
     public List<short> OutputID;
     public List<short> OutputRate;
-
 }
 
 public class ExecuteEventObject
 {
-
     private ExecuteEventType Type;
     private int StartTime;
     private int EndTime;
-
-
     private int Value1;
     private int Value2;
     private int Value3;
@@ -1149,7 +1142,6 @@ public class ExecuteEventObject
     private int Value5;
     public ExecuteEventObject( ExecuteEventType type, int startTime, int endTime, int value1, int value2, int value3, int value4, int value5)
     {
-
         this.Type = type;
         this.StartTime = startTime;
         this.EndTime = endTime;
@@ -1159,7 +1151,6 @@ public class ExecuteEventObject
         this.Value4 = value4;
         this.Value3 = value5;
     }
-
     public ExecuteEventType type { get { return Type; } }
     public int startTime { get { return StartTime; } }
     public int endTime { get { return EndTime; } }
@@ -1170,17 +1161,3 @@ public class ExecuteEventObject
     public int value5 { get { return Value5; } }
 }
 
-public class CommonDefine : MonoBehaviour
-{
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-
-}

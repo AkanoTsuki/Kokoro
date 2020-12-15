@@ -7,9 +7,9 @@ public class GameControlInNewGame : MonoBehaviour
 
 
     GameControl gc;
-    int temp_districtID = -1;
-    public int temp_leaderHeroSex = 0;
-    public int temp_leaderHeroType = -1;
+    short temp_districtID = -1;
+    public byte temp_leaderHeroSex = 0;
+    public short temp_leaderHeroType = -1;
     public HeroObject temp_Leader = null;
     public HeroObject[] temp_HeroList = { null, null, null, null, null };
 
@@ -42,7 +42,7 @@ public class GameControlInNewGame : MonoBehaviour
         }
     }
 
-    public void SetDistrict(int districtID)
+    public void SetDistrict(short districtID)
     {
         temp_districtID = districtID;
         StartChoosePanel.Instance.UpdateDistrictInfo(districtID);
@@ -54,7 +54,7 @@ public class GameControlInNewGame : MonoBehaviour
         gc.playerName = name;
     }
 
-    public void SetLeaderHeroSex(int sex)
+    public void SetLeaderHeroSex(byte sex)
     {
         temp_leaderHeroSex = sex;
         temp_Leader.sex= sex;
@@ -71,7 +71,7 @@ public class GameControlInNewGame : MonoBehaviour
         HeroPanel.Instance.OnShow(temp_Leader, 374, -32, -234);
     }
 
-    public void SetLeaderHeroType(int typeID)
+    public void SetLeaderHeroType(short typeID)
     {
         temp_leaderHeroType = typeID;
         temp_Leader= gc.GenerateHeroByMould(0, typeID, temp_leaderHeroSex,"[主角]");
@@ -91,7 +91,7 @@ public class GameControlInNewGame : MonoBehaviour
     public void RollMenber(int index)
     {
         int ran = Random.Range(0, 6);
-        temp_HeroList[index]=gc.GenerateHeroByRandom(index, ran, Random.Range(0, 2));
+        temp_HeroList[index]=gc.GenerateHeroByRandom(index, (short)ran,(byte)Random.Range(0, 2));
 
         StartChoosePanel.Instance.UpdateMenberInfo(index);
         HeroPanel.Instance.UpdateAllInfo(gc, temp_HeroList[index], -374);
@@ -113,7 +113,7 @@ public class GameControlInNewGame : MonoBehaviour
         gc.heroIndex = 6;
         for (int i = 0; i < 7; i++)
         {
-            gc.districtDic[i] = new DistrictObject(i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des, temp_districtID == i, 1, 10, 20,0, DataManager.mDistrictDict[i].StartGrid[0], 0,
+            gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des, temp_districtID == i, 1, 10, 20,0, DataManager.mDistrictDict[i].StartGrid[0], 0,
                 DataManager.mDistrictDict[i].Grass[0], DataManager.mDistrictDict[i].Wood[0], DataManager.mDistrictDict[i].Water[0], DataManager.mDistrictDict[i].Stone[0], DataManager.mDistrictDict[i].Metal[0],
                 0, 0, 0, 0, 0, new List<int> { }, temp_districtID == i? new List<int> { 0,1,2,3,4,5}: new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
                 0, 0, 0, 0, 0, 500, 500, 500, 500, 0, 0, 0, 0, 0, 0, 5000, 5000, 50);

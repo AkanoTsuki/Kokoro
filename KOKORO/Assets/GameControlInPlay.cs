@@ -25,7 +25,7 @@ public class GameControlInPlay : MonoBehaviour
         PlayMainPanel.Instance.OnShow();
 
 
-        //InvokeRepeating("TimeFlow", 0.1f, 0.1f);
+        InvokeRepeating("TimeFlow", 0.05f, 0.05f);
     }
 
     // Update is called once per frame
@@ -37,34 +37,40 @@ public class GameControlInPlay : MonoBehaviour
     {
         
         gc.timeS++;
-        if (gc.timeS > 10) { gc.timeHour++; gc.timeS = 0; Debug.Log("年" + gc.timeYear + " 月" + gc.timeMonth + " 日" + gc.timeDay + " 时" + gc.timeHour); }
-        if (gc.timeHour >= 24) { gc.timeDay++; gc.timeHour = 0; }
+        if (gc.timeS > 10) { gc.timeHour++; gc.timeS = 0; PlayMainPanel.Instance.UpdateDateInfo(); Debug.Log("年" + gc.timeYear + " 月" + gc.timeMonth + " 日" + gc.timeDay + " 时" + gc.timeHour); }
+        if (gc.timeHour >= 24) { gc.timeDay++; gc.timeHour = 0;gc.timeWeek++;if (gc.timeWeek > 7) { gc.timeWeek = 1; } }
         if (gc.timeDay > 30) { gc.timeMonth++; gc.timeDay = 1; }
         if (gc.timeMonth > 12) { gc.timeYear++; gc.timeMonth = 1; }
 
+        
+
         gc.standardTime++;
-        if (gc.standardTime == gc.executeEventList[0].endTime)
+        if(gc.executeEventList.Count>0)
         {
-            switch (gc.executeEventList[0].type)
+            if (gc.standardTime == gc.executeEventList[0].endTime)
             {
-                case ExecuteEventType.ProduceResource:
-                    Debug.Log("  gc.standardTime=" + gc.standardTime + "   资源生产" + gc.standardTime);
-                    int districtID = gc.executeEventList[0].value1;
-                    int buildingID = gc.executeEventList[0].value2;
-                    gc.ResourceAdd(districtID, (StuffType)gc.executeEventList[0].value3, gc.executeEventList[0].value4);
-                    gc.executeEventList.RemoveAt(0);
-                    gc.CreateProduceEvent(buildingID);
-                    break;
-                case ExecuteEventType.ProduceItem:
-                    Debug.Log("  gc.standardTime=" + gc.standardTime + "   制作" + gc.standardTime);
-                    int itemId = gc.executeEventList[0].value3;
-                    gc.GenerateItemByRandom(itemId);
-                    gc.executeEventList.RemoveAt(0);
-                    StartProduceItem(itemId);
-                    break;
-                default:break;
+                switch (gc.executeEventList[0].type)
+                {
+                    case ExecuteEventType.ProduceResource:
+                        Debug.Log("  gc.standardTime=" + gc.standardTime + "   资源生产" + gc.standardTime);
+                        int districtID = gc.executeEventList[0].value1;
+                        int buildingID = gc.executeEventList[0].value2;
+                        gc.ResourceAdd(districtID, (StuffType)gc.executeEventList[0].value3, gc.executeEventList[0].value4);
+                        gc.executeEventList.RemoveAt(0);
+                        gc.CreateProduceEvent(buildingID);
+                        break;
+                    case ExecuteEventType.ProduceItem:
+                        Debug.Log("  gc.standardTime=" + gc.standardTime + "   制作" + gc.standardTime);
+                        int itemId = gc.executeEventList[0].value3;
+                        gc.GenerateItemByRandom(itemId);
+                        gc.executeEventList.RemoveAt(0);
+                        StartProduceItem(itemId);
+                        break;
+                    default: break;
+                }
             }
         }
+        
 
     }
 

@@ -325,12 +325,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76db1a7928ac704fa152733a7a1bc59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeS: 0
+  timeHour: 0
+  timeDay: 1
+  timeWeek: 1
+  timeMonth: 1
+  timeSeason: 1
+  timeYear: 1
   gold: 0
   nowCheckingDistrictID: 0
-  countHour: 0
+  standardTime: 0
+  nextExecuteEventEndTime: 0
   heroIndex: 0
   itemIndex: 0
   buildingIndex: 0
+  buildingUnlock: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   logIndex: 0
   playerName: 
 --- !u!114 &559004349

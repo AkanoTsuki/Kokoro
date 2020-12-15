@@ -13,7 +13,7 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         GameControl gc = GameObject.Find("GameManager").GetComponent<GameControl>();
         if (labelType == LabelType.BuildingInBuild)
         {
-            btn.onClick.AddListener(delegate () { gc.Build(index); });
+            btn.onClick.AddListener(delegate () { gc.Build((short)index); });
         }
         else if (labelType == LabelType.BuildingInDistrictMain)
         {

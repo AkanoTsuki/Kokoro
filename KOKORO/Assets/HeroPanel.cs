@@ -22,34 +22,41 @@ public class HeroPanel : BasePanel
     public Text infoWork_desText;
 
     public Button equip_weaponBtn;
+    public Button equip_subhandBtn;
     public Button equip_headBtn;
     public Button equip_bodyBtn;
     public Button equip_handBtn;
-    public Button equip_lowerBtn;
+    public Button equip_backBtn;
     public Button equip_footBtn;
     public Button equip_neckBtn;
     public Button equip_finger1Btn;
     public Button equip_finger2Btn;
 
     public Image equip_weaponImage;
+    public Image equip_subhandImage;
     public Image equip_headImage;
     public Image equip_bodyImage;
     public Image equip_handImage;
-    public Image equip_lowerImage;
+    public Image equip_backImage;
     public Image equip_footImage;
     public Image equip_neckImage;
     public Image equip_finger1Image;
     public Image equip_finger2Image;
 
     public Text equip_weaponText;
+    public Text equip_subhandText;
     public Text equip_headText;
     public Text equip_bodyText;
     public Text equip_handText;
-    public Text equip_lowerText;
+    public Text equip_backText;
     public Text equip_footText;
     public Text equip_neckText;
     public Text equip_finger1Text;
     public Text equip_finger2Text;
+
+    public List<Button> skill_Btn;
+    public List<Image> skill_Image;
+    public List<Text> skill_Text;
 
     public Button closeBtn;
 
@@ -163,8 +170,19 @@ public class HeroPanel : BasePanel
         }
         else
         {
-            equip_weaponText.text = "武器<color=red>（未装备）</color>";
+            equip_weaponText.text = "主手<color=red>（未装备）</color>";
             equip_weaponImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+        }
+
+        if (heroObject.equipSubhand != -1)
+        {
+            equip_subhandText.text = gc.itemDic[heroObject.equipSubhand].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipSubhand].rank);
+            equip_subhandImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipSubhand].pic, typeof(Sprite)) as Sprite;
+        }
+        else
+        {
+            equip_subhandText.text = "副手<color=red>（未装备）</color>";
+            equip_subhandImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
         }
 
         if (heroObject.equipHead != -1)
@@ -200,15 +218,15 @@ public class HeroPanel : BasePanel
             equip_handImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
         }
 
-        if (heroObject.equipLower != -1)
+        if (heroObject.equipBack != -1)
         {
-            equip_lowerText.text = gc.itemDic[heroObject.equipLower].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipLower].rank);
-            equip_lowerImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipLower].pic, typeof(Sprite)) as Sprite;
+            equip_backText.text = gc.itemDic[heroObject.equipBack].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipBack].rank);
+            equip_backImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipBack].pic, typeof(Sprite)) as Sprite;
         }
         else
         {
-            equip_lowerText.text = "腰部防具<color=red>（未装备）</color>";
-            equip_lowerImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+            equip_backText.text = "背部防具<color=red>（未装备）</color>";
+            equip_backImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
         }
 
         if (heroObject.equipFoot != -1)

@@ -17,7 +17,7 @@ public class GameControl : MonoBehaviour
 
     //save data
     public int gold=0;
-    public int nowCheckingDistrictID = 0;
+    public short nowCheckingDistrictID = 0;
     public int standardTime = 0;//时间戳，基准时间单位：小时
     public List<ExecuteEventObject> executeEventList = new List<ExecuteEventObject>();
     public int nextExecuteEventEndTime = 0;
@@ -41,7 +41,7 @@ public class GameControl : MonoBehaviour
     public class DataSave
     {
         public int gold = 0;
-        public int nowCheckingDistrictID = 0;
+        public short nowCheckingDistrictID = 0;
         public int standardTime = 0;
         public List<ExecuteEventObject> executeEventList = new List<ExecuteEventObject>();
         public int nextExecuteEventEndTime = 0;
@@ -189,84 +189,84 @@ public class GameControl : MonoBehaviour
     {
         
     }
-    public void CreateHero(int pid)
+    public void CreateHero(short pid)
     {
-        heroDic.Add(heroIndex,GenerateHeroByRandom(heroIndex, pid,Random.Range(0,2)));
+        heroDic.Add(heroIndex,GenerateHeroByRandom(heroIndex, pid,(byte)Random.Range(0,2)));
         heroIndex++;
     }
 
     //pid:
-    public HeroObject GenerateHeroByRandom(int heroID,int pid,int sexCode)
+    public HeroObject GenerateHeroByRandom(int heroID,short heroTypeID,byte sexCode)
     {
         string name = "";
         string pic = "";
         if (sexCode == 0)
         {
             name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
-            pic = DataManager.mHeroDict[pid].PicMan;
+            pic = DataManager.mHeroDict[heroTypeID].PicMan;
         }
         else
         {
             name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
-            pic = DataManager.mHeroDict[pid].PicWoman;
+            pic = DataManager.mHeroDict[heroTypeID].PicWoman;
         }
 
-        int hp = SetAttr(Attribute.Hp, pid);
-        int mp = SetAttr(Attribute.Mp, pid);
-        int hpRenew = 0;
-        int mpRenew = 0;
-        int atkMax = SetAttr(Attribute.AtkMax, pid);
-        int atkMin = atkMax - 2;
-        int mAtkMax = SetAttr(Attribute.MAtkMax, pid);
-        int mAtkMin = mAtkMax - 2;
-        int def = SetAttr(Attribute.Def, pid);
-        int mDef = SetAttr(Attribute.MDef, pid);
-        int hit = SetAttr(Attribute.Hit, pid);
-        int dod = SetAttr(Attribute.Dod, pid);
-        int criR = SetAttr(Attribute.CriR, pid);
-        int criD = 200;
-        int spd = 80;
-        int windDam = 100;
-        int fireDam = 100;
-        int waterDam = 100;
-        int groundDam = 100;
-        int lightDam = 100;
-        int darkDam = 100;
-        int windRes = 0;
-        int fireRes = 0;
-        int waterRes = 0;
-        int groundRes = 0;
-        int lightRes = 0;
-        int darkRes = 0;
-        int dizzyRes = 0;
-        int confusionRes = 0;
-        int poisonRes = 0;
-        int sleepRes = 0;
-        int goldGet = 0;
-        int expGet = 0;
-        int itemGet = 0;
-        int workPlanting = SetAttr(Attribute.WorkPlanting, pid);
-        int workFeeding = SetAttr(Attribute.WorkFeeding, pid);
-        int workFishing = SetAttr(Attribute.WorkFishing, pid);
-        int workHunting = SetAttr(Attribute.WorkHunting, pid);
-        int workMining = SetAttr(Attribute.WorkMining, pid);
-        int workQuarrying = SetAttr(Attribute.WorkQuarrying, pid);
-        int workFelling = SetAttr(Attribute.WorkFelling, pid);
-        int workBuild = SetAttr(Attribute.WorkBuild, pid);
-        int workMakeWeapon = SetAttr(Attribute.WorkMakeWeapon, pid);
-        int workMakeArmor = SetAttr(Attribute.WorkMakeArmor, pid);
-        int workMakeJewelry = SetAttr(Attribute.WorkMakeJewelry, pid);
-        int workSundry = SetAttr(Attribute.WorkSundry, pid);
+        int hp = SetAttr(Attribute.Hp, heroTypeID);
+        int mp = SetAttr(Attribute.Mp, heroTypeID);
+        short hpRenew = 0;
+        short mpRenew = 0;
+        short atkMax = (short)SetAttr(Attribute.AtkMax, heroTypeID);
+        short atkMin = (short)(atkMax - 2);
+        short mAtkMax = (short)SetAttr(Attribute.MAtkMax, heroTypeID);
+        short mAtkMin = (short)(mAtkMax - 2);
+        short def = (short)SetAttr(Attribute.Def, heroTypeID);
+        short mDef = (short)SetAttr(Attribute.MDef, heroTypeID);
+        short hit = (short)SetAttr(Attribute.Hit, heroTypeID);
+        short dod = (short)SetAttr(Attribute.Dod, heroTypeID);
+        short criR = (short)SetAttr(Attribute.CriR, heroTypeID);
+        short criD = 200;
+        short spd = 80;
+        short windDam = 100;
+        short fireDam = 100;
+        short waterDam = 100;
+        short groundDam = 100;
+        short lightDam = 100;
+        short darkDam = 100;
+        short windRes = 0;
+        short fireRes = 0;
+        short waterRes = 0;
+        short groundRes = 0;
+        short lightRes = 0;
+        short darkRes = 0;
+        short dizzyRes = 0;
+        short confusionRes = 0;
+        short poisonRes = 0;
+        short sleepRes = 0;
+        byte goldGet = 0;
+        byte expGet = 0;
+        byte itemGet = 0;
+        byte workPlanting = (byte)SetAttr(Attribute.WorkPlanting, heroTypeID);
+        byte workFeeding = (byte)SetAttr(Attribute.WorkFeeding, heroTypeID);
+        byte workFishing = (byte)SetAttr(Attribute.WorkFishing, heroTypeID);
+        byte workHunting = (byte)SetAttr(Attribute.WorkHunting, heroTypeID);
+        byte workMining = (byte)SetAttr(Attribute.WorkMining, heroTypeID);
+        byte workQuarrying = (byte)SetAttr(Attribute.WorkQuarrying, heroTypeID);
+        byte workFelling = (byte)SetAttr(Attribute.WorkFelling, heroTypeID);
+        byte workBuild = (byte)SetAttr(Attribute.WorkBuild, heroTypeID);
+        byte workMakeWeapon = (byte)SetAttr(Attribute.WorkMakeWeapon, heroTypeID);
+        byte workMakeArmor = (byte)SetAttr(Attribute.WorkMakeArmor, heroTypeID);
+        byte workMakeJewelry = (byte)SetAttr(Attribute.WorkMakeJewelry, heroTypeID);
+        byte workSundry = (byte)SetAttr(Attribute.WorkSundry, heroTypeID);
 
 
-       return new HeroObject(heroID, name, pid, 1,0, sexCode, pic, hp,mp,hpRenew,mpRenew,atkMin,atkMax,mAtkMin,mAtkMax,def,mDef,hit,dod,criR,criD,spd,
+       return new HeroObject(heroID, name, heroTypeID, 1,0, sexCode, pic, hp,mp,hpRenew,mpRenew,atkMin,atkMax,mAtkMin,mAtkMax,def,mDef,hit,dod,criR,criD,spd,
          windDam,fireDam,waterDam,groundDam,lightDam,darkDam,windRes,fireRes,waterRes,groundRes,lightRes,darkRes,dizzyRes,confusionRes,poisonRes,sleepRes,goldGet,expGet,itemGet,
          workPlanting,workFeeding,workFishing,workHunting,workMining,workQuarrying,workFelling,workBuild,workMakeWeapon,workMakeArmor,workMakeJewelry,workSundry,
-         -1,-1,-1,-1,-1,-1,-1,-1,-1, -1);
+         -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1);
 
 }
 
-    public HeroObject GenerateHeroByMould(int heroID, int pid, int sexCode,string nameSet)
+    public HeroObject GenerateHeroByMould(int heroID, short heroTypeID, byte sexCode,string nameSet)
     {
 
         string name = "";
@@ -274,101 +274,101 @@ public class GameControl : MonoBehaviour
         if (sexCode == 0)
         {
             name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
-            pic = DataManager.mHeroDict[pid].PicMan;
+            pic = DataManager.mHeroDict[heroTypeID].PicMan;
         }
         else
         {
             name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
-            pic = DataManager.mHeroDict[pid].PicWoman;
+            pic = DataManager.mHeroDict[heroTypeID].PicWoman;
         }
 
-        int hp = DataManager.mHeroDict[pid].Hp;
-        int mp = DataManager.mHeroDict[pid].Mp;
-        int hpRenew = DataManager.mHeroDict[pid].HpRenew;
-        int mpRenew = DataManager.mHeroDict[pid].MpRenew;
-        int atkMax = DataManager.mHeroDict[pid].AtkMin;
-        int atkMin = DataManager.mHeroDict[pid].AtkMax;
-        int mAtkMax = DataManager.mHeroDict[pid].MAtkMin;
-        int mAtkMin = DataManager.mHeroDict[pid].MAtkMax;
-        int def = DataManager.mHeroDict[pid].Def;
-        int mDef = DataManager.mHeroDict[pid].MDef;
-        int hit = DataManager.mHeroDict[pid].Hit;
-        int dod = DataManager.mHeroDict[pid].Dod;
-        int criR = DataManager.mHeroDict[pid].CriR;
-        int criD = DataManager.mHeroDict[pid].CriD;
-        int spd = DataManager.mHeroDict[pid].Spd;
-        int windDam = DataManager.mHeroDict[pid].WindDam+100;
-        int fireDam = DataManager.mHeroDict[pid].FireDam + 100;
-        int waterDam = DataManager.mHeroDict[pid].WaterDam + 100;
-        int groundDam = DataManager.mHeroDict[pid].GroundDam + 100;
-        int lightDam = DataManager.mHeroDict[pid].LightDam + 100;
-        int darkDam = DataManager.mHeroDict[pid].DarkDam + 100;
-        int windRes = DataManager.mHeroDict[pid].WindRes + 100;
-        int fireRes = DataManager.mHeroDict[pid].FireRes;
-        int waterRes = DataManager.mHeroDict[pid].WaterRes;
-        int groundRes = DataManager.mHeroDict[pid].GroundRes;
-        int lightRes = DataManager.mHeroDict[pid].LightRes;
-        int darkRes = DataManager.mHeroDict[pid].DarkRes;
-        int dizzyRes = DataManager.mHeroDict[pid].DizzyRes;
-        int confusionRes = DataManager.mHeroDict[pid].ConfusionRes;
-        int poisonRes = DataManager.mHeroDict[pid].PoisonRes;
-        int sleepRes = DataManager.mHeroDict[pid].SleepRes;
-        int goldGet = DataManager.mHeroDict[pid].GoldGet;
-        int expGet = DataManager.mHeroDict[pid].ExpGet;
-        int itemGet = DataManager.mHeroDict[pid].ItemGet;
-        int workPlanting = DataManager.mHeroDict[pid].WorkPlanting;
-        int workFeeding = DataManager.mHeroDict[pid].WorkFeeding;
-        int workFishing = DataManager.mHeroDict[pid].WorkFishing;
-        int workHunting = DataManager.mHeroDict[pid].WorkHunting;
-        int workMining = DataManager.mHeroDict[pid].WorkMining;
-        int workQuarrying = DataManager.mHeroDict[pid].WorkQuarrying;
-        int workFelling = DataManager.mHeroDict[pid].WorkFelling;
-        int workBuild = DataManager.mHeroDict[pid].WorkBuild;
-        int workMakeWeapon = DataManager.mHeroDict[pid].WorkMakeWeapon;
-        int workMakeArmor = DataManager.mHeroDict[pid].WorkMakeArmor;
-        int workMakeJewelry = DataManager.mHeroDict[pid].WorkMakeJewelry;
-        int workSundry = DataManager.mHeroDict[pid].WorkSundry;
+        int hp = DataManager.mHeroDict[heroTypeID].Hp;
+        int mp = DataManager.mHeroDict[heroTypeID].Mp;
+        short hpRenew = DataManager.mHeroDict[heroTypeID].HpRenew;
+        short mpRenew = DataManager.mHeroDict[heroTypeID].MpRenew;
+        short atkMax = DataManager.mHeroDict[heroTypeID].AtkMin;
+        short atkMin = DataManager.mHeroDict[heroTypeID].AtkMax;
+        short mAtkMax = DataManager.mHeroDict[heroTypeID].MAtkMin;
+        short mAtkMin = DataManager.mHeroDict[heroTypeID].MAtkMax;
+        short def = DataManager.mHeroDict[heroTypeID].Def;
+        short mDef = DataManager.mHeroDict[heroTypeID].MDef;
+        short hit = DataManager.mHeroDict[heroTypeID].Hit;
+        short dod = DataManager.mHeroDict[heroTypeID].Dod;
+        short criR = DataManager.mHeroDict[heroTypeID].CriR;
+        short criD = DataManager.mHeroDict[heroTypeID].CriD;
+        short spd = DataManager.mHeroDict[heroTypeID].Spd;
+        short windDam = DataManager.mHeroDict[heroTypeID].WindDam;
+        short fireDam = DataManager.mHeroDict[heroTypeID].FireDam ;
+        short waterDam = DataManager.mHeroDict[heroTypeID].WaterDam ;
+        short groundDam = DataManager.mHeroDict[heroTypeID].GroundDam ;
+        short lightDam = DataManager.mHeroDict[heroTypeID].LightDam ;
+        short darkDam = DataManager.mHeroDict[heroTypeID].DarkDam ;
+        short windRes = DataManager.mHeroDict[heroTypeID].WindRes ;
+        short fireRes = DataManager.mHeroDict[heroTypeID].FireRes;
+        short waterRes = DataManager.mHeroDict[heroTypeID].WaterRes;
+        short groundRes = DataManager.mHeroDict[heroTypeID].GroundRes;
+        short lightRes = DataManager.mHeroDict[heroTypeID].LightRes;
+        short darkRes = DataManager.mHeroDict[heroTypeID].DarkRes;
+        short dizzyRes = DataManager.mHeroDict[heroTypeID].DizzyRes;
+        short confusionRes = DataManager.mHeroDict[heroTypeID].ConfusionRes;
+        short poisonRes = DataManager.mHeroDict[heroTypeID].PoisonRes;
+        short sleepRes = DataManager.mHeroDict[heroTypeID].SleepRes;
+        byte goldGet = DataManager.mHeroDict[heroTypeID].GoldGet;
+        byte expGet = DataManager.mHeroDict[heroTypeID].ExpGet;
+        byte itemGet = DataManager.mHeroDict[heroTypeID].ItemGet;
+        byte workPlanting = DataManager.mHeroDict[heroTypeID].WorkPlanting;
+        byte workFeeding = DataManager.mHeroDict[heroTypeID].WorkFeeding;
+        byte workFishing = DataManager.mHeroDict[heroTypeID].WorkFishing;
+        byte workHunting = DataManager.mHeroDict[heroTypeID].WorkHunting;
+        byte workMining = DataManager.mHeroDict[heroTypeID].WorkMining;
+        byte workQuarrying = DataManager.mHeroDict[heroTypeID].WorkQuarrying;
+        byte workFelling = DataManager.mHeroDict[heroTypeID].WorkFelling;
+        byte workBuild = DataManager.mHeroDict[heroTypeID].WorkBuild;
+        byte workMakeWeapon = DataManager.mHeroDict[heroTypeID].WorkMakeWeapon;
+        byte workMakeArmor = DataManager.mHeroDict[heroTypeID].WorkMakeArmor;
+        byte workMakeJewelry = DataManager.mHeroDict[heroTypeID].WorkMakeJewelry;
+        byte workSundry = DataManager.mHeroDict[heroTypeID].WorkSundry;
 
 
-        return new HeroObject(heroID,nameSet!=""?nameSet:name, pid, 1, 0, sexCode, pic, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
+        return new HeroObject(heroID,nameSet!=""?nameSet:name, heroTypeID, 1, 0, sexCode, pic, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workSundry,
-          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1);
+          -1, -1, -1, -1,-1, -1, -1, -1, -1, -1, -1);
 
     }
 
-    public int SetAttr(Attribute attr, int pid)
+    public int SetAttr(Attribute attr, short heroTypeID)
     {
-        int rank = 0;
+        int rank;
 
         switch (attr)
         {
-            case Attribute.Hp:rank = DataManager.mCreateHeroTypeDict[pid].Hp;break;
-            case Attribute.Mp: rank = DataManager.mCreateHeroTypeDict[pid].Mp; break;
+            case Attribute.Hp:rank = DataManager.mCreateHeroTypeDict[heroTypeID].Hp;break;
+            case Attribute.Mp: rank = DataManager.mCreateHeroTypeDict[heroTypeID].Mp; break;
 
-            case Attribute.AtkMax: rank = DataManager.mCreateHeroTypeDict[pid].AtkMax; break;
-            case Attribute.MAtkMax: rank = DataManager.mCreateHeroTypeDict[pid].MAtkMax; break;
+            case Attribute.AtkMax: rank = DataManager.mCreateHeroTypeDict[heroTypeID].AtkMax; break;
+            case Attribute.MAtkMax: rank = DataManager.mCreateHeroTypeDict[heroTypeID].MAtkMax; break;
 
-            case Attribute.Def: rank = DataManager.mCreateHeroTypeDict[pid].Def; break;
-            case Attribute.MDef: rank = DataManager.mCreateHeroTypeDict[pid].MDef; break;
+            case Attribute.Def: rank = DataManager.mCreateHeroTypeDict[heroTypeID].Def; break;
+            case Attribute.MDef: rank = DataManager.mCreateHeroTypeDict[heroTypeID].MDef; break;
 
-            case Attribute.Hit: rank = DataManager.mCreateHeroTypeDict[pid].Hit; break;
-            case Attribute.Dod: rank = DataManager.mCreateHeroTypeDict[pid].Dod; break;
-            case Attribute.CriR: rank = DataManager.mCreateHeroTypeDict[pid].CriR; break;
+            case Attribute.Hit: rank = DataManager.mCreateHeroTypeDict[heroTypeID].Hit; break;
+            case Attribute.Dod: rank = DataManager.mCreateHeroTypeDict[heroTypeID].Dod; break;
+            case Attribute.CriR: rank = DataManager.mCreateHeroTypeDict[heroTypeID].CriR; break;
 
 
-            case Attribute.WorkPlanting: rank = DataManager.mCreateHeroTypeDict[pid].WorkPlanting; break;
-            case Attribute.WorkFeeding: rank = DataManager.mCreateHeroTypeDict[pid].WorkFeeding; break;
-            case Attribute.WorkFishing: rank = DataManager.mCreateHeroTypeDict[pid].WorkFishing; break;
-            case Attribute.WorkHunting: rank = DataManager.mCreateHeroTypeDict[pid].WorkHunting; break;
-            case Attribute.WorkFelling: rank = DataManager.mCreateHeroTypeDict[pid].WorkFelling; break;
-            case Attribute.WorkQuarrying: rank = DataManager.mCreateHeroTypeDict[pid].WorkQuarrying; break;
-            case Attribute.WorkMining: rank = DataManager.mCreateHeroTypeDict[pid].WorkMining; break;
-            case Attribute.WorkBuild: rank = DataManager.mCreateHeroTypeDict[pid].WorkBuild; break;
-            case Attribute.WorkMakeWeapon: rank = DataManager.mCreateHeroTypeDict[pid].WorkMakeWeapon; break;
-            case Attribute.WorkMakeArmor: rank = DataManager.mCreateHeroTypeDict[pid].WorkMakeArmor; break;
-            case Attribute.WorkMakeJewelry: rank = DataManager.mCreateHeroTypeDict[pid].WorkMakeJewelry; break;
-            case Attribute.WorkSundry: rank = DataManager.mCreateHeroTypeDict[pid].WorkSundry; break;
+            case Attribute.WorkPlanting: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkPlanting; break;
+            case Attribute.WorkFeeding: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkFeeding; break;
+            case Attribute.WorkFishing: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkFishing; break;
+            case Attribute.WorkHunting: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkHunting; break;
+            case Attribute.WorkFelling: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkFelling; break;
+            case Attribute.WorkQuarrying: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkQuarrying; break;
+            case Attribute.WorkMining: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkMining; break;
+            case Attribute.WorkBuild: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkBuild; break;
+            case Attribute.WorkMakeWeapon: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkMakeWeapon; break;
+            case Attribute.WorkMakeArmor: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkMakeArmor; break;
+            case Attribute.WorkMakeJewelry: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkMakeJewelry; break;
+            case Attribute.WorkSundry: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkSundry; break;
             default:
                 rank = 999; break;
         }
@@ -393,7 +393,7 @@ public class GameControl : MonoBehaviour
     public ItemObject GenerateItemByRandom(int itemID)
     {
         //随机提升等级，每个等级提升基础数据5%，上限5
-        int upLevel = 0;
+        byte upLevel = 0;
         for (int i = 0; i < 5; i++)
         {
             int ran = Random.Range(0, 100);
@@ -458,7 +458,7 @@ public class GameControl : MonoBehaviour
 
 
 
-    public void Build( int buildingId)
+    public void Build( short buildingId)
     {
        // Debug.Log(" Build（） buildingId=" + buildingId);
 
@@ -487,7 +487,7 @@ public class GameControl : MonoBehaviour
 
 
         List<int> grid = new List<int> { };
-        int count = DataManager.mBuildingDict[buildingId].Grid;
+        short count = DataManager.mBuildingDict[buildingId].Grid;
 
 
         foreach (KeyValuePair<int, DistrictGridObject> kvp in districtGridDic)

@@ -55,7 +55,7 @@ public class BuildingPanel : BasePanel
     // Start is called before the first frame update
     void Start()
     {
-        
+        closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 
     public void OnShow(BuildingObject buildingObject, int x, int y, int connY)
@@ -80,7 +80,6 @@ public class BuildingPanel : BasePanel
     public void UpdateForge(BuildingObject buildingObject)
     {
 
-
         nameText.text = buildingObject.name;
         picImage.overrideSprite = Resources.Load("Image/BuildingPic/" + buildingObject.mainPic, typeof(Sprite)) as Sprite; 
         desText.text = gc.OutputSignStr("★", buildingObject.level)+"\n 维护费 "+ buildingObject.expense;
@@ -89,7 +88,6 @@ public class BuildingPanel : BasePanel
 
 
         setManagerRt.anchoredPosition = new Vector2(16f, -298f);
-
         for(int i=0;i< buildingObject.heroList.Count; i++)
         {
             setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic, typeof(Sprite)) as Sprite;
@@ -119,10 +117,8 @@ public class BuildingPanel : BasePanel
 
 
         setWorkerRt.anchoredPosition = new Vector2(16f, -404f);
-
         int feed = gc.districtDic[gc.nowCheckingDistrictID].people - gc.districtDic[gc.nowCheckingDistrictID].worker;
         setWorker_desText.text = "空闲:" + feed + "\n 人数 " + buildingObject.workerNow + "/" + buildingObject.worker;
-
         if (buildingObject.workerNow>0)
         {
             setWorker_minusBtn.interactable = true;
@@ -131,7 +127,6 @@ public class BuildingPanel : BasePanel
         {
             setWorker_minusBtn.interactable = false;
         }
-
         if (feed > 0 && (buildingObject.workerNow < buildingObject.worker))
         {
             setWorker_addBtn.interactable = true;
@@ -143,18 +138,14 @@ public class BuildingPanel : BasePanel
 
         infoHistoryRt.anchoredPosition = new Vector2(278f, -16f);
         infoHistoryRt.sizeDelta = new Vector2(256f, 276f);
-
-        //infoHistory_contentText
         string str = "";
         List<LogObject> temp = new List<LogObject> { };
-
         foreach (KeyValuePair<int, LogObject> kvp in gc.logDic)
         {
             if (kvp.Value.type == LogType.ProduceDone && kvp.Value.value2 == buildingObject.id)
             {
                 str = "[" + kvp.Value.standardTime + "]生产了" + gc.itemDic[kvp.Value.value3].name+"\n"+str;
             }
-
         }
         infoHistory_contentText.text = str;
     }
