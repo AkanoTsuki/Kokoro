@@ -9,7 +9,7 @@ public class GameControlInStartMenu : MonoBehaviour
     Button toNewGameButton;
     Button toContinueButton;
     GameObject ConfirmBoxGo;
-    int flag = 0; //0是否检测到存档
+
 
     void Awake()
     {
@@ -39,7 +39,6 @@ public class GameControlInStartMenu : MonoBehaviour
             ConfirmBoxGo.transform.GetChild(0).GetComponent<Text>().text = "程序检测到已存在游戏记录，如开始新游戏将会覆盖已有数据，确定要重新开始游戏吗？";
             toNewGameButton.interactable = false;
             toContinueButton.interactable = false;
-            flag = 0;
         }
     }
 

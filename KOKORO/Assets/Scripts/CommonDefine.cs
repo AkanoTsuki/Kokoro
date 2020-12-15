@@ -2,6 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//库存资源类型
+public enum StuffType
+{
+Cereal,
+Vegetable,
+Fruit,
+Meat,
+Fish,
+Wood,
+Stone,
+Metal,
+Leather,
+Cloth,
+Twine,
+Bone,
+}
+
 //交互小标签类型
 public enum LabelType
 {
@@ -124,6 +141,13 @@ public enum LogType
     ProduceDone
 }
 
+public enum ExecuteEventType
+{
+    Build,
+    ProduceItem,
+    ProduceResource,
+}
+
 public class ItemAttribute
 {
     private Attribute Attr;
@@ -149,6 +173,8 @@ public class ItemPrototype
     public string Pic;
     public string TypeBig;
     public string TypeSmall;
+    public string Des;
+    public int Cost;
     public int Rank;
     public int Hp;
     public int Mp;
@@ -741,59 +767,59 @@ public class DistrictObject
     public DistrictObject(int id, string name, string baseName, string des, bool isOpen, int level, int people, int peopleLimit, int worker, int gridEmpty, int gridUsed,
         int totalGrass, int totalWood, int totalWater, int totalStone, int totalMetal, int usedGrass, int usedWood, int usedWater, int usedStone, int usedMetal, List<int> buildingList, List<int> heroList,
         int eWind, int eFire, int eWater, int eGround, int eLight, int eDark,
-        int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, 
+        int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish,
         int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
         int rProductWeapon, int rProductArmor, int rProductJewelry,
         int rFoodLimit, int rStuffLimit, int rProductLimit)
     {
-        this.ID=id;
-        this.Name= name;
-        this.BaseName= baseName;
-     this.Des= des;
-     this.IsOpen= isOpen;
-     this.Level= level;
-     this.People= people;
-     this.PeopleLimit= peopleLimit;
+        this.ID = id;
+        this.Name = name;
+        this.BaseName = baseName;
+        this.Des = des;
+        this.IsOpen = isOpen;
+        this.Level = level;
+        this.People = people;
+        this.PeopleLimit = peopleLimit;
         this.Worker = worker;
-        this.GridEmpty= gridEmpty;
-     this.GridUsed= gridUsed;
-     this.TotalGrass= totalGrass;
-     this.TotalWood= totalWood;
-     this.TotalWater= totalWater;
-     this.TotalStone= totalStone;
-     this.TotalMetal= totalMetal;
-     this.UsedGrass= usedGrass;
-     this.UsedWood= usedWood;
-     this.UsedWater= usedWater;
-     this.UsedStone= usedStone;
-     this.UsedMetal= usedMetal;
-     this.BuildingList= buildingList;
+        this.GridEmpty = gridEmpty;
+        this.GridUsed = gridUsed;
+        this.TotalGrass = totalGrass;
+        this.TotalWood = totalWood;
+        this.TotalWater = totalWater;
+        this.TotalStone = totalStone;
+        this.TotalMetal = totalMetal;
+        this.UsedGrass = usedGrass;
+        this.UsedWood = usedWood;
+        this.UsedWater = usedWater;
+        this.UsedStone = usedStone;
+        this.UsedMetal = usedMetal;
+        this.BuildingList = buildingList;
         this.HeroList = heroList;
-        this.EWind= eWind;
-     this.EFire= eFire;
-     this.EWater= eWater;
-     this.EGround= eGround;
-     this.ELight= eLight;
-     this.EDark= eDark;
-     this.RFoodCereal= rFoodCereal;//现有库存
-     this.RFoodVegetable= rFoodVegetable;
-     this.RFoodFruit= rFoodFruit;
-     this.RFoodMeat= rFoodMeat;
-     this.RFoodFish= rFoodFish;
-     this.RStuffWood= rStuffWood;
-     this.RStuffMetal= rStuffMetal;
-     this.RStuffStone= rStuffStone;
-     this.RStuffLeather= rStuffLeather;
-     this.RStuffTwine= rStuffTwine;
-     this.RStuffCloth= rStuffCloth;
-     this.RStuffBone= rStuffBone;
-     this.RProductWeapon= rProductWeapon;
-     this.RProductArmor= rProductArmor;
-     this.RProductJewelry= rProductJewelry;
-     this.RFoodLimit= rFoodLimit;//库存上限
-     this.RStuffLimit= rStuffLimit;
-     this.RProductLimit= rProductLimit;
-}
+        this.EWind = eWind;
+        this.EFire = eFire;
+        this.EWater = eWater;
+        this.EGround = eGround;
+        this.ELight = eLight;
+        this.EDark = eDark;
+        this.RFoodCereal = rFoodCereal;//现有库存
+        this.RFoodVegetable = rFoodVegetable;
+        this.RFoodFruit = rFoodFruit;
+        this.RFoodMeat = rFoodMeat;
+        this.RFoodFish = rFoodFish;
+        this.RStuffWood = rStuffWood;
+        this.RStuffMetal = rStuffMetal;
+        this.RStuffStone = rStuffStone;
+        this.RStuffLeather = rStuffLeather;
+        this.RStuffTwine = rStuffTwine;
+        this.RStuffCloth = rStuffCloth;
+        this.RStuffBone = rStuffBone;
+        this.RProductWeapon = rProductWeapon;
+        this.RProductArmor = rProductArmor;
+        this.RProductJewelry = rProductJewelry;
+        this.RFoodLimit = rFoodLimit;//库存上限
+        this.RStuffLimit = rStuffLimit;
+        this.RProductLimit = rProductLimit;
+    }
     public int id { get { return ID; } }
     public string name { get { return Name; }  }
     public string baseName { get { return BaseName; } set { BaseName = value; } }
@@ -901,6 +927,7 @@ public class BuildingObject
 {
     private int ID;
     private int DistrictID;
+    private int PrototypeID;
     private string Name;
     private string MainPic;
     private string MapPic;
@@ -926,11 +953,12 @@ public class BuildingObject
     private int EGround;
     private int ELight;
     private int EDark;
-    public BuildingObject(int id, int districtID,string name, string mainPic, string mapPic, string panelType, string des, int level, int expense, int upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
+    public BuildingObject(int id, int prototypeID, int districtID,string name, string mainPic, string mapPic, string panelType, string des, int level, int expense, int upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
         int natureGrass, int natureWood, int natureWater, int natureStone, int natureMetal, int people, int worker, int workerNow,
         int eWind, int eFire, int eWater, int eGround, int eLight, int eDark)
     {
         this.ID = id;
+        this.PrototypeID = prototypeID;
         this.DistrictID = districtID;
         this.Name = name;
     this.MainPic = mainPic;
@@ -959,6 +987,7 @@ public class BuildingObject
     this.EDark = eDark;
 }
     public int id{ get { return ID; } }
+    public int prototypeID { get { return PrototypeID; } }
     public int districtID { get { return DistrictID; } }
     public string name{ get { return Name; } }
     public string mainPic { get { return MainPic; } }
@@ -1010,7 +1039,7 @@ public class MonsterPrototype
     public string Des;
 }
 
-//日志消息示例
+//日志消息实例
 public class LogObject
 {
     private int ID;
@@ -1020,6 +1049,7 @@ public class LogObject
     private int Value1;
     private int Value2;
     private int Value3;
+
     public LogObject(int id, LogType type, int standardTime, string text, int value1, int value2, int value3)
     {
         this.ID = id;
@@ -1029,6 +1059,7 @@ public class LogObject
         this.Value1 = value1;
         this.Value2 = value2;
         this.Value3 = value3;
+
     }
     public int id { get { return ID; } }
     public LogType type { get { return Type; } }
@@ -1040,6 +1071,104 @@ public class LogObject
 
 }
 
+
+//装备词条原型
+[System.Serializable]
+public class LemmaPrototype
+{
+    public short ID;
+    public string Name;
+    public string Des;
+    public List<short> Hp;//长度10，下标对应装备的rank确定增加的基本值
+    public List<short> Mp;
+    public List<short> HpRenew;
+    public List<short> MpRenew;
+    public List<short> AtkMin;
+    public List<short> AtkMax;
+    public List<short> MAtkMin;
+    public List<short> MAtkMax;
+    public List<short> Def;
+    public List<short> MDef;
+    public List<short> Hit;
+    public List<short> Dod;
+    public List<short> CriR;
+    public List<short> CriD;
+    public List<short> Spd;
+    public List<short> WindDam;
+    public List<short> FireDam;
+    public List<short> WaterDam;
+    public List<short> GroundDam;
+    public List<short> LightDam;
+    public List<short> DarkDam;
+    public List<short> WindRes;
+    public List<short> FireRes;
+    public List<short> WaterRes;
+    public List<short> GroundRes;
+    public List<short> LightRes;
+    public List<short> DarkRes;
+    public List<short> DizzyRes;
+    public List<short> ConfusionRes;
+    public List<short> PoisonRes;
+    public List<short> SleepRes;
+    public List<short> GoldGet;
+    public List<short> ExpGet;
+    public List<short> ItemGet;
+}
+
+//装备生产关系原型
+[System.Serializable]
+public class ProduceEquipPrototype
+{
+    public short ID;
+    public string Type;
+    public byte Level;
+    public byte InputWood;
+    public byte InputStone;
+    public byte InputMetal;
+    public byte InputLeather;
+    public byte InputCloth;
+    public byte InputTwine;
+    public byte InputBone;
+    public List<short> OutputID;
+    public List<short> OutputRate;
+
+}
+
+public class ExecuteEventObject
+{
+
+    private ExecuteEventType Type;
+    private int StartTime;
+    private int EndTime;
+
+
+    private int Value1;
+    private int Value2;
+    private int Value3;
+    private int Value4;
+    private int Value5;
+    public ExecuteEventObject( ExecuteEventType type, int startTime, int endTime, int value1, int value2, int value3, int value4, int value5)
+    {
+
+        this.Type = type;
+        this.StartTime = startTime;
+        this.EndTime = endTime;
+        this.Value1 = value1;
+        this.Value2 = value2;
+        this.Value3 = value3;
+        this.Value4 = value4;
+        this.Value3 = value5;
+    }
+
+    public ExecuteEventType type { get { return Type; } }
+    public int startTime { get { return StartTime; } }
+    public int endTime { get { return EndTime; } }
+    public int value1 { get { return Value1; } }
+    public int value2 { get { return Value2; } }
+    public int value3 { get { return Value3; } }
+    public int value4 { get { return Value4; } }
+    public int value5 { get { return Value5; } }
+}
 
 public class CommonDefine : MonoBehaviour
 {
