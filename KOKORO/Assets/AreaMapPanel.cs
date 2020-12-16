@@ -61,7 +61,6 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void AddIconByBuilding( int buildingID)
     {
-        Debug.Log("AddIconByBuilding() buildingID="+buildingID);
         for (int i = 0; i < gc.buildingDic[buildingID].gridList.Count; i++)
         {
             AddIconByGrid(gc.buildingDic[buildingID].districtID, buildingID, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].X, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].Y);
@@ -70,8 +69,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void AddIconByGrid(int districtID,int buildingID,int gridX, int gridY)
     {
-        Debug.Log("AddIconByGrid() districtID=" + districtID + " buildingID=" + buildingID);
-        
+
         string str = "";
         if (buildingID == 59 || buildingID == 60 || buildingID == 61 ||
             buildingID == 62 || buildingID == 63 || buildingID == 64)

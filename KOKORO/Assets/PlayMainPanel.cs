@@ -90,7 +90,7 @@ public class PlayMainPanel : BasePanel
         {
             
             Leftis0 = !Leftis0;
-            Debug.Log("切换 Leftis0="+ Leftis0.ToString());
+           // Debug.Log("切换 Leftis0="+ Leftis0.ToString());
         }
 
         if (Leftis0)

@@ -44,6 +44,9 @@ public class BuildingPanel : BasePanel
 
     public Button closeBtn;
 
+    public int setForgeType = 0;
+    public int setForgeLevel = 0;
+
     void Awake()
     {
         Instance = this;
@@ -56,6 +59,8 @@ public class BuildingPanel : BasePanel
     void Start()
     {
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
+        setForge_typeDd.onValueChanged.AddListener(delegate  { setForgeType = setForge_typeDd.value; });
+        setForge_levelDd.onValueChanged.AddListener(delegate { setForgeLevel = setForge_levelDd.value; });
     }
 
     public void OnShow(BuildingObject buildingObject, int x, int y, int connY)
@@ -148,5 +153,76 @@ public class BuildingPanel : BasePanel
             }
         }
         infoHistory_contentText.text = str;
+
+
+        //setForge_typeDd.
+        switch (buildingObject.prototypeID)
+        {
+            case 32:
+            case 33:
+            case 34:
+            case 35:
+            case 36:
+                setForge_typeDd.ClearOptions();
+                setForge_typeDd.AddOptions(new List<string> { "剑", "斧", "枪", "锤", "弓", "杖", "箭袋" });
+                break;
+            case 37:
+            case 38:
+            case 39:
+            case 40:
+            case 41:
+                setForge_typeDd.ClearOptions();
+                setForge_typeDd.AddOptions(new List<string> { "头部防具（重）", "头部防具（轻）", "身体防具（重）", "身体防具（轻）", "手部防具（重）", "手部防具（轻）", "背部防具（重）", "背部防具（轻）", "腿部防具（重）", "腿部防具（轻）", "盾" });
+                break;
+            case 42:
+            case 43:
+            case 44:
+            case 45:
+            case 46:
+                setForge_typeDd.ClearOptions();
+                setForge_typeDd.AddOptions(new List<string> { "项链", "戒指" });
+                break;
+        }
+        setForge_typeDd.RefreshShownValue();
+       // Debug.Log(buildingObject.produceEquipNow);
+       // Debug.Log(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].OptionValue);
+        if (buildingObject.produceEquipNow != -1)
+        {
+            setForge_typeDd.value = DataManager.mProduceEquipDict[buildingObject.produceEquipNow].OptionValue;
+        }
+        else
+        {
+            setForge_typeDd.value = 0;
+        }
+        //setForgeType = setForge_typeDd.value;
+
+        setForge_levelDd.ClearOptions();
+        for (int i = 0; i < buildingObject.level; i++)
+        {
+            setForge_levelDd.AddOptions(new List<string> { (i+1)+"级"});
+        }
+        setForge_levelDd.RefreshShownValue();
+        if (buildingObject.produceEquipNow != -1)
+        { 
+            setForge_levelDd.value = DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level - 1; 
+        }
+        else
+        {
+            setForge_levelDd.value = 0;
+        }
+
+       // setForgeLevel = setForge_levelDd.value;
+
+        if (buildingObject.produceEquipNow != -1)
+        {
+            setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "更新";
+        }
+        else
+        {
+            setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "生产";
+        }
+        setForge_updateBtn.onClick.RemoveAllListeners();
+        setForge_updateBtn.onClick.AddListener(delegate () { gc.ChangeProduceEquipNow(buildingObject.id); });
+
     }
 }

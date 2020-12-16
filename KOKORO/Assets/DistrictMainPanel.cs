@@ -114,7 +114,7 @@ public class DistrictMainPanel : BasePanel
         }
         GameObject go;
 
-        Debug.Log("districtObject.buildingList.Count=" + districtObject.buildingList.Count);
+
         for (int i = 0; i < districtObject.buildingList.Count; i++)
         {
             go = Instantiate(Resources.Load("Prefab/UILabel/Label_BuildingInDistrictMain")) as GameObject;
@@ -123,7 +123,6 @@ public class DistrictMainPanel : BasePanel
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/BuildingPic/" + gc.buildingDic[districtObject.buildingList[i]].mainPic);
             go.transform.GetChild(1).GetComponent<Text>().text = gc.buildingDic[districtObject.buildingList[i]].name;
-            print(districtObject.id);
             go.transform.GetComponent<InteractiveLabel>().index = districtObject.buildingList[i];
         }
         buildingListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(231f, 4 + districtObject.buildingList.Count * 22f));

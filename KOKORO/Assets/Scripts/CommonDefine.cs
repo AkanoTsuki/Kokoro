@@ -14,7 +14,7 @@ public enum StuffType
     Leather,
     Cloth,
     Twine,
-    Bone,
+    Bone
 }
 
 //交互小标签类型
@@ -229,7 +229,9 @@ public class ItemObject
     private List<ItemAttribute> Attr;
     private string Des;
     private int Cost;
-    public ItemObject(int objectID, int prototypeID, string name, string pic, byte rank, byte level, List<ItemAttribute> attr, string des, int cost)
+    private short DistrictID;//如果是装备，存储在哪个地区的制品仓库，-1为整体收藏库
+    private bool IsGoods;//是否商品（DistrictID！=-1）
+    public ItemObject(int objectID, int prototypeID, string name, string pic, byte rank, byte level, List<ItemAttribute> attr, string des, int cost, short districtID, bool isGoods)
     {
         this.ObjectID = objectID;
         this.PrototypeID = prototypeID;
@@ -240,6 +242,8 @@ public class ItemObject
         this.Attr = attr;
         this.Des = des;
         this.Cost = cost;
+        this.DistrictID = districtID;
+        this.IsGoods = isGoods;
     }
     public int objectID { get { return ObjectID; } }
     public int prototypeID { get { return PrototypeID; } }
@@ -250,6 +254,8 @@ public class ItemObject
     public List<ItemAttribute> attr { get { return Attr; } }
     public string des { get { return Des; } }
     public int cost { get { return Cost; } }
+    public short districtID { get { return DistrictID; } }
+    public bool isGoods { get { return IsGoods; } }
 }
 
 
@@ -824,7 +830,7 @@ public class DistrictObject
         this.RStuffLimit = rStuffLimit;
         this.RProductLimit = rProductLimit;
     }
-    public int id { get { return ID; } }
+    public short id { get { return ID; } }
     public string name { get { return Name; }  }
     public string baseName { get { return BaseName; } set { BaseName = value; } }
     public string des { get { return Des; } set { Des = value; } }
@@ -954,9 +960,11 @@ public class BuildingObject
     private byte EGround;
     private byte ELight;
     private byte EDark;
+    private short ProduceEquipNow;//当前生产的装备模板原型ID
     public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, string mapPic, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
         byte natureGrass, byte natureWood, byte natureWater, byte natureStone, byte natureMetal, short people, short worker, short workerNow,
-        byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark)
+        byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
+        short produceEquipNow)
     {
         this.ID = id;
         this.PrototypeID = prototypeID;
@@ -986,6 +994,7 @@ public class BuildingObject
         this.EGround = eGround;
         this.ELight = eLight;
         this.EDark = eDark;
+        this.ProduceEquipNow = produceEquipNow;
     }
     public int id{ get { return ID; } }
     public short prototypeID { get { return PrototypeID; } }
@@ -1015,6 +1024,7 @@ public class BuildingObject
     public byte eGround { get { return EGround; } }
     public byte eLight { get { return ELight; } }
     public byte eDark { get { return EDark; } }
+    public short produceEquipNow { get { return ProduceEquipNow; } set { ProduceEquipNow = value; } }
 }
 
 
@@ -1117,8 +1127,10 @@ public class LemmaPrototype
 public class ProduceEquipPrototype
 {
     public short ID;
-    public string Type;
+    public ItemTypeSmall Type;//smalltype
+    public byte OptionValue;
     public byte Level;
+    public short NeedLabor;
     public byte InputWood;
     public byte InputStone;
     public byte InputMetal;
@@ -1130,34 +1142,56 @@ public class ProduceEquipPrototype
     public List<short> OutputRate;
 }
 
+//资源生产关系原型
+[System.Serializable]
+public class ProduceResourcePrototype
+{
+    public short ID;//对应建筑原型ID
+    public short TimeInterval;
+    public float LaborRate;
+    public short InputCereal;
+    public short InputVegetable;
+    public short InputFruit;
+    public short InputMeat;
+    public short InputFish;
+    public short InputWood;
+    public short InputStone;
+    public short InputMetal;
+    public short InputLeather;
+    public short InputCloth;
+    public short InputTwine;
+    public short InputBone;
+    public short OutputCereal;
+    public short OutputVegetable;
+    public short OutputFruit;
+    public short OutputMeat;
+    public short OutputFish;
+    public short OutputWood;
+    public short OutputStone;
+    public short OutputMetal;
+    public short OutputLeather;
+    public short OutputCloth;
+    public short OutputTwine;
+    public short OutputBone;
+}
+
 public class ExecuteEventObject
 {
     private ExecuteEventType Type;
     private int StartTime;
     private int EndTime;
-    private int Value1;
-    private int Value2;
-    private int Value3;
-    private int Value4;
-    private int Value5;
-    public ExecuteEventObject( ExecuteEventType type, int startTime, int endTime, int value1, int value2, int value3, int value4, int value5)
+    private List<int> Value;
+    public ExecuteEventObject( ExecuteEventType type, int startTime, int endTime, List<int> value)
     {
         this.Type = type;
         this.StartTime = startTime;
         this.EndTime = endTime;
-        this.Value1 = value1;
-        this.Value2 = value2;
-        this.Value3 = value3;
-        this.Value4 = value4;
-        this.Value3 = value5;
+        this.Value = value;
     }
     public ExecuteEventType type { get { return Type; } }
     public int startTime { get { return StartTime; } }
     public int endTime { get { return EndTime; } }
-    public int value1 { get { return Value1; } }
-    public int value2 { get { return Value2; } }
-    public int value3 { get { return Value3; } }
-    public int value4 { get { return Value4; } }
-    public int value5 { get { return Value5; } }
+    public List<int> value { get { return Value; } }
+
 }
 

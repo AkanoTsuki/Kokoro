@@ -176,7 +176,7 @@ public class GameControl : MonoBehaviour
             print("文件不存在." + filename);
         }
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         //Debug.Log("1heroDic.Count=" + heroDic.Count);
@@ -184,11 +184,7 @@ public class GameControl : MonoBehaviour
         //Debug.Log("2heroDic.Count=" + heroDic.Count);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     public void CreateHero(short pid)
     {
         heroDic.Add(heroIndex,GenerateHeroByRandom(heroIndex, pid,(byte)Random.Range(0,2)));
@@ -390,13 +386,15 @@ public class GameControl : MonoBehaviour
         return 0;
     }
 
-    public ItemObject GenerateItemByRandom(int itemID)
+    public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject,List<int> heroObjectIDList)
     {
         //随机提升等级，每个等级提升基础数据5%，上限5
         byte upLevel = 0;
+        int ran;
+     
         for (int i = 0; i < 5; i++)
         {
-            int ran = Random.Range(0, 100);
+             ran = Random.Range(0, 100);
             if (ran < 20)
             {
                 upLevel++;
@@ -407,10 +405,12 @@ public class GameControl : MonoBehaviour
             }
         }
         float upRate = 1f + upLevel * 0.05f;
-
+        string name = DataManager.mItemDict[itemID].Name + (upLevel > 0 ? " +" + upLevel : "");
 
 
         List<ItemAttribute> attrList = new List<ItemAttribute> { };
+
+        //模板基础属性及等级修正
 
         if (DataManager.mItemDict[itemID].AtkMax != 0){attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMax * upRate))); }
         if (DataManager.mItemDict[itemID].AtkMin != 0){attrList.Add(new ItemAttribute(Attribute.AtkMin, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMin * upRate)));}
@@ -451,9 +451,69 @@ public class GameControl : MonoBehaviour
         if (DataManager.mItemDict[itemID].GoldGet != 0) { attrList.Add(new ItemAttribute(Attribute.GoldGet, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].GoldGet * upRate))); }
         if (DataManager.mItemDict[itemID].ItemGet != 0) { attrList.Add(new ItemAttribute(Attribute.ItemGet, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].ItemGet * upRate))); }
 
+        //追加词条
+        byte rank = DataManager.mItemDict[itemID].Rank;
+        int lemmaCount = 0;
+         ran = Random.Range(0, 99);
+        upRate = 1f + Random.Range(0f,0.2f);
+        if (ran <= 10)
+        {
+            lemmaCount = 2;
+        }
+        else if (ran > 10 && ran <= 30)
+        {
+            lemmaCount = 1;
+        }
+        for (int i = 0; i < lemmaCount; i++)
+        {
+            int lemmaID = Random.Range(0, DataManager.mLemmaDict.Count);
+            name = DataManager.mLemmaDict[lemmaID]+"的 " + name;
+
+            if (DataManager.mLemmaDict[lemmaID].AtkMax[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].AtkMax[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].AtkMin[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMin, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].AtkMin[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].MAtkMax[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMax, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].MAtkMax[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].MAtkMin[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMin, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].MAtkMin[rank] * upRate))); }
+
+            if (DataManager.mLemmaDict[lemmaID].Hp[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.Hp, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].Hp[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].Mp[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.Mp, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].Mp[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].HpRenew[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.HpRenew, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].HpRenew[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].MpRenew[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.MpRenew, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].AtkMax[rank] * upRate))); }
+
+            if (DataManager.mLemmaDict[lemmaID].Hit[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.Hit, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].Hit[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].Dod[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.Dod, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].Dod[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].CriR[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.CriR, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].CriR[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].CriD[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.CriD, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].CriD[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].Spd[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.Spd, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].Spd[rank] * upRate))); }
+
+            if (DataManager.mLemmaDict[lemmaID].WindDam[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.WindDam, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].WindDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].FireDam[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.FireDam, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].FireDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].WaterDam[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.WaterDam, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].WaterDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].GroundDam[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.GroundDam, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].GroundDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].LightDam[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.LightDam, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].LightDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].DarkDam[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.DarkDam, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].DarkDam[rank] * upRate))); }
+
+            if (DataManager.mLemmaDict[lemmaID].WindRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.WindRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].WindRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].FireRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.FireRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].FireRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].WaterRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.WaterRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].WaterRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].GroundRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.GroundRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].GroundRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].LightRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.LightRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].LightRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].DarkRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.DarkRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].DarkRes[rank] * upRate))); }
+
+            if (DataManager.mLemmaDict[lemmaID].DizzyRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.DizzyRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].DizzyRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].ConfusionRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.ConfusionRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].ConfusionRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].PoisonRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.PoisonRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].PoisonRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].SleepRes[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.SleepRes, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].SleepRes[rank] * upRate))); }
+
+            if (DataManager.mLemmaDict[lemmaID].ExpGet[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.ExpGet, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].ExpGet[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].GoldGet[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.GoldGet, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].GoldGet[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].ItemGet[rank] != 0) { attrList.Add(new ItemAttribute(Attribute.ItemGet, AttributeSource.Basic, (int)(DataManager.mLemmaDict[lemmaID].ItemGet[rank] * upRate))); }
+
+        }
 
 
-        return new ItemObject(itemIndex, itemID, DataManager.mItemDict[itemID].Name+(upLevel>0?" +"+ upLevel : ""), DataManager.mItemDict[itemID].Pic, DataManager.mItemDict[itemID].Rank,upLevel,attrList, DataManager.mItemDict[itemID].Des+(standardTime+"制作"), DataManager.mItemDict[itemID].Cost);
+
+        return new ItemObject(itemIndex, itemID, name, DataManager.mItemDict[itemID].Pic, DataManager.mItemDict[itemID].Rank,upLevel,attrList, 
+            DataManager.mItemDict[itemID].Des+(standardTime+"制作"), DataManager.mItemDict[itemID].Cost, districtObject!=null? districtObject.id:(short)-1, false);
     }
 
 
@@ -500,7 +560,6 @@ public class GameControl : MonoBehaviour
                 districtGridDic[kvp.Value.id].buildingID = buildingIndex;
                 districtGridDic[kvp.Value.id].pic = DataManager.mBuildingDict[buildingId].MapPic;
 
-              
                 count--;
             }
             if (count == 0)
@@ -508,7 +567,7 @@ public class GameControl : MonoBehaviour
                 break;
             }
         }
-        Debug.Log("grid.count=" + grid.Count );
+
         for (int i = 0; i < grid.Count; i++)
         {
             districtGridDic[grid[i]].buildingID = buildingIndex;
@@ -542,11 +601,10 @@ public class GameControl : MonoBehaviour
 
 
 
-        Debug.Log("buildingDic.count="+ buildingDic.Count+"  buildingIndex=" + buildingIndex);
         buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, DataManager.mBuildingDict[buildingId].MapPic, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, true, grid, new List<int> { },
             DataManager.mBuildingDict[buildingId].NatureGrass, DataManager.mBuildingDict[buildingId].NatureWood, DataManager.mBuildingDict[buildingId].NatureWater, DataManager.mBuildingDict[buildingId].NatureStone, DataManager.mBuildingDict[buildingId].NatureMetal,
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
-            DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark));
+            DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,-1));
 
         //资源生产设施开始自动开工
         
@@ -565,114 +623,180 @@ public class GameControl : MonoBehaviour
         buildingIndex++;
     }
 
-     void StartProduceResource(int districtID, int buildingID,int needTime, StuffType stuffType, int value)
+    void StartProduceResource(int districtID, int buildingID, int needTime, StuffType stuffType, int value)
     {
-        //value1:地区实例ID value2:建筑实例ID value3:资源类型
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource,standardTime, standardTime + needTime, districtID, buildingID, (int)stuffType, value, -1));
-
+        //value0:地区实例ID value1:建筑实例ID value2:资源类型 value3:资源数量
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, (int)stuffType, value }));
+    }
+    void StartProduceItem(int districtID, int buildingID, int needTime, short produceEquipNow)
+    {
+        //value0:地区实例ID value1:建筑实例ID value2:装备模板原型ID
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceItem, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, produceEquipNow }));
     }
 
-
-    public void CreateProduceEvent(int buildingID)
+    public void CreateProduceItemEvent(int buildingID)
     {
+        int needLabor = DataManager.mProduceEquipDict[buildingDic[buildingID].produceEquipNow].NeedLabor;
+        int nowLabor = 20+ buildingDic[buildingID].workerNow*20;
+        for (int i = 1; i < buildingDic[buildingID].heroList.Count; i++)
+        {
+            switch (buildingDic[buildingID].id)
+            {
+                case 32:
+                case 33:
+                case 34:
+                case 35:
+                case 36:
+                    nowLabor += heroDic[buildingDic[buildingID].heroList[i]].workMakeWeapon;
+                    break;
+                case 37:
+                case 38:
+                case 39:
+                case 40:
+                case 41:
+                    nowLabor += heroDic[buildingDic[buildingID].heroList[i]].workMakeArmor;
+                    break;
+                case 42:
+                case 43:
+                case 44:
+                case 45:
+                case 46:
+                    nowLabor += heroDic[buildingDic[buildingID].heroList[i]].workMakeJewelry;
+                    break;
+            }
+        }
 
+        int needTime = (int)(24 * ((float)needLabor / (float)nowLabor));
 
-        int needTime = 0;
-        int num = 0;
-        
+        StartProduceItem(buildingDic[buildingID].districtID, buildingID, needTime, buildingDic[buildingID].produceEquipNow);
+    }
+
+    public void CreateProduceResourceEvent(int buildingID)
+    {
+        int needTime = 24 * DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].TimeInterval;      
+        float laborRate = Mathf.Pow(buildingDic[buildingID].workerNow, DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].LaborRate);
+        int num1,num2 = 0;
+
         switch (buildingDic[buildingID].id)
         {
             case 9://麦田
-                needTime = 24 * 30;
-                 num = buildingDic[buildingID].workerNow * 100;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Cereal, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputCereal * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Cereal, num1);
                 break;
             case 10://菜田
-                needTime = 24 * 30;
-                num = buildingDic[buildingID].workerNow * 100;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Vegetable, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputVegetable * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Vegetable, num1);
                 break;
             case 11://果园
-                needTime = 24 * 30;
-                num = buildingDic[buildingID].workerNow * 100;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Fruit, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputFruit * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Fruit, num1);
                 break;
             case 12://亚麻田
-                needTime = 24 * 30;
-                num = buildingDic[buildingID].workerNow * 100;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Twine, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputTwine * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Twine, num1);
                 break;
             case 13://牛圈
-                needTime = 24 * 30;
-                num = buildingDic[buildingID].workerNow * 100;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Meat, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMeat * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Meat, num1);
                 break;
             case 14://羊圈
-                needTime = 24 * 30;
-                num = buildingDic[buildingID].workerNow * 100;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Meat, num);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Cloth, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMeat * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Meat, num1);
+                num2 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputCloth * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Cloth, num2);
                 break;
             case 15://渔场
-                needTime = 24 * 30;
-                num = buildingDic[buildingID].workerNow * 100;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Fish, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputFish * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Fish, num1);
                 break;
 
             case 16://伐木场
-                needTime =(int)( (24) *(1f- buildingDic[buildingID].workerNow*0.05f));
-                num = 200;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Wood, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputWood * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Wood, num1);
                 break;
             case 17://伐木场
-                needTime = (int)((24) * (1f - buildingDic[buildingID].workerNow * 0.05f));
-                num = 300;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Wood, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputWood * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Wood, num1);
                 break;
             case 18://伐木场
-                needTime = (int)((24) * (1f - buildingDic[buildingID].workerNow * 0.05f));
-                num = 500;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Wood, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputWood * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Wood, num1);
                 break;
 
             case 19://矿场
-                needTime = (int)((24) * (1f - buildingDic[buildingID].workerNow * 0.05f));
-                num = 200;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Metal, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMetal * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Metal, num1);
                 break;
             case 20://矿场
-                needTime = (int)((24) * (1f - buildingDic[buildingID].workerNow * 0.05f));
-                num = 300;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Metal, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMetal * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Metal, num1);
                 break;
             case 21://矿场
-                needTime = (int)((24) * (1f - buildingDic[buildingID].workerNow * 0.05f));
-                num = 500;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Metal, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMetal * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Metal, num1);
                 break;
 
             case 22://采石场
-                needTime = (int)((24) * (1f - buildingDic[buildingID].workerNow * 0.05f));
-                num = 200;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Stone, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputStone * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Stone, num1);
                 break;
             case 23://采石场
-                needTime = (int)((24) * (1f - buildingDic[buildingID].workerNow * 0.05f));
-                num = 300;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Stone, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputStone * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Stone, num1);
                 break;
             case 24://采石场
-                needTime = (int)((24) * (1f - buildingDic[buildingID].workerNow * 0.05f));
-                num = 500;
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Stone, num);
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputStone * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Stone, num1);
                 break;
-
         }
-
-
     }
 
-    public void ResourceAdd(int districtID, StuffType stuffType,  int value)
+    public void DistrictItemAdd(int districtID, int buildingID)
+    {
+        if ((districtDic[districtID].rProductWeapon + districtDic[districtID].rProductArmor + districtDic[districtID].rProductJewelry) >= districtDic[districtID].rProductLimit)
+        {
+            Debug.Log("库存已满，生产失败");
+            return;
+        }
+        int moduleID = buildingDic[buildingID].produceEquipNow;
+        //计算依据模板，确定道具原型ID
+        int probabilityCount = DataManager.mProduceEquipDict[moduleID].OutputRate.Count;
+        int ran = Random.Range(0, 100);
+        int lj = 0;
+        int itemID = -1;
+        for (int i = 0; i < probabilityCount; i++)
+        {
+            lj += DataManager.mProduceEquipDict[moduleID].OutputRate[i];
+
+            if (ran < lj)
+            {
+                itemID = DataManager.mProduceEquipDict[moduleID].OutputID[i];
+                break;
+            }
+        }
+        Debug.Log("DistrictItemAdd() 生产 " + DataManager.mItemDict[itemID].Name);
+
+        itemDic.Add(itemIndex, GenerateItemByRandom(itemID, districtDic[districtID],buildingDic[buildingID].heroList));
+        itemIndex++;
+
+        switch (DataManager.mItemDict[itemID].TypeBig)
+        {
+            case ItemTypeBig.Weapon:
+            case ItemTypeBig.Subhand:
+                districtDic[districtID].rProductWeapon++;
+                break;
+            case ItemTypeBig.Armor:
+                districtDic[districtID].rProductArmor++;
+                break;
+            case ItemTypeBig.Jewelry:
+                districtDic[districtID].rProductJewelry++;
+                break;
+        }
+
+       // itemDic.Add(GenerateItemByRandom(, districtDic[districtID],));
+    }
+
+    public void DistrictResourceAdd(int districtID, StuffType stuffType,  int value)
     {
         switch (stuffType)
         {
@@ -690,6 +814,29 @@ public class GameControl : MonoBehaviour
             case StuffType.Bone: districtDic[districtID].rStuffBone += value; break;
         }
     }
+
+    public void ChangeProduceEquipNow(int buildingID)
+    {
+        Debug.Log("ChangeProduceEquipNow() buildingID=" + buildingID+ " setForgeType="+ BuildingPanel.Instance.setForgeType + " setForgeLevel" + BuildingPanel.Instance.setForgeLevel);
+        bool needStart = (buildingDic[buildingID].produceEquipNow == -1);
+
+        foreach (KeyValuePair<int, ProduceEquipPrototype> kvp in DataManager.mProduceEquipDict)
+        {
+            if (kvp.Value.OptionValue == BuildingPanel.Instance.setForgeType && kvp.Value.Level ==( BuildingPanel.Instance.setForgeLevel+1))
+            {
+                buildingDic[buildingID].produceEquipNow = kvp.Value.ID;
+                Debug.Log("kvp.Value.ID=" + kvp.Value.ID);
+                break;
+            }
+        }
+        Debug.Log("buildingDic[buildingID].produceEquipNow=" + buildingDic[buildingID].produceEquipNow);
+        if (needStart)
+        {
+            CreateProduceItemEvent(buildingID);
+        }
+            
+    }
+
 
     public void CreateLog(LogType logType,string text, int value1, int value2, int value3)
     {
