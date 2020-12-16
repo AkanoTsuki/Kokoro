@@ -21,6 +21,7 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.Build);
         UIManager.Instance.InitPanel(UIPanelType.Message);
         MessagePanel.Instance.OnShow(0, 26);
+        UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
         PlayMainPanel.Instance.OnShow();
 
@@ -61,7 +62,7 @@ public class GameControlInPlay : MonoBehaviour
                         gc.CreateProduceResourceEvent(buildingID);
                         break;
                     case ExecuteEventType.ProduceItem:
-                        Debug.Log("  gc.standardTime=" + gc.standardTime + "   制作模板" + gc.executeEventList[0].value[2]);
+                       // Debug.Log("  gc.standardTime=" + gc.standardTime + "   制作模板" + gc.executeEventList[0].value[2]);
                          districtID = gc.executeEventList[0].value[0];
                          buildingID = gc.executeEventList[0].value[1];
                          itemId = gc.executeEventList[0].value[2];
@@ -92,9 +93,18 @@ public class GameControlInPlay : MonoBehaviour
     }
 
 
-    public void SetBuildProduceEquipNow()
+    public void OpenItemListAndInfo()
     {
-        // gc.nowCheckingDistrictID
-       // BuildingPanel.Instance.setForge_typeDd.options[].;
+        List<ItemObject> itemObjects = new List<ItemObject>();
+
+        foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
+        {
+            if (kvp.Value.districtID == gc.nowCheckingDistrictID)
+            {
+                itemObjects.Add(kvp.Value);
+            }
+        }
+
+        ItemListAndInfoPanel.Instance.OnShow(itemObjects, 84, -88);
     }
 }

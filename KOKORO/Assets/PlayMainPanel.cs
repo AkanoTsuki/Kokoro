@@ -55,7 +55,7 @@ public class PlayMainPanel : BasePanel
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInPlay>();
         
         left_districtMainBtn.onClick.AddListener(delegate () { gci.OpenDistrictMain(); });
-        left_inventoryMainBtn.onClick.AddListener(delegate () {  });
+        left_inventoryMainBtn.onClick.AddListener(delegate () { gci.OpenItemListAndInfo(); });
         left_heroMainBtn.onClick.AddListener(delegate () { });
         left_adventureMainBtn.onClick.AddListener(delegate () { });
     }

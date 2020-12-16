@@ -13,7 +13,7 @@ public enum UIPanelType
     AdventureTeam,
     AdventureFight,
     Equip,
-    Inventory,
+    ItemListAndInfo,
     EconomicStatistics,
     Message,
     AreaMap,

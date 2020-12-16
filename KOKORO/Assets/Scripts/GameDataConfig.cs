@@ -144,8 +144,8 @@ public class GameDataConfig : MonoBehaviour
         //Debug.Log(DataManager.cCreateHeroTypeDict[1].Name);
         //Debug.Log(DataManager.mBuildingDict[5].Name);
         //Debug.Log(DataManager.mMonsterDict[1].Name);
-        //Debug.Log(DataManager.mDistrictDict[2].Water[1]);
-
+       // Debug.Log(DataManager.mItemDict[141].Name);
+       // Debug.Log(DataManager.mItemDict[141].TypeSmall);
     }
 
 }

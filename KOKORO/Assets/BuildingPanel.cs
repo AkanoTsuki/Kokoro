@@ -44,6 +44,7 @@ public class BuildingPanel : BasePanel
 
     public Button closeBtn;
 
+    public int setForgeTypeSmall = 0;
     public int setForgeType = 0;
     public int setForgeLevel = 0;
 

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
+using System;
 //库存资源类型
 public enum StuffType
 {
@@ -171,13 +173,15 @@ public class ItemAttribute
 
 //物品原型
 [System.Serializable]
-public class ItemPrototype
+public class ItemPrototype: ISerializationCallbackReceiver
 {
     public int ID;
     public string Name;
     public string Pic;
     public ItemTypeBig TypeBig;
     public ItemTypeSmall TypeSmall;
+    public string TypeBigStr;
+    public string TypeSmallStr;
     public string Des;
     public int Cost;
     public byte Rank;
@@ -215,6 +219,18 @@ public class ItemPrototype
     public byte GoldGet;
     public byte ExpGet;
     public byte ItemGet;
+    public void OnAfterDeserialize()
+    {
+        ItemTypeSmall type = (ItemTypeSmall)Enum.Parse(typeof(ItemTypeSmall), TypeSmallStr);
+        TypeSmall = type;
+        ItemTypeBig type2 = (ItemTypeBig)Enum.Parse(typeof(ItemTypeBig), TypeBigStr);
+        TypeBig = type2;
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 //物品实例
@@ -1124,10 +1140,13 @@ public class LemmaPrototype
 
 //装备生产关系原型
 [System.Serializable]
-public class ProduceEquipPrototype
+public class ProduceEquipPrototype: ISerializationCallbackReceiver
 {
     public short ID;
     public ItemTypeSmall Type;//smalltype
+
+    public string TypeStr;
+    public List<byte> MakePlace;
     public byte OptionValue;
     public byte Level;
     public short NeedLabor;
@@ -1140,6 +1159,17 @@ public class ProduceEquipPrototype
     public byte InputBone;
     public List<short> OutputID;
     public List<short> OutputRate;
+
+    public void OnAfterDeserialize()
+    {
+        ItemTypeSmall type = (ItemTypeSmall)Enum.Parse(typeof(ItemTypeSmall), TypeStr);
+        Type = type;
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 //资源生产关系原型

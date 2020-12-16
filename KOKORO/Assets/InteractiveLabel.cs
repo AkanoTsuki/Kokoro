@@ -8,9 +8,10 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public LabelType labelType;
     public int index;
     public Button btn;
+    GameControl gc;
     void Start()
     {
-        GameControl gc = GameObject.Find("GameManager").GetComponent<GameControl>();
+        gc = GameObject.Find("GameManager").GetComponent<GameControl>();
         if (labelType == LabelType.BuildingInBuild)
         {
             btn.onClick.AddListener(delegate () { gc.Build((short)index); });
@@ -18,6 +19,15 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         else if (labelType == LabelType.BuildingInDistrictMain)
         {
             btn.onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index],  686,-88,-45); });
+        }
+        else if (labelType == LabelType.Item)
+        {
+            btn.onClick.AddListener(delegate () {
+                ItemListAndInfoPanel.Instance.nowItemID = index;
+                ItemListAndInfoPanel.Instance.UpdateInfo(gc.itemDic[index]);
+            });
+ 
+           // btn.onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index], 686, -88, -45); });
         }
     }
 
@@ -33,6 +43,11 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
             GameControlInNewGame gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInNewGame>();
             HeroPanel.Instance.OnShow(gci.temp_Leader, 374, -32, -234);
         }
+        else if (labelType == LabelType.Item)
+        {
+            ItemListAndInfoPanel.Instance.UpdateInfo(gc.itemDic[index]);
+            // btn.onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index], 686, -88, -45); });
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -46,6 +61,20 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
 
             HeroPanel.Instance.OnHide();
+        }
+        else if (labelType == LabelType.Item)
+        {
+            if (ItemListAndInfoPanel.Instance.nowItemID == -1)
+            {
+                return;
+            }
+            if (!gc.itemDic.ContainsKey(ItemListAndInfoPanel.Instance.nowItemID))
+            {
+                return;
+            }
+
+            ItemListAndInfoPanel.Instance.UpdateInfo(gc.itemDic[ItemListAndInfoPanel.Instance.nowItemID]);
+            // btn.onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index], 686, -88, -45); });
         }
     }
 }
