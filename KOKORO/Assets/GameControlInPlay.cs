@@ -22,6 +22,8 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.Message);
         MessagePanel.Instance.OnShow(0, 26);
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
+        UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
+        UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
         PlayMainPanel.Instance.OnShow();
 
@@ -32,7 +34,18 @@ public class GameControlInPlay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            gc.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("gc.executeEventList.Count=" + gc.executeEventList.Count);
+            if (gc.executeEventList.Count > 0)
+            {
+                Debug.Log("gc.executeEventList[0]=" + gc.executeEventList[0].endTime+ " gc.standardTime=" + gc.standardTime);
+            }
+        }
     }
     public void TimeFlow()
     {
@@ -68,15 +81,22 @@ public class GameControlInPlay : MonoBehaviour
                          buildingID = gc.executeEventList[0].value[1];
                          itemId = gc.executeEventList[0].value[2];
                         bool isSuccess = gc.DistrictItemAdd(districtID, buildingID);
+                        //Debug.Log(isSuccess);
                         gc.executeEventList.RemoveAt(0);
-                        if (!isSuccess)//制作失败，停止继续生产
+                        if (isSuccess)//制作失败，停止继续生产
+                        {                         
+                            gc.CreateProduceItemEvent(buildingID);
+                        }
+                        else
                         {
                             gc.buildingDic[buildingID].produceEquipNow = -1;
-                            gc.CreateProduceItemEvent(buildingID);
-                        }            
+                        }
                         break;
                     case ExecuteEventType.Build:
-                        
+                        districtID = gc.executeEventList[0].value[0];
+                        buildingID = gc.executeEventList[0].value[1];
+                        gc.BuildDone((short)buildingID);
+                        gc.executeEventList.RemoveAt(0);
                         break;
                     default: break;
                 }
@@ -97,9 +117,18 @@ public class GameControlInPlay : MonoBehaviour
 
     public void OpenBuild()
     {
-        BuildPanel.Instance.OnShow( 688, -88);
+        BuildPanel.Instance.OnShow(84, -88);
     }
 
+    public void OpenBuildingSelect()
+    {
+        BuildingSelectPanel.Instance.OnShow(84, -88);
+    }
+
+    public void OpenHeroSelect()
+    {
+        HeroSelectPanel.Instance.OnShow("",84, -88);
+    }
 
     public void OpenItemListAndInfo()
     {

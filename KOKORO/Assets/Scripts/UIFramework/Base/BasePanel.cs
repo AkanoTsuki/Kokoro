@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+
 //所有面板的公共基类
 public class BasePanel : MonoBehaviour
 {
@@ -109,4 +110,5 @@ public class BasePanel : MonoBehaviour
         canvasGroup.blocksRaycasts = false;//使该页面不可交互
         canvasGroup.alpha = 0;
     }
+
 }

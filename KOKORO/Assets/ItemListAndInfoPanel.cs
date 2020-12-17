@@ -66,6 +66,7 @@ public class ItemListAndInfoPanel : BasePanel
             listRt.sizeDelta = new Vector2(470f - 232f, 450f);
         }
 
+ 
         //Debug.Log("前itemObjects.Count=" + itemObjects.Count + " itemGo.Count=" + itemGo.Count);
         GameObject go;
         for (int i = 0; i < itemObjects.Count; i++)
@@ -84,20 +85,17 @@ public class ItemListAndInfoPanel : BasePanel
             
             int row = i == 0 ? 0 : (i % columns);
             int col = i == 0 ? 0 : (i / columns);
-           // Debug.Log("count=" + count + " row=" + row + " col=" + col);
             go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 224f, -4 + col * -22f, 0f);
 
-           // go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f, -4 + i * -22f, 0f);
-
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObjects[i].pic);
-            go.transform.GetChild(1).GetComponent<Text>().text = "<color=#"+ itemObjects[i].rank+ ">"+itemObjects[i].name+"</color>";
+            go.transform.GetChild(1).GetComponent<Text>().text = "<color=#"+ gc.OutputItemRankColorString(itemObjects[i].rank) + ">"+itemObjects[i].name+"</color>";
             go.transform.GetComponent<InteractiveLabel>().index = itemObjects[i].objectID;
         }
         for (int i = itemObjects.Count; i < itemGo.Count; i++)
         {
             itemGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
-       // Debug.Log("后itemObjects.Count=" + itemObjects.Count + " itemGo.Count=" + itemGo.Count);
+    
         itemListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(425f, 4 + (itemObjects.Count / columns) * 22f));
     }
 
@@ -146,7 +144,7 @@ public class ItemListAndInfoPanel : BasePanel
         string strLemma = "";
         string strBasicFirst = "";
         List<int> atkValue = new List<int> { 0, 0, 0, 0, 0 };
-        Debug.Log(" itemObject.attr.Count=" + itemObject.attr.Count);
+        //Debug.Log(" itemObject.attr.Count=" + itemObject.attr.Count);
         for (int i = 0; i < itemObject.attr.Count; i++)
         {
 

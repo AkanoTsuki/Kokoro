@@ -53,7 +53,7 @@ public class MessagePanel : BasePanel
         GameObject go;
         go = Instantiate(Resources.Load("Prefab/UILabel/Label_Message")) as GameObject;
         go.transform.SetParent(messageListGo.transform);
-        go.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, count * 30f, 0f);
+        go.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, count * 16f, 0f);
         go.transform.GetChild(0).GetComponent<Text>().text = str;
         if (logObject.value[0] != -1)
         {
@@ -63,10 +63,23 @@ public class MessagePanel : BasePanel
         {
             go.transform.GetChild(1).localScale = Vector3.zero;
         }
-        messageListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(313f, 30f+count * 30f);
+        messageListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(313f, 16f+count * 16f);
 
         count++;
         messageSb.value = 1f;
     }
 
+    public void AddMessage(string content)
+    {
+        GameObject go;
+        go = Instantiate(Resources.Load("Prefab/UILabel/Label_Message")) as GameObject;
+        go.transform.SetParent(messageListGo.transform);
+        go.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, count * 16f, 0f);
+        go.transform.GetChild(0).GetComponent<Text>().text = content;
+        go.transform.GetChild(1).localScale = Vector3.zero;
+        messageListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(313f, 16f + count * 16f);
+
+        count++;
+        messageSb.value = 1f;
+    }
 }

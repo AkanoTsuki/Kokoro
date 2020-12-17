@@ -58,6 +58,7 @@ public class BuildingPanel : BasePanel
     void Start()
     {
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
+        
         setForge_typeDd.onValueChanged.AddListener(delegate  { setForgeType = setForge_typeDd.value; });
         setForge_levelDd.onValueChanged.AddListener(delegate { setForgeLevel = setForge_levelDd.value; });
     }
@@ -72,6 +73,13 @@ public class BuildingPanel : BasePanel
         }
         SetAnchoredPosition(x, y);
         isShow = true;
+
+        setWorker_minusBtn.onClick.RemoveAllListeners();
+        setWorker_minusBtn.onClick.AddListener(delegate () { gc.BuildingWorkerMinus(buildingObject.id); });
+        setWorker_addBtn.onClick.RemoveAllListeners();
+        setWorker_addBtn.onClick.AddListener(delegate () { gc.BuildingWorkerAdd(buildingObject.id); });
+
+
     }
 
     public override void OnHide()
@@ -137,7 +145,8 @@ public class BuildingPanel : BasePanel
         }
     }
 
-    public void UpdateSetWorkerPart(BuildingObject buildingObject)
+
+public void UpdateSetWorkerPart(BuildingObject buildingObject)
     {
         setWorkerRt.anchoredPosition = new Vector2(16f, -404f);
         int feed = gc.districtDic[gc.nowCheckingDistrictID].people - gc.districtDic[gc.nowCheckingDistrictID].worker;

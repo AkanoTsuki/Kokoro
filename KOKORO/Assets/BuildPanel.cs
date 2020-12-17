@@ -40,7 +40,7 @@ public class BuildPanel : BasePanel
     public void UpdateAllInfo(GameControl gc)
     {
 
-        infoText.text = "木材 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffWood + "     石料 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffWood + "     金属 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal + "\n金币 " + gc.gold;
+        infoText.text = "木材 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffWood + "     石料 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffStone + "     金属 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal + "\n金币 " + gc.gold;
 
         List <BuildingPrototype> temp = new List<BuildingPrototype> { };
         foreach (KeyValuePair<int, BuildingPrototype> kvp in DataManager.mBuildingDict)

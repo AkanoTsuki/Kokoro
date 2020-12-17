@@ -217,8 +217,8 @@ public class GameControl : MonoBehaviour
     //pid:
     public HeroObject GenerateHeroByRandom(int heroID,short heroTypeID,byte sexCode)
     {
-        string name = "";
-        string pic = "";
+        string name;
+        string pic;
         if (sexCode == 0)
         {
             name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
@@ -550,18 +550,80 @@ public class GameControl : MonoBehaviour
 
 
 
-    public void Build( short buildingId)
+    public void BuildDone( short buildingId)
+    {
+        buildingDic[buildingId].buildProgress = 1;
+      
+        //资源生产设施开始自动开工
+
+
+        AreaMapPanel.Instance.AddIconByBuilding(buildingId);
+        if(DistrictMainPanel.Instance.isShow&& buildingDic[buildingId].districtID== nowCheckingDistrictID)
+        {
+            DistrictMainPanel.Instance.UpdateNatureInfo(districtDic[nowCheckingDistrictID]);
+            DistrictMainPanel.Instance.UpdateOutputInfo(districtDic[nowCheckingDistrictID]);
+            DistrictMainPanel.Instance.UpdateCultureInfo(districtDic[nowCheckingDistrictID]);
+            DistrictMainPanel.Instance.UpdateBuildingInfo(districtDic[nowCheckingDistrictID]);
+        }
+
+
+        //BuildPanel.Instance.UpdateAllInfo(this);
+        MessagePanel.Instance.AddMessage(districtDic[buildingDic[buildingId].districtID].name+"的"+ buildingDic[buildingId].name+"建筑完成");
+    
+    }
+
+
+    void StartBuild(int districtID,int buildingID, int needTime)
+    {
+        //value0:地区实例ID value1:建筑实例ID 
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Build, standardTime, standardTime + needTime, new List<int> { districtID, buildingID }));
+    }
+
+    void StartProduceResource(int districtID, int buildingID, int needTime, StuffType stuffType, int value)
+    {
+        //value0:地区实例ID value1:建筑实例ID value2:资源类型 value3:资源数量
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, (int)stuffType, value }));
+    }
+    void StartProduceItem(int districtID, int buildingID, int needTime, short produceEquipNow)
+    {
+        //value0:地区实例ID value1:建筑实例ID value2:装备模板原型ID
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceItem, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, produceEquipNow }));
+    }
+
+    public void CreateBuildEvent(short BuildingPrototypeID)
     {
 
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureGrass > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedGrass)
+        {
+            return;
+        }
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureWood > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWood)
+        {
+            return;
+        }
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureWater > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWater)
+        {
+            return;
+        }
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureStone > districtDic[nowCheckingDistrictID].totalStone - districtDic[nowCheckingDistrictID].usedStone)
+        {
+            return;
+        }
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureMetal > districtDic[nowCheckingDistrictID].totalMetal - districtDic[nowCheckingDistrictID].usedMetal)
+        {
+            return;
+        }
+
+        short buildingId = BuildingPrototypeID;
         List<int> grid = new List<int> { };
         short count = DataManager.mBuildingDict[buildingId].Grid;
 
 
         foreach (KeyValuePair<int, DistrictGridObject> kvp in districtGridDic)
         {
-            if (DataManager.mDistrictGridDict[kvp.Value.id].DistrictID == nowCheckingDistrictID&& 
-                DataManager.mDistrictGridDict[kvp.Value.id].Level<= districtDic[nowCheckingDistrictID].level&&
-                 kvp.Value.buildingID==-1)
+            if (DataManager.mDistrictGridDict[kvp.Value.id].DistrictID == nowCheckingDistrictID &&
+                DataManager.mDistrictGridDict[kvp.Value.id].Level <= districtDic[nowCheckingDistrictID].level &&
+                 kvp.Value.buildingID == -1)
             {
                 grid.Add(kvp.Value.id);
                 districtGridDic[kvp.Value.id].buildingID = buildingIndex;
@@ -603,7 +665,7 @@ public class GameControl : MonoBehaviour
 
 
         districtDic[nowCheckingDistrictID].gridEmpty -= count;
-        districtDic[nowCheckingDistrictID].gridUsed+= count;
+        districtDic[nowCheckingDistrictID].gridUsed += count;
         districtDic[nowCheckingDistrictID].buildingList.Add(buildingIndex);
 
 
@@ -611,67 +673,16 @@ public class GameControl : MonoBehaviour
         buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, DataManager.mBuildingDict[buildingId].MapPic, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, true, grid, new List<int> { },
             DataManager.mBuildingDict[buildingId].NatureGrass, DataManager.mBuildingDict[buildingId].NatureWood, DataManager.mBuildingDict[buildingId].NatureWater, DataManager.mBuildingDict[buildingId].NatureStone, DataManager.mBuildingDict[buildingId].NatureMetal,
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
-            DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,-1,0));
+            DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,
+            -1, 0));
 
-        //资源生产设施开始自动开工
-
-
-        AreaMapPanel.Instance.AddIconByBuilding(buildingIndex);
-
-        DistrictMainPanel.Instance.UpdateNatureInfo(districtDic[nowCheckingDistrictID]);
-        DistrictMainPanel.Instance.UpdateOutputInfo(districtDic[nowCheckingDistrictID]);
-        DistrictMainPanel.Instance.UpdateCultureInfo(districtDic[nowCheckingDistrictID]);
-        DistrictMainPanel.Instance.UpdateBuildingInfo(districtDic[nowCheckingDistrictID]);
-
-        BuildPanel.Instance.UpdateAllInfo(this);
-        
-        buildingIndex++;
-    }
-
-
-    void StartBuild(int districtID,int BuildingPrototypeID, int needTime)
-    {
-        //value0:地区实例ID value1:建筑原型ID 
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Build, standardTime, standardTime + needTime, new List<int> { districtID, BuildingPrototypeID }));
-    }
-
-    void StartProduceResource(int districtID, int buildingID, int needTime, StuffType stuffType, int value)
-    {
-        //value0:地区实例ID value1:建筑实例ID value2:资源类型 value3:资源数量
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, (int)stuffType, value }));
-    }
-    void StartProduceItem(int districtID, int buildingID, int needTime, short produceEquipNow)
-    {
-        //value0:地区实例ID value1:建筑实例ID value2:装备模板原型ID
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceItem, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, produceEquipNow }));
-    }
-
-    public void CreateBuildEvent(int BuildingPrototypeID)
-    {
-
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureGrass > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedGrass)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureWood > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWood)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureWater > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWater)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureStone > districtDic[nowCheckingDistrictID].totalStone - districtDic[nowCheckingDistrictID].usedStone)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureMetal > districtDic[nowCheckingDistrictID].totalMetal - districtDic[nowCheckingDistrictID].usedMetal)
-        {
-            return;
-        }
+       
 
         int needTime = DataManager.mBuildingDict[BuildingPrototypeID].BuildTime * 10;
-        StartBuild(nowCheckingDistrictID, BuildingPrototypeID, needTime);
+        StartBuild(nowCheckingDistrictID, buildingIndex, needTime);
+
+        buildingIndex++;
+        BuildPanel.Instance.UpdateAllInfo(this);
     }
 
     public void CreateProduceItemEvent(int buildingID)
@@ -960,7 +971,7 @@ public class GameControl : MonoBehaviour
     public string OutputDateStr(int t, string format)
     {
        // int t = st / 10;
-        string r = "";
+        //string r = "";
         int year=0, month = 0, day = 0, hour = 0, st = 0;
 
         if (t >= 86400) //天,

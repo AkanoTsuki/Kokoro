@@ -28,7 +28,8 @@ public enum LabelType
     BuildingInDistrictMain,
     HeroInDis,
     BuildingInBuild,
-    Message
+    Message,
+    HeroInSelect
 }
 
 public enum Element
@@ -923,7 +924,7 @@ public class BuildingPrototype
     public string PanelType;
     public string Des;
     public byte Level;
-    public byte BuildTime;//建造时间 单位小时
+    public short BuildTime;//建造时间 单位小时
     public short NeedGold;
     public short NeedWood;
     public short NeedStone;

@@ -35,7 +35,7 @@ public class DistrictMainPanel : BasePanel
     void Start()
     {
         GameControlInPlay gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInPlay>();
-        buildBtn.onClick.AddListener(delegate () { gci.OpenBuild(); });
+        //buildBtn.onClick.AddListener(delegate () { gci.OpenBuild(); });
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 

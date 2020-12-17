@@ -36,10 +36,7 @@ public class GameControlInNewGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            gc.Save();
-        }
+        
     }
 
     public void SetDistrict(short districtID)

@@ -17,6 +17,8 @@ public enum UIPanelType
     EconomicStatistics,
     Message,
     AreaMap,
-    PlayMain
+    PlayMain,
+    BuildingSelect,
+    HeroSelect
 
 }
