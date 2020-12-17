@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+
 public class GameControl : MonoBehaviour
 {
 
@@ -19,7 +20,7 @@ public class GameControl : MonoBehaviour
     public int timeYear = 1;
     public int gold=0;
     public short nowCheckingDistrictID = 0;
-    public int standardTime = 0;//时间戳，基准时间单位：小时
+    public int standardTime = 0;//时间戳，基准时间单位：1/10小时
     public List<ExecuteEventObject> executeEventList = new List<ExecuteEventObject>();
     public int nextExecuteEventEndTime = 0;
     public int heroIndex = 0;
@@ -551,31 +552,6 @@ public class GameControl : MonoBehaviour
 
     public void Build( short buildingId)
     {
-       // Debug.Log(" Build（） buildingId=" + buildingId);
-
-
-        if (DataManager.mBuildingDict[buildingId].NatureGrass > districtDic[nowCheckingDistrictID].totalGrass- districtDic[nowCheckingDistrictID].usedGrass)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[buildingId].NatureWood > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWood)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[buildingId].NatureWater > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWater)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[buildingId].NatureStone > districtDic[nowCheckingDistrictID].totalStone - districtDic[nowCheckingDistrictID].usedStone)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[buildingId].NatureMetal > districtDic[nowCheckingDistrictID].totalMetal - districtDic[nowCheckingDistrictID].usedMetal)
-        {
-            return;
-        }
-
-
 
         List<int> grid = new List<int> { };
         short count = DataManager.mBuildingDict[buildingId].Grid;
@@ -635,11 +611,9 @@ public class GameControl : MonoBehaviour
         buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, DataManager.mBuildingDict[buildingId].MapPic, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, true, grid, new List<int> { },
             DataManager.mBuildingDict[buildingId].NatureGrass, DataManager.mBuildingDict[buildingId].NatureWood, DataManager.mBuildingDict[buildingId].NatureWater, DataManager.mBuildingDict[buildingId].NatureStone, DataManager.mBuildingDict[buildingId].NatureMetal,
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
-            DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,-1));
+            DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,-1,0));
 
         //资源生产设施开始自动开工
-        
-        
 
 
         AreaMapPanel.Instance.AddIconByBuilding(buildingIndex);
@@ -654,6 +628,13 @@ public class GameControl : MonoBehaviour
         buildingIndex++;
     }
 
+
+    void StartBuild(int districtID,int BuildingPrototypeID, int needTime)
+    {
+        //value0:地区实例ID value1:建筑原型ID 
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Build, standardTime, standardTime + needTime, new List<int> { districtID, BuildingPrototypeID }));
+    }
+
     void StartProduceResource(int districtID, int buildingID, int needTime, StuffType stuffType, int value)
     {
         //value0:地区实例ID value1:建筑实例ID value2:资源类型 value3:资源数量
@@ -663,6 +644,34 @@ public class GameControl : MonoBehaviour
     {
         //value0:地区实例ID value1:建筑实例ID value2:装备模板原型ID
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceItem, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, produceEquipNow }));
+    }
+
+    public void CreateBuildEvent(int BuildingPrototypeID)
+    {
+
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureGrass > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedGrass)
+        {
+            return;
+        }
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureWood > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWood)
+        {
+            return;
+        }
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureWater > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWater)
+        {
+            return;
+        }
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureStone > districtDic[nowCheckingDistrictID].totalStone - districtDic[nowCheckingDistrictID].usedStone)
+        {
+            return;
+        }
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureMetal > districtDic[nowCheckingDistrictID].totalMetal - districtDic[nowCheckingDistrictID].usedMetal)
+        {
+            return;
+        }
+
+        int needTime = DataManager.mBuildingDict[BuildingPrototypeID].BuildTime * 10;
+        StartBuild(nowCheckingDistrictID, BuildingPrototypeID, needTime);
     }
 
     public void CreateProduceItemEvent(int buildingID)
@@ -782,12 +791,13 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    public void DistrictItemAdd(int districtID, int buildingID)
+    public bool DistrictItemAdd(int districtID, int buildingID)
     {
         if ((districtDic[districtID].rProductWeapon + districtDic[districtID].rProductArmor + districtDic[districtID].rProductJewelry) >= districtDic[districtID].rProductLimit)
         {
             Debug.Log("库存已满，生产失败");
-            return;
+
+            return false;
         }
         int moduleID = buildingDic[buildingID].produceEquipNow;
         //计算依据模板，确定道具原型ID
@@ -824,6 +834,8 @@ public class GameControl : MonoBehaviour
                 break;
         }
 
+        CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemID });
+        return true;
        // itemDic.Add(GenerateItemByRandom(, districtDic[districtID],));
     }
 
@@ -853,9 +865,6 @@ public class GameControl : MonoBehaviour
 
         foreach (KeyValuePair<int, ProduceEquipPrototype> kvp in DataManager.mProduceEquipDict)
         {
-            //kvp.Value.t
-
-
             if (kvp.Value.MakePlace.Contains((byte)buildingDic[buildingID].prototypeID)&& kvp.Value.OptionValue == BuildingPanel.Instance.setForgeType && kvp.Value.Level ==( BuildingPanel.Instance.setForgeLevel+1))
             {
                 buildingDic[buildingID].produceEquipNow = kvp.Value.ID;
@@ -872,11 +881,65 @@ public class GameControl : MonoBehaviour
     }
 
 
-    public void CreateLog(LogType logType,string text, int value1, int value2, int value3)
+
+    public void BuildingManagerMinus(int buildingID, int heroID)
     {
-        logDic.Add(logIndex, new LogObject(logIndex, logType,standardTime, text, value1, value2, value3));
+        if (!buildingDic[buildingID].heroList.Contains(heroID))
+        {
+            return;
+        }
+        buildingDic[buildingID].heroList.Remove(heroID);
+        heroDic[heroID].workerInBuilding = -1;
+        BuildingPanel.Instance.UpdateSetManagerPart(buildingDic[buildingID]);
+    }
+
+    public void BuildingManagerAdd(int buildingID, int heroID)
+    {
+        if (buildingDic[buildingID].heroList.Count >= 4)
+        {
+            return;
+        }
+        if (heroDic[heroID].workerInBuilding != -1)
+        {
+            return;
+        }
+        buildingDic[buildingID].heroList.Add(heroID);
+        heroDic[heroID].workerInBuilding = buildingID;
+        BuildingPanel.Instance.UpdateSetManagerPart(buildingDic[buildingID]);
+    }
+
+    public void BuildingWorkerMinus(int buildingID)
+    {
+        if ( buildingDic[buildingID].worker<=0)
+        {
+            return;
+        }  
+        buildingDic[buildingID].workerNow--;
+        districtDic[buildingDic[buildingID].districtID].worker--;
+        BuildingPanel.Instance.UpdateSetWorkerPart(buildingDic[buildingID]);
+    }
+
+    public void BuildingWorkerAdd(int buildingID)
+    {
+        if (buildingDic[buildingID].workerNow >= buildingDic[buildingID].worker)
+        {
+            return;
+        }
+        if (districtDic[buildingDic[buildingID].districtID].people - districtDic[buildingDic[buildingID].districtID].worker <= 0)
+        {
+            return;
+        }
+        buildingDic[buildingID].workerNow++;
+        districtDic[buildingDic[buildingID].districtID].worker++;
+        BuildingPanel.Instance.UpdateSetWorkerPart(buildingDic[buildingID]);
+    }
+
+    public void CreateLog(LogType logType,string text, List<int> value)
+    {
+        //LogType.ProduceDone(地区实例ID,建筑实例ID,物品原型ID)
+        logDic.Add(logIndex, new LogObject(logIndex, logType,standardTime, text, value));
         logIndex++;
-        MessagePanel.Instance.AddMessage(logDic[logIndex - 1]);
+        //MessagePanel.Instance.AddMessage(logDic[logIndex - 1]);
     }
 
     //添加执行事件，遍历确定插入位置
@@ -892,6 +955,58 @@ public class GameControl : MonoBehaviour
         }
         executeEventList.Add(executeEventObject);
     }
+
+    //辅助方法组
+    public string OutputDateStr(int t, string format)
+    {
+       // int t = st / 10;
+        string r = "";
+        int year=0, month = 0, day = 0, hour = 0, st = 0;
+
+        if (t >= 86400) //天,
+        {
+            year = System.Convert.ToInt16(t / 86400);
+            month = System.Convert.ToInt16((t % 86400) / 7200);
+            day = System.Convert.ToInt16((t % 86400 % 7200) / 240);
+            hour = System.Convert.ToInt16((t % 86400 % 7200 % 240) / 10);
+            st = System.Convert.ToInt16(t % 86400 % 7200 % 240 % 10);
+        }
+        else if (t >= 7200)//时,
+        {
+            month = System.Convert.ToInt16(t / 7200);
+            day = System.Convert.ToInt16((t % 7200) / 240);
+            hour = System.Convert.ToInt16((t % 7200 % 240) / 10);
+            st = System.Convert.ToInt16(t % 7200 % 240 % 10);
+        }
+        else if (t >= 240)//分
+        {
+            day = System.Convert.ToInt16(t / 240);
+            hour = System.Convert.ToInt16((t % 240) / 10);
+            st = System.Convert.ToInt16(t % 240 % 10);
+        }
+        else if (t >= 10)
+        {
+            hour = System.Convert.ToInt16(t / 10);
+            st = System.Convert.ToInt16(t % 10);
+        }
+        else
+        {
+            st = System.Convert.ToInt16(t);
+        }
+
+        switch (format)
+        {
+            case "Y年M月D日H时":return (year + 1) + ("年") + ((month + 1) > 12 ? 1 : (month + 1)) + ("月") + day + ("日") + hour + ("时");
+            case "Y年M月D日": return (year + 1) + ("年") + ((month + 1) > 12 ? 1 : (month + 1)) + ("月") + day + ("日") ; 
+            case "Y/M/D H": return (year + 1) + ("/") + ((month + 1) > 12 ? 1 : (month + 1)) + ("/") + day + (" ") + hour ;
+            default:return "未知格式";
+        }    
+
+   
+    }
+
+  
+
 
     public string ValueToRank(int value)
     {
@@ -919,6 +1034,23 @@ public class GameControl : MonoBehaviour
         return tempStr;
     }
 
+    public string OutputItemRankColorString(byte rank)
+    {
+        switch (rank)
+        {
+            case 1: return "B3B3B3";
+            case 2: return "CDC9C9";
+            case 3: return "32CD32";
+            case 4: return "5CACEE";
+            case 5: return "436EEE";
+            case 6: return "CD00CD";
+            case 7: return "FF8C00";
+            case 8: return "EE2C2C";
+            case 9: return "EEC900";
+            case 10: return "EEAD0E";
+            default: return "";
+        }
+    }
     public string OutputAttrName(Attribute attribute)
     {
         switch (attribute)

@@ -6,6 +6,8 @@ public class BasePanel : MonoBehaviour
 {
    // protected CanvasGroup canvasGroup;//对该页面CanvasGroup组件的引用
 
+    public bool isShow = false;
+
     CanvasGroup canvasGroup;
     void Start()
     {

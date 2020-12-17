@@ -45,7 +45,7 @@ public class DistrictMainPanel : BasePanel
         UpdateAllInfo(gc, districtObject);
         SetAnchoredPosition(x, y);
         //ShowByImmediately(true);
-
+        isShow = true;
     }
 
     public void UpdateAllInfo(GameControl gc, DistrictObject districtObject)
@@ -165,5 +165,6 @@ public class DistrictMainPanel : BasePanel
     public override void OnHide()
     {
         SetAnchoredPosition(0, 5000);
+        isShow = false;
     }
 }

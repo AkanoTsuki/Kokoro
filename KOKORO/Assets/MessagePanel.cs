@@ -44,8 +44,8 @@ public class MessagePanel : BasePanel
         switch (logObject.type)
         {
             case LogType.Info:str = logObject.text;break;
-            case LogType.ProduceDone: str =gc.districtDic[ logObject.value1].baseName +"的"+gc.buildingDic[logObject.value2]+"生产了"+gc.itemDic[logObject.value3]; break;
-            case LogType.BuildDone: str = gc.districtDic[logObject.value1].baseName + "的" + gc.buildingDic[logObject.value2] + "建造完成了"; break;
+            case LogType.ProduceDone: str =gc.districtDic[ logObject.value[0]].baseName +"的"+gc.buildingDic[logObject.value[1]]+"生产了"+gc.itemDic[logObject.value[2]]; break;
+            case LogType.BuildDone: str = gc.districtDic[logObject.value[0]].baseName + "的" + gc.buildingDic[logObject.value[1]] + "建造完成了"; break;
             default:str = "未定义日志类型";break;
         }
    
@@ -55,7 +55,7 @@ public class MessagePanel : BasePanel
         go.transform.SetParent(messageListGo.transform);
         go.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, count * 30f, 0f);
         go.transform.GetChild(0).GetComponent<Text>().text = str;
-        if (logObject.value1 != -1)
+        if (logObject.value[0] != -1)
         {
             go.GetComponent<InteractiveLabel>().index = logObject.id;
         }

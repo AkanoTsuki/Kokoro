@@ -47,6 +47,7 @@ public class BuildingPanel : BasePanel
     public int setForgeTypeSmall = 0;
     public int setForgeType = 0;
     public int setForgeLevel = 0;
+ 
 
     void Awake()
     {
@@ -54,9 +55,6 @@ public class BuildingPanel : BasePanel
         gc = GameObject.Find("GameManager").GetComponent<GameControl>();
     }
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
@@ -66,8 +64,6 @@ public class BuildingPanel : BasePanel
 
     public void OnShow(BuildingObject buildingObject, int x, int y, int connY)
     {
-
-
         switch (buildingObject.panelType)
         {
             case "Forge":
@@ -75,26 +71,45 @@ public class BuildingPanel : BasePanel
             default:break;
         }
         SetAnchoredPosition(x, y);
+        isShow = true;
     }
 
     public override void OnHide()
     {
         SetAnchoredPosition(0, 5000);
+        isShow = false;
     }
 
 
     public void UpdateForge(BuildingObject buildingObject)
     {
+        UpdateBasicPart(buildingObject);
+        UpdateOutputInfoPart(buildingObject);
+        UpdateSetManagerPart(buildingObject);
+        UpdateSetWorkerPart(buildingObject);
+        UpdateHistoryInfoPart(buildingObject);
+        UpdateSetForgePart(buildingObject);
+    }
 
+    //各栏目更新
+    public void UpdateBasicPart(BuildingObject buildingObject)
+    {
         nameText.text = buildingObject.name;
-        picImage.overrideSprite = Resources.Load("Image/BuildingPic/" + buildingObject.mainPic, typeof(Sprite)) as Sprite; 
-        desText.text = gc.OutputSignStr("★", buildingObject.level)+"\n 维护费 "+ buildingObject.expense;
+        picImage.overrideSprite = Resources.Load("Image/BuildingPic/" + buildingObject.mainPic, typeof(Sprite)) as Sprite;
+        desText.text = gc.OutputSignStr("★", buildingObject.level) + "\n 维护费 " + buildingObject.expense;
+    }
 
-        outputInfoRt.anchoredPosition = new Vector2(16f,-120f);
+    public void UpdateOutputInfoPart(BuildingObject buildingObject)
+    {
+        outputInfoRt.anchoredPosition = new Vector2(16f, -120f);
 
+        outputInfo_desText.text = "";
+    }
 
+    public void UpdateSetManagerPart(BuildingObject buildingObject)
+    {
         setManagerRt.anchoredPosition = new Vector2(16f, -298f);
-        for(int i=0;i< buildingObject.heroList.Count; i++)
+        for (int i = 0; i < buildingObject.heroList.Count; i++)
         {
             setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic, typeof(Sprite)) as Sprite;
             setManager_textList[i].text = gc.heroDic[buildingObject.heroList[i]].name;
@@ -104,7 +119,7 @@ public class BuildingPanel : BasePanel
         }
         for (int i = buildingObject.heroList.Count; i < 4; i++)
         {
-            setManager_imageList[i].overrideSprite = Resources.Load("Image/Empty" , typeof(Sprite)) as Sprite;
+            setManager_imageList[i].overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
             if (i == buildingObject.heroList.Count)
             {
                 setManager_textList[i].text = " <未指派>";
@@ -118,14 +133,16 @@ public class BuildingPanel : BasePanel
                 setManager_btnList[i].gameObject.GetComponent<Image>().overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                 setManager_btnList[i].onClick.RemoveAllListeners();
             }
-            
+
         }
+    }
 
-
+    public void UpdateSetWorkerPart(BuildingObject buildingObject)
+    {
         setWorkerRt.anchoredPosition = new Vector2(16f, -404f);
         int feed = gc.districtDic[gc.nowCheckingDistrictID].people - gc.districtDic[gc.nowCheckingDistrictID].worker;
         setWorker_desText.text = "空闲:" + feed + "\n 人数 " + buildingObject.workerNow + "/" + buildingObject.worker;
-        if (buildingObject.workerNow>0)
+        if (buildingObject.workerNow > 0)
         {
             setWorker_minusBtn.interactable = true;
         }
@@ -141,22 +158,26 @@ public class BuildingPanel : BasePanel
         {
             setWorker_addBtn.interactable = false;
         }
+    }
 
+    public void UpdateHistoryInfoPart(BuildingObject buildingObject)
+    {
         infoHistoryRt.anchoredPosition = new Vector2(278f, -16f);
         infoHistoryRt.sizeDelta = new Vector2(256f, 276f);
         string str = "";
         List<LogObject> temp = new List<LogObject> { };
         foreach (KeyValuePair<int, LogObject> kvp in gc.logDic)
         {
-            if (kvp.Value.type == LogType.ProduceDone && kvp.Value.value2 == buildingObject.id)
+            if (kvp.Value.type == LogType.ProduceDone && kvp.Value.value[1] == buildingObject.id)
             {
-                str = "[" + kvp.Value.standardTime + "]生产了" + gc.itemDic[kvp.Value.value3].name+"\n"+str;
+                str = "[" +gc.OutputDateStr( kvp.Value.standardTime, "Y年M月D日") + "]生产了" +DataManager.mItemDict[kvp.Value.value[2]].Name + "\n" + str;
             }
         }
         infoHistory_contentText.text = str;
+    }
 
-
-        //setForge_typeDd.
+    public void UpdateSetForgePart(BuildingObject buildingObject)
+    {
         switch (buildingObject.prototypeID)
         {
             case 32:
@@ -185,8 +206,8 @@ public class BuildingPanel : BasePanel
                 break;
         }
         setForge_typeDd.RefreshShownValue();
-       // Debug.Log(buildingObject.produceEquipNow);
-       // Debug.Log(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].OptionValue);
+        // Debug.Log(buildingObject.produceEquipNow);
+        // Debug.Log(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].OptionValue);
         if (buildingObject.produceEquipNow != -1)
         {
             setForge_typeDd.value = DataManager.mProduceEquipDict[buildingObject.produceEquipNow].OptionValue;
@@ -200,19 +221,19 @@ public class BuildingPanel : BasePanel
         setForge_levelDd.ClearOptions();
         for (int i = 0; i < buildingObject.level; i++)
         {
-            setForge_levelDd.AddOptions(new List<string> { (i+1)+"级"});
+            setForge_levelDd.AddOptions(new List<string> { (i + 1) + "级" });
         }
         setForge_levelDd.RefreshShownValue();
         if (buildingObject.produceEquipNow != -1)
-        { 
-            setForge_levelDd.value = DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level - 1; 
+        {
+            setForge_levelDd.value = DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level - 1;
         }
         else
         {
             setForge_levelDd.value = 0;
         }
 
-       // setForgeLevel = setForge_levelDd.value;
+        // setForgeLevel = setForge_levelDd.value;
 
         if (buildingObject.produceEquipNow != -1)
         {

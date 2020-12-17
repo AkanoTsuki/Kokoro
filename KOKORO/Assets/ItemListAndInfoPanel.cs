@@ -40,7 +40,7 @@ public class ItemListAndInfoPanel : BasePanel
     }
     public void OnShow(List<ItemObject> itemObjects, int x, int y)
     {
-        UpdateAllInfo(itemObjects, 2);
+        UpdateAllInfo(itemObjects, 1);
         SetAnchoredPosition(x, y);
     }
     public override void OnHide()
@@ -90,7 +90,7 @@ public class ItemListAndInfoPanel : BasePanel
            // go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f, -4 + i * -22f, 0f);
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObjects[i].pic);
-            go.transform.GetChild(1).GetComponent<Text>().text = itemObjects[i].name;
+            go.transform.GetChild(1).GetComponent<Text>().text = "<color=#"+ itemObjects[i].rank+ ">"+itemObjects[i].name+"</color>";
             go.transform.GetComponent<InteractiveLabel>().index = itemObjects[i].objectID;
         }
         for (int i = itemObjects.Count; i < itemGo.Count; i++)
@@ -111,7 +111,7 @@ public class ItemListAndInfoPanel : BasePanel
         }
 
         info_picText.sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObject.pic);
-        info_nameText.text = itemObject.name+"\n"+gc.OutputSignStr("★", itemObject.rank);
+        info_nameText.text = "<color=#"+gc.OutputItemRankColorString(itemObject.rank) +">"+itemObject.name+"</color>\n"+gc.OutputSignStr("★", itemObject.rank);
         string str = "";
 
 

@@ -38,7 +38,8 @@ public class GameControlInPlay : MonoBehaviour
     {
         
         gc.timeS++;
-        if (gc.timeS > 10) { gc.timeHour++; gc.timeS = 0; PlayMainPanel.Instance.UpdateDateInfo(); }
+        PlayMainPanel.Instance.UpdateTimeBar();
+        if (gc.timeS >= 10) { PlayMainPanel.Instance.UpdateTimeText();  gc.timeHour++; gc.timeS = 0;  }
         if (gc.timeHour >= 24) { gc.timeDay++; gc.timeHour = 0;gc.timeWeek++;if (gc.timeWeek > 7) { gc.timeWeek = 1; } }
         if (gc.timeDay > 30) { gc.timeMonth++; gc.timeDay = 1; }
         if (gc.timeMonth > 12) { gc.timeYear++; gc.timeMonth = 1; }
@@ -66,9 +67,16 @@ public class GameControlInPlay : MonoBehaviour
                          districtID = gc.executeEventList[0].value[0];
                          buildingID = gc.executeEventList[0].value[1];
                          itemId = gc.executeEventList[0].value[2];
-                        gc.DistrictItemAdd(districtID, buildingID);
+                        bool isSuccess = gc.DistrictItemAdd(districtID, buildingID);
                         gc.executeEventList.RemoveAt(0);
-                        gc.CreateProduceItemEvent(buildingID);
+                        if (!isSuccess)//制作失败，停止继续生产
+                        {
+                            gc.buildingDic[buildingID].produceEquipNow = -1;
+                            gc.CreateProduceItemEvent(buildingID);
+                        }            
+                        break;
+                    case ExecuteEventType.Build:
+                        
                         break;
                     default: break;
                 }

@@ -79,9 +79,13 @@ public class PlayMainPanel : BasePanel
 
     public void UpdateDateInfo()
     {
+        UpdateTimeText();
+        UpdateTimeBar();
+    }
+    public void UpdateTimeText()
+    {
         top_dateText.text = "  第" + gc.timeYear + "年       " + gc.timeMonth + "月" + gc.timeDay + "日";
         top_hourText.text = gc.timeHour.ToString();
-        UpdateTimeBar();
     }
 
     public void UpdateTimeBar()
@@ -95,7 +99,7 @@ public class PlayMainPanel : BasePanel
 
         if (Leftis0)
         {
-            top_timeBarRtList[0].anchoredPosition = new Vector2((gc.timeHour - 4) * -20f, 0);
+            top_timeBarRtList[0].anchoredPosition = new Vector2((gc.timeHour - 4) * -20f+(-2f*gc.timeS), 0);
             if (gc.timeHour <= 6)
             {
                 top_timeBarRtList[1].anchoredPosition = new Vector2(top_timeBarRtList[0].anchoredPosition.x - 480f, 0);
@@ -108,7 +112,7 @@ public class PlayMainPanel : BasePanel
         }
         else
         {
-            top_timeBarRtList[1].anchoredPosition = new Vector2((gc.timeHour - 4) * -20f, 0);
+            top_timeBarRtList[1].anchoredPosition = new Vector2((gc.timeHour - 4) * -20f + (-2f * gc.timeS), 0);
             if (gc.timeHour <= 6)
             {
                 top_timeBarRtList[0].anchoredPosition = new Vector2(top_timeBarRtList[1].anchoredPosition.x - 480f, 0);

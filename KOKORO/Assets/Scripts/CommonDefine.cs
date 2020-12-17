@@ -748,9 +748,9 @@ public class DistrictObject
     private string Des;
     private bool IsOpen;
     private byte Level;
-    private short People;
-    private short PeopleLimit;
-    private short Worker;
+    private short People;//当前人口
+    private short PeopleLimit;//人口上限
+    private short Worker;//正在工作
     private short GridEmpty;
     private short GridUsed;
     private short TotalGrass;
@@ -923,6 +923,7 @@ public class BuildingPrototype
     public string PanelType;
     public string Des;
     public byte Level;
+    public byte BuildTime;//建造时间 单位小时
     public short NeedGold;
     public short NeedWood;
     public short NeedStone;
@@ -977,10 +978,11 @@ public class BuildingObject
     private byte ELight;
     private byte EDark;
     private short ProduceEquipNow;//当前生产的装备模板原型ID
+    private byte BuildProgress;//0建设中 1已完成
     public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, string mapPic, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
         byte natureGrass, byte natureWood, byte natureWater, byte natureStone, byte natureMetal, short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
-        short produceEquipNow)
+        short produceEquipNow, byte buildProgress)
     {
         this.ID = id;
         this.PrototypeID = prototypeID;
@@ -1011,36 +1013,38 @@ public class BuildingObject
         this.ELight = eLight;
         this.EDark = eDark;
         this.ProduceEquipNow = produceEquipNow;
+        this.BuildProgress = buildProgress;
     }
     public int id{ get { return ID; } }
-    public short prototypeID { get { return PrototypeID; } }
+    public short prototypeID { get { return PrototypeID; } set { PrototypeID = value; } }
     public short districtID { get { return DistrictID; } }
-    public string name{ get { return Name; } }
-    public string mainPic { get { return MainPic; } }
-    public string mapPic { get { return MapPic; } }
-    public string panelType { get { return PanelType; } }
-    public string des { get { return Des; } }
-    public byte level { get { return Level; } }
-    public int expense { get { return Expense; } }
-    public short upgradeTo { get { return UpgradeTo; } }
+    public string name{ get { return Name; } set { Name = value; } }
+    public string mainPic { get { return MainPic; } set { MainPic = value; } }
+    public string mapPic { get { return MapPic; } set { MapPic = value; } }
+    public string panelType { get { return PanelType; } set { PanelType = value; } }
+    public string des { get { return Des; } set { Des = value; } }
+    public byte level { get { return Level; } set { Level = value; } }
+    public int expense { get { return Expense; } set { Expense = value; } }
+    public short upgradeTo { get { return UpgradeTo; } set { UpgradeTo = value; } }
     public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
     public List<int> gridList { get { return GridList; } set { GridList = value; } }
     public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
-    public byte natureGrass { get { return NatureGrass; } }
-    public byte natureWood { get { return NatureWood; } }
-    public byte natureWater { get { return NatureWater; } }
-    public byte natureStone { get { return NatureStone; } }
-    public byte natureMetal { get { return NatureMetal; } }
-    public short people { get { return People; } }
-    public short worker { get { return Worker; } }
+    public byte natureGrass { get { return NatureGrass; } set { NatureGrass = value; } }
+    public byte natureWood { get { return NatureWood; } set { NatureWood = value; } }
+    public byte natureWater { get { return NatureWater; } set { NatureWater = value; } }
+    public byte natureStone { get { return NatureStone; } set { NatureStone = value; } }
+    public byte natureMetal { get { return NatureMetal; } set { NatureMetal = value; } }
+    public short people { get { return People; } set { People = value; } }
+    public short worker { get { return Worker; } set { Worker = value; } }
     public short workerNow { get { return WorkerNow; } set { WorkerNow = value; } }
-    public byte eWind { get { return EWind; } }
-    public byte eFire { get { return EFire; } }
-    public byte eWater { get { return EWater; } }
-    public byte eGround { get { return EGround; } }
-    public byte eLight { get { return ELight; } }
-    public byte eDark { get { return EDark; } }
+    public byte eWind { get { return EWind; } set { EWind = value; } }
+    public byte eFire { get { return EFire; } set { EFire = value; } }
+    public byte eWater { get { return EWater; } set { EWater = value; } }
+    public byte eGround { get { return EGround; } set { EGround = value; } }
+    public byte eLight { get { return ELight; } set { ELight = value; } }
+    public byte eDark { get { return EDark; } set { EDark = value; } }
     public short produceEquipNow { get { return ProduceEquipNow; } set { ProduceEquipNow = value; } }
+    public byte buildProgress { get { return BuildProgress; } set { BuildProgress = value; } }
 }
 
 
@@ -1072,26 +1076,20 @@ public class LogObject
     private LogType Type;
     private int StandardTime;
     private string Text;
-    private int Value1;
-    private int Value2;
-    private int Value3;
-    public LogObject(int id, LogType type, int standardTime, string text, int value1, int value2, int value3)
+    private List<int> Value;
+    public LogObject(int id, LogType type, int standardTime, string text, List<int> value)
     {
         this.ID = id;
         this.Type = type;
         this.StandardTime = standardTime;
         this.Text = text;
-        this.Value1 = value1;
-        this.Value2 = value2;
-        this.Value3 = value3;
+        this.Value = value;
     }
     public int id { get { return ID; } }
     public LogType type { get { return Type; } }
     public int standardTime { get { return StandardTime; } }
     public string text { get { return Text; } }
-    public int value1 { get { return Value1; } }
-    public int value2 { get { return Value2; } }
-    public int value3 { get { return Value3; } }
+    public List<int> value { get { return Value; } }
 }
 
 
