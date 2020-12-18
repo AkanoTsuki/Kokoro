@@ -978,7 +978,7 @@ public class BuildingObject
     private byte EGround;
     private byte ELight;
     private byte EDark;
-    private short ProduceEquipNow;//当前生产的装备模板原型ID
+    private short ProduceEquipNow;//当前生产的装备模板原型ID 如果是资源类则对应资源生产关系表
     private byte BuildProgress;//0建设中 1已完成
     public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, string mapPic, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
         byte natureGrass, byte natureWood, byte natureWater, byte natureStone, byte natureMetal, short people, short worker, short workerNow,
@@ -1143,9 +1143,9 @@ public class ProduceEquipPrototype: ISerializationCallbackReceiver
 {
     public short ID;
     public ItemTypeSmall Type;//smalltype
-
     public string TypeStr;
     public List<byte> MakePlace;
+    public string OutputPic;
     public byte OptionValue;
     public byte Level;
     public short NeedLabor;
@@ -1176,6 +1176,8 @@ public class ProduceEquipPrototype: ISerializationCallbackReceiver
 public class ProduceResourcePrototype
 {
     public short ID;//对应建筑原型ID
+    public string Action;
+    public List<string> OutputPic;
     public short TimeInterval;
     public float LaborRate;
     public short InputCereal;

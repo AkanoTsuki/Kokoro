@@ -26543,6 +26543,7 @@
         35,
         36
       ],
+      "OutputPic": "w_sword_1",
       "OptionValue": 0,
       "Level": 1,
       "NeedLabor": 100,
@@ -26576,6 +26577,7 @@
         35,
         36
       ],
+      "OutputPic": "w_sword_1",
       "OptionValue": 0,
       "Level": 2,
       "NeedLabor": 200,
@@ -26609,6 +26611,7 @@
         35,
         36
       ],
+      "OutputPic": "w_sword_1",
       "OptionValue": 0,
       "Level": 3,
       "NeedLabor": 300,
@@ -26644,6 +26647,7 @@
         35,
         36
       ],
+      "OutputPic": "w_sword_1",
       "OptionValue": 0,
       "Level": 4,
       "NeedLabor": 400,
@@ -26679,6 +26683,7 @@
         35,
         36
       ],
+      "OutputPic": "w_sword_1",
       "OptionValue": 0,
       "Level": 5,
       "NeedLabor": 500,
@@ -26712,6 +26717,7 @@
         35,
         36
       ],
+      "OutputPic": "w_axe_1",
       "OptionValue": 1,
       "Level": 1,
       "NeedLabor": 100,
@@ -26743,6 +26749,7 @@
         35,
         36
       ],
+      "OutputPic": "w_axe_1",
       "OptionValue": 1,
       "Level": 2,
       "NeedLabor": 200,
@@ -26776,6 +26783,7 @@
         35,
         36
       ],
+      "OutputPic": "w_axe_1",
       "OptionValue": 1,
       "Level": 3,
       "NeedLabor": 300,
@@ -26809,6 +26817,7 @@
         35,
         36
       ],
+      "OutputPic": "w_axe_1",
       "OptionValue": 1,
       "Level": 4,
       "NeedLabor": 400,
@@ -26840,6 +26849,7 @@
         35,
         36
       ],
+      "OutputPic": "w_axe_1",
       "OptionValue": 1,
       "Level": 5,
       "NeedLabor": 500,
@@ -26875,6 +26885,7 @@
         35,
         36
       ],
+      "OutputPic": "w_spear_1",
       "OptionValue": 2,
       "Level": 1,
       "NeedLabor": 100,
@@ -26906,6 +26917,7 @@
         35,
         36
       ],
+      "OutputPic": "w_spear_1",
       "OptionValue": 2,
       "Level": 2,
       "NeedLabor": 200,
@@ -26937,6 +26949,7 @@
         35,
         36
       ],
+      "OutputPic": "w_spear_1",
       "OptionValue": 2,
       "Level": 3,
       "NeedLabor": 300,
@@ -26968,6 +26981,7 @@
         35,
         36
       ],
+      "OutputPic": "w_spear_1",
       "OptionValue": 2,
       "Level": 4,
       "NeedLabor": 400,
@@ -26999,6 +27013,7 @@
         35,
         36
       ],
+      "OutputPic": "w_spear_1",
       "OptionValue": 2,
       "Level": 5,
       "NeedLabor": 500,
@@ -27032,6 +27047,7 @@
         35,
         36
       ],
+      "OutputPic": "w_hammer_1",
       "OptionValue": 3,
       "Level": 1,
       "NeedLabor": 100,
@@ -27065,6 +27081,7 @@
         35,
         36
       ],
+      "OutputPic": "w_hammer_1",
       "OptionValue": 3,
       "Level": 2,
       "NeedLabor": 200,
@@ -27100,6 +27117,7 @@
         35,
         36
       ],
+      "OutputPic": "w_hammer_1",
       "OptionValue": 3,
       "Level": 3,
       "NeedLabor": 300,
@@ -27135,6 +27153,7 @@
         35,
         36
       ],
+      "OutputPic": "w_hammer_1",
       "OptionValue": 3,
       "Level": 4,
       "NeedLabor": 400,
@@ -27170,6 +27189,7 @@
         35,
         36
       ],
+      "OutputPic": "w_hammer_1",
       "OptionValue": 3,
       "Level": 5,
       "NeedLabor": 500,
@@ -27201,6 +27221,7 @@
         35,
         36
       ],
+      "OutputPic": "w_bow_1",
       "OptionValue": 4,
       "Level": 1,
       "NeedLabor": 100,
@@ -27232,6 +27253,7 @@
         35,
         36
       ],
+      "OutputPic": "w_bow_1",
       "OptionValue": 4,
       "Level": 2,
       "NeedLabor": 200,
@@ -27265,6 +27287,7 @@
         35,
         36
       ],
+      "OutputPic": "w_bow_1",
       "OptionValue": 4,
       "Level": 3,
       "NeedLabor": 300,
@@ -27298,6 +27321,7 @@
         35,
         36
       ],
+      "OutputPic": "w_bow_1",
       "OptionValue": 4,
       "Level": 4,
       "NeedLabor": 400,
@@ -27329,6 +27353,7 @@
         35,
         36
       ],
+      "OutputPic": "w_bow_1",
       "OptionValue": 4,
       "Level": 5,
       "NeedLabor": 500,
@@ -27360,6 +27385,7 @@
         35,
         36
       ],
+      "OutputPic": "w_staff_1",
       "OptionValue": 5,
       "Level": 1,
       "NeedLabor": 100,
@@ -27393,6 +27419,7 @@
         35,
         36
       ],
+      "OutputPic": "w_staff_1",
       "OptionValue": 5,
       "Level": 2,
       "NeedLabor": 200,
@@ -27428,6 +27455,7 @@
         35,
         36
       ],
+      "OutputPic": "w_staff_1",
       "OptionValue": 5,
       "Level": 3,
       "NeedLabor": 300,
@@ -27463,6 +27491,7 @@
         35,
         36
       ],
+      "OutputPic": "w_staff_1",
       "OptionValue": 5,
       "Level": 4,
       "NeedLabor": 400,
@@ -27500,6 +27529,7 @@
         35,
         36
       ],
+      "OutputPic": "w_staff_1",
       "OptionValue": 5,
       "Level": 5,
       "NeedLabor": 500,
@@ -27533,6 +27563,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 0,
       "Level": 1,
       "NeedLabor": 100,
@@ -27566,6 +27597,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 0,
       "Level": 2,
       "NeedLabor": 200,
@@ -27599,6 +27631,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 0,
       "Level": 3,
       "NeedLabor": 300,
@@ -27634,6 +27667,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 0,
       "Level": 4,
       "NeedLabor": 400,
@@ -27671,6 +27705,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 0,
       "Level": 5,
       "NeedLabor": 500,
@@ -27708,6 +27743,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 1,
       "Level": 1,
       "NeedLabor": 100,
@@ -27741,6 +27777,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 1,
       "Level": 2,
       "NeedLabor": 200,
@@ -27776,6 +27813,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 1,
       "Level": 3,
       "NeedLabor": 300,
@@ -27811,6 +27849,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 1,
       "Level": 4,
       "NeedLabor": 400,
@@ -27846,6 +27885,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 1,
       "Level": 5,
       "NeedLabor": 500,
@@ -27879,6 +27919,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_h_1",
       "OptionValue": 2,
       "Level": 1,
       "NeedLabor": 100,
@@ -27912,6 +27953,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_h_1",
       "OptionValue": 2,
       "Level": 2,
       "NeedLabor": 200,
@@ -27943,6 +27985,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_h_1",
       "OptionValue": 2,
       "Level": 3,
       "NeedLabor": 300,
@@ -27978,6 +28021,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_h_1",
       "OptionValue": 2,
       "Level": 4,
       "NeedLabor": 400,
@@ -28015,6 +28059,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_h_1",
       "OptionValue": 2,
       "Level": 5,
       "NeedLabor": 500,
@@ -28052,6 +28097,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_l_1",
       "OptionValue": 3,
       "Level": 1,
       "NeedLabor": 100,
@@ -28087,6 +28133,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_l_1",
       "OptionValue": 3,
       "Level": 2,
       "NeedLabor": 200,
@@ -28122,6 +28169,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_l_1",
       "OptionValue": 3,
       "Level": 3,
       "NeedLabor": 300,
@@ -28157,6 +28205,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_l_1",
       "OptionValue": 3,
       "Level": 4,
       "NeedLabor": 400,
@@ -28192,6 +28241,7 @@
         40,
         41
       ],
+      "OutputPic": "a_body_l_1",
       "OptionValue": 3,
       "Level": 5,
       "NeedLabor": 500,
@@ -28225,6 +28275,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 4,
       "Level": 1,
       "NeedLabor": 100,
@@ -28254,6 +28305,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 4,
       "Level": 2,
       "NeedLabor": 200,
@@ -28285,6 +28337,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 4,
       "Level": 3,
       "NeedLabor": 300,
@@ -28318,6 +28371,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 4,
       "Level": 4,
       "NeedLabor": 400,
@@ -28353,6 +28407,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_h_2",
       "OptionValue": 4,
       "Level": 5,
       "NeedLabor": 500,
@@ -28386,6 +28441,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 5,
       "Level": 1,
       "NeedLabor": 100,
@@ -28415,6 +28471,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 5,
       "Level": 2,
       "NeedLabor": 200,
@@ -28446,6 +28503,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 5,
       "Level": 3,
       "NeedLabor": 300,
@@ -28477,6 +28535,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 5,
       "Level": 4,
       "NeedLabor": 400,
@@ -28506,6 +28565,7 @@
         40,
         41
       ],
+      "OutputPic": "a_hand_l_4",
       "OptionValue": 5,
       "Level": 5,
       "NeedLabor": 500,
@@ -28537,6 +28597,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_h_2",
       "OptionValue": 6,
       "Level": 1,
       "NeedLabor": 100,
@@ -28566,6 +28627,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_h_2",
       "OptionValue": 6,
       "Level": 2,
       "NeedLabor": 200,
@@ -28599,6 +28661,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_h_2",
       "OptionValue": 6,
       "Level": 3,
       "NeedLabor": 300,
@@ -28632,6 +28695,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_h_2",
       "OptionValue": 6,
       "Level": 4,
       "NeedLabor": 400,
@@ -28665,6 +28729,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_h_2",
       "OptionValue": 6,
       "Level": 5,
       "NeedLabor": 500,
@@ -28696,6 +28761,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_l_8",
       "OptionValue": 7,
       "Level": 1,
       "NeedLabor": 100,
@@ -28719,6 +28785,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_l_8",
       "OptionValue": 7,
       "Level": 2,
       "NeedLabor": 200,
@@ -28746,6 +28813,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_l_8",
       "OptionValue": 7,
       "Level": 3,
       "NeedLabor": 300,
@@ -28773,6 +28841,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_l_8",
       "OptionValue": 7,
       "Level": 4,
       "NeedLabor": 400,
@@ -28802,6 +28871,7 @@
         40,
         41
       ],
+      "OutputPic": "a_back_l_8",
       "OptionValue": 7,
       "Level": 5,
       "NeedLabor": 500,
@@ -28833,6 +28903,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_h_2",
       "OptionValue": 8,
       "Level": 1,
       "NeedLabor": 100,
@@ -28862,6 +28933,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_h_2",
       "OptionValue": 8,
       "Level": 2,
       "NeedLabor": 200,
@@ -28895,6 +28967,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_h_2",
       "OptionValue": 8,
       "Level": 3,
       "NeedLabor": 300,
@@ -28930,6 +29003,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_h_2",
       "OptionValue": 8,
       "Level": 4,
       "NeedLabor": 400,
@@ -28967,6 +29041,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_h_2",
       "OptionValue": 8,
       "Level": 5,
       "NeedLabor": 500,
@@ -29004,6 +29079,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_l_1",
       "OptionValue": 9,
       "Level": 1,
       "NeedLabor": 100,
@@ -29039,6 +29115,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_l_1",
       "OptionValue": 9,
       "Level": 2,
       "NeedLabor": 200,
@@ -29074,6 +29151,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_l_1",
       "OptionValue": 9,
       "Level": 3,
       "NeedLabor": 300,
@@ -29109,6 +29187,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_l_1",
       "OptionValue": 9,
       "Level": 4,
       "NeedLabor": 400,
@@ -29144,6 +29223,7 @@
         40,
         41
       ],
+      "OutputPic": "a_foot_l_1",
       "OptionValue": 9,
       "Level": 5,
       "NeedLabor": 500,
@@ -29177,6 +29257,7 @@
         45,
         46
       ],
+      "OutputPic": "j_neck_l_9",
       "OptionValue": 0,
       "Level": 1,
       "NeedLabor": 100,
@@ -29208,6 +29289,7 @@
         45,
         46
       ],
+      "OutputPic": "j_neck_l_9",
       "OptionValue": 0,
       "Level": 2,
       "NeedLabor": 200,
@@ -29245,6 +29327,7 @@
         45,
         46
       ],
+      "OutputPic": "j_neck_l_9",
       "OptionValue": 0,
       "Level": 3,
       "NeedLabor": 300,
@@ -29282,6 +29365,7 @@
         45,
         46
       ],
+      "OutputPic": "j_neck_l_9",
       "OptionValue": 0,
       "Level": 4,
       "NeedLabor": 400,
@@ -29319,6 +29403,7 @@
         45,
         46
       ],
+      "OutputPic": "j_neck_l_9",
       "OptionValue": 0,
       "Level": 5,
       "NeedLabor": 500,
@@ -29356,6 +29441,7 @@
         45,
         46
       ],
+      "OutputPic": "j_finger_1",
       "OptionValue": 1,
       "Level": 1,
       "NeedLabor": 100,
@@ -29383,6 +29469,7 @@
         45,
         46
       ],
+      "OutputPic": "j_finger_1",
       "OptionValue": 1,
       "Level": 2,
       "NeedLabor": 200,
@@ -29414,6 +29501,7 @@
         45,
         46
       ],
+      "OutputPic": "j_finger_1",
       "OptionValue": 1,
       "Level": 3,
       "NeedLabor": 300,
@@ -29445,6 +29533,7 @@
         45,
         46
       ],
+      "OutputPic": "j_finger_1",
       "OptionValue": 1,
       "Level": 4,
       "NeedLabor": 400,
@@ -29476,6 +29565,7 @@
         45,
         46
       ],
+      "OutputPic": "j_finger_1",
       "OptionValue": 1,
       "Level": 5,
       "NeedLabor": 500,
@@ -29499,6 +29589,7 @@
         40,
         41
       ],
+      "OutputPic": "s_shield_1",
       "OptionValue": 10,
       "Level": 1,
       "NeedLabor": 100,
@@ -29532,6 +29623,7 @@
         40,
         41
       ],
+      "OutputPic": "s_shield_1",
       "OptionValue": 10,
       "Level": 2,
       "NeedLabor": 200,
@@ -29565,6 +29657,7 @@
         40,
         41
       ],
+      "OutputPic": "s_shield_1",
       "OptionValue": 10,
       "Level": 3,
       "NeedLabor": 300,
@@ -29600,6 +29693,7 @@
         40,
         41
       ],
+      "OutputPic": "s_shield_1",
       "OptionValue": 10,
       "Level": 4,
       "NeedLabor": 400,
@@ -29637,6 +29731,7 @@
         40,
         41
       ],
+      "OutputPic": "s_shield_1",
       "OptionValue": 10,
       "Level": 5,
       "NeedLabor": 500,
@@ -29674,6 +29769,7 @@
         35,
         36
       ],
+      "OutputPic": "s_dorlach_1",
       "OptionValue": 6,
       "Level": 1,
       "NeedLabor": 100,
@@ -29701,6 +29797,7 @@
         35,
         36
       ],
+      "OutputPic": "s_dorlach_1",
       "OptionValue": 6,
       "Level": 2,
       "NeedLabor": 200,
@@ -29728,6 +29825,7 @@
         35,
         36
       ],
+      "OutputPic": "s_dorlach_1",
       "OptionValue": 6,
       "Level": 3,
       "NeedLabor": 300,
@@ -29755,6 +29853,7 @@
         35,
         36
       ],
+      "OutputPic": "s_dorlach_1",
       "OptionValue": 6,
       "Level": 4,
       "NeedLabor": 400,
@@ -29782,6 +29881,7 @@
         35,
         36
       ],
+      "OutputPic": "s_dorlach_1",
       "OptionValue": 6,
       "Level": 5,
       "NeedLabor": 500,
@@ -29804,6 +29904,11 @@
     {
       "ID": 9,
       "Name": "麦田",
+      "Action": "种植",
+      "OutputPic": [
+        "icon318",
+        "icon318"
+      ],
       "TimeInterval": 7,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -29834,6 +29939,10 @@
     {
       "ID": 10,
       "Name": "菜田",
+      "Action": "种植",
+      "OutputPic": [
+        "icon296"
+      ],
       "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -29864,6 +29973,10 @@
     {
       "ID": 11,
       "Name": "果园",
+      "Action": "种植",
+      "OutputPic": [
+        "icon312"
+      ],
       "TimeInterval": 3,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -29894,6 +30007,10 @@
     {
       "ID": 12,
       "Name": "亚麻田",
+      "Action": "种植",
+      "OutputPic": [
+        "icon397"
+      ],
       "TimeInterval": 7,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -29924,6 +30041,10 @@
     {
       "ID": 13,
       "Name": "牛圈",
+      "Action": "饲养",
+      "OutputPic": [
+        "icon323"
+      ],
       "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -29954,6 +30075,11 @@
     {
       "ID": 14,
       "Name": "羊圈",
+      "Action": "饲养",
+      "OutputPic": [
+        "icon323",
+        "icon426"
+      ],
       "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -29984,6 +30110,10 @@
     {
       "ID": 15,
       "Name": "渔场",
+      "Action": "捕钓",
+      "OutputPic": [
+        "icon868"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30014,6 +30144,10 @@
     {
       "ID": 16,
       "Name": "初级伐木场",
+      "Action": "捕钓",
+      "OutputPic": [
+        "icon959"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30044,6 +30178,10 @@
     {
       "ID": 17,
       "Name": "中级伐木场",
+      "Action": "捕钓",
+      "OutputPic": [
+        "icon959"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30074,6 +30212,10 @@
     {
       "ID": 18,
       "Name": "高级伐木场",
+      "Action": "捕钓",
+      "OutputPic": [
+        "icon959"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30104,6 +30246,10 @@
     {
       "ID": 19,
       "Name": "初级矿场",
+      "Action": "挖掘",
+      "OutputPic": [
+        "icon961"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30134,6 +30280,10 @@
     {
       "ID": 20,
       "Name": "中级矿场",
+      "Action": "挖掘",
+      "OutputPic": [
+        "icon961"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30164,6 +30314,10 @@
     {
       "ID": 21,
       "Name": "高级矿场",
+      "Action": "挖掘",
+      "OutputPic": [
+        "icon961"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30194,6 +30348,10 @@
     {
       "ID": 22,
       "Name": "初级采石场",
+      "Action": "挖掘",
+      "OutputPic": [
+        "icon858"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30224,6 +30382,10 @@
     {
       "ID": 23,
       "Name": "中级采石场",
+      "Action": "挖掘",
+      "OutputPic": [
+        "icon858"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30254,6 +30416,10 @@
     {
       "ID": 24,
       "Name": "高级采石场",
+      "Action": "挖掘",
+      "OutputPic": [
+        "icon858"
+      ],
       "TimeInterval": 1,
       "LaborRate": 0.5,
       "InputCereal": 0,
@@ -30284,6 +30450,10 @@
     {
       "ID": 25,
       "Name": "小型酿酒厂",
+      "Action": "酿制",
+      "OutputPic": [
+        "icon343"
+      ],
       "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 100,
@@ -30314,6 +30484,10 @@
     {
       "ID": 26,
       "Name": "大型酿酒厂",
+      "Action": "酿制",
+      "OutputPic": [
+        "icon343"
+      ],
       "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 200,

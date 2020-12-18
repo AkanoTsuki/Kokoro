@@ -804,13 +804,28 @@ public class GameControl : MonoBehaviour
 
     public bool DistrictItemAdd(int districtID, int buildingID)
     {
-        if ((districtDic[districtID].rProductWeapon + districtDic[districtID].rProductArmor + districtDic[districtID].rProductJewelry) >= districtDic[districtID].rProductLimit)
-        {
-            Debug.Log("库存已满，生产失败");
 
+        if (GetDistrictProductAll (districtID) >= districtDic[districtID].rProductLimit)
+        {
+            MessagePanel.Instance.AddMessage("装备库房已满，生产停止");
             return false;
         }
         int moduleID = buildingDic[buildingID].produceEquipNow;
+
+        if (DataManager.mProduceEquipDict[moduleID].InputWood> districtDic[districtID].rStuffWood||
+            DataManager.mProduceEquipDict[moduleID].InputStone > districtDic[districtID].rStuffStone ||
+            DataManager.mProduceEquipDict[moduleID].InputMetal > districtDic[districtID].rStuffMetal ||
+            DataManager.mProduceEquipDict[moduleID].InputLeather > districtDic[districtID].rStuffLeather ||
+            DataManager.mProduceEquipDict[moduleID].InputCloth > districtDic[districtID].rStuffCloth ||
+            DataManager.mProduceEquipDict[moduleID].InputTwine > districtDic[districtID].rStuffTwine ||
+            DataManager.mProduceEquipDict[moduleID].InputBone > districtDic[districtID].rStuffBone )
+        {
+            MessagePanel.Instance.AddMessage("原材料不足，生产停止");
+            return false;
+        }
+
+
+
         //计算依据模板，确定道具原型ID
         int probabilityCount = DataManager.mProduceEquipDict[moduleID].OutputRate.Count;
         int ran = Random.Range(0, 100);
@@ -827,6 +842,16 @@ public class GameControl : MonoBehaviour
             }
         }
         Debug.Log("DistrictItemAdd() 生产 " + DataManager.mItemDict[itemID].Name);
+
+
+        districtDic[districtID].rStuffWood -= DataManager.mProduceEquipDict[moduleID].InputWood;
+        districtDic[districtID].rStuffStone -= DataManager.mProduceEquipDict[moduleID].InputStone;
+        districtDic[districtID].rStuffMetal -= DataManager.mProduceEquipDict[moduleID].InputMetal;
+        districtDic[districtID].rStuffLeather -= DataManager.mProduceEquipDict[moduleID].InputLeather;
+        districtDic[districtID].rStuffCloth -= DataManager.mProduceEquipDict[moduleID].InputCloth;
+        districtDic[districtID].rStuffTwine -= DataManager.mProduceEquipDict[moduleID].InputTwine;
+        districtDic[districtID].rStuffBone -= DataManager.mProduceEquipDict[moduleID].InputBone;
+
 
         itemDic.Add(itemIndex, GenerateItemByRandom(itemID, districtDic[districtID],buildingDic[buildingID].heroList));
         itemIndex++;
@@ -850,8 +875,47 @@ public class GameControl : MonoBehaviour
        // itemDic.Add(GenerateItemByRandom(, districtDic[districtID],));
     }
 
-    public void DistrictResourceAdd(int districtID, StuffType stuffType,  int value)
+    public bool DistrictResourceAdd(int districtID, StuffType stuffType,  int value)
     {
+        switch (stuffType)
+        {
+            case StuffType.Cereal: 
+            case StuffType.Vegetable: 
+            case StuffType.Fruit: 
+            case StuffType.Meat: 
+            case StuffType.Fish:
+                if (GetDistrictFoodAll(districtID) >= districtDic[districtID].rFoodLimit)
+                {
+                    MessagePanel.Instance.AddMessage("食物库房已满，生产停止");
+                    return false;
+                }
+                break;
+            case StuffType.Wood: 
+            case StuffType.Stone: 
+            case StuffType.Metal:
+            case StuffType.Leather:
+            case StuffType.Cloth:
+            case StuffType.Twine: 
+            case StuffType.Bone:
+                if (GetDistrictStuffAll(districtID) >= districtDic[districtID].rStuffLimit)
+                {
+                    MessagePanel.Instance.AddMessage("材料库房已满，生产停止");
+                    return false;
+                }
+                break;
+        }
+        //if (DataManager.mProduceResourceDict[moduleID].InputWood > districtDic[districtID].rStuffWood ||
+        //   DataManager.mProduceEquipDict[moduleID].InputStone > districtDic[districtID].rStuffStone ||
+        //   DataManager.mProduceEquipDict[moduleID].InputMetal > districtDic[districtID].rStuffMetal ||
+        //   DataManager.mProduceEquipDict[moduleID].InputLeather > districtDic[districtID].rStuffLeather ||
+        //   DataManager.mProduceEquipDict[moduleID].InputCloth > districtDic[districtID].rStuffCloth ||
+        //   DataManager.mProduceEquipDict[moduleID].InputTwine > districtDic[districtID].rStuffTwine ||
+        //   DataManager.mProduceEquipDict[moduleID].InputBone > districtDic[districtID].rStuffBone)
+        //{
+        //    MessagePanel.Instance.AddMessage("原材料不足，生产停止");
+        //    return false;
+        //}
+
         switch (stuffType)
         {
             case StuffType.Cereal:districtDic[districtID].rFoodCereal += value;break;
@@ -867,6 +931,19 @@ public class GameControl : MonoBehaviour
             case StuffType.Twine: districtDic[districtID].rStuffTwine += value; break;
             case StuffType.Bone: districtDic[districtID].rStuffBone += value; break;
         }
+        return true;
+    }
+    public int GetDistrictFoodAll(int districtID)
+    {
+        return districtDic[districtID].rFoodCereal + districtDic[districtID].rFoodVegetable + districtDic[districtID].rFoodFruit + districtDic[districtID].rFoodMeat + districtDic[districtID].rFoodFish;
+    }
+    public int GetDistrictStuffAll(int districtID)
+    {
+        return districtDic[districtID].rStuffWood + districtDic[districtID].rStuffStone + districtDic[districtID].rStuffMetal + districtDic[districtID].rStuffLeather + districtDic[districtID].rStuffCloth + districtDic[districtID].rStuffTwine + districtDic[districtID].rStuffBone;
+    }
+    public int GetDistrictProductAll(int districtID)
+    {
+        return districtDic[districtID].rProductWeapon + districtDic[districtID].rProductArmor + districtDic[districtID].rProductJewelry;
     }
 
     public void ChangeProduceEquipNow(int buildingID)
@@ -968,6 +1045,34 @@ public class GameControl : MonoBehaviour
     }
 
     //辅助方法组
+    public string OutputItemTypeSmallStr(ItemTypeSmall itemTypeSmall)
+    {
+        switch (itemTypeSmall)
+        {
+            case ItemTypeSmall.Sword: return "剑";
+            case ItemTypeSmall.Hammer: return "锤、棍棒";
+            case ItemTypeSmall.Spear: return "枪、矛";
+            case ItemTypeSmall.Axe: return "斧、镰刀";
+            case ItemTypeSmall.Bow: return "弓";
+            case ItemTypeSmall.Staff: return "杖";
+            case ItemTypeSmall.HeadH: return "头部装备（重型）";
+            case ItemTypeSmall.HeadL: return "头部装备（轻型）";
+            case ItemTypeSmall.BodyH: return "身体装备（重型）";
+            case ItemTypeSmall.BodyL: return "身体装备（轻型）";
+            case ItemTypeSmall.HandH: return "手部装备（重型）";
+            case ItemTypeSmall.HandL: return "手部装备（轻型）";
+            case ItemTypeSmall.BackH: return "背部装备（重型）";
+            case ItemTypeSmall.BackL: return "背部装备（轻型）";
+            case ItemTypeSmall.FootH: return "腿部装备（重型）";
+            case ItemTypeSmall.FootL: return "腿部装备（轻型）";
+            case ItemTypeSmall.Neck: return "项链";
+            case ItemTypeSmall.Finger: return "戒指";
+            case ItemTypeSmall.Shield: return "副手装备（盾）";
+            case ItemTypeSmall.Dorlach: return "副手装备（箭袋）";
+            default: return "未定义类型";
+        }
+    }
+
     public string OutputDateStr(int t, string format)
     {
        // int t = st / 10;

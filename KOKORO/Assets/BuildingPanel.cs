@@ -18,7 +18,7 @@ public class BuildingPanel : BasePanel
     public Text desText;
 
     public RectTransform outputInfoRt;
-    public Image outputInfo_iconImage;
+    public List<Image> outputInfo_iconImage;
     public Text outputInfo_desText;
 
     public RectTransform setManagerRt;
@@ -47,8 +47,8 @@ public class BuildingPanel : BasePanel
     public int setForgeTypeSmall = 0;
     public int setForgeType = 0;
     public int setForgeLevel = 0;
- 
 
+    public int nowCheckingBuildingID = -1;
     void Awake()
     {
         Instance = this;
@@ -69,11 +69,14 @@ public class BuildingPanel : BasePanel
         {
             case "Forge":
                 UpdateForge(buildingObject);break;
+            case "Resource":
+
+                break;
             default:break;
         }
         SetAnchoredPosition(x, y);
         isShow = true;
-
+        nowCheckingBuildingID = buildingObject.id;
         setWorker_minusBtn.onClick.RemoveAllListeners();
         setWorker_minusBtn.onClick.AddListener(delegate () { gc.BuildingWorkerMinus(buildingObject.id); });
         setWorker_addBtn.onClick.RemoveAllListeners();
@@ -86,6 +89,7 @@ public class BuildingPanel : BasePanel
     {
         SetAnchoredPosition(0, 5000);
         isShow = false;
+        nowCheckingBuildingID = -1;
     }
 
 
@@ -95,7 +99,7 @@ public class BuildingPanel : BasePanel
         UpdateOutputInfoPart(buildingObject);
         UpdateSetManagerPart(buildingObject);
         UpdateSetWorkerPart(buildingObject);
-        UpdateHistoryInfoPart(buildingObject);
+        UpdateHistoryInfoPart(buildingObject, 276f);
         UpdateSetForgePart(buildingObject);
     }
 
@@ -110,8 +114,113 @@ public class BuildingPanel : BasePanel
     public void UpdateOutputInfoPart(BuildingObject buildingObject)
     {
         outputInfoRt.anchoredPosition = new Vector2(16f, -120f);
+        switch (buildingObject.panelType)
+        {
+            case "Forge":
+                if (buildingObject.produceEquipNow != -1)
+                {
+                    int needTime = 0;
+                    int nowTime = 0;
+                    for (int i = 0; i < gc.executeEventList.Count; i++)
+                    {
+                        if (gc.executeEventList[i].value[1] == buildingObject.id)
+                        {
+                            needTime = gc.executeEventList[i].endTime - gc.executeEventList[i].startTime;
+                            nowTime = gc.standardTime - gc.executeEventList[i].startTime;
+                            break;
+                        }
+                    }
+                    
+                    outputInfo_iconImage[0].color = new Color(58 / 255f, 46 / 255f, 46 / 255f, 174 / 255f);
+                    outputInfo_iconImage[0].overrideSprite = Resources.Load("Image/ItemPic/" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].OutputPic, typeof(Sprite)) as Sprite;
+                    for (int i = 1; i < outputInfo_iconImage.Count; i++)
+                    {
+                        outputInfo_iconImage[i].color = Color.clear ;
+                    }
+                    
+                    outputInfo_desText.text = gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Type) +
+                        "-级别" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level + " 制作中...[" + nowTime + "/" + needTime + "]\n消耗"+
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWood!=0?" 木材"+ DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWood:"")+
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputStone != 0 ? " 石料" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputStone : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputMetal != 0 ? " 金属" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputMetal : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputLeather != 0 ? " 皮革" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputLeather : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputCloth != 0 ? " 布料" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputCloth : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputTwine != 0 ? " 麻绳" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputTwine : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputBone != 0 ? " 骨块" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputBone : "") +"\n";
+                }
+                else
+                {
+                    for (int i = 0; i < outputInfo_iconImage.Count; i++)
+                    {
+                        outputInfo_iconImage[i].color = Color.clear;
+                    }
+                    outputInfo_desText.text = "停工中";
+                }
+                break;
+            case "Resource":
+                if (buildingObject.produceEquipNow != -1)
+                {
+                    int needTime = 0;
+                    int nowTime = 0;
+                    for (int i = 0; i < gc.executeEventList.Count; i++)
+                    {
+                        if (gc.executeEventList[i].value[1] == buildingObject.id)
+                        {
+                            needTime = gc.executeEventList[i].endTime - gc.executeEventList[i].startTime;
+                            nowTime = gc.standardTime - gc.executeEventList[i].startTime;
+                            break;
+                        }
+                    }
+                  
+                    for (int i = 0; i < DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputPic.Count; i++)
+                    {
+                        outputInfo_iconImage[i].color = new Color(1f, 1f, 1f, 174 / 255f);
+                        outputInfo_iconImage[i].overrideSprite = Resources.Load("Image/" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputPic[i], typeof(Sprite)) as Sprite;
+                    }
+                    for (int i = DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputPic.Count; i < outputInfo_iconImage.Count; i++)
+                    {
+                        outputInfo_iconImage[i].color = Color.clear;
+                    }
+                    outputInfo_desText.text = DataManager.mProduceResourceDict[buildingObject.produceEquipNow].Action + "中...[" + nowTime + "/" + needTime + "]\n消耗" +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCereal != 0 ? " 谷物" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCereal : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputVegetable != 0 ? " 蔬菜" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputVegetable : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputFruit != 0 ? " 水果" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputFruit : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputMetal != 0 ? " 肉类" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputMetal : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputFish != 0 ? " 鱼类" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputFish : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputWood != 0 ? " 木材" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputWood : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputStone != 0 ? " 石料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputStone : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputMetal != 0 ? " 金属" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputMetal : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputLeather != 0 ? " 皮革" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputLeather : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCloth != 0 ? " 布料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCloth : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputTwine != 0 ? " 麻绳" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputTwine : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone : "") + "\n产出" +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCereal != 0 ? " 谷物" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCereal : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputVegetable != 0 ? " 蔬菜" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputVegetable : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFruit != 0 ? " 水果" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFruit : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal != 0 ? " 肉类" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFish != 0 ? " 鱼类" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFish : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWood != 0 ? " 木材" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWood : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputStone != 0 ? " 石料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputStone : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal != 0 ? " 金属" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLeather != 0 ? " 皮革" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLeather : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCloth != 0 ? " 布料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCloth : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputTwine != 0 ? " 麻绳" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputTwine : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone : "");
 
-        outputInfo_desText.text = "";
+                }
+                else
+                {
+                    for (int i = 0; i < outputInfo_iconImage.Count; i++)
+                    {
+                        outputInfo_iconImage[i].color = Color.clear;
+                    }
+                    outputInfo_desText.text = "停工中";
+                }
+             
+                break;
+            default: break;
+        }
+       
     }
 
     public void UpdateSetManagerPart(BuildingObject buildingObject)
@@ -146,7 +255,7 @@ public class BuildingPanel : BasePanel
     }
 
 
-public void UpdateSetWorkerPart(BuildingObject buildingObject)
+    public void UpdateSetWorkerPart(BuildingObject buildingObject)
     {
         setWorkerRt.anchoredPosition = new Vector2(16f, -404f);
         int feed = gc.districtDic[gc.nowCheckingDistrictID].people - gc.districtDic[gc.nowCheckingDistrictID].worker;
@@ -169,10 +278,10 @@ public void UpdateSetWorkerPart(BuildingObject buildingObject)
         }
     }
 
-    public void UpdateHistoryInfoPart(BuildingObject buildingObject)
+    public void UpdateHistoryInfoPart(BuildingObject buildingObject ,float height)
     {
         infoHistoryRt.anchoredPosition = new Vector2(278f, -16f);
-        infoHistoryRt.sizeDelta = new Vector2(256f, 276f);
+        infoHistoryRt.sizeDelta = new Vector2(256f, height );
         string str = "";
         List<LogObject> temp = new List<LogObject> { };
         foreach (KeyValuePair<int, LogObject> kvp in gc.logDic)
@@ -195,7 +304,7 @@ public void UpdateSetWorkerPart(BuildingObject buildingObject)
             case 35:
             case 36:
                 setForge_typeDd.ClearOptions();
-                setForge_typeDd.AddOptions(new List<string> { "剑", "斧", "枪", "锤", "弓", "杖", "箭袋" });
+                setForge_typeDd.AddOptions(new List<string> { "剑", "斧、镰刀", "枪、矛", "锤、棍棒", "弓", "杖", "箭袋" });
                 break;
             case 37:
             case 38:
