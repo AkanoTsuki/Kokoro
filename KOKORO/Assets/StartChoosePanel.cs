@@ -16,6 +16,7 @@ public class StartChoosePanel : BasePanel
     public Text desText;
     public List<Button> districtBtnList;
 
+    public InputField leaderNameIf;
     public List<Button> leaderBtnList;
     public Button leaderManBtn;
     public Button leaderWomanBtn;

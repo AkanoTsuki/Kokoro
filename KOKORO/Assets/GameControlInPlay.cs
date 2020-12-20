@@ -28,7 +28,9 @@ public class GameControlInPlay : MonoBehaviour
         PlayMainPanel.Instance.OnShow();
 
 
-        InvokeRepeating("TimeFlow", 0.05f, 0.05f);
+        InvokeRepeating("TimeFlow", 0, 0.05f / gc.timeFlowSpeed);
+
+        Debug.Log("gc.heroDic[1].id" + gc.heroDic[1].id);
     }
 
     // Update is called once per frame
@@ -54,7 +56,7 @@ public class GameControlInPlay : MonoBehaviour
         PlayMainPanel.Instance.UpdateTimeBar();
         if (gc.timeS >= 10) {
 
-            PlayMainPanel.Instance.UpdateTimeText();
+            PlayMainPanel.Instance.UpdateMonthDayHour();
 
             if (BuildingPanel.Instance.isShow)
             {
@@ -67,7 +69,7 @@ public class GameControlInPlay : MonoBehaviour
             gc.timeHour++; gc.timeS = 0; 
         }
         if (gc.timeHour >= 24) { gc.timeDay++; gc.timeHour = 0;gc.timeWeek++;if (gc.timeWeek > 7) { gc.timeWeek = 1; } }
-        if (gc.timeDay > 30) { gc.timeMonth++; gc.timeDay = 1; }
+        if (gc.timeDay > 30) { gc.timeMonth++; gc.timeDay = 1; PlayMainPanel.Instance.UpdateYearSeason(); }
         if (gc.timeMonth > 12) { gc.timeYear++; gc.timeMonth = 1; }
 
         
@@ -83,19 +85,23 @@ public class GameControlInPlay : MonoBehaviour
                 switch (gc.executeEventList[0].type)
                 {
                     case ExecuteEventType.ProduceResource:
-                        Debug.Log("  gc.standardTime=" + gc.standardTime + "   资源生产" + (StuffType)gc.executeEventList[0].value[2]+"*"+ (StuffType)gc.executeEventList[0].value[3]);
+                        Debug.Log("  gc.standardTime=" + gc.standardTime + "   资源生产" + (StuffType)gc.executeEventList[0].value[2]+"*"+ gc.executeEventList[0].value[3]);
                          districtID = (short)gc.executeEventList[0].value[0];
                          buildingID = gc.executeEventList[0].value[1];
-                         isSuccess = gc.DistrictResourceAdd(districtID, (StuffType)gc.executeEventList[0].value[2], gc.executeEventList[0].value[3]);
+                        //if (gc.buildingDic[buildingID].produceEquipNow == -1)
+                        //{
+                        //    MessagePanel.Instance.AddMessage("接到停工命令，生产停止");
+                        //    break;
+                        //}
+                         isSuccess = gc.DistrictResourceAdd(districtID, buildingID,(StuffType)gc.executeEventList[0].value[2], gc.executeEventList[0].value[3]);
                         gc.executeEventList.RemoveAt(0);
                         if (isSuccess)
                         {
                             gc.CreateProduceResourceEvent(buildingID);
                         }
-
-                        if (districtID == gc.nowCheckingDistrictID)
+                        else
                         {
-                            PlayMainPanel.Instance.UpdateResourcesInfo(districtID);
+                            gc.buildingDic[buildingID].produceEquipNow = -1;
                         }
                         break;
                     case ExecuteEventType.ProduceItem:
@@ -120,6 +126,7 @@ public class GameControlInPlay : MonoBehaviour
                         buildingID = gc.executeEventList[0].value[1];
                         gc.BuildDone((short)buildingID);
                         gc.executeEventList.RemoveAt(0);
+
                         break;
                     default: break;
                 }
@@ -129,42 +136,92 @@ public class GameControlInPlay : MonoBehaviour
 
     }
 
-
-    
+    public void TimePause()
+    {
+        gc.timeFlowSpeed = 0;
+        CancelInvoke("TimeFlow");
+        PlayMainPanel.Instance.UpdateTimeButtonState();
+    }
+    public void TimePlay()
+    {
+        gc.timeFlowSpeed = 1;
+        CancelInvoke("TimeFlow");
+        InvokeRepeating("TimeFlow", 0, 0.05f /gc.timeFlowSpeed);
+        PlayMainPanel.Instance.UpdateTimeButtonState();
+    }
+    public void TimeFast()
+    {
+        gc.timeFlowSpeed = 2;
+        CancelInvoke("TimeFlow");
+        InvokeRepeating("TimeFlow", 0, 0.05f / gc.timeFlowSpeed);
+        PlayMainPanel.Instance.UpdateTimeButtonState();
+    }
 
     public void OpenDistrictMain()
     {
-
-        DistrictMainPanel.Instance.OnShow(gc.districtDic[gc.nowCheckingDistrictID],84,-88);
+        if (DistrictMainPanel.Instance.isShow)
+        {
+            DistrictMainPanel.Instance.OnHide();
+        }
+        else
+        {
+            DistrictMainPanel.Instance.OnShow(gc.districtDic[gc.nowCheckingDistrictID], 64, -88);
+        }     
     }
 
     public void OpenBuild()
     {
-        BuildPanel.Instance.OnShow(84, -88);
+        if (BuildPanel.Instance.isShow)
+        {
+            BuildPanel.Instance.OnHide();
+        }
+        else
+        {
+            BuildPanel.Instance.OnShow(64, -88);
+        }  
     }
 
     public void OpenBuildingSelect()
     {
-        BuildingSelectPanel.Instance.OnShow(84, -88);
+        if (BuildingSelectPanel.Instance.isShow)
+        {
+            BuildingSelectPanel.Instance.OnHide();
+        }
+        else
+        {
+            BuildingSelectPanel.Instance.OnShow(64, -88);
+        }     
     }
 
     public void OpenHeroSelect()
     {
-        HeroSelectPanel.Instance.OnShow("",84, -88);
+        if (HeroSelectPanel.Instance.isShow)
+        {
+            HeroSelectPanel.Instance.OnHide();
+        }
+        else
+        {
+            HeroSelectPanel.Instance.OnShow("", gc.nowCheckingDistrictID,-1,1, 64, -88);
+        }
     }
 
     public void OpenItemListAndInfo()
     {
-        List<ItemObject> itemObjects = new List<ItemObject>();
-
-        foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
+        Debug.Log("gc.nowCheckingDistrictID=" + gc.nowCheckingDistrictID + " gc.itemDic.Coun=" + gc.itemDic.Count);
+        if (ItemListAndInfoPanel.Instance.isShow)
         {
-            if (kvp.Value.districtID == gc.nowCheckingDistrictID)
-            {
-                itemObjects.Add(kvp.Value);
-            }
+            ItemListAndInfoPanel.Instance.OnHide();
+        }
+        else
+        {
+            ItemListAndInfoPanel.Instance.OnShow(gc.nowCheckingDistrictID, 64, -88,1);
         }
 
-        ItemListAndInfoPanel.Instance.OnShow(itemObjects, 84, -88);
+    }
+
+    public void GameSave()
+    {
+        gc.Save();
+        MessagePanel.Instance.AddMessage("游戏已保存");
     }
 }

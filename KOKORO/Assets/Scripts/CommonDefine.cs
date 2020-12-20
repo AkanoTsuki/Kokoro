@@ -29,7 +29,11 @@ public enum LabelType
     HeroInDis,
     BuildingInBuild,
     Message,
-    HeroInSelect
+    HeroInSelect,
+    HeroInSelectToCheck,
+    EquipmentLook,
+    EquipmentSet,
+    ItemToSet
 }
 
 public enum Element
@@ -83,6 +87,21 @@ public enum ItemTypeSmall
     Finger,
     Shield,
     Dorlach
+}
+
+public enum EquipPart
+{ 
+    None,
+    Weapon,
+    Subhand,
+    Head,
+    Body,
+    Hand,
+    Back,
+    Foot,
+    Neck,
+    Finger1,
+    Finger2
 }
 
 public enum Attribute
@@ -248,7 +267,9 @@ public class ItemObject
     private int Cost;
     private short DistrictID;//如果是装备，存储在哪个地区的制品仓库，-1为整体收藏库
     private bool IsGoods;//是否商品（DistrictID！=-1）
-    public ItemObject(int objectID, int prototypeID, string name, string pic, byte rank, byte level, List<ItemAttribute> attr, string des, int cost, short districtID, bool isGoods)
+    private int HeroID;//装备在哪个英雄身上，-1为未装备
+    private EquipPart HeroPart;//（HeroID！=-1）
+    public ItemObject(int objectID, int prototypeID, string name, string pic, byte rank, byte level, List<ItemAttribute> attr, string des, int cost, short districtID, bool isGoods, int heroID, EquipPart heroPart)
     {
         this.ObjectID = objectID;
         this.PrototypeID = prototypeID;
@@ -261,6 +282,8 @@ public class ItemObject
         this.Cost = cost;
         this.DistrictID = districtID;
         this.IsGoods = isGoods;
+        this.HeroID = heroID;
+        this.HeroPart = heroPart;
     }
     public int objectID { get { return ObjectID; } }
     public int prototypeID { get { return PrototypeID; } }
@@ -271,8 +294,10 @@ public class ItemObject
     public List<ItemAttribute> attr { get { return Attr; } }
     public string des { get { return Des; } }
     public int cost { get { return Cost; } }
-    public short districtID { get { return DistrictID; } }
-    public bool isGoods { get { return IsGoods; } }
+    public short districtID { get { return DistrictID; } set { DistrictID = value; } }
+    public bool isGoods { get { return IsGoods; } set { IsGoods = value; } }
+    public int heroID { get { return HeroID; } set { HeroID = value; } }
+    public EquipPart heroPart { get { return HeroPart; } set { HeroPart = value; } }
 }
 
 

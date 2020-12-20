@@ -35,12 +35,14 @@ public class BuildingSelectPanel : BasePanel
         UpdateAllInfo( gc.nowCheckingDistrictID, 2);
         SetAnchoredPosition(x, y);
         //ShowByImmediately(true);
+        isShow = true;
 
     }
 
     public override void OnHide()
     {
         SetAnchoredPosition(0, 5000);
+        isShow = false;
     }
 
     public void UpdateAllInfo( int districtID, byte columns)
@@ -60,7 +62,7 @@ public class BuildingSelectPanel : BasePanel
         List<BuildingObject> temp = new List<BuildingObject> { };
         foreach (KeyValuePair<int, BuildingObject> kvp in gc.buildingDic)
         {
-            if (kvp.Value.districtID == districtID)
+            if (kvp.Value.districtID == districtID&& kvp.Value.buildProgress==1)
             {
                 temp.Add(kvp.Value);
             }
@@ -90,7 +92,7 @@ public class BuildingSelectPanel : BasePanel
             go.transform.GetComponent<InteractiveLabel>().index = temp[i].id;
             int index = temp[i].id;
             go.transform.GetComponent<Button>().onClick.RemoveAllListeners();
-            go.transform.GetComponent<Button>().onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index], (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ goRt.sizeDelta.x+8f), -88, -45); });
+            go.transform.GetComponent<Button>().onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index], (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ goRt.sizeDelta.x+ GameControl.spacing), -88, -45); });
 
 
         }

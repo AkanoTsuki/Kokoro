@@ -13,7 +13,8 @@ public class PlayMainPanel : BasePanel
     public Text top_goldText;
     public Image top_weatherImage;
     public Image top_seasonImage;
-    public Text top_dateText;
+    public Text top_dateLeftText;
+    public Text top_dateRightText;
     public Text top_hourText;
     public List<RectTransform> top_timeBarRtList;
     public Button top_pauseBtn;
@@ -44,6 +45,8 @@ public class PlayMainPanel : BasePanel
     public Text bottom_boneText;
     public Text bottom_totalText;
 
+    List<Button> leftBtnList = new List<Button>();
+    short nowLeftIndex = -1;//todo
 
     bool Leftis0 = true;
     void Awake()
@@ -62,6 +65,19 @@ public class PlayMainPanel : BasePanel
         left_buildingSelectBtn.onClick.AddListener(delegate () { gci.OpenBuildingSelect(); });
         left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
         left_adventureMainBtn.onClick.AddListener(delegate () { });
+        top_saveBtn.onClick.AddListener(delegate () { gci.GameSave(); });
+        top_pauseBtn.onClick.AddListener(delegate () { gci.TimePause(); });
+        top_playBtn.onClick.AddListener(delegate () { gci.TimePlay(); });
+        top_fastBtn.onClick.AddListener(delegate () { gci.TimeFast(); });
+ 
+
+
+        leftBtnList.Add(left_districtMainBtn);
+        leftBtnList.Add(left_inventoryMainBtn);
+        leftBtnList.Add(left_buildBtn);
+        leftBtnList.Add(left_buildingSelectBtn);
+        leftBtnList.Add(left_heroMainBtn);
+        leftBtnList.Add(left_adventureMainBtn);
     }
 
     public override void OnShow()
@@ -69,7 +85,9 @@ public class PlayMainPanel : BasePanel
         SetAnchoredPosition(0, 0);
 
         UpdateKingdomInfo();
+        UpdateGold();
         UpdateDateInfo();
+        UpdateTimeButtonState();
         UpdateDistrictInfo(gc.nowCheckingDistrictID);
         UpdateResourcesInfo(gc.nowCheckingDistrictID);
       
@@ -77,26 +95,55 @@ public class PlayMainPanel : BasePanel
 
     public void UpdateKingdomInfo()
     {
-        top_nameText.text = "领地名称";
+        top_nameText.text = gc.heroDic[0].name+"的领地";
+      
+    }
+    public void UpdateGold()
+    {
         top_goldText.text = gc.gold.ToString();
     }
 
     public void UpdateDateInfo()
     {
-        UpdateTimeText();
+        UpdateYearSeason();
+        UpdateMonthDayHour();
         UpdateTimeBar();
     }
-    public void UpdateTimeText()
+    public void UpdateMonthDayHour()
     {
-        top_dateText.text = "  第" + gc.timeYear + "年       " + gc.timeMonth + "月" + gc.timeDay + "日";
+        top_dateRightText.text = gc.timeMonth + "月" + gc.timeDay + "日 "+gc.OutputWeekStr(gc.timeWeek,true);
         top_hourText.text = gc.timeHour.ToString();
+    }
+
+    public void UpdateYearSeason()
+    {
+        top_dateLeftText.text = "第" + gc.timeYear + "年 " + gc.OutputSeasonStr(gc.timeMonth, true);
+        switch (gc.timeMonth)
+        {
+            case 1:
+            case 2:
+            case 3:
+                top_seasonImage.overrideSprite= Resources.Load("Image/Other/season_spring2", typeof(Sprite)) as Sprite;break;
+            case 4:
+            case 5:
+            case 6:
+                top_seasonImage.overrideSprite = Resources.Load("Image/Other/season_summer2", typeof(Sprite)) as Sprite; break;
+            case 7:
+            case 8:
+            case 9:
+                top_seasonImage.overrideSprite = Resources.Load("Image/Other/season_autumn2", typeof(Sprite)) as Sprite; break;
+            case 10:
+            case 11:
+            case 12:
+                top_seasonImage.overrideSprite = Resources.Load("Image/Other/season_winter2", typeof(Sprite)) as Sprite; break;
+        }
+        
     }
 
     public void UpdateTimeBar()
     {
         if (gc.timeHour==18)
         {
-            
             Leftis0 = !Leftis0;
            // Debug.Log("切换 Leftis0="+ Leftis0.ToString());
         }
@@ -111,8 +158,7 @@ public class PlayMainPanel : BasePanel
             else
             {
                 top_timeBarRtList[1].anchoredPosition = new Vector2(top_timeBarRtList[0].anchoredPosition.x + 480f, 0);
-            }
-            
+            } 
         }
         else
         {
@@ -125,11 +171,35 @@ public class PlayMainPanel : BasePanel
             {
                 top_timeBarRtList[0].anchoredPosition = new Vector2(top_timeBarRtList[1].anchoredPosition.x + 480f, 0);
             }
-        
+
         }
+    }
 
+    public void UpdateTimeButtonState()
+    {
+        if (gc.timeFlowSpeed == 0)
+        {
+            top_pauseBtn.interactable = false;
+            top_playBtn.interactable = true;
+            top_fastBtn.interactable = true;
+        }
+        else if (gc.timeFlowSpeed == 1)
+        {
+            top_pauseBtn.interactable = true;
+            top_playBtn.interactable = false;
+            top_fastBtn.interactable = true;
+        }
+        else if (gc.timeFlowSpeed == 2)
+        {
+            top_pauseBtn.interactable = true;
+            top_playBtn.interactable = true;
+            top_fastBtn.interactable = false;
+        }
+    }
 
-
+    public void UpdateLeftButtonState()
+    {
+        
     }
 
     public void UpdateDistrictInfo(short districtID)

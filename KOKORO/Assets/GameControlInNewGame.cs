@@ -88,7 +88,7 @@ public class GameControlInNewGame : MonoBehaviour
     public void RollMenber(int index)
     {
         int ran = Random.Range(0, 6);
-        temp_HeroList[index]=gc.GenerateHeroByRandom(index, (short)ran,(byte)Random.Range(0, 2));
+        temp_HeroList[index]=gc.GenerateHeroByRandom(index+1, (short)ran,(byte)Random.Range(0, 2));
 
         StartChoosePanel.Instance.UpdateMenberInfo(index);
         HeroPanel.Instance.UpdateAllInfo(gc, temp_HeroList[index], -374);
@@ -103,6 +103,7 @@ public class GameControlInNewGame : MonoBehaviour
         }
 
         gc.heroDic.Add(0, temp_Leader);
+        gc.heroDic[0].name = StartChoosePanel.Instance.leaderNameIf.text;
         for (int i = 0; i < 5; i++)
         {
             gc.heroDic.Add(i + 1, temp_HeroList[i]);

@@ -4760,6 +4760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53cacd8c8a8d264fbdd69ef0bc14395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isShow: 0
   bigMapRt: {fileID: 2089193301359169106}
   bigMapDesRt: {fileID: 2089193303068233805}
   bigMapDesText: {fileID: 2089193301098793778}
@@ -4772,6 +4773,7 @@ MonoBehaviour:
   - {fileID: 642775386665067825}
   - {fileID: 642775387281634597}
   - {fileID: 642775388250651426}
+  leaderNameIf: {fileID: 642775388607957285}
   leaderBtnList:
   - {fileID: 642775386756529101}
   - {fileID: 642775387877583816}

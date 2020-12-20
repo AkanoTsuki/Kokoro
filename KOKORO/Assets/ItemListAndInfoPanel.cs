@@ -37,32 +37,99 @@ public class ItemListAndInfoPanel : BasePanel
     void Start()
     {
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
+       
     }
-    public void OnShow(List<ItemObject> itemObjects, int x, int y)
+    public void OnShow(short districtID, int x, int y, byte col)//地区库房查询
     {
-        UpdateAllInfo(itemObjects, 1);
+
+        titleText.text = "鉴定仓库["+ gc.districtDic[districtID].name+"-"+gc.districtDic[districtID].baseName+"]";
+        UpdateAllInfo(districtID, col);
+
+
+   
+        HideFuncBtn(4);
         SetAnchoredPosition(x, y);
+        isShow = true;
     }
+    public void OnShow(int itemID, int x, int y)//用作查看物品信息
+    {
+        titleText.text = "物品信息";
+        goRt.sizeDelta = new Vector2(732f - 232f-238f, 536f);
+        listRt.sizeDelta = new Vector2(0, 450f);
+
+        UpdateInfo(gc.itemDic[itemID]);
+
+        SetAnchoredPosition(x, y);
+        isShow = true;
+    }
+
+    public void OnShow(int heroID, EquipPart equipPart, int x, int y)//准备装备
+    {
+        titleText.text = "物品选择";
+        funcBtn[0].GetComponent<RectTransform>().sizeDelta = Vector2.one;
+        funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "装备";
+        funcBtn[0].onClick.RemoveAllListeners();
+        funcBtn[0].onClick.AddListener(delegate () { gc.HeroEquipSet(heroID, equipPart, nowItemID); });
+
+        UpdateAllInfoToEquip(equipPart);
+
+        HideFuncBtn(3);
+
+        SetAnchoredPosition(x, y);
+        isShow = true;
+    }
+
+
     public override void OnHide()
     {
         SetAnchoredPosition(0, 5000);
+        isShow = false;
     }
-    public void UpdateAllInfo(List<ItemObject> itemObjects,byte col)
+
+    public void HideFuncBtn(int count)
     {
-        UpdateList(itemObjects,col);
+        for (int i = funcBtn.Count-1; i >= funcBtn.Count - count; i--)
+        {
+            funcBtn[i].GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+        }
+    }
+
+    public void UpdateAllInfoToEquip(EquipPart equipPart)
+    {
+        UpdateListToEquip(equipPart, 1);
         UpdateInfo(null);
     }
 
-    public void UpdateList(List<ItemObject> itemObjects, byte columns)
+    public void UpdateAllInfo(short districtID, byte col)
     {
+        UpdateList(districtID,col);
+        UpdateInfo(null);
+    }
+
+
+
+    public void UpdateList(short districtID, byte columns)
+    {
+        List<ItemObject> itemObjects = new List<ItemObject>();
+
+        foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
+        {
+            if (kvp.Value.districtID == districtID&&kvp.Value.heroID==-1)
+            {
+                itemObjects.Add(kvp.Value);
+            }
+        }
+       // Debug.Log("");
+
+
         if (columns == 2)
         {
-            goRt.sizeDelta = new Vector2(766f, 536f);
+            goRt.sizeDelta = new Vector2(732f, 536f);
             listRt.sizeDelta = new Vector2(470f, 450f);
         }
         else if (columns == 1)
         {
-            goRt.sizeDelta = new Vector2(766f - 232f, 536f);
+            goRt.sizeDelta = new Vector2(732f - 232f, 536f);
             listRt.sizeDelta = new Vector2(470f - 232f, 450f);
         }
 
@@ -89,6 +156,7 @@ public class ItemListAndInfoPanel : BasePanel
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObjects[i].pic);
             go.transform.GetChild(1).GetComponent<Text>().text = "<color=#"+ gc.OutputItemRankColorString(itemObjects[i].rank) + ">"+itemObjects[i].name+"</color>";
+            go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.Item;
             go.transform.GetComponent<InteractiveLabel>().index = itemObjects[i].objectID;
         }
         for (int i = itemObjects.Count; i < itemGo.Count; i++)
@@ -97,6 +165,137 @@ public class ItemListAndInfoPanel : BasePanel
         }
     
         itemListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(425f, 4 + (itemObjects.Count / columns) * 22f));
+        if (districtID != -1)
+        {
+            numText.text = itemObjects.Count + "/" + gc.districtDic[districtID].rProductLimit;
+        }
+        else
+        {
+            numText.text = itemObjects.Count.ToString();
+        }
+    }
+
+    public void UpdateListToEquip(EquipPart equipPart, byte columns)
+    {
+        List<ItemObject> itemObjects = new List<ItemObject>();
+
+        foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
+        {
+            switch (equipPart)
+            {
+                case EquipPart.Weapon:
+                    if ( DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Weapon && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                case EquipPart.Subhand:
+                    if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Subhand && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                case EquipPart.Head:
+                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HeadH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HeadL) && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                case EquipPart.Body:
+                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BodyH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BodyL) && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                case EquipPart.Hand:
+                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HandH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HandL) && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                case EquipPart.Back:
+                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BackH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BackL) && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                case EquipPart.Foot:
+                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.FootH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.FootL) && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                case EquipPart.Neck:
+                    if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.Neck && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                case EquipPart.Finger1:
+                    if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.Finger && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                case EquipPart.Finger2:
+                    if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.Finger && kvp.Value.heroID == -1)
+                    {
+                        itemObjects.Add(kvp.Value);
+                    }
+                    break;
+                
+            }
+            
+        }
+
+
+
+        if (columns == 2)
+        {
+            goRt.sizeDelta = new Vector2(732f, 536f);
+            listRt.sizeDelta = new Vector2(470f, 450f);
+        }
+        else if (columns == 1)
+        {
+            goRt.sizeDelta = new Vector2(732f - 232f, 536f);
+            listRt.sizeDelta = new Vector2(470f - 232f, 450f);
+        }
+
+
+        //Debug.Log("前itemObjects.Count=" + itemObjects.Count + " itemGo.Count=" + itemGo.Count);
+        GameObject go;
+        for (int i = 0; i < itemObjects.Count; i++)
+        {
+            if (i < itemGo.Count)
+            {
+                go = itemGo[i];
+                itemGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+            }
+            else
+            {
+                go = Instantiate(Resources.Load("Prefab/UILabel/Label_Item")) as GameObject;
+                go.transform.SetParent(itemListGo.transform);
+                itemGo.Add(go);
+            }
+
+            int row = i == 0 ? 0 : (i % columns);
+            int col = i == 0 ? 0 : (i / columns);
+            go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 224f, -4 + col * -22f, 0f);
+
+            go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObjects[i].pic);
+            go.transform.GetChild(1).GetComponent<Text>().text = "<color=#" + gc.OutputItemRankColorString(itemObjects[i].rank) + ">" + itemObjects[i].name + "</color>";
+            go.transform.GetComponent<InteractiveLabel>().index = itemObjects[i].objectID;
+            go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.ItemToSet;
+        }
+        for (int i = itemObjects.Count; i < itemGo.Count; i++)
+        {
+            itemGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+
+        itemListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(425f, 4 + (itemObjects.Count / columns) * 22f));
+      
+            numText.text = itemObjects.Count.ToString();
+        
     }
 
 
@@ -216,7 +415,7 @@ public class ItemListAndInfoPanel : BasePanel
         }
 
         strBasic = strBasicFirst + strBasic+ "\n<color=#53C2FF>" + strLemma+"</color>";
-        str += "\n" + strBasic + "----------------------------------\n" + itemObject.des + "\n价值 "+ itemObject.cost;
+        str += "\n" + strBasic + "-----------------------------\n" + itemObject.des + "\n价值 "+ itemObject.cost;
 
         info_desText.text = str;
     }

@@ -42,6 +42,7 @@ public class BuildingPanel : BasePanel
     public List<Button> setForge_btnList;
     public Button setForge_updateBtn;
 
+    public List<Button> totalSet_btnList;
     public Button closeBtn;
 
     public int setForgeTypeSmall = 0;
@@ -70,8 +71,7 @@ public class BuildingPanel : BasePanel
             case "Forge":
                 UpdateForge(buildingObject);break;
             case "Resource":
-
-                break;
+                UpdateResource(buildingObject); break;
             default:break;
         }
         SetAnchoredPosition(x, y);
@@ -82,7 +82,7 @@ public class BuildingPanel : BasePanel
         setWorker_addBtn.onClick.RemoveAllListeners();
         setWorker_addBtn.onClick.AddListener(delegate () { gc.BuildingWorkerAdd(buildingObject.id); });
 
-
+    
     }
 
     public override void OnHide()
@@ -101,7 +101,123 @@ public class BuildingPanel : BasePanel
         UpdateSetWorkerPart(buildingObject);
         UpdateHistoryInfoPart(buildingObject, 276f);
         UpdateSetForgePart(buildingObject);
+        UpdateTotalSetButton(buildingObject);
     }
+
+    public void UpdateResource(BuildingObject buildingObject)
+    {
+        UpdateBasicPart(buildingObject);
+        UpdateOutputInfoPart(buildingObject);
+        UpdateSetManagerPart(buildingObject);
+        UpdateSetWorkerPart(buildingObject);
+        UpdateHistoryInfoPart(buildingObject, 474f);
+        HideSetForgePart();
+
+        UpdateTotalSetButton(buildingObject);
+    }
+
+
+    //
+    public void UpdateTotalSetButton(BuildingObject buildingObject)
+    {
+        switch (buildingObject.panelType)
+        { 
+            case "Resource":
+                //开工停工
+                totalSet_btnList[0].GetComponent<RectTransform>().localScale = Vector3.one;
+                totalSet_btnList[0].onClick.RemoveAllListeners();
+                if (buildingObject.produceEquipNow != -1)
+                {
+                    totalSet_btnList[0].transform.GetChild(0).GetComponent<Text>().text = "停工";
+                    totalSet_btnList[0].onClick.AddListener(delegate () {
+                        gc.StopProduceResource(buildingObject.id);
+                        UpdateTotalSetButton(buildingObject);
+                    });
+                }
+                else
+                {
+                    totalSet_btnList[0].transform.GetChild(0).GetComponent<Text>().text = "开工";
+                    totalSet_btnList[0].onClick.AddListener(delegate () {
+                        if (buildingObject.workerNow == 0 )
+                        {
+                            MessagePanel.Instance.AddMessage("缺少工人，无法开工");
+                        }
+                        else
+                        {
+                            gc.CreateProduceResourceEvent(buildingObject.id); 
+                            UpdateTotalSetButton(buildingObject);
+                        }
+                    });
+                }
+                //升级
+                totalSet_btnList[1].GetComponent<RectTransform>().localScale = Vector3.one;
+                totalSet_btnList[1].onClick.RemoveAllListeners();
+                totalSet_btnList[1].transform.GetChild(0).GetComponent<Text>().text = "升级";
+                totalSet_btnList[1].onClick.AddListener(delegate () { /*   */ });
+
+                //拆除
+                totalSet_btnList[2].GetComponent<RectTransform>().localScale = Vector3.one;
+                totalSet_btnList[2].onClick.RemoveAllListeners();
+                totalSet_btnList[2].transform.GetChild(0).GetComponent<Text>().text = "拆除";
+                totalSet_btnList[2].onClick.AddListener(delegate () { /*   */ });
+
+                for (int i = 3; i < 6; i++)
+                {
+                    totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
+                }
+
+                break;
+            case "Forge":
+                //开工停工
+                totalSet_btnList[0].GetComponent<RectTransform>().localScale = Vector3.one;
+                totalSet_btnList[0].onClick.RemoveAllListeners();
+                if (buildingObject.produceEquipNow != -1)
+                {
+                    totalSet_btnList[0].transform.GetChild(0).GetComponent<Text>().text = "停工";
+                    totalSet_btnList[0].onClick.AddListener(delegate () {
+                        gc.StopProduceItem(buildingObject.id);
+                        UpdateTotalSetButton(buildingObject);
+                    });
+                }
+                else
+                {
+                    totalSet_btnList[0].transform.GetChild(0).GetComponent<Text>().text = "开工";
+                    totalSet_btnList[0].onClick.AddListener(delegate () {
+                        if (buildingObject.workerNow == 0)
+                        {
+                            MessagePanel.Instance.AddMessage("缺少工人，无法开工");
+                        }
+                        else
+                        {
+                            gc.CreateProduceItemEvent(buildingObject.id);
+                            UpdateTotalSetButton(buildingObject);
+                        }
+                    });
+                }
+                //升级
+                totalSet_btnList[1].GetComponent<RectTransform>().localScale = Vector3.one;
+                totalSet_btnList[1].onClick.RemoveAllListeners();
+                totalSet_btnList[1].transform.GetChild(0).GetComponent<Text>().text = "升级";
+                totalSet_btnList[1].onClick.AddListener(delegate () { /*   */ });
+
+                //拆除
+                totalSet_btnList[2].GetComponent<RectTransform>().localScale = Vector3.one;
+                totalSet_btnList[2].onClick.RemoveAllListeners();
+                totalSet_btnList[2].transform.GetChild(0).GetComponent<Text>().text = "拆除";
+                totalSet_btnList[2].onClick.AddListener(delegate () { /*   */ });
+
+                for (int i = 3; i < 6; i++)
+                {
+                    totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
+                }
+
+
+                break;
+        }
+    }
+
+
+
 
     //各栏目更新
     public void UpdateBasicPart(BuildingObject buildingObject)
@@ -154,7 +270,7 @@ public class BuildingPanel : BasePanel
                     {
                         outputInfo_iconImage[i].color = Color.clear;
                     }
-                    outputInfo_desText.text = "停工中";
+                    outputInfo_desText.text = "<color=#FF4500>停工中</color>";
                 }
                 break;
             case "Resource":
@@ -175,7 +291,7 @@ public class BuildingPanel : BasePanel
                     for (int i = 0; i < DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputPic.Count; i++)
                     {
                         outputInfo_iconImage[i].color = new Color(1f, 1f, 1f, 174 / 255f);
-                        outputInfo_iconImage[i].overrideSprite = Resources.Load("Image/" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputPic[i], typeof(Sprite)) as Sprite;
+                        outputInfo_iconImage[i].overrideSprite = Resources.Load("Image/Other/" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputPic[i], typeof(Sprite)) as Sprite;
                     }
                     for (int i = DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputPic.Count; i < outputInfo_iconImage.Count; i++)
                     {
@@ -193,20 +309,24 @@ public class BuildingPanel : BasePanel
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputLeather != 0 ? " 皮革" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputLeather : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCloth != 0 ? " 布料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCloth : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputTwine != 0 ? " 麻绳" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputTwine : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone : "") + "\n产出" +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCereal != 0 ? " 谷物" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCereal : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputVegetable != 0 ? " 蔬菜" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputVegetable : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFruit != 0 ? " 水果" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFruit : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal != 0 ? " 肉类" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFish != 0 ? " 鱼类" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFish : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWood != 0 ? " 木材" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWood : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputStone != 0 ? " 石料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputStone : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal != 0 ? " 金属" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLeather != 0 ? " 皮革" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLeather : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCloth != 0 ? " 布料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCloth : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputTwine != 0 ? " 麻绳" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputTwine : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone : "");
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone : "") + "\n基础产出" +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCereal != 0 ? " 谷物" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCereal+"(效率"+ (int)(gc.GetProduceResourceLaborRate(buildingObject.id) *100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputVegetable != 0 ? " 蔬菜" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputVegetable + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFruit != 0 ? " 水果" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFruit + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal != 0 ? " 肉类" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFish != 0 ? " 鱼类" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFish + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWood != 0 ? " 木材" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWood + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputStone != 0 ? " 石料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputStone + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal != 0 ? " 金属" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputMetal + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLeather != 0 ? " 皮革" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLeather + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCloth != 0 ? " 布料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCloth + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputTwine != 0 ? " 麻绳" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputTwine + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "");
 
+                    if (gc.GetProduceResourceOutputUp(buildingObject.id) != 0f)
+                    {
+                        outputInfo_desText.text += "\n<color=#00FF00>管理者能力 +" + (int)(gc.GetProduceResourceOutputUp(buildingObject.id) * 100) + "%产出</color>";
+                    }
                 }
                 else
                 {
@@ -214,7 +334,7 @@ public class BuildingPanel : BasePanel
                     {
                         outputInfo_iconImage[i].color = Color.clear;
                     }
-                    outputInfo_desText.text = "停工中";
+                    outputInfo_desText.text = "<color=#FF4500>停工中</color>";
                 }
              
                 break;
@@ -231,8 +351,13 @@ public class BuildingPanel : BasePanel
             setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic, typeof(Sprite)) as Sprite;
             setManager_textList[i].text = gc.heroDic[buildingObject.heroList[i]].name;
             setManager_btnList[i].gameObject.GetComponent<Image>().overrideSprite = Resources.Load("Image/Other/to_down", typeof(Sprite)) as Sprite;
+            int hid = gc.heroDic[buildingObject.heroList[i]].id;
             setManager_btnList[i].onClick.RemoveAllListeners();
-            setManager_btnList[i].onClick.AddListener(delegate () { /*卸下*/ });
+            setManager_btnList[i].onClick.AddListener(delegate () {
+                /*卸下*/
+                gc.BuildingManagerMinus(buildingObject.id, hid);
+                UpdateSetManagerPart(buildingObject);
+            });
         }
         for (int i = buildingObject.heroList.Count; i < 4; i++)
         {
@@ -242,7 +367,9 @@ public class BuildingPanel : BasePanel
                 setManager_textList[i].text = " <未指派>";
                 setManager_btnList[i].gameObject.GetComponent<Image>().overrideSprite = Resources.Load("Image/Other/to_up", typeof(Sprite)) as Sprite;
                 setManager_btnList[i].onClick.RemoveAllListeners();
-                setManager_btnList[i].onClick.AddListener(delegate () { /*指派*/ });
+                setManager_btnList[i].onClick.AddListener(delegate () {
+                    HeroSelectPanel.Instance.OnShow("指派管理者", buildingObject.districtID, buildingObject.id, 1,(int)(gameObject.GetComponent<RectTransform>().sizeDelta.x+ gameObject.GetComponent<RectTransform>().anchoredPosition.x+ GameControl.spacing),(int)( gameObject.GetComponent<RectTransform>().anchoredPosition.y));
+                });
             }
             else
             {
@@ -296,6 +423,7 @@ public class BuildingPanel : BasePanel
 
     public void UpdateSetForgePart(BuildingObject buildingObject)
     {
+      SetForgeRt.anchoredPosition = new Vector2(278f, -298f);
         switch (buildingObject.prototypeID)
         {
             case 32:
@@ -364,5 +492,11 @@ public class BuildingPanel : BasePanel
         setForge_updateBtn.onClick.RemoveAllListeners();
         setForge_updateBtn.onClick.AddListener(delegate () { gc.ChangeProduceEquipNow(buildingObject.id); });
 
+    }
+
+
+    public void HideSetForgePart()
+    {
+        SetForgeRt.anchoredPosition = new Vector2(278f, 5000f);
     }
 }

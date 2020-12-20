@@ -25,16 +25,15 @@ public class BuildPanel : BasePanel
 
     public void OnShow( int x, int y)
     {
-
         UpdateAllInfo(gc);
         SetAnchoredPosition(x, y);
-        //ShowByImmediately(true);
-
+        isShow = true;
     }
 
     public override void OnHide()
     {
         SetAnchoredPosition(0, 5000);
+        isShow = false;
     }
 
     public void UpdateAllInfo(GameControl gc)

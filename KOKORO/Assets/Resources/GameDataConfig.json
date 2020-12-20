@@ -20472,7 +20472,7 @@
     {
       "ID": 16,
       "Name": "初级伐木场",
-      "MainPic": "Oasis",
+      "MainPic": "GemMine",
       "MapPic": 5,
       "PanelType": "Resource",
       "Des": "",
@@ -20502,7 +20502,7 @@
     {
       "ID": 17,
       "Name": "中级伐木场",
-      "MainPic": "Oasis",
+      "MainPic": "GemMine",
       "MapPic": 5,
       "PanelType": "Resource",
       "Des": "",
@@ -20532,7 +20532,7 @@
     {
       "ID": 18,
       "Name": "高级伐木场",
-      "MainPic": "Oasis",
+      "MainPic": "GemMine",
       "MapPic": 5,
       "PanelType": "Resource",
       "Des": "",
@@ -30114,7 +30114,7 @@
       "OutputPic": [
         "icon868"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 3,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
@@ -30144,11 +30144,11 @@
     {
       "ID": 16,
       "Name": "初级伐木场",
-      "Action": "捕钓",
+      "Action": "砍伐",
       "OutputPic": [
         "icon959"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
@@ -30178,11 +30178,11 @@
     {
       "ID": 17,
       "Name": "中级伐木场",
-      "Action": "捕钓",
+      "Action": "砍伐",
       "OutputPic": [
         "icon959"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
@@ -30212,11 +30212,11 @@
     {
       "ID": 18,
       "Name": "高级伐木场",
-      "Action": "捕钓",
+      "Action": "砍伐",
       "OutputPic": [
         "icon959"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
@@ -30250,7 +30250,7 @@
       "OutputPic": [
         "icon961"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
@@ -30284,7 +30284,7 @@
       "OutputPic": [
         "icon961"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
@@ -30318,7 +30318,7 @@
       "OutputPic": [
         "icon961"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
@@ -30352,7 +30352,7 @@
       "OutputPic": [
         "icon858"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
@@ -30386,7 +30386,7 @@
       "OutputPic": [
         "icon858"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
@@ -30420,7 +30420,7 @@
       "OutputPic": [
         "icon858"
       ],
-      "TimeInterval": 1,
+      "TimeInterval": 5,
       "LaborRate": 0.5,
       "InputCereal": 0,
       "InputVegetable": 0,
