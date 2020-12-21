@@ -490,7 +490,18 @@ public class BuildingPanel : BasePanel
             setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "生产";
         }
         setForge_updateBtn.onClick.RemoveAllListeners();
-        setForge_updateBtn.onClick.AddListener(delegate () { gc.ChangeProduceEquipNow(buildingObject.id); });
+        setForge_updateBtn.onClick.AddListener(delegate () { 
+            gc.ChangeProduceEquipNow(buildingObject.id);
+            if (buildingObject.produceEquipNow != -1)
+            {
+                setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "更新";
+            }
+            else
+            {
+                setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "生产";
+            }
+            UpdateTotalSetButton(buildingObject);
+        });
 
     }
 

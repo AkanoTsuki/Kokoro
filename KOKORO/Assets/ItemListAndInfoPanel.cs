@@ -69,6 +69,8 @@ public class ItemListAndInfoPanel : BasePanel
         funcBtn[0].onClick.RemoveAllListeners();
         funcBtn[0].onClick.AddListener(delegate () { gc.ItemToGoodsAll(districtID); });
 
+        closeBtn.GetComponent<RectTransform>().localScale = Vector3.one;
+
         UpdateAllInfo(districtID, col);
 
 
@@ -83,6 +85,10 @@ public class ItemListAndInfoPanel : BasePanel
         titleText.text = "物品信息";
         goRt.sizeDelta = new Vector2(732f - 232f-238f, 536f);
         listRt.sizeDelta = new Vector2(0, 450f);
+        numText.text = "";
+
+        HideFuncBtn(4);
+        closeBtn.GetComponent<RectTransform>().localScale = Vector3.zero;
 
         UpdateInfo(gc.itemDic[itemID]);
 
@@ -99,10 +105,12 @@ public class ItemListAndInfoPanel : BasePanel
         funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "装备";
         funcBtn[0].onClick.RemoveAllListeners();
         funcBtn[0].onClick.AddListener(delegate () {
-            Debug.Log("nowItemID="+ nowItemID);
-            gc.HeroEquipSet(heroID, equipPart, nowItemID); 
+            gc.HeroEquipSet(heroID, equipPart, nowItemID);
+            HeroPanel.Instance.UpdateFightInfo(gc.heroDic[heroID], EquipPart.None, null, 1);
         });
         HideFuncBtn(3);
+
+        closeBtn.GetComponent<RectTransform>().localScale = Vector3.one;
 
         UpdateAllInfoToEquip(equipPart);
 
@@ -323,6 +331,13 @@ public class ItemListAndInfoPanel : BasePanel
             go.transform.GetChild(1).GetComponent<Text>().text = "<color=#" + gc.OutputItemRankColorString(itemObjects[i].rank) + ">" + itemObjects[i].name + "</color>";
             go.transform.GetComponent<InteractiveLabel>().index = itemObjects[i].objectID;
             go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.ItemToSet;
+            int index = i;
+            go.transform.GetComponent<Button>().onClick.AddListener(delegate ()
+            {
+                ItemListAndInfoPanel.Instance.nowItemID =  itemObjects[index].objectID; 
+                ItemListAndInfoPanel.Instance.UpdateInfo(gc.itemDic[itemObjects[index].objectID]);
+                HeroPanel.Instance.UpdateFightInfo(gc.heroDic[HeroPanel.Instance.nowSelectedHeroID], ItemListAndInfoPanel.Instance.nowEquipPart, gc.itemDic[itemObjects[index].objectID], 1);
+            });
         }
         for (int i = itemObjects.Count; i < itemGo.Count; i++)
         {

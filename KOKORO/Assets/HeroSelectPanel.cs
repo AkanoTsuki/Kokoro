@@ -108,7 +108,7 @@ public class HeroSelectPanel : BasePanel
                 }
 
                 heroListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(413f, 4 + (temp.Count / columns) * 36f));
-                doBtn.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+                doBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 break;
             case "指派管理者":
 
@@ -152,7 +152,7 @@ public class HeroSelectPanel : BasePanel
                 }
 
                 heroListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(413f, 4 + (temp.Count / columns) * 36f));
-                doBtn.GetComponent<RectTransform>().sizeDelta = Vector2.one;
+                doBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                 doBtn.onClick.RemoveAllListeners();
                 doBtn.onClick.AddListener(delegate () {
                     gc.BuildingManagerAdd(buildingID, nowSelectedHeroID);

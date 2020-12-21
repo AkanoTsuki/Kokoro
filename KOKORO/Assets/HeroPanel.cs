@@ -94,12 +94,12 @@ public class HeroPanel : BasePanel
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 
-    public void OnShow( HeroObject heroObject, int x,int y,int connY)
+    public void OnShow( HeroObject heroObject,bool equipState, bool skillState, int x,int y,int connY)
     {
 
         UpdateAllInfo( heroObject, connY);
-        nowEquipState = false;
-        nowSkillState = false;
+        nowEquipState = equipState;
+        nowSkillState = skillState;
         UpdateButtonStatus();
         SetAnchoredPosition(x, y);
 
@@ -114,222 +114,33 @@ public class HeroPanel : BasePanel
 
     public void UpdateButtonStatus()
     {
-        //Debug.Log("nowEquipState=" + nowEquipState);
-        if (!nowEquipState)
+        if (nowEquipState==false)
         {
             equip_titleText.text = "装备[查看模式]";
-            equip_weaponBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_weaponBtn.onClick.RemoveAllListeners();
-            equip_weaponBtn.onClick.AddListener(delegate ()
-            {
-                int index= equip_weaponBtn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {  
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing),(int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
-
-            equip_subhandBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_subhandBtn.onClick.RemoveAllListeners();
-            equip_subhandBtn.onClick.AddListener(delegate ()
-            {
-                int index = equip_subhandBtn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
-
-            equip_headBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_headBtn.onClick.RemoveAllListeners();
-            equip_headBtn.onClick.AddListener(delegate ()
-            {
-                int index = equip_headBtn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
-
-            equip_bodyBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_bodyBtn.onClick.RemoveAllListeners();
-            equip_bodyBtn.onClick.AddListener(delegate ()
-            {
-                int index = equip_bodyBtn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
-
-            equip_handBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_handBtn.onClick.RemoveAllListeners();
-            equip_handBtn.onClick.AddListener(delegate ()
-            {
-                int index = equip_handBtn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
-
-            equip_backBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_backBtn.onClick.RemoveAllListeners();
-            equip_backBtn.onClick.AddListener(delegate ()
-            {
-                int index = equip_backBtn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
-
-            equip_footBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_footBtn.onClick.RemoveAllListeners();
-            equip_footBtn.onClick.AddListener(delegate ()
-            {
-                int index = equip_footBtn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
-
-            equip_neckBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_neckBtn.onClick.RemoveAllListeners();
-            equip_neckBtn.onClick.AddListener(delegate ()
-            {
-                int index = equip_neckBtn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
-
-            equip_finger1Btn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_finger1Btn.onClick.RemoveAllListeners();
-            equip_finger1Btn.onClick.AddListener(delegate ()
-            {
-                int index = equip_finger1Btn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
-
-            equip_finger2Btn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
-            equip_finger2Btn.onClick.RemoveAllListeners();
-            equip_finger2Btn.onClick.AddListener(delegate ()
-            {
-                int index = equip_finger2Btn.transform.GetComponent<InteractiveLabel>().index;
-                if (index != -1)
-                {
-                    ItemListAndInfoPanel.Instance.nowItemID = index;
-                    ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-                }
-            });
+            SetEquipButtonModeLook(equip_weaponBtn, equip_weaponUnSetBtn);
+            SetEquipButtonModeLook(equip_subhandBtn, equip_subhandUnSetBtn);
+            SetEquipButtonModeLook(equip_headBtn, equip_headUnSetBtn);
+            SetEquipButtonModeLook(equip_bodyBtn, equip_bodyUnSetBtn);
+            SetEquipButtonModeLook(equip_handBtn, equip_handUnSetBtn);
+            SetEquipButtonModeLook(equip_backBtn, equip_backUnSetBtn);
+            SetEquipButtonModeLook(equip_footBtn, equip_footUnSetBtn);
+            SetEquipButtonModeLook(equip_neckBtn, equip_neckUnSetBtn);
+            SetEquipButtonModeLook(equip_finger1Btn, equip_finger1UnSetBtn);
+            SetEquipButtonModeLook(equip_finger2Btn, equip_finger2UnSetBtn);
         }
         else 
         {
             equip_titleText.text = "装备[调整模式]";
-            equip_weaponBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_weaponBtn.onClick.RemoveAllListeners();
-            equip_weaponBtn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_weaponBtn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_weaponBtn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart,(int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ gameObject.GetComponent<RectTransform>().sizeDelta.x+ GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
-
-            equip_subhandBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_subhandBtn.onClick.RemoveAllListeners();
-            equip_subhandBtn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_subhandBtn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_subhandBtn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
-
-            equip_headBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_weaponBtn.onClick.RemoveAllListeners();
-            equip_weaponBtn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_weaponBtn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_weaponBtn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
-
-            equip_bodyBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_bodyBtn.onClick.RemoveAllListeners();
-            equip_bodyBtn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_bodyBtn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_bodyBtn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
-
-            equip_handBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_handBtn.onClick.RemoveAllListeners();
-            equip_handBtn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_handBtn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_handBtn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
-
-            equip_backBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_backBtn.onClick.RemoveAllListeners();
-            equip_backBtn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_backBtn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_backBtn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
-
-            equip_footBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_footBtn.onClick.RemoveAllListeners();
-            equip_footBtn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_footBtn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_footBtn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
-
-            equip_neckBtn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_neckBtn.onClick.RemoveAllListeners();
-            equip_neckBtn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_neckBtn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_neckBtn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
-
-            equip_finger1Btn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_finger1Btn.onClick.RemoveAllListeners();
-            equip_finger1Btn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_finger1Btn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_finger1Btn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
-
-            equip_finger2Btn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
-            equip_finger2Btn.onClick.RemoveAllListeners();
-            equip_finger2Btn.onClick.AddListener(delegate ()
-            {
-                int heroID = equip_finger2Btn.transform.GetComponent<InteractiveLabel>().heroID;
-                EquipPart equipPart = equip_finger2Btn.transform.GetComponent<InteractiveLabel>().equipPart;
-                ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-            });
+            SetEquipButtonModeSet(equip_weaponBtn, equip_weaponUnSetBtn, gc.heroDic[nowSelectedHeroID].equipWeapon, EquipPart.Weapon);
+            SetEquipButtonModeSet(equip_subhandBtn, equip_subhandUnSetBtn, gc.heroDic[nowSelectedHeroID].equipSubhand, EquipPart.Subhand);
+            SetEquipButtonModeSet(equip_headBtn, equip_headUnSetBtn, gc.heroDic[nowSelectedHeroID].equipHead, EquipPart.Head);
+            SetEquipButtonModeSet(equip_bodyBtn, equip_bodyUnSetBtn, gc.heroDic[nowSelectedHeroID].equipBody, EquipPart.Body);
+            SetEquipButtonModeSet(equip_handBtn, equip_handUnSetBtn, gc.heroDic[nowSelectedHeroID].equipHand, EquipPart.Hand);
+            SetEquipButtonModeSet(equip_backBtn, equip_backUnSetBtn, gc.heroDic[nowSelectedHeroID].equipBack, EquipPart.Back);
+            SetEquipButtonModeSet(equip_footBtn, equip_footUnSetBtn, gc.heroDic[nowSelectedHeroID].equipFoot, EquipPart.Foot);
+            SetEquipButtonModeSet(equip_neckBtn, equip_neckUnSetBtn, gc.heroDic[nowSelectedHeroID].equipNeck, EquipPart.Neck);
+            SetEquipButtonModeSet(equip_finger1Btn, equip_finger1UnSetBtn, gc.heroDic[nowSelectedHeroID].equipFinger1, EquipPart.Finger1);
+            SetEquipButtonModeSet(equip_finger2Btn, equip_finger2UnSetBtn, gc.heroDic[nowSelectedHeroID].equipFinger2, EquipPart.Finger2);
         }
 
         if (!nowSkillState)
@@ -339,6 +150,43 @@ public class HeroPanel : BasePanel
         else 
         {
             skill_titleText.text = "招式[调整模式]";
+        }
+    }
+    void SetEquipButtonModeLook(Button btn, Button unsetBtn)
+    {
+        btn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentLook;
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(delegate ()
+        {
+            int index = btn.transform.GetComponent<InteractiveLabel>().index;
+            if (index != -1)
+            {
+                ItemListAndInfoPanel.Instance.nowItemID = index;
+                ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
+            }
+        });
+        unsetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+    }
+
+    void SetEquipButtonModeSet(Button btn,Button unsetBtn,int heroEquipID,EquipPart equipPartA)
+    {
+        btn.transform.GetComponent<InteractiveLabel>().labelType = LabelType.EquipmentSet;
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(delegate ()
+        {
+            int heroID = btn.transform.GetComponent<InteractiveLabel>().heroID;
+            EquipPart equipPart = btn.transform.GetComponent<InteractiveLabel>().equipPart;
+            ItemListAndInfoPanel.Instance.OnShow(heroID, equipPart, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y);
+        });
+        if (heroEquipID != -1)
+        {
+            unsetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+            unsetBtn.onClick.RemoveAllListeners();
+            unsetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(nowSelectedHeroID, equipPartA); });
+        }
+        else
+        {
+            unsetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
     }
 
@@ -362,7 +210,7 @@ public class HeroPanel : BasePanel
 
     public void UpdateFightInfo(HeroObject heroObject ,EquipPart equipPart ,ItemObject itemObject, int page)
     {
-        Debug.Log("UpdateFightInfo() equipPart=" + equipPart );
+        Debug.Log("equipPart=" + equipPart);
         int hpEquipAdd = 0;
         int mpEquipAdd = 0;
         short hpRenewEquipAdd = 0;
@@ -1830,7 +1678,7 @@ public class HeroPanel : BasePanel
         }
         else if (change < 0)
         {
-            changeStr = " <color=#FF4A4A>-" + change + suffixes+"</color>";
+            changeStr = " <color=#FF4A4A>" + change + suffixes+"</color>";
         }
         
         return newValue+ suffixes + changeStr;
@@ -1874,7 +1722,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Weapon:
                 if (heroObject.equipWeapon != -1)
                 {
-                    equip_weaponText.text = gc.itemDic[heroObject.equipWeapon].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipWeapon].rank);
+                    equip_weaponText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipWeapon].rank) + ">"+ gc.itemDic[heroObject.equipWeapon].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipWeapon].rank)+ "</color>";
                     equip_weaponImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipWeapon].pic, typeof(Sprite)) as Sprite;
                     equip_weaponUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_weaponUnSetBtn.onClick.RemoveAllListeners();
@@ -1892,7 +1740,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Subhand:
                 if (heroObject.equipSubhand != -1)
                 {
-                    equip_subhandText.text = gc.itemDic[heroObject.equipSubhand].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipSubhand].rank);
+                    equip_subhandText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipSubhand].rank) + ">" + gc.itemDic[heroObject.equipSubhand].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipSubhand].rank) + "</color>";
                     equip_subhandImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipSubhand].pic, typeof(Sprite)) as Sprite;
                     equip_subhandUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_subhandUnSetBtn.onClick.RemoveAllListeners();
@@ -1910,7 +1758,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Head:
                 if (heroObject.equipHead != -1)
                 {
-                    equip_headText.text = gc.itemDic[heroObject.equipHead].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipHead].rank);
+                    equip_headText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipHead].rank) + ">" + gc.itemDic[heroObject.equipHead].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipHead].rank) + "</color>";
                     equip_headImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipHead].pic, typeof(Sprite)) as Sprite;
                     equip_headUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_headUnSetBtn.onClick.RemoveAllListeners();
@@ -1928,7 +1776,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Body:
                 if (heroObject.equipBody != -1)
                 {
-                    equip_bodyText.text = gc.itemDic[heroObject.equipBody].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipBody].rank);
+                    equip_bodyText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipBody].rank) + ">" + gc.itemDic[heroObject.equipBody].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipBody].rank) + "</color>";
                     equip_bodyImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipBody].pic, typeof(Sprite)) as Sprite;
                     equip_bodyUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_bodyUnSetBtn.onClick.RemoveAllListeners();
@@ -1946,7 +1794,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Hand:
                 if (heroObject.equipHand != -1)
                 {
-                    equip_handText.text = gc.itemDic[heroObject.equipHand].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipHand].rank);
+                    equip_handText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipHand].rank) + ">" + gc.itemDic[heroObject.equipHand].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipHand].rank) + "</color>";
                     equip_handImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipHand].pic, typeof(Sprite)) as Sprite;
                     equip_handUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_handUnSetBtn.onClick.RemoveAllListeners();
@@ -1964,7 +1812,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Back:
                 if (heroObject.equipBack != -1)
                 {
-                    equip_backText.text = gc.itemDic[heroObject.equipBack].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipBack].rank);
+                    equip_backText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipBack].rank) + ">" + gc.itemDic[heroObject.equipBack].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipBack].rank) + "</color>";
                     equip_backImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipBack].pic, typeof(Sprite)) as Sprite;
                     equip_backUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_backUnSetBtn.onClick.RemoveAllListeners();
@@ -1982,7 +1830,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Foot:
                 if (heroObject.equipFoot != -1)
                 {
-                    equip_footText.text = gc.itemDic[heroObject.equipFoot].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipFoot].rank);
+                    equip_footText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipFoot].rank) + ">" + gc.itemDic[heroObject.equipFoot].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipFoot].rank) + "</color>";
                     equip_footImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipFoot].pic, typeof(Sprite)) as Sprite;
                     equip_footUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_footUnSetBtn.onClick.RemoveAllListeners();
@@ -2000,7 +1848,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Neck:
                 if (heroObject.equipNeck != -1)
                 {
-                    equip_neckText.text = gc.itemDic[heroObject.equipNeck].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipNeck].rank);
+                    equip_neckText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipNeck].rank) + ">" + gc.itemDic[heroObject.equipNeck].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipNeck].rank) + "</color>";
                     equip_neckImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipNeck].pic, typeof(Sprite)) as Sprite;
                     equip_neckUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_neckUnSetBtn.onClick.RemoveAllListeners();
@@ -2018,7 +1866,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Finger1:
                 if (heroObject.equipFinger1 != -1)
                 {
-                    equip_finger1Text.text = gc.itemDic[heroObject.equipFinger1].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipFinger1].rank);
+                    equip_finger1Text.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipFinger1].rank) + ">" + gc.itemDic[heroObject.equipFinger1].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipFinger1].rank) + "</color>";
                     equip_finger1Image.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipFinger1].pic, typeof(Sprite)) as Sprite;
                     equip_finger1UnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_finger1UnSetBtn.onClick.RemoveAllListeners();
@@ -2036,7 +1884,7 @@ public class HeroPanel : BasePanel
             case EquipPart.Finger2:
                 if (heroObject.equipFinger2 != -1)
                 {
-                    equip_finger2Text.text = gc.itemDic[heroObject.equipFinger2].name + "\n" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipFinger2].rank);
+                    equip_finger2Text.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipFinger2].rank) + ">" + gc.itemDic[heroObject.equipFinger2].name + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipFinger2].rank) + "</color>";
                     equip_finger2Image.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipFinger2].pic, typeof(Sprite)) as Sprite;
                     equip_finger2UnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_finger2UnSetBtn.onClick.RemoveAllListeners();
@@ -2044,7 +1892,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_finger2Text.text = "戒指<color=red>（未装备）</color>";
+                    equip_finger2Text.text =  "戒指<color=red>（未装备）</color>";
                     equip_finger2Image.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_finger2UnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }

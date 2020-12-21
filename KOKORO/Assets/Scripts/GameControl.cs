@@ -309,10 +309,10 @@ public class GameControl : MonoBehaviour
         int mp = DataManager.mHeroDict[heroTypeID].Mp;
         short hpRenew = DataManager.mHeroDict[heroTypeID].HpRenew;
         short mpRenew = DataManager.mHeroDict[heroTypeID].MpRenew;
-        short atkMax = DataManager.mHeroDict[heroTypeID].AtkMin;
-        short atkMin = DataManager.mHeroDict[heroTypeID].AtkMax;
-        short mAtkMax = DataManager.mHeroDict[heroTypeID].MAtkMin;
-        short mAtkMin = DataManager.mHeroDict[heroTypeID].MAtkMax;
+        short atkMin = DataManager.mHeroDict[heroTypeID].AtkMin;
+        short atkMax = DataManager.mHeroDict[heroTypeID].AtkMax;
+        short mAtkMin = DataManager.mHeroDict[heroTypeID].MAtkMin;
+        short mAtkMax = DataManager.mHeroDict[heroTypeID].MAtkMax;
         short def = DataManager.mHeroDict[heroTypeID].Def;
         short mDef = DataManager.mHeroDict[heroTypeID].MDef;
         short hit = DataManager.mHeroDict[heroTypeID].Hit;
@@ -1176,13 +1176,25 @@ public class GameControl : MonoBehaviour
         {
             if (kvp.Value.districtID == districtID)
             {
-                if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Weapon ||
-            DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Subhand ||
-            DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Armor ||
-            DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Jewelry)
+
+
+                if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Weapon)
                 {
-                    districtDic[districtID].rProductLimit--;
+                    districtDic[districtID].rProductWeapon--;
                 }
+                else if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Subhand)
+                {
+                    districtDic[districtID].rProductWeapon--;
+                }
+                else if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Armor)
+                {
+                    districtDic[districtID].rProductArmor--;
+                }
+                else if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Jewelry)
+                {
+                    districtDic[districtID].rProductJewelry--;
+                }
+
                 itemDic[kvp.Key].districtID = -1;
             }
         }
@@ -1196,13 +1208,23 @@ public class GameControl : MonoBehaviour
     {
         short districtID = itemDic[itemID].districtID;
 
-        if (DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Weapon ||
-            DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Subhand ||
-            DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Armor ||
-            DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Jewelry)
+        if (DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Weapon)
         {
-            districtDic[itemDic[itemID].districtID].rProductLimit--;
+            districtDic[itemDic[itemID].districtID].rProductWeapon--;
         }
+        else if (DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Subhand)
+        {
+            districtDic[itemDic[itemID].districtID].rProductWeapon--;
+        }
+        else if (DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Armor)
+        {
+            districtDic[itemDic[itemID].districtID].rProductArmor--;
+        }
+        else if (DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Jewelry)
+        {
+            districtDic[itemDic[itemID].districtID].rProductJewelry--;
+        }
+
         itemDic[itemID].districtID = -1;
         if (ItemListAndInfoPanel.Instance.isShow)
         {

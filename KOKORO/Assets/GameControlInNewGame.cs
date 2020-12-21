@@ -65,7 +65,7 @@ public class GameControlInNewGame : MonoBehaviour
         }
         Debug.Log("temp_Leader.sex="+temp_Leader.sex);
         StartChoosePanel.Instance.UpdateLeaderInfo(temp_leaderHeroType);
-        HeroPanel.Instance.OnShow(temp_Leader, 374, -32, -234);
+        HeroPanel.Instance.OnShow(temp_Leader, false, false, 374, -32, -234);
     }
 
     public void SetLeaderHeroType(short typeID)
@@ -73,7 +73,7 @@ public class GameControlInNewGame : MonoBehaviour
         temp_leaderHeroType = typeID;
         temp_Leader= gc.GenerateHeroByMould(0, typeID, temp_leaderHeroSex,"[主角]");
         StartChoosePanel.Instance.UpdateLeaderInfo(typeID);
-        HeroPanel.Instance.OnShow(temp_Leader, 374, -32, -234);
+        HeroPanel.Instance.OnShow(temp_Leader, false, false, 374, -32, -234);
     }
 
     public void RollMenberAll()
