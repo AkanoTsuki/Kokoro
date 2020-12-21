@@ -27,6 +27,7 @@ public class ItemListAndInfoPanel : BasePanel
     List<GameObject> itemGo=new List<GameObject>();
 
     public int nowItemID = -1;
+    public EquipPart nowEquipPart = EquipPart.None;
 
     void Awake()
     {
@@ -41,18 +42,44 @@ public class ItemListAndInfoPanel : BasePanel
     }
     public void OnShow(short districtID, int x, int y, byte col)//地区库房查询
     {
-
+        nowEquipPart = EquipPart.None;
         titleText.text = "鉴定仓库["+ gc.districtDic[districtID].name+"-"+gc.districtDic[districtID].baseName+"]";
+
+        funcBtn[3].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[3].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
+        funcBtn[3].transform.GetChild(0).GetComponent<Text>().text = "<<全部收藏";
+        funcBtn[3].onClick.RemoveAllListeners();
+        funcBtn[3].onClick.AddListener(delegate () { gc.ItemToCollectionAll(districtID); });
+
+        funcBtn[2].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[2].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
+        funcBtn[2].transform.GetChild(0).GetComponent<Text>().text = "<<收藏";
+        funcBtn[2].onClick.RemoveAllListeners();
+        funcBtn[2].onClick.AddListener(delegate () { gc.ItemToCollection(nowItemID); });
+
+        funcBtn[1].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[1].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+        funcBtn[1].transform.GetChild(0).GetComponent<Text>().text = "放售>>";
+        funcBtn[1].onClick.RemoveAllListeners();
+        funcBtn[1].onClick.AddListener(delegate () { gc.ItemToGoods(nowItemID); });
+
+        funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[0].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+        funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "全部放售>>";
+        funcBtn[0].onClick.RemoveAllListeners();
+        funcBtn[0].onClick.AddListener(delegate () { gc.ItemToGoodsAll(districtID); });
+
         UpdateAllInfo(districtID, col);
 
 
    
-        HideFuncBtn(4);
+       
         SetAnchoredPosition(x, y);
         isShow = true;
     }
     public void OnShow(int itemID, int x, int y)//用作查看物品信息
     {
+        nowEquipPart = EquipPart.None;
         titleText.text = "物品信息";
         goRt.sizeDelta = new Vector2(732f - 232f-238f, 536f);
         listRt.sizeDelta = new Vector2(0, 450f);
@@ -65,15 +92,21 @@ public class ItemListAndInfoPanel : BasePanel
 
     public void OnShow(int heroID, EquipPart equipPart, int x, int y)//准备装备
     {
+        nowEquipPart = equipPart;
         titleText.text = "物品选择";
-        funcBtn[0].GetComponent<RectTransform>().sizeDelta = Vector2.one;
+        funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[0].GetComponent<Image>().color = new Color(229 / 255f, 181 / 255f, 105 / 255f, 255 / 255f);
         funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "装备";
         funcBtn[0].onClick.RemoveAllListeners();
-        funcBtn[0].onClick.AddListener(delegate () { gc.HeroEquipSet(heroID, equipPart, nowItemID); });
+        funcBtn[0].onClick.AddListener(delegate () {
+            Debug.Log("nowItemID="+ nowItemID);
+            gc.HeroEquipSet(heroID, equipPart, nowItemID); 
+        });
+        HideFuncBtn(3);
 
         UpdateAllInfoToEquip(equipPart);
 
-        HideFuncBtn(3);
+       
 
         SetAnchoredPosition(x, y);
         isShow = true;
@@ -90,7 +123,7 @@ public class ItemListAndInfoPanel : BasePanel
     {
         for (int i = funcBtn.Count-1; i >= funcBtn.Count - count; i--)
         {
-            funcBtn[i].GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+            funcBtn[i].GetComponent<RectTransform>().localScale = Vector2.zero;
         }
     }
 
@@ -181,70 +214,74 @@ public class ItemListAndInfoPanel : BasePanel
 
         foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
         {
-            switch (equipPart)
+            if (kvp.Value.districtID==-1&& kvp.Value.heroID == -1)//在收藏库 并且没被英雄装备
             {
-                case EquipPart.Weapon:
-                    if ( DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Weapon && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                case EquipPart.Subhand:
-                    if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Subhand && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                case EquipPart.Head:
-                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HeadH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HeadL) && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                case EquipPart.Body:
-                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BodyH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BodyL) && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                case EquipPart.Hand:
-                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HandH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HandL) && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                case EquipPart.Back:
-                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BackH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BackL) && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                case EquipPart.Foot:
-                    if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.FootH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.FootL) && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                case EquipPart.Neck:
-                    if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.Neck && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                case EquipPart.Finger1:
-                    if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.Finger && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                case EquipPart.Finger2:
-                    if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.Finger && kvp.Value.heroID == -1)
-                    {
-                        itemObjects.Add(kvp.Value);
-                    }
-                    break;
-                
+                switch (equipPart)
+                {
+                    case EquipPart.Weapon:
+                        if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Weapon)
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+                    case EquipPart.Subhand:
+                        if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Subhand)
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+                    case EquipPart.Head:
+                        if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HeadH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HeadL))
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+                    case EquipPart.Body:
+                        if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BodyH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BodyL))
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+                    case EquipPart.Hand:
+                        if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HandH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.HandL))
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+                    case EquipPart.Back:
+                        if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BackH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.BackL))
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+                    case EquipPart.Foot:
+                        if ((DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.FootH || DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.FootL))
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+                    case EquipPart.Neck:
+                        if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.Neck)
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+                    case EquipPart.Finger1:
+                        if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.Finger)
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+                    case EquipPart.Finger2:
+                        if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == ItemTypeSmall.Finger)
+                        {
+                            itemObjects.Add(kvp.Value);
+                        }
+                        break;
+
+                }
             }
+         
             
         }
 

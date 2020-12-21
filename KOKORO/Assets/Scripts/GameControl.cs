@@ -249,12 +249,12 @@ public class GameControl : MonoBehaviour
         short criR = (short)SetAttr(Attribute.CriR, heroTypeID);
         short criD = 200;
         short spd = 80;
-        short windDam = 100;
-        short fireDam = 100;
-        short waterDam = 100;
-        short groundDam = 100;
-        short lightDam = 100;
-        short darkDam = 100;
+        short windDam = 0;
+        short fireDam = 0;
+        short waterDam = 0;
+        short groundDam = 0;
+        short lightDam = 0;
+        short darkDam = 0;
         short windRes = 0;
         short fireRes = 0;
         short waterRes = 0;
@@ -1118,18 +1118,121 @@ public class GameControl : MonoBehaviour
 
     public void HeroEquipSet(int heroID,EquipPart equipPart, int itemID)
     {
-        Debug.Log("HeroEquipSet() heroID=" + heroID + " equipPart=" + equipPart + " itemID");
+        Debug.Log("HeroEquipSet() heroID=" + heroID + " equipPart=" + equipPart + " itemID="+ itemID+ " heroDic[heroID].equipWeapon=" + heroDic[heroID].equipWeapon);
+        if (heroDic[heroID].equipWeapon != -1)
+        {
+            itemDic[heroDic[heroID].equipWeapon].heroID = -1;
+            itemDic[heroDic[heroID].equipWeapon].heroPart = EquipPart.None;
+        }
         switch (equipPart)
         {
-            case EquipPart.Weapon:
-             //   itemDic[itemID].
-                break;
+            case EquipPart.Weapon:heroDic[heroID].equipWeapon = itemID;break;
+            case EquipPart.Subhand: heroDic[heroID].equipSubhand = itemID; break;
+            case EquipPart.Head: heroDic[heroID].equipHead = itemID; break;
+            case EquipPart.Body: heroDic[heroID].equipBody = itemID; break;
+            case EquipPart.Hand: heroDic[heroID].equipHand = itemID; break;
+            case EquipPart.Back: heroDic[heroID].equipBack = itemID; break;
+            case EquipPart.Foot: heroDic[heroID].equipFoot = itemID; break;
+            case EquipPart.Neck: heroDic[heroID].equipNeck = itemID; break;
+            case EquipPart.Finger1: heroDic[heroID].equipFinger1 = itemID; break;
+            case EquipPart.Finger2: heroDic[heroID].equipFinger2 = itemID; break;
+            default:break;
+        }
+        itemDic[itemID].heroID = heroID;
+        itemDic[itemID].heroPart = equipPart;
+
+        HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
+        ItemListAndInfoPanel.Instance.OnHide();
+    }
+
+    public void HeroEquipUnSet(int heroID, EquipPart equipPart)
+    {
+        if (heroDic[heroID].equipWeapon == -1)//原本就无装备
+        {
+            return;
+        }
+        itemDic[heroDic[heroID].equipWeapon].heroID = -1;
+        itemDic[heroDic[heroID].equipWeapon].heroPart = EquipPart.None;
+        switch (equipPart)
+        {
+            case EquipPart.Weapon:heroDic[heroID].equipWeapon = -1;break;
+            case EquipPart.Subhand: heroDic[heroID].equipSubhand = -1; break;
+            case EquipPart.Head: heroDic[heroID].equipHead = -1; break;
+            case EquipPart.Body: heroDic[heroID].equipBody = -1; break;
+            case EquipPart.Hand: heroDic[heroID].equipHand = -1; break;
+            case EquipPart.Back: heroDic[heroID].equipBack = -1; break;
+            case EquipPart.Foot: heroDic[heroID].equipFoot = -1; break;
+            case EquipPart.Neck: heroDic[heroID].equipNeck = -1; break;
+            case EquipPart.Finger1: heroDic[heroID].equipFinger1 = -1; break;
+            case EquipPart.Finger2: heroDic[heroID].equipFinger2 = -1; break;
+        }
+
+        HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
+    }
+
+    public void ItemToCollectionAll(short districtID)
+    {
+        foreach (KeyValuePair<int, ItemObject> kvp in itemDic)
+        {
+            if (kvp.Value.districtID == districtID)
+            {
+                if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Weapon ||
+            DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Subhand ||
+            DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Armor ||
+            DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Jewelry)
+                {
+                    districtDic[districtID].rProductLimit--;
+                }
+                itemDic[kvp.Key].districtID = -1;
+            }
+        }
+        if (ItemListAndInfoPanel.Instance.isShow)
+        {
+            ItemListAndInfoPanel.Instance.OnShow(districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
         }
     }
 
-    public void HeroEquipUnSet(int heroID, EquipPart equipPart, int itemID)
+    public void ItemToCollection(int itemID)
     {
+        short districtID = itemDic[itemID].districtID;
 
+        if (DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Weapon ||
+            DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Subhand ||
+            DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Armor ||
+            DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Jewelry)
+        {
+            districtDic[itemDic[itemID].districtID].rProductLimit--;
+        }
+        itemDic[itemID].districtID = -1;
+        if (ItemListAndInfoPanel.Instance.isShow)
+        {
+            ItemListAndInfoPanel.Instance.OnShow(districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
+        }
+    }
+
+    public void ItemToGoodsAll(short districtID)
+    {
+        foreach (KeyValuePair<int, ItemObject> kvp in itemDic)
+        {
+            if (kvp.Value.districtID == districtID)
+            {
+                kvp.Value.isGoods = true;
+            }
+        }
+        if (ItemListAndInfoPanel.Instance.isShow)
+        {
+            ItemListAndInfoPanel.Instance.OnShow(districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
+        }
+    }
+
+    public void ItemToGoods(int itemID)
+    {
+        itemDic[itemID].isGoods = true;
+
+        if (ItemListAndInfoPanel.Instance.isShow)
+        {
+            ItemListAndInfoPanel.Instance.OnShow(itemDic[itemID].districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
+        }
     }
 
     public void CreateLog(LogType logType,string text, List<int> value)

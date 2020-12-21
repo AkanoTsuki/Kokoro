@@ -91,7 +91,7 @@ public class GameControlInNewGame : MonoBehaviour
         temp_HeroList[index]=gc.GenerateHeroByRandom(index+1, (short)ran,(byte)Random.Range(0, 2));
 
         StartChoosePanel.Instance.UpdateMenberInfo(index);
-        HeroPanel.Instance.UpdateAllInfo(gc, temp_HeroList[index], -374);
+        HeroPanel.Instance.UpdateAllInfo(temp_HeroList[index], -374);
     }
 
     //确认并正式开始游戏

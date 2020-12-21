@@ -701,8 +701,8 @@ public class HeroObject
     public byte workMakeArmor { get { return WorkMakeArmor; } set { WorkMakeArmor = value; } }
     public byte workMakeJewelry { get { return WorkMakeJewelry; } set { WorkMakeJewelry = value; } }
     public byte workSundry { get { return WorkSundry; } set { WorkSundry = value; } }
-    public int equipWeapon { get { return EquipWeapon; } set { equipWeapon = value; } }
-    public int equipSubhand { get { return EquipSubhand; } set { equipSubhand = value; } }
+    public int equipWeapon { get { return EquipWeapon; } set { EquipWeapon = value; } }
+    public int equipSubhand { get { return EquipSubhand; } set { EquipSubhand = value; } }
     public int equipHead { get { return EquipHead; } set { EquipHead = value; } }
     public int equipBody { get { return EquipBody; } set { EquipBody = value; } }
     public int equipHand { get { return EquipHand; } set { EquipHand = value; } }

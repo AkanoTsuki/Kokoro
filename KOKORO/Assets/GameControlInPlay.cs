@@ -30,7 +30,6 @@ public class GameControlInPlay : MonoBehaviour
 
         InvokeRepeating("TimeFlow", 0, 0.05f / gc.timeFlowSpeed);
 
-        Debug.Log("gc.heroDic[1].id" + gc.heroDic[1].id);
     }
 
     // Update is called once per frame

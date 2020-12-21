@@ -44,22 +44,12 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
             btn.onClick.AddListener(delegate ()
             {
+                HeroSelectPanel.Instance.nowSelectedHeroID = index;
+                HeroSelectPanel.Instance.UpdateDesInfo();
                 HeroPanel.Instance.nowSelectedHeroID = index;
                 HeroPanel.Instance.OnShow(gc.heroDic[index], (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y), 5000);
 
             });
-        }
-        else if (labelType == LabelType.EquipmentLook)
-        {
-            if (index != -1)
-            {
-                
-            }
-            
-        }
-        else if (labelType == LabelType.EquipmentSet)
-        {
-            
         }
         else if (labelType == LabelType.ItemToSet)
         {
@@ -67,6 +57,7 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
             {
                 ItemListAndInfoPanel.Instance.nowItemID = index;
                 ItemListAndInfoPanel.Instance.UpdateInfo(gc.itemDic[index]);
+                HeroPanel.Instance.UpdateFightInfo(gc.heroDic[ HeroPanel.Instance.nowSelectedHeroID], ItemListAndInfoPanel.Instance.nowEquipPart, gc.itemDic[index], 1);
             });
         }
     }
