@@ -1686,19 +1686,19 @@ public class HeroPanel : BasePanel
 
     public void UpdateWorkInfo(HeroObject heroObject)
     {
-        infoWork_desText.text = "<color=#FFBD58>种植</color> " + gc.ValueToRank(heroObject.workPlanting) +
-            "  <color=#FFBD58>饲养</color> " + gc.ValueToRank(heroObject.workFeeding) +
-            "  <color=#FFBD58>钓鱼</color> " + gc.ValueToRank(heroObject.workFishing) +
-            "  <color=#FFBD58>打猎</color> " + gc.ValueToRank(heroObject.workHunting) +
-            "\n<color=#FFBD58>伐木</color> " + gc.ValueToRank(heroObject.workFelling) +
-            "  <color=#FFBD58>挖矿</color> " + gc.ValueToRank(heroObject.workQuarrying) +
-            "  <color=#FFBD58>采石</color> " + gc.ValueToRank(heroObject.workMining) +
-            "  <color=#FFBD58>建筑</color> " + gc.ValueToRank(heroObject.workBuild) +
-            "\n<color=#F0A0FF>武器锻造</color> " + gc.ValueToRank(heroObject.workMakeWeapon) +
-            "        <color=#F0A0FF>防具制作</color> " + gc.ValueToRank(heroObject.workMakeArmor) +
-            "\n<color=#F0A0FF>饰品制作</color> " + gc.ValueToRank(heroObject.workMakeJewelry) +
+        infoWork_desText.text = "<color=#FFBD58>种植</color> " + gc.OutputWorkValueToRank(heroObject.workPlanting) +
+            "  <color=#FFBD58>饲养</color> " + gc.OutputWorkValueToRank(heroObject.workFeeding) +
+            "  <color=#FFBD58>钓鱼</color> " + gc.OutputWorkValueToRank(heroObject.workFishing) +
+            "  <color=#FFBD58>打猎</color> " + gc.OutputWorkValueToRank(heroObject.workHunting) +
+            "\n<color=#FFBD58>伐木</color> " + gc.OutputWorkValueToRank(heroObject.workFelling) +
+            "  <color=#FFBD58>挖矿</color> " + gc.OutputWorkValueToRank(heroObject.workQuarrying) +
+            "  <color=#FFBD58>采石</color> " + gc.OutputWorkValueToRank(heroObject.workMining) +
+            "  <color=#FFBD58>建筑</color> " + gc.OutputWorkValueToRank(heroObject.workBuild) +
+            "\n<color=#F0A0FF>武器锻造</color> " + gc.OutputWorkValueToRank(heroObject.workMakeWeapon) +
+            "        <color=#F0A0FF>防具制作</color> " + gc.OutputWorkValueToRank(heroObject.workMakeArmor) +
+            "\n<color=#F0A0FF>饰品制作</color> " + gc.OutputWorkValueToRank(heroObject.workMakeJewelry) +
             "        <color=#F0A0FF>卷轴研究</color> " + "???" +
-            "\n<color=#62D5EE>管理</color> " + gc.ValueToRank(heroObject.workSundry);
+            "\n<color=#62D5EE>管理</color> " + gc.OutputWorkValueToRank(heroObject.workSundry);
     }
 
     public void UpdateEquipAll( HeroObject heroObject)

@@ -35,6 +35,8 @@ public class BuildingPanel : BasePanel
     public Text infoHistory_contentText;
 
     public RectTransform SetForgeRt;
+    public Text setForge_outputText;
+    public Text setForge_inputText;
     public Dropdown setForge_typeDd;
     public Dropdown setForge_levelDd;
     public List<Image> setForge_imageList;
@@ -60,8 +62,8 @@ public class BuildingPanel : BasePanel
     {
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
         
-        setForge_typeDd.onValueChanged.AddListener(delegate  { setForgeType = setForge_typeDd.value; });
-        setForge_levelDd.onValueChanged.AddListener(delegate { setForgeLevel = setForge_levelDd.value; });
+        setForge_typeDd.onValueChanged.AddListener(delegate  { setForgeType = setForge_typeDd.value; UpdateSetForgeOutputInput(nowCheckingBuildingID, setForgeType, setForgeLevel); });
+        setForge_levelDd.onValueChanged.AddListener(delegate { setForgeLevel = setForge_levelDd.value; UpdateSetForgeOutputInput(nowCheckingBuildingID, setForgeType, setForgeLevel); });
     }
 
     public void OnShow(BuildingObject buildingObject, int x, int y, int connY)
@@ -99,7 +101,7 @@ public class BuildingPanel : BasePanel
         UpdateOutputInfoPart(buildingObject);
         UpdateSetManagerPart(buildingObject);
         UpdateSetWorkerPart(buildingObject);
-        UpdateHistoryInfoPart(buildingObject, 276f);
+        UpdateHistoryInfoPart(buildingObject, 190f);
         UpdateSetForgePart(buildingObject);
         UpdateTotalSetButton(buildingObject);
     }
@@ -254,8 +256,8 @@ public class BuildingPanel : BasePanel
                         outputInfo_iconImage[i].color = Color.clear ;
                     }
                     
-                    outputInfo_desText.text = gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Type) +
-                        "-级别" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level + " 制作中...[" + nowTime + "/" + needTime + "]\n消耗"+
+                    outputInfo_desText.text = "工艺"+DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level +"的"+gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Type) +
+                        ""  + "制作中[" + nowTime + "/" + needTime + "]\n消耗"+
                         (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWood!=0?" 木材"+ DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWood:"")+
                         (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputStone != 0 ? " 石料" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputStone : "") +
                         (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputMetal != 0 ? " 金属" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputMetal : "") +
@@ -297,7 +299,7 @@ public class BuildingPanel : BasePanel
                     {
                         outputInfo_iconImage[i].color = Color.clear;
                     }
-                    outputInfo_desText.text = DataManager.mProduceResourceDict[buildingObject.produceEquipNow].Action + "中...[" + nowTime + "/" + needTime + "]\n消耗" +
+                    outputInfo_desText.text = DataManager.mProduceResourceDict[buildingObject.produceEquipNow].Action + "中[" + nowTime + "/" + needTime + "]\n消耗" +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCereal != 0 ? " 谷物" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCereal : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputVegetable != 0 ? " 蔬菜" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputVegetable : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputFruit != 0 ? " 水果" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputFruit : "") +
@@ -349,7 +351,43 @@ public class BuildingPanel : BasePanel
         for (int i = 0; i < buildingObject.heroList.Count; i++)
         {
             setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic, typeof(Sprite)) as Sprite;
-            setManager_textList[i].text = gc.heroDic[buildingObject.heroList[i]].name;
+            string workValue = "";
+            switch (buildingObject.prototypeID)
+            {
+                case 9:
+                case 10:
+                case 11:
+                case 12: workValue = "\n<color=#FFBD58>种植</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workPlanting); break;
+                case 13:
+                case 14: workValue = "\n<color=#FFBD58>饲养</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workFeeding); break;
+                case 15: workValue = "\n<color=#FFBD58>钓鱼</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workFishing); break;
+                case 16:
+                case 17:
+                case 18: workValue = "\n<color=#FFBD58>伐木</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workFelling); break;
+                case 19:
+                case 20:
+                case 21: workValue = "\n<color=#FFBD58>挖矿</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workQuarrying); break;
+                case 22:
+                case 23:
+                case 24: workValue = "\n<color=#FFBD58>采石</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workMining); break;
+                case 32:
+                case 33:
+                case 34:
+                case 35:
+                case 36: workValue = "\n<color=#F0A0FF>武器锻造</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workMakeWeapon); break;
+                case 37:
+                case 38:
+                case 39:
+                case 40:
+                case 41: workValue = "\n<color=#F0A0FF>防具制作</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workMakeArmor); break;
+                case 42:
+                case 43:
+                case 44:
+                case 45:
+                case 46: workValue = "\n<color=#F0A0FF>饰品制作</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workMakeJewelry); break;
+                    default: workValue = "\n<color=#62D5EE>管理</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workSundry); break;
+            }
+            setManager_textList[i].text = gc.heroDic[buildingObject.heroList[i]].name+ workValue;
             setManager_btnList[i].gameObject.GetComponent<Image>().overrideSprite = Resources.Load("Image/Other/to_down", typeof(Sprite)) as Sprite;
             int hid = gc.heroDic[buildingObject.heroList[i]].id;
             setManager_btnList[i].onClick.RemoveAllListeners();
@@ -423,7 +461,13 @@ public class BuildingPanel : BasePanel
 
     public void UpdateSetForgePart(BuildingObject buildingObject)
     {
-      SetForgeRt.anchoredPosition = new Vector2(278f, -298f);
+        SetForgeRt.anchoredPosition = new Vector2(278f, -212f);
+
+
+
+     
+
+
         switch (buildingObject.prototypeID)
         {
             case 32:
@@ -478,6 +522,7 @@ public class BuildingPanel : BasePanel
         {
             setForge_levelDd.value = 0;
         }
+        UpdateSetForgeOutputInput(buildingObject.id, setForge_typeDd.value, setForge_levelDd.value);
 
         // setForgeLevel = setForge_levelDd.value;
 
@@ -492,19 +537,73 @@ public class BuildingPanel : BasePanel
         setForge_updateBtn.onClick.RemoveAllListeners();
         setForge_updateBtn.onClick.AddListener(delegate () { 
             gc.ChangeProduceEquipNow(buildingObject.id);
-            if (buildingObject.produceEquipNow != -1)
-            {
-                setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "更新";
-            }
-            else
-            {
-                setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "生产";
-            }
+            UpdateSetForgePart(buildingObject);
             UpdateTotalSetButton(buildingObject);
         });
 
     }
 
+    void UpdateSetForgeOutputInput(short produceEquipID)
+    {
+        string outputStr = "";
+        string inputStr = "";
+        if (produceEquipID != -1)
+        {
+            ProduceEquipPrototype produceEquipPrototype = DataManager.mProduceEquipDict[produceEquipID];
+            for (int i = 0; i < produceEquipPrototype.OutputID.Count; i++)
+            {
+                outputStr += "<color=#" + gc.OutputItemRankColorString(DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Rank) + ">" + DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Name + "</color> ";
+            }
+
+            if (produceEquipPrototype.InputWood != 0) { inputStr += "木材*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputStone != 0) { inputStr += "石料*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputMetal != 0) { inputStr += "金属*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputLeather != 0) { inputStr += "皮革*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputCloth != 0) { inputStr += "布料*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputTwine != 0) { inputStr += "麻绳*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputBone != 0) { inputStr += "骨块*" + produceEquipPrototype.InputWood + " "; }
+
+        }
+
+        setForge_outputText.text = outputStr;
+        setForge_inputText.text = inputStr;
+    }
+
+    void UpdateSetForgeOutputInput(int buildingID,int type,int level)
+    {
+        int produceEquipID = -1;
+        foreach (KeyValuePair<int, ProduceEquipPrototype> kvp in DataManager.mProduceEquipDict)
+        {
+            if (kvp.Value.MakePlace.Contains((byte)gc.buildingDic[buildingID].prototypeID) && kvp.Value.OptionValue == type && kvp.Value.Level == (level + 1))
+            {
+                produceEquipID = kvp.Value.ID;
+                break;
+            }
+        }
+
+        string outputStr = "";
+        string inputStr = "";
+        if (produceEquipID != -1)
+        {
+            ProduceEquipPrototype produceEquipPrototype = DataManager.mProduceEquipDict[produceEquipID];
+            for (int i = 0; i < produceEquipPrototype.OutputID.Count; i++)
+            {
+                outputStr += "<color=#" + gc.OutputItemRankColorString(DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Rank) + ">" + DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Name + "</color> ";
+            }
+
+            if (produceEquipPrototype.InputWood != 0) { inputStr += "木材*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputStone != 0) { inputStr += "石料*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputMetal != 0) { inputStr += "金属*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputLeather != 0) { inputStr += "皮革*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputCloth != 0) { inputStr += "布料*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputTwine != 0) { inputStr += "麻绳*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputBone != 0) { inputStr += "骨块*" + produceEquipPrototype.InputWood + " "; }
+
+        }
+
+        setForge_outputText.text = outputStr;
+        setForge_inputText.text = inputStr;
+    }
 
     public void HideSetForgePart()
     {

@@ -161,6 +161,52 @@ public enum AttributeSource
     LemmaAdd
 }
 
+public enum AdventureState
+{
+    NotSend,
+    Doing,
+    Done,
+    Fail,
+    Retreat
+}
+
+public enum AdventureEvent
+{
+    Walk,
+    Fight,
+    GetItem,
+    Trap
+}
+
+public enum FightBuffType
+{
+    UpAtk,
+    UpMAtk,
+    UpDef,
+    UpMDef,
+    UpHit,
+    UpDod,
+    UpCriR,
+    UpCriD,
+    UpSpd,
+    UpWindDam,
+    UpFireDam,
+    UpWaterDam,
+    UpGroundDam,
+    UpLightDam,
+    UpDarkDam,
+    UpWindRes,
+    UpFireRes,
+    UpWaterRes,
+    UpGroundRes,
+    UpLightRes,
+    UpDarkRes,
+    Dizzy,
+    Confusion,
+    Poison,
+    Sleep
+}
+
 public enum LogType
 {
     Info,
@@ -173,6 +219,7 @@ public enum ExecuteEventType
     Build,
     ProduceItem,
     ProduceResource,
+    Adventure
 }
 
 public class ItemAttribute
@@ -570,18 +617,19 @@ public class HeroObject
     private int EquipFinger1;
     private int EquipFinger2;
     private int WorkerInBuilding;
+    private short AdventureInTeam;
     public HeroObject(int id, string name, short type, short level, int exp,byte sex,string pic,
         int hp, int mp, short hpRenew, short mpRenew,
         short atkMin, short atkMax, short mAtkMin, short mAtkMax, short def, short mDef,
         short hit, short dod, short criR, short criD, short spd,
-        short windDam, short fireDam, short waterDam, short groundDam, short LightDam, short darkDam,
-        short windRes, short fireRes, short waterRes, short groundRes, short LightRes, short darkRes,
+        short windDam, short fireDam, short waterDam, short groundDam, short lightDam, short darkDam,
+        short windRes, short fireRes, short waterRes, short groundRes, short lightRes, short darkRes,
         short dizzyRes, short confusionRes, short poisonRes, short sleepRes,
         byte goldGet, byte expGet, byte itemGet,
         byte workPlanting, byte workFeeding, byte workFishing, byte workHunting, byte workMining, byte workQuarrying, byte workFelling, byte workBuild,
         byte workMakeWeapon, byte workMakeArmor, byte workMakeJewelry,
         byte workSundry,
-        int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2,int workerInBuilding)
+        int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2,int workerInBuilding, short adventureInTeam)
     {
         this.ID = id;
         this.Name = name;
@@ -609,13 +657,13 @@ public class HeroObject
         this.FireDam = fireDam;
         this.WaterDam = waterDam;
         this.GroundDam = groundDam;
-        this.LightDam = LightDam;
+        this.LightDam = lightDam;
         this.DarkDam = darkDam;
         this.WindRes = windRes;
         this.FireRes = fireRes;
         this.WaterRes = waterRes;
         this.GroundRes = groundRes;
-        this.LightRes = LightRes;
+        this.LightRes = lightRes;
         this.DarkRes = darkRes;
         this.DizzyRes = dizzyRes;
         this.ConfusionRes = confusionRes;
@@ -647,6 +695,7 @@ public class HeroObject
         this.EquipFinger1 = equipFinger1;
         this.EquipFinger2 = equipFinger2;
         this.WorkerInBuilding = workerInBuilding;
+        this.AdventureInTeam = adventureInTeam;
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } set { Name = value; } }
@@ -712,6 +761,7 @@ public class HeroObject
     public int equipFinger1 { get { return EquipFinger1; } set { EquipFinger1 = value; } }
     public int equipFinger2 { get { return EquipFinger2; } set { EquipFinger2 = value; } }
     public int workerInBuilding { get { return WorkerInBuilding; } set { WorkerInBuilding = value; } }
+    public short adventureInTeam { get { return AdventureInTeam; } set { AdventureInTeam = value; } }
 }
 
 
@@ -1093,6 +1143,278 @@ public class MonsterPrototype
     public string Name;
     public byte Level;
     public string Des;
+}
+
+//探险队实例
+public class AdventureTeamObject
+{
+    private byte ID;
+    private short DungeonID;
+    private List<int> HeroIDList;
+    private List<int> HeroHpList;
+    private List<int> HeroMpList;
+    private byte NowDay;
+    private AdventureState State;
+    private short GetExp;
+    private short GetGold;
+    private short GetCereal;
+    private short GetVegetable;
+    private short GetFruit;
+    private short GetMeat;
+    private short GetFish;
+    private short GetWood;
+    private short GetMetal;
+    private short GetStone;
+    private short GetLeather;
+    private short GetCloth;
+    private short GetTwine;
+    private short GetBone;
+    private List<int> GetItemList;
+    private short KillNum;
+    private string Log;
+    private List<AdventurePartObject> Part;
+    public AdventureTeamObject(byte id,short dungeonID, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, byte nowDay, AdventureState state,
+        short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
+        List<int> getItemList, short killNum, string log, List<AdventurePartObject> part)
+    {
+        this.ID = id;
+        this.DungeonID = dungeonID;
+        this.HeroIDList = heroIDList;
+        this.HeroHpList = heroHpList;
+        this.HeroMpList = heroMpList;
+        this.NowDay = nowDay;
+        this.State = state;
+        this.GetExp = getExp;
+        this.GetGold = getGold;
+        this.GetCereal = getCereal;
+        this.GetVegetable = getVegetable;
+        this.GetFruit = getFruit;
+        this.GetMeat = getMeat;
+        this.GetFish = getFish;
+        this.GetWood = getWood;
+        this.GetMetal = getMetal;
+        this.GetStone = getStone;
+        this.GetLeather = getLeather;
+        this.GetCloth = getCloth;
+        this.GetTwine = getTwine;
+        this.GetBone = getBone;
+        this.GetItemList = getItemList;
+        this.KillNum = killNum;
+        this.Log = log;
+        this.Part = part;
+    }
+    public int id { get { return ID; } }
+    public short dungeonID { get { return DungeonID; } set { DungeonID = value; } }
+    public List<int> heroIDList { get { return HeroIDList; } set { HeroIDList = value; } }
+    public List<int> heroHpList { get { return HeroHpList; } set { HeroHpList = value; } }
+    public List<int> heroMpList { get { return HeroMpList; } set { HeroMpList = value; } }
+    public byte nowDay { get { return NowDay; } set { NowDay = value; } }
+    public AdventureState state { get { return State; } set { State = value; } }
+    public short getExp { get { return GetExp; } set { GetExp = value; } }
+    public short getGold { get { return GetGold; } set { GetGold = value; } }
+    public short getCereal { get { return GetCereal; } set { GetCereal = value; } }
+    public short getVegetable { get { return GetVegetable; } set { GetVegetable = value; } }
+    public short getFruit { get { return GetFruit; } set { GetFruit = value; } }
+    public short getMeat { get { return GetMeat; } set { GetMeat = value; } }
+    public short getFish { get { return GetFish; } set { GetFish = value; } }
+    public short getWood { get { return GetWood; } set { GetWood = value; } }
+    public short getMetal { get { return GetMetal; } set { GetMetal = value; } }
+    public short getStone { get { return GetStone; } set { GetStone = value; } }
+    public short getLeather { get { return GetLeather; } set { GetLeather = value; } }
+    public short getCloth { get { return GetCloth; } set { GetCloth = value; } }
+    public short getTwine { get { return GetTwine; } set { GetTwine = value; } }
+    public short getBone { get { return GetBone; } set { GetBone = value; } }
+    public List<int> getItemList { get { return GetItemList; } set { GetItemList = value; } }
+    public short killNum { get { return KillNum; } set { KillNum = value; } }
+    public string log { get { return Log; } set { Log = value; } }
+    public List<AdventurePartObject> part { get { return Part; } set { Part = value; } }
+}
+
+//探险队部分（暂定1部分=1天）实例
+public class AdventurePartObject
+{
+    private byte ID;
+    private AdventureEvent EventType;
+    private bool IsPass;
+    private List<int> HeroHpList;//结束后
+    private List<int> HeroMpList;
+    private string Log;
+    public AdventurePartObject(byte id, AdventureEvent eventType, bool isPass, List<int> heroHpList, List<int> heroMpList, string log)
+    {
+        this.ID = id;
+        this.EventType = eventType;
+        this.IsPass = isPass;
+        this.HeroHpList = heroHpList;
+        this.HeroMpList = heroMpList;
+        this.Log = log;
+    }
+
+    public int id { get { return ID; } }
+    public AdventureEvent eventType { get { return EventType; } set { EventType = value; } }
+    public bool isPass { get { return IsPass; } set { IsPass = value; } }
+    public List<int> heroHpList { get { return HeroHpList; } set { HeroHpList = value; } }
+    public List<int> heroMpList { get { return HeroMpList; } set { HeroMpList = value; } }
+    public string log { get { return Log; } set { Log = value; } }
+}
+
+public class FightObject
+{
+    private List<FightMenberObject> MenberList;
+    private byte Round;
+    private byte WinSide;//是否左边赢
+    public FightObject(List<FightMenberObject> menberList,  byte round, byte winSide)
+    {
+        this.MenberList = menberList;
+        this.Round = round;
+        this.WinSide = winSide;
+    }
+    public List<FightMenberObject> menberList { get { return MenberList; } set { MenberList = value; } }
+    public byte round { get { return Round; } set { Round = value; } }
+    public byte winSide { get { return WinSide; } set { WinSide = value; } }
+}
+
+public class FightMenberObject
+{
+    private int ID;
+    private byte Side;
+    private string Name;
+    private int Hp;
+    private int Mp;
+    private short HpRenew;
+    private short MpRenew;
+    private short AtkMin;
+    private short AtkMax;
+    private short MAtkMin;
+    private short MAtkMax;
+    private short Def;
+    private short MDef;
+    private short Hit;
+    private short Dod;
+    private short CriR;
+    private short CriD;
+    private short Spd;
+    private short WindDam;
+    private short FireDam;
+    private short WaterDam;
+    private short GroundDam;
+    private short LightDam;
+    private short DarkDam;
+    private short WindRes;
+    private short FireRes;
+    private short WaterRes;
+    private short GroundRes;
+    private short LightRes;
+    private short DarkRes;
+    private short DizzyRes;
+    private short ConfusionRes;
+    private short PoisonRes;
+    private short SleepRes;
+    private int HpNow;
+    private int MpNow;
+    private List<FightBuff> Buff;
+
+
+    public FightMenberObject(int id, byte side, string name,
+         int hp, int mp, short hpRenew, short mpRenew,
+        short atkMin, short atkMax, short mAtkMin, short mAtkMax, short def, short mDef,
+        short hit, short dod, short criR, short criD, short spd,
+        short windDam, short fireDam, short waterDam, short groundDam, short lightDam, short darkDam,
+        short windRes, short fireRes, short waterRes, short groundRes, short lightRes, short darkRes,
+        short dizzyRes, short confusionRes, short poisonRes, short sleepRes,
+        int hpNow, int mpNow,  List<FightBuff> buff)
+    {
+        this.ID = id;
+        this.Side = side;
+        this.Name = name;
+        this.Hp = hp;
+        this.Mp = mp;
+        this.HpRenew = hpRenew;
+        this.MpRenew = mpRenew;
+        this.AtkMin = atkMin;
+        this.AtkMax = atkMax;
+        this.MAtkMin = mAtkMin;
+        this.MAtkMax = mAtkMax;
+        this.Def = def;
+        this.MDef = mDef;
+        this.Hit = hit;
+        this.Dod = dod;
+        this.CriR = criR;
+        this.CriD = criD;
+        this.Spd = spd;
+        this.WindDam = windDam;
+        this.FireDam = fireDam;
+        this.WaterDam = waterDam;
+        this.GroundDam = groundDam;
+        this.LightDam = lightDam;
+        this.DarkDam = darkDam;
+        this.WindRes = windRes;
+        this.FireRes = fireRes;
+        this.WaterRes = waterRes;
+        this.GroundRes = groundRes;
+        this.LightRes = lightRes;
+        this.DarkRes = darkRes;
+        this.DizzyRes = dizzyRes;
+        this.ConfusionRes = confusionRes;
+        this.PoisonRes = poisonRes;
+        this.SleepRes = sleepRes;
+        this.HpNow = hpNow;
+        this.MpNow = mpNow;
+        this.Buff = buff;
+
+}
+    public int id { get { return ID; } }
+    public int side { get { return Side; } }
+    public string name { get { return Name; } set { Name = value; } }
+    public int hp { get { return Hp; } set { Hp = value; } }
+    public int mp { get { return Mp; } set { Mp = value; } }
+    public short hpRenew { get { return HpRenew; } set { HpRenew = value; } }
+    public short mpRenew { get { return MpRenew; } set { MpRenew = value; } }
+    public short atkMin { get { return AtkMin; } set { AtkMin = value; } }
+    public short atkMax { get { return AtkMax; } set { AtkMax = value; } }
+    public short mAtkMin { get { return MAtkMin; } set { MAtkMin = value; } }
+    public short mAtkMax { get { return MAtkMax; } set { MAtkMax = value; } }
+    public short def { get { return Def; } set { Def = value; } }
+    public short mDef { get { return MDef; } set { MDef = value; } }
+    public short hit { get { return Hit; } set { Hit = value; } }
+    public short dod { get { return Dod; } set { Dod = value; } }
+    public short criR { get { return CriR; } set { CriR = value; } }
+    public short criD { get { return CriD; } set { CriD = value; } }
+    public short spd { get { return Spd; } set { Spd = value; } }
+    public short windDam { get { return WindDam; } set { WindDam = value; } }
+    public short fireDam { get { return FireDam; } set { FireDam = value; } }
+    public short waterDam { get { return WaterDam; } set { WaterDam = value; } }
+    public short groundDam { get { return GroundDam; } set { GroundDam = value; } }
+    public short lightDam { get { return LightDam; } set { LightDam = value; } }
+    public short darkDam { get { return DarkDam; } set { DarkDam = value; } }
+    public short windRes { get { return WindRes; } set { WindRes = value; } }
+    public short fireRes { get { return FireRes; } set { FireRes = value; } }
+    public short waterRes { get { return WaterRes; } set { WaterRes = value; } }
+    public short groundRes { get { return GroundRes; } set { GroundRes = value; } }
+    public short lightRes { get { return LightRes; } set { LightRes = value; } }
+    public short darkRes { get { return DarkRes; } set { DarkRes = value; } }
+    public short dizzyRes { get { return DizzyRes; } set { DizzyRes = value; } }
+    public short confusionRes { get { return ConfusionRes; } set { ConfusionRes = value; } }
+    public short poisonRes { get { return PoisonRes; } set { PoisonRes = value; } }
+    public short sleepRes { get { return SleepRes; } set { SleepRes = value; } }
+    public int hpNow { get { return HpNow; } set { HpNow = value; } }
+    public int mpNow { get { return MpNow; } set { MpNow = value; } }
+    public List<FightBuff> buff { get { return Buff; } set { Buff = value; } }
+}
+
+public class FightBuff
+{
+    private FightBuffType Type;
+    private byte Value;
+    private byte Round;
+    public FightBuff(FightBuffType type, byte value, byte round)
+    {
+        this.Type = type;
+        this.Round = value;
+        this.Round = round;
+    }
+    public FightBuffType type { get { return Type; } }
+    public byte value { get { return Value; } }
+    public byte round { get { return Round; } set { Round = value; } }
 }
 
 //日志消息实例

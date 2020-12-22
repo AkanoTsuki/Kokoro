@@ -117,6 +117,10 @@ public class GameControlInNewGame : MonoBehaviour
                 0, 0, 0, 0, 0, 1000, 1000, 1000, 500, 0, 0, 0, 0, 0, 0, 5000, 5000, 50);
         }
 
+        gc.adventureTeamList.Add(new AdventureTeamObject(0, -1, null, null, null, 0, AdventureState.NotSend, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, "", null));
+        gc.adventureTeamList.Add(new AdventureTeamObject(1, -1, null, null, null, 0, AdventureState.NotSend, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, "", null));
+
+
         gc.buildingUnlock[0]= true;
         gc.buildingUnlock[3]= true;
         gc.buildingUnlock[9]= true;

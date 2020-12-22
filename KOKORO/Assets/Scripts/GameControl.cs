@@ -36,6 +36,7 @@ public class GameControl : MonoBehaviour
     public Dictionary<int, DistrictGridObject> districtGridDic = new Dictionary<int, DistrictGridObject>();
     public Dictionary<int, BuildingObject> buildingDic = new Dictionary<int, BuildingObject>();
     public Dictionary<int, LogObject> logDic = new Dictionary<int, LogObject>();
+    public List<AdventureTeamObject> adventureTeamList = new List<AdventureTeamObject>();
 
     /// <summary>
     /// 用作存档的数据类
@@ -162,6 +163,7 @@ public class GameControl : MonoBehaviour
         }
 
     }
+
     public bool CheckSaveFile()
     {
         //定义存档路径
@@ -181,7 +183,6 @@ public class GameControl : MonoBehaviour
             return false;
         }
     }
-
 
     public void Delete()
     {
@@ -211,14 +212,13 @@ public class GameControl : MonoBehaviour
         //Debug.Log("2heroDic.Count=" + heroDic.Count);
     }
 
-
+    #region 【通用方法】生成英雄、道具
     public void CreateHero(short pid)
     {
         heroDic.Add(heroIndex,GenerateHeroByRandom(heroIndex, pid,(byte)Random.Range(0,2)));
         heroIndex++;
     }
 
-    //pid:
     public HeroObject GenerateHeroByRandom(int heroID,short heroTypeID,byte sexCode)
     {
         string name;
@@ -285,7 +285,7 @@ public class GameControl : MonoBehaviour
        return new HeroObject(heroID, name, heroTypeID, 1,0, sexCode, pic, hp,mp,hpRenew,mpRenew,atkMin,atkMax,mAtkMin,mAtkMax,def,mDef,hit,dod,criR,criD,spd,
          windDam,fireDam,waterDam,groundDam,lightDam,darkDam,windRes,fireRes,waterRes,groundRes,lightRes,darkRes,dizzyRes,confusionRes,poisonRes,sleepRes,goldGet,expGet,itemGet,
          workPlanting,workFeeding,workFishing,workHunting,workMining,workQuarrying,workFelling,workBuild,workMakeWeapon,workMakeArmor,workMakeJewelry,workSundry,
-         -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1);
+         -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1);
 
 }
 
@@ -356,7 +356,7 @@ public class GameControl : MonoBehaviour
         return new HeroObject(heroID,nameSet!=""?nameSet:name, heroTypeID, 1, 0, sexCode, pic, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workSundry,
-          -1, -1, -1, -1,-1, -1, -1, -1, -1, -1, -1);
+          -1, -1, -1, -1,-1, -1, -1, -1, -1, -1, -1,-1);
 
     }
 
@@ -551,9 +551,9 @@ public class GameControl : MonoBehaviour
         return new ItemObject(itemIndex, itemID, name, DataManager.mItemDict[itemID].Pic, DataManager.mItemDict[itemID].Rank,upLevel,attrList, 
             DataManager.mItemDict[itemID].Des+("于"+timeYear+"年"+timeMonth+"月"+ (districtObject != null ? ("在"+districtObject.name + "制作") :"获得") ), DataManager.mItemDict[itemID].Cost, districtObject!=null? districtObject.id:(short)-1, false,-1, EquipPart.None);
     }
+    #endregion
 
-
-
+    #region 【方法】建筑物建设
     public void BuildDone( short buildingId)
     {
         buildingDic[buildingId].buildProgress = 1;
@@ -580,18 +580,20 @@ public class GameControl : MonoBehaviour
     
     }
 
-
     void StartBuild(int districtID,int buildingID, int needTime)
     {
         //value0:地区实例ID value1:建筑实例ID 
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Build, standardTime, standardTime + needTime, new List<int> { districtID, buildingID }));
     }
+    #endregion
 
+    #region 【方法】建筑物配置生成资源/装备
     void StartProduceResource(int districtID, int buildingID, int needTime, StuffType stuffType, int value)
     {
         //value0:地区实例ID value1:建筑实例ID value2:资源类型 value3:资源数量
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, (int)stuffType, value }));
     }
+    
     public void StopProduceResource(int buildingID)
     {
         List<int> tempList = new List<int>();
@@ -1027,19 +1029,7 @@ public class GameControl : MonoBehaviour
         }
         return true;
     }
-    public int GetDistrictFoodAll(int districtID)
-    {
-        return districtDic[districtID].rFoodCereal + districtDic[districtID].rFoodVegetable + districtDic[districtID].rFoodFruit + districtDic[districtID].rFoodMeat + districtDic[districtID].rFoodFish;
-    }
-    public int GetDistrictStuffAll(int districtID)
-    {
-        return districtDic[districtID].rStuffWood + districtDic[districtID].rStuffStone + districtDic[districtID].rStuffMetal + districtDic[districtID].rStuffLeather + districtDic[districtID].rStuffCloth + districtDic[districtID].rStuffTwine + districtDic[districtID].rStuffBone;
-    }
-    public int GetDistrictProductAll(int districtID)
-    {
-        return districtDic[districtID].rProductWeapon + districtDic[districtID].rProductArmor + districtDic[districtID].rProductJewelry;
-    }
-
+ 
     public void ChangeProduceEquipNow(int buildingID)
     {
         Debug.Log("ChangeProduceEquipNow() buildingID=" + buildingID+ " setForgeType="+ BuildingPanel.Instance.setForgeType + " setForgeLevel" + BuildingPanel.Instance.setForgeLevel);
@@ -1061,9 +1051,9 @@ public class GameControl : MonoBehaviour
         }
             
     }
+    #endregion
 
-
-
+    #region 【方法】建筑物配置管理者、工人
     public void BuildingManagerMinus(int buildingID, int heroID)
     {
         if (!buildingDic[buildingID].heroList.Contains(heroID))
@@ -1115,7 +1105,9 @@ public class GameControl : MonoBehaviour
         districtDic[buildingDic[buildingID].districtID].worker++;
         BuildingPanel.Instance.UpdateSetWorkerPart(buildingDic[buildingID]);
     }
+    #endregion
 
+    #region 【方法】英雄装备/卸下
     public void HeroEquipSet(int heroID,EquipPart equipPart, int itemID)
     {
         Debug.Log("HeroEquipSet() heroID=" + heroID + " equipPart=" + equipPart + " itemID="+ itemID+ " heroDic[heroID].equipWeapon=" + heroDic[heroID].equipWeapon);
@@ -1169,7 +1161,9 @@ public class GameControl : MonoBehaviour
 
         HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
     }
+    #endregion
 
+    #region 【方法】鉴定库转收藏/放售
     public void ItemToCollectionAll(short districtID)
     {
         foreach (KeyValuePair<int, ItemObject> kvp in itemDic)
@@ -1256,7 +1250,50 @@ public class GameControl : MonoBehaviour
             ItemListAndInfoPanel.Instance.OnShow(itemDic[itemID].districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
         }
     }
+    #endregion
 
+    public void AdventureTeamSetDungeon(byte teamID, short dungeonID)
+    {
+        adventureTeamList[teamID].dungeonID=  dungeonID;
+    }
+
+    public void AdventureTeamHeroMinus(byte teamID, int heroID)
+    {
+        if (!adventureTeamList[teamID].heroIDList.Contains(heroID))
+        {
+            return;
+        }
+        adventureTeamList[teamID].heroIDList.Remove(heroID);
+        heroDic[heroID].adventureInTeam = -1;
+        //todo UI操作
+    }
+
+    public void AdventureTeamHeroAdd(byte teamID, int heroID)
+    {
+        if (adventureTeamList[teamID].heroIDList.Count >= 3)
+        {
+            return;
+        }
+        if (heroDic[heroID].adventureInTeam != -1)
+        {
+            return;
+        }
+        adventureTeamList[teamID].heroIDList.Add(teamID);
+        heroDic[heroID].adventureInTeam = teamID;
+        //todo  UI操作
+    }
+
+    public void AdventureTeamSend(byte teamID)
+    {
+        
+    }
+
+    public void AdventureEventHappen()
+    { 
+
+    }
+
+    #region 【方法】日志与执行事件基础
     public void CreateLog(LogType logType,string text, List<int> value)
     {
         //LogType.ProduceDone(地区实例ID,建筑实例ID,物品原型ID)
@@ -1279,8 +1316,24 @@ public class GameControl : MonoBehaviour
         }
         executeEventList.Add(executeEventObject);
     }
+    #endregion
 
-    //辅助方法组
+    #region 【辅助方法集】获取值
+    public int GetDistrictFoodAll(int districtID)
+    {
+        return districtDic[districtID].rFoodCereal + districtDic[districtID].rFoodVegetable + districtDic[districtID].rFoodFruit + districtDic[districtID].rFoodMeat + districtDic[districtID].rFoodFish;
+    }
+
+    public int GetDistrictStuffAll(int districtID)
+    {
+        return districtDic[districtID].rStuffWood + districtDic[districtID].rStuffStone + districtDic[districtID].rStuffMetal + districtDic[districtID].rStuffLeather + districtDic[districtID].rStuffCloth + districtDic[districtID].rStuffTwine + districtDic[districtID].rStuffBone;
+    }
+    
+    public int GetDistrictProductAll(int districtID)
+    {
+        return districtDic[districtID].rProductWeapon + districtDic[districtID].rProductArmor + districtDic[districtID].rProductJewelry;
+    }
+
     public float GetProduceResourceLaborRate(int buildingID)
     {
       return  Mathf.Pow(buildingDic[buildingID].workerNow, DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].LaborRate);
@@ -1393,8 +1446,8 @@ public class GameControl : MonoBehaviour
         }
         return outputUp;
     }
-
-
+    #endregion
+    #region 【辅助方法集】输出字符
     public string OutputItemTypeSmallStr(ItemTypeSmall itemTypeSmall)
     {
         switch (itemTypeSmall)
@@ -1471,10 +1524,7 @@ public class GameControl : MonoBehaviour
    
     }
 
-  
-
-
-    public string ValueToRank(int value)
+    public string OutputWorkValueToRank(int value)
     {
         switch (value)
         {
@@ -1490,6 +1540,7 @@ public class GameControl : MonoBehaviour
                 return "null";
         }
     }
+    
     public string OutputSignStr(string str, int count)
     {
         string tempStr = "";
@@ -1541,6 +1592,7 @@ public class GameControl : MonoBehaviour
             default:return "错误的月份";
         }
     }
+    
     public string OutputWeekStr(int week, bool color)
     {
         switch (week)
@@ -1610,4 +1662,5 @@ public class GameControl : MonoBehaviour
             default:return "未定义类型";
         }
     }
+    #endregion
 }
