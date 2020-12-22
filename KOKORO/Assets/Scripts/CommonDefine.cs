@@ -1409,7 +1409,7 @@ public class FightBuff
     public FightBuff(FightBuffType type, byte value, byte round)
     {
         this.Type = type;
-        this.Round = value;
+        this.Value = value;
         this.Round = round;
     }
     public FightBuffType type { get { return Type; } }
