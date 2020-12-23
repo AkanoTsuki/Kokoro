@@ -1139,6 +1139,7 @@ public class DungeonPrototype : ISerializationCallbackReceiver
     public short ID;
     public string Name;
     public byte Level;
+    public List<string> ScenePic;
     public string Des;
     public byte PartNum;
     public List<byte> FixPart;
@@ -1299,7 +1300,7 @@ public class AdventureTeamObject
         this.Log = log;
         this.Part = part;
     }
-    public int id { get { return ID; } }
+    public byte id { get { return ID; } }
     public short dungeonID { get { return DungeonID; } set { DungeonID = value; } }
     public List<int> heroIDList { get { return HeroIDList; } set { HeroIDList = value; } }
     public List<int> heroHpList { get { return HeroHpList; } set { HeroHpList = value; } }
@@ -1345,7 +1346,7 @@ public class AdventurePartObject
         this.Log = log;
     }
 
-    public int id { get { return ID; } }
+    public byte id { get { return ID; } }
     public AdventureEvent eventType { get { return EventType; } set { EventType = value; } }
     public bool isPass { get { return IsPass; } set { IsPass = value; } }
     public List<int> heroHpList { get { return HeroHpList; } set { HeroHpList = value; } }
@@ -1459,7 +1460,7 @@ public class FightMenberObject
 
 }
     public int id { get { return ID; } }
-    public int side { get { return Side; } }
+    public byte side { get { return Side; } }
     public string name { get { return Name; } set { Name = value; } }
     public int hp { get { return Hp; } set { Hp = value; } }
     public int mp { get { return Mp; } set { Mp = value; } }

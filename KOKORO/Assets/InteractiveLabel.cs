@@ -55,6 +55,13 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             
         }
+        else if (labelType == LabelType.DungeonInAdventure)
+        {
+            btn.onClick.AddListener(delegate ()
+            {
+                AdventureMainPanel.Instance.nowSelectDungeonID= (short)index;
+            });
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

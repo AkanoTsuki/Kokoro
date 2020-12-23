@@ -11,6 +11,7 @@ public class AdventureTeamBlock : MonoBehaviour
     public GameObject dungeon_bgListGo;
     public GameObject dungeon_heroListGo;
     public GameObject dungeon_fgListGo;
+    public Button dungeon_selectBtn;
 
     public List<Image> hero_picImage;
     public List<Text> hero_nameText;

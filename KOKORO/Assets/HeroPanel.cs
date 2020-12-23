@@ -210,7 +210,6 @@ public class HeroPanel : BasePanel
 
     public void UpdateFightInfo(HeroObject heroObject ,EquipPart equipPart ,ItemObject itemObject, int page)
     {
-        Debug.Log("equipPart=" + equipPart);
         int hpEquipAdd = 0;
         int mpEquipAdd = 0;
         short hpRenewEquipAdd = 0;

@@ -22183,9 +22183,9 @@
   "Dungeon": [
     {
       "ID": 0,
-      "Name": "微风平原",
+      "Name": "法罗斯平原",
       "Level": 5,
-      "Pic": [
+      "ScenePic": [
         "Forest_01"
       ],
       "Des": "介绍",
@@ -22193,7 +22193,7 @@
       "FixPart": [
         9
       ],
-      "FixEventStr": [
+      "FixEvent": [
         "Monster"
       ],
       "FixValue": [
@@ -22207,8 +22207,8 @@
       "RandomGold": 0,
       "RandomItem": 0,
       "RandomResource": 20,
-      "ResourceTypeStr": [
-        "Wood"
+      "ResourceType": [
+        "wood"
       ],
       "ResourceValue": [
         100
@@ -22234,7 +22234,7 @@
       "ID": 1,
       "Name": "克克洛森林",
       "Level": 10,
-      "Pic": [
+      "ScenePic": [
         "Forest_01"
       ],
       "Des": "介绍",
@@ -22242,7 +22242,7 @@
       "FixPart": [
         9
       ],
-      "FixEventStr": [
+      "FixEvent": [
         "Monster"
       ],
       "FixValue": [
@@ -22256,8 +22256,253 @@
       "RandomGold": 0,
       "RandomItem": 0,
       "RandomResource": 20,
-      "ResourceTypeStr": [
-        "Wood"
+      "ResourceType": [
+        "wood"
+      ],
+      "ResourceValue": [
+        100
+      ],
+      "MonsterID": [
+        0,
+        1
+      ],
+      "MonsterRate": [
+        70,
+        30
+      ],
+      "MonsterEliteRate": [
+        10,
+        10
+      ],
+      "MonsterLeaderRate": [
+        5,
+        5
+      ]
+    },
+    {
+      "ID": 2,
+      "Name": "穆卡拉荒原",
+      "Level": 10,
+      "ScenePic": [
+        "Forest_01"
+      ],
+      "Des": "介绍",
+      "PartNum": 10,
+      "FixPart": [
+        9
+      ],
+      "FixEvent": [
+        "Monster"
+      ],
+      "FixValue": [
+        1
+      ],
+      "RandomMonster": 60,
+      "RandomTrapHp": 0,
+      "RandomTrapMp": 0,
+      "RandomSpringHp": 5,
+      "RandomSpringMp": 5,
+      "RandomGold": 0,
+      "RandomItem": 0,
+      "RandomResource": 20,
+      "ResourceType": [
+        "wood"
+      ],
+      "ResourceValue": [
+        100
+      ],
+      "MonsterID": [
+        2,
+        3
+      ],
+      "MonsterRate": [
+        70,
+        30
+      ],
+      "MonsterEliteRate": [
+        10,
+        10
+      ],
+      "MonsterLeaderRate": [
+        5,
+        5
+      ]
+    },
+    {
+      "ID": 3,
+      "Name": "赫克森林",
+      "Level": 10,
+      "ScenePic": [
+        "Forest_01"
+      ],
+      "Des": "介绍",
+      "PartNum": 10,
+      "FixPart": [
+        9
+      ],
+      "FixEvent": [
+        "Monster"
+      ],
+      "FixValue": [
+        1
+      ],
+      "RandomMonster": 60,
+      "RandomTrapHp": 0,
+      "RandomTrapMp": 0,
+      "RandomSpringHp": 5,
+      "RandomSpringMp": 5,
+      "RandomGold": 0,
+      "RandomItem": 0,
+      "RandomResource": 20,
+      "ResourceType": [
+        "wood"
+      ],
+      "ResourceValue": [
+        100
+      ],
+      "MonsterID": [
+        4,
+        7
+      ],
+      "MonsterRate": [
+        70,
+        30
+      ],
+      "MonsterEliteRate": [
+        10,
+        10
+      ],
+      "MonsterLeaderRate": [
+        5,
+        5
+      ]
+    },
+    {
+      "ID": 4,
+      "Name": "三河平原",
+      "Level": 10,
+      "ScenePic": [
+        "River_01"
+      ],
+      "Des": "介绍",
+      "PartNum": 10,
+      "FixPart": [
+        9
+      ],
+      "FixEvent": [
+        "Monster"
+      ],
+      "FixValue": [
+        1
+      ],
+      "RandomMonster": 60,
+      "RandomTrapHp": 0,
+      "RandomTrapMp": 0,
+      "RandomSpringHp": 5,
+      "RandomSpringMp": 5,
+      "RandomGold": 0,
+      "RandomItem": 0,
+      "RandomResource": 20,
+      "ResourceType": [
+        "wood"
+      ],
+      "ResourceValue": [
+        100
+      ],
+      "MonsterID": [
+        0,
+        1
+      ],
+      "MonsterRate": [
+        70,
+        30
+      ],
+      "MonsterEliteRate": [
+        10,
+        10
+      ],
+      "MonsterLeaderRate": [
+        5,
+        5
+      ]
+    },
+    {
+      "ID": 5,
+      "Name": "塞拉莱山",
+      "Level": 10,
+      "ScenePic": [
+        "Hill_01"
+      ],
+      "Des": "介绍",
+      "PartNum": 10,
+      "FixPart": [
+        9
+      ],
+      "FixEvent": [
+        "Monster"
+      ],
+      "FixValue": [
+        1
+      ],
+      "RandomMonster": 60,
+      "RandomTrapHp": 0,
+      "RandomTrapMp": 0,
+      "RandomSpringHp": 5,
+      "RandomSpringMp": 5,
+      "RandomGold": 0,
+      "RandomItem": 0,
+      "RandomResource": 20,
+      "ResourceType": [
+        "wood"
+      ],
+      "ResourceValue": [
+        100
+      ],
+      "MonsterID": [
+        0,
+        1
+      ],
+      "MonsterRate": [
+        70,
+        30
+      ],
+      "MonsterEliteRate": [
+        10,
+        10
+      ],
+      "MonsterLeaderRate": [
+        5,
+        5
+      ]
+    },
+    {
+      "ID": 6,
+      "Name": "纳法山路",
+      "Level": 10,
+      "ScenePic": [
+        "Hill_01"
+      ],
+      "Des": "介绍",
+      "PartNum": 10,
+      "FixPart": [
+        9
+      ],
+      "FixEvent": [
+        "Monster"
+      ],
+      "FixValue": [
+        1
+      ],
+      "RandomMonster": 60,
+      "RandomTrapHp": 0,
+      "RandomTrapMp": 0,
+      "RandomSpringHp": 5,
+      "RandomSpringMp": 5,
+      "RandomGold": 0,
+      "RandomItem": 0,
+      "RandomResource": 20,
+      "ResourceType": [
+        "wood"
       ],
       "ResourceValue": [
         100

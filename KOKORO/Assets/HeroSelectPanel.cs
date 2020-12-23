@@ -160,7 +160,9 @@ public class HeroSelectPanel : BasePanel
                 });
 
                 break;
+            case "指派探险者":
 
+                break;
         }
 
     }

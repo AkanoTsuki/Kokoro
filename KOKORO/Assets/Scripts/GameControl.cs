@@ -70,6 +70,8 @@ public class GameControl : MonoBehaviour
         public Dictionary<int, DistrictGridObject> districtGridDic = new Dictionary<int, DistrictGridObject>();
         public Dictionary<int, BuildingObject> buildingDic = new Dictionary<int, BuildingObject>();
         public Dictionary<int, LogObject> logDic = new Dictionary<int, LogObject>();
+        public List<AdventureTeamObject> adventureTeamList = new List<AdventureTeamObject>();
+        public List<DungeonObject> dungeonList = new List<DungeonObject>();
     }
 
 
@@ -109,7 +111,8 @@ public class GameControl : MonoBehaviour
         t.districtGridDic = this.districtGridDic;
         t.buildingDic = this.buildingDic;
         t.logDic = this.logDic;
-
+        t.adventureTeamList = this.adventureTeamList;
+        t.dungeonList = this.dungeonList;
         //保存数据
         IOHelper.SetData(filename, t);
     }
@@ -155,7 +158,8 @@ public class GameControl : MonoBehaviour
             this.districtGridDic = t1.districtGridDic;
             this.buildingDic = t1.buildingDic;
             this.logDic = t1.logDic;
-           
+            this.adventureTeamList = t1.adventureTeamList;
+            this.dungeonList = t1.dungeonList;
         }
         else
         {
