@@ -33,7 +33,10 @@ public enum LabelType
     HeroInSelectToCheck,
     EquipmentLook,
     EquipmentSet,
-    ItemToSet
+    ItemToSet,
+    DungeonInAdventure,
+    AdventureTeam,
+    AdventurePart
 }
 
 public enum Element
@@ -172,10 +175,15 @@ public enum AdventureState
 
 public enum AdventureEvent
 {
-    Walk,
-    Fight,
-    GetItem,
-    Trap
+    None,
+    Monster,
+    TrapHp,
+    TrapMp,
+    SpringHp,
+    SpringMp,
+    Gold,
+    Item,
+    Resource
 }
 
 public enum FightBuffType
@@ -1126,13 +1134,65 @@ public class BuildingObject
 
 //地牢原型
 [System.Serializable]
-public class DungeonPrototype
+public class DungeonPrototype : ISerializationCallbackReceiver
 {
     public short ID;
     public string Name;
     public byte Level;
     public string Des;
-    public string Monster;
+    public byte PartNum;
+    public List<byte> FixPart;
+    public List<AdventureEvent> FixEvent=new List<AdventureEvent>();
+    public List<string> FixEventStr;
+    public List<int> FixValue;
+    public byte RandomMonster;
+    public byte RandomTrapHp;
+    public byte RandomTrapMp;
+    public byte RandomSpringHp;
+    public byte RandomSpringMp;
+    public byte RandomGold;
+    public byte RandomItem;
+    public byte RandomResource;
+
+    public List<StuffType> ResourceType=new List<StuffType>();
+    public List<string> ResourceTypeStr;
+    public List<int> ResourceValue;
+    public List<int> MonsterID;
+    public List<int> MonsterRate;
+    public List<int> MonsterEliteRate;
+    public List<int> MonsterLeaderRate;
+    public void OnAfterDeserialize()
+    {
+        for (int i = 0; i < FixEventStr.Count; i++)
+        {
+            AdventureEvent fixPart = (AdventureEvent)Enum.Parse(typeof(AdventureEvent), FixEventStr[i]);
+            FixEvent.Add(fixPart);
+        }
+        for (int i = 0; i < ResourceTypeStr.Count; i++)
+        {
+            StuffType resourceType = (StuffType)Enum.Parse(typeof(StuffType), ResourceTypeStr[i]);
+            ResourceType.Add( resourceType);
+        }
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+//地牢实例
+public class DungeonObject
+{
+    private short ID;
+    private bool Unlock;
+    public DungeonObject(short id, bool unlock)
+    {
+        this.ID = id;
+        this.Unlock = unlock;
+    }
+    public short id { get { return ID; }  }
+    public bool unlock { get { return Unlock; } set { Unlock = value; } }
 }
 
 //怪物原型
@@ -1141,8 +1201,44 @@ public class MonsterPrototype
 {
     public short ID;
     public string Name;
+    public string Pic;
     public byte Level;
     public string Des;
+    public List<short> Skill;
+    public int Hp;
+    public int Mp;
+    public short HpRenew;
+    public short MpRenew;
+    public short AtkMin;
+    public short AtkMax;
+    public short MAtkMin;
+    public short MAtkMax;
+    public short Def;
+    public short MDef;
+    public short Hit;
+    public short Dod;
+    public short CriR;
+    public short CriD;
+    public short Spd;
+    public short WindDam;
+    public short FireDam;
+    public short WaterDam;
+    public short GroundDam;
+    public short LightDam;
+    public short DarkDam;
+    public short WindRes;
+    public short FireRes;
+    public short WaterRes;
+    public short GroundRes;
+    public short LightRes;
+    public short DarkRes;
+    public short DizzyRes;
+    public short ConfusionRes;
+    public short PoisonRes;
+    public short SleepRes;
+    public short ExpDrop;
+    public short GoldDrop;
+    public List<int> ItemDrop;
 }
 
 //探险队实例

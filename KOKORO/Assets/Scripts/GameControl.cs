@@ -37,6 +37,7 @@ public class GameControl : MonoBehaviour
     public Dictionary<int, BuildingObject> buildingDic = new Dictionary<int, BuildingObject>();
     public Dictionary<int, LogObject> logDic = new Dictionary<int, LogObject>();
     public List<AdventureTeamObject> adventureTeamList = new List<AdventureTeamObject>();
+    public List<DungeonObject> dungeonList = new List<DungeonObject>();
 
     /// <summary>
     /// 用作存档的数据类
@@ -1445,6 +1446,153 @@ public class GameControl : MonoBehaviour
                 break;
         }
         return outputUp;
+    }
+    //基础+装备加成
+    public int GetHeroAttr(Attribute attribute,int heroID)
+    {
+        int equipAdd = 0;
+
+        if (heroDic[heroID].equipWeapon != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipWeapon].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipWeapon].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipWeapon].attr[i].value;
+                }
+            }
+        }
+        if (heroDic[heroID].equipSubhand != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipSubhand].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipSubhand].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipSubhand].attr[i].value;
+                }
+            }
+        }
+        if (heroDic[heroID].equipHead != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipHead].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipHead].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipHead].attr[i].value;
+                }
+            }
+        }
+        if (heroDic[heroID].equipBody != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipBody].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipBody].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipBody].attr[i].value;
+                }
+            }
+        }
+        if (heroDic[heroID].equipHand != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipHand].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipHand].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipHand].attr[i].value;
+                }
+            }
+        }
+        if (heroDic[heroID].equipBack != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipBack].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipBack].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipBack].attr[i].value;
+                }
+            }
+        }
+        if (heroDic[heroID].equipFoot != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipFoot].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipFoot].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipFoot].attr[i].value;
+                }
+            }
+        }
+        if (heroDic[heroID].equipNeck != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipNeck].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipNeck].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipNeck].attr[i].value;
+                }
+            }
+        }
+        if (heroDic[heroID].equipFinger1 != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipFinger1].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipFinger1].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipFinger1].attr[i].value;
+                }
+            }
+        }
+        if (heroDic[heroID].equipFinger2 != -1)
+        {
+            for (int i = 0; i < itemDic[heroDic[heroID].equipFinger2].attr.Count; i++)
+            {
+                if (itemDic[heroDic[heroID].equipFinger2].attr[i].attr == attribute)
+                {
+                    equipAdd += itemDic[heroDic[heroID].equipFinger2].attr[i].value;
+                }
+            }
+        }
+
+
+        switch (attribute)
+        {
+            case Attribute.Hp: return heroDic[heroID].hp+ equipAdd;
+            case Attribute.Mp: return heroDic[heroID].mp+ equipAdd;
+            case Attribute.HpRenew: return heroDic[heroID].hpRenew+ equipAdd;
+            case Attribute.MpRenew: return heroDic[heroID].mpRenew+ equipAdd;
+            case Attribute.AtkMin: return heroDic[heroID].atkMin+ equipAdd;
+            case Attribute.AtkMax: return heroDic[heroID].atkMax+ equipAdd;
+            case Attribute.MAtkMin: return heroDic[heroID].mAtkMin+ equipAdd;
+            case Attribute.MAtkMax: return heroDic[heroID].mAtkMax+ equipAdd;
+            case Attribute.Def: return heroDic[heroID].def+ equipAdd;
+            case Attribute.MDef: return heroDic[heroID].mDef+ equipAdd;
+            case Attribute.Hit: return heroDic[heroID].hit+ equipAdd;
+            case Attribute.Dod: return heroDic[heroID].dod+ equipAdd;
+            case Attribute.CriR: return heroDic[heroID].criR+ equipAdd;
+            case Attribute.CriD: return heroDic[heroID].criD+ equipAdd;
+            case Attribute.Spd: return heroDic[heroID].spd+ equipAdd;
+            case Attribute.WindDam: return heroDic[heroID].windDam+ equipAdd;
+            case Attribute.FireDam: return heroDic[heroID].fireDam+ equipAdd;
+            case Attribute.WaterDam: return heroDic[heroID].waterDam+ equipAdd;
+            case Attribute.GroundDam: return heroDic[heroID].groundDam+ equipAdd;
+            case Attribute.LightDam: return heroDic[heroID].lightDam+ equipAdd;
+            case Attribute.DarkDam: return heroDic[heroID].darkDam+ equipAdd;
+            case Attribute.WindRes: return heroDic[heroID].windRes+ equipAdd;
+            case Attribute.FireRes: return heroDic[heroID].fireRes+ equipAdd;
+            case Attribute.WaterRes: return heroDic[heroID].waterRes+ equipAdd;
+            case Attribute.GroundRes: return heroDic[heroID].groundRes+ equipAdd;
+            case Attribute.LightRes: return heroDic[heroID].lightRes+ equipAdd;
+            case Attribute.DarkRes: return heroDic[heroID].darkRes+ equipAdd;
+            case Attribute.DizzyRes: return heroDic[heroID].dizzyRes+ equipAdd;
+            case Attribute.ConfusionRes: return heroDic[heroID].confusionRes+ equipAdd;
+            case Attribute.PoisonRes: return heroDic[heroID].poisonRes+ equipAdd;
+            case Attribute.SleepRes: return heroDic[heroID].sleepRes+ equipAdd;
+            case Attribute.GoldGet: return heroDic[heroID].goldGet+ equipAdd;
+            case Attribute.ExpGet: return heroDic[heroID].expGet+ equipAdd;
+            case Attribute.ItemGet: return heroDic[heroID].itemGet+ equipAdd;
+            default: return 0;
+        }
+
     }
     #endregion
     #region 【辅助方法集】输出字符

@@ -22,6 +22,7 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.Message);
         MessagePanel.Instance.OnShow(0, 26);
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
+        UIManager.Instance.InitPanel(UIPanelType.AdventureMain);
         UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
@@ -216,6 +217,18 @@ public class GameControlInPlay : MonoBehaviour
             ItemListAndInfoPanel.Instance.OnShow(gc.nowCheckingDistrictID, 64, -88,1);
         }
 
+    }
+
+    public void OpenAdventureMain()
+    {
+        if (AdventureMainPanel.Instance.isShow)
+        {
+            AdventureMainPanel.Instance.OnHide();
+        }
+        else
+        {
+            AdventureMainPanel.Instance.OnShow( 64, -88);
+        }
     }
 
     public void GameSave()

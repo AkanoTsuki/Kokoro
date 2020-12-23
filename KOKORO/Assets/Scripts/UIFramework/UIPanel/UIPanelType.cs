@@ -9,7 +9,6 @@ public enum UIPanelType
     Building,
     DistrictMain,
     AdventureMain,
-    AdventureSend,
     AdventureTeam,
     AdventureFight,
     Equip,
@@ -20,5 +19,6 @@ public enum UIPanelType
     PlayMain,
     BuildingSelect,
     HeroSelect
+
 
 }

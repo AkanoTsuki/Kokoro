@@ -64,7 +64,7 @@ public class PlayMainPanel : BasePanel
         left_buildBtn.onClick.AddListener(delegate () { gci.OpenBuild(); });
         left_buildingSelectBtn.onClick.AddListener(delegate () { gci.OpenBuildingSelect(); });
         left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
-        left_adventureMainBtn.onClick.AddListener(delegate () { });
+        left_adventureMainBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
         top_saveBtn.onClick.AddListener(delegate () { gci.GameSave(); });
         top_pauseBtn.onClick.AddListener(delegate () { gci.TimePause(); });
         top_playBtn.onClick.AddListener(delegate () { gci.TimePlay(); });
