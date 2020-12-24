@@ -1259,7 +1259,21 @@ public class GameControl : MonoBehaviour
 
     public void AdventureTeamSetDungeon(byte teamID, short dungeonID)
     {
+
         adventureTeamList[teamID].dungeonID=  dungeonID;
+        adventureTeamList[teamID].scenePicList.Clear();
+        for (int i = 0; i < 3; i++)
+        {
+            if (i == 0)
+            {
+                adventureTeamList[teamID].scenePicList.Add(DataManager.mDungeonDict[dungeonID].ScenePic[0]);
+            }
+            else
+            {
+                adventureTeamList[teamID].scenePicList.Add(DataManager.mDungeonDict[dungeonID].ScenePic[Random.Range(0, DataManager.mDungeonDict[dungeonID].ScenePic.Count-1)]);
+            }
+
+        }
     }
 
     public void AdventureTeamHeroMinus(byte teamID, int heroID)
@@ -1268,9 +1282,15 @@ public class GameControl : MonoBehaviour
         {
             return;
         }
-        adventureTeamList[teamID].heroIDList.Remove(heroID);
+        int index = adventureTeamList[teamID].heroIDList.FindIndex(item => item.Equals(heroID));
+
+        adventureTeamList[teamID].heroIDList.RemoveAt(index);
+        adventureTeamList[teamID].heroHpList.RemoveAt(index);
+        adventureTeamList[teamID].heroMpList.RemoveAt(index);
+        //adventureTeamList[teamID].heroIDList.
         heroDic[heroID].adventureInTeam = -1;
-        //todo UI操作
+        AdventureMainPanel.Instance.UpdateTeamHero(teamID);
+        AdventureMainPanel.Instance.TeamLogAdd(teamID, heroDic[heroID].name+"离开了队伍");
     }
 
     public void AdventureTeamHeroAdd(byte teamID, int heroID)
@@ -1283,14 +1303,18 @@ public class GameControl : MonoBehaviour
         {
             return;
         }
-        adventureTeamList[teamID].heroIDList.Add(teamID);
+        adventureTeamList[teamID].heroIDList.Add(heroID);
+        adventureTeamList[teamID].heroHpList.Add(GetHeroAttr(Attribute.Hp, heroID));
+        adventureTeamList[teamID].heroMpList.Add(GetHeroAttr(Attribute.Mp, heroID));
         heroDic[heroID].adventureInTeam = teamID;
-        //todo  UI操作
+        AdventureMainPanel.Instance.UpdateTeamHero(teamID);
+        AdventureMainPanel.Instance.TeamLogAdd(teamID, heroDic[heroID].name + "加入了队伍");
     }
 
     public void AdventureTeamSend(byte teamID)
     {
-        
+        adventureTeamList[teamID].state = AdventureState.Doing;
+        AdventureMainPanel.Instance.UpdateTeam(teamID);
     }
 
     public void AdventureEventHappen()

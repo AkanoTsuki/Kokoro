@@ -65,7 +65,8 @@ public enum ItemTypeBig
     Weapon,
     Armor,
     Jewelry,
-    Subhand
+    Subhand,
+    SkillRoll
 }
 
 public enum ItemTypeSmall
@@ -109,8 +110,8 @@ public enum EquipPart
 
 public enum Attribute
 {
-    Hp,
-    Mp,
+    Hp,//skill 作为 发动几率变化 单位%
+    Mp,//skill 作为 耗蓝变化 单位%
     HpRenew,
     MpRenew,
     AtkMin,
@@ -121,8 +122,8 @@ public enum Attribute
     MDef,
     Hit,
     Dod,
-    CriR,
-    CriD,
+    CriR,//skill 作为 追加连击概率 单位%
+    CriD,//skill 作为 连击数上限 
     Spd,
     WindDam,
     FireDam,
@@ -140,7 +141,7 @@ public enum Attribute
     ConfusionRes,
     PoisonRes,
     SleepRes,
-    GoldGet,
+    GoldGet,//skill 作为 击杀获取金币 单位%
     ExpGet,
     ItemGet,
     WorkPlanting, 
@@ -1247,6 +1248,9 @@ public class AdventureTeamObject
 {
     private byte ID;
     private short DungeonID;
+    private List<string> ScenePicList;
+    private List<RectTransform> SceneBgRt;
+    private List<RectTransform> SceneFgRt;
     private List<int> HeroIDList;
     private List<int> HeroHpList;
     private List<int> HeroMpList;
@@ -1270,12 +1274,15 @@ public class AdventureTeamObject
     private short KillNum;
     private string Log;
     private List<AdventurePartObject> Part;
-    public AdventureTeamObject(byte id,short dungeonID, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, byte nowDay, AdventureState state,
+    public AdventureTeamObject(byte id,short dungeonID, List<string> scenePicList, List<RectTransform> sceneBgRt, List<RectTransform> sceneFgRt, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, byte nowDay, AdventureState state,
         short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
         List<int> getItemList, short killNum, string log, List<AdventurePartObject> part)
     {
         this.ID = id;
         this.DungeonID = dungeonID;
+        this.ScenePicList = scenePicList;
+        this.SceneBgRt = sceneBgRt;
+        this.SceneFgRt = sceneFgRt;
         this.HeroIDList = heroIDList;
         this.HeroHpList = heroHpList;
         this.HeroMpList = heroMpList;
@@ -1302,6 +1309,9 @@ public class AdventureTeamObject
     }
     public byte id { get { return ID; } }
     public short dungeonID { get { return DungeonID; } set { DungeonID = value; } }
+    public List<string> scenePicList { get { return ScenePicList; } set { ScenePicList = value; } }
+    public List<RectTransform> sceneBgRt { get { return SceneBgRt; } set { SceneBgRt = value; } }
+    public List<RectTransform> sceneFgRt { get { return SceneFgRt; } set { SceneFgRt = value; } }
     public List<int> heroIDList { get { return HeroIDList; } set { HeroIDList = value; } }
     public List<int> heroHpList { get { return HeroHpList; } set { HeroHpList = value; } }
     public List<int> heroMpList { get { return HeroMpList; } set { HeroMpList = value; } }

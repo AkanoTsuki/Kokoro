@@ -31,11 +31,11 @@ public class HeroSelectPanel : BasePanel
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 
-
+    //districtID在指派冒险者的时候作为TeamID使用
     public void OnShow(string type, int districtID, int buildingID, byte columns, int x, int y)
     {
 
-        UpdateAllInfo(type,gc.nowCheckingDistrictID, buildingID, columns);
+        UpdateAllInfo(type, districtID, buildingID, columns);
         SetAnchoredPosition(x, y);
         isShow = true;
 
@@ -111,7 +111,6 @@ public class HeroSelectPanel : BasePanel
                 doBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 break;
             case "指派管理者":
-
                 foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
                 {
                     if (gc.districtDic[districtID].heroList.Contains(kvp.Key)&& kvp.Value.workerInBuilding==-1)
@@ -120,7 +119,6 @@ public class HeroSelectPanel : BasePanel
                     }
                 }
 
-          
                 for (int i = 0; i < temp.Count; i++)
                 {
                     if (i < heroGo.Count)
@@ -161,6 +159,51 @@ public class HeroSelectPanel : BasePanel
 
                 break;
             case "指派探险者":
+                foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
+                {
+                    if ( kvp.Value.adventureInTeam == -1)
+                    {
+                        temp.Add(kvp.Value);
+                    }
+                }
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    if (i < heroGo.Count)
+                    {
+                        go = heroGo[i];
+                        heroGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+                    }
+                    else
+                    {
+                        go = Instantiate(Resources.Load("Prefab/UILabel/Label_HeroInDis")) as GameObject;
+                        go.transform.SetParent(heroListGo.transform);
+                        heroGo.Add(go);
+                    }
+                    int row = i == 0 ? 0 : (i % columns);
+                    int col = i == 0 ? 0 : (i / columns);
+                    go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 154f, -4 + col * -36f, 0f);
+
+                    go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + temp[i].pic);
+
+                    go.transform.GetChild(1).GetComponent<Text>().text = temp[i].name;
+                    go.transform.GetChild(2).GetComponent<Text>().text = "Lv." + temp[i].level;
+                    go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.HeroInSelect;
+                    go.transform.GetComponent<InteractiveLabel>().index = temp[i].id;
+
+                }
+                for (int i = temp.Count; i < heroGo.Count; i++)
+                {
+                    heroGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+                }
+
+                heroListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(413f, 4 + (temp.Count / columns) * 36f));
+                doBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                doBtn.onClick.RemoveAllListeners();
+                doBtn.onClick.AddListener(delegate () {
+                    Debug.Log("(byte)districtID=" + (byte)districtID);
+                    gc.AdventureTeamHeroAdd((byte)districtID, nowSelectedHeroID);
+                    OnHide();
+                });
 
                 break;
         }
