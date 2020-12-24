@@ -36,7 +36,8 @@ public enum LabelType
     ItemToSet,
     DungeonInAdventure,
     AdventureTeam,
-    AdventurePart
+    AdventurePart,
+    Skill
 }
 
 public enum Element
@@ -110,8 +111,8 @@ public enum EquipPart
 
 public enum Attribute
 {
-    Hp,//skill 作为 发动几率变化 单位%
-    Mp,//skill 作为 耗蓝变化 单位%
+    Hp,
+    Mp,
     HpRenew,
     MpRenew,
     AtkMin,
@@ -122,8 +123,8 @@ public enum Attribute
     MDef,
     Hit,
     Dod,
-    CriR,//skill 作为 追加连击概率 单位%
-    CriD,//skill 作为 连击数上限 
+    CriR,
+    CriD,
     Spd,
     WindDam,
     FireDam,
@@ -361,7 +362,7 @@ public class ItemObject
 [System.Serializable]
 public class SkillPrototype
 {
-    public int ID;
+    public short ID;
     public string Name;
     public string Pic;
     public List<int> Element;
@@ -415,6 +416,47 @@ public class SkillPrototype
     public short UpLightRes;
     public short UpDarkRes;
 }
+
+public class SkillObject
+{
+    private int ID;
+    private string Name;
+    private short PrototypeID;
+    private short RateModify;
+    private short MpModify;
+    private byte ComboRate;
+    private byte ComboMax;
+    private byte Gold;
+    private short Cost;
+    private int HeroID;
+    private int UseCount;
+    public SkillObject(int id, string name, short prototypeID, short rateModify, short mpModify, byte comboRate, byte comboMax, byte gold, short cost,int heroID, int useCount)
+    {
+          this.ID= id;
+        this.Name= name;
+        this.PrototypeID= prototypeID;
+        this.RateModify = rateModify;
+        this.MpModify= mpModify;
+        this.ComboRate= comboRate;
+        this.ComboMax= comboMax;
+        this.Gold= gold;
+        this.Cost= cost;
+        this.HeroID= heroID;
+        this.UseCount= useCount;
+}
+    public int id { get { return ID; }  }
+    public string name { get { return Name; } set { Name = value; } }
+    public short prototypeID { get { return PrototypeID; }  }
+    public short rateModify { get { return RateModify; } set { RateModify = value; } }
+    public short mpModify { get { return MpModify; } set { MpModify = value; } }
+    public byte comboRate { get { return ComboRate; } set { ComboRate = value; } }
+    public byte comboMax { get { return ComboMax; } set { ComboMax = value; } }
+    public byte gold { get { return Gold; } set { Gold = value; } }
+    public short cost { get { return Cost; } set { Cost = value; } }
+    public int heroID { get { return HeroID; } set { HeroID = value; } }
+    public int useCount { get { return UseCount; } set { UseCount = value; } }
+}
+
 
 //英雄原型T
 [System.Serializable]

@@ -26,6 +26,7 @@ public class GameControl : MonoBehaviour
     public int nextExecuteEventEndTime = 0;
     public int heroIndex = 0;
     public int itemIndex = 0;
+    public int skillIndex = 0;
     public int buildingIndex = 0;
     public bool[] buildingUnlock=new bool[73] ; 
     public int logIndex = 0;
@@ -38,7 +39,7 @@ public class GameControl : MonoBehaviour
     public Dictionary<int, LogObject> logDic = new Dictionary<int, LogObject>();
     public List<AdventureTeamObject> adventureTeamList = new List<AdventureTeamObject>();
     public List<DungeonObject> dungeonList = new List<DungeonObject>();
-
+    public Dictionary<int, SkillObject> skillDic = new Dictionary<int, SkillObject>();
     /// <summary>
     /// 用作存档的数据类
     /// </summary>
@@ -60,6 +61,7 @@ public class GameControl : MonoBehaviour
         public int nextExecuteEventEndTime = 0;
         public int heroIndex = 0;
         public int itemIndex = 0;
+        public int skillIndex = 0;
         public int buildingIndex = 0;
         public bool[] buildingUnlock = new bool[73];
         public int logIndex = 0;
@@ -72,6 +74,7 @@ public class GameControl : MonoBehaviour
         public Dictionary<int, LogObject> logDic = new Dictionary<int, LogObject>();
         public List<AdventureTeamObject> adventureTeamList = new List<AdventureTeamObject>();
         public List<DungeonObject> dungeonList = new List<DungeonObject>();
+        public Dictionary<int, SkillObject> skillDic = new Dictionary<int, SkillObject>();
     }
 
 
@@ -101,6 +104,7 @@ public class GameControl : MonoBehaviour
         t.nextExecuteEventEndTime = this.nextExecuteEventEndTime;
         t.heroIndex = this.heroIndex;
         t.itemIndex = this.itemIndex;
+        t.skillIndex = this.skillIndex;
         t.buildingIndex = this.buildingIndex;
         t.buildingUnlock = this.buildingUnlock;
         t.logIndex = this.logIndex;
@@ -113,6 +117,7 @@ public class GameControl : MonoBehaviour
         t.logDic = this.logDic;
         t.adventureTeamList = this.adventureTeamList;
         t.dungeonList = this.dungeonList;
+        t.skillDic = this.skillDic;
         //保存数据
         IOHelper.SetData(filename, t);
     }
@@ -148,6 +153,7 @@ public class GameControl : MonoBehaviour
             this.nextExecuteEventEndTime = t1.nextExecuteEventEndTime;
             this.heroIndex = t1.heroIndex;
             this.itemIndex = t1.itemIndex;
+            this.skillIndex = t1.skillIndex;
             this.buildingIndex = t1.buildingIndex;
             this.buildingUnlock = t1.buildingUnlock;
             this.logIndex = t1.logIndex;
@@ -160,6 +166,7 @@ public class GameControl : MonoBehaviour
             this.logDic = t1.logDic;
             this.adventureTeamList = t1.adventureTeamList;
             this.dungeonList = t1.dungeonList;
+            this.skillDic = t1.skillDic;
         }
         else
         {
@@ -217,7 +224,7 @@ public class GameControl : MonoBehaviour
         //Debug.Log("2heroDic.Count=" + heroDic.Count);
     }
 
-    #region 【通用方法】生成英雄、道具
+    #region 【通用方法】生成英雄、道具、技能
     public void CreateHero(short pid)
     {
         heroDic.Add(heroIndex,GenerateHeroByRandom(heroIndex, pid,(byte)Random.Range(0,2)));
@@ -486,15 +493,15 @@ public class GameControl : MonoBehaviour
         if (DataManager.mItemDict[itemID].ItemGet != 0) { attrList.Add(new ItemAttribute(Attribute.ItemGet, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].ItemGet * upRate))); }
 
         //追加词条
-        byte rank =(byte) (DataManager.mItemDict[itemID].Rank-1);
+        byte rank = (byte)(DataManager.mItemDict[itemID].Rank - 1);
         int lemmaCount = 0;
-         ran = Random.Range(0, 99);
-        upRate = 1f + Random.Range(0f,0.2f);
-        if (ran <= 10)
+        ran = Random.Range(0, 100);
+        upRate = 1f + Random.Range(0f, 0.2f);
+        if (ran < 10)//10%概率2词条
         {
             lemmaCount = 2;
         }
-        else if (ran > 10 && ran <= 30)
+        else if (ran >= 10 && ran < 30)//20%概率1词条
         {
             lemmaCount = 1;
         }
@@ -555,6 +562,109 @@ public class GameControl : MonoBehaviour
 
         return new ItemObject(itemIndex, itemID, name, DataManager.mItemDict[itemID].Pic, DataManager.mItemDict[itemID].Rank,upLevel,attrList, 
             DataManager.mItemDict[itemID].Des+("于"+timeYear+"年"+timeMonth+"月"+ (districtObject != null ? ("在"+districtObject.name + "制作") :"获得") ), DataManager.mItemDict[itemID].Cost, districtObject!=null? districtObject.id:(short)-1, false,-1, EquipPart.None);
+    }
+
+    public SkillObject GenerateSkillByRandom(short skillID)
+    {
+        string name =DataManager.mSkillDict[skillID].Name;
+        short RateModify = 0;
+        short MpModify = 0;
+        byte ComboRate = 0;
+        byte ComboMax = 0;
+        byte Gold = 0;
+
+
+        int lemmaCount = 0;
+        int ran = Random.Range(0, 100);
+        if (ran <= 10)//10%概率2词条
+        {
+            lemmaCount = 2;
+        }
+        else if (ran > 10 && ran <= 30)//20%概率1词条
+        {
+            lemmaCount = 1;
+        }
+
+        List<int> typePool = new List<int> { 0, 1, 2, 3 };
+
+        for (int i = 0; i < lemmaCount; i++)
+        {
+            int ranType = Random.Range(0, typePool.Count);
+            int type = typePool[ranType];
+            typePool.Remove(ranType);
+            switch (ranType)
+            {
+                case 0://发动几率修正
+
+                    while (RateModify == 0)
+                    {
+                        RateModify = (short)Random.Range(-10, 11);
+                    }
+                    if (RateModify > 0)
+                    {
+                        name = "积极 " + name;
+                    }
+                    else 
+                    {
+                        name = "消极 " + name;
+                    }
+
+                    break;
+                case 1://发耗蓝修正 对原本mp的%修正
+                    while (MpModify == 0)
+                    {
+                        MpModify = (short)Random.Range(-30, 30);
+                    }
+                    if (MpModify > 0)
+                    {
+                        name = "奢侈 " + name;
+                    }
+                    else
+                    {
+                        name = "节约 " + name;
+                    }
+
+                    break;
+                case 2://追击
+                    ComboRate = (byte)Random.Range(1, 21);
+                    ComboMax = (byte)Random.Range(1, 5);
+
+                    if (ComboRate < 5)
+                    {
+                        name = "快速 " + name;
+                    }
+                    else if (ComboRate >= 5&& ComboRate < 10)
+                    {
+                        name = "迅速 " + name;
+                    }
+                    else if (ComboRate >= 10 && ComboRate < 15)
+                    {
+                        name = "急速 " + name;
+                    }
+                    else 
+                    {
+                        name = "极速 " + name;
+                    }
+                    switch (ComboMax)
+                    {
+                        case 1: name = "二连" + name;break;
+                        case 2: name = "三连" + name; break;
+                        case 3: name = "四连" + name; break;
+                        case 4: name = "五连" + name; break;
+                    }
+
+
+                    break;
+                case 3://攻击得金
+
+                    Gold = (byte)Random.Range(1, 21);
+                    name = "夺金 " + name;
+                    break;
+            }
+        }
+
+        return new SkillObject(skillIndex, name, skillID, RateModify, MpModify, ComboRate, ComboMax, Gold, 5000, -1, 0);
+
     }
     #endregion
 
@@ -1257,6 +1367,7 @@ public class GameControl : MonoBehaviour
     }
     #endregion
 
+    #region 【方法】冒险
     public void AdventureTeamSetDungeon(byte teamID, short dungeonID)
     {
 
@@ -1321,6 +1432,7 @@ public class GameControl : MonoBehaviour
     { 
 
     }
+    #endregion
 
     #region 【方法】日志与执行事件基础
     public void CreateLog(LogType logType,string text, List<int> value)

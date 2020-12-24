@@ -467,7 +467,7 @@ public class ItemListAndInfoPanel : BasePanel
         }
 
         strBasic = strBasicFirst + strBasic+ "\n<color=#53C2FF>" + strLemma+"</color>";
-        str += "\n" + strBasic + "-----------------------------\n" + itemObject.des + "\n价值 "+ itemObject.cost;
+        str += "\n" + strBasic + "──────────────\n" + itemObject.des + "\n价值 "+ itemObject.cost;
 
         info_desText.text = str;
     }
