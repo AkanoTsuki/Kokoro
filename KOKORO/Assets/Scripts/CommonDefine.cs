@@ -428,11 +428,12 @@ public class SkillObject
     private byte ComboMax;
     private byte Gold;
     private short Cost;
+    private short DistrictID;
     private int HeroID;
     private int UseCount;
-    public SkillObject(int id, string name, short prototypeID, short rateModify, short mpModify, byte comboRate, byte comboMax, byte gold, short cost,int heroID, int useCount)
+    public SkillObject(int id, string name, short prototypeID, short rateModify, short mpModify, byte comboRate, byte comboMax, byte gold, short cost, short districtID,int heroID, int useCount)
     {
-          this.ID= id;
+        this.ID= id;
         this.Name= name;
         this.PrototypeID= prototypeID;
         this.RateModify = rateModify;
@@ -441,6 +442,7 @@ public class SkillObject
         this.ComboMax= comboMax;
         this.Gold= gold;
         this.Cost= cost;
+        this.DistrictID = districtID;
         this.HeroID= heroID;
         this.UseCount= useCount;
 }
@@ -453,6 +455,7 @@ public class SkillObject
     public byte comboMax { get { return ComboMax; } set { ComboMax = value; } }
     public byte gold { get { return Gold; } set { Gold = value; } }
     public short cost { get { return Cost; } set { Cost = value; } }
+    public short districtID { get { return DistrictID; } set { DistrictID = value; } }
     public int heroID { get { return HeroID; } set { HeroID = value; } }
     public int useCount { get { return UseCount; } set { UseCount = value; } }
 }
@@ -667,6 +670,7 @@ public class HeroObject
     private int EquipNeck;
     private int EquipFinger1;
     private int EquipFinger2;
+    private List<int> Skill;
     private int WorkerInBuilding;
     private short AdventureInTeam;
     public HeroObject(int id, string name, short type, short level, int exp,byte sex,string pic,
@@ -680,7 +684,7 @@ public class HeroObject
         byte workPlanting, byte workFeeding, byte workFishing, byte workHunting, byte workMining, byte workQuarrying, byte workFelling, byte workBuild,
         byte workMakeWeapon, byte workMakeArmor, byte workMakeJewelry,
         byte workSundry,
-        int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2,int workerInBuilding, short adventureInTeam)
+        int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<int> skill,int workerInBuilding, short adventureInTeam)
     {
         this.ID = id;
         this.Name = name;
@@ -745,6 +749,7 @@ public class HeroObject
         this.EquipNeck = equipNeck;
         this.EquipFinger1 = equipFinger1;
         this.EquipFinger2 = equipFinger2;
+        this.Skill = skill;
         this.WorkerInBuilding = workerInBuilding;
         this.AdventureInTeam = adventureInTeam;
     }
@@ -811,6 +816,7 @@ public class HeroObject
     public int equipNeck { get { return EquipNeck; } set { EquipNeck = value; } }
     public int equipFinger1 { get { return EquipFinger1; } set { EquipFinger1 = value; } }
     public int equipFinger2 { get { return EquipFinger2; } set { EquipFinger2 = value; } }
+    public List<int> skill { get { return Skill; } set { Skill = value; } }
     public int workerInBuilding { get { return WorkerInBuilding; } set { WorkerInBuilding = value; } }
     public short adventureInTeam { get { return AdventureInTeam; } set { AdventureInTeam = value; } }
 }
@@ -916,14 +922,14 @@ public class DistrictObject
     private int RFoodLimit;//库存上限
     private int RStuffLimit;
     private int RProductLimit;
-
+    private int RRollLimit;
     public DistrictObject(short id, string name, string baseName, string des, bool isOpen, byte level, short people, short peopleLimit, short worker, short gridEmpty, short gridUsed,
         short totalGrass, short totalWood, short totalWater, short totalStone, short totalMetal, short usedGrass, short usedWood, short usedWater, short usedStone, short usedMetal, List<int> buildingList, List<int> heroList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish,
         int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
         int rProductWeapon, int rProductArmor, int rProductJewelry,
-        int rFoodLimit, int rStuffLimit, int rProductLimit)
+        int rFoodLimit, int rStuffLimit, int rProductLimit, int rRollLimit)
     {
         this.ID = id;
         this.Name = name;
@@ -972,6 +978,7 @@ public class DistrictObject
         this.RFoodLimit = rFoodLimit;//库存上限
         this.RStuffLimit = rStuffLimit;
         this.RProductLimit = rProductLimit;
+        this.RRollLimit = rRollLimit;
     }
     public short id { get { return ID; } }
     public string name { get { return Name; }  }
@@ -1020,6 +1027,7 @@ public class DistrictObject
     public int rFoodLimit { get { return RFoodLimit; } set { RFoodLimit = value; } }
     public int rStuffLimit { get { return RStuffLimit; } set { RStuffLimit = value; } }
     public int rProductLimit { get { return RProductLimit; } set { RProductLimit = value; } }
+    public int rRollLimit { get { return RRollLimit; } set { RRollLimit = value; } }
 }
 
 public class DistrictGridObject

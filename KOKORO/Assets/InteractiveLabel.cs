@@ -28,8 +28,6 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 ItemListAndInfoPanel.Instance.nowItemID = index;
                 ItemListAndInfoPanel.Instance.UpdateInfo(gc.itemDic[index]);
             });
-
-            // btn.onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index], 686, -88, -45); });
         }
         else if (labelType == LabelType.HeroInSelect)
         {
@@ -60,6 +58,14 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
             btn.onClick.AddListener(delegate ()
             {
                 AdventureMainPanel.Instance.nowSelectDungeonID= (short)index;
+            });
+        }
+        else if (labelType == LabelType.Skill)
+        {
+            btn.onClick.AddListener(delegate ()
+            {
+                SkillListAndInfoPanel.Instance.nowSkillID = index;
+                SkillListAndInfoPanel.Instance.UpdateInfo(index);
             });
         }
     }

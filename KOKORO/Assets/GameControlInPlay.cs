@@ -22,6 +22,7 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.Message);
         MessagePanel.Instance.OnShow(0, 26);
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
+        UIManager.Instance.InitPanel(UIPanelType.SkillListAndInfo);
         UIManager.Instance.InitPanel(UIPanelType.AdventureMain);
         UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
@@ -38,7 +39,8 @@ public class GameControlInPlay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            gc.Save();
+           gc.skillDic.Add(gc.skillIndex , gc.GenerateSkillByRandom((short)Random.Range(0,DataManager.mSkillDict.Count)));
+            gc.skillIndex++;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {

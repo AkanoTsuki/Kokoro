@@ -18,7 +18,8 @@ public enum UIPanelType
     AreaMap,
     PlayMain,
     BuildingSelect,
-    HeroSelect
+    HeroSelect,
+    SkillListAndInfo
 
 
 }

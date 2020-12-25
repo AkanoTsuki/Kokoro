@@ -297,7 +297,7 @@ public class GameControl : MonoBehaviour
        return new HeroObject(heroID, name, heroTypeID, 1,0, sexCode, pic, hp,mp,hpRenew,mpRenew,atkMin,atkMax,mAtkMin,mAtkMax,def,mDef,hit,dod,criR,criD,spd,
          windDam,fireDam,waterDam,groundDam,lightDam,darkDam,windRes,fireRes,waterRes,groundRes,lightRes,darkRes,dizzyRes,confusionRes,poisonRes,sleepRes,goldGet,expGet,itemGet,
          workPlanting,workFeeding,workFishing,workHunting,workMining,workQuarrying,workFelling,workBuild,workMakeWeapon,workMakeArmor,workMakeJewelry,workSundry,
-         -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1);
+         -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,new List<int> { -1,-1,-1,-1}, -1,-1);
 
 }
 
@@ -368,7 +368,7 @@ public class GameControl : MonoBehaviour
         return new HeroObject(heroID,nameSet!=""?nameSet:name, heroTypeID, 1, 0, sexCode, pic, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workSundry,
-          -1, -1, -1, -1,-1, -1, -1, -1, -1, -1, -1,-1);
+          -1, -1, -1, -1,-1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, - 1,-1);
 
     }
 
@@ -592,7 +592,7 @@ public class GameControl : MonoBehaviour
             int ranType = Random.Range(0, typePool.Count);
             int type = typePool[ranType];
             typePool.Remove(ranType);
-            switch (ranType)
+            switch (type)
             {
                 case 0://发动几率修正
 
@@ -663,7 +663,7 @@ public class GameControl : MonoBehaviour
             }
         }
 
-        return new SkillObject(skillIndex, name, skillID, RateModify, MpModify, ComboRate, ComboMax, Gold, 5000, -1, 0);
+        return new SkillObject(skillIndex, name, skillID, RateModify, MpModify, ComboRate, ComboMax, Gold, 5000,-1, -1, 0);
 
     }
     #endregion
@@ -1277,6 +1277,22 @@ public class GameControl : MonoBehaviour
         HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
     }
     #endregion
+
+    public void HeroSkillSet(int heroID, byte index, int skillID)
+    {
+
+        if (heroDic[heroID].skill[index] != -1)
+        {
+            skillDic[heroDic[heroID].skill[index]].heroID = -1;
+        }
+
+        heroDic[heroID].skill[index] = skillID;
+
+
+        HeroPanel.Instance.UpdateSkill(heroDic[heroID], index);
+        SkillListAndInfoPanel.Instance.OnHide();
+    }
+
 
     #region 【方法】鉴定库转收藏/放售
     public void ItemToCollectionAll(short districtID)

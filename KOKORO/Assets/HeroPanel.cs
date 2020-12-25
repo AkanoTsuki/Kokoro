@@ -194,9 +194,10 @@ public class HeroPanel : BasePanel
     {
         connRt.anchoredPosition = new Vector2(-19, connY);
         UpdateBasicInfo(heroObject);
-        UpdateFightInfo( heroObject,EquipPart.None,null, 1);
+        UpdateFightInfo(heroObject, EquipPart.None, null, 1);
         UpdateWorkInfo(heroObject);
-        UpdateEquipAll( heroObject);
+        UpdateEquipAll(heroObject);
+        UpdateSkillAll(heroObject);
     }
 
     public void UpdateBasicInfo(HeroObject heroObject)
@@ -1898,6 +1899,74 @@ public class HeroPanel : BasePanel
                 equip_finger2Btn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipFinger2;
                 equip_finger2Btn.transform.GetComponent<InteractiveLabel>().heroID = heroObject.id;
                 break;
+        }
+    }
+   
+    public void UpdateSkillAll(HeroObject heroObject)
+    {
+        for (byte i = 0; i < 4; i++)
+        {
+            UpdateSkill(heroObject, i);
+        }
+    }
+
+    public void UpdateSkill(HeroObject heroObject, byte skillIndex)
+    {
+        skill_Btn[skillIndex].onClick.RemoveAllListeners();
+        skill_Btn[skillIndex].onClick.AddListener(delegate () { SkillListAndInfoPanel.Instance.OnShow(-1,null,heroObject.id,skillIndex,(int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ gameObject.GetComponent<RectTransform>().sizeDelta.x+GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y); });
+        
+
+        if (heroObject.skill[skillIndex] != -1)
+        {
+            SkillObject so = gc.skillDic[heroObject.skill[skillIndex]];
+            SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
+            skill_Image[skillIndex].overrideSprite = Resources.Load("Image/SkillPic/" + sp.Pic, typeof(Sprite)) as Sprite;
+
+            string str = "";
+            for (int i = 0; i < sp.Element.Count; i++)
+            {
+                if (i != 0)
+                {
+                    str += "/";
+                }
+                switch (sp.Element[i])
+                {
+                    case 0: str += "-"; break;
+                    case 1: str += "<color=#26F39A>风</color>"; break;
+                    case 2: str += "<color=#E74624>火</color>"; break;
+                    case 3: str += "<color=#24CDE7>水</color>"; break;
+                    case 4: str += "<color=#C08342>地</color>"; break;
+                    case 5: str += "<color=#E0DE60>光</color>"; break;
+                    case 6: str += "<color=#DA7CFF>暗</color>"; break;
+
+                }
+            }
+
+            int probability = sp.Probability;
+            if (so.rateModify != 0)
+            {
+                probability += so.rateModify;
+                if (probability < 0)
+                {
+                    probability = 0;
+                }
+                else if (probability > 0)
+                {
+                    probability = 100;
+                }
+            }
+            int mp = sp.Mp;
+            if (so.mpModify != 0)
+            {
+                mp = (int)(1f + so.mpModify / 100f);
+            }
+
+            skill_Text[skillIndex].text = str + "\n" + probability + "%\nMP <color=#38B9FB>" + mp + "</color>";
+        }
+        else
+        {
+            skill_Image[skillIndex].overrideSprite = Resources.Load("Image/Other/icon007", typeof(Sprite)) as Sprite;
+            skill_Text[skillIndex].text = "-";
         }
     }
 }
