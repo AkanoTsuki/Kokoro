@@ -755,14 +755,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
     m_FontSize: 14
     m_FontStyle: 2
     m_BestFit: 0
@@ -774,7 +774,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...11
+  m_Text: "5\u4E2A\u5B57\u7B26\u5185"
 --- !u!1 &642775386925963813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,6 +1040,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelType: 0
   index: 0
+  equipPart: 0
+  heroID: 0
   btn: {fileID: 0}
 --- !u!1 &642775386987874026
 GameObject:
@@ -1737,6 +1739,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelType: 1
   index: 2
+  equipPart: 0
+  heroID: 0
   btn: {fileID: 0}
 --- !u!1 &642775387263968004
 GameObject:
@@ -2544,6 +2548,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelType: 1
   index: 1
+  equipPart: 0
+  heroID: 0
   btn: {fileID: 0}
 --- !u!1 &642775387520352502
 GameObject:
@@ -3374,6 +3380,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelType: 1
   index: 3
+  equipPart: 0
+  heroID: 0
   btn: {fileID: 0}
 --- !u!1 &642775387727355149
 GameObject:
@@ -3731,6 +3739,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelType: 1
   index: 4
+  equipPart: 0
+  heroID: 0
   btn: {fileID: 0}
 --- !u!1 &642775387877583818
 GameObject:
@@ -5867,14 +5877,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -6116,7 +6126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8207547, g: 0.6936124, b: 0.3987629, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6714,6 +6724,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelType: 1
   index: 0
+  equipPart: 0
+  heroID: 0
   btn: {fileID: 0}
 --- !u!1 &642775388771026391
 GameObject:

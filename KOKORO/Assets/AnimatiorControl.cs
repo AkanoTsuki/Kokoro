@@ -11,33 +11,52 @@ public enum AnimStatus
     Bow,
     Magic,
     Hit,
-    Dead
+    Death
 }
 public class AnimatiorControl : MonoBehaviour
 {
     private float fps = 5.0f;
     private float time = 0;
     private int currentIndex = 0;
-    Sprite[] actionFrames;
-    Sprite[] walkFrames;
+
+    Sprite[] attackFrames;
+    Sprite[] bowFrames;
+    Sprite[] deathFrames;
+    Sprite[] hitFrames;
+    Sprite[] idleFrames;
+    Sprite[] magicFrames;
+    Sprite[] walk_DownFrames;
+    Sprite[] walk_LeftFrames;
+    Sprite[] walk_RightFrames;
+    Sprite[] walk_UpFrames;
+
     Sprite[] needFrames = new Sprite[3];
 
     bool isPlay = false;
     bool isLoop = false;
-    public string charaName = "chara1_01";
+    public string charaName = "chara1_1";
 
     void Start()
     {
-       // nowFrame = gameObject.GetComponent<Image>().sprite;
-        actionFrames = Resources.LoadAll<Sprite>("Image/RolePic/"+ charaName + "/action");
-        walkFrames = Resources.LoadAll<Sprite>("Image/RolePic/"+ charaName + "/walk");
-        Debug.Log("Image/RolePic/" + charaName + "/walk");
-        Debug.Log(actionFrames.Length);
+        charaName = "chara1_1";
+
+        attackFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Attack");
+        bowFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Bow");
+        deathFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Death");
+        hitFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Hit");
+        idleFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Idle");
+        magicFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Magic");
+        walk_DownFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Down");
+        walk_LeftFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Left");
+        walk_RightFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Right");
+        walk_UpFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Up");
+
+        Debug.Log("Image/RolePic/" + charaName + "/Idle       "+idleFrames.Length);
         SetAnim(AnimStatus.Idle);
         gameObject.GetComponent<Image>().sprite = needFrames[currentIndex];
 
         Play();
-        Debug.Log(isLoop);
+       
     }
 
 
@@ -92,39 +111,65 @@ public class AnimatiorControl : MonoBehaviour
     }
     void SetAnim(AnimStatus animStatus)
     {
-       
-        byte Index = 0;
-        switch (animStatus)
-        {
-            case AnimStatus.WalkLeft: Index = 1; isLoop = true; break;
-            case AnimStatus.WalkRight: Index = 2; isLoop = true; break;
-            case AnimStatus.Idle: Index = 2; isLoop = true; break;
-            case AnimStatus.Attack:  Index = 1; isLoop = false; break;
-            case AnimStatus.Bow:  Index = 7; isLoop = true; break;
-            case AnimStatus.Magic:  Index = 13; isLoop = true; break;
-            case AnimStatus.Hit:  Index = 14; isLoop = true; break;
-            case AnimStatus.Dead:  Index = 15; isLoop = true; break;
-        }
+
         switch (animStatus)
         {
             case AnimStatus.WalkLeft:
-            case AnimStatus.WalkRight:
-                needFrames[0] = walkFrames[Index * 3 + 0];
-                needFrames[1] = walkFrames[Index * 3 + 2];
-                needFrames[2] = walkFrames[Index * 3 + 1];
+                needFrames[0] = walk_LeftFrames[0];
+                needFrames[1] = walk_LeftFrames[2];
+                needFrames[2] = walk_LeftFrames[1];
                 gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(39, 54);
-
+                isLoop = true;
                 break;
-            case AnimStatus.Idle: 
-            case AnimStatus.Attack:
-            case AnimStatus.Bow:
-            case AnimStatus.Magic:
-            case AnimStatus.Hit: 
-            case AnimStatus.Dead:
-                needFrames[0] = actionFrames[Index * 3 + 0];
-                needFrames[1] = actionFrames[Index * 3 + 2];
-                needFrames[2] = actionFrames[Index * 3 + 1];
+            case AnimStatus.WalkRight:
+                needFrames[0] = walk_RightFrames[0];
+                needFrames[1] = walk_RightFrames[2];
+                needFrames[2] = walk_RightFrames[1];
+                gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(39, 54);
+                isLoop = true;
+                break;
+
+            case AnimStatus.Idle:
+                needFrames[0] = idleFrames[0];
+                needFrames[1] = idleFrames[2];
+                needFrames[2] = idleFrames[1];
                 gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                isLoop = true;
+                break;
+            case AnimStatus.Attack:
+                needFrames[0] = attackFrames[0];
+                needFrames[1] = attackFrames[2];
+                needFrames[2] = attackFrames[1];
+                gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                isLoop = false;
+                break;
+            case AnimStatus.Bow:
+                needFrames[0] = bowFrames[0];
+                needFrames[1] = bowFrames[2];
+                needFrames[2] = bowFrames[1];
+                gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                isLoop = false;
+                break;
+            case AnimStatus.Magic:
+                needFrames[0] = magicFrames[0];
+                needFrames[1] = magicFrames[2];
+                needFrames[2] = magicFrames[1];
+                gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                isLoop = false;
+                break;
+            case AnimStatus.Hit:
+                needFrames[0] = hitFrames[0];
+                needFrames[1] = hitFrames[2];
+                needFrames[2] = hitFrames[1];
+                gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                isLoop = false;
+                break;
+            case AnimStatus.Death:
+                needFrames[0] = deathFrames[0];
+                needFrames[1] = deathFrames[2];
+                needFrames[2] = deathFrames[1];
+                gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                isLoop = true;
                 break;
         }
 

@@ -68,6 +68,7 @@ public class BuildingPanel : BasePanel
 
     public void OnShow(BuildingObject buildingObject, int x, int y, int connY)
     {
+        nowCheckingBuildingID = buildingObject.id;
         switch (buildingObject.panelType)
         {
             case "Forge":
@@ -78,7 +79,7 @@ public class BuildingPanel : BasePanel
         }
         SetAnchoredPosition(x, y);
         isShow = true;
-        nowCheckingBuildingID = buildingObject.id;
+        
         setWorker_minusBtn.onClick.RemoveAllListeners();
         setWorker_minusBtn.onClick.AddListener(delegate () { gc.BuildingWorkerMinus(buildingObject.id); });
         setWorker_addBtn.onClick.RemoveAllListeners();
@@ -134,6 +135,10 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[0].onClick.AddListener(delegate () {
                         gc.StopProduceResource(buildingObject.id);
                         UpdateTotalSetButton(buildingObject);
+                        if (BuildingSelectPanel.Instance.isShow)
+                        {
+                            BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                        }
                     });
                 }
                 else
@@ -148,6 +153,10 @@ public class BuildingPanel : BasePanel
                         {
                             gc.CreateProduceResourceEvent(buildingObject.id); 
                             UpdateTotalSetButton(buildingObject);
+                            if (BuildingSelectPanel.Instance.isShow)
+                            {
+                                BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                            }
                         }
                     });
                 }
@@ -179,6 +188,10 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[0].onClick.AddListener(delegate () {
                         gc.StopProduceItem(buildingObject.id);
                         UpdateTotalSetButton(buildingObject);
+                        if (BuildingSelectPanel.Instance.isShow)
+                        {
+                            BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                        }
                     });
                 }
                 else
@@ -193,6 +206,10 @@ public class BuildingPanel : BasePanel
                         {
                             gc.CreateProduceItemEvent(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
+                            if (BuildingSelectPanel.Instance.isShow)
+                            {
+                                BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                            }
                         }
                     });
                 }
@@ -350,7 +367,7 @@ public class BuildingPanel : BasePanel
         setManagerRt.anchoredPosition = new Vector2(16f, -298f);
         for (int i = 0; i < buildingObject.heroList.Count; i++)
         {
-            setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic, typeof(Sprite)) as Sprite;
+            setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
             string workValue = "";
             switch (buildingObject.prototypeID)
             {
@@ -539,6 +556,10 @@ public class BuildingPanel : BasePanel
             gc.ChangeProduceEquipNow(buildingObject.id);
             UpdateSetForgePart(buildingObject);
             UpdateTotalSetButton(buildingObject);
+            if (BuildingSelectPanel.Instance.isShow)
+            {
+                BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+            }
         });
 
     }
@@ -556,12 +577,12 @@ public class BuildingPanel : BasePanel
             }
 
             if (produceEquipPrototype.InputWood != 0) { inputStr += "木材*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputStone != 0) { inputStr += "石料*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputMetal != 0) { inputStr += "金属*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputLeather != 0) { inputStr += "皮革*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputCloth != 0) { inputStr += "布料*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputTwine != 0) { inputStr += "麻绳*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputBone != 0) { inputStr += "骨块*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputStone != 0) { inputStr += "石料*" + produceEquipPrototype.InputStone + " "; }
+            if (produceEquipPrototype.InputMetal != 0) { inputStr += "金属*" + produceEquipPrototype.InputMetal + " "; }
+            if (produceEquipPrototype.InputLeather != 0) { inputStr += "皮革*" + produceEquipPrototype.InputLeather + " "; }
+            if (produceEquipPrototype.InputCloth != 0) { inputStr += "布料*" + produceEquipPrototype.InputCloth + " "; }
+            if (produceEquipPrototype.InputTwine != 0) { inputStr += "麻绳*" + produceEquipPrototype.InputTwine + " "; }
+            if (produceEquipPrototype.InputBone != 0) { inputStr += "骨块*" + produceEquipPrototype.InputBone + " "; }
 
         }
 
@@ -592,12 +613,12 @@ public class BuildingPanel : BasePanel
             }
 
             if (produceEquipPrototype.InputWood != 0) { inputStr += "木材*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputStone != 0) { inputStr += "石料*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputMetal != 0) { inputStr += "金属*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputLeather != 0) { inputStr += "皮革*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputCloth != 0) { inputStr += "布料*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputTwine != 0) { inputStr += "麻绳*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputBone != 0) { inputStr += "骨块*" + produceEquipPrototype.InputWood + " "; }
+            if (produceEquipPrototype.InputStone != 0) { inputStr += "石料*" + produceEquipPrototype.InputStone + " "; }
+            if (produceEquipPrototype.InputMetal != 0) { inputStr += "金属*" + produceEquipPrototype.InputMetal + " "; }
+            if (produceEquipPrototype.InputLeather != 0) { inputStr += "皮革*" + produceEquipPrototype.InputLeather + " "; }
+            if (produceEquipPrototype.InputCloth != 0) { inputStr += "布料*" + produceEquipPrototype.InputCloth + " "; }
+            if (produceEquipPrototype.InputTwine != 0) { inputStr += "麻绳*" + produceEquipPrototype.InputTwine + " "; }
+            if (produceEquipPrototype.InputBone != 0) { inputStr += "骨块*" + produceEquipPrototype.InputBone + " "; }
 
         }
 

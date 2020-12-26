@@ -11,8 +11,8 @@ public class DataManager
     public class TestArray
     {
         
-        public List<CreateHeroType> HeroType;
         public List<HeroPrototype> Hero;
+        //public List<HeroPrototype> Hero;
         public List<ItemPrototype> Item;
         public List<SkillPrototype> Skill;
         public List<DistrictPrototype> District;
@@ -27,12 +27,12 @@ public class DataManager
 
     
 
-    public static Dictionary<int, CreateHeroType> mCreateHeroTypeDict = new Dictionary<int, CreateHeroType>();
+    public static Dictionary<int, HeroPrototype> mHeroDict = new Dictionary<int, HeroPrototype>();
     public static Dictionary<Attribute, CreateHeroRank> cCreateHeroRankDict = new Dictionary<Attribute, CreateHeroRank>();
 
     public static Dictionary<int, ItemPrototype> mItemDict = new Dictionary<int, ItemPrototype>();
     public static Dictionary<int, SkillPrototype> mSkillDict = new Dictionary<int, SkillPrototype>();
-    public static Dictionary<int, HeroPrototype> mHeroDict = new Dictionary<int, HeroPrototype>();
+    //public static Dictionary<int, HeroPrototype> mHeroDict = new Dictionary<int, HeroPrototype>();
 
     public static Dictionary<int, DistrictPrototype> mDistrictDict = new Dictionary<int, DistrictPrototype>();
     public static Dictionary<int, DistrictGridPrototype> mDistrictGridDict = new Dictionary<int, DistrictGridPrototype>();
@@ -87,8 +87,6 @@ public class DataManager
             Debug.LogError("ExampleData data null");
         }
 
-        if (jsonObject.HeroType == null){Debug.LogError("HeroType data null");}
-        foreach (CreateHeroType item in jsonObject.HeroType){mCreateHeroTypeDict[item.ID] = item; }
 
         if (jsonObject.Hero == null) { Debug.LogError("Hero data null"); }
         foreach (HeroPrototype item in jsonObject.Hero) { mHeroDict[item.ID] = item; }

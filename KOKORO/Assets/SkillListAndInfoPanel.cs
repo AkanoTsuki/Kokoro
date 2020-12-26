@@ -60,6 +60,8 @@ public class SkillListAndInfoPanel : BasePanel
 
     void Start()
     {
+
+        list_nowEmptyBtn.onClick.AddListener(delegate () { nowHeroSkillIndex = -1; UpdateInfo(-1); });
         list_filterAllBtn.onClick.AddListener(delegate () { UpdateAllInfo(nowDistrictID, null, nowHeroID, nowHeroSkillIndex); });
         list_filterNoneBtn.onClick.AddListener(delegate () { UpdateAllInfo(nowDistrictID, new List<int> { 0 }, nowHeroID, nowHeroSkillIndex); });
         list_filterWindBtn.onClick.AddListener(delegate () { UpdateAllInfo(nowDistrictID, new List<int> { 1 }, nowHeroID, nowHeroSkillIndex); });
@@ -81,7 +83,7 @@ public class SkillListAndInfoPanel : BasePanel
     {
 
         funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
-        funcBtn[0].GetComponent<Image>().color = new Color(229 / 255f, 181 / 255f, 105 / 255f, 255 / 255f);
+        funcBtn[0].GetComponent<Image>().color = new Color(109 / 255f, 159 / 255f, 121 / 255f, 255 / 255f);
         funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "装备";
         funcBtn[0].onClick.RemoveAllListeners();
         funcBtn[0].onClick.AddListener(delegate () {
@@ -144,12 +146,14 @@ public class SkillListAndInfoPanel : BasePanel
                 list_nowNameText.text = "<普通攻击>";
                 list_nowUseBtn.GetComponent<InteractiveLabel>().index = -1;
 
-                list_nowEmptyBtn.onClick.RemoveAllListeners();
+                //list_nowEmptyBtn.onClick.RemoveAllListeners();
+
 
             }
             else
             {
-                list_nowPicImage.overrideSprite = Resources.Load("Image/Skill/"+DataManager.mSkillDict[ gc.skillDic[ gc.heroDic[heroID].skill[heroSkillIndex]].prototypeID].Pic, typeof(Sprite)) as Sprite;
+                Debug.Log(DataManager.mSkillDict[gc.skillDic[gc.heroDic[heroID].skill[heroSkillIndex]].prototypeID].Pic);
+                list_nowPicImage.overrideSprite = Resources.Load("Image/SkillPic/" + DataManager.mSkillDict[ gc.skillDic[ gc.heroDic[heroID].skill[heroSkillIndex]].prototypeID].Pic, typeof(Sprite)) as Sprite;
                 list_nowNameText.text = gc.skillDic[gc.heroDic[heroID].skill[heroSkillIndex]].name+"之卷";
                 list_nowUseBtn.GetComponent<InteractiveLabel>().index = gc.heroDic[heroID].skill[heroSkillIndex];
             }
@@ -212,7 +216,7 @@ public class SkillListAndInfoPanel : BasePanel
             go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 224f, -4 + col * -22f, 0f);
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/SkillPic/" +DataManager.mSkillDict[ skillObjects[i].prototypeID].Pic);
-            go.transform.GetChild(1).GetComponent<Text>().text = skillObjects[i].name ;
+            go.transform.GetChild(1).GetComponent<Text>().text = skillObjects[i].name + "之卷";
             go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.Skill;
             go.transform.GetComponent<InteractiveLabel>().index = skillObjects[i].id;
         }
@@ -221,7 +225,7 @@ public class SkillListAndInfoPanel : BasePanel
             skillGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
 
-        list_skillListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(425f, 4 + (skillObjects.Count / 2) * 22f));
+        list_skillListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(455f, Mathf.Max(400f, 4 + (skillObjects.Count / 2) * 22f));
         if (districtID != -1)
         {
             numText.text = skillObjects.Count + "/" + gc.districtDic[districtID].rRollLimit;
@@ -383,7 +387,7 @@ public class SkillListAndInfoPanel : BasePanel
 
             if (so.gold != 0)
             {
-                strLemma += "\n[夺金]\n 每次攻击在目标身上夺取" + so.gold + "%金币";
+                strLemma += "\n[夺金]\n 每次攻击夺取目标" + so.gold + "%金币";
             }
 
             str +=(strLemma!=""?("\n<color=#53C2FF>" + strLemma+"</color>"):"") + "\n──────────────\n";

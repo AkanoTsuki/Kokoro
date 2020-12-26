@@ -66,19 +66,19 @@ public class HeroPanel : BasePanel
     public Button equip_finger1UnSetBtn;
     public Button equip_finger2UnSetBtn;
 
-    public Text skill_titleText;
+   // public Text skill_titleText;
     public List<Button> skill_Btn;
     public List<Image> skill_Image;
     public List<Text> skill_Text;
 
     public Button totalSet_equipBtn;
-    public Button totalSet_skillBtn;
+   // public Button totalSet_skillBtn;
 
     public Button closeBtn;
 
     public int nowSelectedHeroID = -1;
     public bool nowEquipState = false;//false为查看模式 true为调整模式
-    public bool nowSkillState = false;//false为查看模式 true为调整模式
+   // public bool nowSkillState = false;//false为查看模式 true为调整模式
 
     void Awake()
     {
@@ -90,16 +90,16 @@ public class HeroPanel : BasePanel
     {
 
         totalSet_equipBtn.onClick.AddListener(delegate () { nowEquipState = !nowEquipState; UpdateButtonStatus(); });
-        totalSet_skillBtn.onClick.AddListener(delegate () { nowSkillState = !nowSkillState; UpdateButtonStatus(); });
+        //totalSet_skillBtn.onClick.AddListener(delegate () { nowSkillState = !nowSkillState; UpdateButtonStatus(); });
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 
-    public void OnShow( HeroObject heroObject,bool equipState, bool skillState, int x,int y,int connY)
+    public void OnShow( HeroObject heroObject,bool equipState, int x,int y,int connY)
     {
 
         UpdateAllInfo( heroObject, connY);
         nowEquipState = equipState;
-        nowSkillState = skillState;
+        //nowSkillState = skillState;
         UpdateButtonStatus();
         SetAnchoredPosition(x, y);
 
@@ -143,14 +143,7 @@ public class HeroPanel : BasePanel
             SetEquipButtonModeSet(equip_finger2Btn, equip_finger2UnSetBtn, gc.heroDic[nowSelectedHeroID].equipFinger2, EquipPart.Finger2);
         }
 
-        if (!nowSkillState)
-        {
-            skill_titleText.text = "招式[查看模式]";
-        }
-        else 
-        {
-            skill_titleText.text = "招式[调整模式]";
-        }
+        
     }
     void SetEquipButtonModeLook(Button btn, Button unsetBtn)
     {
@@ -203,9 +196,9 @@ public class HeroPanel : BasePanel
     public void UpdateBasicInfo(HeroObject heroObject)
     {
         nameText.text = heroObject.name;
-        picImage.overrideSprite = Resources.Load("Image/RolePic/" + heroObject.pic, typeof(Sprite)) as Sprite; ;
-        infoText.text = "Lv." + heroObject.level+""+ DataManager.mCreateHeroTypeDict[heroObject.type].Name + " [Exp "+ heroObject .exp+ "]"+
-            "\n薪金 150金币/月";
+        picImage.overrideSprite = Resources.Load("Image/RolePic/" + heroObject.pic + "/Pic", typeof(Sprite)) as Sprite; ;
+        infoText.text = "Lv." + heroObject.level+""+ DataManager.mHeroDict[heroObject.prototypeID].Name + " [Exp "+ heroObject .exp+ "]"+
+            "\n薪金 150金币/月\n成长率 " + heroObject.groupRate;
     }
 
 
@@ -1958,10 +1951,10 @@ public class HeroPanel : BasePanel
             int mp = sp.Mp;
             if (so.mpModify != 0)
             {
-                mp = (int)(1f + so.mpModify / 100f);
+                mp = (int)(sp.Mp*(1f + so.mpModify / 100f));
             }
 
-            skill_Text[skillIndex].text = str + "\n" + probability + "%\nMP <color=#38B9FB>" + mp + "</color>";
+            skill_Text[skillIndex].text = str + "\n" + probability + "%\n<color=#38B9FB>MP " + mp + "</color>";
         }
         else
         {

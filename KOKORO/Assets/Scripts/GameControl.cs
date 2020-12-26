@@ -238,13 +238,14 @@ public class GameControl : MonoBehaviour
         if (sexCode == 0)
         {
             name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
-            pic = DataManager.mHeroDict[heroTypeID].PicMan;
+            pic = DataManager.mHeroDict[heroTypeID].PicMan[Random.Range(0, DataManager.mHeroDict[heroTypeID].PicMan.Count)];
         }
         else
         {
             name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
-            pic = DataManager.mHeroDict[heroTypeID].PicWoman;
+            pic = DataManager.mHeroDict[heroTypeID].PicWoman[Random.Range(0, DataManager.mHeroDict[heroTypeID].PicWoman.Count)];
         }
+        float groupRate = Random.Range(DataManager.mHeroDict[heroTypeID].GroupRate - 0.2f, DataManager.mHeroDict[heroTypeID].GroupRate + 0.2f);
 
         int hp = SetAttr(Attribute.Hp, heroTypeID);
         int mp = SetAttr(Attribute.Mp, heroTypeID);
@@ -294,83 +295,83 @@ public class GameControl : MonoBehaviour
         byte workSundry = (byte)SetAttr(Attribute.WorkSundry, heroTypeID);
 
 
-       return new HeroObject(heroID, name, heroTypeID, 1,0, sexCode, pic, hp,mp,hpRenew,mpRenew,atkMin,atkMax,mAtkMin,mAtkMax,def,mDef,hit,dod,criR,criD,spd,
+       return new HeroObject(heroID, name, heroTypeID, 1,0, sexCode, pic, groupRate, hp,mp,hpRenew,mpRenew,atkMin,atkMax,mAtkMin,mAtkMax,def,mDef,hit,dod,criR,criD,spd,
          windDam,fireDam,waterDam,groundDam,lightDam,darkDam,windRes,fireRes,waterRes,groundRes,lightRes,darkRes,dizzyRes,confusionRes,poisonRes,sleepRes,goldGet,expGet,itemGet,
          workPlanting,workFeeding,workFishing,workHunting,workMining,workQuarrying,workFelling,workBuild,workMakeWeapon,workMakeArmor,workMakeJewelry,workSundry,
          -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,new List<int> { -1,-1,-1,-1}, -1,-1);
 
 }
 
-    public HeroObject GenerateHeroByMould(int heroID, short heroTypeID, byte sexCode,string nameSet)
-    {
+    //public HeroObject GenerateHeroByMould(int heroID, short heroTypeID, byte sexCode,string nameSet)
+    //{
 
-        string name = "";
-        string pic = "";
-        if (sexCode == 0)
-        {
-            name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
-            pic = DataManager.mHeroDict[heroTypeID].PicMan;
-        }
-        else
-        {
-            name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
-            pic = DataManager.mHeroDict[heroTypeID].PicWoman;
-        }
+    //    string name = "";
+    //    string pic = "";
+    //    if (sexCode == 0)
+    //    {
+    //        name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
+    //        pic = DataManager.mHeroDict[heroTypeID].PicMan;
+    //    }
+    //    else
+    //    {
+    //        name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
+    //        pic = DataManager.mHeroDict[heroTypeID].PicWoman;
+    //    }
 
-        int hp = DataManager.mHeroDict[heroTypeID].Hp;
-        int mp = DataManager.mHeroDict[heroTypeID].Mp;
-        short hpRenew = DataManager.mHeroDict[heroTypeID].HpRenew;
-        short mpRenew = DataManager.mHeroDict[heroTypeID].MpRenew;
-        short atkMin = DataManager.mHeroDict[heroTypeID].AtkMin;
-        short atkMax = DataManager.mHeroDict[heroTypeID].AtkMax;
-        short mAtkMin = DataManager.mHeroDict[heroTypeID].MAtkMin;
-        short mAtkMax = DataManager.mHeroDict[heroTypeID].MAtkMax;
-        short def = DataManager.mHeroDict[heroTypeID].Def;
-        short mDef = DataManager.mHeroDict[heroTypeID].MDef;
-        short hit = DataManager.mHeroDict[heroTypeID].Hit;
-        short dod = DataManager.mHeroDict[heroTypeID].Dod;
-        short criR = DataManager.mHeroDict[heroTypeID].CriR;
-        short criD = DataManager.mHeroDict[heroTypeID].CriD;
-        short spd = DataManager.mHeroDict[heroTypeID].Spd;
-        short windDam = DataManager.mHeroDict[heroTypeID].WindDam;
-        short fireDam = DataManager.mHeroDict[heroTypeID].FireDam ;
-        short waterDam = DataManager.mHeroDict[heroTypeID].WaterDam ;
-        short groundDam = DataManager.mHeroDict[heroTypeID].GroundDam ;
-        short lightDam = DataManager.mHeroDict[heroTypeID].LightDam ;
-        short darkDam = DataManager.mHeroDict[heroTypeID].DarkDam ;
-        short windRes = DataManager.mHeroDict[heroTypeID].WindRes ;
-        short fireRes = DataManager.mHeroDict[heroTypeID].FireRes;
-        short waterRes = DataManager.mHeroDict[heroTypeID].WaterRes;
-        short groundRes = DataManager.mHeroDict[heroTypeID].GroundRes;
-        short lightRes = DataManager.mHeroDict[heroTypeID].LightRes;
-        short darkRes = DataManager.mHeroDict[heroTypeID].DarkRes;
-        short dizzyRes = DataManager.mHeroDict[heroTypeID].DizzyRes;
-        short confusionRes = DataManager.mHeroDict[heroTypeID].ConfusionRes;
-        short poisonRes = DataManager.mHeroDict[heroTypeID].PoisonRes;
-        short sleepRes = DataManager.mHeroDict[heroTypeID].SleepRes;
-        byte goldGet = DataManager.mHeroDict[heroTypeID].GoldGet;
-        byte expGet = DataManager.mHeroDict[heroTypeID].ExpGet;
-        byte itemGet = DataManager.mHeroDict[heroTypeID].ItemGet;
-        byte workPlanting = DataManager.mHeroDict[heroTypeID].WorkPlanting;
-        byte workFeeding = DataManager.mHeroDict[heroTypeID].WorkFeeding;
-        byte workFishing = DataManager.mHeroDict[heroTypeID].WorkFishing;
-        byte workHunting = DataManager.mHeroDict[heroTypeID].WorkHunting;
-        byte workMining = DataManager.mHeroDict[heroTypeID].WorkMining;
-        byte workQuarrying = DataManager.mHeroDict[heroTypeID].WorkQuarrying;
-        byte workFelling = DataManager.mHeroDict[heroTypeID].WorkFelling;
-        byte workBuild = DataManager.mHeroDict[heroTypeID].WorkBuild;
-        byte workMakeWeapon = DataManager.mHeroDict[heroTypeID].WorkMakeWeapon;
-        byte workMakeArmor = DataManager.mHeroDict[heroTypeID].WorkMakeArmor;
-        byte workMakeJewelry = DataManager.mHeroDict[heroTypeID].WorkMakeJewelry;
-        byte workSundry = DataManager.mHeroDict[heroTypeID].WorkSundry;
+    //    int hp = DataManager.mHeroDict[heroTypeID].Hp;
+    //    int mp = DataManager.mHeroDict[heroTypeID].Mp;
+    //    short hpRenew = DataManager.mHeroDict[heroTypeID].HpRenew;
+    //    short mpRenew = DataManager.mHeroDict[heroTypeID].MpRenew;
+    //    short atkMin = DataManager.mHeroDict[heroTypeID].AtkMin;
+    //    short atkMax = DataManager.mHeroDict[heroTypeID].AtkMax;
+    //    short mAtkMin = DataManager.mHeroDict[heroTypeID].MAtkMin;
+    //    short mAtkMax = DataManager.mHeroDict[heroTypeID].MAtkMax;
+    //    short def = DataManager.mHeroDict[heroTypeID].Def;
+    //    short mDef = DataManager.mHeroDict[heroTypeID].MDef;
+    //    short hit = DataManager.mHeroDict[heroTypeID].Hit;
+    //    short dod = DataManager.mHeroDict[heroTypeID].Dod;
+    //    short criR = DataManager.mHeroDict[heroTypeID].CriR;
+    //    short criD = DataManager.mHeroDict[heroTypeID].CriD;
+    //    short spd = DataManager.mHeroDict[heroTypeID].Spd;
+    //    short windDam = DataManager.mHeroDict[heroTypeID].WindDam;
+    //    short fireDam = DataManager.mHeroDict[heroTypeID].FireDam ;
+    //    short waterDam = DataManager.mHeroDict[heroTypeID].WaterDam ;
+    //    short groundDam = DataManager.mHeroDict[heroTypeID].GroundDam ;
+    //    short lightDam = DataManager.mHeroDict[heroTypeID].LightDam ;
+    //    short darkDam = DataManager.mHeroDict[heroTypeID].DarkDam ;
+    //    short windRes = DataManager.mHeroDict[heroTypeID].WindRes ;
+    //    short fireRes = DataManager.mHeroDict[heroTypeID].FireRes;
+    //    short waterRes = DataManager.mHeroDict[heroTypeID].WaterRes;
+    //    short groundRes = DataManager.mHeroDict[heroTypeID].GroundRes;
+    //    short lightRes = DataManager.mHeroDict[heroTypeID].LightRes;
+    //    short darkRes = DataManager.mHeroDict[heroTypeID].DarkRes;
+    //    short dizzyRes = DataManager.mHeroDict[heroTypeID].DizzyRes;
+    //    short confusionRes = DataManager.mHeroDict[heroTypeID].ConfusionRes;
+    //    short poisonRes = DataManager.mHeroDict[heroTypeID].PoisonRes;
+    //    short sleepRes = DataManager.mHeroDict[heroTypeID].SleepRes;
+    //    byte goldGet = DataManager.mHeroDict[heroTypeID].GoldGet;
+    //    byte expGet = DataManager.mHeroDict[heroTypeID].ExpGet;
+    //    byte itemGet = DataManager.mHeroDict[heroTypeID].ItemGet;
+    //    byte workPlanting = DataManager.mHeroDict[heroTypeID].WorkPlanting;
+    //    byte workFeeding = DataManager.mHeroDict[heroTypeID].WorkFeeding;
+    //    byte workFishing = DataManager.mHeroDict[heroTypeID].WorkFishing;
+    //    byte workHunting = DataManager.mHeroDict[heroTypeID].WorkHunting;
+    //    byte workMining = DataManager.mHeroDict[heroTypeID].WorkMining;
+    //    byte workQuarrying = DataManager.mHeroDict[heroTypeID].WorkQuarrying;
+    //    byte workFelling = DataManager.mHeroDict[heroTypeID].WorkFelling;
+    //    byte workBuild = DataManager.mHeroDict[heroTypeID].WorkBuild;
+    //    byte workMakeWeapon = DataManager.mHeroDict[heroTypeID].WorkMakeWeapon;
+    //    byte workMakeArmor = DataManager.mHeroDict[heroTypeID].WorkMakeArmor;
+    //    byte workMakeJewelry = DataManager.mHeroDict[heroTypeID].WorkMakeJewelry;
+    //    byte workSundry = DataManager.mHeroDict[heroTypeID].WorkSundry;
 
 
-        return new HeroObject(heroID,nameSet!=""?nameSet:name, heroTypeID, 1, 0, sexCode, pic, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
-          windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
-          workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workSundry,
-          -1, -1, -1, -1,-1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, - 1,-1);
+    //    return new HeroObject(heroID,nameSet!=""?nameSet:name, heroTypeID, 1, 0, sexCode, pic, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
+    //      windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
+    //      workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workSundry,
+    //      -1, -1, -1, -1,-1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, - 1,-1);
 
-    }
+    //}
 
     public int SetAttr(Attribute attr, short heroTypeID)
     {
@@ -378,32 +379,32 @@ public class GameControl : MonoBehaviour
 
         switch (attr)
         {
-            case Attribute.Hp:rank = DataManager.mCreateHeroTypeDict[heroTypeID].Hp;break;
-            case Attribute.Mp: rank = DataManager.mCreateHeroTypeDict[heroTypeID].Mp; break;
+            case Attribute.Hp:rank = DataManager.mHeroDict[heroTypeID].Hp;break;
+            case Attribute.Mp: rank = DataManager.mHeroDict[heroTypeID].Mp; break;
 
-            case Attribute.AtkMax: rank = DataManager.mCreateHeroTypeDict[heroTypeID].AtkMax; break;
-            case Attribute.MAtkMax: rank = DataManager.mCreateHeroTypeDict[heroTypeID].MAtkMax; break;
+            case Attribute.AtkMax: rank = DataManager.mHeroDict[heroTypeID].AtkMax; break;
+            case Attribute.MAtkMax: rank = DataManager.mHeroDict[heroTypeID].MAtkMax; break;
 
-            case Attribute.Def: rank = DataManager.mCreateHeroTypeDict[heroTypeID].Def; break;
-            case Attribute.MDef: rank = DataManager.mCreateHeroTypeDict[heroTypeID].MDef; break;
+            case Attribute.Def: rank = DataManager.mHeroDict[heroTypeID].Def; break;
+            case Attribute.MDef: rank = DataManager.mHeroDict[heroTypeID].MDef; break;
 
-            case Attribute.Hit: rank = DataManager.mCreateHeroTypeDict[heroTypeID].Hit; break;
-            case Attribute.Dod: rank = DataManager.mCreateHeroTypeDict[heroTypeID].Dod; break;
-            case Attribute.CriR: rank = DataManager.mCreateHeroTypeDict[heroTypeID].CriR; break;
+            case Attribute.Hit: rank = DataManager.mHeroDict[heroTypeID].Hit; break;
+            case Attribute.Dod: rank = DataManager.mHeroDict[heroTypeID].Dod; break;
+            case Attribute.CriR: rank = DataManager.mHeroDict[heroTypeID].CriR; break;
 
 
-            case Attribute.WorkPlanting: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkPlanting; break;
-            case Attribute.WorkFeeding: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkFeeding; break;
-            case Attribute.WorkFishing: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkFishing; break;
-            case Attribute.WorkHunting: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkHunting; break;
-            case Attribute.WorkFelling: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkFelling; break;
-            case Attribute.WorkQuarrying: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkQuarrying; break;
-            case Attribute.WorkMining: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkMining; break;
-            case Attribute.WorkBuild: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkBuild; break;
-            case Attribute.WorkMakeWeapon: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkMakeWeapon; break;
-            case Attribute.WorkMakeArmor: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkMakeArmor; break;
-            case Attribute.WorkMakeJewelry: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkMakeJewelry; break;
-            case Attribute.WorkSundry: rank = DataManager.mCreateHeroTypeDict[heroTypeID].WorkSundry; break;
+            case Attribute.WorkPlanting: rank = DataManager.mHeroDict[heroTypeID].WorkPlanting; break;
+            case Attribute.WorkFeeding: rank = DataManager.mHeroDict[heroTypeID].WorkFeeding; break;
+            case Attribute.WorkFishing: rank = DataManager.mHeroDict[heroTypeID].WorkFishing; break;
+            case Attribute.WorkHunting: rank = DataManager.mHeroDict[heroTypeID].WorkHunting; break;
+            case Attribute.WorkFelling: rank = DataManager.mHeroDict[heroTypeID].WorkFelling; break;
+            case Attribute.WorkQuarrying: rank = DataManager.mHeroDict[heroTypeID].WorkQuarrying; break;
+            case Attribute.WorkMining: rank = DataManager.mHeroDict[heroTypeID].WorkMining; break;
+            case Attribute.WorkBuild: rank = DataManager.mHeroDict[heroTypeID].WorkBuild; break;
+            case Attribute.WorkMakeWeapon: rank = DataManager.mHeroDict[heroTypeID].WorkMakeWeapon; break;
+            case Attribute.WorkMakeArmor: rank = DataManager.mHeroDict[heroTypeID].WorkMakeArmor; break;
+            case Attribute.WorkMakeJewelry: rank = DataManager.mHeroDict[heroTypeID].WorkMakeJewelry; break;
+            case Attribute.WorkSundry: rank = DataManager.mHeroDict[heroTypeID].WorkSundry; break;
             default:
                 rank = 999; break;
         }
@@ -689,7 +690,7 @@ public class GameControl : MonoBehaviour
         //BuildPanel.Instance.UpdateAllInfo(this);
         if (BuildingSelectPanel.Instance.isShow)
         {
-            BuildingSelectPanel.Instance.UpdateAllInfo(buildingDic[buildingId].districtID, 2);
+            BuildingSelectPanel.Instance.UpdateAllInfo(buildingDic[buildingId].districtID, BuildingSelectPanel.Instance.nowTypePanel, 2);
         }
         MessagePanel.Instance.AddMessage(districtDic[buildingDic[buildingId].districtID].name+"的"+ buildingDic[buildingId].name+"建筑完成");
     
@@ -851,7 +852,7 @@ public class GameControl : MonoBehaviour
         StartBuild(nowCheckingDistrictID, buildingIndex, needTime);
 
         buildingIndex++;
-        BuildPanel.Instance.UpdateAllInfo(this);
+        BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
         PlayMainPanel.Instance.UpdateGold();
         PlayMainPanel.Instance.UpdateResourcesInfo(nowCheckingDistrictID);
     }
@@ -1225,24 +1226,86 @@ public class GameControl : MonoBehaviour
     #region 【方法】英雄装备/卸下
     public void HeroEquipSet(int heroID,EquipPart equipPart, int itemID)
     {
-        Debug.Log("HeroEquipSet() heroID=" + heroID + " equipPart=" + equipPart + " itemID="+ itemID+ " heroDic[heroID].equipWeapon=" + heroDic[heroID].equipWeapon);
-        if (heroDic[heroID].equipWeapon != -1)
-        {
-            itemDic[heroDic[heroID].equipWeapon].heroID = -1;
-            itemDic[heroDic[heroID].equipWeapon].heroPart = EquipPart.None;
-        }
+       // Debug.Log("HeroEquipSet() heroID=" + heroID + " equipPart=" + equipPart + " itemID="+ itemID+ " heroDic[heroID].equipWeapon=" + heroDic[heroID].equipWeapon);
+        
         switch (equipPart)
         {
-            case EquipPart.Weapon:heroDic[heroID].equipWeapon = itemID;break;
-            case EquipPart.Subhand: heroDic[heroID].equipSubhand = itemID; break;
-            case EquipPart.Head: heroDic[heroID].equipHead = itemID; break;
-            case EquipPart.Body: heroDic[heroID].equipBody = itemID; break;
-            case EquipPart.Hand: heroDic[heroID].equipHand = itemID; break;
-            case EquipPart.Back: heroDic[heroID].equipBack = itemID; break;
-            case EquipPart.Foot: heroDic[heroID].equipFoot = itemID; break;
-            case EquipPart.Neck: heroDic[heroID].equipNeck = itemID; break;
-            case EquipPart.Finger1: heroDic[heroID].equipFinger1 = itemID; break;
-            case EquipPart.Finger2: heroDic[heroID].equipFinger2 = itemID; break;
+            case EquipPart.Weapon:
+                if (heroDic[heroID].equipWeapon != -1)
+                {
+                    itemDic[heroDic[heroID].equipWeapon].heroID = -1;
+                    itemDic[heroDic[heroID].equipWeapon].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipWeapon = itemID;
+                break;
+            case EquipPart.Subhand:
+                if (heroDic[heroID].equipSubhand != -1)
+                {
+                    itemDic[heroDic[heroID].equipSubhand].heroID = -1;
+                    itemDic[heroDic[heroID].equipSubhand].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipSubhand = itemID; 
+                break;
+            case EquipPart.Head:
+                if (heroDic[heroID].equipHead != -1)
+                {
+                    itemDic[heroDic[heroID].equipHead].heroID = -1;
+                    itemDic[heroDic[heroID].equipHead].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipHead = itemID; 
+                break;
+            case EquipPart.Body:
+                if (heroDic[heroID].equipBody != -1)
+                {
+                    itemDic[heroDic[heroID].equipBody].heroID = -1;
+                    itemDic[heroDic[heroID].equipBody].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipBody = itemID; 
+                break;
+            case EquipPart.Hand:
+                if (heroDic[heroID].equipHand != -1)
+                {
+                    itemDic[heroDic[heroID].equipHand].heroID = -1;
+                    itemDic[heroDic[heroID].equipHand].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipHand = itemID;
+                break;
+            case EquipPart.Back:
+                if (heroDic[heroID].equipBack != -1)
+                {
+                    itemDic[heroDic[heroID].equipBack].heroID = -1;
+                    itemDic[heroDic[heroID].equipBack].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipBack = itemID; 
+                break;
+            case EquipPart.Foot:
+                if (heroDic[heroID].equipFoot != -1)
+                {
+                    itemDic[heroDic[heroID].equipFoot].heroID = -1;
+                    itemDic[heroDic[heroID].equipFoot].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipFoot = itemID; break;
+            case EquipPart.Neck:
+                if (heroDic[heroID].equipNeck != -1)
+                {
+                    itemDic[heroDic[heroID].equipNeck].heroID = -1;
+                    itemDic[heroDic[heroID].equipNeck].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipNeck = itemID; break;
+            case EquipPart.Finger1:
+                if (heroDic[heroID].equipFinger1 != -1)
+                {
+                    itemDic[heroDic[heroID].equipFinger1].heroID = -1;
+                    itemDic[heroDic[heroID].equipFinger1].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipFinger1 = itemID; break;
+            case EquipPart.Finger2:
+                if (heroDic[heroID].equipFinger2 != -1)
+                {
+                    itemDic[heroDic[heroID].equipFinger2].heroID = -1;
+                    itemDic[heroDic[heroID].equipFinger2].heroPart = EquipPart.None;
+                }
+                heroDic[heroID].equipFinger2 = itemID; break;
             default:break;
         }
         itemDic[itemID].heroID = heroID;
@@ -1254,40 +1317,86 @@ public class GameControl : MonoBehaviour
 
     public void HeroEquipUnSet(int heroID, EquipPart equipPart)
     {
-        if (heroDic[heroID].equipWeapon == -1)//原本就无装备
-        {
-            return;
-        }
-        itemDic[heroDic[heroID].equipWeapon].heroID = -1;
-        itemDic[heroDic[heroID].equipWeapon].heroPart = EquipPart.None;
+       // Debug.Log("HeroEquipUnSet() heroID=" + heroID + " equipPart=" + equipPart+ " heroDic[heroID].equipWeapon="+ heroDic[heroID].equipWeapon);
+
         switch (equipPart)
         {
-            case EquipPart.Weapon:heroDic[heroID].equipWeapon = -1;break;
-            case EquipPart.Subhand: heroDic[heroID].equipSubhand = -1; break;
-            case EquipPart.Head: heroDic[heroID].equipHead = -1; break;
-            case EquipPart.Body: heroDic[heroID].equipBody = -1; break;
-            case EquipPart.Hand: heroDic[heroID].equipHand = -1; break;
-            case EquipPart.Back: heroDic[heroID].equipBack = -1; break;
-            case EquipPart.Foot: heroDic[heroID].equipFoot = -1; break;
-            case EquipPart.Neck: heroDic[heroID].equipNeck = -1; break;
-            case EquipPart.Finger1: heroDic[heroID].equipFinger1 = -1; break;
-            case EquipPart.Finger2: heroDic[heroID].equipFinger2 = -1; break;
+            case EquipPart.Weapon:
+                if (heroDic[heroID].equipWeapon == -1) { return; }
+                itemDic[heroDic[heroID].equipWeapon].heroID = -1;
+                itemDic[heroDic[heroID].equipWeapon].heroPart = EquipPart.None;
+                heroDic[heroID].equipWeapon = -1;break;
+            case EquipPart.Subhand:
+                if (heroDic[heroID].equipSubhand == -1) { return; }
+                itemDic[heroDic[heroID].equipSubhand].heroID = -1;
+                itemDic[heroDic[heroID].equipSubhand].heroPart = EquipPart.None; 
+                heroDic[heroID].equipSubhand = -1; break;
+            case EquipPart.Head:
+                if (heroDic[heroID].equipHead == -1) { return; }
+                itemDic[heroDic[heroID].equipHead].heroID = -1;
+                itemDic[heroDic[heroID].equipHead].heroPart = EquipPart.None;
+                heroDic[heroID].equipHead = -1; break;
+            case EquipPart.Body:
+                if (heroDic[heroID].equipBody == -1) { return; }
+                itemDic[heroDic[heroID].equipBody].heroID = -1;
+                itemDic[heroDic[heroID].equipBody].heroPart = EquipPart.None; 
+                heroDic[heroID].equipBody = -1; break;
+            case EquipPart.Hand:
+                if (heroDic[heroID].equipHand == -1) { return; }
+                itemDic[heroDic[heroID].equipHand].heroID = -1;
+                itemDic[heroDic[heroID].equipHand].heroPart = EquipPart.None; 
+                heroDic[heroID].equipHand = -1; break;
+            case EquipPart.Back:
+                if (heroDic[heroID].equipBack == -1) { return; }
+                itemDic[heroDic[heroID].equipBack].heroID = -1;
+                itemDic[heroDic[heroID].equipBack].heroPart = EquipPart.None; 
+                heroDic[heroID].equipBack = -1; break;
+            case EquipPart.Foot:
+                if (heroDic[heroID].equipFoot == -1) { return; }
+                itemDic[heroDic[heroID].equipFoot].heroID = -1;
+                itemDic[heroDic[heroID].equipFoot].heroPart = EquipPart.None; 
+                heroDic[heroID].equipFoot = -1; break;
+            case EquipPart.Neck:
+                if (heroDic[heroID].equipNeck == -1) { return; }
+                itemDic[heroDic[heroID].equipNeck].heroID = -1;
+                itemDic[heroDic[heroID].equipNeck].heroPart = EquipPart.None; 
+                heroDic[heroID].equipNeck = -1; break;
+            case EquipPart.Finger1:
+                if (heroDic[heroID].equipFinger1 == -1) { return; }
+                itemDic[heroDic[heroID].equipFinger1].heroID = -1;
+                itemDic[heroDic[heroID].equipFinger1].heroPart = EquipPart.None; 
+                heroDic[heroID].equipFinger1 = -1; break;
+            case EquipPart.Finger2:
+                if (heroDic[heroID].equipFinger2 == -1) { return; }
+                itemDic[heroDic[heroID].equipFinger2].heroID = -1;
+                itemDic[heroDic[heroID].equipFinger2].heroPart = EquipPart.None; 
+                heroDic[heroID].equipFinger2 = -1; break;
         }
 
         HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
+        if (ItemListAndInfoPanel.Instance.isShow)
+        {
+            ItemListAndInfoPanel.Instance.UpdateAllInfoToEquip(equipPart);
+        }
     }
     #endregion
 
     public void HeroSkillSet(int heroID, byte index, int skillID)
     {
+        if (skillDic[skillID].heroID != -1)
+        {
+            Debug.Log("技能已被使用 skillID=" + skillID);
+            return;
+        }
 
-        if (heroDic[heroID].skill[index] != -1)
+
+            if (heroDic[heroID].skill[index] != -1)
         {
             skillDic[heroDic[heroID].skill[index]].heroID = -1;
         }
 
         heroDic[heroID].skill[index] = skillID;
-
+        skillDic[skillID].heroID = heroID;
 
         HeroPanel.Instance.UpdateSkill(heroDic[heroID], index);
         SkillListAndInfoPanel.Instance.OnHide();
@@ -1762,16 +1871,16 @@ public class GameControl : MonoBehaviour
             case ItemTypeSmall.Axe: return "斧、镰刀";
             case ItemTypeSmall.Bow: return "弓";
             case ItemTypeSmall.Staff: return "杖";
-            case ItemTypeSmall.HeadH: return "头部装备（重型）";
-            case ItemTypeSmall.HeadL: return "头部装备（轻型）";
-            case ItemTypeSmall.BodyH: return "身体装备（重型）";
-            case ItemTypeSmall.BodyL: return "身体装备（轻型）";
-            case ItemTypeSmall.HandH: return "手部装备（重型）";
-            case ItemTypeSmall.HandL: return "手部装备（轻型）";
-            case ItemTypeSmall.BackH: return "背部装备（重型）";
-            case ItemTypeSmall.BackL: return "背部装备（轻型）";
-            case ItemTypeSmall.FootH: return "腿部装备（重型）";
-            case ItemTypeSmall.FootL: return "腿部装备（轻型）";
+            case ItemTypeSmall.HeadH: return "重型头部装备";
+            case ItemTypeSmall.HeadL: return "轻型头部装备";
+            case ItemTypeSmall.BodyH: return "重型身体装备";
+            case ItemTypeSmall.BodyL: return "轻型身体装备";
+            case ItemTypeSmall.HandH: return "重型手部装备";
+            case ItemTypeSmall.HandL: return "轻型手部装备";
+            case ItemTypeSmall.BackH: return "重型背部装备";
+            case ItemTypeSmall.BackL: return "轻型背部装备";
+            case ItemTypeSmall.FootH: return "重型腿部装备";
+            case ItemTypeSmall.FootL: return "轻型腿部装备";
             case ItemTypeSmall.Neck: return "项链";
             case ItemTypeSmall.Finger: return "戒指";
             case ItemTypeSmall.Shield: return "副手装备（盾）";

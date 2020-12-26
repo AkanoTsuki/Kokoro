@@ -130,9 +130,9 @@ public class StartChoosePanel : BasePanel
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInNewGame>();
 
 
-        picImageList[index].overrideSprite= Resources.Load("Image/RolePic/" + gci.temp_HeroList[index].pic, typeof(Sprite)) as Sprite;
+        picImageList[index].overrideSprite= Resources.Load("Image/RolePic/" + gci.temp_HeroList[index].pic+"/Pic", typeof(Sprite)) as Sprite;
         nameTextList[index].text = gci.temp_HeroList[index].name;
-        typeTextList[index].text = "<color=#"+DataManager.mCreateHeroTypeDict[ gci.temp_HeroList[index].type].Color+">"+ DataManager.mCreateHeroTypeDict[gci.temp_HeroList[index].type].Name+"</color>";
+        typeTextList[index].text = "<color=#"+DataManager.mHeroDict[ gci.temp_HeroList[index].prototypeID].Color+">"+ DataManager.mHeroDict[gci.temp_HeroList[index].prototypeID].Name+"</color>";
     }
 
 

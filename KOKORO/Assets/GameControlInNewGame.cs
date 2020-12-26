@@ -57,23 +57,23 @@ public class GameControlInNewGame : MonoBehaviour
         temp_Leader.sex= sex;
         if (sex==0)
         {
-            temp_Leader.pic = DataManager.mHeroDict[temp_leaderHeroType].PicMan;
+            temp_Leader.pic = DataManager.mHeroDict[temp_leaderHeroType].PicMan[0];
         }
         else if (sex == 1)
         {
-            temp_Leader.pic = DataManager.mHeroDict[temp_leaderHeroType].PicWoman;
+            temp_Leader.pic = DataManager.mHeroDict[temp_leaderHeroType].PicWoman[0];
         }
         Debug.Log("temp_Leader.sex="+temp_Leader.sex);
         StartChoosePanel.Instance.UpdateLeaderInfo(temp_leaderHeroType);
-        HeroPanel.Instance.OnShow(temp_Leader, false, false, 374, -32, -234);
+        HeroPanel.Instance.OnShow(temp_Leader, false,  374, -32, -234);
     }
 
     public void SetLeaderHeroType(short typeID)
     {
         temp_leaderHeroType = typeID;
-        temp_Leader= gc.GenerateHeroByMould(0, typeID, temp_leaderHeroSex,"[主角]");
+        temp_Leader= gc.GenerateHeroByRandom(0, typeID, temp_leaderHeroSex);
         StartChoosePanel.Instance.UpdateLeaderInfo(typeID);
-        HeroPanel.Instance.OnShow(temp_Leader, false, false, 374, -32, -234);
+        HeroPanel.Instance.OnShow(temp_Leader, false,  374, -32, -234);
     }
 
     public void RollMenberAll()

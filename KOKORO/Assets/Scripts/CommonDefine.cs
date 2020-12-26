@@ -463,11 +463,15 @@ public class SkillObject
 
 //英雄原型T
 [System.Serializable]
-public class CreateHeroType
+public class HeroPrototype
 {
     public short ID;
     public string Name;
+    public string Des;
     public string Color;
+    public List<string> PicMan;
+    public List<string> PicWoman;
+    public float GroupRate;
     public byte Hp;//级别 0 1 2
     public byte Mp;
     public byte HpRenew;
@@ -517,91 +521,91 @@ public class CreateHeroType
 }
 
 //英雄原型
-[System.Serializable]
-public class HeroPrototype
-{
-    public short ID;
-    public string Name;
-    public string PicMan;
-    public string PicWoman;
-    public int Hp;
-    public int Mp;
-    public short HpRenew;
-    public short MpRenew;
-    public short AtkMin;
-    public short AtkMax;
-    public short MAtkMin;
-    public short MAtkMax;
-    public short Def;
-    public short MDef;
-    public short Hit;
-    public short Dod;
-    public short CriR;
-    public short CriD;
+//[System.Serializable]
+//public class HeroPrototype
+//{
+//    public short ID;
+//    public string Name;
+//    public string PicMan;
+//    public string PicWoman;
+//    public int Hp;
+//    public int Mp;
+//    public short HpRenew;
+//    public short MpRenew;
+//    public short AtkMin;
+//    public short AtkMax;
+//    public short MAtkMin;
+//    public short MAtkMax;
+//    public short Def;
+//    public short MDef;
+//    public short Hit;
+//    public short Dod;
+//    public short CriR;
+//    public short CriD;
 
-    public short HpGD;
-    public short MpGD;
-    public short HpRenewGD;
-    public short MpRenewGD;
-    public short AtkMinGD;
-    public short AtkMaxGD;
-    public short MAtkMinGD;
-    public short MAtkMaxGD;
-    public short DefGD;
-    public short MDefGD;
-    public short HitGD;
-    public short DodGD;
-    public short CriRGD;
-    public short CriDGD;
+//    public short HpGD;
+//    public short MpGD;
+//    public short HpRenewGD;
+//    public short MpRenewGD;
+//    public short AtkMinGD;
+//    public short AtkMaxGD;
+//    public short MAtkMinGD;
+//    public short MAtkMaxGD;
+//    public short DefGD;
+//    public short MDefGD;
+//    public short HitGD;
+//    public short DodGD;
+//    public short CriRGD;
+//    public short CriDGD;
 
-    public short HpGU;
-    public short MpGU;
-    public short HpRenewGU;
-    public short MpRenewGU;
-    public short AtkMinGU;
-    public short AtkMaxGU;
-    public short MAtkMinGU;
-    public short MAtkMaxGU;
-    public short DefGU;
-    public short MDefGU;
-    public short HitGU;
-    public short DodGU;
-    public short CriRGU;
-    public short CriDGU;
+//    public short HpGU;
+//    public short MpGU;
+//    public short HpRenewGU;
+//    public short MpRenewGU;
+//    public short AtkMinGU;
+//    public short AtkMaxGU;
+//    public short MAtkMinGU;
+//    public short MAtkMaxGU;
+//    public short DefGU;
+//    public short MDefGU;
+//    public short HitGU;
+//    public short DodGU;
+//    public short CriRGU;
+//    public short CriDGU;
 
-    public short Spd;
-    public short WindDam;
-    public short FireDam;
-    public short WaterDam;
-    public short GroundDam;
-    public short LightDam;
-    public short DarkDam;
-    public short WindRes;
-    public short FireRes;
-    public short WaterRes;
-    public short GroundRes;
-    public short LightRes;
-    public short DarkRes;
-    public short DizzyRes;
-    public short ConfusionRes;
-    public short PoisonRes;
-    public short SleepRes;
-    public byte GoldGet;
-    public byte ExpGet;
-    public byte ItemGet;
-    public byte WorkPlanting;
-    public byte WorkFeeding;
-    public byte WorkFishing;
-    public byte WorkHunting;
-    public byte WorkMining;
-    public byte WorkQuarrying;
-    public byte WorkFelling;
-    public byte WorkBuild;
-    public byte WorkMakeWeapon;
-    public byte WorkMakeArmor;
-    public byte WorkMakeJewelry;
-    public byte WorkSundry;
-}
+//    public short Spd;
+//    public short WindDam;
+//    public short FireDam;
+//    public short WaterDam;
+//    public short GroundDam;
+//    public short LightDam;
+//    public short DarkDam;
+//    public short WindRes;
+//    public short FireRes;
+//    public short WaterRes;
+//    public short GroundRes;
+//    public short LightRes;
+//    public short DarkRes;
+//    public short DizzyRes;
+//    public short ConfusionRes;
+//    public short PoisonRes;
+//    public short SleepRes;
+//    public byte GoldGet;
+//    public byte ExpGet;
+//    public byte ItemGet;
+//    public byte WorkPlanting;
+//    public byte WorkFeeding;
+//    public byte WorkFishing;
+//    public byte WorkHunting;
+//    public byte WorkMining;
+//    public byte WorkQuarrying;
+//    public byte WorkFelling;
+//    public byte WorkBuild;
+//    public byte WorkMakeWeapon;
+//    public byte WorkMakeArmor;
+//    public byte WorkMakeJewelry;
+//    public byte WorkSundry;
+//}
 
 //英雄实例
 public class HeroObject
@@ -609,11 +613,12 @@ public class HeroObject
     
     private int ID;
     private string Name;
-    private short Type;//来源类型“herotype表”
+    private short PrototypeID;
     private short Level;
     private int Exp;
     private byte Sex;
     private string Pic;
+    private float GroupRate;
     private int Hp;
     private int Mp;
     private short HpRenew;
@@ -673,7 +678,7 @@ public class HeroObject
     private List<int> Skill;
     private int WorkerInBuilding;
     private short AdventureInTeam;
-    public HeroObject(int id, string name, short type, short level, int exp,byte sex,string pic,
+    public HeroObject(int id, string name, short prototypeID, short level, int exp,byte sex,string pic, float groupRate,
         int hp, int mp, short hpRenew, short mpRenew,
         short atkMin, short atkMax, short mAtkMin, short mAtkMax, short def, short mDef,
         short hit, short dod, short criR, short criD, short spd,
@@ -688,11 +693,12 @@ public class HeroObject
     {
         this.ID = id;
         this.Name = name;
-        this.Type = type;
+        this.PrototypeID = prototypeID;
         this.Level = level;
         this.Exp = exp;
         this.Sex = sex;
         this.Pic = pic;
+        this.GroupRate = groupRate;
         this.Hp = hp;
         this.Mp = mp;
         this.HpRenew = hpRenew;
@@ -755,11 +761,12 @@ public class HeroObject
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } set { Name = value; } }
-    public short type { get { return Type; } }
+    public short prototypeID { get { return PrototypeID; } }
     public short level { get { return Level; } set { Level = value; } }
     public int exp { get { return Exp; } set { Exp = value; } }
     public byte sex { get { return Sex; } set { Sex = value; } }
     public string pic { get { return Pic; } set { Pic = value; } }
+    public float groupRate { get { return GroupRate; } set { GroupRate = value; } }
     public int hp { get { return Hp; } set { Hp = value; } }
     public int mp { get { return Mp; } set { Mp = value; } }
     public short hpRenew { get { return HpRenew; } set { HpRenew = value; } }

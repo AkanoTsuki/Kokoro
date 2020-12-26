@@ -76,7 +76,7 @@ public class HeroSelectPanel : BasePanel
                         temp.Add(kvp.Value);
                     }
                 }
-              
+                numText.text = temp.Count + "人";
                 for (int i = 0; i < temp.Count; i++)
                 {
                     if (i < heroGo.Count)
@@ -94,10 +94,10 @@ public class HeroSelectPanel : BasePanel
                     int col = i == 0 ? 0 : (i / columns);
                     go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 154f, -4 + col * -36f, 0f);
 
-                    go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + temp[i].pic);
+                    go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + temp[i].pic + "/Pic");
 
                     go.transform.GetChild(1).GetComponent<Text>().text = temp[i].name;
-                    go.transform.GetChild(2).GetComponent<Text>().text = "Lv." + temp[i].level + " <color=#" + DataManager.mCreateHeroTypeDict[temp[i].type].Color + ">" + DataManager.mCreateHeroTypeDict[temp[i].type].Name + "</color>";
+                    go.transform.GetChild(2).GetComponent<Text>().text = "Lv." + temp[i].level + " <color=#" + DataManager.mHeroDict[temp[i].prototypeID].Color + ">" + DataManager.mHeroDict[temp[i].prototypeID].Name + "</color>";
                     go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.HeroInSelectToCheck;
                     go.transform.GetComponent<InteractiveLabel>().index = temp[i].id;
 
@@ -118,7 +118,7 @@ public class HeroSelectPanel : BasePanel
                         temp.Add(kvp.Value);
                     }
                 }
-
+                numText.text = temp.Count + "人";
                 for (int i = 0; i < temp.Count; i++)
                 {
                     if (i < heroGo.Count)
@@ -136,7 +136,7 @@ public class HeroSelectPanel : BasePanel
                     int col = i == 0 ? 0 : (i / columns);
                     go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 154f, -4 + col * -36f, 0f);
 
-                    go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + temp[i].pic);
+                    go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + temp[i].pic + "/Pic");
 
                     go.transform.GetChild(1).GetComponent<Text>().text = temp[i].name;
                     go.transform.GetChild(2).GetComponent<Text>().text = temp[i].workerInBuilding == -1 ? "<color=#00FF00>空闲</color>" : "<color=#7B68EE>" + gc.buildingDic[temp[i].workerInBuilding].name + "工作中</color>";
@@ -166,6 +166,7 @@ public class HeroSelectPanel : BasePanel
                         temp.Add(kvp.Value);
                     }
                 }
+                numText.text = temp.Count + "人";
                 for (int i = 0; i < temp.Count; i++)
                 {
                     if (i < heroGo.Count)
@@ -183,7 +184,7 @@ public class HeroSelectPanel : BasePanel
                     int col = i == 0 ? 0 : (i / columns);
                     go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 154f, -4 + col * -36f, 0f);
 
-                    go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + temp[i].pic);
+                    go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + temp[i].pic + "/Pic");
 
                     go.transform.GetChild(1).GetComponent<Text>().text = temp[i].name;
                     go.transform.GetChild(2).GetComponent<Text>().text = "Lv." + temp[i].level;

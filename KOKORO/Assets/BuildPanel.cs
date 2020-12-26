@@ -7,10 +7,23 @@ public class BuildPanel : BasePanel
     GameControl gc;
     public static BuildPanel Instance;
 
-    public Text infoText;
+    public Button filterAllBtn;
+    public Button filterHouseBtn;
+    public Button filterResourceBtn;
+    public Button filterForgeBtn;
+    public Button filterMunicipalBtn;
+    public Button filterMilitaryBtn;
+
+    public Text filterAllText;
+    public Text filterHouseText;
+    public Text filterResourceText;
+    public Text filterForgeText;
+    public Text filterMunicipalText;
+    public Text filterMilitaryText;
+
     public GameObject buildingListGo;
     public Button closeBtn;
-
+    public string nowTypePanel = "All";
     void Awake()
     {
         Instance = this;
@@ -18,6 +31,12 @@ public class BuildPanel : BasePanel
     }
     void Start()
     {
+        filterAllBtn.onClick.AddListener(delegate () { UpdateAllInfo( "All"); });
+        filterHouseBtn.onClick.AddListener(delegate () { UpdateAllInfo( "House"); });
+        filterResourceBtn.onClick.AddListener(delegate () { UpdateAllInfo( "Resource"); });
+        filterForgeBtn.onClick.AddListener(delegate () { UpdateAllInfo("Forge"); });
+        filterMunicipalBtn.onClick.AddListener(delegate () { UpdateAllInfo( "Municipal"); });
+        filterMilitaryBtn.onClick.AddListener(delegate () { UpdateAllInfo( "Military"); });
 
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
@@ -25,7 +44,8 @@ public class BuildPanel : BasePanel
 
     public void OnShow( int x, int y)
     {
-        UpdateAllInfo(gc);
+        UpdateAllInfo("All");
+        UpdateFilterButtonText();
         SetAnchoredPosition(x, y);
         isShow = true;
     }
@@ -36,17 +56,63 @@ public class BuildPanel : BasePanel
         isShow = false;
     }
 
-    public void UpdateAllInfo(GameControl gc)
+    void UpdateFilterButtonText()
     {
+        short houseCount = 0;
+        short resourceCount = 0;
+        short forgeCount = 0;
+        short municipalCount = 0;
+        short militaryCount = 0;
+        foreach (KeyValuePair<int, BuildingPrototype> kvp in DataManager.mBuildingDict)
+        {
+            if (DataManager.mBuildingDict[kvp.Key].Level == 1 && gc.buildingUnlock[kvp.Key])
+            {
+                switch (kvp.Value.PanelType)
+                {
+                    case "House": houseCount++; break;
+                    case "Resource": resourceCount++; break;
+                    case "Forge": forgeCount++; break;
+                    case "Municipal": municipalCount++; break;
+                    case "Military": militaryCount++; break;
+                }
 
-        infoText.text = "木材 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffWood + "     石料 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffStone + "     金属 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal + "\n金币 " + gc.gold;
+            }
+
+        }
+
+
+        filterHouseText.text = "住房[" + houseCount + "]";
+        filterResourceText.text = "资源[" + resourceCount + "]";
+        filterForgeText.text = "制造[" + forgeCount + "]";
+        filterMunicipalText.text = "公共[" + municipalCount + "]";
+        filterMilitaryText.text = "军事[" + militaryCount + "]";
+
+        filterAllText.text = "全部[" + (houseCount + resourceCount + forgeCount + municipalCount + militaryCount) + "]";
+    }
+
+    public void UpdateAllInfo(string typePanel)
+    {
+        nowTypePanel = typePanel;
+        //  infoText.text = "木材 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffWood + "     石料 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffStone + "     金属 " + gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal + "\n金币 " + gc.gold;
+
 
         List <BuildingPrototype> temp = new List<BuildingPrototype> { };
         foreach (KeyValuePair<int, BuildingPrototype> kvp in DataManager.mBuildingDict)
         {
             if (DataManager.mBuildingDict[kvp.Key].Level == 1&&gc.buildingUnlock[kvp.Key])
             {
-                temp.Add(DataManager.mBuildingDict[kvp.Key]);
+                if (typePanel == "All")
+                {
+                    temp.Add(DataManager.mBuildingDict[kvp.Key]);
+                }
+                else
+                {
+                    if (DataManager.mBuildingDict[kvp.Key].PanelType == typePanel)
+                    {
+                        temp.Add(DataManager.mBuildingDict[kvp.Key]);
+                    }
+                }
+             
             }
         }
 
@@ -67,6 +133,7 @@ public class BuildPanel : BasePanel
             go.transform.GetChild(2).GetComponent<Text>().text =  CheckNeedToStr("wood", temp[i].NeedWood) + CheckNeedToStr("stone", temp[i].NeedStone)  + CheckNeedToStr("metal", temp[i].NeedMetal) + CheckNeedToStr("gold", temp[i].NeedGold) + 
                 "\n☀维持费 " + temp[i].Expense + "金/月\n" + temp[i].Des ;
 
+            go.transform.GetChild(4).GetComponent<Text>().text = CheckNeedToStr("grid", temp[i].Grid);
             if (!CheckStuff(temp[i].Grid <= gc.districtDic[gc.nowCheckingDistrictID].gridEmpty,
                 temp[i].NeedWood<= gc.districtDic[gc.nowCheckingDistrictID].rStuffWood, 
                 temp[i].NeedStone <= gc.districtDic[gc.nowCheckingDistrictID].rStuffStone,
