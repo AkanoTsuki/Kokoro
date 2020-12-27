@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public enum AnimStatus
 {
+    Front,//正面静止
     Idle,
     WalkLeft,
     WalkRight,
@@ -38,24 +39,10 @@ public class AnimatiorControl : MonoBehaviour
 
     void Start()
     {
-        charaName = "chara1_1";
+        //SetAnim(AnimStatus.Idle);
+        //gameObject.GetComponent<Image>().sprite = needFrames[currentIndex];
 
-        attackFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Attack");
-        bowFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Bow");
-        deathFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Death");
-        hitFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Hit");
-        idleFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Idle");
-        magicFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Magic");
-        walk_DownFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Down");
-        walk_LeftFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Left");
-        walk_RightFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Right");
-        walk_UpFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Up");
-
-        Debug.Log("Image/RolePic/" + charaName + "/Idle       "+idleFrames.Length);
-        SetAnim(AnimStatus.Idle);
-        gameObject.GetComponent<Image>().sprite = needFrames[currentIndex];
-
-        Play();
+        //Play();
        
     }
 
@@ -69,7 +56,9 @@ public class AnimatiorControl : MonoBehaviour
             time += Time.deltaTime;
             if (time >= 1.0f / fps)
             {
+               
                 gameObject.GetComponent<Image>().sprite = needFrames[currentIndex];
+                //Debug.Log(gameObject.GetComponent<Image>().sprite);
                 currentIndex++;
                 time = 0;
                 if (currentIndex > 2)
@@ -103,13 +92,32 @@ public class AnimatiorControl : MonoBehaviour
 
     public void Play()
     {
+        Debug.Log(charaName + " Play()");
         isPlay = true;
     }
     public void Stop()
     {
+        Debug.Log(charaName + " Stop()");
         isPlay = false;
     }
-    void SetAnim(AnimStatus animStatus)
+
+    public void SetCharaFrames(string name)
+    {
+        charaName = name;
+
+        attackFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Attack");
+        bowFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Bow");
+        deathFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Death");
+        hitFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Hit");
+        idleFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Idle");
+        magicFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Magic");
+        walk_DownFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Down");
+        walk_LeftFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Left");
+        walk_RightFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Right");
+        walk_UpFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Up");
+    }
+
+    public void SetAnim(AnimStatus animStatus)
     {
 
         switch (animStatus)

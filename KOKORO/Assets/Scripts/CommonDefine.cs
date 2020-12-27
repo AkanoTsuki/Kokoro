@@ -175,6 +175,13 @@ public enum AdventureState
     Retreat
 }
 
+public enum AdventureAction
+{
+    None,
+    Walk,
+    Fight
+}
+
 public enum AdventureEvent
 {
     None,
@@ -1313,6 +1320,7 @@ public class AdventureTeamObject
     private List<int> HeroMpList;
     private byte NowDay;
     private AdventureState State;
+    private AdventureAction Action;
     private short GetExp;
     private short GetGold;
     private short GetCereal;
@@ -1331,7 +1339,7 @@ public class AdventureTeamObject
     private short KillNum;
     private string Log;
     private List<AdventurePartObject> Part;
-    public AdventureTeamObject(byte id,short dungeonID, List<string> scenePicList, List<RectTransform> sceneBgRt, List<RectTransform> sceneFgRt, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, byte nowDay, AdventureState state,
+    public AdventureTeamObject(byte id,short dungeonID, List<string> scenePicList, List<RectTransform> sceneBgRt, List<RectTransform> sceneFgRt, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, byte nowDay, AdventureState state, AdventureAction action,
         short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
         List<int> getItemList, short killNum, string log, List<AdventurePartObject> part)
     {
@@ -1345,6 +1353,7 @@ public class AdventureTeamObject
         this.HeroMpList = heroMpList;
         this.NowDay = nowDay;
         this.State = state;
+        this.Action = action;
         this.GetExp = getExp;
         this.GetGold = getGold;
         this.GetCereal = getCereal;
@@ -1374,6 +1383,7 @@ public class AdventureTeamObject
     public List<int> heroMpList { get { return HeroMpList; } set { HeroMpList = value; } }
     public byte nowDay { get { return NowDay; } set { NowDay = value; } }
     public AdventureState state { get { return State; } set { State = value; } }
+    public AdventureAction action { get { return Action; } set { Action = value; } }
     public short getExp { get { return GetExp; } set { GetExp = value; } }
     public short getGold { get { return GetGold; } set { GetGold = value; } }
     public short getCereal { get { return GetCereal; } set { GetCereal = value; } }
@@ -1440,6 +1450,7 @@ public class FightObject
 public class FightMenberObject
 {
     private int ID;
+    private int ObjectID;//对于己方，heroID
     private byte Side;
     private string Name;
     private int Hp;
@@ -1473,21 +1484,24 @@ public class FightMenberObject
     private short ConfusionRes;
     private short PoisonRes;
     private short SleepRes;
+    private short ActionBar;
+    private byte SkillIndex;//当前招式位置
     private int HpNow;
     private int MpNow;
     private List<FightBuff> Buff;
 
 
-    public FightMenberObject(int id, byte side, string name,
+    public FightMenberObject(int id, int objectID, byte side, string name,
          int hp, int mp, short hpRenew, short mpRenew,
         short atkMin, short atkMax, short mAtkMin, short mAtkMax, short def, short mDef,
         short hit, short dod, short criR, short criD, short spd,
         short windDam, short fireDam, short waterDam, short groundDam, short lightDam, short darkDam,
         short windRes, short fireRes, short waterRes, short groundRes, short lightRes, short darkRes,
         short dizzyRes, short confusionRes, short poisonRes, short sleepRes,
-        int hpNow, int mpNow,  List<FightBuff> buff)
+       short actionBar, byte skillIndex,int hpNow, int mpNow,  List<FightBuff> buff)
     {
         this.ID = id;
+        this.ObjectID = objectID;
         this.Side = side;
         this.Name = name;
         this.Hp = hp;
@@ -1521,12 +1535,14 @@ public class FightMenberObject
         this.ConfusionRes = confusionRes;
         this.PoisonRes = poisonRes;
         this.SleepRes = sleepRes;
+        this.ActionBar = actionBar;
         this.HpNow = hpNow;
         this.MpNow = mpNow;
         this.Buff = buff;
 
 }
     public int id { get { return ID; } }
+    public int objectID { get { return ObjectID; } }
     public byte side { get { return Side; } }
     public string name { get { return Name; } set { Name = value; } }
     public int hp { get { return Hp; } set { Hp = value; } }
@@ -1560,6 +1576,8 @@ public class FightMenberObject
     public short confusionRes { get { return ConfusionRes; } set { ConfusionRes = value; } }
     public short poisonRes { get { return PoisonRes; } set { PoisonRes = value; } }
     public short sleepRes { get { return SleepRes; } set { SleepRes = value; } }
+    public short actionBar { get { return ActionBar; } set { ActionBar = value; } }
+    public byte skillIndex { get { return SkillIndex; } set { SkillIndex = value; } }
     public int hpNow { get { return HpNow; } set { HpNow = value; } }
     public int mpNow { get { return MpNow; } set { MpNow = value; } }
     public List<FightBuff> buff { get { return Buff; } set { Buff = value; } }

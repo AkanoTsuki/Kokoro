@@ -1948,13 +1948,9 @@ public class HeroPanel : BasePanel
                     probability = 100;
                 }
             }
-            int mp = sp.Mp;
-            if (so.mpModify != 0)
-            {
-                mp = (int)(sp.Mp*(1f + so.mpModify / 100f));
-            }
 
-            skill_Text[skillIndex].text = str + "\n" + probability + "%\n<color=#38B9FB>MP " + mp + "</color>";
+
+            skill_Text[skillIndex].text = str + "\n" + probability + "%\n<color=#38B9FB>MP " + gc.GetSkillMpCost(so.id) + "</color>";
         }
         else
         {

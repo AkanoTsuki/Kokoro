@@ -21380,7 +21380,7 @@
       "MainPic": "Campfire",
       "MapPic": "Campfire",
       "PanelType": "Municipal",
-      "Des": "装饰物，<color=#E74624>增加环境光元素5点</color>",
+      "Des": "装饰物，<color=#E74624>增加环境火元素5点</color>",
       "UpgradeTo": -1,
       "Level": 1,
       "BuildTime": 20,
@@ -22117,7 +22117,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22161,7 +22166,12 @@
       "Pic": "monster1_01",
       "Level": 10,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22205,7 +22215,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22249,7 +22264,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22293,7 +22313,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22337,7 +22362,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22381,7 +22411,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22425,7 +22460,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22469,7 +22509,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22513,7 +22558,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22557,7 +22607,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22601,7 +22656,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22645,7 +22705,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22689,7 +22754,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22733,7 +22803,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22777,7 +22852,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22821,7 +22901,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22865,7 +22950,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22909,7 +22999,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22953,7 +23048,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -22997,7 +23097,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23041,7 +23146,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23085,7 +23195,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23129,7 +23244,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23173,7 +23293,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23217,7 +23342,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23261,7 +23391,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23305,7 +23440,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23349,7 +23489,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23393,7 +23538,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23437,7 +23587,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23481,7 +23636,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23525,7 +23685,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23569,7 +23734,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23613,7 +23783,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
@@ -23657,7 +23832,12 @@
       "Pic": "monster1_01",
       "Level": 5,
       "Des": "",
-      "SkillID": [],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
       "Hp": 200,
       "Mp": 0,
       "HpRenew": 0,
