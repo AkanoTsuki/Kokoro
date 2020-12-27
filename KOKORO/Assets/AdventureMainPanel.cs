@@ -140,7 +140,9 @@ public class AdventureMainPanel : BasePanel
             });
 
             UpdateTeamHero(teamID);
-            go.GetComponent<AdventureTeamBlock>().contentText.text = gc.adventureTeamList[teamID].log;
+            //TeamLogAdd()
+            TeamLogShow(teamID);
+            //go.GetComponent<AdventureTeamBlock>().contentText.text = gc.adventureTeamList[teamID].log;
 
             go.GetComponent<AdventureTeamBlock>().detailBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             go.GetComponent<AdventureTeamBlock>().retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
@@ -168,8 +170,8 @@ public class AdventureMainPanel : BasePanel
 
             go.GetComponent<AdventureTeamBlock>().dungeon_selectBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             UpdateTeamHero(teamID);
-            go.GetComponent<AdventureTeamBlock>().contentText.text = gc.adventureTeamList[teamID].log;
-
+            //go.GetComponent<AdventureTeamBlock>().contentText.text = gc.adventureTeamList[teamID].log;
+            TeamLogShow(teamID);
             go.GetComponent<AdventureTeamBlock>().detailBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             go.GetComponent<AdventureTeamBlock>().detailBtn.onClick.RemoveAllListeners();
             go.GetComponent<AdventureTeamBlock>().detailBtn.onClick.AddListener(delegate ()
@@ -297,10 +299,23 @@ public class AdventureMainPanel : BasePanel
 
     public void TeamLogAdd(byte teamID,string str)
     {
-        gc.adventureTeamList[teamID].log = str + "\n" + gc.adventureTeamList[teamID].log;
-        adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().contentText.text = gc.adventureTeamList[teamID].log;
 
 
+        gc.adventureTeamList[teamID].log.Add(str) ;
+        TeamLogShow(teamID);
+
+       // Debug.Log(adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().contentText.text.Length);
+    }
+
+    public void TeamLogShow(byte teamID)
+    {
+        const int MaxRow=50;
+        adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().contentText.text = "";
+
+        for (int i = gc.adventureTeamList[teamID].log.Count - 1; i >=System.Math.Max(0, gc.adventureTeamList[teamID].log.Count- MaxRow); i--)
+        {
+            adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().contentText.text +=  gc.adventureTeamList[teamID].log[i]+ "\n"  ;
+        }
     }
 
     public void UpdateSceneBar(byte teamID)
@@ -331,7 +346,7 @@ public class AdventureMainPanel : BasePanel
     }
     public void UpdateSceneRole(byte teamID)
     {
-        Debug.Log("gc.adventureTeamList[teamID].state=" + gc.adventureTeamList[teamID].state + " gc.adventureTeamList[teamID].action=" + gc.adventureTeamList[teamID].action);
+        //Debug.Log("gc.adventureTeamList[teamID].state=" + gc.adventureTeamList[teamID].state + " gc.adventureTeamList[teamID].action=" + gc.adventureTeamList[teamID].action);
         for (int i = 0; i < gc.adventureTeamList[teamID].heroIDList.Count; i++)
         {
             if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)

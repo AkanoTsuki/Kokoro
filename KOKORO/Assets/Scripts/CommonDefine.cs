@@ -1337,11 +1337,11 @@ public class AdventureTeamObject
     private short GetBone;
     private List<int> GetItemList;
     private short KillNum;
-    private string Log;
+    private List<string> Log;
     private List<AdventurePartObject> Part;
     public AdventureTeamObject(byte id,short dungeonID, List<string> scenePicList, List<RectTransform> sceneBgRt, List<RectTransform> sceneFgRt, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, byte nowDay, AdventureState state, AdventureAction action,
         short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
-        List<int> getItemList, short killNum, string log, List<AdventurePartObject> part)
+        List<int> getItemList, short killNum, List<string> log, List<AdventurePartObject> part)
     {
         this.ID = id;
         this.DungeonID = dungeonID;
@@ -1400,7 +1400,7 @@ public class AdventureTeamObject
     public short getBone { get { return GetBone; } set { GetBone = value; } }
     public List<int> getItemList { get { return GetItemList; } set { GetItemList = value; } }
     public short killNum { get { return KillNum; } set { KillNum = value; } }
-    public string log { get { return Log; } set { Log = value; } }
+    public List<string> log { get { return Log; } set { Log = value; } }
     public List<AdventurePartObject> part { get { return Part; } set { Part = value; } }
 }
 

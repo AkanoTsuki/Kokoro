@@ -92,7 +92,6 @@ public class AnimatiorControl : MonoBehaviour
 
     public void Play()
     {
-        Debug.Log(charaName + " Play()");
         isPlay = true;
     }
     public void Stop()

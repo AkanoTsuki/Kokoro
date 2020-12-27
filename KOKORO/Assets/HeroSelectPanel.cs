@@ -201,7 +201,6 @@ public class HeroSelectPanel : BasePanel
                 doBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                 doBtn.onClick.RemoveAllListeners();
                 doBtn.onClick.AddListener(delegate () {
-                    Debug.Log("(byte)districtID=" + (byte)districtID);
                     gc.AdventureTeamHeroAdd((byte)districtID, nowSelectedHeroID);
                     OnHide();
                 });
