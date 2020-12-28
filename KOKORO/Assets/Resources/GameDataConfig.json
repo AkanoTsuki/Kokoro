@@ -22170,7 +22170,7 @@
     {
       "ID": 0,
       "Name": "史莱姆",
-      "Pic": "monster1_01",
+      "Pic": "monster1_1",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22184,14 +22184,14 @@
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
-      "MAtkMin": 15,
-      "MAtkMax": 20,
+      "AtkMin": 10,
+      "AtkMax": 15,
+      "MAtkMin": 10,
+      "MAtkMax": 15,
       "Def": 5,
       "MDef": 5,
       "Hit": 30,
-      "Dod": 10,
+      "Dod": 5,
       "CriR": 10,
       "CriD": 200,
       "Spd": 60,
@@ -22220,7 +22220,7 @@
     {
       "ID": 1,
       "Name": "老鼠",
-      "Pic": "monster1_01",
+      "Pic": "monster1_2",
       "Level": 10,
       "GroupRate": 0.1,
       "Des": "",
@@ -22270,7 +22270,7 @@
     {
       "ID": 2,
       "Name": "蜘蛛",
-      "Pic": "monster1_01",
+      "Pic": "monster1_3",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22320,7 +22320,7 @@
     {
       "ID": 3,
       "Name": "蝎子",
-      "Pic": "monster1_01",
+      "Pic": "monster1_4",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22370,7 +22370,7 @@
     {
       "ID": 4,
       "Name": "花蛇",
-      "Pic": "monster1_01",
+      "Pic": "monster1_5",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22420,7 +22420,7 @@
     {
       "ID": 5,
       "Name": "青蛇",
-      "Pic": "monster1_01",
+      "Pic": "monster1_6",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22470,7 +22470,7 @@
     {
       "ID": 6,
       "Name": "黄蜂",
-      "Pic": "monster1_01",
+      "Pic": "monster1_7",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22520,7 +22520,7 @@
     {
       "ID": 7,
       "Name": "蝙蝠",
-      "Pic": "monster1_01",
+      "Pic": "monster1_8",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22570,7 +22570,7 @@
     {
       "ID": 8,
       "Name": "巨蟹",
-      "Pic": "monster1_01",
+      "Pic": "monster2_1",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22620,7 +22620,7 @@
     {
       "ID": 9,
       "Name": "巨龟",
-      "Pic": "monster1_01",
+      "Pic": "monster2_2",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22670,7 +22670,7 @@
     {
       "ID": 10,
       "Name": "章鱼",
-      "Pic": "monster1_01",
+      "Pic": "monster2_3",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22720,7 +22720,7 @@
     {
       "ID": 11,
       "Name": "鳄鱼",
-      "Pic": "monster1_01",
+      "Pic": "monster2_4",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22770,7 +22770,7 @@
     {
       "ID": 12,
       "Name": "青蛙",
-      "Pic": "monster1_01",
+      "Pic": "monster2_5",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22820,7 +22820,7 @@
     {
       "ID": 13,
       "Name": "水蛙",
-      "Pic": "monster1_01",
+      "Pic": "monster2_6",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22870,7 +22870,7 @@
     {
       "ID": 14,
       "Name": "巨菇龟",
-      "Pic": "monster1_01",
+      "Pic": "monster2_7",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22920,7 +22920,7 @@
     {
       "ID": 15,
       "Name": "刺甲龟",
-      "Pic": "monster1_01",
+      "Pic": "monster2_8",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -22970,7 +22970,7 @@
     {
       "ID": 16,
       "Name": "蘑菇怪",
-      "Pic": "monster1_01",
+      "Pic": "monster3_1",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23020,7 +23020,7 @@
     {
       "ID": 17,
       "Name": "巨菇怪",
-      "Pic": "monster1_01",
+      "Pic": "monster3_2",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23070,7 +23070,7 @@
     {
       "ID": 18,
       "Name": "食人花",
-      "Pic": "monster1_01",
+      "Pic": "monster3_3",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23120,7 +23120,7 @@
     {
       "ID": 19,
       "Name": "变异瓜",
-      "Pic": "monster1_01",
+      "Pic": "monster3_4",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23170,7 +23170,7 @@
     {
       "ID": 20,
       "Name": "鬼火",
-      "Pic": "monster1_01",
+      "Pic": "monster3_5",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23220,7 +23220,7 @@
     {
       "ID": 21,
       "Name": "鬼火烛",
-      "Pic": "monster1_01",
+      "Pic": "monster3_6",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23270,7 +23270,7 @@
     {
       "ID": 22,
       "Name": "宝箱怪",
-      "Pic": "monster1_01",
+      "Pic": "monster3_7",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23320,7 +23320,7 @@
     {
       "ID": 23,
       "Name": "大宝箱怪",
-      "Pic": "monster1_01",
+      "Pic": "monster3_8",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23370,7 +23370,7 @@
     {
       "ID": 24,
       "Name": "浮灵",
-      "Pic": "monster1_01",
+      "Pic": "monster4_1",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23420,7 +23420,7 @@
     {
       "ID": 25,
       "Name": "浮恶灵",
-      "Pic": "monster1_01",
+      "Pic": "monster4_2",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23470,7 +23470,7 @@
     {
       "ID": 26,
       "Name": "野人",
-      "Pic": "monster1_01",
+      "Pic": "monster4_3",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23520,7 +23520,7 @@
     {
       "ID": 27,
       "Name": "白化野人",
-      "Pic": "monster1_01",
+      "Pic": "monster4_4",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23570,7 +23570,7 @@
     {
       "ID": 28,
       "Name": "鼠人",
-      "Pic": "monster1_01",
+      "Pic": "monster4_5",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23620,7 +23620,7 @@
     {
       "ID": 29,
       "Name": "鼠人兵",
-      "Pic": "monster1_01",
+      "Pic": "monster4_6",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23670,7 +23670,7 @@
     {
       "ID": 30,
       "Name": "恶魔",
-      "Pic": "monster1_01",
+      "Pic": "monster4_7",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23720,7 +23720,7 @@
     {
       "ID": 31,
       "Name": "地狱恶魔",
-      "Pic": "monster1_01",
+      "Pic": "monster4_8",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23770,7 +23770,7 @@
     {
       "ID": 32,
       "Name": "水术士",
-      "Pic": "monster1_01",
+      "Pic": "monster_wizard_1",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23820,7 +23820,7 @@
     {
       "ID": 33,
       "Name": "火术士",
-      "Pic": "monster1_01",
+      "Pic": "monster_wizard_2",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23870,7 +23870,7 @@
     {
       "ID": 34,
       "Name": "风术士",
-      "Pic": "monster1_01",
+      "Pic": "monster_wizard_3",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
@@ -23920,7 +23920,7 @@
     {
       "ID": 35,
       "Name": "地术士",
-      "Pic": "monster1_01",
+      "Pic": "monster_wizard_4",
       "Level": 5,
       "GroupRate": 0.1,
       "Des": "",

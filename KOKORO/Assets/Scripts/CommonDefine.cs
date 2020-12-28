@@ -1455,6 +1455,7 @@ public class FightMenberObject
     private int ID;
     private int ObjectID;//对于己方hero实例ID,对于怪物为怪物原型ID
     private byte Side;
+    private byte SideIndex;
     private string Name;
     private int Hp;
     private int Mp;
@@ -1495,7 +1496,7 @@ public class FightMenberObject
     private List<FightBuff> Buff;
 
 
-    public FightMenberObject(int id, int objectID, byte side, string name,
+    public FightMenberObject(int id, int objectID, byte side, byte sideIndex, string name,
          int hp, int mp, short hpRenew, short mpRenew,
         short atkMin, short atkMax, short mAtkMin, short mAtkMax, short def, short mDef,
         short hit, short dod, short criR, short criD, short spd,
@@ -1507,6 +1508,7 @@ public class FightMenberObject
         this.ID = id;
         this.ObjectID = objectID;
         this.Side = side;
+        this.SideIndex = sideIndex;
         this.Name = name;
         this.Hp = hp;
         this.Mp = mp;
@@ -1549,6 +1551,7 @@ public class FightMenberObject
     public int id { get { return ID; } }
     public int objectID { get { return ObjectID; } }
     public byte side { get { return Side; } }
+    public byte sideIndex { get { return SideIndex; } }
     public string name { get { return Name; } set { Name = value; } }
     public int hp { get { return Hp; } set { Hp = value; } }
     public int mp { get { return Mp; } set { Mp = value; } }

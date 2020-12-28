@@ -363,9 +363,15 @@ public class AdventureMainPanel : BasePanel
             if (gc.adventureTeamList[teamID].action == AdventureAction.Fight)
             {
                 //TODO:怪物图集处理
-                adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
-                //adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.Idle);
+                adventureTeamBlock.dungeon_side1Go[i].GetComponent<AnimatiorControl>().SetCharaFramesSimple(DataManager.mMonsterDict[gc.adventureTeamList[teamID].enemyIDList[i]].Pic);
+                adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite = Resources.Load("Image/RolePic/" +DataManager.mMonsterDict[gc.adventureTeamList[teamID].enemyIDList[i]].Pic + "/Pic", typeof(Sprite)) as Sprite;
+                adventureTeamBlock.dungeon_side1Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.WalkLeft);
             }
+        }
+        for (int i = gc.adventureTeamList[teamID].enemyIDList.Count; i < 3; i++)
+        {
+            adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+
         }
     }
 
@@ -378,7 +384,7 @@ public class AdventureMainPanel : BasePanel
             if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
             {
                 adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().Stop();
-                adventureTeamBlock.dungeon_side0Go[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
+                adventureTeamBlock.dungeon_side0Go[i].GetComponent<Image>().sprite = Resources.Load("Image/RolePic/" + gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
             }
             else if (gc.adventureTeamList[teamID].state == AdventureState.Doing)
             {
@@ -443,6 +449,24 @@ public class AdventureMainPanel : BasePanel
                 adventureTeamBlock.dungeon_side1Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
             }
         }
+    }
+
+    public void SetAnim(byte teamID,byte side,byte index, AnimStatus animStatus)
+    {
+        if (side == 0)
+        {
+            adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().dungeon_side0Go[index].GetComponent<AnimatiorControl>().SetAnim(animStatus);
+        }
+        else if (side == 1)
+        {
+            adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().dungeon_side1Go[index].GetComponent<AnimatiorControl>().SetAnim(animStatus);
+        }
+
+    }
+
+    public void ShowDamageText(byte teamID, byte side, byte index,int value)
+    {
+        
     }
 
     public void HideDungeonPage()
