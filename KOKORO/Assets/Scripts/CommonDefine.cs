@@ -67,7 +67,8 @@ public enum ItemTypeBig
     Armor,
     Jewelry,
     Subhand,
-    SkillRoll
+    SkillRoll,
+    None
 }
 
 public enum ItemTypeSmall
@@ -91,7 +92,8 @@ public enum ItemTypeSmall
     Neck,
     Finger,
     Shield,
-    Dorlach
+    Dorlach,
+    None
 }
 
 public enum EquipPart
@@ -179,7 +181,8 @@ public enum AdventureAction
 {
     None,
     Walk,
-    Fight
+    Fight,
+    GetSomething
 }
 
 public enum AdventureEvent
@@ -1224,9 +1227,11 @@ public class DungeonPrototype : ISerializationCallbackReceiver
     public List<string> ResourceTypeStr;
     public List<int> ResourceValue;
     public List<int> MonsterID;
-    public List<int> MonsterRate;
-    public List<int> MonsterEliteRate;
-    public List<int> MonsterLeaderRate;
+    public List<byte> MonsterRate;
+    public List<byte> MonsterLevelMin;
+    public List<byte> MonsterLevelMax;
+    public List<byte> MonsterEliteRate;
+    public List<byte> MonsterLeaderRate;
     public void OnAfterDeserialize()
     {
         for (int i = 0; i < FixEventStr.Count; i++)
@@ -1269,8 +1274,9 @@ public class MonsterPrototype
     public string Name;
     public string Pic;
     public byte Level;
+    public float GroupRate;
     public string Des;
-    public List<short> Skill;
+    public List<short> SkillID;
     public int Hp;
     public int Mp;
     public short HpRenew;
@@ -1313,11 +1319,10 @@ public class AdventureTeamObject
     private byte ID;
     private short DungeonID;
     private List<string> ScenePicList;
-    private List<RectTransform> SceneBgRt;
-    private List<RectTransform> SceneFgRt;
     private List<int> HeroIDList;
     private List<int> HeroHpList;
     private List<int> HeroMpList;
+    private List<int> EnemyIDList;
     private byte NowDay;
     private AdventureState State;
     private AdventureAction Action;
@@ -1339,18 +1344,17 @@ public class AdventureTeamObject
     private short KillNum;
     private List<string> Log;
     private List<AdventurePartObject> Part;
-    public AdventureTeamObject(byte id,short dungeonID, List<string> scenePicList, List<RectTransform> sceneBgRt, List<RectTransform> sceneFgRt, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, byte nowDay, AdventureState state, AdventureAction action,
+    public AdventureTeamObject(byte id,short dungeonID, List<string> scenePicList, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, List<int> enemyIDList, byte nowDay, AdventureState state, AdventureAction action,
         short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
         List<int> getItemList, short killNum, List<string> log, List<AdventurePartObject> part)
     {
         this.ID = id;
         this.DungeonID = dungeonID;
         this.ScenePicList = scenePicList;
-        this.SceneBgRt = sceneBgRt;
-        this.SceneFgRt = sceneFgRt;
         this.HeroIDList = heroIDList;
         this.HeroHpList = heroHpList;
         this.HeroMpList = heroMpList;
+        this.EnemyIDList = enemyIDList;
         this.NowDay = nowDay;
         this.State = state;
         this.Action = action;
@@ -1376,11 +1380,10 @@ public class AdventureTeamObject
     public byte id { get { return ID; } }
     public short dungeonID { get { return DungeonID; } set { DungeonID = value; } }
     public List<string> scenePicList { get { return ScenePicList; } set { ScenePicList = value; } }
-    public List<RectTransform> sceneBgRt { get { return SceneBgRt; } set { SceneBgRt = value; } }
-    public List<RectTransform> sceneFgRt { get { return SceneFgRt; } set { SceneFgRt = value; } }
     public List<int> heroIDList { get { return HeroIDList; } set { HeroIDList = value; } }
     public List<int> heroHpList { get { return HeroHpList; } set { HeroHpList = value; } }
     public List<int> heroMpList { get { return HeroMpList; } set { HeroMpList = value; } }
+    public List<int> enemyIDList { get { return EnemyIDList; } set { EnemyIDList = value; } }
     public byte nowDay { get { return NowDay; } set { NowDay = value; } }
     public AdventureState state { get { return State; } set { State = value; } }
     public AdventureAction action { get { return Action; } set { Action = value; } }
@@ -1450,7 +1453,7 @@ public class FightObject
 public class FightMenberObject
 {
     private int ID;
-    private int ObjectID;//对于己方，heroID
+    private int ObjectID;//对于己方hero实例ID,对于怪物为怪物原型ID
     private byte Side;
     private string Name;
     private int Hp;
@@ -1484,6 +1487,7 @@ public class FightMenberObject
     private short ConfusionRes;
     private short PoisonRes;
     private short SleepRes;
+    private ItemTypeSmall WeaponType;
     private short ActionBar;
     private byte SkillIndex;//当前招式位置
     private int HpNow;
@@ -1497,7 +1501,7 @@ public class FightMenberObject
         short hit, short dod, short criR, short criD, short spd,
         short windDam, short fireDam, short waterDam, short groundDam, short lightDam, short darkDam,
         short windRes, short fireRes, short waterRes, short groundRes, short lightRes, short darkRes,
-        short dizzyRes, short confusionRes, short poisonRes, short sleepRes,
+        short dizzyRes, short confusionRes, short poisonRes, short sleepRes, ItemTypeSmall weaponType,
        short actionBar, byte skillIndex,int hpNow, int mpNow,  List<FightBuff> buff)
     {
         this.ID = id;
@@ -1535,6 +1539,7 @@ public class FightMenberObject
         this.ConfusionRes = confusionRes;
         this.PoisonRes = poisonRes;
         this.SleepRes = sleepRes;
+        this.WeaponType = weaponType;
         this.ActionBar = actionBar;
         this.HpNow = hpNow;
         this.MpNow = mpNow;
@@ -1576,6 +1581,7 @@ public class FightMenberObject
     public short confusionRes { get { return ConfusionRes; } set { ConfusionRes = value; } }
     public short poisonRes { get { return PoisonRes; } set { PoisonRes = value; } }
     public short sleepRes { get { return SleepRes; } set { SleepRes = value; } }
+    public ItemTypeSmall weaponType { get { return WeaponType; } }
     public short actionBar { get { return ActionBar; } set { ActionBar = value; } }
     public byte skillIndex { get { return SkillIndex; } set { SkillIndex = value; } }
     public int hpNow { get { return HpNow; } set { HpNow = value; } }

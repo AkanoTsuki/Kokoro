@@ -46,7 +46,7 @@ public class PlayMainPanel : BasePanel
     public Text bottom_totalText;
 
     List<Button> leftBtnList = new List<Button>();
-    short nowLeftIndex = -1;//todo
+    short nowLeftIndex = -1;//TODO:关闭其他窗口系列，或子窗口
 
     bool Leftis0 = true;
     void Awake()

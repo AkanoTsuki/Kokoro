@@ -21806,6 +21806,14 @@
         70,
         30
       ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
+      ],
       "MonsterEliteRate": [
         10,
         10
@@ -21854,6 +21862,14 @@
       "MonsterRate": [
         70,
         30
+      ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
       ],
       "MonsterEliteRate": [
         10,
@@ -21904,6 +21920,14 @@
         70,
         30
       ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
+      ],
       "MonsterEliteRate": [
         10,
         10
@@ -21952,6 +21976,14 @@
       "MonsterRate": [
         70,
         30
+      ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
       ],
       "MonsterEliteRate": [
         10,
@@ -22002,6 +22034,14 @@
         70,
         30
       ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
+      ],
       "MonsterEliteRate": [
         10,
         10
@@ -22050,6 +22090,14 @@
       "MonsterRate": [
         70,
         30
+      ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
       ],
       "MonsterEliteRate": [
         10,
@@ -22100,6 +22148,14 @@
         70,
         30
       ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
+      ],
       "MonsterEliteRate": [
         10,
         10
@@ -22116,6 +22172,7 @@
       "Name": "史莱姆",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22165,6 +22222,7 @@
       "Name": "老鼠",
       "Pic": "monster1_01",
       "Level": 10,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22214,6 +22272,7 @@
       "Name": "蜘蛛",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22263,6 +22322,7 @@
       "Name": "蝎子",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22312,6 +22372,7 @@
       "Name": "花蛇",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22361,6 +22422,7 @@
       "Name": "青蛇",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22410,6 +22472,7 @@
       "Name": "黄蜂",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22459,6 +22522,7 @@
       "Name": "蝙蝠",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22508,6 +22572,7 @@
       "Name": "巨蟹",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22557,6 +22622,7 @@
       "Name": "巨龟",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22606,6 +22672,7 @@
       "Name": "章鱼",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22655,6 +22722,7 @@
       "Name": "鳄鱼",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22704,6 +22772,7 @@
       "Name": "青蛙",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22753,6 +22822,7 @@
       "Name": "水蛙",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22802,6 +22872,7 @@
       "Name": "巨菇龟",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22851,6 +22922,7 @@
       "Name": "刺甲龟",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22900,6 +22972,7 @@
       "Name": "蘑菇怪",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22949,6 +23022,7 @@
       "Name": "巨菇怪",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -22998,6 +23072,7 @@
       "Name": "食人花",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23047,6 +23122,7 @@
       "Name": "变异瓜",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23096,6 +23172,7 @@
       "Name": "鬼火",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23145,6 +23222,7 @@
       "Name": "鬼火烛",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23194,6 +23272,7 @@
       "Name": "宝箱怪",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23243,6 +23322,7 @@
       "Name": "大宝箱怪",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23292,6 +23372,7 @@
       "Name": "浮灵",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23341,6 +23422,7 @@
       "Name": "浮恶灵",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23390,6 +23472,7 @@
       "Name": "野人",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23439,6 +23522,7 @@
       "Name": "白化野人",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23488,6 +23572,7 @@
       "Name": "鼠人",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23537,6 +23622,7 @@
       "Name": "鼠人兵",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23586,6 +23672,7 @@
       "Name": "恶魔",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23635,6 +23722,7 @@
       "Name": "地狱恶魔",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23684,6 +23772,7 @@
       "Name": "水术士",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23733,6 +23822,7 @@
       "Name": "火术士",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23782,6 +23872,7 @@
       "Name": "风术士",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,
@@ -23831,6 +23922,7 @@
       "Name": "地术士",
       "Pic": "monster1_01",
       "Level": 5,
+      "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
         -1,

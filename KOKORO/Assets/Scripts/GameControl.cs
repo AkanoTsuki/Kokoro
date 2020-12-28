@@ -302,76 +302,6 @@ public class GameControl : MonoBehaviour
 
     }
 
-    //public HeroObject GenerateHeroByMould(int heroID, short heroTypeID, byte sexCode,string nameSet)
-    //{
-
-    //    string name = "";
-    //    string pic = "";
-    //    if (sexCode == 0)
-    //    {
-    //        name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
-    //        pic = DataManager.mHeroDict[heroTypeID].PicMan;
-    //    }
-    //    else
-    //    {
-    //        name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
-    //        pic = DataManager.mHeroDict[heroTypeID].PicWoman;
-    //    }
-
-    //    int hp = DataManager.mHeroDict[heroTypeID].Hp;
-    //    int mp = DataManager.mHeroDict[heroTypeID].Mp;
-    //    short hpRenew = DataManager.mHeroDict[heroTypeID].HpRenew;
-    //    short mpRenew = DataManager.mHeroDict[heroTypeID].MpRenew;
-    //    short atkMin = DataManager.mHeroDict[heroTypeID].AtkMin;
-    //    short atkMax = DataManager.mHeroDict[heroTypeID].AtkMax;
-    //    short mAtkMin = DataManager.mHeroDict[heroTypeID].MAtkMin;
-    //    short mAtkMax = DataManager.mHeroDict[heroTypeID].MAtkMax;
-    //    short def = DataManager.mHeroDict[heroTypeID].Def;
-    //    short mDef = DataManager.mHeroDict[heroTypeID].MDef;
-    //    short hit = DataManager.mHeroDict[heroTypeID].Hit;
-    //    short dod = DataManager.mHeroDict[heroTypeID].Dod;
-    //    short criR = DataManager.mHeroDict[heroTypeID].CriR;
-    //    short criD = DataManager.mHeroDict[heroTypeID].CriD;
-    //    short spd = DataManager.mHeroDict[heroTypeID].Spd;
-    //    short windDam = DataManager.mHeroDict[heroTypeID].WindDam;
-    //    short fireDam = DataManager.mHeroDict[heroTypeID].FireDam ;
-    //    short waterDam = DataManager.mHeroDict[heroTypeID].WaterDam ;
-    //    short groundDam = DataManager.mHeroDict[heroTypeID].GroundDam ;
-    //    short lightDam = DataManager.mHeroDict[heroTypeID].LightDam ;
-    //    short darkDam = DataManager.mHeroDict[heroTypeID].DarkDam ;
-    //    short windRes = DataManager.mHeroDict[heroTypeID].WindRes ;
-    //    short fireRes = DataManager.mHeroDict[heroTypeID].FireRes;
-    //    short waterRes = DataManager.mHeroDict[heroTypeID].WaterRes;
-    //    short groundRes = DataManager.mHeroDict[heroTypeID].GroundRes;
-    //    short lightRes = DataManager.mHeroDict[heroTypeID].LightRes;
-    //    short darkRes = DataManager.mHeroDict[heroTypeID].DarkRes;
-    //    short dizzyRes = DataManager.mHeroDict[heroTypeID].DizzyRes;
-    //    short confusionRes = DataManager.mHeroDict[heroTypeID].ConfusionRes;
-    //    short poisonRes = DataManager.mHeroDict[heroTypeID].PoisonRes;
-    //    short sleepRes = DataManager.mHeroDict[heroTypeID].SleepRes;
-    //    byte goldGet = DataManager.mHeroDict[heroTypeID].GoldGet;
-    //    byte expGet = DataManager.mHeroDict[heroTypeID].ExpGet;
-    //    byte itemGet = DataManager.mHeroDict[heroTypeID].ItemGet;
-    //    byte workPlanting = DataManager.mHeroDict[heroTypeID].WorkPlanting;
-    //    byte workFeeding = DataManager.mHeroDict[heroTypeID].WorkFeeding;
-    //    byte workFishing = DataManager.mHeroDict[heroTypeID].WorkFishing;
-    //    byte workHunting = DataManager.mHeroDict[heroTypeID].WorkHunting;
-    //    byte workMining = DataManager.mHeroDict[heroTypeID].WorkMining;
-    //    byte workQuarrying = DataManager.mHeroDict[heroTypeID].WorkQuarrying;
-    //    byte workFelling = DataManager.mHeroDict[heroTypeID].WorkFelling;
-    //    byte workBuild = DataManager.mHeroDict[heroTypeID].WorkBuild;
-    //    byte workMakeWeapon = DataManager.mHeroDict[heroTypeID].WorkMakeWeapon;
-    //    byte workMakeArmor = DataManager.mHeroDict[heroTypeID].WorkMakeArmor;
-    //    byte workMakeJewelry = DataManager.mHeroDict[heroTypeID].WorkMakeJewelry;
-    //    byte workSundry = DataManager.mHeroDict[heroTypeID].WorkSundry;
-
-
-    //    return new HeroObject(heroID,nameSet!=""?nameSet:name, heroTypeID, 1, 0, sexCode, pic, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
-    //      windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
-    //      workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workSundry,
-    //      -1, -1, -1, -1,-1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, - 1,-1);
-
-    //}
 
     public int SetAttr(Attribute attr, short heroTypeID)
     {
@@ -1562,19 +1492,34 @@ public class GameControl : MonoBehaviour
         adventureTeamList[teamID].state = AdventureState.Doing;
         adventureTeamList[teamID].action = AdventureAction.Walk;
         AdventureMainPanel.Instance.UpdateTeam(teamID);
+        //AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);
 
-        AdventureEventHappen(teamID);
+        CreateAdventureEvent(teamID);
     }
 
-    public void AdventureEventHappen(byte teamID)
+    public void CreateAdventureEvent(byte teamID)
     {
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Adventure, standardTime, standardTime + 80, new List<int> { teamID }));
     }
 
-    public void AdventureFight(byte teamID)
+    public void AdventureEventHappen(byte teamID)
     {
+        StartCoroutine(AdventureFight(teamID));
+    }
+
+
+     IEnumerator AdventureFight(byte teamID)
+    {
+        adventureTeamList[teamID].action = AdventureAction.Fight;
+
+        AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
+        AdventureMainPanel.Instance.UpdateSceneRole(teamID);
+
         const int RoundLimit= 200;
+        int CheckFightOverResult = -1;
+
+
         List<FightMenberObject> fightMenberObjects = new List<FightMenberObject>();
         //读取队伍成员和怪物列表，转化为战斗成员实例
         for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
@@ -1616,41 +1561,91 @@ public class GameControl : MonoBehaviour
             short confusionRes = (short)GetHeroAttr(Attribute.ConfusionRes, heroID);
             short poisonRes = (short)GetHeroAttr(Attribute.PoisonRes, heroID);
             short sleepRes = (short)GetHeroAttr(Attribute.SleepRes, heroID);
+
+            ItemTypeSmall weaponType = ItemTypeSmall.None;
+            if (heroDic[heroID].equipWeapon != -1)
+            {
+                weaponType = DataManager.mItemDict[itemDic[heroDic[heroID].equipWeapon].prototypeID].TypeSmall;
+            }
+
             short actionBar = 0;
             byte skillIndex = 0;//当前招式位置
             int hpNow = adventureTeamList[teamID].heroHpList[i];
             int mpNow = adventureTeamList[teamID].heroMpList[i];
             List<FightBuff> buff = new List<FightBuff> { };
             fightMenberObjects.Add(new FightMenberObject(id, objectID, side, name, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
-                                                            windDam, fireDam, waterDam, groundDam, lightDam, darkDam,windRes, fireRes, waterRes, groundRes, lightRes, darkRes,dizzyRes, confusionRes, poisonRes, sleepRes,
+                                                            windDam, fireDam, waterDam, groundDam, lightDam, darkDam,windRes, fireRes, waterRes, groundRes, lightRes, darkRes,dizzyRes, confusionRes, poisonRes, sleepRes, weaponType,
                                                             actionBar, skillIndex, hpNow, mpNow, buff));
         }
 
         int heroCount = fightMenberObjects.Count;
-        //测试创建怪物ID列表
-        List<int> enemyIDList = new List<int> { 0, 0, 0 };
 
+        //创建怪物ID列表
+        adventureTeamList[teamID].enemyIDList.Clear();
+        List<int> enemyIDList = new List<int> { };
+        List<int> enemyLevelList = new List<int> { };
+        List<float> enemyRankList = new List<float> { };
+        int enemyNum = Random.Range(1,4);
+        for (int i = 0; i < enemyNum; i++)
+        {
+            int probabilityCount = DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterID.Count;
+            int ranEnemy = Random.Range(0, 100);
+            byte lj = 0;
+            for (int j = 0; j < probabilityCount; j++)
+            {
+                lj += DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterRate[j];
 
-        List<int> enemyIDTempList = new List<int> { };
+                if (ranEnemy < lj)
+                {
+                    enemyIDList.Add(DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterID[j]);
+                    adventureTeamList[teamID].enemyIDList.Add(DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterID[j]);
+                    enemyLevelList.Add(Random.Range(DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterLevelMin[j], DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterLevelMax[j]));
 
-     
+                    int ranRank = Random.Range(0, 100);
+                    if (ranRank < DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterLeaderRate[j])
+                    {
+                        enemyRankList.Add(2f);
+                    }
+                    else if (ranRank < DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterLeaderRate[j]+ DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterEliteRate[j] )
+                    {
+                        enemyRankList.Add(1.3f);
+                    }
+                    else
+                    {
+                        enemyRankList.Add(1f);
+                    }
+                    break;
+                }
+            }
+        }
 
+        List<int> enemyIDTempList = new List<int> { };//用作记录同类怪物数
         for (int i = 0; i < enemyIDList.Count; i++)
         {
             int monsterID = enemyIDList[i];
-
-            
-
+            int level= enemyLevelList[i];
 
             int id = i+ adventureTeamList[teamID].heroIDList.Count;
             int objectID = monsterID;//对于敌方，原型
             byte side = 1;
 
             byte sameNameCount = 0;
+
+            string name = DataManager.mMonsterDict[monsterID].Name ;
+            if (enemyRankList[i] == 2f)
+            {
+                name += "首领";
+            }
+            else if (enemyRankList[i] == 1.3f)
+            {
+                name += "精英";
+            }
+
             string NameModifyStr = "";
             for (int j = 0; j < enemyIDTempList.Count; j++)
             {
-                if (enemyIDTempList[j] == monsterID)
+               // Debug.Log("enemyRankList[i]=" + enemyRankList[i] + " enemyRankList[j]=" + enemyRankList[j]);
+                if (enemyIDTempList[j] == monsterID&& enemyRankList[i]== enemyRankList[j])
                 {
                     sameNameCount++;
                 }
@@ -1666,27 +1661,34 @@ public class GameControl : MonoBehaviour
             {
                 NameModifyStr = "C";
             }
-            string name = DataManager.mMonsterDict[monsterID].Name+ NameModifyStr;
-            int hp = DataManager.mMonsterDict[monsterID].Hp;
-            int mp = DataManager.mMonsterDict[monsterID].Mp;
-            short hpRenew =  DataManager.mMonsterDict[monsterID].HpRenew;
-            short mpRenew =  DataManager.mMonsterDict[monsterID].MpRenew;
-            short atkMin =  DataManager.mMonsterDict[monsterID].AtkMin;
-            short atkMax =  DataManager.mMonsterDict[monsterID].AtkMax;
-            short mAtkMin =  DataManager.mMonsterDict[monsterID].MAtkMin;
-            short mAtkMax =  DataManager.mMonsterDict[monsterID].MAtkMax;
-            short def =  DataManager.mMonsterDict[monsterID].Def;
-            short mDef =  DataManager.mMonsterDict[monsterID].MDef;
-            short hit =  DataManager.mMonsterDict[monsterID].Hit;
-            short dod =  DataManager.mMonsterDict[monsterID].Dod;
-            short criR =  DataManager.mMonsterDict[monsterID].CriR;
-            short criD =  DataManager.mMonsterDict[monsterID].CriD;
-            short spd =  DataManager.mMonsterDict[monsterID].Spd;
-            short windDam =  DataManager.mMonsterDict[monsterID].WindDam;
-            short fireDam =  DataManager.mMonsterDict[monsterID].FireDam;
-            short waterDam =  DataManager.mMonsterDict[monsterID].WaterDam;
-            short groundDam =  DataManager.mMonsterDict[monsterID].GroundDam;
-            short lightDam =  DataManager.mMonsterDict[monsterID].LightDam;
+
+            name += NameModifyStr;
+
+            float levelModify = level * DataManager.mMonsterDict[monsterID].GroupRate;
+
+
+            
+            
+            int hp = (int)(DataManager.mMonsterDict[monsterID].Hp * (1f + levelModify)* enemyRankList[i]);
+            int mp = (int)(DataManager.mMonsterDict[monsterID].Mp * (1f + levelModify) * enemyRankList[i]);
+            short hpRenew = DataManager.mMonsterDict[monsterID].HpRenew;
+            short mpRenew = DataManager.mMonsterDict[monsterID].MpRenew;
+            short atkMin = (short)(DataManager.mMonsterDict[monsterID].AtkMin * (1f + levelModify) * enemyRankList[i]);
+            short atkMax = (short)(DataManager.mMonsterDict[monsterID].AtkMax * (1f + levelModify) * enemyRankList[i]);
+            short mAtkMin = (short)(DataManager.mMonsterDict[monsterID].MAtkMin * (1f + levelModify) * enemyRankList[i]);
+            short mAtkMax = (short)(DataManager.mMonsterDict[monsterID].MAtkMax * (1f + levelModify) * enemyRankList[i]);
+            short def = (short)(DataManager.mMonsterDict[monsterID].Def * (1f + levelModify) * enemyRankList[i]);
+            short mDef = (short)(DataManager.mMonsterDict[monsterID].MDef * (1f + levelModify) * enemyRankList[i]);
+            short hit = (short)(DataManager.mMonsterDict[monsterID].Hit * (1f + levelModify) * enemyRankList[i]);
+            short dod = (short)(DataManager.mMonsterDict[monsterID].Dod * (1f + levelModify) * enemyRankList[i]);
+            short criR = DataManager.mMonsterDict[monsterID].CriR;
+            short criD = DataManager.mMonsterDict[monsterID].CriD;
+            short spd = DataManager.mMonsterDict[monsterID].Spd;
+            short windDam = DataManager.mMonsterDict[monsterID].WindDam;
+            short fireDam = DataManager.mMonsterDict[monsterID].FireDam;
+            short waterDam = DataManager.mMonsterDict[monsterID].WaterDam;
+            short groundDam = DataManager.mMonsterDict[monsterID].GroundDam;
+            short lightDam = DataManager.mMonsterDict[monsterID].LightDam;
             short darkDam =  DataManager.mMonsterDict[monsterID].DarkDam;
             short windRes =  DataManager.mMonsterDict[monsterID].WindRes;
             short fireRes =  DataManager.mMonsterDict[monsterID].FireRes;
@@ -1705,14 +1707,11 @@ public class GameControl : MonoBehaviour
             List<FightBuff> buff = new List<FightBuff> { };
 
             fightMenberObjects.Add(new FightMenberObject(id, objectID, side, name, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
-                                                      windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes,
+                                                      windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, ItemTypeSmall.None,
                                                       actionBar, skillIndex, hpNow, mpNow, buff));
 
             enemyIDTempList.Add(monsterID);
         }
-
-
-
         string monsterNameList = "";
         for (int i = 0; i < fightMenberObjects.Count; i++)
         {
@@ -1721,20 +1720,22 @@ public class GameControl : MonoBehaviour
                 monsterNameList += fightMenberObjects[i].name + " ";
             }
         }
-        AdventureMainPanel.Instance.TeamLogAdd(teamID, "遭遇了" + monsterNameList+",开始战斗！");
 
+        Debug.Log("遭遇了" + monsterNameList + ",开始战斗！");
+        AdventureMainPanel.Instance.TeamLogAdd(teamID, "遭遇了" + monsterNameList+",开始战斗！");
         int round = 0;
 
         List<FightMenberObject> actionMenber = new List<FightMenberObject>();
 
         while(round< RoundLimit)
         {
+            yield return new WaitForSeconds(1.0f);
             //选取行动槽满的战斗成员
             while (actionMenber.Count == 0)
             {
                 for (int i = 0; i < fightMenberObjects.Count; i++)
                 {
-                    if (fightMenberObjects[i].hpNow > 0)//眩晕与睡眠待写
+                    if (fightMenberObjects[i].hpNow > 0)
                     {
                         fightMenberObjects[i].actionBar += fightMenberObjects[i].spd;
                         if (fightMenberObjects[i].actionBar >= 200)
@@ -1742,22 +1743,59 @@ public class GameControl : MonoBehaviour
                             actionMenber.Add(fightMenberObjects[i]);
                             fightMenberObjects[i].actionBar = (short)(fightMenberObjects[i].actionBar - 200);
                         }
-                    }
-                    
+                    } 
                 }
             }
             //行动成员行动
             for (int i = 0; i < actionMenber.Count; i++)
             {
-                //buff计算待写（减掉回合数）
+                //buff（减掉回合数）
+                bool canAction = true;
+                for (int j = 0; j < actionMenber[i].buff.Count; j++)
+                {
+                    switch (actionMenber[i].buff[j].type)
+                    {
+                        case FightBuffType.Dizzy:
+                            canAction = false;
+                            break;
+                        case FightBuffType.Confusion:
+
+                            break;
+                        case FightBuffType.Poison://每回合5%伤害
+                            //造成伤害
+                            AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber[i]) + "受到"+ (int)(actionMenber[i].hp * 0.05f) + "点中毒伤害");
+                            actionMenber[i].hpNow -=(int) (actionMenber[i].hp*0.05f);
+                            if (actionMenber[i].hpNow < 0)
+                            {
+                                actionMenber[i].hpNow = 0;
+                                AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber[i]) + "被打败了！");
+                            }
+
+                            break;
+                        case FightBuffType.Sleep:
+                            canAction = false;
+                            break;
+                        default:
+                            break;
+                    }
+                    actionMenber[i].buff[j].round--;
+                }
 
 
-                if (actionMenber[i].hpNow > 0)
+                if (actionMenber[i].hpNow > 0&& canAction)
                 {
                     byte skillIndex = actionMenber[i].skillIndex;
-
-
-                    int skillID = heroDic[actionMenber[i].objectID].skill[skillIndex];
+                    
+                    int skillID=-1;
+                    if (actionMenber[i].side == 0)
+                    {
+                        skillID = heroDic[actionMenber[i].objectID].skill[skillIndex];
+                    }
+                    else if (actionMenber[i].side == 1)
+                    {
+                        skillID = DataManager.mMonsterDict[actionMenber[i].objectID].SkillID[skillIndex];
+                    }
+                  
                 
                     if (skillID != -1)
                     {
@@ -1790,53 +1828,35 @@ public class GameControl : MonoBehaviour
                                                 int damageMin = System.Math.Max(0, (int)(actionMenber[i].atkMin * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMin * (sp.MAtk / 100f) - targetMenber[j].mDef));
                                                 int damageMax = System.Math.Max(0, (int)(actionMenber[i].atkMax * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMax * (sp.MAtk / 100f) - targetMenber[j].mDef));
 
-                                                if (sp.Sword != 0 && heroDic[actionMenber[i].objectID].equipWeapon != -1)
+                                                if (sp.Sword != 0 && actionMenber[i].weaponType == ItemTypeSmall.Sword)
                                                 {
-                                                    if (DataManager.mItemDict[itemDic[heroDic[actionMenber[i].objectID].equipWeapon].prototypeID].TypeSmall == ItemTypeSmall.Sword)
-                                                    {
-                                                        damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
-                                                        damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
-                                                    }
+                                                    damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
+                                                    damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
                                                 }
-                                                if (sp.Axe != 0 && heroDic[actionMenber[i].objectID].equipWeapon != -1)
+                                                if (sp.Axe != 0 && actionMenber[i].weaponType == ItemTypeSmall.Axe)
                                                 {
-                                                    if (DataManager.mItemDict[itemDic[heroDic[actionMenber[i].objectID].equipWeapon].prototypeID].TypeSmall == ItemTypeSmall.Axe)
-                                                    {
-                                                        damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
-                                                        damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
-                                                    }
+                                                    damageMin = (int)(damageMin * (1f + (sp.Axe / 100f)));
+                                                    damageMax = (int)(damageMax * (1f + (sp.Axe / 100f)));
                                                 }
-                                                if (sp.Spear != 0 && heroDic[actionMenber[i].objectID].equipWeapon != -1)
+                                                if (sp.Spear != 0 && actionMenber[i].weaponType == ItemTypeSmall.Spear)
                                                 {
-                                                    if (DataManager.mItemDict[itemDic[heroDic[actionMenber[i].objectID].equipWeapon].prototypeID].TypeSmall == ItemTypeSmall.Spear)
-                                                    {
-                                                        damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
-                                                        damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
-                                                    }
+                                                    damageMin = (int)(damageMin * (1f + (sp.Spear / 100f)));
+                                                    damageMax = (int)(damageMax * (1f + (sp.Spear / 100f)));
                                                 }
-                                                if (sp.Hammer != 0 && heroDic[actionMenber[i].objectID].equipWeapon != -1)
+                                                if (sp.Hammer != 0 && actionMenber[i].weaponType == ItemTypeSmall.Hammer)
                                                 {
-                                                    if (DataManager.mItemDict[itemDic[heroDic[actionMenber[i].objectID].equipWeapon].prototypeID].TypeSmall == ItemTypeSmall.Hammer)
-                                                    {
-                                                        damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
-                                                        damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
-                                                    }
+                                                    damageMin = (int)(damageMin * (1f + (sp.Hammer / 100f)));
+                                                    damageMax = (int)(damageMax * (1f + (sp.Hammer / 100f)));
                                                 }
-                                                if (sp.Bow != 0 && heroDic[actionMenber[i].objectID].equipWeapon != -1)
+                                                if (sp.Bow != 0 && actionMenber[i].weaponType == ItemTypeSmall.Bow)
                                                 {
-                                                    if (DataManager.mItemDict[itemDic[heroDic[actionMenber[i].objectID].equipWeapon].prototypeID].TypeSmall == ItemTypeSmall.Bow)
-                                                    {
-                                                        damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
-                                                        damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
-                                                    }
+                                                    damageMin = (int)(damageMin * (1f + (sp.Bow / 100f)));
+                                                    damageMax = (int)(damageMax * (1f + (sp.Bow / 100f)));
                                                 }
-                                                if (sp.Staff != 0 && heroDic[actionMenber[i].objectID].equipWeapon != -1)
+                                                if (sp.Staff != 0 && actionMenber[i].weaponType == ItemTypeSmall.Staff)
                                                 {
-                                                    if (DataManager.mItemDict[itemDic[heroDic[actionMenber[i].objectID].equipWeapon].prototypeID].TypeSmall == ItemTypeSmall.Staff)
-                                                    {
-                                                        damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
-                                                        damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
-                                                    }
+                                                    damageMin = (int)(damageMin * (1f + (sp.Staff / 100f)));
+                                                    damageMax = (int)(damageMax * (1f + (sp.Staff / 100f)));
                                                 }
 
                                                 int damage = Random.Range(damageMin, damageMax + 1);
@@ -1906,7 +1926,21 @@ public class GameControl : MonoBehaviour
                                                 int ranHit = Random.Range(0, 100);
                                                 if (ranHit < hitRate)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.Dizzy, 0, (byte)sp.DizzyValue));
+                                                    bool buffExist = false;
+                                                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                                    {
+                                                        if (targetMenber[j].buff[k].type == FightBuffType.Dizzy)
+                                                        {
+                                                            targetMenber[j].buff[k].round = (byte)sp.DizzyValue;
+                                                            buffExist = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (!buffExist)
+                                                    {
+                                                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Dizzy, 0, (byte)sp.DizzyValue));
+                                                    }
+                                                    
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[j]) + "眩晕了");
                                                 }
                                                 else
@@ -1920,7 +1954,21 @@ public class GameControl : MonoBehaviour
                                                 int ranHit = Random.Range(0, 100);
                                                 if (ranHit < hitRate)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.Confusion, 0, (byte)sp.ConfusionValue));
+                                                    bool buffExist = false;
+                                                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                                    {
+                                                        if (targetMenber[j].buff[k].type == FightBuffType.Confusion)
+                                                        {
+                                                            targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
+                                                            buffExist = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (!buffExist)
+                                                    {
+                                                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Confusion, 0, (byte)sp.DizzyValue));
+                                                    }
+  
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[j]) + "混乱了");
                                                 }
                                                 else
@@ -1934,7 +1982,21 @@ public class GameControl : MonoBehaviour
                                                 int ranHit = Random.Range(0, 100);
                                                 if (ranHit < hitRate)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.Sleep, 0, (byte)sp.SleepValue));
+                                                    bool buffExist = false;
+                                                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                                    {
+                                                        if (targetMenber[j].buff[k].type == FightBuffType.Sleep)
+                                                        {
+                                                            targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
+                                                            buffExist = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (!buffExist)
+                                                    {
+                                                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Sleep, 0, (byte)sp.SleepValue));
+                                                    }
+    
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[j]) + "睡眠了");
                                                 }
                                                 else
@@ -1948,7 +2010,21 @@ public class GameControl : MonoBehaviour
                                                 int ranHit = Random.Range(0, 100);
                                                 if (ranHit < hitRate)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.Poison, 0, (byte)sp.PoisonValue));
+                                                    bool buffExist = false;
+                                                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                                    {
+                                                        if (targetMenber[j].buff[k].type == FightBuffType.Poison)
+                                                        {
+                                                            targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
+                                                            buffExist = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (!buffExist)
+                                                    {
+                                                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Poison, 0, (byte)sp.PoisonValue));
+                                                    }
+                                       
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[j]) + "中毒了");
                                                 }
                                                 else
@@ -1975,7 +2051,10 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpAtk) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpAtk) {
+                                                        targetMenber[j].buff[k].round = 2;
+                                                        buffExist = true;
+                                                        break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -1990,7 +2069,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpMAtk) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpMAtk) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2005,7 +2084,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDef) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDef) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2019,7 +2098,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpMDef) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpMDef) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2033,7 +2112,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpHit) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpHit) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2047,7 +2126,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDod) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDod) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2061,7 +2140,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpCriD) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpCriD) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2076,7 +2155,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWindDam) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWindDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2090,7 +2169,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpFireDam) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpFireDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2104,7 +2183,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWaterDam) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWaterDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2118,7 +2197,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpGroundDam) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpGroundDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2132,7 +2211,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpLightDam) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpLightDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2146,7 +2225,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDarkDam) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDarkDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2161,7 +2240,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWindRes) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWindRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2175,7 +2254,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpFireRes) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpFireRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2189,7 +2268,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWaterRes) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWaterRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2203,7 +2282,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpGroundRes) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpGroundRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2217,7 +2296,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpLightRes) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpLightRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2231,7 +2310,7 @@ public class GameControl : MonoBehaviour
                                                 bool buffExist = false;
                                                 for (int k = 0; k < targetMenber[j].buff.Count; k++)
                                                 {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDarkRes) { buffExist = true; break; }
+                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDarkRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
                                                 }
                                                 if (!buffExist)
                                                 {
@@ -2329,9 +2408,6 @@ public class GameControl : MonoBehaviour
                         Debug.Log("发动设置的普通攻击");
                         //选取目标
                         List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
-                        //Debug.Log("i=" + i);
-                        //Debug.Log("actionMenber[i].hit =" + actionMenber[i].hit);
-                        //Debug.Log("targetMenber[0].dod =" + targetMenber[0].dod);
                         if (targetMenber.Count > 0)
                         {
                             int hitRate = (int)((float)actionMenber[i].hit / (actionMenber[i].hit + targetMenber[0].dod) * 100);
@@ -2370,34 +2446,114 @@ public class GameControl : MonoBehaviour
 
                     round++;
 
+                    actionMenber[i].skillIndex++;
+                    if (actionMenber[i].skillIndex >= 4)
+                    {
+                        actionMenber[i].skillIndex = 0;
+                    }
                 }
 
-                actionMenber[i].skillIndex++;
-                if (actionMenber[i].skillIndex >= 4)
+                //移除失效的buff
+                for (int j = actionMenber[i].buff.Count - 1; j >= 0; j--)
                 {
-                    actionMenber[i].skillIndex = 0;
+                    if (actionMenber[i].buff[j].round == 0)
+                    {
+                        switch (actionMenber[i].buff[j].type)
+                        {
+                            case FightBuffType.UpAtk:
+                                actionMenber[i].atkMin = (short)(actionMenber[i].atkMin / (1f + actionMenber[i].buff[j].value / 100f));
+                                actionMenber[i].atkMax = (short)(actionMenber[i].atkMax / (1f + actionMenber[i].buff[j].value / 100f));
+                                break;
+                            case FightBuffType.UpMAtk:
+                                actionMenber[i].mAtkMin = (short)(actionMenber[i].mAtkMin / (1f + actionMenber[i].buff[j].value / 100f));
+                                actionMenber[i].mAtkMax = (short)(actionMenber[i].mAtkMax / (1f + actionMenber[i].buff[j].value / 100f));
+                                break;
+                            case FightBuffType.UpDef:
+                                actionMenber[i].def = (short)(actionMenber[i].def / (1f + actionMenber[i].buff[j].value / 100f));
+                                break;
+                            case FightBuffType.UpMDef:
+                                actionMenber[i].mDef = (short)(actionMenber[i].mDef / (1f + actionMenber[i].buff[j].value / 100f));
+                                break;
+                            case FightBuffType.UpHit:
+                                actionMenber[i].hit = (short)(actionMenber[i].hit / (1f + actionMenber[i].buff[j].value / 100f));
+                                break;
+                            case FightBuffType.UpDod:
+                                actionMenber[i].dod = (short)(actionMenber[i].dod / (1f + actionMenber[i].buff[j].value / 100f));
+                                break;
+                            case FightBuffType.UpCriD:
+                                actionMenber[i].criD = (short)(actionMenber[i].criD / (1f + actionMenber[i].buff[j].value / 100f));
+                                break;
+                            case FightBuffType.UpWindDam:
+                                actionMenber[i].windDam -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpFireDam:
+                                actionMenber[i].fireDam -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpWaterDam:
+                                actionMenber[i].waterDam -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpGroundDam:
+                                actionMenber[i].groundDam -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpLightDam:
+                                actionMenber[i].lightDam -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpDarkDam:
+                                actionMenber[i].darkDam -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpWindRes:
+                                actionMenber[i].windRes -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpFireRes:
+                                actionMenber[i].fireRes -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpWaterRes:
+                                actionMenber[i].waterRes -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpGroundRes:
+                                actionMenber[i].groundRes -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpLightRes:
+                                actionMenber[i].lightRes -= actionMenber[i].buff[j].value;
+                                break;
+                            case FightBuffType.UpDarkRes:
+                                actionMenber[i].darkRes -= actionMenber[i].buff[j].value;
+                                break;
+                        }
+
+                        actionMenber[i].buff.Remove(actionMenber[i].buff[j]);
+                    }
                 }
+
             }
 
             actionMenber.Clear();
-            int CheckFightOverResult = CheckFightOver(fightMenberObjects);
+             CheckFightOverResult = CheckFightOver(fightMenberObjects);
             if (CheckFightOverResult != -1)
             {
-                if (CheckFightOverResult == 0)
-                {
-                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "战斗胜利！");
-                }
-                else if (CheckFightOverResult == 1)
-                {
-                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "被击败了！");
-                }
+                
                 break;
             }
         }
         if (round > RoundLimit)
         {
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "超过"+ RoundLimit + "回合,战斗失败！");
+            AdventureMainPanel.Instance.TeamLogAdd(teamID, "超过" + RoundLimit + "回合");
+            CheckFightOverResult = 1;
         }
+
+        if (CheckFightOverResult == 0)
+        {
+            AdventureMainPanel.Instance.TeamLogAdd(teamID, "战斗胜利！");
+            adventureTeamList[teamID].action = AdventureAction.Walk;
+        }
+        else if (CheckFightOverResult == 1)
+        {
+            AdventureMainPanel.Instance.TeamLogAdd(teamID, "被击败了！");
+
+            adventureTeamList[teamID].state = AdventureState.Fail;
+            adventureTeamList[teamID].action = AdventureAction.None;
+        }
+        
 
         //结算
         for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
@@ -2443,6 +2599,7 @@ public class GameControl : MonoBehaviour
 
     List<FightMenberObject> GetTargetManbers(List<FightMenberObject> fightMenberObjects, FightMenberObject actionMenber, SkillPrototype sp)
     {
+        //TODO:混乱选取目标情况待写，随机选取待写（目前按序列取）
         List<FightMenberObject> targetMenber = new List<FightMenberObject>();
         int maxCount;
         if (sp != null)
@@ -2558,7 +2715,7 @@ public class GameControl : MonoBehaviour
                 }
             }
         }
-        Debug.Log("targetMenber" + targetMenber.Count);
+        //Debug.Log("targetMenber" + targetMenber.Count);
         return targetMenber;
     }
 

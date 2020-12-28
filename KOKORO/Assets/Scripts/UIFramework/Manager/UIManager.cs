@@ -132,7 +132,7 @@ public class UIManager
             GameObject instPanel = GameObject.Instantiate(Resources.Load(path)) as GameObject;//根据路径加载并实例化面板
             instPanel.transform.SetParent(this.CanvasTransform, false);//设置为Canvas的子物体,false表示实例化的子物体坐标以Canvas为准
             instPanel.transform.name = panelType.ToString() + "Panel";
-            //TODO
+            
             panelDict.Add(panelType, instPanel.GetComponent<BasePanel>());
             return instPanel.GetComponent<BasePanel>();
         }

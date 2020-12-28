@@ -134,7 +134,7 @@ public class GameControlInPlay : MonoBehaviour
                         byte teamID = (byte)gc.executeEventList[0].value[0];
 
                         /*战斗事件*/
-                        gc.AdventureFight(teamID);
+                        gc.AdventureEventHappen(teamID);
                         gc.executeEventList.RemoveAt(0);
 
                         break;
