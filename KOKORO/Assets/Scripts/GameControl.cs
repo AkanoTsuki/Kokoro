@@ -1491,9 +1491,10 @@ public class GameControl : MonoBehaviour
 
         adventureTeamList[teamID].state = AdventureState.Doing;
         adventureTeamList[teamID].action = AdventureAction.Walk;
+        AdventureMainPanel.Instance.UpdateSceneRole(teamID);
         AdventureMainPanel.Instance.UpdateTeam(teamID);
         //AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
-        AdventureMainPanel.Instance.UpdateSceneRole(teamID);
+       
 
         CreateAdventureEvent(teamID);
     }
@@ -1509,7 +1510,7 @@ public class GameControl : MonoBehaviour
     }
 
 
-     IEnumerator AdventureFight(byte teamID)
+    IEnumerator AdventureFight(byte teamID)
     {
         adventureTeamList[teamID].action = AdventureAction.Fight;
 
@@ -1722,6 +1723,8 @@ public class GameControl : MonoBehaviour
         }
 
         AdventureMainPanel.Instance.UpdateSceneEnemy(teamID);
+        AdventureMainPanel.Instance.HideSceneRoleHpMp(teamID);
+        AdventureMainPanel.Instance.UpdateSceneRoleHpMp(teamID, fightMenberObjects);
 
         Debug.Log("遭遇了" + monsterNameList + ",开始战斗！");
         AdventureMainPanel.Instance.TeamLogAdd(teamID, "遭遇了" + monsterNameList+",开始战斗！");
@@ -1810,9 +1813,10 @@ public class GameControl : MonoBehaviour
                             if (ran < GetSkillProbability(skillID))
                             {
                                 Debug.Log("发动技能");
-                                AdventureMainPanel.Instance.SetAnim(teamID, actionMenber[i].side, actionMenber[i].sideIndex, AnimStatus.Magic);
-                                yield return new WaitForSeconds(1.0f);
+                                StartCoroutine(Attack(teamID, actionMenber[i], sp));
+
                                 actionMenber[i].mpNow -= GetSkillMpCost(skillID);
+                                AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, actionMenber[i]);
 
                                 //选取目标
                                 List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], sp);
@@ -1907,7 +1911,7 @@ public class GameControl : MonoBehaviour
                                                     damageWithElement = (int)(damageWithElement * (actionMenber[i].criD / 100f));
                                                 }
 
-                                                Attack(teamID, round, actionMenber[i], targetMenber[0], sp, damage);
+                                                TakeDamage(teamID, round, actionMenber[i], targetMenber[0], sp, damage);
 
                                                 //AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber[i]) + "用" + sp.Name + "对" + OutputNameWithColor(targetMenber[0]) + "造成" + damageWithElement + "点伤害");
                                                 ////造成伤害
@@ -1921,6 +1925,7 @@ public class GameControl : MonoBehaviour
                                             }
                                             else//未命中
                                             {
+                                                AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber[j].side, targetMenber[j].sideIndex, "MISS");
                                                 AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[j]) + "避开了" + OutputNameWithColor(actionMenber[i]) + "的攻击");
                                             }
                                         }
@@ -2335,8 +2340,7 @@ public class GameControl : MonoBehaviour
                             else//技能概率未触发，普通攻击
                             {
                                 Debug.Log("技能概率未触发，普通攻击");
-                                AdventureMainPanel.Instance.SetAnim(teamID, actionMenber[i].side, actionMenber[i].sideIndex, AnimStatus.Attack);
-                                yield return new WaitForSeconds(1.0f);
+                                StartCoroutine(Attack(teamID, actionMenber[i], null));
                                 //选取目标
                                 List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
                                 if (targetMenber.Count > 0)
@@ -2353,19 +2357,12 @@ public class GameControl : MonoBehaviour
                                         {
                                             damage = (int)(damage * (actionMenber[i].criD / 100f));
                                         }
-
-                                        AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber[i]) + "普通攻击对" + OutputNameWithColor(targetMenber[0]) + "造成" + damage + "点伤害");
-                                        //造成伤害
-                                        targetMenber[0].hpNow -= damage;
-                                        if (targetMenber[0].hpNow < 0)
-                                        {
-                                            targetMenber[0].hpNow = 0;
-                                            AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[0]) + "被打败了！");
-
-                                        }
+                                        TakeDamage(teamID, round, actionMenber[i], targetMenber[0], null, damage);
+                                  
                                     }
                                     else//未命中
                                     {
+                                        AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber[0].side, targetMenber[0].sideIndex, "MISS");
                                         AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[0]) + "避开了" + OutputNameWithColor(actionMenber[i]) + "的攻击");
                                     }
                                 }
@@ -2376,8 +2373,7 @@ public class GameControl : MonoBehaviour
                         else//MP不足，普通攻击
                         {
                             Debug.Log("MP不足，普通攻击");
-                            AdventureMainPanel.Instance.SetAnim(teamID, actionMenber[i].side, actionMenber[i].sideIndex, AnimStatus.Attack);
-                            yield return new WaitForSeconds(1.0f);
+                            StartCoroutine(Attack(teamID, actionMenber[i], null));
                             //选取目标
                             List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
                             if (targetMenber.Count > 0)
@@ -2395,7 +2391,7 @@ public class GameControl : MonoBehaviour
                                         damage = (int)(damage * (actionMenber[i].criD / 100f));
                                     }
 
-                                    Attack(teamID, round,actionMenber[i], targetMenber[0],null, damage);
+                                    TakeDamage(teamID, round,actionMenber[i], targetMenber[0],null, damage);
 
                                     //AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber[i]) + "普通攻击对" + OutputNameWithColor(targetMenber[0]) + "造成" + damage + "点伤害");
                                     ////造成伤害
@@ -2409,6 +2405,7 @@ public class GameControl : MonoBehaviour
                                 }
                                 else//未命中
                                 {
+                                    AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber[0].side, targetMenber[0].sideIndex, "MISS");
                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[0]) + "避开了" + OutputNameWithColor(actionMenber[i]) + "的攻击");
                                 }
                             }
@@ -2419,8 +2416,7 @@ public class GameControl : MonoBehaviour
                     else//普通攻击
                     {
                         Debug.Log("发动设置的普通攻击");
-                        AdventureMainPanel.Instance.SetAnim(teamID, actionMenber[i].side, actionMenber[i].sideIndex, AnimStatus.Attack);
-                        yield return new WaitForSeconds(1.0f);
+                        StartCoroutine(Attack(teamID, actionMenber[i], null));
                         //选取目标
                         List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
                         if (targetMenber.Count > 0)
@@ -2438,20 +2434,12 @@ public class GameControl : MonoBehaviour
                                     damage = (int)(damage * (actionMenber[i].criD / 100f));
                                 }
 
-                                Attack(teamID, round, actionMenber[i], targetMenber[0], null, damage);
+                                TakeDamage(teamID, round, actionMenber[i], targetMenber[0], null, damage);
 
-                                //AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber[i]) + "普通攻击对" + OutputNameWithColor(targetMenber[0]) + "造成" + damage + "点伤害");
-                                ////造成伤害
-                                //targetMenber[0].hpNow -= damage;
-                                //if (targetMenber[0].hpNow < 0)
-                                //{
-                                //    targetMenber[0].hpNow = 0;
-                                //    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[0]) + "被打败了！");
-
-                                //}
                             }
                             else//未命中
                             {
+                                AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber[0].side, targetMenber[0].sideIndex, "MISS");
                                 AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[0]) + "避开了" + OutputNameWithColor(actionMenber[i]) + "的攻击");
                             }
 
@@ -2468,7 +2456,7 @@ public class GameControl : MonoBehaviour
                         actionMenber[i].skillIndex = 0;
                     }
                 }
-
+                yield return new WaitForSeconds(1f);//单个行动角色行动完后等1s
                 //移除失效的buff
                 for (int j = actionMenber[i].buff.Count - 1; j >= 0; j--)
                 {
@@ -2580,10 +2568,32 @@ public class GameControl : MonoBehaviour
         AdventureMainPanel.Instance.UpdateTeamHero(teamID);
     }
 
-    void Attack(byte teamID,int round,FightMenberObject actionMenber, FightMenberObject targetMenber,SkillPrototype sp,int damage)
+    IEnumerator Attack(byte teamID, FightMenberObject actionMenber, SkillPrototype sp)
     {
 
-        AdventureMainPanel.Instance.SetAnim(teamID, actionMenber.side, actionMenber.sideIndex,AnimStatus.Hit);
+        AdventureMainPanel.Instance.SetAnim(teamID, actionMenber.side, actionMenber.sideIndex, sp != null? sp.ActionAnim: AnimStatus.Attack);
+        yield return new WaitForSeconds(0.5f);
+        // AdventureMainPanel.Instance.SetAnim(teamID, actionMenber[i].side, actionMenber[i].sideIndex, AnimStatus.Magic);
+    }
+
+    void TakeDamage(byte teamID,int round,FightMenberObject actionMenber, FightMenberObject targetMenber,SkillPrototype sp,int damage)
+    {
+        string effectName = "";
+        if (sp != null)
+        {
+            Debug.Log("actionMenber="+ actionMenber.name + " sp.Name=" + sp.Name + " sp.Effect=" + sp.Effect);
+            effectName = sp.Effect;
+        }
+        else
+        {
+            effectName = "sword_1";
+        }
+      
+
+
+        AdventureMainPanel.Instance.ShowEffect(teamID, targetMenber.side, targetMenber.sideIndex, effectName);
+        AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "-"+damage);
+        AdventureMainPanel.Instance.SetAnim(teamID, targetMenber.side, targetMenber.sideIndex,AnimStatus.Hit);
 
         
         //造成伤害
@@ -2591,14 +2601,13 @@ public class GameControl : MonoBehaviour
         if (targetMenber.hpNow < 0)
         {
             targetMenber.hpNow = 0;
-           
-
         }
-
-        AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber) + "用" + (sp != null ? sp.Name : "普通攻击") + "对" + OutputNameWithColor(targetMenber) + "造成" + damage + "点伤害(剩"+ targetMenber.hpNow+")");
+        AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, targetMenber);
+        AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber) + "用" + (sp != null ? "<color=#4FA3C1>" + sp.Name+"</color>" : "普通攻击") + "对" + OutputNameWithColor(targetMenber) + "造成" + damage + "点伤害("+ OutputNameWithColor(targetMenber) + "HP "+ targetMenber.hpNow+")");
 
         if (targetMenber.hpNow == 0)
         {
+            AdventureMainPanel.Instance.SetAnim(teamID, targetMenber.side, targetMenber.sideIndex, AnimStatus.Death);
             AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber) + "被打倒了！");
         }
     }
@@ -2638,7 +2647,11 @@ public class GameControl : MonoBehaviour
 
     List<FightMenberObject> GetTargetManbers(List<FightMenberObject> fightMenberObjects, FightMenberObject actionMenber, SkillPrototype sp)
     {
-        //TODO:混乱选取目标情况待写，随机选取待写（目前按序列取）
+        //TODO:混乱选取目标情况待写，随机选取待写（目前按序列取），策略选取待写（AI）
+        List<FightMenberObject> temp_fightMenberObjects = ListRandom<FightMenberObject>(fightMenberObjects);
+
+
+
         List<FightMenberObject> targetMenber = new List<FightMenberObject>();
         int maxCount;
         if (sp != null)
@@ -2649,15 +2662,15 @@ public class GameControl : MonoBehaviour
 
                 if (actionMenber.side == 0)
                 {
-                    for (int j = 0; j < fightMenberObjects.Count; j++)
+                    for (int j = 0; j < temp_fightMenberObjects.Count; j++)
                     {
-                        if (fightMenberObjects[j].side == 1)
+                        if (temp_fightMenberObjects[j].side == 1)
                         {
-                            if (fightMenberObjects[j].hpNow > 0)
+                            if (temp_fightMenberObjects[j].hpNow > 0)
                             {
                                 if (maxCount > 0)
                                 {
-                                    targetMenber.Add(fightMenberObjects[j]);
+                                    targetMenber.Add(temp_fightMenberObjects[j]);
                                 }
                                 maxCount--;
                             }
@@ -2667,15 +2680,15 @@ public class GameControl : MonoBehaviour
                 }
                 else if (actionMenber.side == 1)
                 {
-                    for (int j = 0; j < fightMenberObjects.Count; j++)
+                    for (int j = 0; j < temp_fightMenberObjects.Count; j++)
                     {
-                        if (fightMenberObjects[j].side == 0)
+                        if (temp_fightMenberObjects[j].side == 0)
                         {
-                            if (fightMenberObjects[j].hpNow > 0)
+                            if (temp_fightMenberObjects[j].hpNow > 0)
                             {
                                 if (maxCount > 0)
                                 {
-                                    targetMenber.Add(fightMenberObjects[j]);
+                                    targetMenber.Add(temp_fightMenberObjects[j]);
                                 }
                                 maxCount--;
                             }
@@ -2687,15 +2700,15 @@ public class GameControl : MonoBehaviour
             {
                 if (actionMenber.side == 0)
                 {
-                    for (int j = 0; j < fightMenberObjects.Count; j++)
+                    for (int j = 0; j < temp_fightMenberObjects.Count; j++)
                     {
-                        if (fightMenberObjects[j].side == 0)
+                        if (temp_fightMenberObjects[j].side == 0)
                         {
-                            if (fightMenberObjects[j].hpNow > 0)
+                            if (temp_fightMenberObjects[j].hpNow > 0)
                             {
                                 if (maxCount > 0)
                                 {
-                                    targetMenber.Add(fightMenberObjects[j]);
+                                    targetMenber.Add(temp_fightMenberObjects[j]);
                                 }
                                 maxCount--;
                             }
@@ -2705,15 +2718,15 @@ public class GameControl : MonoBehaviour
                 }
                 else if (actionMenber.side == 1)
                 {
-                    for (int j = 0; j < fightMenberObjects.Count; j++)
+                    for (int j = 0; j < temp_fightMenberObjects.Count; j++)
                     {
-                        if (fightMenberObjects[j].side == 1)
+                        if (temp_fightMenberObjects[j].side == 1)
                         {
-                            if (fightMenberObjects[j].hpNow > 0)
+                            if (temp_fightMenberObjects[j].hpNow > 0)
                             {
                                 if (maxCount > 0)
                                 {
-                                    targetMenber.Add(fightMenberObjects[j]);
+                                    targetMenber.Add(temp_fightMenberObjects[j]);
                                 }
                                 maxCount--;
                             }
@@ -2727,13 +2740,13 @@ public class GameControl : MonoBehaviour
         {
             if (actionMenber.side == 0)
             {
-                for (int j = 0; j < fightMenberObjects.Count; j++)
+                for (int j = 0; j < temp_fightMenberObjects.Count; j++)
                 {
-                    if (fightMenberObjects[j].side == 1)
+                    if (temp_fightMenberObjects[j].side == 1)
                     {
-                        if (fightMenberObjects[j].hpNow > 0)
+                        if (temp_fightMenberObjects[j].hpNow > 0)
                         {
-                            targetMenber.Add(fightMenberObjects[j]);
+                            targetMenber.Add(temp_fightMenberObjects[j]);
                             break;
                         }
                     }
@@ -2741,13 +2754,13 @@ public class GameControl : MonoBehaviour
             }
             else if (actionMenber.side == 1)
             {
-                for (int j = 0; j < fightMenberObjects.Count; j++)
+                for (int j = 0; j < temp_fightMenberObjects.Count; j++)
                 {
-                    if (fightMenberObjects[j].side == 0)
+                    if (temp_fightMenberObjects[j].side == 0)
                     {
-                        if (fightMenberObjects[j].hpNow > 0)
+                        if (temp_fightMenberObjects[j].hpNow > 0)
                         {
-                            targetMenber.Add(fightMenberObjects[j]);
+                            targetMenber.Add(temp_fightMenberObjects[j]);
                             break;
                         }
                     }
@@ -3321,4 +3334,15 @@ public class GameControl : MonoBehaviour
         }
     }
     #endregion
+
+    public static List<T> ListRandom<T>(List<T> sources)
+    {
+        var random = new System.Random();
+        var resultList = new List<T>();
+        foreach (var item in sources)
+        {
+            resultList.Insert(random.Next(resultList.Count), item);
+        }
+        return resultList;
+    }
 }

@@ -23973,6 +23973,8 @@
       "ID": 0,
       "Name": "疾风",
       "Pic": "wind_i_1",
+      "Effect": "wind_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         1
       ],
@@ -24030,6 +24032,8 @@
       "ID": 1,
       "Name": "狂风",
       "Pic": "wind_i_2",
+      "Effect": "wind_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         1
       ],
@@ -24087,6 +24091,8 @@
       "ID": 2,
       "Name": "龙卷",
       "Pic": "wind_i_3",
+      "Effect": "wind_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         1
       ],
@@ -24142,8 +24148,10 @@
     },
     {
       "ID": 3,
-      "Name": "末世风暴",
+      "Name": "末世龙卷",
       "Pic": "wind_i_4",
+      "Effect": "wind_4",
+      "ActionAnimStr": "Magic",
       "Element": [
         1
       ],
@@ -24201,6 +24209,8 @@
       "ID": 4,
       "Name": "闪电",
       "Pic": "wind_ii_1",
+      "Effect": "lightning_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         1,
         5
@@ -24259,6 +24269,8 @@
       "ID": 5,
       "Name": "雷击",
       "Pic": "wind_ii_2",
+      "Effect": "lightning_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         1,
         5
@@ -24317,6 +24329,8 @@
       "ID": 6,
       "Name": "雷暴",
       "Pic": "wind_ii_3",
+      "Effect": "lightning_4",
+      "ActionAnimStr": "Magic",
       "Element": [
         1,
         5
@@ -24375,6 +24389,8 @@
       "ID": 7,
       "Name": "雷电咆哮",
       "Pic": "wind_ii_4",
+      "Effect": "lightning_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         1,
         5
@@ -24433,6 +24449,8 @@
       "ID": 8,
       "Name": "火焰",
       "Pic": "fire_i_1",
+      "Effect": "fire_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         2
       ],
@@ -24490,6 +24508,8 @@
       "ID": 9,
       "Name": "火焰冲击",
       "Pic": "fire_i_2",
+      "Effect": "fire_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         2
       ],
@@ -24547,6 +24567,8 @@
       "ID": 10,
       "Name": "火漩涡",
       "Pic": "fire_i_3",
+      "Effect": "fire_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         2
       ],
@@ -24604,6 +24626,8 @@
       "ID": 11,
       "Name": "炼狱",
       "Pic": "fire_i_4",
+      "Effect": "fire_4",
+      "ActionAnimStr": "Magic",
       "Element": [
         2
       ],
@@ -24661,6 +24685,8 @@
       "ID": 12,
       "Name": "引爆",
       "Pic": "fire_ii_1",
+      "Effect": "impact_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         2,
         4
@@ -24719,6 +24745,8 @@
       "ID": 13,
       "Name": "爆炸",
       "Pic": "fire_ii_2",
+      "Effect": "explosion_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         2,
         4
@@ -24777,6 +24805,8 @@
       "ID": 14,
       "Name": "燃爆新星",
       "Pic": "fire_ii_3",
+      "Effect": "earth_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         2,
         4
@@ -24835,6 +24865,8 @@
       "ID": 15,
       "Name": "核子爆发",
       "Pic": "fire_ii_4",
+      "Effect": "explosion_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         2,
         4
@@ -24891,8 +24923,10 @@
     },
     {
       "ID": 16,
-      "Name": "水气",
+      "Name": "水弹",
       "Pic": "water_i_1",
+      "Effect": "water_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         3
       ],
@@ -24948,8 +24982,10 @@
     },
     {
       "ID": 17,
-      "Name": "暴雨",
+      "Name": "暴水弹",
       "Pic": "water_i_2",
+      "Effect": "water_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         3
       ],
@@ -25007,6 +25043,8 @@
       "ID": 18,
       "Name": "水柱",
       "Pic": "water_i_3",
+      "Effect": "water_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         3
       ],
@@ -25064,6 +25102,8 @@
       "ID": 19,
       "Name": "海啸",
       "Pic": "water_i_4",
+      "Effect": "water_4",
+      "ActionAnimStr": "Magic",
       "Element": [
         3
       ],
@@ -25121,6 +25161,8 @@
       "ID": 20,
       "Name": "结冰",
       "Pic": "water_ii_1",
+      "Effect": "ice_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         3,
         6
@@ -25179,6 +25221,8 @@
       "ID": 21,
       "Name": "霜冻",
       "Pic": "water_ii_2",
+      "Effect": "ice_4",
+      "ActionAnimStr": "Magic",
       "Element": [
         3,
         6
@@ -25237,6 +25281,8 @@
       "ID": 22,
       "Name": "寒冷新星",
       "Pic": "water_ii_3",
+      "Effect": "ice_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         3,
         6
@@ -25295,6 +25341,8 @@
       "ID": 23,
       "Name": "极地冰刃",
       "Pic": "water_ii_4",
+      "Effect": "ice_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         3,
         6
@@ -25353,6 +25401,8 @@
       "ID": 24,
       "Name": "飞石",
       "Pic": "ground_i_1",
+      "Effect": "weapon_8",
+      "ActionAnimStr": "Magic",
       "Element": [
         4
       ],
@@ -25410,6 +25460,8 @@
       "ID": 25,
       "Name": "地裂",
       "Pic": "ground_i_2",
+      "Effect": "dust_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         4
       ],
@@ -25467,6 +25519,8 @@
       "ID": 26,
       "Name": "石化",
       "Pic": "ground_i_3",
+      "Effect": "earth_4",
+      "ActionAnimStr": "Magic",
       "Element": [
         4
       ],
@@ -25524,6 +25578,8 @@
       "ID": 27,
       "Name": "毁灭沙暴",
       "Pic": "ground_i_4",
+      "Effect": "smoke_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         4
       ],
@@ -25581,6 +25637,8 @@
       "ID": 28,
       "Name": "飞叶",
       "Pic": "ground_ii_1",
+      "Effect": "earth_5",
+      "ActionAnimStr": "Magic",
       "Element": [
         4,
         3
@@ -25639,6 +25697,8 @@
       "ID": 29,
       "Name": "缠绕",
       "Pic": "ground_ii_2",
+      "Effect": "earth_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         4,
         3
@@ -25697,6 +25757,8 @@
       "ID": 30,
       "Name": "毒虫",
       "Pic": "ground_ii_3",
+      "Effect": "bite_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         4,
         3
@@ -25755,6 +25817,8 @@
       "ID": 31,
       "Name": "自然爆发",
       "Pic": "ground_ii_4",
+      "Effect": "earth_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         4,
         3
@@ -25813,6 +25877,8 @@
       "ID": 32,
       "Name": "闪光",
       "Pic": "light_i_1",
+      "Effect": "heal_5",
+      "ActionAnimStr": "Magic",
       "Element": [
         5
       ],
@@ -25870,6 +25936,8 @@
       "ID": 33,
       "Name": "圣光",
       "Pic": "light_i_2",
+      "Effect": "heal_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         5
       ],
@@ -25927,6 +25995,8 @@
       "ID": 34,
       "Name": "天罚",
       "Pic": "light_i_3",
+      "Effect": "holy_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         5
       ],
@@ -25984,6 +26054,8 @@
       "ID": 35,
       "Name": "圣神领域",
       "Pic": "light_i_4",
+      "Effect": "holy_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         5
       ],
@@ -26041,6 +26113,8 @@
       "ID": 36,
       "Name": "超越",
       "Pic": "light_ii_1",
+      "Effect": "heal_4",
+      "ActionAnimStr": "Magic",
       "Element": [
         5,
         1
@@ -26099,6 +26173,8 @@
       "ID": 37,
       "Name": "结界",
       "Pic": "light_ii_2",
+      "Effect": "heal_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         5,
         1
@@ -26157,6 +26233,8 @@
       "ID": 38,
       "Name": "异世之门",
       "Pic": "light_ii_3",
+      "Effect": "diamond_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         5,
         1
@@ -26215,6 +26293,8 @@
       "ID": 39,
       "Name": "时空漩涡",
       "Pic": "light_ii_4",
+      "Effect": "clock_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         5,
         1
@@ -26273,6 +26353,8 @@
       "ID": 40,
       "Name": "暗影",
       "Pic": "dark_i_1",
+      "Effect": "smoke_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         6
       ],
@@ -26330,6 +26412,8 @@
       "ID": 41,
       "Name": "混沌",
       "Pic": "dark_i_2",
+      "Effect": "darkness_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         6
       ],
@@ -26387,6 +26471,8 @@
       "ID": 42,
       "Name": "邪能",
       "Pic": "dark_i_3",
+      "Effect": "lightning_3",
+      "ActionAnimStr": "Magic",
       "Element": [
         6
       ],
@@ -26444,6 +26530,8 @@
       "ID": 43,
       "Name": "冥界封锁",
       "Pic": "dark_i_4",
+      "Effect": "status_9",
+      "ActionAnimStr": "Magic",
       "Element": [
         6
       ],
@@ -26501,6 +26589,8 @@
       "ID": 44,
       "Name": "猛毒",
       "Pic": "dark_ii_1",
+      "Effect": "darkness_2",
+      "ActionAnimStr": "Magic",
       "Element": [
         6,
         2
@@ -26559,6 +26649,8 @@
       "ID": 45,
       "Name": "缚灵",
       "Pic": "dark_ii_2",
+      "Effect": "status_8",
+      "ActionAnimStr": "Magic",
       "Element": [
         6,
         2
@@ -26617,6 +26709,8 @@
       "ID": 46,
       "Name": "裂魂",
       "Pic": "dark_ii_3",
+      "Effect": "claw_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         6,
         2
@@ -26675,6 +26769,8 @@
       "ID": 47,
       "Name": "亡灵侵蚀",
       "Pic": "dark_ii_4",
+      "Effect": "darkness_1",
+      "ActionAnimStr": "Magic",
       "Element": [
         6,
         2
@@ -26733,6 +26829,8 @@
       "ID": 48,
       "Name": "风斩",
       "Pic": "z_wind",
+      "Effect": "sword_3",
+      "ActionAnimStr": "Attack",
       "Element": [
         1
       ],
@@ -26790,6 +26888,8 @@
       "ID": 49,
       "Name": "火斩",
       "Pic": "z_fire",
+      "Effect": "sword_3",
+      "ActionAnimStr": "Attack",
       "Element": [
         2
       ],
@@ -26847,6 +26947,8 @@
       "ID": 50,
       "Name": "水斩",
       "Pic": "z_water",
+      "Effect": "sword_3",
+      "ActionAnimStr": "Attack",
       "Element": [
         3
       ],
@@ -26904,6 +27006,8 @@
       "ID": 51,
       "Name": "地斩",
       "Pic": "z_ground",
+      "Effect": "sword_3",
+      "ActionAnimStr": "Attack",
       "Element": [
         4
       ],
@@ -26961,6 +27065,8 @@
       "ID": 52,
       "Name": "光斩",
       "Pic": "z_light",
+      "Effect": "sword_3",
+      "ActionAnimStr": "Attack",
       "Element": [
         5
       ],
@@ -27018,6 +27124,8 @@
       "ID": 53,
       "Name": "暗斩",
       "Pic": "z_dark",
+      "Effect": "sword_3",
+      "ActionAnimStr": "Attack",
       "Element": [
         6
       ],
@@ -27075,6 +27183,8 @@
       "ID": 54,
       "Name": "精确射击",
       "Pic": "j_1",
+      "Effect": "arrow_2",
+      "ActionAnimStr": "Bow",
       "Element": [
         0
       ],
@@ -27132,6 +27242,8 @@
       "ID": 55,
       "Name": "多重射击",
       "Pic": "j_2",
+      "Effect": "arrow_1",
+      "ActionAnimStr": "Bow",
       "Element": [
         0
       ],
@@ -27189,6 +27301,8 @@
       "ID": 56,
       "Name": "穿透射击",
       "Pic": "j_3",
+      "Effect": "weapon_5",
+      "ActionAnimStr": "Bow",
       "Element": [
         0
       ],
@@ -27246,6 +27360,8 @@
       "ID": 57,
       "Name": "强力射击",
       "Pic": "j_4",
+      "Effect": "arrow_1",
+      "ActionAnimStr": "Bow",
       "Element": [
         0
       ],

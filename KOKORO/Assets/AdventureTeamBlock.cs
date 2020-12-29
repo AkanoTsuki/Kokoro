@@ -11,12 +11,18 @@ public class AdventureTeamBlock : MonoBehaviour
     public GameObject dungeon_bgListGo;
     public GameObject dungeon_heroListGo;//TODO:可能要移除
     public GameObject dungeon_fgListGo;
+    public GameObject dungeon_effectLayerGo;
+    public GameObject dungeon_numLayerGo;
 
     public List<RectTransform> dungeon_sceneBgRt;
     public List<RectTransform> dungeon_sceneFgRt;
 
     public List<GameObject> dungeon_side0Go;
     public List<GameObject> dungeon_side1Go;
+    public List<RectTransform> dungeon_side0HpRt;
+    public List<RectTransform> dungeon_side0MpRt;
+    public List<RectTransform> dungeon_side1HpRt;
+    public List<RectTransform> dungeon_side1MpRt;
 
     public Button dungeon_selectBtn;
 

@@ -227,6 +227,19 @@ public enum FightBuffType
     Sleep
 }
 
+public enum AnimStatus
+{
+    Front,//正面静止
+    Idle,
+    WalkLeft,
+    WalkRight,
+    Attack,
+    Bow,
+    Magic,
+    Hit,
+    Death
+}
+
 public enum LogType
 {
     Info,
@@ -370,11 +383,14 @@ public class ItemObject
 
 //技能原型
 [System.Serializable]
-public class SkillPrototype
+public class SkillPrototype: ISerializationCallbackReceiver
 {
     public short ID;
     public string Name;
     public string Pic;
+    public string Effect;
+    public AnimStatus ActionAnim;
+    public string ActionAnimStr;
     public List<int> Element;
     public string Des;
     public short Mp;//消耗魔法
@@ -425,6 +441,17 @@ public class SkillPrototype
     public short UpGroundRes;
     public short UpLightRes;
     public short UpDarkRes;
+    public void OnAfterDeserialize()
+    {
+        AnimStatus type = (AnimStatus)Enum.Parse(typeof(AnimStatus), ActionAnimStr);
+        ActionAnim = type;
+
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class SkillObject
@@ -530,94 +557,7 @@ public class HeroPrototype
     public byte WorkSundry;
 }
 
-//英雄原型
-//[System.Serializable]
-//public class HeroPrototype
-//{
-//    public short ID;
-//    public string Name;
-//    public string PicMan;
-//    public string PicWoman;
-//    public int Hp;
-//    public int Mp;
-//    public short HpRenew;
-//    public short MpRenew;
-//    public short AtkMin;
-//    public short AtkMax;
-//    public short MAtkMin;
-//    public short MAtkMax;
-//    public short Def;
-//    public short MDef;
-//    public short Hit;
-//    public short Dod;
-//    public short CriR;
-//    public short CriD;
 
-//    public short HpGD;
-//    public short MpGD;
-//    public short HpRenewGD;
-//    public short MpRenewGD;
-//    public short AtkMinGD;
-//    public short AtkMaxGD;
-//    public short MAtkMinGD;
-//    public short MAtkMaxGD;
-//    public short DefGD;
-//    public short MDefGD;
-//    public short HitGD;
-//    public short DodGD;
-//    public short CriRGD;
-//    public short CriDGD;
-
-//    public short HpGU;
-//    public short MpGU;
-//    public short HpRenewGU;
-//    public short MpRenewGU;
-//    public short AtkMinGU;
-//    public short AtkMaxGU;
-//    public short MAtkMinGU;
-//    public short MAtkMaxGU;
-//    public short DefGU;
-//    public short MDefGU;
-//    public short HitGU;
-//    public short DodGU;
-//    public short CriRGU;
-//    public short CriDGU;
-
-//    public short Spd;
-//    public short WindDam;
-//    public short FireDam;
-//    public short WaterDam;
-//    public short GroundDam;
-//    public short LightDam;
-//    public short DarkDam;
-//    public short WindRes;
-//    public short FireRes;
-//    public short WaterRes;
-//    public short GroundRes;
-//    public short LightRes;
-//    public short DarkRes;
-//    public short DizzyRes;
-//    public short ConfusionRes;
-//    public short PoisonRes;
-//    public short SleepRes;
-//    public byte GoldGet;
-//    public byte ExpGet;
-//    public byte ItemGet;
-//    public byte WorkPlanting;
-//    public byte WorkFeeding;
-//    public byte WorkFishing;
-//    public byte WorkHunting;
-//    public byte WorkMining;
-//    public byte WorkQuarrying;
-//    public byte WorkFelling;
-//    public byte WorkBuild;
-//    public byte WorkMakeWeapon;
-//    public byte WorkMakeArmor;
-//    public byte WorkMakeJewelry;
-//    public byte WorkSundry;
-//}
-
-//英雄实例
 public class HeroObject
 {
     

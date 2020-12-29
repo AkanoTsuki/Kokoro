@@ -2,21 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public enum AnimStatus
-{
-    Front,//正面静止
-    Idle,
-    WalkLeft,
-    WalkRight,
-    Attack,
-    Bow,
-    Magic,
-    Hit,
-    Death
-}
+using DG.Tweening;
+
 public class AnimatiorControl : MonoBehaviour
 {
-    private float fps = 5.0f;
+    private float fps = 10.0f;
     private float time = 0;
     private int currentIndex = 0;
 
@@ -58,7 +48,6 @@ public class AnimatiorControl : MonoBehaviour
             {
                
                 gameObject.GetComponent<Image>().sprite = needFrames[currentIndex];
-                //Debug.Log(gameObject.GetComponent<Image>().sprite);
                 currentIndex++;
                 time = 0;
                 if (currentIndex > 2)
@@ -115,8 +104,8 @@ public class AnimatiorControl : MonoBehaviour
         walk_RightFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Right");
         walk_UpFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Up");
 
-        Debug.Log(walk_LeftFrames[0].texture.width + " " + walk_LeftFrames[0].texture.height);
-        Debug.Log(attackFrames[0].texture.width + " " + attackFrames[0].texture.height);
+        //Debug.Log(walk_LeftFrames[0].texture.width + " " + walk_LeftFrames[0].texture.height);
+        //Debug.Log(attackFrames[0].texture.width + " " + attackFrames[0].texture.height);
     }
 
     public void SetCharaFramesSimple(string name)//怪物用
@@ -166,7 +155,16 @@ public class AnimatiorControl : MonoBehaviour
                 needFrames[0] = attackFrames[0];
                 needFrames[1] = attackFrames[2];
                 needFrames[2] = attackFrames[1];
-             //   gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                //   gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                if (GetComponent<RectTransform>().anchoredPosition.x < 0)
+                {
+                    transform.DOShakePosition(1, Vector2.right * 10, 1, 0, true);
+                }
+                else
+                {
+                    transform.DOShakePosition(1, Vector2.left * 10, 1, 0, true);
+                }
+
                 isLoop = false;
                 break;
             case AnimStatus.Bow:
@@ -187,7 +185,10 @@ public class AnimatiorControl : MonoBehaviour
                 needFrames[0] = hitFrames[0];
                 needFrames[1] = hitFrames[2];
                 needFrames[2] = hitFrames[1];
-              //  gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                //  gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 72);
+                transform.DOShakePosition(0.5f, 5, 5, 50, true);
+                transform.GetComponent<Image>().DOColor(Color.red, 0.3f);
+                transform.GetComponent<Image>().DOColor(Color.white, 0.3f).SetDelay(0.3f);
                 isLoop = false;
                 break;
             case AnimStatus.Death:
@@ -203,8 +204,10 @@ public class AnimatiorControl : MonoBehaviour
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(needFrames[0].texture.width / (3 * 2f), needFrames[0].texture.height / 2f);
 
         currentIndex = 0;
-       
-        // Play(needFrames,true);
+       // Debug.Log("开始行走动画第一帧");
+        //gameObject.GetComponent<Image>().sprite = needFrames[currentIndex];
+     
+        //currentIndex++;
         Play();
     }
 
