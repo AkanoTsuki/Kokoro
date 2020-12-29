@@ -286,28 +286,28 @@ public class SkillListAndInfoPanel : BasePanel
             if (sp.FlagDamage)
             {
                 if (sp.Atk != 0) { str += "\n物理攻击影响 " + sp.Atk + "%"; }
-                if (sp.MAtk != 0) { str += "\n魔法攻击影响 " + sp.Atk + "%"; }
-                if (sp.Sword != 0) { str += "\n剑类武器增加" + sp.Atk + "%伤害"; }
-                if (sp.Axe != 0) { str += "\n斧、镰类武器增加" + sp.Atk + "%伤害"; }
-                if (sp.Spear != 0) { str += "\n枪、矛类武器增加" + sp.Atk + "%伤害"; }
-                if (sp.Hammer != 0) { str += "\n锤、棍类武器增加" + sp.Atk + "%伤害"; }
-                if (sp.Bow != 0) { str += "\n弓类武器增加" + sp.Atk + "%伤害"; }
-                if (sp.Staff != 0) { str += "\n杖类武器增加" + sp.Atk + "%伤害"; }
-                if (sp.Wind != 0) { str += "\n<color=#26F39A>造成风系伤害</color>（风系伤害+" + sp.Atk + "%）"; }
-                if (sp.Fire != 0) { str += "\n<color=#E74624>造成火系伤害</color>（火系伤害+" + sp.Atk + "%）"; }
-                if (sp.Water!= 0) { str += "\n<color=#24CDE7>造成水系伤害</color>（水系伤害+" + sp.Atk + "%）"; }
-                if (sp.Ground != 0) { str += "\n<color=#C08342>造成地系伤害</color>（地系伤害+" + sp.Atk + "%）"; }
-                if (sp.Light != 0) { str += "\n<color=#E0DE60>造成光系伤害</color>（光系伤害+" + sp.Atk + "%）"; }
-                if (sp.Dark != 0) { str += "\n<color=#DA7CFF>造成暗系伤害</color>（暗系伤害+" + sp.Atk + "%）"; }
+                if (sp.MAtk != 0) { str += "\n魔法攻击影响 " + sp.MAtk + "%"; }
+                if (sp.Sword != 0) { str += "\n剑类武器增加" + sp.Sword + "%伤害"; }
+                if (sp.Axe != 0) { str += "\n斧、镰类武器增加" + sp.Axe + "%伤害"; }
+                if (sp.Spear != 0) { str += "\n枪、矛类武器增加" + sp.Spear + "%伤害"; }
+                if (sp.Hammer != 0) { str += "\n锤、棍类武器增加" + sp.Hammer + "%伤害"; }
+                if (sp.Bow != 0) { str += "\n弓类武器增加" + sp.Bow + "%伤害"; }
+                if (sp.Staff != 0) { str += "\n杖类武器增加" + sp.Staff + "%伤害"; }
+                if (sp.Wind != 0) { str += "\n<color=#26F39A>造成风系伤害</color>（风系伤害+" + sp.Wind + "%）"; }
+                if (sp.Fire != 0) { str += "\n<color=#E74624>造成火系伤害</color>（火系伤害+" + sp.Fire + "%）"; }
+                if (sp.Water!= 0) { str += "\n<color=#24CDE7>造成水系伤害</color>（水系伤害+" + sp.Water + "%）"; }
+                if (sp.Ground != 0) { str += "\n<color=#C08342>造成地系伤害</color>（地系伤害+" + sp.Ground + "%）"; }
+                if (sp.Light != 0) { str += "\n<color=#E0DE60>造成光系伤害</color>（光系伤害+" + sp.Light + "%）"; }
+                if (sp.Dark != 0) { str += "\n<color=#DA7CFF>造成暗系伤害</color>（暗系伤害+" + sp.Dark + "%）"; }
             }
             if (sp.FlagDebuff)
             {
                 if (sp.Dizzy != 0) { str += "\n"+ sp.Dizzy + "%几率触发眩晕效果，持续" + sp.DizzyValue + "回合"; }
-                if (sp.Confusion != 0) { str += "\n" + sp.Dizzy + "%几率触发混乱效果，持续" + sp.ConfusionValue + "回合"; }
-                if (sp.Poison != 0) { str += "\n" + sp.Dizzy + "%几率触发中毒效果，持续" + sp.PoisonValue + "回合"; }
-                if (sp.Sleep != 0) { str += "\n"+ sp.Dizzy + "%几率触发睡眠效果，持续" + sp.SleepValue + "回合"; }
+                if (sp.Confusion != 0) { str += "\n" + sp.Confusion + "%几率触发混乱效果，持续" + sp.ConfusionValue + "回合"; }
+                if (sp.Poison != 0) { str += "\n" + sp.Poison + "%几率触发中毒效果，持续" + sp.PoisonValue + "回合"; }
+                if (sp.Sleep != 0) { str += "\n"+ sp.Sleep + "%几率触发睡眠效果，持续" + sp.SleepValue + "回合"; }
             }
-            if (sp.Cure != 0) { str += "\n恢复目标生命值" + sp.DizzyValue + "%"; }
+            if (sp.Cure != 0) { str += "\n恢复目标生命值" + sp.Cure + "%"; }
             if (sp.FlagBuff)
             {
                 if (sp.UpAtk != 0) { str += "\n提示目标物理攻击" + sp.UpAtk + "%，持续2回合"; }

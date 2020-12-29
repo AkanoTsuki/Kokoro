@@ -23,6 +23,9 @@ public class AdventureTeamBlock : MonoBehaviour
     public List<RectTransform> dungeon_side0MpRt;
     public List<RectTransform> dungeon_side1HpRt;
     public List<RectTransform> dungeon_side1MpRt;
+    
+    public RectTransform dungeon_progressNowBarRt;
+    public RectTransform dungeon_progressNowFlagRt;
 
     public Button dungeon_selectBtn;
 

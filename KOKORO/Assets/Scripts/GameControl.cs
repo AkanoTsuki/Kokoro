@@ -1455,6 +1455,7 @@ public class GameControl : MonoBehaviour
         //adventureTeamList[teamID].heroIDList.
         heroDic[heroID].adventureInTeam = -1;
         AdventureMainPanel.Instance.UpdateTeamHero(teamID);
+        AdventureMainPanel.Instance.UpdateSceneRole(teamID);
         AdventureMainPanel.Instance.TeamLogAdd(teamID, heroDic[heroID].name + "离开了队伍");
     }
 
@@ -1473,6 +1474,7 @@ public class GameControl : MonoBehaviour
         adventureTeamList[teamID].heroMpList.Add(GetHeroAttr(Attribute.Mp, heroID));
         heroDic[heroID].adventureInTeam = teamID;
         AdventureMainPanel.Instance.UpdateTeamHero(teamID);
+        AdventureMainPanel.Instance.UpdateSceneRole(teamID);
         AdventureMainPanel.Instance.TeamLogAdd(teamID, heroDic[heroID].name + "加入了队伍");
     }
 
@@ -1488,9 +1490,11 @@ public class GameControl : MonoBehaviour
             MessagePanel.Instance.AddMessage("队伍无探险者");
             return;
         }
+        adventureTeamList[teamID].nowDay = 0;
 
         adventureTeamList[teamID].state = AdventureState.Doing;
         adventureTeamList[teamID].action = AdventureAction.Walk;
+        //AdventureMainPanel.Instance.HideSceneRoleHpMp(teamID);
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);
         AdventureMainPanel.Instance.UpdateTeam(teamID);
         //AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
@@ -1531,10 +1535,10 @@ public class GameControl : MonoBehaviour
             int objectID = heroID;//对于己方，heroID
             byte side = 0;
             string name = heroDic[heroID].name;
-            int hp = GetHeroAttr(Attribute.Hp, heroID);
+            int hp =  GetHeroAttr(Attribute.Hp, heroID);
             int mp = GetHeroAttr(Attribute.Mp, heroID);
             short hpRenew = (short)GetHeroAttr(Attribute.HpRenew, heroID);
-            short mpRenew = (short)GetHeroAttr(Attribute.MpRenew, heroID);
+            short mpRenew = (short)(GetHeroAttr(Attribute.MpRenew, heroID)+10);//测试 每回合回10%
             short atkMin = (short)GetHeroAttr(Attribute.AtkMin, heroID);
             short atkMax = (short)GetHeroAttr(Attribute.AtkMax, heroID);
             short mAtkMin = (short)GetHeroAttr(Attribute.MAtkMin, heroID);
@@ -1728,11 +1732,12 @@ public class GameControl : MonoBehaviour
 
         Debug.Log("遭遇了" + monsterNameList + ",开始战斗！");
         AdventureMainPanel.Instance.TeamLogAdd(teamID, "遭遇了" + monsterNameList+",开始战斗！");
+        yield return new WaitForSeconds(1f);
         int round = 0;
 
         List<FightMenberObject> actionMenber = new List<FightMenberObject>();
 
-        while(round< RoundLimit)
+        while(round<= RoundLimit)
         {
             
             //选取行动槽满的战斗成员
@@ -1755,7 +1760,7 @@ public class GameControl : MonoBehaviour
             for (int i = 0; i < actionMenber.Count; i++)
             {
 
-                //buff（减掉回合数）
+                //行动前执行BUFF效果（同时减掉回合数）
                 bool canAction = true;
                 for (int j = 0; j < actionMenber[i].buff.Count; j++)
                 {
@@ -1787,6 +1792,19 @@ public class GameControl : MonoBehaviour
                     actionMenber[i].buff[j].round--;
                 }
 
+                //行动前执行回合HPMP固定恢复
+                if (actionMenber[i].hpNow>0)
+                {
+                    if (actionMenber[i].hpRenew > 0)
+                    {
+                        TakeCure(teamID, round, null, actionMenber[i], null, Attribute.Hp, (int)(actionMenber[i].hp * (actionMenber[i].hpRenew / 100f)));
+                    }
+                    if (actionMenber[i].mpRenew > 0)
+                    {
+                        TakeCure(teamID, round, null, actionMenber[i], null, Attribute.Mp, (int)(actionMenber[i].mp * (actionMenber[i].mpRenew / 100f)));
+                    }
+
+                }
 
                 if (actionMenber[i].hpNow > 0&& canAction)
                 {
@@ -1812,12 +1830,12 @@ public class GameControl : MonoBehaviour
                             int ran = Random.Range(0, 100);
                             if (ran < GetSkillProbability(skillID))
                             {
-                                Debug.Log("发动技能");
+                                Debug.Log("[" + round + "]" + actionMenber[i].name+"发动技能");
                                 StartCoroutine(Attack(teamID, actionMenber[i], sp));
 
                                 actionMenber[i].mpNow -= GetSkillMpCost(skillID);
                                 AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, actionMenber[i]);
-
+                                AdventureMainPanel.Instance.UpdateHeroHpMpSingle(teamID, actionMenber[i]);
                                 //选取目标
                                 List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], sp);
 
@@ -1913,15 +1931,7 @@ public class GameControl : MonoBehaviour
 
                                                 TakeDamage(teamID, round, actionMenber[i], targetMenber[0], sp, damage);
 
-                                                //AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber[i]) + "用" + sp.Name + "对" + OutputNameWithColor(targetMenber[0]) + "造成" + damageWithElement + "点伤害");
-                                                ////造成伤害
-                                                //targetMenber[0].hpNow -= damage;
-                                                //if (targetMenber[0].hpNow < 0)
-                                                //{
-                                                //    targetMenber[0].hpNow = 0;
-                                                //    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[0]) + "被打败了！");
 
-                                                //}
                                             }
                                             else//未命中
                                             {
@@ -2048,12 +2058,10 @@ public class GameControl : MonoBehaviour
 
                                         if (sp.Cure != 0)
                                         {
-                                            targetMenber[j].hpNow += (int)(targetMenber[j].hp * (sp.Cure / 100f));
-                                            if (targetMenber[j].hpNow > targetMenber[j].hp)
-                                            {
-                                                targetMenber[j].hpNow = targetMenber[j].hp;
-                                            }
-                                            AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[j]) + "体力恢复了" + (int)(targetMenber[j].hp * (sp.Cure / 100f)));
+                                            int cure = (int)(targetMenber[j].hp * (sp.Cure / 100f));
+
+                                            TakeCure(teamID, round, actionMenber[i], targetMenber[j], sp, Attribute.Hp, cure);
+
                                         }
 
                                         if (sp.FlagBuff)
@@ -2335,11 +2343,12 @@ public class GameControl : MonoBehaviour
 
                                     }
                                 }
-                                  
+                                 
+                                //TODO:技能追加效果待写（连击，夺金）
                             }
                             else//技能概率未触发，普通攻击
                             {
-                                Debug.Log("技能概率未触发，普通攻击");
+                                Debug.Log("[" + round + "]" + actionMenber[i].name + "技能概率未触发，普通攻击");
                                 StartCoroutine(Attack(teamID, actionMenber[i], null));
                                 //选取目标
                                 List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
@@ -2372,7 +2381,7 @@ public class GameControl : MonoBehaviour
                         }
                         else//MP不足，普通攻击
                         {
-                            Debug.Log("MP不足，普通攻击");
+                            Debug.Log("[" + round + "]" + actionMenber[i].name + "MP不足，普通攻击");
                             StartCoroutine(Attack(teamID, actionMenber[i], null));
                             //选取目标
                             List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
@@ -2393,15 +2402,6 @@ public class GameControl : MonoBehaviour
 
                                     TakeDamage(teamID, round,actionMenber[i], targetMenber[0],null, damage);
 
-                                    //AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber[i]) + "普通攻击对" + OutputNameWithColor(targetMenber[0]) + "造成" + damage + "点伤害");
-                                    ////造成伤害
-                                    //targetMenber[0].hpNow -= damage;
-                                    //if (targetMenber[0].hpNow < 0)
-                                    //{
-                                    //    targetMenber[0].hpNow = 0;
-                                    //    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber[0]) + "被打败了！");
-
-                                    //}
                                 }
                                 else//未命中
                                 {
@@ -2415,7 +2415,7 @@ public class GameControl : MonoBehaviour
                     }
                     else//普通攻击
                     {
-                        Debug.Log("发动设置的普通攻击");
+                        Debug.Log("[" + round + "]" + actionMenber[i].name + "发动设置的普通攻击");
                         StartCoroutine(Attack(teamID, actionMenber[i], null));
                         //选取目标
                         List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
@@ -2548,7 +2548,15 @@ public class GameControl : MonoBehaviour
         if (CheckFightOverResult == 0)
         {
             AdventureMainPanel.Instance.TeamLogAdd(teamID, "战斗胜利！");
+
+            adventureTeamList[teamID].killNum += (short)enemyIDList.Count;
+
             adventureTeamList[teamID].action = AdventureAction.Walk;
+            AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
+            AdventureMainPanel.Instance.UpdateSceneRole(teamID);
+            AdventureMainPanel.Instance.UpdateTeam(teamID);
+
+            CreateAdventureEvent(teamID);
         }
         else if (CheckFightOverResult == 1)
         {
@@ -2562,7 +2570,8 @@ public class GameControl : MonoBehaviour
         //结算
         for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
         {
-            adventureTeamList[teamID].heroHpList[i] = fightMenberObjects[i].hpNow;
+            adventureTeamList[teamID].heroHpList[i] =System.Math.Max(1, fightMenberObjects[i].hpNow);
+
             adventureTeamList[teamID].heroMpList[i] = fightMenberObjects[i].mpNow;
         }
         AdventureMainPanel.Instance.UpdateTeamHero(teamID);
@@ -2575,13 +2584,65 @@ public class GameControl : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         // AdventureMainPanel.Instance.SetAnim(teamID, actionMenber[i].side, actionMenber[i].sideIndex, AnimStatus.Magic);
     }
+    void TakeCure(byte teamID, int round, FightMenberObject actionMenber, FightMenberObject targetMenber, SkillPrototype sp, Attribute attribute,int cure)
+    {
+
+        Debug.Log("TakeCure() teamID=" + teamID);
+        string effectName = "impact_6";
+        string color = "6EFB6F";
+        if (sp != null)
+        {
+            effectName = sp.Effect;
+        }
+        else
+        {
+        
+            if (attribute == Attribute.Hp)
+            {
+                effectName = "impact_6";
+            }
+            else if (attribute == Attribute.Mp)
+            {
+                effectName = "impact_5";
+            }
+        }
+
+        if (attribute == Attribute.Hp)
+        {
+            color = "6EFB6F";
+            targetMenber.hpNow += cure;
+            if (targetMenber.hpNow > targetMenber.hp)
+            {
+                targetMenber.hpNow = targetMenber.hp;
+            }
+
+        }
+        else if (attribute == Attribute.Mp)
+        {
+            color = "6FAAFA";
+            targetMenber.mpNow += cure;
+            if (targetMenber.mpNow > targetMenber.mp)
+            {
+                targetMenber.mpNow = targetMenber.mp;
+            }
+
+        }
+
+        AdventureMainPanel.Instance.ShowEffect(teamID, targetMenber.side, targetMenber.sideIndex, effectName);
+        AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "<color=#"+ color + ">+" + cure + "</color>");
+
+        
+        AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, targetMenber);
+        AdventureMainPanel.Instance.UpdateHeroHpMpSingle(teamID, targetMenber);
+        AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" +  (sp != null ? OutputNameWithColor(actionMenber) + "用<color=#4FA3C1>" + sp.Name + "</color>" : "") + "恢复" + OutputNameWithColor(targetMenber)+ cure + "点"+(attribute== Attribute.Hp?"体力": "魔力") +"(" + OutputNameWithColor(targetMenber) + (attribute == Attribute.Hp ? ("HP " + targetMenber.hpNow) :( "MP " + targetMenber.mpNow))  + ")");
+
+    }
 
     void TakeDamage(byte teamID,int round,FightMenberObject actionMenber, FightMenberObject targetMenber,SkillPrototype sp,int damage)
     {
-        string effectName = "";
+        string effectName ;
         if (sp != null)
         {
-            Debug.Log("actionMenber="+ actionMenber.name + " sp.Name=" + sp.Name + " sp.Effect=" + sp.Effect);
             effectName = sp.Effect;
         }
         else
@@ -2592,7 +2653,7 @@ public class GameControl : MonoBehaviour
 
 
         AdventureMainPanel.Instance.ShowEffect(teamID, targetMenber.side, targetMenber.sideIndex, effectName);
-        AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "-"+damage);
+        AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, damage>0?("<color=#F86A43>-" + damage+"</color>"):"格挡");
         AdventureMainPanel.Instance.SetAnim(teamID, targetMenber.side, targetMenber.sideIndex,AnimStatus.Hit);
 
         
@@ -2603,7 +2664,8 @@ public class GameControl : MonoBehaviour
             targetMenber.hpNow = 0;
         }
         AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, targetMenber);
-        AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber) + "用" + (sp != null ? "<color=#4FA3C1>" + sp.Name+"</color>" : "普通攻击") + "对" + OutputNameWithColor(targetMenber) + "造成" + damage + "点伤害("+ OutputNameWithColor(targetMenber) + "HP "+ targetMenber.hpNow+")");
+        AdventureMainPanel.Instance.UpdateHeroHpMpSingle(teamID, targetMenber);
+        AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(actionMenber) + (sp != null ? "用<color=#4FA3C1>" + sp.Name+"</color>" : "普通攻击") + "对" + OutputNameWithColor(targetMenber) + "造成" + damage + "点伤害("+ OutputNameWithColor(targetMenber) + "HP "+ targetMenber.hpNow+")");
 
         if (targetMenber.hpNow == 0)
         {
