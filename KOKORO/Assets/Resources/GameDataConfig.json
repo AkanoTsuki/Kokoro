@@ -21773,8 +21773,8 @@
       "ScenePic": [
         "Forest_01"
       ],
-      "Des": "介绍",
-      "PartNum": 200,
+      "Des": "怪物很少的平原，适合采集",
+      "PartNum": 100,
       "FixPart": [
         9
       ],
@@ -21784,18 +21784,20 @@
       "FixValue": [
         1
       ],
-      "RandomMonster": 50,
+      "RandomMonster": 5,
       "RandomTrapHp": 0,
       "RandomTrapMp": 0,
-      "RandomSpringHp": 5,
-      "RandomSpringMp": 5,
-      "RandomGold": 0,
+      "RandomSpringHp": 0,
+      "RandomSpringMp": 0,
+      "RandomGold": 35,
       "RandomItem": 0,
-      "RandomResource": 20,
+      "RandomResource": 55,
       "ResourceType": [
-        "wood"
+        "Wood",
+        "Meat"
       ],
       "ResourceValue": [
+        200,
         100
       ],
       "MonsterID": [
@@ -21830,8 +21832,8 @@
       "ScenePic": [
         "Forest_01"
       ],
-      "Des": "介绍",
-      "PartNum": 200,
+      "Des": "各种陷阱和泉水",
+      "PartNum": 100,
       "FixPart": [
         9
       ],
@@ -21841,16 +21843,16 @@
       "FixValue": [
         1
       ],
-      "RandomMonster": 60,
-      "RandomTrapHp": 0,
-      "RandomTrapMp": 0,
-      "RandomSpringHp": 5,
-      "RandomSpringMp": 5,
+      "RandomMonster": 10,
+      "RandomTrapHp": 20,
+      "RandomTrapMp": 20,
+      "RandomSpringHp": 20,
+      "RandomSpringMp": 20,
       "RandomGold": 0,
       "RandomItem": 0,
-      "RandomResource": 20,
+      "RandomResource": 0,
       "ResourceType": [
-        "wood"
+        "Wood"
       ],
       "ResourceValue": [
         100
@@ -21888,7 +21890,7 @@
         "Forest_01"
       ],
       "Des": "介绍",
-      "PartNum": 200,
+      "PartNum": 100,
       "FixPart": [
         9
       ],
@@ -21898,18 +21900,20 @@
       "FixValue": [
         1
       ],
-      "RandomMonster": 60,
+      "RandomMonster": 20,
       "RandomTrapHp": 0,
       "RandomTrapMp": 0,
-      "RandomSpringHp": 5,
-      "RandomSpringMp": 5,
-      "RandomGold": 0,
+      "RandomSpringHp": 0,
+      "RandomSpringMp": 0,
+      "RandomGold": 30,
       "RandomItem": 0,
-      "RandomResource": 20,
+      "RandomResource": 30,
       "ResourceType": [
-        "wood"
+        "Wood",
+        "Meat"
       ],
       "ResourceValue": [
+        200,
         100
       ],
       "MonsterID": [
@@ -21945,7 +21949,7 @@
         "Forest_01"
       ],
       "Des": "介绍",
-      "PartNum": 200,
+      "PartNum": 100,
       "FixPart": [
         9
       ],
@@ -21964,7 +21968,7 @@
       "RandomItem": 0,
       "RandomResource": 20,
       "ResourceType": [
-        "wood"
+        "Wood"
       ],
       "ResourceValue": [
         100
@@ -22002,7 +22006,7 @@
         "River_01"
       ],
       "Des": "介绍",
-      "PartNum": 200,
+      "PartNum": 100,
       "FixPart": [
         9
       ],
@@ -22021,7 +22025,7 @@
       "RandomItem": 0,
       "RandomResource": 20,
       "ResourceType": [
-        "wood"
+        "Wood"
       ],
       "ResourceValue": [
         100
@@ -22059,7 +22063,7 @@
         "Hill_01"
       ],
       "Des": "介绍",
-      "PartNum": 200,
+      "PartNum": 100,
       "FixPart": [
         9
       ],
@@ -22078,7 +22082,7 @@
       "RandomItem": 0,
       "RandomResource": 20,
       "ResourceType": [
-        "wood"
+        "Wood"
       ],
       "ResourceValue": [
         100
@@ -22116,7 +22120,7 @@
         "Hill_01"
       ],
       "Des": "介绍",
-      "PartNum": 200,
+      "PartNum": 100,
       "FixPart": [
         9
       ],
@@ -22135,7 +22139,7 @@
       "RandomItem": 0,
       "RandomResource": 20,
       "ResourceType": [
-        "wood"
+        "Wood"
       ],
       "ResourceValue": [
         100

@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 25c0b01e73a1fd941bcfed49f7df23b4
+guid: 7d56325bc68a36149b7f8ce97e55b449
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -369004858089563195
-    second: Magic_0
+      213: 5355597992369922210
+    second: 4_3_14_0
   - first:
-      213: 4791746620587977043
-    second: Magic_1
+      213: -3211293435835396265
+    second: 4_3_14_1
   - first:
-      213: 5195732802288038451
-    second: Magic_2
+      213: 7521151882579441097
+    second: 4_3_14_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -96,7 +96,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Magic_0
+      name: 4_3_14_0
       rect:
         serializedVersion: 2
         x: 0
@@ -110,14 +110,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5cb9d21690801eaf0800000000000000
-      internalID: -369004858089563195
+      spriteID: 2a02107bff7e25a40800000000000000
+      internalID: 5355597992369922210
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Magic_1
+      name: 4_3_14_1
       rect:
         serializedVersion: 2
         x: 144
@@ -131,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35923d5e924bf7240800000000000000
-      internalID: 4791746620587977043
+      spriteID: 75fcc7f52a13f63d0800000000000000
+      internalID: -3211293435835396265
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Magic_2
+      name: 4_3_14_2
       rect:
         serializedVersion: 2
         x: 288
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 332393c9473fa1840800000000000000
-      internalID: 5195732802288038451
+      spriteID: 9c578e6d9cf706860800000000000000
+      internalID: 7521151882579441097
       vertices: []
       indices: 
       edges: []

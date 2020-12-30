@@ -109,6 +109,7 @@ public class AdventureMainPanel : BasePanel
 
     }
 
+    //更新单个队伍块信息
     public void UpdateTeam(byte teamID)
     {
         AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
@@ -119,6 +120,7 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.titleText.text += "(近卫队)";
         }
 
+        //Debug.Log("UpdateTeam() teamID=" + teamID + " gc.adventureTeamList[teamID].state=" + gc.adventureTeamList[teamID].state);
         if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
         {
             if (gc.adventureTeamList[teamID].dungeonID != -1)
@@ -135,7 +137,7 @@ public class AdventureMainPanel : BasePanel
             }
             else
             {
-                adventureTeamBlock.dungeon_nameText.text = "未选择地点";
+                adventureTeamBlock.dungeon_nameText.text = "营地 - 未选择目的地";
              
                 adventureTeamBlock.dungeon_sceneBgRt[0].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_B", typeof(Sprite)) as Sprite;
                 adventureTeamBlock.dungeon_sceneFgRt[0].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_F", typeof(Sprite)) as Sprite;
@@ -168,8 +170,9 @@ public class AdventureMainPanel : BasePanel
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.Doing)
         {
-            adventureTeamBlock.dungeon_nameText.text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name +"\n击杀 "+ gc.adventureTeamList[teamID].killNum;
-            adventureTeamBlock.dungeon_progressText.text = ((float)gc.adventureTeamList[teamID].nowDay / DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].PartNum * 100) + "%";
+            adventureTeamBlock.dungeon_nameText.text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name +"[击杀 "+ gc.adventureTeamList[teamID].killNum+"]";
+           
+            //滚动背景图设置
             for (int i = 0; i < gc.adventureTeamList[teamID].scenePicList.Count; i++)
             {
                 adventureTeamBlock.dungeon_sceneBgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_B", typeof(Sprite)) as Sprite;
@@ -179,13 +182,27 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.dungeon_selectBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
 
             UpdateProgress(teamID);
-
-            if (gc.adventureTeamList[teamID].action != AdventureAction.Fight)
-            {
-                HideSceneRoleHpMp(teamID);
-            }
-            
             UpdateTeamHero(teamID);
+
+            UpdateSceneRoleFormations(teamID);
+            switch (gc.adventureTeamList[teamID].action)
+            {
+                case AdventureAction.Walk:
+                    HideSceneRoleHpMp(teamID);
+
+                    break;
+                case AdventureAction.Fight:
+                    UpdateSceneRoleHpMp(teamID, gc.fightMenberObjectSS[teamID]);
+                    UpdateSceneRole(teamID);
+                    UpdateSceneEnemy(teamID);
+                    break;
+                case AdventureAction.GetSomething:
+                    HideSceneRoleHpMp(teamID);
+                    break;
+            }
+          
+            
+   
 
             TeamLogShow(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -207,6 +224,7 @@ public class AdventureMainPanel : BasePanel
 
     }
 
+    //更新三个英雄信息格子（先锋，中军，后卫）
     public void UpdateTeamHero(byte teamID)
     {
         AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
@@ -214,15 +232,10 @@ public class AdventureMainPanel : BasePanel
         for (int j = 0; j < gc.adventureTeamList[teamID].heroIDList.Count; j++)
         {
             int heroID = gc.adventureTeamList[teamID].heroIDList[j];
-
-
-            //adventureTeamBlock.dungeon_side0Go[j].GetComponent<Image>().sprite = Resources.Load("Image/RolePic/" + gc.heroDic[heroID].pic + "/Pic", typeof(Sprite)) as Sprite;
             adventureTeamBlock.dungeon_side0Go[j].GetComponent<AnimatiorControl>().SetCharaFrames( gc.heroDic[heroID].pic);
-            //adventureTeamBlock.dungeon_side0Go[j].GetComponent<AnimatiorControl>().SetAnim( AnimStatus.Front);
 
             adventureTeamBlock.hero_picImage[j].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[heroID].pic + "/Pic", typeof(Sprite)) as Sprite;
             adventureTeamBlock.hero_nameText[j].text = gc.heroDic[heroID].name + "\nLv." + gc.heroDic[heroID].level;
-
             adventureTeamBlock.hero_hpmpText[j].text = "<color=#76ee00>体力 " + gc.adventureTeamList[teamID].heroHpList[j] + "/" + gc.GetHeroAttr(Attribute.Hp, heroID) + "</color>\n<color=#428DFD>魔力 " + gc.adventureTeamList[teamID].heroMpList[j] + "/" + gc.GetHeroAttr(Attribute.Mp, heroID) + "</color>";
 
             if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
@@ -270,8 +283,18 @@ public class AdventureMainPanel : BasePanel
         }
     }
 
+    //更新单个英雄信息格子 仅HPMP
+    public void UpdateHeroHpMpSingle(byte teamID, FightMenberObject fightMenberObject)
+    {
 
+        if (fightMenberObject.side == 0)
+        {
+            AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+            adventureTeamBlock.hero_hpmpText[fightMenberObject.sideIndex].text = "<color=#76ee00>体力 " + fightMenberObject.hpNow + "/" + fightMenberObject.hp + "</color>\n<color=#428DFD>魔力 " + fightMenberObject.mpNow + "/" + fightMenberObject.mp + "</color>";
+        }
+    }
 
+    //打开选择目的地界面
     public void ShowDungeonPage(byte teamID)
     {
         dungeonRt.localScale = Vector2.one;
@@ -329,7 +352,13 @@ public class AdventureMainPanel : BasePanel
             UpdateTeam(teamID);
         });
     }
+    //关闭选择目的地界面
+    public void HideDungeonPage()
+    {
+        dungeonRt.localScale = Vector2.zero;
+    }
 
+    //日志框更新
     public void TeamLogAdd(byte teamID,string str)
     {
 
@@ -339,7 +368,6 @@ public class AdventureMainPanel : BasePanel
 
        // Debug.Log(adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().contentText.text.Length);
     }
-
     public void TeamLogShow(byte teamID)
     {
         const int MaxRow=50;
@@ -392,6 +420,7 @@ public class AdventureMainPanel : BasePanel
         
     }
 
+    //更新进度值，进度条，旗子标记
     void UpdateProgress(byte teamID)
     {
         AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
@@ -411,7 +440,8 @@ public class AdventureMainPanel : BasePanel
         
     }
 
-    //场景敌人状态
+
+    //更新场景敌人图片资源集、动作
     public void UpdateSceneEnemy(byte teamID)
     {
         AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
@@ -432,7 +462,7 @@ public class AdventureMainPanel : BasePanel
         }
     }
 
-    //场景人物状态
+    //更新场景人物图片资源集、动作
     public void UpdateSceneRole(byte teamID)
     {
         AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
@@ -441,9 +471,6 @@ public class AdventureMainPanel : BasePanel
             if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
             {
                 adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.Front);
-                //adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().Stop();
-                //adventureTeamBlock.dungeon_side0Go[i].GetComponent<Image>().sprite = Resources.Load("Image/RolePic/" + gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
-           
             }
             else if (gc.adventureTeamList[teamID].state == AdventureState.Doing)
             {
@@ -458,29 +485,17 @@ public class AdventureMainPanel : BasePanel
             }
         }
     }
+    
+    //更新场景全部人物血条蓝条
     public void UpdateSceneRoleHpMp(byte teamID, List<FightMenberObject> fightMenberObjects)
     {
- 
-            for (byte i = 0; i < fightMenberObjects.Count; i++)
-            {
-                UpdateSceneRoleHpMpSingle(teamID, fightMenberObjects[i]);
-            }
-
-    }
-    public void HideSceneRoleHpMp(byte teamID)
-    {
-        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
-        for (byte i = 0; i < 3; i++)
+        for (byte i = 0; i < fightMenberObjects.Count; i++)
         {
-            adventureTeamBlock.dungeon_side0HpRt[i].sizeDelta = Vector2.zero;
-            adventureTeamBlock.dungeon_side0MpRt[i].sizeDelta = Vector2.zero;
-
-            adventureTeamBlock.dungeon_side1HpRt[i].sizeDelta = Vector2.zero;
-            adventureTeamBlock.dungeon_side1MpRt[i].sizeDelta = Vector2.zero;
+            UpdateSceneRoleHpMpSingle(teamID, fightMenberObjects[i]);
         }
     }
 
-
+    //更新场景单个人物血条蓝条
     public void UpdateSceneRoleHpMpSingle(byte teamID, FightMenberObject fightMenberObject)
     {
         AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
@@ -496,18 +511,21 @@ public class AdventureMainPanel : BasePanel
         }
     }
 
-    public void UpdateHeroHpMpSingle(byte teamID, FightMenberObject fightMenberObject)
+    //隐藏场景全部人物(包括敌人)血条蓝条
+    public void HideSceneRoleHpMp(byte teamID)
     {
-        
-        if (fightMenberObject.side == 0)
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        for (byte i = 0; i < 3; i++)
         {
-            AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
-            adventureTeamBlock.hero_hpmpText[fightMenberObject.sideIndex].text = "<color=#76ee00>体力 " + fightMenberObject.hpNow + "/" + fightMenberObject.hp + "</color>\n<color=#428DFD>魔力 " + fightMenberObject.mpNow + "/" + fightMenberObject.mp + "</color>";
+            adventureTeamBlock.dungeon_side0HpRt[i].sizeDelta = Vector2.zero;
+            adventureTeamBlock.dungeon_side0MpRt[i].sizeDelta = Vector2.zero;
+
+            adventureTeamBlock.dungeon_side1HpRt[i].sizeDelta = Vector2.zero;
+            adventureTeamBlock.dungeon_side1MpRt[i].sizeDelta = Vector2.zero;
         }
     }
 
-
-    //场景人物队形
+    //更新场景人物队形
     public void UpdateSceneRoleFormations(byte teamID)
     {
        // Debug.Log("UpdateSceneRoleFormations() gc.adventureTeamList[teamID].state ="+ gc.adventureTeamList[teamID].state+ " gc.adventureTeamList[teamID].action="+ gc.adventureTeamList[teamID].action);
@@ -551,15 +569,21 @@ public class AdventureMainPanel : BasePanel
                 adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 40);
                 adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-39, 40);
 
-                adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+                adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(78, 40);
                 adventureTeamBlock.dungeon_side1Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
                 adventureTeamBlock.dungeon_side1Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+
+                adventureTeamBlock.dungeon_side1Go[0].GetComponent<Image>().sprite = Resources.Load("Image/Other/icon268", typeof(Sprite)) as Sprite;
             }
         }
     }
 
+
+    //设置场景人物/敌人动画
     public void SetAnim(byte teamID,byte side,byte index, AnimStatus animStatus)
     {
+        Debug.Log("SetAnim() teamID=" + teamID + " side=" + side + " index=" + index + " animStatus=" + animStatus);
+
         if (side == 0)
         {
             adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().dungeon_side0Go[index].GetComponent<AnimatiorControl>().SetAnim(animStatus);
@@ -571,6 +595,7 @@ public class AdventureMainPanel : BasePanel
 
     }
 
+    //显示伤害数字
     public void ShowDamageText(byte teamID, byte side, byte index, string content)
     {
         GameObject go;
@@ -597,6 +622,8 @@ public class AdventureMainPanel : BasePanel
 
         go.GetComponent<MomentText>().Play(content, targetLocation);
     }
+   
+    //显示特效
     public void ShowEffect(byte teamID, byte side, byte index, string effectName)
     {
         GameObject go;
@@ -627,8 +654,5 @@ public class AdventureMainPanel : BasePanel
 
 
 
-    public void HideDungeonPage()
-    {
-        dungeonRt.localScale = Vector2.zero;
-    }
+    
 }

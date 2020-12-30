@@ -8,6 +8,9 @@ public class AdventureTeamBlock : MonoBehaviour
 
     public Text dungeon_nameText;
     public Text dungeon_progressText;
+
+    public List<Image> dungeon_elementImage;
+
     public GameObject dungeon_bgListGo;
     public GameObject dungeon_heroListGo;//TODO:可能要移除
     public GameObject dungeon_fgListGo;

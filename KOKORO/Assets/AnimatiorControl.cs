@@ -102,6 +102,7 @@ public class AnimatiorControl : MonoBehaviour
 
     public void SetAnim(AnimStatus animStatus)
     {
+        //Debug.Log("SetAnim animStatus=" + animStatus + " charaName=" + charaName);
 
         switch (animStatus)
         {

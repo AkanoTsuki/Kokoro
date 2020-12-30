@@ -24,13 +24,24 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
         UIManager.Instance.InitPanel(UIPanelType.SkillListAndInfo);
         UIManager.Instance.InitPanel(UIPanelType.AdventureMain);
+        AdventureMainPanel.Instance.OnShow(64, 5000);
+        AdventureMainPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
         PlayMainPanel.Instance.OnShow();
 
+        for (byte i = 0; i < gc.adventureTeamList.Count; i++)
+        {
+            if (gc.adventureTeamList[i].action == AdventureAction.Fight)
+            {
+                
+                gc.AdventureEventHappen(i);
+            }
+        }
 
         InvokeRepeating("TimeFlow", 0, 0.05f / gc.timeFlowSpeed);
+
 
     }
 

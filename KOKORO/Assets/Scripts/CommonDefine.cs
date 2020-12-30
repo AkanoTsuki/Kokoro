@@ -1266,7 +1266,8 @@ public class AdventureTeamObject
     private byte NowDay;
     private AdventureState State;
     private AdventureAction Action;
-    private short GetExp;
+    private int FightRound;
+    private short GetExp;//战利品（开始）
     private short GetGold;
     private short GetCereal;
     private short GetVegetable;
@@ -1280,11 +1281,11 @@ public class AdventureTeamObject
     private short GetCloth;
     private short GetTwine;
     private short GetBone;
-    private List<int> GetItemList;
+    private List<int> GetItemList;//战利品（结束），物品原型ID，结算时才生成实例
     private short KillNum;
     private List<string> Log;
     private List<AdventurePartObject> Part;
-    public AdventureTeamObject(byte id,short dungeonID, List<string> scenePicList, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, List<int> enemyIDList, byte nowDay, AdventureState state, AdventureAction action,
+    public AdventureTeamObject(byte id,short dungeonID, List<string> scenePicList, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, List<int> enemyIDList, byte nowDay, AdventureState state, AdventureAction action, int fightRound,
         short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
         List<int> getItemList, short killNum, List<string> log, List<AdventurePartObject> part)
     {
@@ -1298,6 +1299,7 @@ public class AdventureTeamObject
         this.NowDay = nowDay;
         this.State = state;
         this.Action = action;
+        this.FightRound = fightRound;
         this.GetExp = getExp;
         this.GetGold = getGold;
         this.GetCereal = getCereal;
@@ -1327,6 +1329,7 @@ public class AdventureTeamObject
     public byte nowDay { get { return NowDay; } set { NowDay = value; } }
     public AdventureState state { get { return State; } set { State = value; } }
     public AdventureAction action { get { return Action; } set { Action = value; } }
+    public int fightRound { get { return FightRound; } set { FightRound = value; } }
     public short getExp { get { return GetExp; } set { GetExp = value; } }
     public short getGold { get { return GetGold; } set { GetGold = value; } }
     public short getCereal { get { return GetCereal; } set { GetCereal = value; } }
