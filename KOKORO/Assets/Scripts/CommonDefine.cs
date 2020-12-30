@@ -1250,7 +1250,10 @@ public class MonsterPrototype
     public short SleepRes;
     public short ExpDrop;
     public short GoldDrop;
-    public List<int> ItemDrop;
+    public List<short> ItemDrop;
+    public List<byte> ItemDropRate;
+    public List<byte> ItemDropNumMin;
+    public List<byte> ItemDropNumMax;
 }
 
 //探险队实例
@@ -1400,6 +1403,7 @@ public class FightMenberObject
     private byte Side;
     private byte SideIndex;
     private string Name;
+    private short Level;
     private int Hp;
     private int Mp;
     private short HpRenew;
@@ -1439,7 +1443,7 @@ public class FightMenberObject
     private List<FightBuff> Buff;
 
 
-    public FightMenberObject(int id, int objectID, byte side, byte sideIndex, string name,
+    public FightMenberObject(int id, int objectID, byte side, byte sideIndex, string name, short level,
          int hp, int mp, short hpRenew, short mpRenew,
         short atkMin, short atkMax, short mAtkMin, short mAtkMax, short def, short mDef,
         short hit, short dod, short criR, short criD, short spd,
@@ -1453,6 +1457,7 @@ public class FightMenberObject
         this.Side = side;
         this.SideIndex = sideIndex;
         this.Name = name;
+        this.Level = level;
         this.Hp = hp;
         this.Mp = mp;
         this.HpRenew = hpRenew;
@@ -1496,6 +1501,7 @@ public class FightMenberObject
     public byte side { get { return Side; } }
     public byte sideIndex { get { return SideIndex; } }
     public string name { get { return Name; } set { Name = value; } }
+    public short level { get { return Level; } set { Level = value; } }
     public int hp { get { return Hp; } set { Hp = value; } }
     public int mp { get { return Mp; } set { Mp = value; } }
     public short hpRenew { get { return HpRenew; } set { HpRenew = value; } }

@@ -21778,7 +21778,7 @@
       "FixPart": [
         9
       ],
-      "FixEvent": [
+      "FixEventStr": [
         "Monster"
       ],
       "FixValue": [
@@ -21792,7 +21792,7 @@
       "RandomGold": 35,
       "RandomItem": 0,
       "RandomResource": 55,
-      "ResourceType": [
+      "ResourceTypeStr": [
         "Wood",
         "Meat"
       ],
@@ -21837,7 +21837,7 @@
       "FixPart": [
         9
       ],
-      "FixEvent": [
+      "FixEventStr": [
         "Monster"
       ],
       "FixValue": [
@@ -21851,7 +21851,7 @@
       "RandomGold": 0,
       "RandomItem": 0,
       "RandomResource": 0,
-      "ResourceType": [
+      "ResourceTypeStr": [
         "Wood"
       ],
       "ResourceValue": [
@@ -21894,7 +21894,7 @@
       "FixPart": [
         9
       ],
-      "FixEvent": [
+      "FixEventStr": [
         "Monster"
       ],
       "FixValue": [
@@ -21908,7 +21908,7 @@
       "RandomGold": 30,
       "RandomItem": 0,
       "RandomResource": 30,
-      "ResourceType": [
+      "ResourceTypeStr": [
         "Wood",
         "Meat"
       ],
@@ -21953,7 +21953,7 @@
       "FixPart": [
         9
       ],
-      "FixEvent": [
+      "FixEventStr": [
         "Monster"
       ],
       "FixValue": [
@@ -21967,7 +21967,7 @@
       "RandomGold": 0,
       "RandomItem": 0,
       "RandomResource": 20,
-      "ResourceType": [
+      "ResourceTypeStr": [
         "Wood"
       ],
       "ResourceValue": [
@@ -22010,7 +22010,7 @@
       "FixPart": [
         9
       ],
-      "FixEvent": [
+      "FixEventStr": [
         "Monster"
       ],
       "FixValue": [
@@ -22024,7 +22024,7 @@
       "RandomGold": 0,
       "RandomItem": 0,
       "RandomResource": 20,
-      "ResourceType": [
+      "ResourceTypeStr": [
         "Wood"
       ],
       "ResourceValue": [
@@ -22067,7 +22067,7 @@
       "FixPart": [
         9
       ],
-      "FixEvent": [
+      "FixEventStr": [
         "Monster"
       ],
       "FixValue": [
@@ -22081,7 +22081,7 @@
       "RandomGold": 0,
       "RandomItem": 0,
       "RandomResource": 20,
-      "ResourceType": [
+      "ResourceTypeStr": [
         "Wood"
       ],
       "ResourceValue": [
@@ -22124,7 +22124,7 @@
       "FixPart": [
         9
       ],
-      "FixEvent": [
+      "FixEventStr": [
         "Monster"
       ],
       "FixValue": [
@@ -22138,7 +22138,7 @@
       "RandomGold": 0,
       "RandomItem": 0,
       "RandomResource": 20,
-      "ResourceType": [
+      "ResourceTypeStr": [
         "Wood"
       ],
       "ResourceValue": [
@@ -22219,6 +22219,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22269,6 +22278,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22319,6 +22337,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22369,6 +22396,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22419,6 +22455,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22469,6 +22514,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22519,6 +22573,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22569,6 +22632,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22619,6 +22691,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22669,6 +22750,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22719,6 +22809,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22769,6 +22868,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22819,6 +22927,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22869,6 +22986,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22919,6 +23045,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -22969,6 +23104,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23019,6 +23163,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23069,6 +23222,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23119,6 +23281,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23169,6 +23340,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23219,6 +23399,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23269,6 +23458,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23319,6 +23517,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23369,6 +23576,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23419,6 +23635,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23469,6 +23694,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23519,6 +23753,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23569,6 +23812,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23619,6 +23871,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23669,6 +23930,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23719,6 +23989,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23769,6 +24048,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23819,6 +24107,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23869,6 +24166,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23919,6 +24225,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     },
     {
@@ -23969,6 +24284,15 @@
       "ExpDrop": 20,
       "ItemDrop": [
         0
+      ],
+      "ItemDropRate": [
+        50
+      ],
+      "ItemDropNumMin": [
+        1
+      ],
+      "ItemDropNumMax": [
+        1
       ]
     }
   ],

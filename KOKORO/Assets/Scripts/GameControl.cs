@@ -1494,17 +1494,97 @@ public class GameControl : MonoBehaviour
             MessagePanel.Instance.AddMessage("队伍无探险者");
             return;
         }
+        //复位数据
+        
+
+        for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
+        {
+            adventureTeamList[teamID].heroHpList[i] = GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]);
+            adventureTeamList[teamID].heroMpList[i] = GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]);
+        }
+        adventureTeamList[teamID].enemyIDList.Clear();
         adventureTeamList[teamID].nowDay = 0;
+        adventureTeamList[teamID].fightRound = 0;
+        adventureTeamList[teamID].getExp = 0;
+        adventureTeamList[teamID].getGold = 0;
+        adventureTeamList[teamID].getCereal = 0;
+        adventureTeamList[teamID].getVegetable = 0;
+        adventureTeamList[teamID].getFruit = 0;
+        adventureTeamList[teamID].getMeat = 0;
+        adventureTeamList[teamID].getFish = 0;
+        adventureTeamList[teamID].getWood = 0;
+        adventureTeamList[teamID].getMetal = 0;
+        adventureTeamList[teamID].getStone = 0;
+        adventureTeamList[teamID].getLeather = 0;
+        adventureTeamList[teamID].getCloth = 0;
+        adventureTeamList[teamID].getTwine = 0;
+        adventureTeamList[teamID].getBone = 0;
+        adventureTeamList[teamID].getItemList.Clear();
+        adventureTeamList[teamID].killNum = 0;
+        adventureTeamList[teamID].log.Clear();//?
+
 
         adventureTeamList[teamID].state = AdventureState.Doing;
         adventureTeamList[teamID].action = AdventureAction.Walk;
-        //AdventureMainPanel.Instance.HideSceneRoleHpMp(teamID);
-        AdventureMainPanel.Instance.UpdateSceneRole(teamID);
+
+        AdventureMainPanel.Instance.UpdateSceneRole(teamID);//下面代码包括了
         AdventureMainPanel.Instance.UpdateTeam(teamID);
-        //AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
-       
 
         CreateAdventureEvent(teamID);
+    }
+
+    public void AdventureTeamBack(byte teamID, AdventureState adventureState)
+    {
+        List<int> tempList = new List<int>();
+        for (int i = 0; i < executeEventList.Count; i++)
+        {
+            if (executeEventList[i].type == ExecuteEventType.Adventure && executeEventList[i].value[0] == teamID)
+            {
+                tempList.Add(i);
+            }
+        }
+        for (int i = tempList.Count - 1; i >= 0; i--)
+        {
+            executeEventList.RemoveAt(tempList[i]);
+        }
+
+        
+
+        adventureTeamList[teamID].state = adventureState;
+        adventureTeamList[teamID].action = AdventureAction.None;
+
+        AdventureMainPanel.Instance.UpdateTeam(teamID);
+        if (adventureState == AdventureState.Done)
+        {
+            MessagePanel.Instance.AddMessage("第"+(teamID+1) +"探险队完成任务回来了");
+        }
+        else if (adventureState == AdventureState.Fail)
+        {
+            MessagePanel.Instance.AddMessage("第" + (teamID + 1) + "探险队全灭");
+        }
+        else if (adventureState == AdventureState.Retreat)
+        {
+            MessagePanel.Instance.AddMessage("第" + (teamID + 1) + "探险队撤退回来了");
+        }
+  
+    }
+
+    public void AdventureTakeGets(byte teamID)
+    {
+        //未确定资源加到什么库房，首都库房？
+
+        for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
+        {
+            heroDic[adventureTeamList[teamID].heroIDList[i]].exp += (int)(adventureTeamList[teamID].getExp / 3f * (1f + heroDic[adventureTeamList[teamID].heroIDList[i]].expGet / 100f));
+        }
+
+        gold += adventureTeamList[teamID].getGold;
+        PlayMainPanel.Instance.UpdateGold();
+
+        adventureTeamList[teamID].state =  AdventureState.NotSend;
+        adventureTeamList[teamID].action = AdventureAction.None;
+
+        AdventureMainPanel.Instance.UpdateTeam(teamID);
     }
 
     public void CreateAdventureEvent(byte teamID)
@@ -1641,6 +1721,7 @@ public class GameControl : MonoBehaviour
 
                 StuffType resourceType = DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].ResourceType[ran];
                 int resourceValue = DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].ResourceValue[ran];
+                Debug.Log("ran=" + ran + " resourceType=" + resourceType + " resourceValue");
                  getNum = (short)(resourceValue * Random.Range(0.5f, 1.5f));
                 switch (resourceType)
                 {
@@ -1649,7 +1730,6 @@ public class GameControl : MonoBehaviour
                         AdventureMainPanel.Instance.TeamLogAdd(teamID, "[获得资源]谷物*" + getNum );
                         break;
                     case StuffType.Vegetable:
-
                         adventureTeamList[teamID].getVegetable += getNum;
                         AdventureMainPanel.Instance.TeamLogAdd(teamID, "[获得资源]蔬菜*" + getNum);
                         break;
@@ -1699,7 +1779,7 @@ public class GameControl : MonoBehaviour
         }
 
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         adventureTeamList[teamID].action = AdventureAction.Walk;
         AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
@@ -1805,7 +1885,7 @@ public class GameControl : MonoBehaviour
             Debug.Log(" 新开的战斗 teamID=" + teamID + " fightMenberObjectSS.Count=" + fightMenberObjectSS.Count);
             if (teamID < fightMenberObjectSS.Count)
             {
-
+                fightMenberObjectSS[teamID] = new List<FightMenberObject>();
                 fightMenberObjects = fightMenberObjectSS[teamID];
             }
             else
@@ -1823,6 +1903,7 @@ public class GameControl : MonoBehaviour
                 int objectID = heroID;//对于己方，heroID
                 byte side = 0;
                 string name = heroDic[heroID].name;
+                short level = heroDic[heroID].level;
                 int hp = GetHeroAttr(Attribute.Hp, heroID);
                 int mp = GetHeroAttr(Attribute.Mp, heroID);
                 short hpRenew = (short)GetHeroAttr(Attribute.HpRenew, heroID);
@@ -1866,7 +1947,7 @@ public class GameControl : MonoBehaviour
                 int hpNow = adventureTeamList[teamID].heroHpList[i];
                 int mpNow = adventureTeamList[teamID].heroMpList[i];
                 List<FightBuff> buff = new List<FightBuff> { };
-                fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
+                fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name,level, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
                                                                 windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, weaponType,
                                                                 actionBar, skillIndex, hpNow, mpNow, buff));
             }
@@ -1999,7 +2080,7 @@ public class GameControl : MonoBehaviour
                 int mpNow = mp;
                 List<FightBuff> buff = new List<FightBuff> { };
 
-                fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
+                fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name, (short)level,hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
                                                           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, ItemTypeSmall.None,
                                                           actionBar, skillIndex, hpNow, mpNow, buff));
 
@@ -2010,9 +2091,10 @@ public class GameControl : MonoBehaviour
             {
                 if (fightMenberObjects[i].side == 1)
                 {
-                    monsterNameList += fightMenberObjects[i].name + " ";
+                    monsterNameList += fightMenberObjects[i].name + "(Lv."+ fightMenberObjects[i].level+ ") ";
                 }
             }
+            Debug.Log("fightMenberObjects.Count=" + fightMenberObjects.Count + " ,enemyIDTempList.Count=" + enemyIDTempList.Count + " ,adventureTeamList[teamID].enemyIDList.Count=" + adventureTeamList[teamID].enemyIDList.Count);
             Debug.Log("遭遇了" + monsterNameList + ",开始战斗！");
             adventureTeamList[teamID].action = AdventureAction.Fight;
             adventureTeamList[teamID].fightRound = 1;
@@ -2147,9 +2229,7 @@ public class GameControl : MonoBehaviour
                                         if (sp.FlagDamage)
                                         {
 
-                                            int hitRate = (int)((float)actionMenber[i].hit / (actionMenber[i].hit + targetMenber[j].dod) * 100);
-                                            int ranHit = Random.Range(0, 100);
-                                            if (ranHit < hitRate)
+                                            if (IsHit(actionMenber[i].hit, targetMenber[j].dod))
                                             {
                                                 int damageMin = System.Math.Max(0, (int)(actionMenber[i].atkMin * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMin * (sp.MAtk / 100f) - targetMenber[j].mDef));
                                                 int damageMax = System.Math.Max(0, (int)(actionMenber[i].atkMax * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMax * (sp.MAtk / 100f) - targetMenber[j].mDef));
@@ -2228,7 +2308,7 @@ public class GameControl : MonoBehaviour
                                                     damageWithElement = (int)(damageWithElement * (actionMenber[i].criD / 100f));
                                                 }
 
-                                                TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], sp, damage);
+                                                TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[j], sp, damage);
 
 
                                             }
@@ -2653,9 +2733,7 @@ public class GameControl : MonoBehaviour
                                 List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
                                 if (targetMenber.Count > 0)
                                 {
-                                    int hitRate = (int)((float)actionMenber[i].hit / (actionMenber[i].hit + targetMenber[0].dod) * 100);
-                                    int ranHit = Random.Range(0, 100);
-                                    if (ranHit < hitRate)
+                                    if (IsHit(actionMenber[i].hit, targetMenber[0].dod))
                                     {
                                         int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
                                         int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
@@ -2686,9 +2764,8 @@ public class GameControl : MonoBehaviour
                             List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
                             if (targetMenber.Count > 0)
                             {
-                                int hitRate = (int)((float)actionMenber[i].hit / (actionMenber[i].hit + targetMenber[0].dod) * 100);
-                                int ranHit = Random.Range(0, 100);
-                                if (ranHit < hitRate)
+
+                                if (IsHit(actionMenber[i].hit, targetMenber[0].dod))
                                 {
                                     int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
                                     int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
@@ -2720,9 +2797,7 @@ public class GameControl : MonoBehaviour
                         List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
                         if (targetMenber.Count > 0)
                         {
-                            int hitRate = (int)((float)actionMenber[i].hit / (actionMenber[i].hit + targetMenber[0].dod) * 100);
-                            int ranHit = Random.Range(0, 100);
-                            if (ranHit < hitRate)
+                            if (IsHit(actionMenber[i].hit, targetMenber[0].dod))
                             {
                                 int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
                                 int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
@@ -2844,11 +2919,45 @@ public class GameControl : MonoBehaviour
             CheckFightOverResult = 1;
         }
 
+   
         if (CheckFightOverResult == 0)
         {
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "战斗胜利！");
 
-            //adventureTeamList[teamID].killNum += (short)enemyIDList.Count;
+            string getStr = "";
+            short getExp = 0;
+            short getGold = 0;
+            for (int i = 0; i < fightMenberObjects.Count; i++)
+            {
+                if (fightMenberObjects[i].side == 1)
+                {
+                    adventureTeamList[teamID].killNum++;
+                    adventureTeamList[teamID].getExp += DataManager.mMonsterDict[fightMenberObjects[i].objectID].ExpDrop;
+                    getExp+= DataManager.mMonsterDict[fightMenberObjects[i].objectID].ExpDrop;
+                    adventureTeamList[teamID].getGold += DataManager.mMonsterDict[fightMenberObjects[i].objectID].GoldDrop;
+                    getGold += DataManager.mMonsterDict[fightMenberObjects[i].objectID].GoldDrop;
+                    for (int j = 0; j < DataManager.mMonsterDict[fightMenberObjects[i].objectID].ItemDrop.Count; j++)
+                    {
+                        int ran = Random.Range(0, 100);
+                        if (ran < DataManager.mMonsterDict[fightMenberObjects[i].objectID].ItemDropRate[j])
+                        {
+                            for (int k = 0; k < Random.Range(DataManager.mMonsterDict[fightMenberObjects[i].objectID].ItemDropNumMin[j], DataManager.mMonsterDict[fightMenberObjects[i].objectID].ItemDropNumMin[j] + 1);k++)
+                            {
+                                adventureTeamList[teamID].getItemList.Add(DataManager.mMonsterDict[fightMenberObjects[i].objectID].ItemDrop[j]);
+                                getStr += "[" + DataManager.mItemDict[DataManager.mMonsterDict[fightMenberObjects[i].objectID].ItemDrop[j]].Name + "] ";
+                            }
+                        }
+                    }
+
+
+                }
+                
+            }
+
+            AdventureMainPanel.Instance.TeamLogAdd(teamID, "战斗胜利！获得[经验值"+ getExp + "][金币"+ getGold + "] "+ getStr);
+
+
+
+
 
             adventureTeamList[teamID].action = AdventureAction.Walk;
             AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
@@ -2868,15 +2977,17 @@ public class GameControl : MonoBehaviour
         {
             AdventureMainPanel.Instance.TeamLogAdd(teamID, "被击败了！");
 
+
             adventureTeamList[teamID].state = AdventureState.Fail;
-            adventureTeamList[teamID].action = AdventureAction.None;
+            AdventureTeamBack(teamID, AdventureState.Fail);
+
 
             //结算
-            for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
-            {
-                adventureTeamList[teamID].heroHpList[i] = fightMenberObjects[i].hpNow;
-                adventureTeamList[teamID].heroMpList[i] = fightMenberObjects[i].mpNow;
-            }
+            //for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
+            //{
+            //    adventureTeamList[teamID].heroHpList[i] = fightMenberObjects[i].hpNow;
+            //    adventureTeamList[teamID].heroMpList[i] = fightMenberObjects[i].mpNow;
+            //}
         }
         
 
@@ -2894,7 +3005,7 @@ public class GameControl : MonoBehaviour
     void TakeCure(byte teamID, int round, FightMenberObject actionMenber, FightMenberObject targetMenber, SkillPrototype sp, Attribute attribute,int cure)
     {
 
-        Debug.Log("TakeCure() teamID=" + teamID);
+        //Debug.Log("TakeCure() teamID=" + teamID);
         string effectName = "impact_6";
         string color = "6EFB6F";
         if (sp != null)
@@ -3016,10 +3127,21 @@ public class GameControl : MonoBehaviour
 
     List<FightMenberObject> GetTargetManbers(List<FightMenberObject> fightMenberObjects, FightMenberObject actionMenber, SkillPrototype sp)
     {
-        //TODO:混乱选取目标情况待写，随机选取待写（目前按序列取），策略选取待写（AI）
-        List<FightMenberObject> temp_fightMenberObjects = ListRandom<FightMenberObject>(fightMenberObjects);
+        //string str= "打乱前：";
+        //for (int i=0; i < fightMenberObjects.Count; i++)
+        //{
+        //    str += fightMenberObjects[i].name + " ";
+        //}
 
 
+        //TODO:混乱选取目标情况待写，策略选取待写（AI）
+        List<FightMenberObject> temp_fightMenberObjects = GetRandomList<FightMenberObject>(fightMenberObjects);
+        //str += "   打乱后：";
+        //for (int i = 0; i < temp_fightMenberObjects.Count; i++)
+        //{
+        //    str += temp_fightMenberObjects[i].name + " ";
+        //}
+        //Debug.Log(str);
 
         List<FightMenberObject> targetMenber = new List<FightMenberObject>();
         int maxCount;
@@ -3028,78 +3150,25 @@ public class GameControl : MonoBehaviour
             maxCount = sp.Max;
             if (sp.FlagDamage || sp.FlagDebuff)
             {
-
-                if (actionMenber.side == 0)
+                for (int j = 0; j < temp_fightMenberObjects.Count; j++)
                 {
-                    for (int j = 0; j < temp_fightMenberObjects.Count; j++)
+                    if (temp_fightMenberObjects[j].side != actionMenber.side && temp_fightMenberObjects[j].hpNow > 0 && maxCount > 0)
                     {
-                        if (temp_fightMenberObjects[j].side == 1)
-                        {
-                            if (temp_fightMenberObjects[j].hpNow > 0)
-                            {
-                                if (maxCount > 0)
-                                {
-                                    targetMenber.Add(temp_fightMenberObjects[j]);
-                                }
-                                maxCount--;
-                            }
+                        targetMenber.Add(temp_fightMenberObjects[j]);
+                        maxCount--;
 
-                        }
-                    }
-                }
-                else if (actionMenber.side == 1)
-                {
-                    for (int j = 0; j < temp_fightMenberObjects.Count; j++)
-                    {
-                        if (temp_fightMenberObjects[j].side == 0)
-                        {
-                            if (temp_fightMenberObjects[j].hpNow > 0)
-                            {
-                                if (maxCount > 0)
-                                {
-                                    targetMenber.Add(temp_fightMenberObjects[j]);
-                                }
-                                maxCount--;
-                            }
-                        }
                     }
                 }
             }
             else if (sp.Cure != 0 || sp.FlagBuff)
             {
-                if (actionMenber.side == 0)
+                for (int j = 0; j < temp_fightMenberObjects.Count; j++)
                 {
-                    for (int j = 0; j < temp_fightMenberObjects.Count; j++)
+                    if (temp_fightMenberObjects[j].side == actionMenber.side && temp_fightMenberObjects[j].hpNow > 0 && maxCount > 0)
                     {
-                        if (temp_fightMenberObjects[j].side == 0)
-                        {
-                            if (temp_fightMenberObjects[j].hpNow > 0)
-                            {
-                                if (maxCount > 0)
-                                {
-                                    targetMenber.Add(temp_fightMenberObjects[j]);
-                                }
-                                maxCount--;
-                            }
+                        targetMenber.Add(temp_fightMenberObjects[j]);
+                        maxCount--;
 
-                        }
-                    }
-                }
-                else if (actionMenber.side == 1)
-                {
-                    for (int j = 0; j < temp_fightMenberObjects.Count; j++)
-                    {
-                        if (temp_fightMenberObjects[j].side == 1)
-                        {
-                            if (temp_fightMenberObjects[j].hpNow > 0)
-                            {
-                                if (maxCount > 0)
-                                {
-                                    targetMenber.Add(temp_fightMenberObjects[j]);
-                                }
-                                maxCount--;
-                            }
-                        }
                     }
                 }
             }
@@ -3107,36 +3176,22 @@ public class GameControl : MonoBehaviour
         }
         else
         {
-            if (actionMenber.side == 0)
+            for (int j = 0; j < temp_fightMenberObjects.Count; j++)
             {
-                for (int j = 0; j < temp_fightMenberObjects.Count; j++)
+                if (temp_fightMenberObjects[j].side != actionMenber.side && temp_fightMenberObjects[j].hpNow > 0)
                 {
-                    if (temp_fightMenberObjects[j].side == 1)
-                    {
-                        if (temp_fightMenberObjects[j].hpNow > 0)
-                        {
-                            targetMenber.Add(temp_fightMenberObjects[j]);
-                            break;
-                        }
-                    }
-                }
-            }
-            else if (actionMenber.side == 1)
-            {
-                for (int j = 0; j < temp_fightMenberObjects.Count; j++)
-                {
-                    if (temp_fightMenberObjects[j].side == 0)
-                    {
-                        if (temp_fightMenberObjects[j].hpNow > 0)
-                        {
-                            targetMenber.Add(temp_fightMenberObjects[j]);
-                            break;
-                        }
-                    }
+                    targetMenber.Add(temp_fightMenberObjects[j]);
+                    break;
                 }
             }
         }
-        //Debug.Log("targetMenber" + targetMenber.Count);
+        string str = "选中的目标：";
+        for (int i = 0; i < targetMenber.Count; i++)
+        {
+            str += targetMenber[i].name + " ";
+        }
+
+        Debug.Log("targetMenber" + targetMenber.Count+ "  "+ str);
         return targetMenber;
     }
 
@@ -3179,6 +3234,20 @@ public class GameControl : MonoBehaviour
     #endregion
 
     #region 【辅助方法集】获取值
+    public bool IsHit(short hit,short dod)
+    {
+        int hitRate =System.Math.Max( (int)((float)hit / (hit + dod) * 100),90);
+        int ranHit = Random.Range(0, 100);
+        if (ranHit < hitRate)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public int GetSkillMpCost(int skillID)
     {
         SkillObject so = skillDic[skillID];
@@ -3704,14 +3773,31 @@ public class GameControl : MonoBehaviour
     }
     #endregion
 
-    public static List<T> ListRandom<T>(List<T> sources)
+ 
+    public static List<T> GetRandomList<T>(List<T> inputList)
     {
-        var random = new System.Random();
-        var resultList = new List<T>();
-        foreach (var item in sources)
+        //Copy to a array
+        T[] copyArray = new T[inputList.Count];
+        inputList.CopyTo(copyArray);
+
+        //Add range
+        List<T> copyList = new List<T>();
+        copyList.AddRange(copyArray);
+
+        //Set outputList and random
+        List<T> outputList = new List<T>();
+        System.Random rd = new System.Random(System.DateTime.Now.Millisecond);
+
+        while (copyList.Count > 0)
         {
-            resultList.Insert(random.Next(resultList.Count), item);
+            //Select an index and item
+            int rdIndex = rd.Next(0, copyList.Count );
+            T remove = copyList[rdIndex];
+
+            //remove it from copyList and add it to output
+            copyList.Remove(remove);
+            outputList.Add(remove);
         }
-        return resultList;
+        return outputList;
     }
 }

@@ -39,6 +39,10 @@ public class AdventureTeamBlock : MonoBehaviour
 
     public Text contentText;
 
+    public RectTransform getsRt;
+    public Text gets_contentText;
+    public Button gets_confrimBtn;
+
     public Button retreatBtn;
     public Button detailBtn;
     public Button startBtn;
