@@ -402,7 +402,14 @@ public class BuildingPanel : BasePanel
                 case 44:
                 case 45:
                 case 46: workValue = "\n<color=#F0A0FF>饰品制作</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workMakeJewelry); break;
-                    default: workValue = "\n<color=#62D5EE>管理</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workSundry); break;
+                case 73:
+                case 74:
+                case 75:
+                case 76:
+                case 77: workValue = "\n<color=#F0A0FF>卷轴制作</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workMakeScroll); break;
+
+
+                default: workValue = "\n<color=#62D5EE>管理</color> " + gc.OutputWorkValueToRank(gc.heroDic[buildingObject.heroList[i]].workSundry); break;
             }
             setManager_textList[i].text = gc.heroDic[buildingObject.heroList[i]].name+ workValue;
             setManager_btnList[i].gameObject.GetComponent<Image>().overrideSprite = Resources.Load("Image/Other/to_down", typeof(Sprite)) as Sprite;
@@ -481,10 +488,6 @@ public class BuildingPanel : BasePanel
         SetForgeRt.anchoredPosition = new Vector2(278f, -212f);
 
 
-
-     
-
-
         switch (buildingObject.prototypeID)
         {
             case 32:
@@ -493,7 +496,7 @@ public class BuildingPanel : BasePanel
             case 35:
             case 36:
                 setForge_typeDd.ClearOptions();
-                setForge_typeDd.AddOptions(new List<string> { "剑", "斧、镰刀", "枪、矛", "锤、棍棒", "弓", "杖", "箭袋" });
+                setForge_typeDd.AddOptions(new List<string> { "剑", "斧、镰刀", "枪、矛", "锤、棍棒", "弓", "杖", "箭袋", "盾" });
                 break;
             case 37:
             case 38:
@@ -501,7 +504,7 @@ public class BuildingPanel : BasePanel
             case 40:
             case 41:
                 setForge_typeDd.ClearOptions();
-                setForge_typeDd.AddOptions(new List<string> { "头部防具（重）", "头部防具（轻）", "身体防具（重）", "身体防具（轻）", "手部防具（重）", "手部防具（轻）", "背部防具（重）", "背部防具（轻）", "腿部防具（重）", "腿部防具（轻）", "盾" });
+                setForge_typeDd.AddOptions(new List<string> { "头部防具（重）", "头部防具（轻）", "身体防具（重）", "身体防具（轻）", "手部防具（重）", "手部防具（轻）", "背部防具（重）", "背部防具（轻）", "腿部防具（重）", "腿部防具（轻）" });
                 break;
             case 42:
             case 43:
@@ -510,6 +513,8 @@ public class BuildingPanel : BasePanel
             case 46:
                 setForge_typeDd.ClearOptions();
                 setForge_typeDd.AddOptions(new List<string> { "项链", "戒指" });
+
+                //TODO:卷轴生产待做
                 break;
         }
         setForge_typeDd.RefreshShownValue();

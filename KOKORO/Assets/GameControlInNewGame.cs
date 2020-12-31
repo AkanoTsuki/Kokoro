@@ -128,6 +128,7 @@ public class GameControlInNewGame : MonoBehaviour
         gc.dungeonList.Add(new DungeonObject(5, true));
         gc.dungeonList.Add(new DungeonObject(6, true));
 
+        gc.buildingUnlock = new bool[78];
         gc.buildingUnlock[0]= true;
         gc.buildingUnlock[3]= true;
         gc.buildingUnlock[9]= true;
@@ -148,6 +149,7 @@ public class GameControlInNewGame : MonoBehaviour
         gc.buildingUnlock[48]= true;
         gc.buildingUnlock[49]= true;
         gc.buildingUnlock[65]= true;
+        gc.buildingUnlock[73] = true;
 
         gc.gold = 5000;
         gc.nowCheckingDistrictID = temp_districtID;

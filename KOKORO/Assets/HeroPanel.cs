@@ -13,6 +13,7 @@ public class HeroPanel : BasePanel
 
     public Text nameText;
     public Image picImage;
+    public Image sexImage;
     public Text infoText;
 
     public Button infoFight_page1Btn;
@@ -195,10 +196,23 @@ public class HeroPanel : BasePanel
 
     public void UpdateBasicInfo(HeroObject heroObject)
     {
+        //Debug.Log("DataManager.mDistrictDict[gc.buildingDic[heroObject.workerInBuilding].districtID].Name=" + DataManager.mDistrictDict[gc.buildingDic[heroObject.workerInBuilding].districtID].Name);
+        //Debug.Log(" gc.buildingDic[heroObject.workerInBuilding].name=" + gc.buildingDic[heroObject.workerInBuilding].name);
+        ////Debug.Log(" gc.buildingDic[heroObject.workerInBuilding].name=" + gc.buildingDic[heroObject.workerInBuilding].name);
+
         nameText.text = heroObject.name;
         picImage.overrideSprite = Resources.Load("Image/RolePic/" + heroObject.pic + "/Pic", typeof(Sprite)) as Sprite; ;
-        infoText.text = "Lv." + heroObject.level+""+ DataManager.mHeroDict[heroObject.prototypeID].Name + " [Exp "+ heroObject .exp+ "]"+
-            "\n薪金 150金币/月\n成长率 " + heroObject.groupRate;
+        sexImage.overrideSprite = Resources.Load("Image/Other/sex_" + (heroObject.sex==0?"man":"woman" ), typeof(Sprite)) as Sprite; ;
+        infoText.text = "Lv." + heroObject.level+""+ DataManager.mHeroDict[heroObject.prototypeID].Name +
+            "[升级经验值"+ ((int)System.Math.Pow(1.05f, heroObject.level)*200-heroObject .exp)+ 
+            "][成长率" +System.Math.Round( heroObject.groupRate,3)+
+            (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex==3?
+            ("\n薪金 150金币/月" +
+            ( heroObject.workerInBuilding!=-1?(" 在"+DataManager.mDistrictDict[gc.buildingDic[heroObject.workerInBuilding].districtID].Name+"的"+  gc.buildingDic[heroObject.workerInBuilding].name +"工作"):"")+
+            (heroObject.adventureInTeam!=-1?(" 已编入第"+(heroObject.adventureInTeam+1) +"探险队"):"")+
+            "\n制作武器"+ heroObject.countMakeWeapon+"件 制作防具" + heroObject.countMakeArmor + "件 制作饰物" + heroObject.countMakeJewelry + "件 制作卷轴" + heroObject.countMakeScroll+ "件  冒险" + heroObject.countAdventure + "次(完成" + heroObject.countAdventureDone + "次)" + " 击杀" + heroObject.countKill + " 倒下" + heroObject.countDeath ):""
+            )+
+            "\n"+DataManager.mHeroDict[ heroObject.prototypeID].Des;
     }
 
 
@@ -1606,7 +1620,7 @@ public class HeroPanel : BasePanel
                 "\n物防 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.def,defEquipAdd) : OutputAttrChangeStr(heroObject.def, defEquipAdd, defEquipAddNew, "")) +
                 "\n命中 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.hit,hitEquipAdd) : OutputAttrChangeStr(heroObject.hit, hitEquipAdd, hitEquipAddNew, "")) +
                 "\n闪避 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dod,dodEquipAdd) : OutputAttrChangeStr(heroObject.dod, dodEquipAdd, dodEquipAddNew, "")) +
-                "\n速度 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.spd,spdEquipAdd) : OutputAttrChangeStr(heroObject.spd, spdEquipAdd, spdEquipAddNew, "")) +
+                "\n速度 " + ((equipPart == EquipPart.None) ? (heroObject.equipWeapon==-1? heroObject.spd.ToString(): spdEquipAdd.ToString()) : OutputAttrChangeStrBySpd((heroObject.equipWeapon == -1 ? heroObject.spd: spdEquipAdd),spdEquipAddNew)) +
                 "\n风系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.windDam,windDamEquipAdd) + "%" : OutputAttrChangeStr(heroObject.windDam, windDamEquipAdd, windDamEquipAddNew, "%"))  +
                 "\n火系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.fireDam,fireDamEquipAdd) + "%" : OutputAttrChangeStr(heroObject.fireDam, fireDamEquipAdd, fireDamEquipAddNew, "%"))  +
                 "\n水系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.waterDam,waterDamEquipAdd) + "%" : OutputAttrChangeStr(heroObject.waterDam, waterDamEquipAdd, waterDamEquipAddNew, "%"))  +
@@ -1634,13 +1648,13 @@ public class HeroPanel : BasePanel
         }
         else if((page == 2))
         {
-            infoFight_des1Text.text = "眩晕抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dizzyRes,dizzyResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.hp, hpEquipAdd, hpEquipAddNew, "%")) +
-                "\n混乱抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.confusionRes,confusionResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.hp, hpEquipAdd, hpEquipAddNew, "%")) +
-                "\n中毒抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.poisonRes,poisonResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.hp, hpEquipAdd, hpEquipAddNew, "%"))  +
-                "\n睡眠抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.sleepRes,sleepResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.hp, hpEquipAdd, hpEquipAddNew, "%"))  +
-                "\n经验值获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.expGet,expGetEquipAdd) + "%" : OutputAttrChangeStr(heroObject.hp, hpEquipAdd, hpEquipAddNew, "%"))  +
-                "\n金币获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.goldGet,goldGetEquipAdd) + "%" : OutputAttrChangeStr(heroObject.hp, hpEquipAdd, hpEquipAddNew, "%"))  +
-                "\n稀有物品掉落加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.itemGet,itemGetEquipAdd) + "%" : OutputAttrChangeStr(heroObject.hp, hpEquipAdd, hpEquipAddNew, "%")) ;
+            infoFight_des1Text.text = "眩晕抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dizzyRes,dizzyResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.dizzyRes, dizzyResEquipAdd, dizzyResEquipAddNew, "%")) +
+                "\n混乱抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.confusionRes,confusionResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.confusionRes, confusionResEquipAdd, confusionResEquipAddNew, "%")) +
+                "\n中毒抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.poisonRes,poisonResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.poisonRes, poisonResEquipAdd, poisonResEquipAddNew, "%"))  +
+                "\n睡眠抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.sleepRes,sleepResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.sleepRes, sleepResEquipAdd, sleepResEquipAddNew, "%"))  +
+                "\n经验值获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.expGet,expGetEquipAdd) + "%" : OutputAttrChangeStr(heroObject.expGet, expGetEquipAdd, expGetEquipAddNew, "%"))  +
+                "\n金币获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.goldGet,goldGetEquipAdd) + "%" : OutputAttrChangeStr(heroObject.goldGet, goldGetEquipAdd, goldGetEquipAddNew, "%"))  +
+                "\n稀有物品掉落加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.itemGet,itemGetEquipAdd) + "%" : OutputAttrChangeStr(heroObject.itemGet, itemGetEquipAdd, itemGetEquipAddNew, "%")) ;
             infoFight_des2Text.text = "";
 
             infoFight_page1Btn.interactable = true;
@@ -1654,15 +1668,15 @@ public class HeroPanel : BasePanel
 
 
 
-    string OutputAttrStr(int basic, int equipAdd)
+    string OutputAttrStr(float basic, int equipAdd)
     {
-        return (basic + equipAdd) >= 0 ? (basic + equipAdd).ToString():"0";
+        return ((int)basic + equipAdd) >= 0 ? (basic + equipAdd).ToString():"0";
     }
 
-    string OutputAttrChangeStr(int basic,int addNow ,int addNew ,string suffixes)
+    string OutputAttrChangeStr(float basic,int addNow ,int addNew ,string suffixes)
     {
-        int nowValue = (basic + addNow) >= 0 ? basic + addNow : 0;
-        int newValue = (basic + addNew) >= 0 ? basic + addNew : 0;
+        int nowValue = ((int)basic + addNow) >= 0 ? (int)basic + addNow : 0;
+        int newValue = ((int)basic + addNew) >= 0 ? (int)basic + addNew : 0;
         int change = newValue - nowValue;
         string changeStr = " ";
         if (change > 0)
@@ -1675,6 +1689,21 @@ public class HeroPanel : BasePanel
         }
         
         return newValue+ suffixes + changeStr;
+    }
+
+    string OutputAttrChangeStrBySpd(int nowValue, int newValue)
+    {
+        int change = newValue - nowValue;
+        string changeStr = " ";
+        if (change > 0)
+        {
+            changeStr = " <color=#76EE00>+" + change  + "</color>";
+        }
+        else if (change < 0)
+        {
+            changeStr = " <color=#FF4A4A>" + change  + "</color>";
+        }
+        return newValue  + changeStr;
     }
 
     public void UpdateWorkInfo(HeroObject heroObject)
@@ -1690,7 +1719,7 @@ public class HeroPanel : BasePanel
             "\n<color=#F0A0FF>武器锻造</color> " + gc.OutputWorkValueToRank(heroObject.workMakeWeapon) +
             "        <color=#F0A0FF>防具制作</color> " + gc.OutputWorkValueToRank(heroObject.workMakeArmor) +
             "\n<color=#F0A0FF>饰品制作</color> " + gc.OutputWorkValueToRank(heroObject.workMakeJewelry) +
-            "        <color=#F0A0FF>卷轴研究</color> " + "???" +
+            "        <color=#F0A0FF>卷轴研究</color> " + gc.OutputWorkValueToRank(heroObject.workMakeScroll) +
             "\n<color=#62D5EE>管理</color> " + gc.OutputWorkValueToRank(heroObject.workSundry);
     }
 

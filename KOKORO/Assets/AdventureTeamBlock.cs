@@ -30,6 +30,8 @@ public class AdventureTeamBlock : MonoBehaviour
     public RectTransform dungeon_progressNowBarRt;
     public RectTransform dungeon_progressNowFlagRt;
 
+    public RectTransform dungeon_destinationRt;
+    public Image dungeon_destinationImage;
     public Button dungeon_selectBtn;
 
     public List<Image> hero_picImage;

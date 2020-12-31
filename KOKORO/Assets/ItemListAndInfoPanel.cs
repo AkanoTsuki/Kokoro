@@ -334,8 +334,8 @@ public class ItemListAndInfoPanel : BasePanel
             int index = i;
             go.transform.GetComponent<Button>().onClick.AddListener(delegate ()
             {
-                ItemListAndInfoPanel.Instance.nowItemID =  itemObjects[index].objectID; 
-                ItemListAndInfoPanel.Instance.UpdateInfo(gc.itemDic[itemObjects[index].objectID]);
+                nowItemID =  itemObjects[index].objectID; 
+                UpdateInfo(gc.itemDic[itemObjects[index].objectID]);
                 HeroPanel.Instance.UpdateFightInfo(gc.heroDic[HeroPanel.Instance.nowSelectedHeroID], ItemListAndInfoPanel.Instance.nowEquipPart, gc.itemDic[itemObjects[index].objectID], 1);
             });
         }

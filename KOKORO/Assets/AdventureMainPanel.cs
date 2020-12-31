@@ -125,25 +125,38 @@ public class AdventureMainPanel : BasePanel
         {
             if (gc.adventureTeamList[teamID].dungeonID != -1)
             {
-                adventureTeamBlock.dungeon_nameText.text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name;
-
-                for (int i = 0; i < gc.adventureTeamList[teamID].scenePicList.Count; i++)
-                {
-                    adventureTeamBlock.dungeon_sceneBgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_B", typeof(Sprite)) as Sprite;
-                    adventureTeamBlock.dungeon_sceneFgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_F", typeof(Sprite)) as Sprite;
-                }
-
-                adventureTeamBlock.dungeon_selectBtn.GetComponent<RectTransform>().localScale = Vector2.one;
-            }
-            else
-            {
-                adventureTeamBlock.dungeon_nameText.text = "营地 - 未选择目的地";
+                adventureTeamBlock.dungeon_nameText.text ="城镇 - 目的地:"+ DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name;
 
                 adventureTeamBlock.dungeon_sceneBgRt[0].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_B", typeof(Sprite)) as Sprite;
                 adventureTeamBlock.dungeon_sceneFgRt[0].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_F", typeof(Sprite)) as Sprite;
-                adventureTeamBlock.dungeon_selectBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                
+                //for (int i = 0; i < gc.adventureTeamList[teamID].scenePicList.Count; i++)
+                //{
+                //    adventureTeamBlock.dungeon_sceneBgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_B", typeof(Sprite)) as Sprite;
+                //    adventureTeamBlock.dungeon_sceneFgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_F", typeof(Sprite)) as Sprite;
+                //}
+
+                adventureTeamBlock.dungeon_destinationRt.localScale = Vector2.one;
+                adventureTeamBlock.dungeon_destinationImage.overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[0] + "_B", typeof(Sprite)) as Sprite;
+
+
+
             }
+            else
+            {
+                adventureTeamBlock.dungeon_nameText.text = "城镇 - 未指定目的地";
+
+                adventureTeamBlock.dungeon_sceneBgRt[0].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_B", typeof(Sprite)) as Sprite;
+                adventureTeamBlock.dungeon_sceneFgRt[0].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_F", typeof(Sprite)) as Sprite;
+
+                adventureTeamBlock.dungeon_destinationRt.localScale = Vector2.zero;
+
+            }
+            adventureTeamBlock.dungeon_bgListGo.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            adventureTeamBlock.dungeon_fgListGo.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
             UpdateProgress(teamID);
+          
             adventureTeamBlock.dungeon_selectBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.dungeon_selectBtn.onClick.RemoveAllListeners();
             adventureTeamBlock.dungeon_selectBtn.onClick.AddListener(delegate ()
@@ -179,7 +192,7 @@ public class AdventureMainPanel : BasePanel
                 adventureTeamBlock.dungeon_sceneBgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_B", typeof(Sprite)) as Sprite;
                 adventureTeamBlock.dungeon_sceneFgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_F", typeof(Sprite)) as Sprite;
             }
-
+            adventureTeamBlock.dungeon_destinationRt.localScale = Vector2.zero;
             adventureTeamBlock.dungeon_selectBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
 
             UpdateProgress(teamID);
@@ -191,14 +204,25 @@ public class AdventureMainPanel : BasePanel
                 case AdventureAction.Walk:
                     HideSceneRoleHpMp(teamID);
 
+                    adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                    adventureTeamBlock.retreatBtn.onClick.RemoveAllListeners();
+                    adventureTeamBlock.retreatBtn.onClick.AddListener(delegate ()
+                    {
+                        gc.AdventureTeamBack(teamID, AdventureState.Retreat);
+                    });
                     break;
                 case AdventureAction.Fight:
                     UpdateSceneRoleHpMp(teamID, gc.fightMenberObjectSS[teamID]);
                     UpdateSceneRole(teamID);
                     UpdateSceneEnemy(teamID);
+
+                    adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+    
+
                     break;
                 case AdventureAction.GetSomething:
                     HideSceneRoleHpMp(teamID);
+                    adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                     break;
             }
 
@@ -212,12 +236,7 @@ public class AdventureMainPanel : BasePanel
             {
                 /*详情*/
             });
-            adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.one;
-            adventureTeamBlock.retreatBtn.onClick.RemoveAllListeners();
-            adventureTeamBlock.retreatBtn.onClick.AddListener(delegate ()
-            {
-                /*撤退*/
-            });
+            
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.startBtn.transform.GetChild(0).GetComponent<Text>().text = "战利品";
             adventureTeamBlock.startBtn.onClick.RemoveAllListeners();
@@ -235,7 +254,7 @@ public class AdventureMainPanel : BasePanel
                 adventureTeamBlock.dungeon_sceneBgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_B", typeof(Sprite)) as Sprite;
                 adventureTeamBlock.dungeon_sceneFgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_F", typeof(Sprite)) as Sprite;
             }
-
+            adventureTeamBlock.dungeon_destinationRt.localScale = Vector2.zero;
             adventureTeamBlock.dungeon_selectBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             UpdateSceneRoleFormations(teamID);
             HideSceneRoleHpMp(teamID);
@@ -260,7 +279,7 @@ public class AdventureMainPanel : BasePanel
                 adventureTeamBlock.dungeon_sceneBgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_B", typeof(Sprite)) as Sprite;
                 adventureTeamBlock.dungeon_sceneFgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_F", typeof(Sprite)) as Sprite;
             }
-
+            adventureTeamBlock.dungeon_destinationRt.localScale = Vector2.zero;
             adventureTeamBlock.dungeon_selectBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             UpdateSceneRoleFormations(teamID);
             HideSceneRoleHpMp(teamID);
@@ -276,7 +295,31 @@ public class AdventureMainPanel : BasePanel
                 ShowGets(teamID);
             });
         }
+        else if (gc.adventureTeamList[teamID].state == AdventureState.Retreat)
+        {
+            adventureTeamBlock.dungeon_nameText.text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name + "<color=red>(探索中止)</color>";
 
+            for (int i = 0; i < gc.adventureTeamList[teamID].scenePicList.Count; i++)
+            {
+                adventureTeamBlock.dungeon_sceneBgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_B", typeof(Sprite)) as Sprite;
+                adventureTeamBlock.dungeon_sceneFgRt[i].GetComponent<Image>().overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[i] + "_F", typeof(Sprite)) as Sprite;
+            }
+            adventureTeamBlock.dungeon_destinationRt.localScale = Vector2.zero;
+            adventureTeamBlock.dungeon_selectBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+            UpdateSceneRoleFormations(teamID);
+            HideSceneRoleHpMp(teamID);
+            UpdateTeamHero(teamID);
+            UpdateSceneRole(teamID);
+            adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+            adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+            adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+            adventureTeamBlock.startBtn.transform.GetChild(0).GetComponent<Text>().text = "结算";
+            adventureTeamBlock.startBtn.onClick.RemoveAllListeners();
+            adventureTeamBlock.startBtn.onClick.AddListener(delegate ()
+            {
+                ShowGets(teamID);
+            });
+        }
     }
 
     //更新三个英雄信息格子（先锋，中军，后卫）
@@ -511,7 +554,9 @@ public class AdventureMainPanel : BasePanel
                 HideGets(teamID);
             });
         }
-        else if (gc.adventureTeamList[teamID].state == AdventureState.Done)
+        else if (gc.adventureTeamList[teamID].state == AdventureState.Done||
+            gc.adventureTeamList[teamID].state == AdventureState.Fail||
+            gc.adventureTeamList[teamID].state == AdventureState.Retreat)
         {
             adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().gets_confrimBtn.transform.GetChild(0).GetComponent<Text>().text = "领取";
             adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().gets_confrimBtn.onClick.AddListener(delegate ()
@@ -520,6 +565,7 @@ public class AdventureMainPanel : BasePanel
                 HideGets(teamID);
             });
         }
+        
     }
     public void HideGets(byte teamID)
     {
@@ -642,6 +688,10 @@ public class AdventureMainPanel : BasePanel
             else if (gc.adventureTeamList[teamID].state == AdventureState.Fail)
             {
                 adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.Death);
+            }
+            else if (gc.adventureTeamList[teamID].state == AdventureState.Fail)
+            {
+                adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.Front);
             }
         }
     }

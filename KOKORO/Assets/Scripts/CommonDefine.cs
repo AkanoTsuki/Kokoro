@@ -157,7 +157,8 @@ public enum Attribute
     WorkBuild, 
     WorkMakeWeapon, 
     WorkMakeArmor, 
-    WorkMakeJewelry, 
+    WorkMakeJewelry,
+    WorkMakeScroll,
     WorkSundry
 }
 
@@ -554,6 +555,7 @@ public class HeroPrototype
     public byte WorkMakeWeapon;
     public byte WorkMakeArmor;
     public byte WorkMakeJewelry;
+    public byte WorkMakeScroll;
     public byte WorkSundry;
 }
 
@@ -569,21 +571,32 @@ public class HeroObject
     private byte Sex;
     private string Pic;
     private float GroupRate;
-    private int Hp;
-    private int Mp;
-    private short HpRenew;
-    private short MpRenew;
-    private short AtkMin;
-    private short AtkMax;
-    private short MAtkMin;
-    private short MAtkMax;
-    private short Def;
-    private short MDef;
-    private short Hit;
-    private short Dod;
-    private short CriR;
-    private short CriD;
+    private float Hp;
+    private float Mp;
+    private float HpRenew;
+    private float MpRenew;
+    private float AtkMin;
+    private float AtkMax;
+    private float MAtkMin;
+    private float MAtkMax;
+    private float Def;
+    private float MDef;
+    private float Hit;
+    private float Dod;
+    private float CriR;
+    private float CriD;
     private short Spd;
+    private short BaseHp;
+    private short BaseMp;
+    private short BaseAtkMin;
+    private short BaseAtkMax;
+    private short BaseMAtkMin;
+    private short BaseMAtkMax;
+    private short BaseDef;
+    private short BaseMDef;
+    private short BaseHit;
+    private short BaseDod;
+    private short BaseCriR;
     private short WindDam;
     private short FireDam;
     private short WaterDam;
@@ -614,6 +627,7 @@ public class HeroObject
     private byte WorkMakeWeapon;
     private byte WorkMakeArmor;
     private byte WorkMakeJewelry;
+    private byte WorkMakeScroll;
     private byte WorkSundry;
     private int EquipWeapon;
     private int EquipSubhand;
@@ -628,18 +642,38 @@ public class HeroObject
     private List<int> Skill;
     private int WorkerInBuilding;
     private short AdventureInTeam;
+    private int CountMakeWeapon;
+    private int CountMakeArmor;
+    private int CountMakeJewelry;
+    private int CountMakeScroll;
+    private int CountKill;
+    private int CountDeath;
+    private int CountAdventure;
+    private int CountAdventureDone;
+    private int CountUseWind;
+    private int CountUseFire;
+    private int CountUseWater;
+    private int CountUseGround;
+    private int CountUseLight;
+    private int CountUseDark;
+    private int CountUseNone;
     public HeroObject(int id, string name, short prototypeID, short level, int exp,byte sex,string pic, float groupRate,
-        int hp, int mp, short hpRenew, short mpRenew,
-        short atkMin, short atkMax, short mAtkMin, short mAtkMax, short def, short mDef,
-        short hit, short dod, short criR, short criD, short spd,
+        float hp, float mp, float hpRenew, float mpRenew,
+        float atkMin, float atkMax, float mAtkMin, float mAtkMax, float def, float mDef,
+        float hit, float dod, float criR, float criD, short spd,
+        short baseHp, short baseMp, short baseAtkMin, short baseAtkMax, short baseMAtkMin, short baseMAtkMax, short baseDef, short baseMDef, short baseHit, short baseDod, short baseCriR,
         short windDam, short fireDam, short waterDam, short groundDam, short lightDam, short darkDam,
         short windRes, short fireRes, short waterRes, short groundRes, short lightRes, short darkRes,
         short dizzyRes, short confusionRes, short poisonRes, short sleepRes,
         byte goldGet, byte expGet, byte itemGet,
         byte workPlanting, byte workFeeding, byte workFishing, byte workHunting, byte workMining, byte workQuarrying, byte workFelling, byte workBuild,
-        byte workMakeWeapon, byte workMakeArmor, byte workMakeJewelry,
+        byte workMakeWeapon, byte workMakeArmor, byte workMakeJewelry, byte workMakeScroll,
         byte workSundry,
-        int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<int> skill,int workerInBuilding, short adventureInTeam)
+        int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<int> skill,
+        int workerInBuilding, short adventureInTeam,
+        int countMakeWeapon, int countMakeArmor, int countMakeJewelry, int countMakeScroll, int countKill, int countDeath, int countAdventure, int countAdventureDone,
+        int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone
+        )
     {
         this.ID = id;
         this.Name = name;
@@ -664,6 +698,18 @@ public class HeroObject
         this.CriR = criR;
         this.CriD = criD;
         this.Spd = spd;
+        this.BaseHp = baseHp;
+        this.BaseMp = baseMp;
+        this.BaseAtkMin = baseAtkMin;
+        this.BaseAtkMax = baseAtkMax;
+        this.BaseMAtkMin = baseMAtkMin;
+        this.BaseMAtkMax = baseMAtkMax;
+        this.BaseDef = baseDef;
+        this.BaseMDef = baseMDef;
+        this.BaseHit = baseHit;
+        this.BaseDod = baseDod;
+        this.BaseCriR = baseCriR;
+
         this.WindDam = windDam;
         this.FireDam = fireDam;
         this.WaterDam = waterDam;
@@ -694,6 +740,7 @@ public class HeroObject
         this.WorkMakeWeapon = workMakeWeapon;
         this.WorkMakeArmor = workMakeArmor;
         this.WorkMakeJewelry = workMakeJewelry;
+        this.WorkMakeScroll = workMakeScroll;
         this.WorkSundry = workSundry;
         this.EquipWeapon = equipWeapon;
         this.EquipSubhand = equipSubhand;
@@ -708,6 +755,21 @@ public class HeroObject
         this.Skill = skill;
         this.WorkerInBuilding = workerInBuilding;
         this.AdventureInTeam = adventureInTeam;
+        this.CountMakeWeapon = countMakeWeapon;
+        this.CountMakeArmor = countMakeArmor;
+        this.CountMakeJewelry = countMakeJewelry;
+        this.CountMakeScroll = countMakeScroll;
+        this.CountKill = countKill;
+        this.CountDeath = countDeath;
+        this.CountAdventure = countAdventure;
+        this.CountAdventureDone = countAdventureDone;
+        this.CountUseWind = countUseWind;
+        this.CountUseFire = countUseFire;
+        this.CountUseWater = countUseWater;
+        this.CountUseGround = countUseGround;
+        this.CountUseLight = countUseLight;
+        this.CountUseDark = countUseDark;
+        this.CountUseNone = countUseNone;
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } set { Name = value; } }
@@ -717,21 +779,34 @@ public class HeroObject
     public byte sex { get { return Sex; } set { Sex = value; } }
     public string pic { get { return Pic; } set { Pic = value; } }
     public float groupRate { get { return GroupRate; } set { GroupRate = value; } }
-    public int hp { get { return Hp; } set { Hp = value; } }
-    public int mp { get { return Mp; } set { Mp = value; } }
-    public short hpRenew { get { return HpRenew; } set { HpRenew = value; } }
-    public short mpRenew { get { return MpRenew; } set { MpRenew = value; } }
-    public short atkMin { get { return AtkMin; } set { AtkMin = value; } }
-    public short atkMax { get { return AtkMax; } set { AtkMax = value; } }
-    public short mAtkMin { get { return MAtkMin; } set { MAtkMin = value; } }
-    public short mAtkMax { get { return MAtkMax; } set { MAtkMax = value; } }
-    public short def { get { return Def; } set { Def = value; } }
-    public short mDef { get { return MDef; } set { MDef = value; } }
-    public short hit { get { return Hit; } set { Hit = value; } }
-    public short dod { get { return Dod; } set { Dod = value; } }
-    public short criR { get { return CriR; } set { CriR = value; } }
-    public short criD { get { return CriD; } set { CriD = value; } }
+    public float hp { get { return Hp; } set { Hp = value; } }
+    public float mp { get { return Mp; } set { Mp = value; } }
+    public float hpRenew { get { return HpRenew; } set { HpRenew = value; } }
+    public float mpRenew { get { return MpRenew; } set { MpRenew = value; } }
+    public float atkMin { get { return AtkMin; } set { AtkMin = value; } }
+    public float atkMax { get { return AtkMax; } set { AtkMax = value; } }
+    public float mAtkMin { get { return MAtkMin; } set { MAtkMin = value; } }
+    public float mAtkMax { get { return MAtkMax; } set { MAtkMax = value; } }
+    public float def { get { return Def; } set { Def = value; } }
+    public float mDef { get { return MDef; } set { MDef = value; } }
+    public float hit { get { return Hit; } set { Hit = value; } }
+    public float dod { get { return Dod; } set { Dod = value; } }
+    public float criR { get { return CriR; } set { CriR = value; } }
+    public float criD { get { return CriD; } set { CriD = value; } }
     public short spd { get { return Spd; } set { Spd = value; } }
+
+    public short baseHp { get { return BaseHp; } }
+    public short baseMp { get { return BaseMp; } }
+    public short baseAtkMin { get { return BaseAtkMin; } }
+    public short baseAtkMax { get { return BaseAtkMax; } }
+    public short baseMAtkMin { get { return BaseMAtkMin; } }
+    public short baseMAtkMax { get { return BaseMAtkMax; } }
+    public short baseDef { get { return BaseMDef; } }
+    public short baseMDef { get { return BaseMDef; } }
+    public short baseHit { get { return BaseHit; } }
+    public short baseDod { get { return BaseDod; } }
+    public short baseCriR { get { return BaseCriR; } }
+
     public short windDam { get { return WindDam; } set { WindDam = value; } }
     public short fireDam { get { return FireDam; } set { FireDam = value; } }
     public short waterDam { get { return WaterDam; } set { WaterDam = value; } }
@@ -762,6 +837,7 @@ public class HeroObject
     public byte workMakeWeapon { get { return WorkMakeWeapon; } set { WorkMakeWeapon = value; } }
     public byte workMakeArmor { get { return WorkMakeArmor; } set { WorkMakeArmor = value; } }
     public byte workMakeJewelry { get { return WorkMakeJewelry; } set { WorkMakeJewelry = value; } }
+    public byte workMakeScroll { get { return WorkMakeScroll; } set { WorkMakeScroll = value; } }
     public byte workSundry { get { return WorkSundry; } set { WorkSundry = value; } }
     public int equipWeapon { get { return EquipWeapon; } set { EquipWeapon = value; } }
     public int equipSubhand { get { return EquipSubhand; } set { EquipSubhand = value; } }
@@ -776,6 +852,22 @@ public class HeroObject
     public List<int> skill { get { return Skill; } set { Skill = value; } }
     public int workerInBuilding { get { return WorkerInBuilding; } set { WorkerInBuilding = value; } }
     public short adventureInTeam { get { return AdventureInTeam; } set { AdventureInTeam = value; } }
+
+    public int countMakeWeapon { get { return CountMakeWeapon; } set { CountMakeWeapon = value; } }
+    public int countMakeArmor { get { return CountMakeArmor; } set { CountMakeArmor = value; } }
+    public int countMakeJewelry { get { return CountMakeJewelry; } set { CountMakeJewelry = value; } }
+    public int countMakeScroll { get { return CountMakeScroll; } set { CountMakeScroll = value; } }
+    public int countKill { get { return CountKill; } set { CountKill = value; } }
+    public int countDeath { get { return CountDeath; } set { CountDeath = value; } }
+    public int countAdventure { get { return CountAdventure; } set { CountAdventure = value; } }
+    public int countAdventureDone { get { return CountAdventureDone; } set { CountAdventureDone = value; } }
+    public int countUseWind { get { return CountUseWind; } set { CountUseWind = value; } }
+    public int countUseFire { get { return CountUseFire; } set { CountUseFire = value; } }
+    public int countUseWater { get { return CountUseWater; } set { CountUseWater = value; } }
+    public int countUseGround { get { return CountUseGround; } set { CountUseGround = value; } }
+    public int countUseLight { get { return CountUseLight; } set { CountUseLight = value; } }
+    public int countUseDark { get { return CountUseDark; } set { CountUseDark = value; } }
+    public int countUseNone { get { return CountUseNone; } set { CountUseNone = value; } }
 }
 
 

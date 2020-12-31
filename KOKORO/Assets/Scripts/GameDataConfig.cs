@@ -73,6 +73,7 @@ public class DataManager
         cCreateHeroRankDict.Add(Attribute.WorkMakeWeapon, new CreateHeroRank(new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new byte[,] { { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 } }));
         cCreateHeroRankDict.Add(Attribute.WorkMakeArmor, new CreateHeroRank(new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new byte[,] { { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 } }));
         cCreateHeroRankDict.Add(Attribute.WorkMakeJewelry, new CreateHeroRank(new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new byte[,] { { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 } }));
+        cCreateHeroRankDict.Add(Attribute.WorkMakeScroll, new CreateHeroRank(new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new byte[,] { { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 } }));
         cCreateHeroRankDict.Add(Attribute.WorkSundry, new CreateHeroRank(new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new byte[,] { { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 } }));
 
     }
@@ -142,8 +143,8 @@ public class GameDataConfig : MonoBehaviour
         //Debug.Log(DataManager.cCreateHeroTypeDict[1].Name);
         //Debug.Log(DataManager.mBuildingDict[5].Name);
         //Debug.Log(DataManager.mMonsterDict[1].Name);
-       // Debug.Log(DataManager.mItemDict[141].Name);
-        Debug.Log(DataManager.mDungeonDict[0].FixEvent[0]);
+       Debug.Log(DataManager.mHeroDict[0].Name);
+        //Debug.Log(DataManager.mDungeonDict[0].FixEvent[0]);
     }
 
 }

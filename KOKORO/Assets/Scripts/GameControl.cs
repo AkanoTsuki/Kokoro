@@ -28,7 +28,7 @@ public class GameControl : MonoBehaviour
     public int itemIndex = 0;
     public int skillIndex = 0;
     public int buildingIndex = 0;
-    public bool[] buildingUnlock = new bool[73];
+    public bool[] buildingUnlock = new bool[78];
     public int logIndex = 0;
     public string playerName = "AAA";
     public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
@@ -64,7 +64,7 @@ public class GameControl : MonoBehaviour
         public int itemIndex = 0;
         public int skillIndex = 0;
         public int buildingIndex = 0;
-        public bool[] buildingUnlock = new bool[73];
+        public bool[] buildingUnlock = new bool[78];
         public int logIndex = 0;
         public string playerName = "";
         public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
@@ -296,13 +296,16 @@ public class GameControl : MonoBehaviour
         byte workMakeWeapon = (byte)SetAttr(Attribute.WorkMakeWeapon, heroTypeID);
         byte workMakeArmor = (byte)SetAttr(Attribute.WorkMakeArmor, heroTypeID);
         byte workMakeJewelry = (byte)SetAttr(Attribute.WorkMakeJewelry, heroTypeID);
+        byte workMakeScroll = (byte)SetAttr(Attribute.WorkMakeScroll, heroTypeID);
         byte workSundry = (byte)SetAttr(Attribute.WorkSundry, heroTypeID);
 
 
         return new HeroObject(heroID, name, heroTypeID, 1, 0, sexCode, pic, groupRate, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
+            (short)hp, (short)mp,  atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, 
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
-          workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workSundry,
-          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, -1, -1);
+          workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workMakeScroll, workSundry,
+          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, -1, -1,
+          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
     }
 
@@ -338,6 +341,7 @@ public class GameControl : MonoBehaviour
             case Attribute.WorkMakeWeapon: rank = DataManager.mHeroDict[heroTypeID].WorkMakeWeapon; break;
             case Attribute.WorkMakeArmor: rank = DataManager.mHeroDict[heroTypeID].WorkMakeArmor; break;
             case Attribute.WorkMakeJewelry: rank = DataManager.mHeroDict[heroTypeID].WorkMakeJewelry; break;
+            case Attribute.WorkMakeScroll: rank = DataManager.mHeroDict[heroTypeID].WorkMakeScroll; break;
             case Attribute.WorkSundry: rank = DataManager.mHeroDict[heroTypeID].WorkSundry; break;
             default:
                 rank = 999; break;
@@ -358,6 +362,38 @@ public class GameControl : MonoBehaviour
         }
 
         return 0;
+    }
+
+    void HeroGetExp(int heroID, int exp)
+    {
+        heroDic[heroID].exp += exp;
+
+        int levelupNeedExp = (int)System.Math.Pow(1.05f, heroDic[heroID].level)*200;
+        while (heroDic[heroID].exp > levelupNeedExp)
+        {
+            heroDic[heroID].exp -= levelupNeedExp;
+            heroDic[heroID].level++;
+            HeroLevelUp(heroID);
+            levelupNeedExp = (int)System.Math.Pow(1.05f, heroDic[heroID].level) * 200; 
+        }
+    }
+    void HeroLevelUp(int heroID)
+    {
+        float groupRate = heroDic[heroID].groupRate-1f;
+
+        heroDic[heroID].hp += heroDic[heroID].baseHp * groupRate;
+        heroDic[heroID].mp += heroDic[heroID].baseMp * groupRate;
+        heroDic[heroID].atkMin += heroDic[heroID].baseAtkMin * groupRate;
+        heroDic[heroID].atkMax += heroDic[heroID].baseAtkMax * groupRate;
+        heroDic[heroID].mAtkMin += heroDic[heroID].baseMAtkMin * groupRate;
+        heroDic[heroID].mAtkMax += heroDic[heroID].baseMAtkMax * groupRate;
+        heroDic[heroID].def += heroDic[heroID].baseDef * groupRate;
+        heroDic[heroID].mDef += heroDic[heroID].baseMDef * groupRate;
+        heroDic[heroID].hit += heroDic[heroID].baseHit * groupRate;
+        heroDic[heroID].dod += heroDic[heroID].baseDod * groupRate;
+        heroDic[heroID].criR += heroDic[heroID].baseCriR * groupRate;
+
+        MessagePanel.Instance.AddMessage(heroDic[heroID].name+"等级升级到Lv."+ heroDic[heroID] .level+"，能力值提升了");
     }
 
     public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject, List<int> heroObjectIDList)
@@ -996,6 +1032,24 @@ public class GameControl : MonoBehaviour
                 break;
         }
 
+        //增加管理人员的数据
+        for (int i = 0; i < buildingDic[buildingID].heroList.Count; i++)
+        {
+            switch (DataManager.mItemDict[itemID].TypeBig)
+            {
+                case ItemTypeBig.Weapon:
+                case ItemTypeBig.Subhand:
+                    heroDic[buildingDic[buildingID].heroList[i]].countMakeWeapon++;
+                    break;
+                case ItemTypeBig.Armor:
+                    heroDic[buildingDic[buildingID].heroList[i]].countMakeArmor++;
+                    break;
+                case ItemTypeBig.Jewelry:
+                    heroDic[buildingDic[buildingID].heroList[i]].countMakeJewelry++;
+                    break;
+            }
+        }
+
         if (ItemListAndInfoPanel.Instance.isShow)
         {
             ItemListAndInfoPanel.Instance.UpdateList(districtID, 1);
@@ -1554,8 +1608,16 @@ public class GameControl : MonoBehaviour
         adventureTeamList[teamID].action = AdventureAction.None;
 
         AdventureMainPanel.Instance.UpdateTeam(teamID);
+        for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
+        {
+            heroDic[adventureTeamList[teamID].heroIDList[i]].countAdventure++;
+        }
         if (adventureState == AdventureState.Done)
         {
+            for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
+            {
+                heroDic[adventureTeamList[teamID].heroIDList[i]].countAdventureDone++;
+            }
             MessagePanel.Instance.AddMessage("第"+(teamID+1) +"探险队完成任务回来了");
         }
         else if (adventureState == AdventureState.Fail)
@@ -1566,8 +1628,11 @@ public class GameControl : MonoBehaviour
         {
             MessagePanel.Instance.AddMessage("第" + (teamID + 1) + "探险队撤退回来了");
         }
-  
+        
+
     }
+
+    
 
     public void AdventureTakeGets(byte teamID)
     {
@@ -1575,7 +1640,8 @@ public class GameControl : MonoBehaviour
 
         for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
         {
-            heroDic[adventureTeamList[teamID].heroIDList[i]].exp += (int)(adventureTeamList[teamID].getExp / 3f * (1f + heroDic[adventureTeamList[teamID].heroIDList[i]].expGet / 100f));
+            //heroDic[adventureTeamList[teamID].heroIDList[i]].exp += (int)(adventureTeamList[teamID].getExp / 3f * (1f + heroDic[adventureTeamList[teamID].heroIDList[i]].expGet / 100f));
+            HeroGetExp(adventureTeamList[teamID].heroIDList[i], (int)(adventureTeamList[teamID].getExp / 3f * (1f + heroDic[adventureTeamList[teamID].heroIDList[i]].expGet / 100f)));
         }
 
         gold += adventureTeamList[teamID].getGold;
@@ -2978,7 +3044,7 @@ public class GameControl : MonoBehaviour
             AdventureMainPanel.Instance.TeamLogAdd(teamID, "被击败了！");
 
 
-            adventureTeamList[teamID].state = AdventureState.Fail;
+            //adventureTeamList[teamID].state = AdventureState.Fail;
             AdventureTeamBack(teamID, AdventureState.Fail);
 
 
@@ -2997,6 +3063,17 @@ public class GameControl : MonoBehaviour
 
     IEnumerator Attack(byte teamID, FightMenberObject actionMenber, SkillPrototype sp)
     {
+        if (actionMenber.side == 0&& sp!=null)
+        {
+            if (sp.Element.Contains(0)) { heroDic[actionMenber.objectID].countUseNone++; }
+            if (sp.Element.Contains(1)) { heroDic[actionMenber.objectID].countUseWind++; }
+            if (sp.Element.Contains(2)) { heroDic[actionMenber.objectID].countUseFire++; }
+            if (sp.Element.Contains(3)) { heroDic[actionMenber.objectID].countUseWater++; }
+            if (sp.Element.Contains(4)) { heroDic[actionMenber.objectID].countUseGround++; }
+            if (sp.Element.Contains(5)) { heroDic[actionMenber.objectID].countUseLight++; }
+            if (sp.Element.Contains(6)) { heroDic[actionMenber.objectID].countUseDark++; }
+        }
+
 
         AdventureMainPanel.Instance.SetAnim(teamID, actionMenber.side, actionMenber.sideIndex, sp != null? sp.ActionAnim: AnimStatus.Attack);
         yield return new WaitForSeconds(0.5f);
@@ -3089,6 +3166,15 @@ public class GameControl : MonoBehaviour
         {
             AdventureMainPanel.Instance.SetAnim(teamID, targetMenber.side, targetMenber.sideIndex, AnimStatus.Death);
             AdventureMainPanel.Instance.TeamLogAdd(teamID, "[" + round + "]" + OutputNameWithColor(targetMenber) + "被打倒了！");
+
+            if (targetMenber.side == 0)
+            {
+                heroDic[targetMenber.objectID].countDeath++;
+            }
+            else if (targetMenber.side == 1)
+            {
+                heroDic[actionMenber.objectID].countKill++;
+            }
         }
     }
 
@@ -3185,13 +3271,13 @@ public class GameControl : MonoBehaviour
                 }
             }
         }
-        string str = "选中的目标：";
-        for (int i = 0; i < targetMenber.Count; i++)
-        {
-            str += targetMenber[i].name + " ";
-        }
+        //string str = "选中的目标：";
+        //for (int i = 0; i < targetMenber.Count; i++)
+        //{
+        //    str += targetMenber[i].name + " ";
+        //}
 
-        Debug.Log("targetMenber" + targetMenber.Count+ "  "+ str);
+        //Debug.Log("targetMenber" + targetMenber.Count+ "  "+ str);
         return targetMenber;
     }
 
@@ -3516,20 +3602,20 @@ public class GameControl : MonoBehaviour
 
         switch (attribute)
         {
-            case Attribute.Hp: return heroDic[heroID].hp+ equipAdd;
-            case Attribute.Mp: return heroDic[heroID].mp+ equipAdd;
-            case Attribute.HpRenew: return heroDic[heroID].hpRenew+ equipAdd;
-            case Attribute.MpRenew: return heroDic[heroID].mpRenew+ equipAdd;
-            case Attribute.AtkMin: return heroDic[heroID].atkMin+ equipAdd;
-            case Attribute.AtkMax: return heroDic[heroID].atkMax+ equipAdd;
-            case Attribute.MAtkMin: return heroDic[heroID].mAtkMin+ equipAdd;
-            case Attribute.MAtkMax: return heroDic[heroID].mAtkMax+ equipAdd;
-            case Attribute.Def: return heroDic[heroID].def+ equipAdd;
-            case Attribute.MDef: return heroDic[heroID].mDef+ equipAdd;
-            case Attribute.Hit: return heroDic[heroID].hit+ equipAdd;
-            case Attribute.Dod: return heroDic[heroID].dod+ equipAdd;
-            case Attribute.CriR: return heroDic[heroID].criR+ equipAdd;
-            case Attribute.CriD: return heroDic[heroID].criD+ equipAdd;
+            case Attribute.Hp: return (int)heroDic[heroID].hp+ equipAdd;
+            case Attribute.Mp: return (int)heroDic[heroID].mp+ equipAdd;
+            case Attribute.HpRenew: return (int)heroDic[heroID].hpRenew+ equipAdd;
+            case Attribute.MpRenew: return (int)heroDic[heroID].mpRenew+ equipAdd;
+            case Attribute.AtkMin: return (int)heroDic[heroID].atkMin+ equipAdd;
+            case Attribute.AtkMax: return (int)heroDic[heroID].atkMax+ equipAdd;
+            case Attribute.MAtkMin: return (int)heroDic[heroID].mAtkMin+ equipAdd;
+            case Attribute.MAtkMax: return (int)heroDic[heroID].mAtkMax+ equipAdd;
+            case Attribute.Def: return (int)heroDic[heroID].def+ equipAdd;
+            case Attribute.MDef: return (int)heroDic[heroID].mDef+ equipAdd;
+            case Attribute.Hit: return (int)heroDic[heroID].hit+ equipAdd;
+            case Attribute.Dod: return (int)heroDic[heroID].dod+ equipAdd;
+            case Attribute.CriR: return (int)heroDic[heroID].criR+ equipAdd;
+            case Attribute.CriD: return (int)heroDic[heroID].criD+ equipAdd;
             case Attribute.Spd: return (heroDic[heroID].equipWeapon==-1)?( heroDic[heroID].spd+ equipAdd): equipAdd;
             case Attribute.WindDam: return heroDic[heroID].windDam+ equipAdd;
             case Attribute.FireDam: return heroDic[heroID].fireDam+ equipAdd;
