@@ -28,10 +28,12 @@ public class PlayMainPanel : BasePanel
 
     public Button left_districtMainBtn;
     public Button left_inventoryMainBtn;
+    public Button left_inventoryScrollBtn;
     public Button left_heroMainBtn;
     public Button left_adventureMainBtn;
     public Button left_buildBtn;
     public Button left_buildingSelectBtn;
+    public Button left_marketBtn;
 
     public Image bottom_disImage;
     public Text bottom_nameText;
@@ -61,15 +63,18 @@ public class PlayMainPanel : BasePanel
         
         left_districtMainBtn.onClick.AddListener(delegate () { gci.OpenDistrictMain(); });
         left_inventoryMainBtn.onClick.AddListener(delegate () { gci.OpenItemListAndInfo(); });
+        left_inventoryScrollBtn.onClick.AddListener(delegate () { gci.OpenSkillListAndInfo(); });
         left_buildBtn.onClick.AddListener(delegate () { gci.OpenBuild(); });
         left_buildingSelectBtn.onClick.AddListener(delegate () { gci.OpenBuildingSelect(); });
         left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
         left_adventureMainBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
+        left_marketBtn.onClick.AddListener(delegate () { gci.OpenMarket(); });
+
         top_saveBtn.onClick.AddListener(delegate () { gci.GameSave(); });
         top_pauseBtn.onClick.AddListener(delegate () { gci.TimePause(); });
         top_playBtn.onClick.AddListener(delegate () { gci.TimePlay(); });
         top_fastBtn.onClick.AddListener(delegate () { gci.TimeFast(); });
- 
+      
 
 
         leftBtnList.Add(left_districtMainBtn);

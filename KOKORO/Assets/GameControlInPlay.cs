@@ -26,8 +26,11 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.AdventureMain);
         AdventureMainPanel.Instance.OnShow(64, 5000);
         AdventureMainPanel.Instance.OnHide();
+        UIManager.Instance.InitPanel(UIPanelType.AdventureTeam);
         UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
+        UIManager.Instance.InitPanel(UIPanelType.Market);
+        UIManager.Instance.InitPanel(UIPanelType.SupplyAndDemand);
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
         PlayMainPanel.Instance.OnShow();
 
@@ -83,7 +86,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         if (gc.timeHour >= 24) { gc.timeDay++; gc.timeHour = 0;gc.timeWeek++;if (gc.timeWeek > 7) { gc.timeWeek = 1; } }
         if (gc.timeDay > 30) { gc.timeMonth++; gc.timeDay = 1; PlayMainPanel.Instance.UpdateYearSeason(); }
-        if (gc.timeMonth > 12) { gc.timeYear++; gc.timeMonth = 1; }
+        if (gc.timeMonth > 12) { gc.timeYear++; gc.timeMonth = 1; PlayMainPanel.Instance.UpdateYearSeason(); }
 
         
 
@@ -238,7 +241,19 @@ public class GameControlInPlay : MonoBehaviour
         {
             ItemListAndInfoPanel.Instance.OnShow(gc.nowCheckingDistrictID, 64, -88,1);
         }
+    }
 
+    public void OpenSkillListAndInfo()
+    {
+        Debug.Log("gc.nowCheckingDistrictID=" + gc.nowCheckingDistrictID + " gc.itemDic.Coun=" + gc.itemDic.Count);
+        if (SkillListAndInfoPanel.Instance.isShow)
+        {
+            SkillListAndInfoPanel.Instance.OnHide();
+        }
+        else
+        {
+            SkillListAndInfoPanel.Instance.OnShow(gc.nowCheckingDistrictID, null,64, -88);
+        }
     }
 
     public void OpenAdventureMain()
@@ -252,6 +267,19 @@ public class GameControlInPlay : MonoBehaviour
             AdventureMainPanel.Instance.OnShow( 64, -88);
         }
     }
+
+    public void OpenMarket()
+    {
+        if (MarketPanel.Instance.isShow)
+        {
+            MarketPanel.Instance.OnHide();
+        }
+        else
+        {
+            MarketPanel.Instance.OnShow(gc.nowCheckingDistrictID, ItemTypeBig.None, ItemTypeSmall.None,null, 64, -88);
+        }
+    }
+
 
     public void GameSave()
     {

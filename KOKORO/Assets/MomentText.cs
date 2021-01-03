@@ -7,10 +7,7 @@ public class MomentText : MonoBehaviour
 {
     bool isPlay = false;
     float targetY = 0f;
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()

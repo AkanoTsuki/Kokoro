@@ -21927,7 +21927,7 @@
       "Name": "法罗斯平原",
       "Level": 5,
       "ScenePic": [
-        "Forest_01"
+        "Forest_02"
       ],
       "Des": "怪物很少的平原，适合采集",
       "PartNum": 100,
@@ -21973,12 +21973,12 @@
         5
       ],
       "MonsterEliteRate": [
-        10,
-        10
-      ],
-      "MonsterLeaderRate": [
         5,
         5
+      ],
+      "MonsterLeaderRate": [
+        1,
+        1
       ]
     },
     {
@@ -22030,12 +22030,12 @@
         5
       ],
       "MonsterEliteRate": [
-        10,
-        10
-      ],
-      "MonsterLeaderRate": [
         5,
         5
+      ],
+      "MonsterLeaderRate": [
+        1,
+        1
       ]
     },
     {
@@ -22043,7 +22043,7 @@
       "Name": "穆卡拉荒原",
       "Level": 10,
       "ScenePic": [
-        "Forest_01"
+        "Desert_01"
       ],
       "Des": "介绍",
       "PartNum": 100,
@@ -22089,12 +22089,12 @@
         5
       ],
       "MonsterEliteRate": [
-        10,
-        10
-      ],
-      "MonsterLeaderRate": [
         5,
         5
+      ],
+      "MonsterLeaderRate": [
+        1,
+        1
       ]
     },
     {
@@ -22102,64 +22102,7 @@
       "Name": "赫克森林",
       "Level": 10,
       "ScenePic": [
-        "Forest_01"
-      ],
-      "Des": "介绍",
-      "PartNum": 100,
-      "FixPart": [
-        9
-      ],
-      "FixEventStr": [
-        "Monster"
-      ],
-      "FixValue": [
-        1
-      ],
-      "RandomMonster": 60,
-      "RandomTrapHp": 0,
-      "RandomTrapMp": 0,
-      "RandomSpringHp": 5,
-      "RandomSpringMp": 5,
-      "RandomGold": 0,
-      "RandomItem": 0,
-      "RandomResource": 20,
-      "ResourceTypeStr": [
-        "Wood"
-      ],
-      "ResourceValue": [
-        100
-      ],
-      "MonsterID": [
-        4,
-        7
-      ],
-      "MonsterRate": [
-        70,
-        30
-      ],
-      "MonsterLevelMin": [
-        3,
-        3
-      ],
-      "MonsterLevelMax": [
-        5,
-        5
-      ],
-      "MonsterEliteRate": [
-        10,
-        10
-      ],
-      "MonsterLeaderRate": [
-        5,
-        5
-      ]
-    },
-    {
-      "ID": 4,
-      "Name": "三河平原",
-      "Level": 10,
-      "ScenePic": [
-        "River_01"
+        "Forest_03"
       ],
       "Des": "介绍",
       "PartNum": 100,
@@ -22203,12 +22146,69 @@
         5
       ],
       "MonsterEliteRate": [
-        10,
-        10
-      ],
-      "MonsterLeaderRate": [
         5,
         5
+      ],
+      "MonsterLeaderRate": [
+        1,
+        1
+      ]
+    },
+    {
+      "ID": 4,
+      "Name": "三河平原",
+      "Level": 10,
+      "ScenePic": [
+        "River_02"
+      ],
+      "Des": "介绍",
+      "PartNum": 100,
+      "FixPart": [
+        9
+      ],
+      "FixEventStr": [
+        "Monster"
+      ],
+      "FixValue": [
+        1
+      ],
+      "RandomMonster": 60,
+      "RandomTrapHp": 0,
+      "RandomTrapMp": 0,
+      "RandomSpringHp": 5,
+      "RandomSpringMp": 5,
+      "RandomGold": 0,
+      "RandomItem": 0,
+      "RandomResource": 20,
+      "ResourceTypeStr": [
+        "Wood"
+      ],
+      "ResourceValue": [
+        100
+      ],
+      "MonsterID": [
+        0,
+        1
+      ],
+      "MonsterRate": [
+        70,
+        30
+      ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
+      ],
+      "MonsterEliteRate": [
+        5,
+        5
+      ],
+      "MonsterLeaderRate": [
+        1,
+        1
       ]
     },
     {
@@ -22260,12 +22260,12 @@
         5
       ],
       "MonsterEliteRate": [
-        10,
-        10
-      ],
-      "MonsterLeaderRate": [
         5,
         5
+      ],
+      "MonsterLeaderRate": [
+        1,
+        1
       ]
     },
     {
@@ -22273,7 +22273,184 @@
       "Name": "纳法山路",
       "Level": 10,
       "ScenePic": [
-        "Hill_01"
+        "Hill_02"
+      ],
+      "Des": "很多蛇出没",
+      "PartNum": 100,
+      "FixPart": [
+        9
+      ],
+      "FixEventStr": [
+        "Monster"
+      ],
+      "FixValue": [
+        1
+      ],
+      "RandomMonster": 60,
+      "RandomTrapHp": 0,
+      "RandomTrapMp": 0,
+      "RandomSpringHp": 5,
+      "RandomSpringMp": 5,
+      "RandomGold": 0,
+      "RandomItem": 0,
+      "RandomResource": 20,
+      "ResourceTypeStr": [
+        "Wood"
+      ],
+      "ResourceValue": [
+        100
+      ],
+      "MonsterID": [
+        4,
+        5
+      ],
+      "MonsterRate": [
+        70,
+        30
+      ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
+      ],
+      "MonsterEliteRate": [
+        5,
+        5
+      ],
+      "MonsterLeaderRate": [
+        1,
+        1
+      ]
+    },
+    {
+      "ID": 7,
+      "Name": "里塔司沙漠",
+      "Level": 10,
+      "ScenePic": [
+        "Desert_02"
+      ],
+      "Des": "介绍",
+      "PartNum": 100,
+      "FixPart": [
+        9
+      ],
+      "FixEventStr": [
+        "Monster"
+      ],
+      "FixValue": [
+        1
+      ],
+      "RandomMonster": 60,
+      "RandomTrapHp": 0,
+      "RandomTrapMp": 0,
+      "RandomSpringHp": 5,
+      "RandomSpringMp": 5,
+      "RandomGold": 0,
+      "RandomItem": 0,
+      "RandomResource": 20,
+      "ResourceTypeStr": [
+        "Wood"
+      ],
+      "ResourceValue": [
+        100
+      ],
+      "MonsterID": [
+        2,
+        3
+      ],
+      "MonsterRate": [
+        70,
+        30
+      ],
+      "MonsterLevelMin": [
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5
+      ],
+      "MonsterEliteRate": [
+        5,
+        5
+      ],
+      "MonsterLeaderRate": [
+        1,
+        1
+      ]
+    },
+    {
+      "ID": 8,
+      "Name": "莫列海岸",
+      "Level": 10,
+      "ScenePic": [
+        "Beach_01"
+      ],
+      "Des": "介绍",
+      "PartNum": 100,
+      "FixPart": [
+        9
+      ],
+      "FixEventStr": [
+        "Monster"
+      ],
+      "FixValue": [
+        1
+      ],
+      "RandomMonster": 60,
+      "RandomTrapHp": 0,
+      "RandomTrapMp": 0,
+      "RandomSpringHp": 5,
+      "RandomSpringMp": 5,
+      "RandomGold": 0,
+      "RandomItem": 0,
+      "RandomResource": 0,
+      "ResourceTypeStr": [
+        "Wood"
+      ],
+      "ResourceValue": [
+        100
+      ],
+      "MonsterID": [
+        8,
+        9,
+        10
+      ],
+      "MonsterRate": [
+        50,
+        30,
+        20
+      ],
+      "MonsterLevelMin": [
+        3,
+        3,
+        3
+      ],
+      "MonsterLevelMax": [
+        5,
+        5,
+        5
+      ],
+      "MonsterEliteRate": [
+        5,
+        5,
+        5
+      ],
+      "MonsterLeaderRate": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "ID": 9,
+      "Name": "北境",
+      "Level": 10,
+      "ScenePic": [
+        "Snow_01"
       ],
       "Des": "介绍",
       "PartNum": 100,
@@ -22340,7 +22517,7 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 100,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
@@ -22348,13 +22525,13 @@
       "AtkMax": 15,
       "MAtkMin": 10,
       "MAtkMax": 15,
-      "Def": 5,
-      "MDef": 5,
+      "Def": 3,
+      "MDef": 2,
       "Hit": 30,
       "Dod": 5,
-      "CriR": 10,
+      "CriR": 5,
       "CriD": 200,
-      "Spd": 60,
+      "Spd": 45,
       "WindDam": 0,
       "FireDam": 0,
       "WaterDam": 0,
@@ -22372,7 +22549,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 50,
       "ItemDrop": [
         0
       ],
@@ -22390,7 +22567,7 @@
       "ID": 1,
       "Name": "老鼠",
       "Pic": "monster1_2",
-      "Level": 10,
+      "Level": 5,
       "GroupRate": 0.1,
       "Des": "",
       "SkillID": [
@@ -22399,7 +22576,7 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 150,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
@@ -22407,11 +22584,11 @@
       "AtkMax": 20,
       "MAtkMin": 15,
       "MAtkMax": 20,
-      "Def": 5,
-      "MDef": 5,
+      "Def": 2,
+      "MDef": 2,
       "Hit": 30,
-      "Dod": 5,
-      "CriR": 10,
+      "Dod": 4,
+      "CriR": 5,
       "CriD": 200,
       "Spd": 60,
       "WindDam": 0,
@@ -22431,7 +22608,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 75,
       "ItemDrop": [
         0
       ],
@@ -22458,21 +22635,21 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 175,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
+      "AtkMin": 20,
+      "AtkMax": 30,
       "MAtkMin": 15,
       "MAtkMax": 20,
       "Def": 5,
       "MDef": 5,
       "Hit": 30,
-      "Dod": 5,
-      "CriR": 10,
+      "Dod": 2,
+      "CriR": 5,
       "CriD": 200,
-      "Spd": 60,
+      "Spd": 55,
       "WindDam": 0,
       "FireDam": 0,
       "WaterDam": 0,
@@ -22490,7 +22667,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 100,
       "ItemDrop": [
         0
       ],
@@ -22517,21 +22694,21 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 250,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
+      "AtkMin": 35,
+      "AtkMax": 40,
       "MAtkMin": 15,
       "MAtkMax": 20,
       "Def": 5,
       "MDef": 5,
       "Hit": 30,
       "Dod": 5,
-      "CriR": 10,
+      "CriR": 5,
       "CriD": 200,
-      "Spd": 60,
+      "Spd": 50,
       "WindDam": 0,
       "FireDam": 0,
       "WaterDam": 0,
@@ -22549,7 +22726,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 150,
       "ItemDrop": [
         0
       ],
@@ -22580,8 +22757,8 @@
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
+      "AtkMin": 30,
+      "AtkMax": 55,
       "MAtkMin": 15,
       "MAtkMax": 20,
       "Def": 5,
@@ -22608,7 +22785,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 250,
       "ItemDrop": [
         0
       ],
@@ -22635,12 +22812,12 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 300,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
+      "AtkMin": 50,
+      "AtkMax": 65,
       "MAtkMin": 15,
       "MAtkMax": 20,
       "Def": 5,
@@ -22667,7 +22844,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 300,
       "ItemDrop": [
         0
       ],
@@ -22694,12 +22871,12 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 350,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
+      "AtkMin": 70,
+      "AtkMax": 80,
       "MAtkMin": 15,
       "MAtkMax": 20,
       "Def": 5,
@@ -22726,7 +22903,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 320,
       "ItemDrop": [
         0
       ],
@@ -22753,12 +22930,12 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 400,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
+      "AtkMin": 75,
+      "AtkMax": 85,
       "MAtkMin": 15,
       "MAtkMax": 20,
       "Def": 5,
@@ -22785,7 +22962,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 400,
       "ItemDrop": [
         0
       ],
@@ -22812,17 +22989,17 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 600,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
+      "AtkMin": 80,
+      "AtkMax": 100,
       "MAtkMin": 15,
       "MAtkMax": 20,
-      "Def": 5,
-      "MDef": 5,
-      "Hit": 30,
+      "Def": 50,
+      "MDef": 50,
+      "Hit": 50,
       "Dod": 5,
       "CriR": 10,
       "CriD": 200,
@@ -22844,7 +23021,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 500,
       "ItemDrop": [
         0
       ],
@@ -22871,17 +23048,17 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 700,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
+      "AtkMin": 80,
+      "AtkMax": 100,
       "MAtkMin": 15,
       "MAtkMax": 20,
-      "Def": 5,
-      "MDef": 5,
-      "Hit": 30,
+      "Def": 50,
+      "MDef": 50,
+      "Hit": 50,
       "Dod": 5,
       "CriR": 10,
       "CriD": 200,
@@ -22903,7 +23080,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 550,
       "ItemDrop": [
         0
       ],
@@ -22930,17 +23107,17 @@
         -1,
         -1
       ],
-      "Hp": 200,
+      "Hp": 1000,
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 15,
-      "AtkMax": 20,
+      "AtkMin": 80,
+      "AtkMax": 100,
       "MAtkMin": 15,
       "MAtkMax": 20,
-      "Def": 5,
-      "MDef": 5,
-      "Hit": 30,
+      "Def": 50,
+      "MDef": 50,
+      "Hit": 50,
       "Dod": 5,
       "CriR": 10,
       "CriD": 200,
@@ -22962,7 +23139,7 @@
       "PoisonRes": 0,
       "SleepRes": 0,
       "GoldDrop": 50,
-      "ExpDrop": 20,
+      "ExpDrop": 600,
       "ItemDrop": [
         0
       ],
@@ -24458,11 +24635,12 @@
       "Name": "疾风",
       "Pic": "wind_i_1",
       "Effect": "wind_1",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         1
       ],
-      "Des": "",
+      "Des": "元素能量划出的风",
       "Mp": 10,
       "Probability": 60,
       "Max": 1,
@@ -24517,6 +24695,7 @@
       "Name": "狂风",
       "Pic": "wind_i_2",
       "Effect": "wind_2",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         1
@@ -24576,6 +24755,7 @@
       "Name": "龙卷",
       "Pic": "wind_i_3",
       "Effect": "wind_3",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         1
@@ -24635,6 +24815,7 @@
       "Name": "末世龙卷",
       "Pic": "wind_i_4",
       "Effect": "wind_4",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         1
@@ -24694,6 +24875,7 @@
       "Name": "闪电",
       "Pic": "wind_ii_1",
       "Effect": "lightning_2",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         1,
@@ -24754,6 +24936,7 @@
       "Name": "雷击",
       "Pic": "wind_ii_2",
       "Effect": "lightning_1",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         1,
@@ -24814,6 +24997,7 @@
       "Name": "雷暴",
       "Pic": "wind_ii_3",
       "Effect": "lightning_4",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         1,
@@ -24874,6 +25058,7 @@
       "Name": "雷电咆哮",
       "Pic": "wind_ii_4",
       "Effect": "lightning_3",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         1,
@@ -24934,11 +25119,12 @@
       "Name": "火焰",
       "Pic": "fire_i_1",
       "Effect": "fire_1",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         2
       ],
-      "Des": "",
+      "Des": "在空气中点起火焰燃烧敌人",
       "Mp": 10,
       "Probability": 75,
       "Max": 1,
@@ -24993,11 +25179,12 @@
       "Name": "火焰冲击",
       "Pic": "fire_i_2",
       "Effect": "fire_2",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         2
       ],
-      "Des": "",
+      "Des": "形成火球打击敌人",
       "Mp": 15,
       "Probability": 85,
       "Max": 1,
@@ -25052,11 +25239,12 @@
       "Name": "火漩涡",
       "Pic": "fire_i_3",
       "Effect": "fire_3",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         2
       ],
-      "Des": "",
+      "Des": "高温烈火漩涡，灼烧目标",
       "Mp": 25,
       "Probability": 60,
       "Max": 1,
@@ -25111,11 +25299,12 @@
       "Name": "炼狱",
       "Pic": "fire_i_4",
       "Effect": "fire_4",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         2
       ],
-      "Des": "",
+      "Des": "火元素绝技，大范围焚烧全部敌人",
       "Mp": 40,
       "Probability": 60,
       "Max": 3,
@@ -25170,12 +25359,13 @@
       "Name": "引爆",
       "Pic": "fire_ii_1",
       "Effect": "impact_3",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         2,
         4
       ],
-      "Des": "",
+      "Des": "连锁点燃空气中的易爆粉肠，炸伤敌人",
       "Mp": 30,
       "Probability": 80,
       "Max": 2,
@@ -25230,12 +25420,13 @@
       "Name": "爆炸",
       "Pic": "fire_ii_2",
       "Effect": "explosion_2",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         2,
         4
       ],
-      "Des": "",
+      "Des": "巨型爆炸",
       "Mp": 45,
       "Probability": 80,
       "Max": 1,
@@ -25290,12 +25481,13 @@
       "Name": "燃爆新星",
       "Pic": "fire_ii_3",
       "Effect": "earth_1",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         2,
         4
       ],
-      "Des": "",
+      "Des": "召唤一颗陨石砸向目标",
       "Mp": 60,
       "Probability": 65,
       "Max": 1,
@@ -25350,12 +25542,13 @@
       "Name": "核子爆发",
       "Pic": "fire_ii_4",
       "Effect": "explosion_1",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         2,
         4
       ],
-      "Des": "",
+      "Des": "带有辐射的超大型爆炸",
       "Mp": 100,
       "Probability": 20,
       "Max": 3,
@@ -25410,6 +25603,7 @@
       "Name": "水弹",
       "Pic": "water_i_1",
       "Effect": "water_2",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         3
@@ -25469,6 +25663,7 @@
       "Name": "暴水弹",
       "Pic": "water_i_2",
       "Effect": "water_1",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         3
@@ -25528,6 +25723,7 @@
       "Name": "水柱",
       "Pic": "water_i_3",
       "Effect": "water_3",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         3
@@ -25587,6 +25783,7 @@
       "Name": "海啸",
       "Pic": "water_i_4",
       "Effect": "water_4",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         3
@@ -25646,6 +25843,7 @@
       "Name": "结冰",
       "Pic": "water_ii_1",
       "Effect": "ice_3",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         3,
@@ -25706,6 +25904,7 @@
       "Name": "霜冻",
       "Pic": "water_ii_2",
       "Effect": "ice_4",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         3,
@@ -25766,12 +25965,13 @@
       "Name": "寒冷新星",
       "Pic": "water_ii_3",
       "Effect": "ice_1",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         3,
         6
       ],
-      "Des": "",
+      "Des": "召唤一颗结冰的陨石砸向目标",
       "Mp": 60,
       "Probability": 55,
       "Max": 1,
@@ -25826,6 +26026,7 @@
       "Name": "极地冰刃",
       "Pic": "water_ii_4",
       "Effect": "ice_2",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         3,
@@ -25886,6 +26087,7 @@
       "Name": "飞石",
       "Pic": "ground_i_1",
       "Effect": "weapon_8",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         4
@@ -25945,6 +26147,7 @@
       "Name": "地裂",
       "Pic": "ground_i_2",
       "Effect": "dust_2",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         4
@@ -26004,6 +26207,7 @@
       "Name": "石化",
       "Pic": "ground_i_3",
       "Effect": "earth_4",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         4
@@ -26063,6 +26267,7 @@
       "Name": "毁灭沙暴",
       "Pic": "ground_i_4",
       "Effect": "smoke_3",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         4
@@ -26122,6 +26327,7 @@
       "Name": "飞叶",
       "Pic": "ground_ii_1",
       "Effect": "earth_5",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         4,
@@ -26182,6 +26388,7 @@
       "Name": "缠绕",
       "Pic": "ground_ii_2",
       "Effect": "earth_3",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         4,
@@ -26242,12 +26449,13 @@
       "Name": "毒虫",
       "Pic": "ground_ii_3",
       "Effect": "bite_1",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         4,
         3
       ],
-      "Des": "",
+      "Des": "释放毒虫咬目标，造成中毒",
       "Mp": 60,
       "Probability": 75,
       "Max": 1,
@@ -26302,12 +26510,13 @@
       "Name": "自然爆发",
       "Pic": "ground_ii_4",
       "Effect": "earth_2",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         4,
         3
       ],
-      "Des": "",
+      "Des": "大地神之怒，在地下突出巨型岩石对大量目标造成伤害",
       "Mp": 100,
       "Probability": 45,
       "Max": 3,
@@ -26362,11 +26571,12 @@
       "Name": "闪光",
       "Pic": "light_i_1",
       "Effect": "heal_5",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         5
       ],
-      "Des": "",
+      "Des": "光之秘术，治疗目标的体力",
       "Mp": 10,
       "Probability": 80,
       "Max": 1,
@@ -26421,11 +26631,12 @@
       "Name": "圣光",
       "Pic": "light_i_2",
       "Effect": "heal_2",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         5
       ],
-      "Des": "",
+      "Des": "光之秘术，治疗多个目标的体力",
       "Mp": 15,
       "Probability": 70,
       "Max": 2,
@@ -26480,6 +26691,7 @@
       "Name": "天罚",
       "Pic": "light_i_3",
       "Effect": "holy_2",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         5
@@ -26539,6 +26751,7 @@
       "Name": "圣神领域",
       "Pic": "light_i_4",
       "Effect": "holy_1",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         5
@@ -26598,6 +26811,7 @@
       "Name": "超越",
       "Pic": "light_ii_1",
       "Effect": "heal_4",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         5,
@@ -26658,6 +26872,7 @@
       "Name": "结界",
       "Pic": "light_ii_2",
       "Effect": "heal_3",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         5,
@@ -26718,6 +26933,7 @@
       "Name": "异世之门",
       "Pic": "light_ii_3",
       "Effect": "diamond_2",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         5,
@@ -26778,6 +26994,7 @@
       "Name": "时空漩涡",
       "Pic": "light_ii_4",
       "Effect": "clock_1",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         5,
@@ -26838,11 +27055,12 @@
       "Name": "暗影",
       "Pic": "dark_i_1",
       "Effect": "smoke_2",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         6
       ],
-      "Des": "",
+      "Des": "对目标释放暗系攻击",
       "Mp": 10,
       "Probability": 90,
       "Max": 2,
@@ -26897,11 +27115,12 @@
       "Name": "混沌",
       "Pic": "dark_i_2",
       "Effect": "darkness_3",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         6
       ],
-      "Des": "",
+      "Des": "释放混沌迷雾，侵蚀目标的理智",
       "Mp": 15,
       "Probability": 80,
       "Max": 2,
@@ -26956,11 +27175,12 @@
       "Name": "邪能",
       "Pic": "dark_i_3",
       "Effect": "lightning_3",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         6
       ],
-      "Des": "",
+      "Des": "邪神创造的秘术，让目标失去知觉",
       "Mp": 25,
       "Probability": 55,
       "Max": 1,
@@ -27015,11 +27235,12 @@
       "Name": "冥界封锁",
       "Pic": "dark_i_4",
       "Effect": "status_9",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         6
       ],
-      "Des": "",
+      "Des": "召唤鬼魂包围对方全体，并持续攻击",
       "Mp": 40,
       "Probability": 10,
       "Max": 3,
@@ -27074,12 +27295,13 @@
       "Name": "猛毒",
       "Pic": "dark_ii_1",
       "Effect": "darkness_2",
+      "Rank": 1,
       "ActionAnimStr": "Magic",
       "Element": [
         6,
         2
       ],
-      "Des": "",
+      "Des": "以未知成分的毒素袭击目标",
       "Mp": 30,
       "Probability": 80,
       "Max": 1,
@@ -27134,6 +27356,7 @@
       "Name": "缚灵",
       "Pic": "dark_ii_2",
       "Effect": "status_8",
+      "Rank": 2,
       "ActionAnimStr": "Magic",
       "Element": [
         6,
@@ -27194,12 +27417,13 @@
       "Name": "裂魂",
       "Pic": "dark_ii_3",
       "Effect": "claw_1",
+      "Rank": 3,
       "ActionAnimStr": "Magic",
       "Element": [
         6,
         2
       ],
-      "Des": "",
+      "Des": "巨大的邪恶之抓撕裂目标",
       "Mp": 60,
       "Probability": 75,
       "Max": 1,
@@ -27254,12 +27478,13 @@
       "Name": "亡灵侵蚀",
       "Pic": "dark_ii_4",
       "Effect": "darkness_1",
+      "Rank": 4,
       "ActionAnimStr": "Magic",
       "Element": [
         6,
         2
       ],
-      "Des": "",
+      "Des": "召唤亡灵王吞噬目标，造成绝无仅有的惊人伤害",
       "Mp": 100,
       "Probability": 5,
       "Max": 1,
@@ -27314,6 +27539,7 @@
       "Name": "风斩",
       "Pic": "z_wind",
       "Effect": "sword_3",
+      "Rank": 2,
       "ActionAnimStr": "Attack",
       "Element": [
         1
@@ -27373,6 +27599,7 @@
       "Name": "火斩",
       "Pic": "z_fire",
       "Effect": "sword_3",
+      "Rank": 2,
       "ActionAnimStr": "Attack",
       "Element": [
         2
@@ -27432,6 +27659,7 @@
       "Name": "水斩",
       "Pic": "z_water",
       "Effect": "sword_3",
+      "Rank": 2,
       "ActionAnimStr": "Attack",
       "Element": [
         3
@@ -27491,6 +27719,7 @@
       "Name": "地斩",
       "Pic": "z_ground",
       "Effect": "sword_3",
+      "Rank": 2,
       "ActionAnimStr": "Attack",
       "Element": [
         4
@@ -27550,6 +27779,7 @@
       "Name": "光斩",
       "Pic": "z_light",
       "Effect": "sword_3",
+      "Rank": 2,
       "ActionAnimStr": "Attack",
       "Element": [
         5
@@ -27609,6 +27839,7 @@
       "Name": "暗斩",
       "Pic": "z_dark",
       "Effect": "sword_3",
+      "Rank": 2,
       "ActionAnimStr": "Attack",
       "Element": [
         6
@@ -27668,11 +27899,12 @@
       "Name": "精确射击",
       "Pic": "j_1",
       "Effect": "arrow_2",
+      "Rank": 1,
       "ActionAnimStr": "Bow",
       "Element": [
         0
       ],
-      "Des": "",
+      "Des": "集中精神瞄准，向目标射出一支箭矢",
       "Mp": 20,
       "Probability": 90,
       "Max": 1,
@@ -27727,11 +27959,12 @@
       "Name": "多重射击",
       "Pic": "j_2",
       "Effect": "arrow_1",
+      "Rank": 2,
       "ActionAnimStr": "Bow",
       "Element": [
         0
       ],
-      "Des": "",
+      "Des": "向目标射出两支箭矢",
       "Mp": 30,
       "Probability": 90,
       "Max": 2,
@@ -27786,6 +28019,7 @@
       "Name": "穿透射击",
       "Pic": "j_3",
       "Effect": "weapon_5",
+      "Rank": 2,
       "ActionAnimStr": "Bow",
       "Element": [
         0
@@ -27845,11 +28079,12 @@
       "Name": "强力射击",
       "Pic": "j_4",
       "Effect": "arrow_1",
+      "Rank": 3,
       "ActionAnimStr": "Bow",
       "Element": [
         0
       ],
-      "Des": "",
+      "Des": "向目标射出一支强力箭矢，造成4倍暴击伤害",
       "Mp": 50,
       "Probability": 90,
       "Max": 1,

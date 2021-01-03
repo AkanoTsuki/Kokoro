@@ -183,7 +183,11 @@ public enum AdventureAction
     None,
     Walk,
     Fight,
-    GetSomething
+    GetSomething,
+    TrapHp,
+    TrapMp,
+    SpringHp,
+    SpringMp
 }
 
 public enum AdventureEvent
@@ -238,7 +242,10 @@ public enum AnimStatus
     Bow,
     Magic,
     Hit,
-    Death
+    Death,
+    SpringAppear,
+    ChestOpen,
+    AttackLoop
 }
 
 public enum LogType
@@ -390,6 +397,7 @@ public class SkillPrototype: ISerializationCallbackReceiver
     public string Name;
     public string Pic;
     public string Effect;
+    public byte Rank;
     public AnimStatus ActionAnim;
     public string ActionAnimStr;
     public List<int> Element;
@@ -467,9 +475,10 @@ public class SkillObject
     private byte Gold;
     private short Cost;
     private short DistrictID;
+    private bool IsGoods;//是否商品（DistrictID！=-1）
     private int HeroID;
     private int UseCount;
-    public SkillObject(int id, string name, short prototypeID, short rateModify, short mpModify, byte comboRate, byte comboMax, byte gold, short cost, short districtID,int heroID, int useCount)
+    public SkillObject(int id, string name, short prototypeID, short rateModify, short mpModify, byte comboRate, byte comboMax, byte gold, short cost, short districtID, bool isGoods, int heroID, int useCount)
     {
         this.ID= id;
         this.Name= name;
@@ -481,6 +490,7 @@ public class SkillObject
         this.Gold= gold;
         this.Cost= cost;
         this.DistrictID = districtID;
+        this.IsGoods = isGoods;
         this.HeroID= heroID;
         this.UseCount= useCount;
 }
@@ -494,6 +504,7 @@ public class SkillObject
     public byte gold { get { return Gold; } set { Gold = value; } }
     public short cost { get { return Cost; } set { Cost = value; } }
     public short districtID { get { return DistrictID; } set { DistrictID = value; } }
+    public bool isGoods { get { return IsGoods; } set { IsGoods = value; } }
     public int heroID { get { return HeroID; } set { HeroID = value; } }
     public int useCount { get { return UseCount; } set { UseCount = value; } }
 }
@@ -968,17 +979,18 @@ public class DistrictObject
     private int RProductWeapon;
     private int RProductArmor;
     private int RProductJewelry;
+    private int RProductScroll;
     private int RFoodLimit;//库存上限
     private int RStuffLimit;
     private int RProductLimit;
-    private int RRollLimit;
+    private int RScrollLimit;
     public DistrictObject(short id, string name, string baseName, string des, bool isOpen, byte level, short people, short peopleLimit, short worker, short gridEmpty, short gridUsed,
         short totalGrass, short totalWood, short totalWater, short totalStone, short totalMetal, short usedGrass, short usedWood, short usedWater, short usedStone, short usedMetal, List<int> buildingList, List<int> heroList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish,
         int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
-        int rProductWeapon, int rProductArmor, int rProductJewelry,
-        int rFoodLimit, int rStuffLimit, int rProductLimit, int rRollLimit)
+        int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll,
+        int rFoodLimit, int rStuffLimit, int rProductLimit, int rScrollLimit)
     {
         this.ID = id;
         this.Name = name;
@@ -1024,10 +1036,11 @@ public class DistrictObject
         this.RProductWeapon = rProductWeapon;
         this.RProductArmor = rProductArmor;
         this.RProductJewelry = rProductJewelry;
+        this.RProductScroll = rProductScroll;
         this.RFoodLimit = rFoodLimit;//库存上限
         this.RStuffLimit = rStuffLimit;
         this.RProductLimit = rProductLimit;
-        this.RRollLimit = rRollLimit;
+        this.RScrollLimit = rScrollLimit;
     }
     public short id { get { return ID; } }
     public string name { get { return Name; }  }
@@ -1073,10 +1086,11 @@ public class DistrictObject
     public int rProductWeapon { get { return RProductWeapon; } set { RProductWeapon = value; } }
     public int rProductArmor { get { return RProductArmor; } set { RProductArmor = value; } }
     public int rProductJewelry { get { return RProductJewelry; } set { RProductJewelry = value; } }
+    public int rProductScroll { get { return RProductScroll; } set { RProductScroll = value; } }
     public int rFoodLimit { get { return RFoodLimit; } set { RFoodLimit = value; } }
     public int rStuffLimit { get { return RStuffLimit; } set { RStuffLimit = value; } }
     public int rProductLimit { get { return RProductLimit; } set { RProductLimit = value; } }
-    public int rRollLimit { get { return RRollLimit; } set { RRollLimit = value; } }
+    public int rScrollLimit { get { return RScrollLimit; } set { RScrollLimit = value; } }
 }
 
 public class DistrictGridObject
@@ -1353,12 +1367,25 @@ public class AdventureTeamObject
 {
     private byte ID;
     private short DungeonID;
+    private short DungeonEVWind;
+    private short DungeonEVFire;
+    private short DungeonEVWater;
+    private short DungeonEVGround;
+    private short DungeonEVLight;
+    private short DungeonEVDark;
+    private byte DungeonEPWind;
+    private byte DungeonEPFire;
+    private byte DungeonEPWater;
+    private byte DungeonEPGround;
+    private byte DungeonEPLight;
+    private byte DungeonEPDark;
     private List<string> ScenePicList;
     private List<int> HeroIDList;
     private List<int> HeroHpList;
     private List<int> HeroMpList;
     private List<int> EnemyIDList;
     private byte NowDay;
+    private int StandardTimeStart;//本次冒险开始时间
     private AdventureState State;
     private AdventureAction Action;
     private int FightRound;
@@ -1380,18 +1407,32 @@ public class AdventureTeamObject
     private short KillNum;
     private List<string> Log;
     private List<AdventurePartObject> Part;
-    public AdventureTeamObject(byte id,short dungeonID, List<string> scenePicList, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, List<int> enemyIDList, byte nowDay, AdventureState state, AdventureAction action, int fightRound,
+    public AdventureTeamObject(byte id,short dungeonID, short dungeonEVWind, short dungeonEVFire, short dungeonEVWater, short dungeonEVGround, short dungeonEVLight, short dungeonEVDark, byte dungeonEPWind, byte dungeonEPFire, byte dungeonEPWater, byte dungeonEPGround, byte dungeonEPLight, byte dungeonEPDark,
+        List<string> scenePicList, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, List<int> enemyIDList, byte nowDay, int standardTimeStart, AdventureState state, AdventureAction action, int fightRound,
         short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
         List<int> getItemList, short killNum, List<string> log, List<AdventurePartObject> part)
     {
         this.ID = id;
         this.DungeonID = dungeonID;
+        this.DungeonEVWind = dungeonEVWind;
+        this.DungeonEVFire = dungeonEVFire;
+        this.DungeonEVWater = dungeonEVWater;
+        this.DungeonEVGround = dungeonEVGround;
+        this.DungeonEVLight = dungeonEVLight;
+        this.DungeonEVDark = dungeonEVDark;
+        this.DungeonEPWind = dungeonEPWind;
+        this.DungeonEPFire = dungeonEPFire;
+        this.DungeonEPWater = dungeonEPWater;
+        this.DungeonEPGround = dungeonEPGround;
+        this.DungeonEPLight = dungeonEPLight;
+        this.DungeonEPDark = dungeonEPDark;
         this.ScenePicList = scenePicList;
         this.HeroIDList = heroIDList;
         this.HeroHpList = heroHpList;
         this.HeroMpList = heroMpList;
         this.EnemyIDList = enemyIDList;
         this.NowDay = nowDay;
+        this.StandardTimeStart = standardTimeStart;
         this.State = state;
         this.Action = action;
         this.FightRound = fightRound;
@@ -1416,12 +1457,25 @@ public class AdventureTeamObject
     }
     public byte id { get { return ID; } }
     public short dungeonID { get { return DungeonID; } set { DungeonID = value; } }
+    public short dungeonEVWind { get { return DungeonEVWind; } set { DungeonEVWind = value; } }
+    public short dungeonEVFire { get { return DungeonEVFire; } set { DungeonEVFire = value; } }
+    public short dungeonEVWater { get { return DungeonEVWater; } set { DungeonEVWater = value; } }
+    public short dungeonEVGround { get { return DungeonEVGround; } set { DungeonEVGround = value; } }
+    public short dungeonEVLight { get { return DungeonEVLight; } set { DungeonEVLight = value; } }
+    public short dungeonEVDark { get { return DungeonEVDark; } set { DungeonEVDark = value; } }
+    public byte dungeonEPWind { get { return DungeonEPWind; } set { DungeonEPWind = value; } }
+    public byte dungeonEPFire { get { return DungeonEPFire; } set { DungeonEPFire = value; } }
+    public byte dungeonEPWater { get { return DungeonEPWater; } set { DungeonEPWater = value; } }
+    public byte dungeonEPGround { get { return DungeonEPGround; } set { DungeonEPGround = value; } }
+    public byte dungeonEPLight { get { return DungeonEPLight; } set { DungeonEPLight = value; } }
+    public byte dungeonEPDark { get { return DungeonEPDark; } set { DungeonEPDark = value; } }
     public List<string> scenePicList { get { return ScenePicList; } set { ScenePicList = value; } }
     public List<int> heroIDList { get { return HeroIDList; } set { HeroIDList = value; } }
     public List<int> heroHpList { get { return HeroHpList; } set { HeroHpList = value; } }
     public List<int> heroMpList { get { return HeroMpList; } set { HeroMpList = value; } }
     public List<int> enemyIDList { get { return EnemyIDList; } set { EnemyIDList = value; } }
     public byte nowDay { get { return NowDay; } set { NowDay = value; } }
+    public int standardTimeStart { get { return StandardTimeStart; } set { StandardTimeStart = value; } }
     public AdventureState state { get { return State; } set { State = value; } }
     public AdventureAction action { get { return Action; } set { Action = value; } }
     public int fightRound { get { return FightRound; } set { FightRound = value; } }
@@ -1448,28 +1502,31 @@ public class AdventureTeamObject
 //探险队部分（暂定1部分=1天）实例
 public class AdventurePartObject
 {
-    private byte ID;
+
     private AdventureEvent EventType;
     private bool IsPass;
     private List<int> HeroHpList;//结束后
     private List<int> HeroMpList;
+    private List<byte> ElementPointList;
     private string Log;
-    public AdventurePartObject(byte id, AdventureEvent eventType, bool isPass, List<int> heroHpList, List<int> heroMpList, string log)
+    public AdventurePartObject( AdventureEvent eventType, bool isPass, List<int> heroHpList, List<int> heroMpList, List<byte> elementPointList, string log)
     {
-        this.ID = id;
+
         this.EventType = eventType;
         this.IsPass = isPass;
         this.HeroHpList = heroHpList;
         this.HeroMpList = heroMpList;
+        this.ElementPointList = elementPointList;
         this.Log = log;
     }
 
-    public byte id { get { return ID; } }
-    public AdventureEvent eventType { get { return EventType; } set { EventType = value; } }
-    public bool isPass { get { return IsPass; } set { IsPass = value; } }
-    public List<int> heroHpList { get { return HeroHpList; } set { HeroHpList = value; } }
-    public List<int> heroMpList { get { return HeroMpList; } set { HeroMpList = value; } }
-    public string log { get { return Log; } set { Log = value; } }
+
+    public AdventureEvent eventType { get { return EventType; } }
+    public bool isPass { get { return IsPass; }  }
+    public List<int> heroHpList { get { return HeroHpList; }  }
+    public List<int> heroMpList { get { return HeroMpList; }  }
+    public List<byte> elementPointList { get { return ElementPointList; }  }
+    public string log { get { return Log; } }
 }
 
 public class FightObject

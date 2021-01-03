@@ -16,6 +16,11 @@ public class HeroPanel : BasePanel
     public Image sexImage;
     public Text infoText;
 
+    public Button title_changeNameBtn;
+    public RectTransform title_changeNameRt;
+    public InputField title_changeNameIf;
+    public Button title_changeNameConfirmBtn;
+
     public Button infoFight_page1Btn;
     public Button infoFight_page2Btn;
     public Text infoFight_des1Text;
@@ -93,6 +98,8 @@ public class HeroPanel : BasePanel
         totalSet_equipBtn.onClick.AddListener(delegate () { nowEquipState = !nowEquipState; UpdateButtonStatus(); });
         //totalSet_skillBtn.onClick.AddListener(delegate () { nowSkillState = !nowSkillState; UpdateButtonStatus(); });
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
+        title_changeNameBtn.onClick.AddListener(delegate () { ShowChangeName(); });
+        title_changeNameConfirmBtn.onClick.AddListener(delegate () { gc.HeroChangeName(nowSelectedHeroID, title_changeNameIf.text);HideChangeName(); });
     }
 
     public void OnShow( HeroObject heroObject,bool equipState, int x,int y,int connY)
@@ -187,6 +194,7 @@ public class HeroPanel : BasePanel
     public void UpdateAllInfo( HeroObject heroObject, int connY)
     {
         connRt.anchoredPosition = new Vector2(-19, connY);
+        HideChangeName();
         UpdateBasicInfo(heroObject);
         UpdateFightInfo(heroObject, EquipPart.None, null, 1);
         UpdateWorkInfo(heroObject);
@@ -203,18 +211,26 @@ public class HeroPanel : BasePanel
         nameText.text = heroObject.name;
         picImage.overrideSprite = Resources.Load("Image/RolePic/" + heroObject.pic + "/Pic", typeof(Sprite)) as Sprite; ;
         sexImage.overrideSprite = Resources.Load("Image/Other/sex_" + (heroObject.sex==0?"man":"woman" ), typeof(Sprite)) as Sprite; ;
-        infoText.text = "Lv." + heroObject.level+""+ DataManager.mHeroDict[heroObject.prototypeID].Name +
-            "[升级经验值"+ ((int)System.Math.Pow(1.05f, heroObject.level)*200-heroObject .exp)+ 
-            "][成长率" +System.Math.Round( heroObject.groupRate,3)+
+        infoText.text = "Lv." + heroObject.level+"<color=#"+ DataManager.mHeroDict[heroObject.prototypeID].Color+ ">"+ DataManager.mHeroDict[heroObject.prototypeID].Name +
+            "</color>[升级经验值<color=#FFFFFF>" + ((int)System.Math.Pow(1.05f, heroObject.level)*200-heroObject .exp)+
+            "</color>][成长率<color=#7DF3AE>" + System.Math.Round( heroObject.groupRate,3)+ "</color>]" +
             (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex==3?
-            ("\n薪金 150金币/月" +
-            ( heroObject.workerInBuilding!=-1?(" 在"+DataManager.mDistrictDict[gc.buildingDic[heroObject.workerInBuilding].districtID].Name+"的"+  gc.buildingDic[heroObject.workerInBuilding].name +"工作"):"")+
-            (heroObject.adventureInTeam!=-1?(" 已编入第"+(heroObject.adventureInTeam+1) +"探险队"):"")+
+            ("\n薪金 <color=#FFFFFF>150</color>金币/月" +
+            ( heroObject.workerInBuilding!=-1?(" <color=#66D5FF>在" + DataManager.mDistrictDict[gc.buildingDic[heroObject.workerInBuilding].districtID].Name+"的"+  gc.buildingDic[heroObject.workerInBuilding].name + "工作</color>") :"")+
+            (heroObject.adventureInTeam!=-1?(" <color=#FF9167>已编入第" + (heroObject.adventureInTeam+1) + "探险队</color>") :"")+
             "\n制作武器"+ heroObject.countMakeWeapon+"件 制作防具" + heroObject.countMakeArmor + "件 制作饰物" + heroObject.countMakeJewelry + "件 制作卷轴" + heroObject.countMakeScroll+ "件  冒险" + heroObject.countAdventure + "次(完成" + heroObject.countAdventureDone + "次)" + " 击杀" + heroObject.countKill + " 倒下" + heroObject.countDeath ):""
             )+
             "\n"+DataManager.mHeroDict[ heroObject.prototypeID].Des;
     }
 
+    public void ShowChangeName()
+    {
+        title_changeNameRt.localScale = Vector2.one;
+    }
+    public void HideChangeName()
+    {
+        title_changeNameRt.localScale = Vector2.zero;
+    }
 
     public void UpdateFightInfo(HeroObject heroObject ,EquipPart equipPart ,ItemObject itemObject, int page)
     {
@@ -1670,7 +1686,7 @@ public class HeroPanel : BasePanel
 
     string OutputAttrStr(float basic, int equipAdd)
     {
-        return ((int)basic + equipAdd) >= 0 ? (basic + equipAdd).ToString():"0";
+        return ((int)basic + equipAdd) >= 0 ? ((int)basic + equipAdd).ToString():"0";
     }
 
     string OutputAttrChangeStr(float basic,int addNow ,int addNew ,string suffixes)

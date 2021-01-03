@@ -124,6 +124,7 @@ public class ItemListAndInfoPanel : BasePanel
     public override void OnHide()
     {
         SetAnchoredPosition(0, 5000);
+        nowItemID = -1;
         isShow = false;
     }
 
@@ -155,7 +156,7 @@ public class ItemListAndInfoPanel : BasePanel
 
         foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
         {
-            if (kvp.Value.districtID == districtID&&kvp.Value.heroID==-1)
+            if (kvp.Value.districtID == districtID&&kvp.Value.heroID==-1 && kvp.Value.isGoods==false)
             {
                 itemObjects.Add(kvp.Value);
             }

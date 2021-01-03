@@ -21,6 +21,8 @@ public class AnimatiorControl : MonoBehaviour
     Sprite[] walk_RightFrames;
     Sprite[] walk_UpFrames;
 
+
+
     Sprite[] needFrames = new Sprite[3];
 
     bool isPlay = false;
@@ -47,7 +49,7 @@ public class AnimatiorControl : MonoBehaviour
                 gameObject.GetComponent<Image>().sprite = needFrames[currentIndex];
                 currentIndex++;
                 time = 0;
-                if (currentIndex > 2)
+                if (currentIndex > needFrames.Length-1)
                 {
                     currentIndex = 0;
                     if (!isLoop)
@@ -71,7 +73,7 @@ public class AnimatiorControl : MonoBehaviour
     public void SetCharaFrames(string name)
     {
         charaName = name;
-
+        needFrames = new Sprite[3];
         attackFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Attack");
         bowFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Bow");
         deathFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Death");
@@ -82,12 +84,14 @@ public class AnimatiorControl : MonoBehaviour
         walk_LeftFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Left");
         walk_RightFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Right");
         walk_UpFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Up");
+
+        //Debug.Log(" walk_RightFrames.Length=" + walk_RightFrames.Length);
     }
 
     public void SetCharaFramesSimple(string name)//怪物用
     {
         charaName = name;
-
+        needFrames = new Sprite[3];
         attackFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Left");
         bowFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Left");
         deathFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Left");
@@ -100,6 +104,19 @@ public class AnimatiorControl : MonoBehaviour
         walk_UpFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Left");
     }
 
+    public void SetChestFrames(byte type)
+    {
+        needFrames = new Sprite[4];
+        idleFrames = Resources.LoadAll<Sprite>("Image/Chest/chests" + type );
+    }
+    public void SetSpringFrames(string type)
+    {
+        needFrames = new Sprite[1];
+      
+        idleFrames = Resources.LoadAll<Sprite>("Image/Other/spring" + type);
+
+    }
+
     public void SetAnim(AnimStatus animStatus)
     {
         //Debug.Log("SetAnim animStatus=" + animStatus + " charaName=" + charaName);
@@ -110,12 +127,15 @@ public class AnimatiorControl : MonoBehaviour
                 needFrames[0] = walk_LeftFrames[0];
                 needFrames[1] = walk_LeftFrames[2];
                 needFrames[2] = walk_LeftFrames[1];
+
+              
                 isLoop = true;
                 break;
             case AnimStatus.WalkRight:
                 needFrames[0] = walk_RightFrames[0];
                 needFrames[1] = walk_RightFrames[2];
                 needFrames[2] = walk_RightFrames[1];
+                gameObject.GetComponent<Image>().sprite = needFrames[0];
                 isLoop = true;
                 break;
             case AnimStatus.Idle:
@@ -138,6 +158,12 @@ public class AnimatiorControl : MonoBehaviour
                 }
 
                 isLoop = false;
+                break;
+            case AnimStatus.AttackLoop:
+                needFrames[0] = attackFrames[0];
+                needFrames[1] = attackFrames[2];
+                needFrames[2] = attackFrames[1];
+                isLoop = true;
                 break;
             case AnimStatus.Bow:
                 needFrames[0] = bowFrames[0];
@@ -173,12 +199,43 @@ public class AnimatiorControl : MonoBehaviour
                 gameObject.GetComponent<Image>().sprite = needFrames[0];
                 isLoop = true;
                 break;
+            case AnimStatus.ChestOpen:
+                needFrames[0] = idleFrames[0];
+                needFrames[1] = idleFrames[1];
+                needFrames[2] = idleFrames[2];
+                needFrames[3] = idleFrames[3];
+                gameObject.GetComponent<Image>().sprite = needFrames[0];
+                isLoop = true;
+                break;
+            case AnimStatus.SpringAppear:
+                needFrames[0] = idleFrames[0];
+                gameObject.GetComponent<Image>().sprite = needFrames[0];
+                gameObject.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
+                gameObject.GetComponent<Image>().DOFade(1f, 0.5f);
+                gameObject.GetComponent<Image>().DOFade(0f, 0.5f).SetDelay(2f);
+                isLoop = true;
+                break;
 
         }
-       // Debug.Log(needFrames[0].texture.width + " " + needFrames[0].texture.height);
-        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(needFrames[0].texture.width / (3 * 2f), needFrames[0].texture.height / 2f);
+        // Debug.Log(needFrames[0].texture.width + " " + needFrames[0].texture.height);
+        if (animStatus == AnimStatus.ChestOpen )
+        {
+           // Debug.Log("needFrames[0].texture.width=" + needFrames[0].texture.width + " needFrames[0].texture.height=" + needFrames[0].texture.height);
+            gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(needFrames[0].texture.width , needFrames[0].texture.height / 4f);
+          //  Debug.Log("gameObject.GetComponent<RectTransform>().sizeDelta=" + gameObject.GetComponent<RectTransform>().sizeDelta);
+            fps = 2.5f;
+        }
+        else if (animStatus == AnimStatus.SpringAppear)
+        {
+            gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(needFrames[0].texture.width , needFrames[0].texture.height );
+        }
+        else
+        {
+            gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(needFrames[0].texture.width / (3 * 2f), needFrames[0].texture.height / 2f);
+            fps = 10.0f;
+        }
 
-        if (animStatus != AnimStatus.Front&& animStatus != AnimStatus.Death)
+        if (animStatus != AnimStatus.Front&& animStatus != AnimStatus.Death && animStatus != AnimStatus.SpringAppear)
         {
             currentIndex = 0;
             Play();

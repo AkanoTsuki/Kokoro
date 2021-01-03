@@ -4,15 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 public class AdventurePartBlock : MonoBehaviour
 {
-    public Text titleText;
 
     public Image bgImage;
-    public GameObject QueueGo;
     public Image fgImage;
 
-    public List<Image> hero_picImage;
-    public List<Text> hero_infoText;
 
-    public Text contentText;
+    public Image eventImage;
+    public Image event_pointImage;
+    public Image event_lineImage;
+
+    public Image event_infoImage;
+
+    public Image event_desTitleImage;
+    public Image event_desTypeImage;
+    public Text event_desTitleText;
+    public Text event_desContentText;
+    public Image event_elementTitleImage;
+    public List<Image> event_elementImage;
+
+    public Image event_heroTitleImage;
+    public List<Image> event_heroPicImage;
+    public List<Text> event_heroInfoText;
+
+
 
 }

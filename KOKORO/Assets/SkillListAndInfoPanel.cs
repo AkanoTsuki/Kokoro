@@ -79,7 +79,7 @@ public class SkillListAndInfoPanel : BasePanel
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
 
     }
-    public void OnShow(short districtID, List<int> element, int heroID, byte heroSkillIndex, int x, int y)
+    public void OnShow(short districtID, List<int> element, int heroID, byte heroSkillIndex, int x, int y)//准备装备
     {
 
         funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
@@ -100,9 +100,50 @@ public class SkillListAndInfoPanel : BasePanel
         isShow = true;
     }
 
+    public void OnShow(short districtID, List<int> element, int x, int y)//地区库房查询
+    {
+        titleText.text = "鉴定仓库[" + gc.districtDic[districtID].name + "-" + gc.districtDic[districtID].baseName + "]";
+
+        funcBtn[3].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[3].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
+        funcBtn[3].transform.GetChild(0).GetComponent<Text>().text = "<<全部收藏";
+        funcBtn[3].onClick.RemoveAllListeners();
+        funcBtn[3].onClick.AddListener(delegate () { gc.SkillToCollectionAll(districtID); });
+
+        funcBtn[2].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[2].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
+        funcBtn[2].transform.GetChild(0).GetComponent<Text>().text = "<<收藏";
+        funcBtn[2].onClick.RemoveAllListeners();
+        funcBtn[2].onClick.AddListener(delegate () { gc.SkillToCollection(nowSkillID); });
+
+        funcBtn[1].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[1].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+        funcBtn[1].transform.GetChild(0).GetComponent<Text>().text = "放售>>";
+        funcBtn[1].onClick.RemoveAllListeners();
+        funcBtn[1].onClick.AddListener(delegate () { gc.SkillToGoods(nowSkillID); });
+
+        funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[0].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+        funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "全部放售>>";
+        funcBtn[0].onClick.RemoveAllListeners();
+        funcBtn[0].onClick.AddListener(delegate () { gc.SkillToGoodsAll(districtID); });
+
+        UpdateAllInfo(districtID,null,-1,0);
+
+
+
+
+        SetAnchoredPosition(x, y);
+        nowDistrictID = districtID;
+        isShow = true;
+
+        closeBtn.GetComponent<RectTransform>().localScale = Vector3.one;
+    }
+
     public override void OnHide()
     {
         SetAnchoredPosition(0, 5000);
+        nowSkillID = -1;
         isShow = false;
     }
 
@@ -116,6 +157,7 @@ public class SkillListAndInfoPanel : BasePanel
 
     public void UpdateAllInfo(short districtID, List<int> element, int heroID, short heroSkillIndex)
     {
+
         UpdateList(districtID, element, heroID, heroSkillIndex);
         if (heroID != -1)
         {
@@ -123,15 +165,18 @@ public class SkillListAndInfoPanel : BasePanel
         }
         else
         {
-            //ClearInfo();
+            ClearInfo();
         }
         // UpdateInfo(null);
     }
+
     //element==null 查全部
     public void UpdateList(short districtID, List<int> element,int heroID,short heroSkillIndex)
     {
-        Debug.Log("gc.skillDic.Count" + gc.skillDic.Count);
+        Debug.Log("UpdateList() element=" + element+ "heroID=" + heroID + "heroSkillIndex=" + heroSkillIndex );
         
+
+
 
         if (heroID != -1)
         {
@@ -171,7 +216,8 @@ public class SkillListAndInfoPanel : BasePanel
 
         foreach (KeyValuePair<int, SkillObject> kvp in gc.skillDic)
         {
-            if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1)
+            Debug.Log("kvp.Value.districtID=" + kvp.Value.districtID + "districtID=" + districtID + "kvp.Value.heroID=" + kvp.Value.heroID);
+            if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1 && kvp.Value.isGoods == false)
             {
                 if (element != null)
                 {
@@ -228,7 +274,7 @@ public class SkillListAndInfoPanel : BasePanel
         list_skillListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(455f, Mathf.Max(400f, 4 + (skillObjects.Count / 2) * 22f));
         if (districtID != -1)
         {
-            numText.text = skillObjects.Count + "/" + gc.districtDic[districtID].rRollLimit;
+            numText.text = skillObjects.Count + "/" + gc.districtDic[districtID].rScrollLimit;
         }
         else
         {
@@ -239,8 +285,10 @@ public class SkillListAndInfoPanel : BasePanel
 
     public void UpdateInfo(int skillID)
     {
+        //Debug.Log("UpdateInfo() skillID=" + skillID);
         if (skillID == -1)
         {
+
             info_picImage.overrideSprite = Resources.Load<Sprite>("Image/Other/icon007");
             info_nameText.text = "普通攻击";
             info_desText.text = "物理攻击影响 100%\n造成无元素属性伤害\n──────────────\n使用武器对单个敌人进行普通攻击";
@@ -250,7 +298,7 @@ public class SkillListAndInfoPanel : BasePanel
             SkillObject so = gc.skillDic[skillID];
             SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
             info_picImage.overrideSprite= Resources.Load<Sprite>("Image/SkillPic/" + sp.Pic);
-            info_nameText.text = so.name+"之卷";
+            info_nameText.text = so.name+"之卷\n"+gc.OutputSignStr("✣", sp.Rank);
             string str = "";
 
             if (sp.Element.Count == 1)
@@ -310,25 +358,25 @@ public class SkillListAndInfoPanel : BasePanel
             if (sp.Cure != 0) { str += "\n恢复目标生命值" + sp.Cure + "%"; }
             if (sp.FlagBuff)
             {
-                if (sp.UpAtk != 0) { str += "\n提示目标物理攻击" + sp.UpAtk + "%，持续2回合"; }
-                if (sp.UpMAtk != 0) { str += "\n提示目标魔法攻击" + sp.UpMAtk + "%，持续2回合"; }
-                if (sp.UpDef != 0) { str += "\n提示目标物理防御" + sp.UpDef + "%，持续2回合"; }
-                if (sp.UpMDef != 0) { str += "\n提示目标魔法防御" + sp.UpMDef + "%，持续2回合"; }
-                if (sp.UpHit != 0) { str += "\n提示目标命中" + sp.UpHit + "%，持续2回合"; }
-                if (sp.UpDod != 0) { str += "\n提示目标闪避" + sp.UpDod + "%，持续2回合"; }
-                if (sp.UpCriD != 0) { str += "\n提示目标暴击伤害" + sp.UpCriD + "%，持续2回合"; }
-                if (sp.UpWindDam != 0) { str += "\n提示目标风系伤害" + sp.UpWindDam + "%，持续2回合"; }
-                if (sp.UpFireDam != 0) { str += "\n提示目标火系伤害" + sp.UpFireDam + "%，持续2回合"; }
-                if (sp.UpWaterDam != 0) { str += "\n提示目标水系伤害" + sp.UpWaterDam + "%，持续2回合"; }
-                if (sp.UpGroundDam != 0) { str += "\n提示目标地系伤害" + sp.UpGroundDam + "%，持续2回合"; }
-                if (sp.UpLightDam != 0) { str += "\n提示目标光系伤害" + sp.UpLightDam + "%，持续2回合"; }
-                if (sp.UpDarkDam != 0) { str += "\n提示目标暗系伤害" + sp.UpDarkDam + "%，持续2回合"; }
-                if (sp.UpWindRes != 0) { str += "\n提示目标风系抗性" + sp.UpWindRes + "%，持续2回合"; }
-                if (sp.UpFireRes != 0) { str += "\n提示目标火系抗性" + sp.UpFireRes + "%，持续2回合"; }
-                if (sp.UpWaterRes != 0) { str += "\n提示目标水系抗性" + sp.UpWaterRes + "%，持续2回合"; }
-                if (sp.UpGroundRes != 0) { str += "\n提示目标地系抗性" + sp.UpGroundRes + "%，持续2回合"; }
-                if (sp.UpLightRes != 0) { str += "\n提示目标光系抗性" + sp.UpLightRes + "%，持续2回合"; }
-                if (sp.UpDarkRes != 0) { str += "\n提示目标暗系抗性" + sp.UpDarkRes + "%，持续2回合"; }
+                if (sp.UpAtk != 0) { str += "\n提升目标物理攻击" + sp.UpAtk + "%，持续2回合"; }
+                if (sp.UpMAtk != 0) { str += "\n提升目标魔法攻击" + sp.UpMAtk + "%，持续2回合"; }
+                if (sp.UpDef != 0) { str += "\n提升目标物理防御" + sp.UpDef + "%，持续2回合"; }
+                if (sp.UpMDef != 0) { str += "\n提升目标魔法防御" + sp.UpMDef + "%，持续2回合"; }
+                if (sp.UpHit != 0) { str += "\n提升目标命中" + sp.UpHit + "%，持续2回合"; }
+                if (sp.UpDod != 0) { str += "\n提升目标闪避" + sp.UpDod + "%，持续2回合"; }
+                if (sp.UpCriD != 0) { str += "\n提升目标暴击伤害" + sp.UpCriD + "%，持续2回合"; }
+                if (sp.UpWindDam != 0) { str += "\n提升目标风系伤害" + sp.UpWindDam + "%，持续2回合"; }
+                if (sp.UpFireDam != 0) { str += "\n提升目标火系伤害" + sp.UpFireDam + "%，持续2回合"; }
+                if (sp.UpWaterDam != 0) { str += "\n提升目标水系伤害" + sp.UpWaterDam + "%，持续2回合"; }
+                if (sp.UpGroundDam != 0) { str += "\n提升目标地系伤害" + sp.UpGroundDam + "%，持续2回合"; }
+                if (sp.UpLightDam != 0) { str += "\n提升目标光系伤害" + sp.UpLightDam + "%，持续2回合"; }
+                if (sp.UpDarkDam != 0) { str += "\n提升目标暗系伤害" + sp.UpDarkDam + "%，持续2回合"; }
+                if (sp.UpWindRes != 0) { str += "\n提升目标风系抗性" + sp.UpWindRes + "%，持续2回合"; }
+                if (sp.UpFireRes != 0) { str += "\n提升目标火系抗性" + sp.UpFireRes + "%，持续2回合"; }
+                if (sp.UpWaterRes != 0) { str += "\n提升目标水系抗性" + sp.UpWaterRes + "%，持续2回合"; }
+                if (sp.UpGroundRes != 0) { str += "\n提升目标地系抗性" + sp.UpGroundRes + "%，持续2回合"; }
+                if (sp.UpLightRes != 0) { str += "\n提升目标光系抗性" + sp.UpLightRes + "%，持续2回合"; }
+                if (sp.UpDarkRes != 0) { str += "\n提升目标暗系抗性" + sp.UpDarkRes + "%，持续2回合"; }
             }
 
             string strLemma = "";
@@ -382,12 +430,12 @@ public class SkillListAndInfoPanel : BasePanel
                 {
                     strLemma += "极速]\n" ; cstr = " 一般";
                 }
-                strLemma += cstr + "概率发动追击，上限"+ so.comboMax + "次";
+                strLemma += cstr + "概率追加行动，上限"+ so.comboMax + "次";
             }
 
             if (so.gold != 0)
             {
-                strLemma += "\n[夺金]\n 每次攻击夺取目标" + so.gold + "%金币";
+                strLemma += "\n[夺金]\n 有几率夺取目标" + so.gold + "%金币";
             }
 
             str +=(strLemma!=""?("\n<color=#53C2FF>" + strLemma+"</color>"):"") + "\n──────────────\n";

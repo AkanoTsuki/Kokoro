@@ -19,7 +19,9 @@ public enum UIPanelType
     PlayMain,
     BuildingSelect,
     HeroSelect,
-    SkillListAndInfo
+    SkillListAndInfo,
+    Market,
+    SupplyAndDemand
 
 
 }
