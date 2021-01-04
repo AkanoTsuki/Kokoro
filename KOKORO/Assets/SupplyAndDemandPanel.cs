@@ -191,24 +191,25 @@ public class SupplyAndDemandPanel : BasePanel
         UpdateSingle(districtID, ItemTypeSmall.BackL);
         UpdateSingle(districtID, ItemTypeSmall.FootL);
 
-        UpdateSingle(districtID, new List<int> { 1});
+        UpdateSingle(districtID, new List<int> { 1 });
         UpdateSingle(districtID, new List<int> { 2 });
         UpdateSingle(districtID, new List<int> { 3 });
         UpdateSingle(districtID, new List<int> { 4 });
-        UpdateSingle(districtID, new List<int> {5 });
+        UpdateSingle(districtID, new List<int> { 5 });
         UpdateSingle(districtID, new List<int> { 6 });
         UpdateSingle(districtID, new List<int> { 0 });
-        UpdateSingle(districtID, new List<int> { 1,5 });
-        UpdateSingle(districtID, new List<int> { 2 ,4});
-        UpdateSingle(districtID, new List<int> { 3 ,6});
-        UpdateSingle(districtID, new List<int> { 4 ,3});
-        UpdateSingle(districtID, new List<int> { 5 ,1});
-        UpdateSingle(districtID, new List<int> { 6 ,2});
+        UpdateSingle(districtID, new List<int> { 1, 5 });
+        UpdateSingle(districtID, new List<int> { 2, 4 });
+        UpdateSingle(districtID, new List<int> { 3, 6 });
+        UpdateSingle(districtID, new List<int> { 4, 3 });
+        UpdateSingle(districtID, new List<int> { 5, 1 });
+        UpdateSingle(districtID, new List<int> { 6, 2 });
     }
 
 
     void UpdateSingle(short districtID,ItemTypeSmall  itemTypeSmall)
     {
+        Debug.Log(districtID);
         string str = "";
         short value = 0;
         byte rank;
@@ -219,7 +220,11 @@ public class SupplyAndDemandPanel : BasePanel
         string yearMonth = gc.timeYear + "/" + gc.timeMonth;
         switch (itemTypeSmall)
         {
-            case ItemTypeSmall.Sword: value = gc.supplyAndDemand.weaponSwordValue[districtID]; rank = gc.supplyAndDemand.weaponSwordRank[districtID]; num = gc.salesRecordDic[yearMonth].weaponSwordNum[districtID]; break;
+            case ItemTypeSmall.Sword: 
+                value = gc.supplyAndDemand.weaponSwordValue[districtID]; 
+                rank = gc.supplyAndDemand.weaponSwordRank[districtID]; 
+                num = gc.salesRecordDic[yearMonth].weaponSwordNum[districtID]; 
+                break;
             case ItemTypeSmall.Axe: value = gc.supplyAndDemand.weaponAxeValue[districtID]; rank = gc.supplyAndDemand.weaponAxeRank[districtID]; num = gc.salesRecordDic[yearMonth].weaponAxeNum[districtID]; break;
             case ItemTypeSmall.Spear: value = gc.supplyAndDemand.weaponSpearValue[districtID]; rank = gc.supplyAndDemand.weaponSpearRank[districtID]; num = gc.salesRecordDic[yearMonth].weaponSpearNum[districtID]; break;
             case ItemTypeSmall.Hammer: value = gc.supplyAndDemand.weaponHammerValue[districtID]; rank = gc.supplyAndDemand.weaponHammerRank[districtID]; num = gc.salesRecordDic[yearMonth].weaponHammerNum[districtID]; break;
@@ -250,7 +255,7 @@ public class SupplyAndDemandPanel : BasePanel
             case 2: str += "倾向 良好"; break;
             case 3: str += "倾向 高档"; break;
         }
-        str += "\n销量" + num+"\n库存"+ have;
+        str += "\n销量 " + num+"\n库存 "+ have;
 
         switch (itemTypeSmall)
         {
@@ -452,37 +457,37 @@ public class SupplyAndDemandPanel : BasePanel
             rank = gc.supplyAndDemand.scrollNoneRank[districtID];
             num = gc.salesRecordDic[yearMonth].scrollNoneNum[districtID];
         }
-        else if (itemTypeSmall.Contains(5) && itemTypeSmall.Contains(1))
+        else if (itemTypeSmall[0] == 1 && itemTypeSmall[1] == 5)
         {
             value = gc.supplyAndDemand.scrollWindIIValue[districtID];
             rank = gc.supplyAndDemand.scrollWindIIRank[districtID];
             num = gc.salesRecordDic[yearMonth].scrollWindIINum[districtID];
         }
-        else if (itemTypeSmall.Contains(4) && itemTypeSmall.Contains(2))
+        else if (itemTypeSmall[0] == 2 && itemTypeSmall[1] ==4)
         {
             value = gc.supplyAndDemand.scrollFireIIValue[districtID];
             rank = gc.supplyAndDemand.scrollFireIIRank[districtID];
             num = gc.salesRecordDic[yearMonth].scrollFireIINum[districtID];
         }
-        else if (itemTypeSmall.Contains(5) && itemTypeSmall.Contains(3))
+        else if (itemTypeSmall[0] == 3 && itemTypeSmall[1] ==6)
         {
             value = gc.supplyAndDemand.scrollWaterIIValue[districtID];
             rank = gc.supplyAndDemand.scrollWaterIIRank[districtID];
             num = gc.salesRecordDic[yearMonth].scrollWaterIINum[districtID];
         }
-        else if (itemTypeSmall.Contains(3) && itemTypeSmall.Contains(4))
+        else if (itemTypeSmall[0] == 4 && itemTypeSmall[1] ==3)
         {
             value = gc.supplyAndDemand.scrollGroundIIValue[districtID];
             rank = gc.supplyAndDemand.scrollGroundIIRank[districtID];
             num = gc.salesRecordDic[yearMonth].scrollGroundIINum[districtID];
         }
-        else if (itemTypeSmall.Contains(1) && itemTypeSmall.Contains(5))
+        else if (itemTypeSmall[0] == 5 && itemTypeSmall[1] ==1)
         {
             value = gc.supplyAndDemand.scrollLightIIValue[districtID];
             rank = gc.supplyAndDemand.scrollLightIIRank[districtID];
             num = gc.salesRecordDic[yearMonth].scrollLightIINum[districtID];
         }
-        else if (itemTypeSmall.Contains(2) && itemTypeSmall.Contains(6))
+        else if (itemTypeSmall[0] == 6 && itemTypeSmall[1] ==2)
         {
             value = gc.supplyAndDemand.scrollDarkIIValue[districtID];
             rank = gc.supplyAndDemand.scrollDarkIIRank[districtID];
@@ -496,7 +501,7 @@ public class SupplyAndDemandPanel : BasePanel
             case 2: str += "倾向 良好"; break;
             case 3: str += "倾向 高档"; break;
         }
-        str += "\n销量" + num + "\n库存" + have;
+        str += "\n销量 " + num + "\n库存 " + have;
 
 
         if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(1))
@@ -555,7 +560,7 @@ public class SupplyAndDemandPanel : BasePanel
             scrollNoneValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
             scrollNoneValueText.text = (value > 0 ? "+" : "") + value;
         }
-        else if (itemTypeSmall.Contains(5) && itemTypeSmall.Contains(1))
+        else if (itemTypeSmall[0] == 1 && itemTypeSmall[1] == 5)
         {
             scrollWindIIDesText.text = str;
             scrollWindIIValueImage.color = value > 0 ? cGreen : cRed;
@@ -563,7 +568,7 @@ public class SupplyAndDemandPanel : BasePanel
             scrollWindIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
             scrollWindIIValueText.text = (value > 0 ? "+" : "") + value;
         }
-        else if (itemTypeSmall.Contains(4) && itemTypeSmall.Contains(2))
+        else if (itemTypeSmall[0] == 2 && itemTypeSmall[1] == 4)
         {
             scrollFireIIDesText.text = str;
             scrollFireIIValueImage.color = value > 0 ? cGreen : cRed;
@@ -571,7 +576,7 @@ public class SupplyAndDemandPanel : BasePanel
             scrollFireIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
             scrollFireIIValueText.text = (value > 0 ? "+" : "") + value;
         }
-        else if (itemTypeSmall.Contains(5) && itemTypeSmall.Contains(3))
+        else if (itemTypeSmall[0] == 3 && itemTypeSmall[1] == 6)
         {
             scrollWaterIIDesText.text = str;
             scrollWaterIIValueImage.color = value > 0 ? cGreen : cRed;
@@ -579,7 +584,7 @@ public class SupplyAndDemandPanel : BasePanel
             scrollWaterIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
             scrollWaterIIValueText.text = (value > 0 ? "+" : "") + value;
         }
-        else if (itemTypeSmall.Contains(3) && itemTypeSmall.Contains(4))
+        else if (itemTypeSmall[0] == 4 && itemTypeSmall[1] == 3)
         {
             scrollGroundIIDesText.text = str;
             scrollGroundIIValueImage.color = value > 0 ? cGreen : cRed;
@@ -587,7 +592,7 @@ public class SupplyAndDemandPanel : BasePanel
             scrollGroundIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
             scrollGroundIIValueText.text = (value > 0 ? "+" : "") + value;
         }
-        else if (itemTypeSmall.Contains(1) && itemTypeSmall.Contains(5))
+        else if (itemTypeSmall[0] == 5 && itemTypeSmall[1] == 1)
         {
             scrollLightIIDesText.text = str;
             scrollLightIIValueImage.color = value > 0 ? cGreen : cRed;
@@ -595,7 +600,7 @@ public class SupplyAndDemandPanel : BasePanel
             scrollLightIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
             scrollLightIIValueText.text = (value > 0 ? "+" : "") + value;
         }
-        else if (itemTypeSmall.Contains(2) && itemTypeSmall.Contains(6))
+        else if (itemTypeSmall[0] == 6 && itemTypeSmall[1] == 2)
         {
             scrollDarkIIDesText.text = str;
             scrollDarkIIValueImage.color = value > 0 ? cGreen : cRed;
@@ -626,7 +631,7 @@ public class SupplyAndDemandPanel : BasePanel
         {
             if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1 && kvp.Value.isGoods == true )
             {
-                bool fh = false;
+                bool fh = true;
                 if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == skillTypeSmall.Count)
                 {
                     for (byte i = 0; i < DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count; i++)
@@ -637,7 +642,10 @@ public class SupplyAndDemandPanel : BasePanel
                         }
                     }
                 }
-
+                else
+                {
+                    fh = false;
+                }
                 if (fh)
                 {
                     have++;

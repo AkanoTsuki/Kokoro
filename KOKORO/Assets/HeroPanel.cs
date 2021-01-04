@@ -1768,7 +1768,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_weaponText.text = "主手<color=red>（未装备）</color>";
+                    equip_weaponText.text = "主手<color=#FF9786>（未装备）</color>";
                     equip_weaponImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_weaponUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
@@ -1786,7 +1786,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_subhandText.text = "副手<color=red>（未装备）</color>";
+                    equip_subhandText.text = "副手<color=#FF9786>（未装备）</color>";
                     equip_subhandImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_subhandUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
@@ -1804,7 +1804,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_headText.text = "头部防具<color=red>（未装备）</color>";
+                    equip_headText.text = "头部防具<color=#FF9786>（未装备）</color>";
                     equip_headImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_headUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
@@ -1822,7 +1822,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_bodyText.text = "身体防具<color=red>（未装备）</color>";
+                    equip_bodyText.text = "身体防具<color=#FF9786>（未装备）</color>";
                     equip_bodyImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_bodyUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
@@ -1840,7 +1840,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_handText.text = "手部防具<color=red>（未装备）</color>";
+                    equip_handText.text = "手部防具<color=#FF9786>（未装备）</color>";
                     equip_handImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_handUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
@@ -1858,7 +1858,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_backText.text = "背部防具<color=red>（未装备）</color>";
+                    equip_backText.text = "背部防具<color=#FF9786>（未装备）</color>";
                     equip_backImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_backUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
@@ -1876,7 +1876,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_footText.text = "腿部防具<color=red>（未装备）</color>";
+                    equip_footText.text = "腿部防具<color=#FF9786>（未装备）</color>";
                     equip_footImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_footUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
@@ -1894,7 +1894,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_neckText.text = "项链<color=red>（未装备）</color>";
+                    equip_neckText.text = "项链<color=#FF9786>（未装备）</color>";
                     equip_neckImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_neckUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
@@ -1912,7 +1912,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_finger1Text.text = "戒指<color=red>（未装备）</color>";
+                    equip_finger1Text.text = "戒指<color=#FF9786>（未装备）</color>";
                     equip_finger1Image.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_finger1UnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
@@ -1930,7 +1930,7 @@ public class HeroPanel : BasePanel
                 }
                 else
                 {
-                    equip_finger2Text.text =  "戒指<color=red>（未装备）</color>";
+                    equip_finger2Text.text = "戒指<color=#FF9786>（未装备）</color>";
                     equip_finger2Image.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_finger2UnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }

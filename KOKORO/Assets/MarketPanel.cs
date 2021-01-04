@@ -377,12 +377,12 @@ public class MarketPanel : BasePanel
                         else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == 1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(4)) { groundI++; }
                         else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == 1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(5)) { lightI++; }
                         else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == 1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(6)) { darkI++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(1) && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(5)) { windII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(2) && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(4)) { fireII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(3) && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(6)) { waterII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(4) && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(3)) { groundII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(5) && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(1)) { lightII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(6) && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(2)) { darkII++; }
+                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0]==1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==5) { windII++; }
+                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==2 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==4) { fireII++; }
+                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==3 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==6) { waterII++; }
+                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==4 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==3) { groundII++; }
+                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==5 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==1) { lightII++; }
+                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==6 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==2) { darkII++; }
                     }
                 }
                 filter_typeSmall_allText.text = "全部[" + (none + windI+ fireI+ waterI+ groundI+ lightI+ darkI+ windII+ fireII+ waterII+ groundII+ lightII+ darkII) + "]";
@@ -464,6 +464,9 @@ public class MarketPanel : BasePanel
 
     public void UpdateList(short districtID, ItemTypeBig itemTypeBig,ItemTypeSmall itemTypeSmall,List<int> skillTypeSmall)
     {
+        Debug.Log("itemTypeBig=" + itemTypeBig + " itemTypeSmall=" +( itemTypeSmall!=null? itemTypeSmall.ToString():"null") + " skillTypeSmall.Count=" + (skillTypeSmall!=null?skillTypeSmall.Count.ToString():"null"));
+
+
         List<ItemObject> itemObjects = new List<ItemObject>();
 
         if (itemTypeBig != ItemTypeBig.SkillRoll)
@@ -508,16 +511,20 @@ public class MarketPanel : BasePanel
                 {
                     if (skillTypeSmall != null)//指定了小类
                     {
-                        bool fh = false;
+                        bool fh = true;
                         if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == skillTypeSmall.Count)
                         {
                             for (byte i = 0; i < DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count; i++)
                             {
                                 if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[i] != skillTypeSmall[i])
                                 {
-                                    fh = false;break;
+                                    fh = false; break;
                                 }
                             }
+                        }
+                        else
+                        {
+                            fh = false;
                         }
 
                         if (fh)
