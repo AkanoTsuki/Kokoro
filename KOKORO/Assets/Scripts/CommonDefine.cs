@@ -1729,6 +1729,495 @@ public class LogObject
     public List<int> value { get { return Value; } }
 }
 
+//供需表实例
+public class SupplyAndDemandObject
+{
+    private List<short> WeaponSwordValue;
+    private List<short> WeaponAxeValue;
+    private List<short> WeaponSpearValue;
+    private List<short> WeaponHammerValue;
+    private List<short> WeaponBowValue;
+    private List<short> WeaponStaffValue;
+    private List<short> SubhandShieldValue;
+    private List<short> SubhandDorlachValue;
+    private List<short> JewelryNeckValue;
+    private List<short> JewelryFingerValue;
+    private List<short> ArmorHeadHValue;
+    private List<short> ArmorBodyHValue;
+    private List<short> ArmorHandHValue;
+    private List<short> ArmorBackHValue;
+    private List<short> ArmorFootHValue;
+    private List<short> ArmorHeadLValue;
+    private List<short> ArmorBodyLValue;
+    private List<short> ArmorHandLValue;
+    private List<short> ArmorBackLValue;
+    private List<short> ArmorFootLValue;
+    private List<short> ScrollWindIValue;
+    private List<short> ScrollFireIValue;
+    private List<short> ScrollWaterIValue;
+    private List<short> ScrollGroundIValue;
+    private List<short> ScrollLightIValue;
+    private List<short> ScrollDarkIValue;
+    private List<short> ScrollNoneValue;
+    private List<short> ScrollWindIIValue;
+    private List<short> ScrollFireIIValue;
+    private List<short> ScrollWaterIIValue;
+    private List<short> ScrollGroundIIValue;
+    private List<short> ScrollLightIIValue;
+    private List<short> ScrollDarkIIValue;
+
+    private List<byte> WeaponSwordRank;
+    private List<byte> WeaponAxeRank;
+    private List<byte> WeaponSpearRank;
+    private List<byte> WeaponHammerRank;
+    private List<byte> WeaponBowRank;
+    private List<byte> WeaponStaffRank;
+    private List<byte> SubhandShieldRank;
+    private List<byte> SubhandDorlachRank;
+    private List<byte> JewelryNeckRank;
+    private List<byte> JewelryFingerRank;
+    private List<byte> ArmorHeadHRank;
+    private List<byte> ArmorBodyHRank;
+    private List<byte> ArmorHandHRank;
+    private List<byte> ArmorBackHRank;
+    private List<byte> ArmorFootHRank;
+    private List<byte> ArmorHeadLRank;
+    private List<byte> ArmorBodyLRank;
+    private List<byte> ArmorHandLRank;
+    private List<byte> ArmorBackLRank;
+    private List<byte> ArmorFootLRank;
+    private List<byte> ScrollWindIRank;
+    private List<byte> ScrollFireIRank;
+    private List<byte> ScrollWaterIRank;
+    private List<byte> ScrollGroundIRank;
+    private List<byte> ScrollLightIRank;
+    private List<byte> ScrollDarkIRank;
+    private List<byte> ScrollNoneRank;
+    private List<byte> ScrollWindIIRank;
+    private List<byte> ScrollFireIIRank;
+    private List<byte> ScrollWaterIIRank;
+    private List<byte> ScrollGroundIIRank;
+    private List<byte> ScrollLightIIRank;
+    private List<byte> ScrollDarkIIRank;
+
+    public SupplyAndDemandObject(List<short> weaponSwordValue, List<short> weaponAxeValue, List<short> weaponSpearValue, List<short> weaponHammerValue, List<short> weaponBowValue, List<short> weaponStaffValue,
+                List<short> subhandShieldValue, List<short> subhandDorlachValue, List<short> jewelryNeckValue, List<short> jewelryFingerValue,
+                List<short> armorHeadHValue, List<short> armorBodyHValue, List<short> armorHandHValue, List<short> armorBackHValue, List<short> armorFootHValue,
+                List<short> armorHeadLValue, List<short> armorBodyLValue, List<short> armorHandLValue, List<short> armorBackLValue, List<short> armorFootLValue,
+                List<short> scrollWindIValue, List<short> scrollFireIValue, List<short> scrollWaterIValue, List<short> scrollGroundIValue, List<short> scrollLightIValue, List<short> scrollDarkIValue, List<short> scrollNoneValue,
+                List<short> scrollWindIIValue, List<short> scrollFireIIValue, List<short> scrollWaterIIValue, List<short> scrollGroundIIValue, List<short> scrollLightIIValue, List<short> scrollDarkIIValue,
+                List<byte> weaponSwordRank, List<byte> weaponAxeRank, List<byte> weaponSpearRank, List<byte> weaponHammerRank, List<byte> weaponBowRank, List<byte> weaponStaffRank,
+                List<byte> subhandShieldRank, List<byte> subhandDorlachRank, List<byte> jewelryNeckRank, List<byte> jewelryFingerRank,
+                List<byte> armorHeadHRank, List<byte> armorBodyHRank, List<byte> armorHandHRank, List<byte> armorBackHRank, List<byte> armorFootHRank,
+                List<byte> armorHeadLRank, List<byte> armorBodyLRank, List<byte> armorHandLRank, List<byte> armorBackLRank, List<byte> armorFootLRank,
+                List<byte> scrollWindIRank, List<byte> scrollFireIRank, List<byte> scrollWaterIRank, List<byte> scrollGroundIRank, List<byte> scrollLightIRank, List<byte> scrollDarkIRank, List<byte> scrollNoneRank,
+                List<byte> scrollWindIIRank, List<byte> scrollFireIIRank, List<byte> scrollWaterIIRank, List<byte> scrollGroundIIRank, List<byte> scrollLightIIRank, List<byte> scrollDarkIIRank
+         )
+    {
+        this.WeaponSwordValue = weaponSwordValue;
+        this.WeaponAxeValue = weaponAxeValue;
+        this.WeaponSpearValue = weaponSpearValue;
+        this.WeaponHammerValue = weaponHammerValue;
+        this.WeaponBowValue = weaponBowValue;
+        this.WeaponStaffValue = weaponStaffValue;
+        this.SubhandShieldValue = subhandShieldValue;
+        this.SubhandDorlachValue = subhandDorlachValue;
+        this.JewelryNeckValue = jewelryNeckValue;
+        this.JewelryFingerValue = jewelryFingerValue;
+        this.ArmorHeadHValue = armorHeadHValue;
+        this.ArmorBodyHValue = armorBodyHValue;
+        this.ArmorHandHValue = armorHandHValue;
+        this.ArmorBackHValue = armorBackHValue;
+        this.ArmorFootHValue = armorFootHValue;
+        this.ArmorHeadLValue = armorHeadLValue;
+        this.ArmorBodyLValue = armorBodyLValue;
+        this.ArmorHandLValue = armorHandLValue;
+        this.ArmorBackLValue = armorBackLValue;
+        this.ArmorFootLValue = armorFootLValue;
+        this.ScrollWindIValue = scrollWindIValue;
+        this.ScrollFireIValue = scrollFireIValue;
+        this.ScrollWaterIValue = scrollWaterIValue;
+        this.ScrollGroundIValue = scrollGroundIValue;
+        this.ScrollLightIValue = scrollLightIValue;
+        this.ScrollDarkIValue = scrollDarkIValue;
+        this.ScrollNoneValue = scrollNoneValue;
+        this.ScrollWindIIValue = scrollWindIIValue;
+        this.ScrollFireIIValue = scrollFireIIValue;
+        this.ScrollWaterIIValue = scrollWaterIIValue;
+        this.ScrollGroundIIValue = scrollGroundIIValue;
+        this.ScrollLightIIValue = scrollLightIIValue;
+        this.ScrollDarkIIValue = scrollDarkIIValue;
+
+        this.WeaponSwordRank = weaponSwordRank;
+        this.WeaponAxeRank = weaponAxeRank;
+        this.WeaponSpearRank = weaponSpearRank;
+        this.WeaponHammerRank = weaponHammerRank;
+        this.WeaponBowRank = weaponBowRank;
+        this.WeaponStaffRank = weaponStaffRank;
+        this.SubhandShieldRank = subhandShieldRank;
+        this.SubhandDorlachRank = subhandDorlachRank;
+        this.JewelryNeckRank = jewelryNeckRank;
+        this.JewelryFingerRank = jewelryFingerRank;
+        this.ArmorHeadHRank = armorHeadHRank;
+        this.ArmorBodyHRank = armorBodyHRank;
+        this.ArmorHandHRank = armorHandHRank;
+        this.ArmorBackHRank = armorBackHRank;
+        this.ArmorFootHRank = armorFootHRank;
+        this.ArmorHeadLRank = armorHeadLRank;
+        this.ArmorBodyLRank = armorBodyLRank;
+        this.ArmorHandLRank = armorHandLRank;
+        this.ArmorBackLRank = armorBackLRank;
+        this.ArmorFootLRank = armorFootLRank;
+        this.ScrollWindIRank = scrollWindIRank;
+        this.ScrollFireIRank = scrollFireIRank;
+        this.ScrollWaterIRank = scrollWaterIRank;
+        this.ScrollGroundIRank = scrollGroundIRank;
+        this.ScrollLightIRank = scrollLightIRank;
+        this.ScrollDarkIRank = scrollDarkIRank;
+        this.ScrollNoneRank = scrollNoneRank;
+        this.ScrollWindIIRank = scrollWindIIRank;
+        this.ScrollFireIIRank = scrollFireIIRank;
+        this.ScrollWaterIIRank = scrollWaterIIRank;
+        this.ScrollGroundIIRank = scrollGroundIIRank;
+        this.ScrollLightIIRank = scrollLightIIRank;
+        this.ScrollDarkIIRank = scrollDarkIIRank;
+    }
+    public List<short> weaponSwordValue { get { return WeaponSwordValue; } set { WeaponSwordValue = value; } }
+    public List<short> weaponAxeValue { get { return WeaponAxeValue; } set { WeaponAxeValue = value; } }
+    public List<short> weaponSpearValue { get { return WeaponSpearValue; } set { WeaponSpearValue = value; } }
+    public List<short> weaponHammerValue { get { return WeaponHammerValue; } set { WeaponHammerValue = value; } }
+    public List<short> weaponBowValue { get { return WeaponBowValue; } set { WeaponBowValue = value; } }
+    public List<short> weaponStaffValue { get { return WeaponStaffValue; } set { WeaponStaffValue = value; } }
+    public List<short> subhandShieldValue { get { return SubhandShieldValue; } set { SubhandShieldValue = value; } }
+    public List<short> subhandDorlachValue { get { return SubhandDorlachValue; } set { SubhandDorlachValue = value; } }
+    public List<short> jewelryNeckValue { get { return JewelryNeckValue; } set { JewelryNeckValue = value; } }
+    public List<short> jewelryFingerValue { get { return JewelryFingerValue; } set { JewelryFingerValue = value; } }
+    public List<short> armorHeadHValue { get { return ArmorHeadHValue; } set { ArmorHeadHValue = value; } }
+    public List<short> armorBodyHValue { get { return ArmorBodyHValue; } set { ArmorBodyHValue = value; } }
+    public List<short> armorHandHValue { get { return ArmorHandHValue; } set { ArmorHandHValue = value; } }
+    public List<short> armorBackHValue { get { return ArmorBackHValue; } set { ArmorBackHValue = value; } }
+    public List<short> armorFootHValue { get { return ArmorFootHValue; } set { ArmorFootHValue = value; } }
+    public List<short> armorHeadLValue { get { return ArmorHeadLValue; } set { ArmorHeadLValue = value; } }
+    public List<short> armorBodyLValue { get { return ArmorBodyLValue; } set { ArmorBodyLValue = value; } }
+    public List<short> armorHandLValue { get { return ArmorHandLValue; } set { ArmorHandLValue = value; } }
+    public List<short> armorBackLValue { get { return ArmorBackLValue; } set { ArmorBackLValue = value; } }
+    public List<short> armorFootLValue { get { return ArmorFootLValue; } set { ArmorFootLValue = value; } }
+    public List<short> scrollWindIValue { get { return ScrollWindIValue; } set { ScrollWindIValue = value; } }
+    public List<short> scrollFireIValue { get { return ScrollFireIValue; } set { ScrollFireIValue = value; } }
+    public List<short> scrollWaterIValue { get { return ScrollWaterIValue; } set { ScrollWaterIValue = value; } }
+    public List<short> scrollGroundIValue { get { return ScrollGroundIValue; } set { ScrollGroundIValue = value; } }
+    public List<short> scrollLightIValue { get { return ScrollLightIValue; } set { ScrollLightIValue = value; } }
+    public List<short> scrollDarkIValue { get { return ScrollDarkIValue; } set { ScrollDarkIValue = value; } }
+    public List<short> scrollNoneValue { get { return ScrollNoneValue; } set { ScrollNoneValue = value; } }
+    public List<short> scrollWindIIValue { get { return ScrollWindIIValue; } set { ScrollWindIIValue = value; } }
+    public List<short> scrollFireIIValue { get { return ScrollFireIIValue; } set { ScrollFireIIValue = value; } }
+    public List<short> scrollWaterIIValue { get { return ScrollWaterIIValue; } set { ScrollWaterIIValue = value; } }
+    public List<short> scrollGroundIIValue { get { return ScrollGroundIIValue; } set { ScrollGroundIIValue = value; } }
+    public List<short> scrollLightIIValue { get { return ScrollLightIIValue; } set { ScrollLightIIValue = value; } }
+    public List<short> scrollDarkIIValue { get { return ScrollDarkIIValue; } set { ScrollDarkIIValue = value; } }
+
+    public List<byte> weaponSwordRank { get { return WeaponSwordRank; } set { WeaponSwordRank = value; } }
+    public List<byte> weaponAxeRank { get { return WeaponAxeRank; } set { WeaponAxeRank = value; } }
+    public List<byte> weaponSpearRank { get { return WeaponSpearRank; } set { WeaponSpearRank = value; } }
+    public List<byte> weaponHammerRank { get { return WeaponHammerRank; } set { WeaponHammerRank = value; } }
+    public List<byte> weaponBowRank { get { return WeaponBowRank; } set { WeaponBowRank = value; } }
+    public List<byte> weaponStaffRank { get { return WeaponStaffRank; } set { WeaponStaffRank = value; } }
+    public List<byte> subhandShieldRank { get { return SubhandShieldRank; } set { SubhandShieldRank = value; } }
+    public List<byte> subhandDorlachRank { get { return SubhandDorlachRank; } set { SubhandDorlachRank = value; } }
+    public List<byte> jewelryNeckRank { get { return JewelryNeckRank; } set { JewelryNeckRank = value; } }
+    public List<byte> jewelryFingerRank { get { return JewelryFingerRank; } set { JewelryFingerRank = value; } }
+    public List<byte> armorHeadHRank { get { return ArmorHeadHRank; } set { ArmorHeadHRank = value; } }
+    public List<byte> armorBodyHRank { get { return ArmorBodyHRank; } set { ArmorBodyHRank = value; } }
+    public List<byte> armorHandHRank { get { return ArmorHandHRank; } set { ArmorHandHRank = value; } }
+    public List<byte> armorBackHRank { get { return ArmorBackHRank; } set { ArmorBackHRank = value; } }
+    public List<byte> armorFootHRank { get { return ArmorFootHRank; } set { ArmorFootHRank = value; } }
+    public List<byte> armorHeadLRank { get { return ArmorHeadLRank; } set { ArmorHeadLRank = value; } }
+    public List<byte> armorBodyLRank { get { return ArmorBodyLRank; } set { ArmorBodyLRank = value; } }
+    public List<byte> armorHandLRank { get { return ArmorHandLRank; } set { ArmorHandLRank = value; } }
+    public List<byte> armorBackLRank { get { return ArmorBackLRank; } set { ArmorBackLRank = value; } }
+    public List<byte> armorFootLRank { get { return ArmorFootLRank; } set { ArmorFootLRank = value; } }
+    public List<byte> scrollWindIRank { get { return ScrollWindIRank; } set { ScrollWindIRank = value; } }
+    public List<byte> scrollFireIRank { get { return ScrollFireIRank; } set { ScrollFireIRank = value; } }
+    public List<byte> scrollWaterIRank { get { return ScrollWaterIRank; } set { ScrollWaterIRank = value; } }
+    public List<byte> scrollGroundIRank { get { return ScrollGroundIRank; } set { ScrollGroundIRank = value; } }
+    public List<byte> scrollLightIRank { get { return ScrollLightIRank; } set { ScrollLightIRank = value; } }
+    public List<byte> scrollDarkIRank { get { return ScrollDarkIRank; } set { ScrollDarkIRank = value; } }
+    public List<byte> scrollNoneRank { get { return ScrollNoneRank; } set { ScrollNoneRank = value; } }
+    public List<byte> scrollWindIIRank { get { return ScrollWindIIRank; } set { ScrollWindIIRank = value; } }
+    public List<byte> scrollFireIIRank { get { return ScrollFireIIRank; } set { ScrollFireIIRank = value; } }
+    public List<byte> scrollWaterIIRank { get { return ScrollWaterIIRank; } set { ScrollWaterIIRank = value; } }
+    public List<byte> scrollGroundIIRank { get { return ScrollGroundIIRank; } set { ScrollGroundIIRank = value; } }
+    public List<byte> scrollLightIIRank { get { return ScrollLightIIRank; } set { ScrollLightIIRank = value; } }
+    public List<byte> scrollDarkIIRank { get { return ScrollDarkIIRank; } set { ScrollDarkIIRank = value; } }
+}
+
+//销售记录实例
+public class SalesRecordObject
+{
+    private List<short> WeaponSwordNum;
+    private List<short> WeaponAxeNum;
+    private List<short> WeaponSpearNum;
+    private List<short> WeaponHammerNum;
+    private List<short> WeaponBowNum;
+    private List<short> WeaponStaffNum;
+    private List<short> SubhandShieldNum;
+    private List<short> SubhandDorlachNum;
+    private List<short> JewelryNeckNum;
+    private List<short> JewelryFingerNum;
+    private List<short> ArmorHeadHNum;
+    private List<short> ArmorBodyHNum;
+    private List<short> ArmorHandHNum;
+    private List<short> ArmorBackHNum;
+    private List<short> ArmorFootHNum;
+    private List<short> ArmorHeadLNum;
+    private List<short> ArmorBodyLNum;
+    private List<short> ArmorHandLNum;
+    private List<short> ArmorBackLNum;
+    private List<short> ArmorFootLNum;
+    private List<short> ScrollWindINum;
+    private List<short> ScrollFireINum;
+    private List<short> ScrollWaterINum;
+    private List<short> ScrollGroundINum;
+    private List<short> ScrollLightINum;
+    private List<short> ScrollDarkINum;
+    private List<short> ScrollNoneNum;
+    private List<short> ScrollWindIINum;
+    private List<short> ScrollFireIINum;
+    private List<short> ScrollWaterIINum;
+    private List<short> ScrollGroundIINum;
+    private List<short> ScrollLightIINum;
+    private List<short> ScrollDarkIINum;
+
+    private List<int> WeaponSwordGold;
+    private List<int> WeaponAxeGold;
+    private List<int> WeaponSpearGold;
+    private List<int> WeaponHammerGold;
+    private List<int> WeaponBowGold;
+    private List<int> WeaponStaffGold;
+    private List<int> SubhandShieldGold;
+    private List<int> SubhandDorlachGold;
+    private List<int> JewelryNeckGold;
+    private List<int> JewelryFingerGold;
+    private List<int> ArmorHeadHGold;
+    private List<int> ArmorBodyHGold;
+    private List<int> ArmorHandHGold;
+    private List<int> ArmorBackHGold;
+    private List<int> ArmorFootHGold;
+    private List<int> ArmorHeadLGold;
+    private List<int> ArmorBodyLGold;
+    private List<int> ArmorHandLGold;
+    private List<int> ArmorBackLGold;
+    private List<int> ArmorFootLGold;
+    private List<int> ScrollWindIGold;
+    private List<int> ScrollFireIGold;
+    private List<int> ScrollWaterIGold;
+    private List<int> ScrollGroundIGold;
+    private List<int> ScrollLightIGold;
+    private List<int> ScrollDarkIGold;
+    private List<int> ScrollNoneGold;
+    private List<int> ScrollWindIIGold;
+    private List<int> ScrollFireIIGold;
+    private List<int> ScrollWaterIIGold;
+    private List<int> ScrollGroundIIGold;
+    private List<int> ScrollLightIIGold;
+    private List<int> ScrollDarkIIGold;
+
+    public SalesRecordObject(List<short> weaponSwordNum, List<short> weaponAxeNum, List<short> weaponSpearNum, List<short> weaponHammerNum, List<short> weaponBowNum, List<short> weaponStaffNum,
+            List<short> subhandShieldNum, List<short> subhandDorlachNum, List<short> jewelryNeckNum, List<short> jewelryFingerNum,
+            List<short> armorHeadHNum, List<short> armorBodyHNum, List<short> armorHandHNum, List<short> armorBackHNum, List<short> armorFootHNum,
+            List<short> armorHeadLNum, List<short> armorBodyLNum, List<short> armorHandLNum, List<short> armorBackLNum, List<short> armorFootLNum,
+            List<short> scrollWindINum, List<short> scrollFireINum, List<short> scrollWaterINum, List<short> scrollGroundINum, List<short> scrollLightINum, List<short> scrollDarkINum, List<short> scrollNoneNum,
+            List<short> scrollWindIINum, List<short> scrollFireIINum, List<short> scrollWaterIINum, List<short> scrollGroundIINum, List<short> scrollLightIINum, List<short> scrollDarkIINum,
+            List<int> weaponSwordGold, List<int> weaponAxeGold, List<int> weaponSpearGold, List<int> weaponHammerGold, List<int> weaponBowGold, List<int> weaponStaffGold,
+            List<int> subhandShieldGold, List<int> subhandDorlachGold, List<int> jewelryNeckGold, List<int> jewelryFingerGold,
+            List<int> armorHeadHGold, List<int> armorBodyHGold, List<int> armorHandHGold, List<int> armorBackHGold, List<int> armorFootHGold,
+            List<int> armorHeadLGold, List<int> armorBodyLGold, List<int> armorHandLGold, List<int> armorBackLGold, List<int> armorFootLGold,
+            List<int> scrollWindIGold, List<int> scrollFireIGold, List<int> scrollWaterIGold, List<int> scrollGroundIGold, List<int> scrollLightIGold, List<int> scrollDarkIGold, List<int> scrollNoneGold,
+            List<int> scrollWindIIGold, List<int> scrollFireIIGold, List<int> scrollWaterIIGold, List<int> scrollGroundIIGold, List<int> scrollLightIIGold, List<int> scrollDarkIIGold
+     )
+    {
+        this.WeaponSwordNum = weaponSwordNum;
+        this.WeaponAxeNum = weaponAxeNum;
+        this.WeaponSpearNum = weaponSpearNum;
+        this.WeaponHammerNum = weaponHammerNum;
+        this.WeaponBowNum = weaponBowNum;
+        this.WeaponStaffNum = weaponStaffNum;
+        this.SubhandShieldNum = subhandShieldNum;
+        this.SubhandDorlachNum = subhandDorlachNum;
+        this.JewelryNeckNum = jewelryNeckNum;
+        this.JewelryFingerNum = jewelryFingerNum;
+        this.ArmorHeadHNum = armorHeadHNum;
+        this.ArmorBodyHNum = armorBodyHNum;
+        this.ArmorHandHNum = armorHandHNum;
+        this.ArmorBackHNum = armorBackHNum;
+        this.ArmorFootHNum = armorFootHNum;
+        this.ArmorHeadLNum = armorHeadLNum;
+        this.ArmorBodyLNum = armorBodyLNum;
+        this.ArmorHandLNum = armorHandLNum;
+        this.ArmorBackLNum = armorBackLNum;
+        this.ArmorFootLNum = armorFootLNum;
+        this.ScrollWindINum = scrollWindINum;
+        this.ScrollFireINum = scrollFireINum;
+        this.ScrollWaterINum = scrollWaterINum;
+        this.ScrollGroundINum = scrollGroundINum;
+        this.ScrollLightINum = scrollLightINum;
+        this.ScrollDarkINum = scrollDarkINum;
+        this.ScrollNoneNum = scrollNoneNum;
+        this.ScrollWindIINum = scrollWindIINum;
+        this.ScrollFireIINum = scrollFireIINum;
+        this.ScrollWaterIINum = scrollWaterIINum;
+        this.ScrollGroundIINum = scrollGroundIINum;
+        this.ScrollLightIINum = scrollLightIINum;
+        this.ScrollDarkIINum = scrollDarkIINum;
+
+        this.WeaponSwordGold = weaponSwordGold;
+        this.WeaponAxeGold = weaponAxeGold;
+        this.WeaponSpearGold = weaponSpearGold;
+        this.WeaponHammerGold = weaponHammerGold;
+        this.WeaponBowGold = weaponBowGold;
+        this.WeaponStaffGold = weaponStaffGold;
+        this.SubhandShieldGold = subhandShieldGold;
+        this.SubhandDorlachGold = subhandDorlachGold;
+        this.JewelryNeckGold = jewelryNeckGold;
+        this.JewelryFingerGold = jewelryFingerGold;
+        this.ArmorHeadHGold = armorHeadHGold;
+        this.ArmorBodyHGold = armorBodyHGold;
+        this.ArmorHandHGold = armorHandHGold;
+        this.ArmorBackHGold = armorBackHGold;
+        this.ArmorFootHGold = armorFootHGold;
+        this.ArmorHeadLGold = armorHeadLGold;
+        this.ArmorBodyLGold = armorBodyLGold;
+        this.ArmorHandLGold = armorHandLGold;
+        this.ArmorBackLGold = armorBackLGold;
+        this.ArmorFootLGold = armorFootLGold;
+        this.ScrollWindIGold = scrollWindIGold;
+        this.ScrollFireIGold = scrollFireIGold;
+        this.ScrollWaterIGold = scrollWaterIGold;
+        this.ScrollGroundIGold = scrollGroundIGold;
+        this.ScrollLightIGold = scrollLightIGold;
+        this.ScrollDarkIGold = scrollDarkIGold;
+        this.ScrollNoneGold = scrollNoneGold;
+        this.ScrollWindIIGold = scrollWindIIGold;
+        this.ScrollFireIIGold = scrollFireIIGold;
+        this.ScrollWaterIIGold = scrollWaterIIGold;
+        this.ScrollGroundIIGold = scrollGroundIIGold;
+        this.ScrollLightIIGold = scrollLightIIGold;
+        this.ScrollDarkIIGold = scrollDarkIIGold;
+    }
+    public List<short> weaponSwordNum { get { return WeaponSwordNum; } set { WeaponSwordNum = value; } }
+    public List<short> weaponAxeNum { get { return WeaponAxeNum; } set { WeaponAxeNum = value; } }
+    public List<short> weaponSpearNum { get { return WeaponSpearNum; } set { WeaponSpearNum = value; } }
+    public List<short> weaponHammerNum { get { return WeaponHammerNum; } set { WeaponHammerNum = value; } }
+    public List<short> weaponBowNum { get { return WeaponBowNum; } set { WeaponBowNum = value; } }
+    public List<short> weaponStaffNum { get { return WeaponStaffNum; } set { WeaponStaffNum = value; } }
+    public List<short> subhandShieldNum { get { return SubhandShieldNum; } set { SubhandShieldNum = value; } }
+    public List<short> subhandDorlachNum { get { return SubhandDorlachNum; } set { SubhandDorlachNum = value; } }
+    public List<short> jewelryNeckNum { get { return JewelryNeckNum; } set { JewelryNeckNum = value; } }
+    public List<short> jewelryFingerNum { get { return JewelryFingerNum; } set { JewelryFingerNum = value; } }
+    public List<short> armorHeadHNum { get { return ArmorHeadHNum; } set { ArmorHeadHNum = value; } }
+    public List<short> armorBodyHNum { get { return ArmorBodyHNum; } set { ArmorBodyHNum = value; } }
+    public List<short> armorHandHNum { get { return ArmorHandHNum; } set { ArmorHandHNum = value; } }
+    public List<short> armorBackHNum { get { return ArmorBackHNum; } set { ArmorBackHNum = value; } }
+    public List<short> armorFootHNum { get { return ArmorFootHNum; } set { ArmorFootHNum = value; } }
+    public List<short> armorHeadLNum { get { return ArmorHeadLNum; } set { ArmorHeadLNum = value; } }
+    public List<short> armorBodyLNum { get { return ArmorBodyLNum; } set { ArmorBodyLNum = value; } }
+    public List<short> armorHandLNum { get { return ArmorHandLNum; } set { ArmorHandLNum = value; } }
+    public List<short> armorBackLNum { get { return ArmorBackLNum; } set { ArmorBackLNum = value; } }
+    public List<short> armorFootLNum { get { return ArmorFootLNum; } set { ArmorFootLNum = value; } }
+    public List<short> scrollWindINum { get { return ScrollWindINum; } set { ScrollWindINum = value; } }
+    public List<short> scrollFireINum { get { return ScrollFireINum; } set { ScrollFireINum = value; } }
+    public List<short> scrollWaterINum { get { return ScrollWaterINum; } set { ScrollWaterINum = value; } }
+    public List<short> scrollGroundINum { get { return ScrollGroundINum; } set { ScrollGroundINum = value; } }
+    public List<short> scrollLightINum { get { return ScrollLightINum; } set { ScrollLightINum = value; } }
+    public List<short> scrollDarkINum { get { return ScrollDarkINum; } set { ScrollDarkINum = value; } }
+    public List<short> scrollNoneNum { get { return ScrollNoneNum; } set { ScrollNoneNum = value; } }
+    public List<short> scrollWindIINum { get { return ScrollWindIINum; } set { ScrollWindIINum = value; } }
+    public List<short> scrollFireIINum { get { return ScrollFireIINum; } set { ScrollFireIINum = value; } }
+    public List<short> scrollWaterIINum { get { return ScrollWaterIINum; } set { ScrollWaterIINum = value; } }
+    public List<short> scrollGroundIINum { get { return ScrollGroundIINum; } set { ScrollGroundIINum = value; } }
+    public List<short> scrollLightIINum { get { return ScrollLightIINum; } set { ScrollLightIINum = value; } }
+    public List<short> scrollDarkIINum { get { return ScrollDarkIINum; } set { ScrollDarkIINum = value; } }
+
+    public List<int> weaponSwordGold { get { return WeaponSwordGold; } set { WeaponSwordGold = value; } }
+    public List<int> weaponAxeGold { get { return WeaponAxeGold; } set { WeaponAxeGold = value; } }
+    public List<int> weaponSpearGold { get { return WeaponSpearGold; } set { WeaponSpearGold = value; } }
+    public List<int> weaponHammerGold { get { return WeaponHammerGold; } set { WeaponHammerGold = value; } }
+    public List<int> weaponBowGold { get { return WeaponBowGold; } set { WeaponBowGold = value; } }
+    public List<int> weaponStaffGold { get { return WeaponStaffGold; } set { WeaponStaffGold = value; } }
+    public List<int> subhandShieldGold { get { return SubhandShieldGold; } set { SubhandShieldGold = value; } }
+    public List<int> subhandDorlachGold { get { return SubhandDorlachGold; } set { SubhandDorlachGold = value; } }
+    public List<int> jewelryNeckGold { get { return JewelryNeckGold; } set { JewelryNeckGold = value; } }
+    public List<int> jewelryFingerGold { get { return JewelryFingerGold; } set { JewelryFingerGold = value; } }
+    public List<int> armorHeadHGold { get { return ArmorHeadHGold; } set { ArmorHeadHGold = value; } }
+    public List<int> armorBodyHGold { get { return ArmorBodyHGold; } set { ArmorBodyHGold = value; } }
+    public List<int> armorHandHGold { get { return ArmorHandHGold; } set { ArmorHandHGold = value; } }
+    public List<int> armorBackHGold { get { return ArmorBackHGold; } set { ArmorBackHGold = value; } }
+    public List<int> armorFootHGold { get { return ArmorFootHGold; } set { ArmorFootHGold = value; } }
+    public List<int> armorHeadLGold { get { return ArmorHeadLGold; } set { ArmorHeadLGold = value; } }
+    public List<int> armorBodyLGold { get { return ArmorBodyLGold; } set { ArmorBodyLGold = value; } }
+    public List<int> armorHandLGold { get { return ArmorHandLGold; } set { ArmorHandLGold = value; } }
+    public List<int> armorBackLGold { get { return ArmorBackLGold; } set { ArmorBackLGold = value; } }
+    public List<int> armorFootLGold { get { return ArmorFootLGold; } set { ArmorFootLGold = value; } }
+    public List<int> scrollWindIGold { get { return ScrollWindIGold; } set { ScrollWindIGold = value; } }
+    public List<int> scrollFireIGold { get { return ScrollFireIGold; } set { ScrollFireIGold = value; } }
+    public List<int> scrollWaterIGold { get { return ScrollWaterIGold; } set { ScrollWaterIGold = value; } }
+    public List<int> scrollGroundIGold { get { return ScrollGroundIGold; } set { ScrollGroundIGold = value; } }
+    public List<int> scrollLightIGold { get { return ScrollLightIGold; } set { ScrollLightIGold = value; } }
+    public List<int> scrollDarkIGold { get { return ScrollDarkIGold; } set { ScrollDarkIGold = value; } }
+    public List<int> scrollNoneGold { get { return ScrollNoneGold; } set { ScrollNoneGold = value; } }
+    public List<int> scrollWindIIGold { get { return ScrollWindIIGold; } set { ScrollWindIIGold = value; } }
+    public List<int> scrollFireIIGold { get { return ScrollFireIIGold; } set { ScrollFireIIGold = value; } }
+    public List<int> scrollWaterIIGold { get { return ScrollWaterIIGold; } set { ScrollWaterIIGold = value; } }
+    public List<int> scrollGroundIIGold { get { return ScrollGroundIIGold; } set { ScrollGroundIIGold = value; } }
+    public List<int> scrollLightIIGold { get { return ScrollLightIIGold; } set { ScrollLightIIGold = value; } }
+    public List<int> scrollDarkIIGold { get { return ScrollDarkIIGold; } set { ScrollDarkIIGold = value; } }
+}
+
+//顾客实例
+public class CustomerObject
+{
+    private int ID;
+    private string Name;
+    private string Pic;
+    private int Gold;
+    private short DistrictID;
+    private List<ItemTypeBig> NeedItemTypeBig;
+    private List<ItemTypeSmall> NeedItemTypeSmall;
+    private List<List<int>> NeedSkillTypeSmall;
+    private List<short> NeedItemID;//原型ID
+    private List<short> NeedSkillID;
+    private List<short> NeedNum;
+    private List<byte> NeedRank;
+    public CustomerObject(int id, string name, string pic, int gold, short districtID,
+        List<ItemTypeBig> needItemTypeBig, List<ItemTypeSmall> needItemTypeSmall, List<List<int>> needSkillTypeSmall, List<short> needItemID, List<short> needSkillID,
+        List<short> needNum, List<byte> needRank)
+    {
+        this.ID = id;
+        this.Name = name;
+        this.Pic = pic;
+        this.Gold = gold;
+        this.DistrictID = districtID;
+        this.NeedItemTypeBig = needItemTypeBig;
+        this.NeedItemTypeSmall = needItemTypeSmall;
+        this.NeedSkillTypeSmall = needSkillTypeSmall;
+        this.NeedItemID = needItemID;
+        this.NeedSkillID = needSkillID;
+        this.NeedNum = needNum;
+        this.NeedRank = needRank;
+    }
+    public int id { get { return ID; } }
+    public string name { get { return Name; } }
+    public string pic { get { return Pic; } }
+    public int gold { get { return Gold; } set { Gold = value; } }
+    public short districtID { get { return DistrictID; } }
+    public List<ItemTypeBig> needItemTypeBig { get { return NeedItemTypeBig; } }
+    public List<ItemTypeSmall> needItemTypeSmall { get { return NeedItemTypeSmall; } }
+    public List<List<int>> needSkillTypeSmall { get { return NeedSkillTypeSmall; } }
+    public List<short> needItemID { get { return NeedItemID; } }
+    public List<short> needSkillID { get { return NeedSkillID; } }
+    public List<short> needNum { get { return NeedNum; } }
+    public List<byte> needRank { get { return NeedRank; } }
+}
 
 //装备词条原型
 [System.Serializable]

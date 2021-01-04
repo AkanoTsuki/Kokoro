@@ -27,6 +27,7 @@ public class GameControl : MonoBehaviour
     public int heroIndex = 0;
     public int itemIndex = 0;
     public int skillIndex = 0;
+    public int customerIndex = 0;
     public int buildingIndex = 0;
     public bool[] buildingUnlock = new bool[78];
     public int logIndex = 0;
@@ -41,6 +42,9 @@ public class GameControl : MonoBehaviour
     public List<DungeonObject> dungeonList = new List<DungeonObject>();
     public Dictionary<int, SkillObject> skillDic = new Dictionary<int, SkillObject>();
     public List<List<FightMenberObject>> fightMenberObjectSS = new List<List<FightMenberObject>>();
+    public SupplyAndDemandObject supplyAndDemand ;
+    public Dictionary<string, SalesRecordObject> salesRecordDic = new Dictionary<string, SalesRecordObject>();
+    public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
     /// <summary>
     /// 用作存档的数据类
     /// </summary>
@@ -63,6 +67,7 @@ public class GameControl : MonoBehaviour
         public int heroIndex = 0;
         public int itemIndex = 0;
         public int skillIndex = 0;
+        public int customerIndex = 0;
         public int buildingIndex = 0;
         public bool[] buildingUnlock = new bool[78];
         public int logIndex = 0;
@@ -77,6 +82,9 @@ public class GameControl : MonoBehaviour
         public List<DungeonObject> dungeonList = new List<DungeonObject>();
         public Dictionary<int, SkillObject> skillDic = new Dictionary<int, SkillObject>();
         public List<List<FightMenberObject>> fightMenberObjectSS = new List<List<FightMenberObject>>();
+        public SupplyAndDemandObject supplyAndDemand;
+        public Dictionary<string, SalesRecordObject> salesRecordDic = new Dictionary<string, SalesRecordObject>();
+        public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
     }
 
 
@@ -107,6 +115,7 @@ public class GameControl : MonoBehaviour
         t.heroIndex = this.heroIndex;
         t.itemIndex = this.itemIndex;
         t.skillIndex = this.skillIndex;
+        t.customerIndex = this.customerIndex;
         t.buildingIndex = this.buildingIndex;
         t.buildingUnlock = this.buildingUnlock;
         t.logIndex = this.logIndex;
@@ -121,6 +130,9 @@ public class GameControl : MonoBehaviour
         t.dungeonList = this.dungeonList;
         t.skillDic = this.skillDic;
         t.fightMenberObjectSS = this.fightMenberObjectSS;
+        t.supplyAndDemand = this.supplyAndDemand;
+        t.salesRecordDic = this.salesRecordDic;
+        t.customerDic = this.customerDic;
         //保存数据
         IOHelper.SetData(filename, t);
     }
@@ -157,6 +169,7 @@ public class GameControl : MonoBehaviour
             this.heroIndex = t1.heroIndex;
             this.itemIndex = t1.itemIndex;
             this.skillIndex = t1.skillIndex;
+            this.customerIndex = t1.customerIndex;
             this.buildingIndex = t1.buildingIndex;
             this.buildingUnlock = t1.buildingUnlock;
             this.logIndex = t1.logIndex;
@@ -171,6 +184,9 @@ public class GameControl : MonoBehaviour
             this.dungeonList = t1.dungeonList;
             this.skillDic = t1.skillDic;
             this.fightMenberObjectSS = t1.fightMenberObjectSS;
+            this.supplyAndDemand = t1.supplyAndDemand;
+            this.salesRecordDic = t1.salesRecordDic;
+            this.customerDic = t1.customerDic;
         }
         else
         {
@@ -1555,6 +1571,62 @@ public class GameControl : MonoBehaviour
         if (SkillListAndInfoPanel.Instance.isShow)
         {
             SkillListAndInfoPanel.Instance.OnShow(skillDic[skillID].districtID, null, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y);
+        }
+    }
+    #endregion
+
+    #region 【方法】市集出售
+    public void CustomerCome()
+    {
+        string name = "";
+        string pic = "";
+        int sexCode = Random.Range(0, 2);
+
+        if (sexCode == 0)
+        {
+            name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
+            pic = DataManager.mHeroDict[0].PicMan[Random.Range(0, DataManager.mHeroDict[0].PicMan.Count)];
+        }
+        else
+        {
+            name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
+            pic = DataManager.mHeroDict[0].PicWoman[Random.Range(0, DataManager.mHeroDict[0].PicWoman.Count)];
+        }
+
+        customerDic.Add(customerIndex, new CustomerObject(customerIndex, name, pic, 5000, 0, null, new List<ItemTypeSmall> { ItemTypeSmall.Axe, ItemTypeSmall.Sword }, null, null, null, new List<short> { 1, 2 }, new List<byte> { 0, 0 }));
+        customerIndex++;
+    }
+
+    public void CustomerGone(int customerID)
+    {
+        customerDic.Remove(customerID);
+    }
+    //TODO
+    public void CustomerCheckGoods(int customerID)
+    {
+        short districtID = customerDic[customerID].districtID;
+        List<int> buyItemList = new List<int>();//实例ID
+        List<int> buySkillList = new List<int>();
+
+        if (customerDic[customerID].needItemTypeBig != null)
+        {
+            for (int i = 0; i < customerDic[customerID].needItemTypeBig.Count; i++)
+            {
+                if (customerDic[customerID].needItemTypeBig[i] == ItemTypeBig.Weapon)
+                {
+                    foreach (KeyValuePair<int, ItemObject> kvp in itemDic)
+                    {
+                        if (kvp.Value.districtID == districtID && kvp.Value.isGoods && DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == customerDic[customerID].needItemTypeBig[i])
+                        {
+                            if (kvp.Value.cost <= customerDic[customerID].gold)
+                            {
+                                buyItemList.Add(kvp.Value.objectID);
+                                customerDic[customerID].gold -= kvp.Value.cost;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     #endregion

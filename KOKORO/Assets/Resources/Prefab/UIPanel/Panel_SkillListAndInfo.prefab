@@ -4247,7 +4247,7 @@ GameObject:
   - component: {fileID: 6216849960044671422}
   - component: {fileID: 6216849960044671411}
   - component: {fileID: 6216849960044671420}
-  - component: {fileID: 6216849960044671421}
+  - component: {fileID: 8917617270976836559}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -4318,7 +4318,7 @@ MonoBehaviour:
     98%\n\u9B54\u529B\u6D88\u8017 50\n\u6700\u5927\u76EE\u6807 5\n\n\u7269\u7406\u653B\u51FB\u5F71\u54CD
     50%\n\u9B54\u6CD5\u653B\u51FB\u5F71\u54CD 60%\n\u5251\u7C7B\u6B66\u5668\u589E\u52A0\u4F24\u5BB320%\n\u9020\u6210\u98CE\u7CFB\u4F24\u5BB3\uFF08\u98CE\u7CFB\u4F24\u5BB3+500%\uFF09\n\u9020\u6210\u706B\u7CFB\u4F24\u5BB3\uFF08\u98CE\u7CFB\u4F24\u5BB3+500%\uFF09\n\n<color=#53C2FF>[\u4E94\u8FDE\u6781\u901F]\n\u6781\u4F4E\u6982\u7387\u8FFD\u52A0\u653B\u51FB\uFF0C\u4E0A\u96505\u6B21\n[\u79EF\u6781]\n\u53D1\u52A8\u51E0\u7387\u63D0\u534710%</color>\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\u6B66\u5668\u4ECB\u7ECD\u6B66\u5668\u4ECB\u7ECD\u6B66\u5668\u4ECB\u7ECD\u6B66\u5668\u4ECB\u7ECD\u6B66\u5668\u4ECB\u7ECD\u6B66\u5668\u4ECB\u7ECD\u6B66\u5668\u4ECB\u7ECD\u6B66\u5668\u4ECB\u7ECD\u6B66\u5668\u4ECB\u7ECD\u6B66\u5668\u4ECB\u7ECD\n\n\u4EF7\u503C
     50000"
---- !u!114 &6216849960044671421
+--- !u!114 &8917617270976836559
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4327,11 +4327,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6216849960044671423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
-  m_EffectDistance: {x: 0.5, y: -0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &6216849960276278737
 GameObject:
@@ -4344,7 +4344,7 @@ GameObject:
   - component: {fileID: 6216849960276278736}
   - component: {fileID: 6216849960276278741}
   - component: {fileID: 6216849960276278742}
-  - component: {fileID: 6216849960276278743}
+  - component: {fileID: 674980741930927246}
   m_Layer: 5
   m_Name: Text_Name
   m_TagString: Untagged
@@ -4412,7 +4412,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u65E0\u754F \u4E94\u8054\u6781\u901F \u672B\u4E16\u98CE\u66B4\u4E4B\u5377\n\u2726\u2726\u2726\u2726"
---- !u!114 &6216849960276278743
+--- !u!114 &674980741930927246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4421,10 +4421,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6216849960276278737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &6216849960393430047
@@ -4645,7 +4645,7 @@ GameObject:
   - component: {fileID: 6216849960491013596}
   - component: {fileID: 6216849960491013585}
   - component: {fileID: 6216849960491013586}
-  - component: {fileID: 6216849960491013587}
+  - component: {fileID: 7285839289693397352}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -4713,7 +4713,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u6280\u80FD-\u9274\u5B9A\u5E93"
---- !u!114 &6216849960491013587
+--- !u!114 &7285839289693397352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4722,7 +4722,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6216849960491013597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}

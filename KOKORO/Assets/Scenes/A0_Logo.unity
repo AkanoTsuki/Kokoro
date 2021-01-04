@@ -270,7 +270,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -340,6 +340,7 @@ MonoBehaviour:
   heroIndex: 0
   itemIndex: 0
   skillIndex: 0
+  customerIndex: 0
   buildingIndex: 0
   buildingUnlock: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   logIndex: 0

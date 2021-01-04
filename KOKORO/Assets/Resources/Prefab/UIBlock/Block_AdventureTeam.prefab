@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 6147781700922805300}
   - component: {fileID: 4438521172004050589}
   - component: {fileID: 1561641989452554108}
-  - component: {fileID: 7426676308944871820}
+  - component: {fileID: 5834562463062857150}
   m_Layer: 5
   m_Name: Text_Title
   m_TagString: Untagged
@@ -555,7 +555,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u6218\u5229\u54C1"
---- !u!114 &7426676308944871820
+--- !u!114 &5834562463062857150
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -564,7 +564,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 611314728976518530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -5943,7 +5943,7 @@ GameObject:
   - component: {fileID: 4739073988925113866}
   - component: {fileID: 4739073988925113973}
   - component: {fileID: 4739073988925113972}
-  - component: {fileID: 4739073988925113867}
+  - component: {fileID: 5212341208953509770}
   m_Layer: 5
   m_Name: Text_Name
   m_TagString: Untagged
@@ -6011,7 +6011,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u5EB7\u65AF\u5766\u4E01\u683C\n<color=#FFD700>Lv.99 \u5236\u4F5C\u5E08</color>"
---- !u!114 &4739073988925113867
+--- !u!114 &5212341208953509770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6020,7 +6020,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4739073988925113865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -6533,7 +6533,7 @@ GameObject:
   - component: {fileID: 4739073989265120945}
   - component: {fileID: 4739073989265120947}
   - component: {fileID: 4739073989265120946}
-  - component: {fileID: 4739073989265120956}
+  - component: {fileID: 7049670581602790741}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -6601,7 +6601,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u7B2C\u4E00\u63A2\u9669\u961F"
---- !u!114 &4739073989265120956
+--- !u!114 &7049670581602790741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6610,7 +6610,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4739073989265120944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -6861,7 +6861,7 @@ GameObject:
   - component: {fileID: 4739073989420081076}
   - component: {fileID: 4739073989420081079}
   - component: {fileID: 4739073989420081078}
-  - component: {fileID: 4739073989420081077}
+  - component: {fileID: 5922900000551554754}
   m_Layer: 5
   m_Name: Text_HpMp
   m_TagString: Untagged
@@ -6930,7 +6930,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "<color=#76ee00>\u4F53\u529B 5000/15000</color>\n<color=#428DFD>\u9B54\u529B
     5000/15000</color>"
---- !u!114 &4739073989420081077
+--- !u!114 &5922900000551554754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6939,7 +6939,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4739073989420080971}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -6956,7 +6956,7 @@ GameObject:
   - component: {fileID: 4739073989515938243}
   - component: {fileID: 4739073989515938254}
   - component: {fileID: 4739073989515938253}
-  - component: {fileID: 4739073989515938252}
+  - component: {fileID: 765321193054929103}
   m_Layer: 5
   m_Name: Text_Name
   m_TagString: Untagged
@@ -7024,7 +7024,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u5EB7\u65AF\u5766\u4E01\u683C\n<color=#FFD700>Lv.99 \u5236\u4F5C\u5E08</color>"
---- !u!114 &4739073989515938252
+--- !u!114 &765321193054929103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7033,7 +7033,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4739073989515938242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -7050,7 +7050,7 @@ GameObject:
   - component: {fileID: 4739073989591649213}
   - component: {fileID: 4739073989591649208}
   - component: {fileID: 4739073989591649215}
-  - component: {fileID: 4739073989591649214}
+  - component: {fileID: 4259801070622342270}
   m_Layer: 5
   m_Name: Text_HpMp
   m_TagString: Untagged
@@ -7119,7 +7119,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "<color=#76ee00>\u4F53\u529B 5000/15000</color>\n<color=#428DFD>\u9B54\u529B
     5000/15000</color>"
---- !u!114 &4739073989591649214
+--- !u!114 &4259801070622342270
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7128,7 +7128,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4739073989591649212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -7239,7 +7239,7 @@ GameObject:
   - component: {fileID: 4739073989688056565}
   - component: {fileID: 4739073989688056560}
   - component: {fileID: 4739073989688056567}
-  - component: {fileID: 4739073989688056566}
+  - component: {fileID: 7033111995990269596}
   m_Layer: 5
   m_Name: Text_Name
   m_TagString: Untagged
@@ -7307,7 +7307,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u5EB7\u65AF\u5766\u4E01\u683C\n<color=#FFD700>Lv.99 \u5236\u4F5C\u5E08</color>"
---- !u!114 &4739073989688056566
+--- !u!114 &7033111995990269596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7316,7 +7316,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4739073989688056564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -8146,7 +8146,7 @@ GameObject:
   - component: {fileID: 4739073990168269461}
   - component: {fileID: 4739073990168269456}
   - component: {fileID: 4739073990168269463}
-  - component: {fileID: 4739073990168269462}
+  - component: {fileID: 4581806369237136670}
   m_Layer: 5
   m_Name: Text_HpMp
   m_TagString: Untagged
@@ -8215,7 +8215,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "<color=#76ee00>\u4F53\u529B 5000/15000</color>\n<color=#428DFD>\u9B54\u529B
     5000/15000</color>"
---- !u!114 &4739073990168269462
+--- !u!114 &4581806369237136670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8224,7 +8224,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4739073990168269460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -10251,7 +10251,7 @@ GameObject:
   - component: {fileID: 6530326744003678877}
   - component: {fileID: 5308204700027602993}
   - component: {fileID: 4525686386888485688}
-  - component: {fileID: 7005155856133443129}
+  - component: {fileID: 1065636228339335435}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -10333,7 +10333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &7005155856133443129
+--- !u!114 &1065636228339335435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10342,7 +10342,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6741908155505726180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}

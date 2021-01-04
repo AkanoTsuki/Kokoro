@@ -64,6 +64,11 @@ public class GameControlInPlay : MonoBehaviour
                 Debug.Log("gc.executeEventList[0]=" + gc.executeEventList[0].endTime+ " gc.standardTime=" + gc.standardTime);
             }
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            gc.CustomerCome();
+        
+        }
     }
     public void TimeFlow()
     {

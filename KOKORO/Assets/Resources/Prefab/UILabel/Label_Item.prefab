@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 622656029075041558}
   - component: {fileID: 622656029075041553}
   - component: {fileID: 622656029075041552}
-  - component: {fileID: 622656029075041559}
+  - component: {fileID: 6795714605120440543}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -79,7 +79,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u65E0\u754F\u7684 \u667A\u6167\u7684 \u5929\u4F7F\u6BC1\u706D\u5251 +20"
---- !u!114 &622656029075041559
+--- !u!114 &6795714605120440543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,10 +88,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 622656029075041557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.2784314}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &622656029488176246

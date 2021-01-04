@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 3996421127823947417}
   - component: {fileID: 3996421127823947418}
   - component: {fileID: 3996421127823947419}
-  - component: {fileID: 3996421127823947416}
+  - component: {fileID: 706312655220088562}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -155,7 +155,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421127823947416
+--- !u!114 &706312655220088562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,10 +164,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421127823947398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421127824221802
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 3996421127824221805}
   - component: {fileID: 3996421127824221806}
   - component: {fileID: 3996421127824221807}
-  - component: {fileID: 3996421127824221804}
+  - component: {fileID: 8109820689280639979}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -249,7 +249,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421127824221804
+--- !u!114 &8109820689280639979
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,10 +258,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421127824221802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421127825692832
@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 3996421127835626128}
   - component: {fileID: 3996421127835626133}
   - component: {fileID: 3996421127835626130}
-  - component: {fileID: 3996421127835626131}
+  - component: {fileID: 5420704593273116877}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -493,7 +493,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421127835626131
+--- !u!114 &5420704593273116877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -502,10 +502,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421127835626129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421127837309114
@@ -543,9 +543,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421127837309118
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -609,7 +609,7 @@ GameObject:
   - component: {fileID: 3996421127840168692}
   - component: {fileID: 3996421127840168457}
   - component: {fileID: 3996421127840168694}
-  - component: {fileID: 3996421127840168695}
+  - component: {fileID: 7019225754552402066}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -677,7 +677,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421127840168695
+--- !u!114 &7019225754552402066
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -686,10 +686,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421127840168693}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421127842194973
@@ -797,7 +797,7 @@ GameObject:
   - component: {fileID: 3996421127842428890}
   - component: {fileID: 3996421127842428895}
   - component: {fileID: 3996421127842428892}
-  - component: {fileID: 3996421127842428893}
+  - component: {fileID: 3417452592224250044}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -865,7 +865,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421127842428893
+--- !u!114 &3417452592224250044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -874,10 +874,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421127842428891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421127860843719
@@ -991,9 +991,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421127870632381
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1057,7 +1057,7 @@ GameObject:
   - component: {fileID: 3996421127878705677}
   - component: {fileID: 3996421127878705678}
   - component: {fileID: 3996421127878705679}
-  - component: {fileID: 3996421127878705676}
+  - component: {fileID: 4889444460523021989}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -1125,7 +1125,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421127878705676
+--- !u!114 &4889444460523021989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1134,10 +1134,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421127878705674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421127887567980
@@ -1321,7 +1321,7 @@ GameObject:
   - component: {fileID: 3996421127895906389}
   - component: {fileID: 3996421127895906390}
   - component: {fileID: 3996421127895906391}
-  - component: {fileID: 3996421127895906388}
+  - component: {fileID: 5745818885245158105}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -1389,7 +1389,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421127895906388
+--- !u!114 &5745818885245158105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1398,10 +1398,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421127895906386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421127908406865
@@ -1509,7 +1509,7 @@ GameObject:
   - component: {fileID: 3996421127915370201}
   - component: {fileID: 3996421127915370202}
   - component: {fileID: 3996421127915370203}
-  - component: {fileID: 3996421127915370200}
+  - component: {fileID: 5169298824222193225}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -1577,7 +1577,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421127915370200
+--- !u!114 &5169298824222193225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1586,10 +1586,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421127915370182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421127916012380
@@ -1627,9 +1627,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421127916012368
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1717,9 +1717,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421127917286694
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2161,7 +2161,7 @@ GameObject:
   - component: {fileID: 3996421127989036808}
   - component: {fileID: 3996421127989036813}
   - component: {fileID: 3996421127989036810}
-  - component: {fileID: 3996421127989036811}
+  - component: {fileID: 7978729786838609037}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -2229,7 +2229,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421127989036811
+--- !u!114 &7978729786838609037
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2238,10 +2238,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421127989036809}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128011788123
@@ -2331,7 +2331,7 @@ GameObject:
   - component: {fileID: 3996421128012915410}
   - component: {fileID: 3996421128012915415}
   - component: {fileID: 3996421128012915412}
-  - component: {fileID: 3996421128012915413}
+  - component: {fileID: 7985270812658230443}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -2399,7 +2399,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128012915413
+--- !u!114 &7985270812658230443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2408,10 +2408,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128012915411}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128015517256
@@ -2425,7 +2425,7 @@ GameObject:
   - component: {fileID: 3996421128015517259}
   - component: {fileID: 3996421128015517260}
   - component: {fileID: 3996421128015517261}
-  - component: {fileID: 3996421128015517258}
+  - component: {fileID: 4055305458364959604}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -2493,7 +2493,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421128015517258
+--- !u!114 &4055305458364959604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2502,10 +2502,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128015517256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128019067573
@@ -2519,7 +2519,7 @@ GameObject:
   - component: {fileID: 3996421128019067572}
   - component: {fileID: 3996421128019067593}
   - component: {fileID: 3996421128019067574}
-  - component: {fileID: 3996421128019067575}
+  - component: {fileID: 7117389749749867824}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -2587,7 +2587,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421128019067575
+--- !u!114 &7117389749749867824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2596,10 +2596,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128019067573}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128042255728
@@ -2613,7 +2613,7 @@ GameObject:
   - component: {fileID: 3996421128042255731}
   - component: {fileID: 3996421128042255732}
   - component: {fileID: 3996421128042255733}
-  - component: {fileID: 3996421128042255730}
+  - component: {fileID: 7165148155562243723}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -2681,7 +2681,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421128042255730
+--- !u!114 &7165148155562243723
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2690,10 +2690,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128042255728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128053996242
@@ -2783,7 +2783,7 @@ GameObject:
   - component: {fileID: 3996421128058233427}
   - component: {fileID: 3996421128058233428}
   - component: {fileID: 3996421128058233429}
-  - component: {fileID: 3996421128058233426}
+  - component: {fileID: 6617277709577857008}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -2851,7 +2851,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421128058233426
+--- !u!114 &6617277709577857008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2860,10 +2860,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128058233424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128091439243
@@ -2901,9 +2901,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128091439247
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2991,9 +2991,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128111032399
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3072,7 +3072,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3996421128114994915}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3081,9 +3081,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
-  m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -28}
+  m_SizeDelta: {x: 32, y: 16}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128114994919
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3105,7 +3105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.28324133, g: 0.6320754, b: 0.31019643, a: 0.4392157}
+  m_Color: {r: 0.75686276, g: 0.21794182, b: 0.117647044, a: 0.7372549}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3147,7 +3147,7 @@ GameObject:
   - component: {fileID: 3996421128134958023}
   - component: {fileID: 3996421128134958040}
   - component: {fileID: 3996421128134958041}
-  - component: {fileID: 3996421128134958022}
+  - component: {fileID: 6277364844059555045}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -3215,7 +3215,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128134958022
+--- !u!114 &6277364844059555045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3224,10 +3224,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128134958020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128141459439
@@ -3241,7 +3241,7 @@ GameObject:
   - component: {fileID: 3996421128141459438}
   - component: {fileID: 3996421128141459427}
   - component: {fileID: 3996421128141459424}
-  - component: {fileID: 3996421128141459425}
+  - component: {fileID: 1744182876796293403}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -3309,7 +3309,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128141459425
+--- !u!114 &1744182876796293403
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3318,10 +3318,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128141459439}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128169131070
@@ -3335,7 +3335,7 @@ GameObject:
   - component: {fileID: 3996421128169131057}
   - component: {fileID: 3996421128169131058}
   - component: {fileID: 3996421128169131059}
-  - component: {fileID: 3996421128169131056}
+  - component: {fileID: 2838922364568100650}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -3403,7 +3403,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421128169131056
+--- !u!114 &2838922364568100650
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3412,10 +3412,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128169131070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128171531771
@@ -3527,9 +3527,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128181728874
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3668,7 +3668,7 @@ GameObject:
   - component: {fileID: 3996421128190861183}
   - component: {fileID: 3996421128190861168}
   - component: {fileID: 3996421128190861169}
-  - component: {fileID: 3996421128190861182}
+  - component: {fileID: 7231665413165649373}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3725,7 +3725,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
     m_FontSize: 16
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -3736,7 +3736,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u5236\u54C1\u4F9B\u9700\u60C5\u62A5"
---- !u!114 &3996421128190861182
+--- !u!114 &7231665413165649373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3745,7 +3745,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128190861180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -3762,7 +3762,7 @@ GameObject:
   - component: {fileID: 3996421128198973611}
   - component: {fileID: 3996421128198973612}
   - component: {fileID: 3996421128198973613}
-  - component: {fileID: 3996421128198973610}
+  - component: {fileID: 6369443303647958830}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -3830,7 +3830,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128198973610
+--- !u!114 &6369443303647958830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3839,10 +3839,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128198973608}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128200946196
@@ -4196,9 +4196,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128243850345
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4474,9 +4474,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128251441636
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4540,7 +4540,7 @@ GameObject:
   - component: {fileID: 3996421128254443568}
   - component: {fileID: 3996421128254443573}
   - component: {fileID: 3996421128254443570}
-  - component: {fileID: 3996421128254443571}
+  - component: {fileID: 1104262498313435650}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -4608,7 +4608,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128254443571
+--- !u!114 &1104262498313435650
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4617,10 +4617,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128254443569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128255230655
@@ -4634,7 +4634,7 @@ GameObject:
   - component: {fileID: 3996421128255230654}
   - component: {fileID: 3996421128255230643}
   - component: {fileID: 3996421128255230640}
-  - component: {fileID: 3996421128255230641}
+  - component: {fileID: 1754550371011474213}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -4702,7 +4702,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128255230641
+--- !u!114 &1754550371011474213
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4711,10 +4711,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128255230655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128269120263
@@ -4752,9 +4752,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128269120283
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4986,7 +4986,7 @@ GameObject:
   - component: {fileID: 3996421128292793072}
   - component: {fileID: 3996421128292793077}
   - component: {fileID: 3996421128292793074}
-  - component: {fileID: 3996421128292793075}
+  - component: {fileID: 5976762565307775284}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -5054,7 +5054,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128292793075
+--- !u!114 &5976762565307775284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5063,10 +5063,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128292793073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128293393436
@@ -5178,9 +5178,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128297970045
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5338,7 +5338,7 @@ GameObject:
   - component: {fileID: 3996421128311274482}
   - component: {fileID: 3996421128311274487}
   - component: {fileID: 3996421128311274484}
-  - component: {fileID: 3996421128311274485}
+  - component: {fileID: 8304002462738472800}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -5406,7 +5406,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421128311274485
+--- !u!114 &8304002462738472800
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5415,10 +5415,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128311274483}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128334269649
@@ -5968,7 +5968,7 @@ GameObject:
   - component: {fileID: 3996421128406936812}
   - component: {fileID: 3996421128406936801}
   - component: {fileID: 3996421128406936814}
-  - component: {fileID: 3996421128406936815}
+  - component: {fileID: 1485374659967706393}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -6036,7 +6036,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128406936815
+--- !u!114 &1485374659967706393
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6045,10 +6045,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128406936813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128432207364
@@ -6062,7 +6062,7 @@ GameObject:
   - component: {fileID: 3996421128432207367}
   - component: {fileID: 3996421128432207384}
   - component: {fileID: 3996421128432207385}
-  - component: {fileID: 3996421128432207366}
+  - component: {fileID: 5598588127116172182}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -6130,7 +6130,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128432207366
+--- !u!114 &5598588127116172182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6139,10 +6139,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128432207364}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128435342368
@@ -6250,7 +6250,7 @@ GameObject:
   - component: {fileID: 3996421128438858307}
   - component: {fileID: 3996421128438858308}
   - component: {fileID: 3996421128438858309}
-  - component: {fileID: 3996421128438858306}
+  - component: {fileID: 1139505864746369908}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -6318,7 +6318,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421128438858306
+--- !u!114 &1139505864746369908
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6327,10 +6327,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128438858304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128484258971
@@ -6576,7 +6576,7 @@ GameObject:
   - component: {fileID: 3996421128511765086}
   - component: {fileID: 3996421128511765075}
   - component: {fileID: 3996421128511765072}
-  - component: {fileID: 3996421128511765073}
+  - component: {fileID: 2615175052966471747}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -6644,7 +6644,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128511765073
+--- !u!114 &2615175052966471747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6653,10 +6653,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128511765087}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128537728894
@@ -6670,7 +6670,7 @@ GameObject:
   - component: {fileID: 3996421128537728881}
   - component: {fileID: 3996421128537728882}
   - component: {fileID: 3996421128537728883}
-  - component: {fileID: 3996421128537728880}
+  - component: {fileID: 4552441425434520387}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -6738,7 +6738,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128537728880
+--- !u!114 &4552441425434520387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6747,10 +6747,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128537728894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128539685268
@@ -6842,7 +6842,7 @@ GameObject:
   - component: {fileID: 3996421128584197326}
   - component: {fileID: 3996421128584197315}
   - component: {fileID: 3996421128584197312}
-  - component: {fileID: 3996421128584197313}
+  - component: {fileID: 656200966479307600}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -6910,7 +6910,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128584197313
+--- !u!114 &656200966479307600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6919,10 +6919,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128584197327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128601876206
@@ -6936,7 +6936,7 @@ GameObject:
   - component: {fileID: 3996421128601876193}
   - component: {fileID: 3996421128601876194}
   - component: {fileID: 3996421128601876195}
-  - component: {fileID: 3996421128601876192}
+  - component: {fileID: 4394629708736014686}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -7004,7 +7004,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128601876192
+--- !u!114 &4394629708736014686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7013,10 +7013,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128601876206}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128616547143
@@ -7292,7 +7292,7 @@ GameObject:
   - component: {fileID: 3996421128626491299}
   - component: {fileID: 3996421128626491300}
   - component: {fileID: 3996421128626491301}
-  - component: {fileID: 3996421128626491298}
+  - component: {fileID: 6428586933763188772}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -7360,7 +7360,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421128626491298
+--- !u!114 &6428586933763188772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7369,10 +7369,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128626491296}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128650085087
@@ -7881,9 +7881,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128731127844
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7947,7 +7947,7 @@ GameObject:
   - component: {fileID: 3996421128747314616}
   - component: {fileID: 3996421128747314621}
   - component: {fileID: 3996421128747314618}
-  - component: {fileID: 3996421128747314619}
+  - component: {fileID: 5947083002115239033}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -8015,7 +8015,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128747314619
+--- !u!114 &5947083002115239033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8024,10 +8024,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128747314617}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128755554540
@@ -8385,9 +8385,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128787837358
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8798,9 +8798,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128827228131
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9014,7 +9014,7 @@ GameObject:
   - component: {fileID: 3996421128840965712}
   - component: {fileID: 3996421128840965717}
   - component: {fileID: 3996421128840965714}
-  - component: {fileID: 3996421128840965715}
+  - component: {fileID: 2469567630771817365}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -9082,7 +9082,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128840965715
+--- !u!114 &2469567630771817365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9091,10 +9091,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128840965713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128845388218
@@ -9108,7 +9108,7 @@ GameObject:
   - component: {fileID: 3996421128845388221}
   - component: {fileID: 3996421128845388222}
   - component: {fileID: 3996421128845388223}
-  - component: {fileID: 3996421128845388220}
+  - component: {fileID: 872691983083394499}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -9176,7 +9176,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421128845388220
+--- !u!114 &872691983083394499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9185,10 +9185,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128845388218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128849581696
@@ -9202,7 +9202,7 @@ GameObject:
   - component: {fileID: 3996421128849581699}
   - component: {fileID: 3996421128849581700}
   - component: {fileID: 3996421128849581701}
-  - component: {fileID: 3996421128849581698}
+  - component: {fileID: 5999278416688371828}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -9270,7 +9270,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128849581698
+--- !u!114 &5999278416688371828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9279,10 +9279,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128849581696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128860456017
@@ -9617,7 +9617,7 @@ GameObject:
   - component: {fileID: 3996421128898732453}
   - component: {fileID: 3996421128898732454}
   - component: {fileID: 3996421128898732455}
-  - component: {fileID: 3996421128898732452}
+  - component: {fileID: 7850662642342846490}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -9685,7 +9685,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128898732452
+--- !u!114 &7850662642342846490
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9694,10 +9694,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128898732450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128908683870
@@ -10115,9 +10115,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128929144097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10205,9 +10205,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128932514908
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10349,7 +10349,7 @@ GameObject:
   - component: {fileID: 3996421128966339050}
   - component: {fileID: 3996421128966339055}
   - component: {fileID: 3996421128966339052}
-  - component: {fileID: 3996421128966339053}
+  - component: {fileID: 4273443069293100681}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -10417,7 +10417,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421128966339053
+--- !u!114 &4273443069293100681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10426,10 +10426,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421128966339051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421128978624323
@@ -10467,9 +10467,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128978624327
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10557,9 +10557,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421128985984317
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10697,7 +10697,7 @@ GameObject:
   - component: {fileID: 3996421129002553072}
   - component: {fileID: 3996421129002553077}
   - component: {fileID: 3996421129002553074}
-  - component: {fileID: 3996421129002553075}
+  - component: {fileID: 3481478489337027628}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -10765,7 +10765,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129002553075
+--- !u!114 &3481478489337027628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10774,10 +10774,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129002553073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129003608896
@@ -11033,9 +11033,9 @@ MonoBehaviour:
   scrollWaterIDesText: {fileID: 3996421129647396026}
   scrollWaterIValueImage: {fileID: 3996421128731127845}
   scrollWaterIValueText: {fileID: 3996421128254443570}
-  scrollGrondIDesText: {fileID: 3996421128019067574}
-  scrollGrondIValueImage: {fileID: 3996421128787837359}
-  scrollGrondIValueText: {fileID: 3996421127835626130}
+  scrollGroundIDesText: {fileID: 3996421128019067574}
+  scrollGroundIValueImage: {fileID: 3996421128787837359}
+  scrollGroundIValueText: {fileID: 3996421127835626130}
   scrollLightIDesText: {fileID: 3996421129415007856}
   scrollLightIValueImage: {fileID: 3996421129733699418}
   scrollLightIValueText: {fileID: 3996421128406936814}
@@ -11054,9 +11054,9 @@ MonoBehaviour:
   scrollWaterIIDesText: {fileID: 3996421129951443217}
   scrollWaterIIValueImage: {fileID: 3996421128297970042}
   scrollWaterIIValueText: {fileID: 3996421129925592501}
-  scrollGrondIIDesText: {fileID: 3996421129272246783}
-  scrollGrondIIValueImage: {fileID: 3996421128978624324}
-  scrollGrondIIValueText: {fileID: 3996421128601876195}
+  scrollGroundIIDesText: {fileID: 3996421129272246783}
+  scrollGroundIIValueImage: {fileID: 3996421128978624324}
+  scrollGroundIIValueText: {fileID: 3996421128601876195}
   scrollLightIIDesText: {fileID: 3996421129894083785}
   scrollLightIIValueImage: {fileID: 3996421128111032396}
   scrollLightIIValueText: {fileID: 3996421128432207385}
@@ -11305,7 +11305,7 @@ GameObject:
   - component: {fileID: 3996421129033659489}
   - component: {fileID: 3996421129033659490}
   - component: {fileID: 3996421129033659491}
-  - component: {fileID: 3996421129033659488}
+  - component: {fileID: 2223729450148655052}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -11373,7 +11373,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129033659488
+--- !u!114 &2223729450148655052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11382,10 +11382,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129033659502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129041213324
@@ -11498,9 +11498,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129057916675
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11834,9 +11834,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129078612190
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11900,7 +11900,7 @@ GameObject:
   - component: {fileID: 3996421129078904296}
   - component: {fileID: 3996421129078904301}
   - component: {fileID: 3996421129078904298}
-  - component: {fileID: 3996421129078904299}
+  - component: {fileID: 8180693139875032478}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -11968,7 +11968,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129078904299
+--- !u!114 &8180693139875032478
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11977,10 +11977,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129078904297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129079425181
@@ -12166,7 +12166,7 @@ GameObject:
   - component: {fileID: 3996421129084666841}
   - component: {fileID: 3996421129084666842}
   - component: {fileID: 3996421129084666843}
-  - component: {fileID: 3996421129084666840}
+  - component: {fileID: 5090158753546368238}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -12234,7 +12234,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129084666840
+--- !u!114 &5090158753546368238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12243,10 +12243,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129084666822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129090897055
@@ -12260,7 +12260,7 @@ GameObject:
   - component: {fileID: 3996421129090897054}
   - component: {fileID: 3996421129090897043}
   - component: {fileID: 3996421129090897040}
-  - component: {fileID: 3996421129090897041}
+  - component: {fileID: 5296011187382030977}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -12328,7 +12328,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129090897041
+--- !u!114 &5296011187382030977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12337,10 +12337,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129090897055}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129098295700
@@ -12566,9 +12566,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129114718514
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12730,9 +12730,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129147443366
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13052,9 +13052,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129175371455
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13236,9 +13236,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129201954989
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13326,9 +13326,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129209059831
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13470,7 +13470,7 @@ GameObject:
   - component: {fileID: 3996421129215088241}
   - component: {fileID: 3996421129215088242}
   - component: {fileID: 3996421129215088243}
-  - component: {fileID: 3996421129215088240}
+  - component: {fileID: 590253759085898284}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -13538,7 +13538,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129215088240
+--- !u!114 &590253759085898284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13547,10 +13547,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129215088254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129215719486
@@ -13718,7 +13718,7 @@ GameObject:
   - component: {fileID: 3996421129229678225}
   - component: {fileID: 3996421129229678226}
   - component: {fileID: 3996421129229678227}
-  - component: {fileID: 3996421129229678224}
+  - component: {fileID: 6520922337809277663}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -13786,7 +13786,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129229678224
+--- !u!114 &6520922337809277663
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13795,10 +13795,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129229678238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129233760027
@@ -13981,7 +13981,7 @@ GameObject:
   - component: {fileID: 3996421129240360953}
   - component: {fileID: 3996421129240360954}
   - component: {fileID: 3996421129240360955}
-  - component: {fileID: 3996421129240360952}
+  - component: {fileID: 6822628496963930926}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -14049,7 +14049,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129240360952
+--- !u!114 &6822628496963930926
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14058,10 +14058,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129240360934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129270201676
@@ -14075,7 +14075,7 @@ GameObject:
   - component: {fileID: 3996421129270201679}
   - component: {fileID: 3996421129270201664}
   - component: {fileID: 3996421129270201665}
-  - component: {fileID: 3996421129270201678}
+  - component: {fileID: 1939982092604253287}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -14143,7 +14143,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129270201678
+--- !u!114 &1939982092604253287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14152,10 +14152,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129270201676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129272246778
@@ -14169,7 +14169,7 @@ GameObject:
   - component: {fileID: 3996421129272246781}
   - component: {fileID: 3996421129272246782}
   - component: {fileID: 3996421129272246783}
-  - component: {fileID: 3996421129272246780}
+  - component: {fileID: 723216362465830789}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -14237,7 +14237,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129272246780
+--- !u!114 &723216362465830789
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14246,10 +14246,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129272246778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129274653647
@@ -14263,7 +14263,7 @@ GameObject:
   - component: {fileID: 3996421129274653646}
   - component: {fileID: 3996421129274653635}
   - component: {fileID: 3996421129274653632}
-  - component: {fileID: 3996421129274653633}
+  - component: {fileID: 3001095844774610279}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -14331,7 +14331,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129274653633
+--- !u!114 &3001095844774610279
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14340,10 +14340,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129274653647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129276802031
@@ -14433,7 +14433,7 @@ GameObject:
   - component: {fileID: 3996421129287022287}
   - component: {fileID: 3996421129287022272}
   - component: {fileID: 3996421129287022273}
-  - component: {fileID: 3996421129287022286}
+  - component: {fileID: 6055847782515553309}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -14501,7 +14501,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129287022286
+--- !u!114 &6055847782515553309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14510,10 +14510,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129287022284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129289480053
@@ -14715,7 +14715,7 @@ GameObject:
   - component: {fileID: 3996421129311994892}
   - component: {fileID: 3996421129311994881}
   - component: {fileID: 3996421129311994894}
-  - component: {fileID: 3996421129311994895}
+  - component: {fileID: 104055892566219119}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -14783,7 +14783,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129311994895
+--- !u!114 &104055892566219119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14792,10 +14792,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129311994893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129314603616
@@ -15073,7 +15073,7 @@ GameObject:
   - component: {fileID: 3996421129335984023}
   - component: {fileID: 3996421129335984040}
   - component: {fileID: 3996421129335984041}
-  - component: {fileID: 3996421129335984022}
+  - component: {fileID: 7111569503911697083}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -15141,7 +15141,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129335984022
+--- !u!114 &7111569503911697083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15150,10 +15150,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129335984020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129340278395
@@ -15241,7 +15241,7 @@ GameObject:
   - component: {fileID: 3996421129344195866}
   - component: {fileID: 3996421129344195871}
   - component: {fileID: 3996421129344195868}
-  - component: {fileID: 3996421129344195869}
+  - component: {fileID: 2391941186812306586}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -15309,7 +15309,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129344195869
+--- !u!114 &2391941186812306586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15318,10 +15318,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129344195867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129345382197
@@ -15453,9 +15453,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129353365573
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15896,7 +15896,7 @@ GameObject:
   - component: {fileID: 3996421129393395365}
   - component: {fileID: 3996421129393395366}
   - component: {fileID: 3996421129393395367}
-  - component: {fileID: 3996421129393395364}
+  - component: {fileID: 8666227540980537442}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -15964,7 +15964,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129393395364
+--- !u!114 &8666227540980537442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15973,10 +15973,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129393395362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129399938388
@@ -16221,7 +16221,7 @@ GameObject:
   - component: {fileID: 3996421129415007870}
   - component: {fileID: 3996421129415007859}
   - component: {fileID: 3996421129415007856}
-  - component: {fileID: 3996421129415007857}
+  - component: {fileID: 4748093107216232964}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -16289,7 +16289,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129415007857
+--- !u!114 &4748093107216232964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16298,10 +16298,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129415007871}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129423443228
@@ -16339,9 +16339,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129423443216
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16503,9 +16503,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129433943331
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16593,9 +16593,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129437037995
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16761,9 +16761,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129494569810
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17341,7 +17341,7 @@ GameObject:
   - component: {fileID: 3996421129545323331}
   - component: {fileID: 3996421129545323332}
   - component: {fileID: 3996421129545323333}
-  - component: {fileID: 3996421129545323330}
+  - component: {fileID: 6776040442469741401}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -17409,7 +17409,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129545323330
+--- !u!114 &6776040442469741401
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17418,10 +17418,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129545323328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129548871458
@@ -17534,9 +17534,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129557214659
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17921,7 +17921,7 @@ GameObject:
   - component: {fileID: 3996421129613071388}
   - component: {fileID: 3996421129613071377}
   - component: {fileID: 3996421129613071390}
-  - component: {fileID: 3996421129613071391}
+  - component: {fileID: 2129097145136144343}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -17989,7 +17989,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129613071391
+--- !u!114 &2129097145136144343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17998,10 +17998,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129613071389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129618861662
@@ -18203,7 +18203,7 @@ GameObject:
   - component: {fileID: 3996421129647396024}
   - component: {fileID: 3996421129647396029}
   - component: {fileID: 3996421129647396026}
-  - component: {fileID: 3996421129647396027}
+  - component: {fileID: 1339924840453288190}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -18271,7 +18271,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129647396027
+--- !u!114 &1339924840453288190
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18280,10 +18280,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129647396025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129659237047
@@ -18621,7 +18621,7 @@ GameObject:
   - component: {fileID: 3996421129704504083}
   - component: {fileID: 3996421129704504084}
   - component: {fileID: 3996421129704504085}
-  - component: {fileID: 3996421129704504082}
+  - component: {fileID: 4766749064474856426}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -18689,7 +18689,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129704504082
+--- !u!114 &4766749064474856426
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18698,10 +18698,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129704504080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129717471979
@@ -18940,7 +18940,7 @@ GameObject:
   - component: {fileID: 3996421129732119784}
   - component: {fileID: 3996421129732119789}
   - component: {fileID: 3996421129732119786}
-  - component: {fileID: 3996421129732119787}
+  - component: {fileID: 2625235383992118179}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -19008,7 +19008,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129732119787
+--- !u!114 &2625235383992118179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19017,10 +19017,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129732119785}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129733699417
@@ -19058,9 +19058,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18, y: -28}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 36, y: 16}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3996421129733699421
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19995,7 +19995,7 @@ GameObject:
   - component: {fileID: 3996421129873780711}
   - component: {fileID: 3996421129873780728}
   - component: {fileID: 3996421129873780729}
-  - component: {fileID: 3996421129873780710}
+  - component: {fileID: 6462282520642740922}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -20063,7 +20063,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129873780710
+--- !u!114 &6462282520642740922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20072,10 +20072,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129873780708}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129874503057
@@ -20167,7 +20167,7 @@ GameObject:
   - component: {fileID: 3996421129876790316}
   - component: {fileID: 3996421129876790305}
   - component: {fileID: 3996421129876790318}
-  - component: {fileID: 3996421129876790319}
+  - component: {fileID: 7655880026992324114}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -20235,7 +20235,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129876790319
+--- !u!114 &7655880026992324114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20244,10 +20244,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129876790317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129879734807
@@ -20407,7 +20407,7 @@ GameObject:
   - component: {fileID: 3996421129888419482}
   - component: {fileID: 3996421129888419487}
   - component: {fileID: 3996421129888419484}
-  - component: {fileID: 3996421129888419485}
+  - component: {fileID: 6267154032190274846}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -20475,7 +20475,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129888419485
+--- !u!114 &6267154032190274846
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20484,10 +20484,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129888419483}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129891610950
@@ -20575,7 +20575,7 @@ GameObject:
   - component: {fileID: 3996421129894083767}
   - component: {fileID: 3996421129894083784}
   - component: {fileID: 3996421129894083785}
-  - component: {fileID: 3996421129894083766}
+  - component: {fileID: 197343370645418013}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -20643,7 +20643,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129894083766
+--- !u!114 &197343370645418013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20652,10 +20652,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129894083764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129902976651
@@ -20669,7 +20669,7 @@ GameObject:
   - component: {fileID: 3996421129902976650}
   - component: {fileID: 3996421129902976655}
   - component: {fileID: 3996421129902976652}
-  - component: {fileID: 3996421129902976653}
+  - component: {fileID: 4998906787458039872}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -20737,7 +20737,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129902976653
+--- !u!114 &4998906787458039872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20746,10 +20746,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129902976651}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129905118686
@@ -20763,7 +20763,7 @@ GameObject:
   - component: {fileID: 3996421129905118673}
   - component: {fileID: 3996421129905118674}
   - component: {fileID: 3996421129905118675}
-  - component: {fileID: 3996421129905118672}
+  - component: {fileID: 5619430405165248686}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -20831,7 +20831,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129905118672
+--- !u!114 &5619430405165248686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20840,10 +20840,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129905118686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129912972368
@@ -21087,7 +21087,7 @@ GameObject:
   - component: {fileID: 3996421129925592499}
   - component: {fileID: 3996421129925592500}
   - component: {fileID: 3996421129925592501}
-  - component: {fileID: 3996421129925592498}
+  - component: {fileID: 4393442570588236052}
   m_Layer: 5
   m_Name: Text_Value
   m_TagString: Untagged
@@ -21155,7 +21155,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
---- !u!114 &3996421129925592498
+--- !u!114 &4393442570588236052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21164,10 +21164,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129925592496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129951443228
@@ -21181,7 +21181,7 @@ GameObject:
   - component: {fileID: 3996421129951443231}
   - component: {fileID: 3996421129951443216}
   - component: {fileID: 3996421129951443217}
-  - component: {fileID: 3996421129951443230}
+  - component: {fileID: 6736942457538522628}
   m_Layer: 5
   m_Name: Text_Des
   m_TagString: Untagged
@@ -21249,7 +21249,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u9500\u91CF 5\n\u91D1\u989D 50000\n\u5E93\u5B58 5000"
---- !u!114 &3996421129951443230
+--- !u!114 &6736942457538522628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21258,10 +21258,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3996421129951443228}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: 5323a33ea70a1414a9421167b5ba50d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &3996421129956931726
