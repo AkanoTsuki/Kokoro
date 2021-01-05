@@ -414,7 +414,99 @@ public class SupplyAndDemandPanel : BasePanel
                 armorFootLValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
                 armorFootLValueText.text = (value > 0 ? "+" : "") + value;
                 break;
-            default: break;
+
+            case ItemTypeSmall.ScrollWindI:
+                scrollWindIDesText.text = str;
+                scrollWindIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollWindIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollWindIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollWindIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollFireI:
+                scrollFireIDesText.text = str;
+                scrollFireIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollFireIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollFireIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollFireIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollWaterI:
+                scrollWaterIDesText.text = str;
+                scrollWaterIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollWaterIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollWaterIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollWaterIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollGroundI:
+                scrollGroundIDesText.text = str;
+                scrollGroundIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollGroundIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollGroundIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollGroundIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollLightI:
+                scrollLightIDesText.text = str;
+                scrollLightIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollLightIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollLightIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollLightIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollDarkI:
+                scrollDarkIDesText.text = str;
+                scrollDarkIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollDarkIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollDarkIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollDarkIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollNone:
+                scrollNoneDesText.text = str;
+                scrollNoneValueImage.color = value > 0 ? cGreen : cRed;
+                scrollNoneValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollNoneValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollNoneValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+
+            case ItemTypeSmall.ScrollWindII:
+                scrollWindIIDesText.text = str;
+                scrollWindIIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollWindIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollWindIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollWindIIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollFireII:
+                scrollFireIIDesText.text = str;
+                scrollFireIIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollFireIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollFireIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollFireIIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollWaterII:
+                scrollWaterIIDesText.text = str;
+                scrollWaterIIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollWaterIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollWaterIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollWaterIIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollGroundII:
+                scrollGroundIIDesText.text = str;
+                scrollGroundIIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollGroundIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollGroundIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollGroundIIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollLightII:
+                scrollLightIIDesText.text = str;
+                scrollLightIIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollLightIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollLightIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollLightIIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
+            case ItemTypeSmall.ScrollDarkII:
+                scrollDarkIIDesText.text = str;
+                scrollDarkIIValueImage.color = value > 0 ? cGreen : cRed;
+                scrollDarkIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
+                scrollDarkIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
+                scrollDarkIIValueText.text = (value > 0 ? "+" : "") + value;
+                break;
         }
 
     }

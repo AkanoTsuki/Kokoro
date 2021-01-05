@@ -852,7 +852,7 @@ public class GameControl : MonoBehaviour
         buildingIndex++;
         BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
         PlayMainPanel.Instance.UpdateGold();
-        PlayMainPanel.Instance.UpdateResourcesInfo(nowCheckingDistrictID);
+        PlayMainPanel.Instance.UpdateBaselineResourcesText(nowCheckingDistrictID);
     }
 
     public void CreateProduceItemEvent(int buildingID)
@@ -1167,7 +1167,7 @@ public class GameControl : MonoBehaviour
         
         if (districtID == nowCheckingDistrictID)
         {
-            PlayMainPanel.Instance.UpdateResourcesInfo(districtID);
+            PlayMainPanel.Instance.UpdateBaselineResourcesText(districtID);
         }
         CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemOrSkillID });
         return true;
@@ -1303,7 +1303,7 @@ public class GameControl : MonoBehaviour
         }
         if (districtID == nowCheckingDistrictID)
         {
-            PlayMainPanel.Instance.UpdateResourcesInfo(districtID);
+            PlayMainPanel.Instance.UpdateBaselineResourcesText(districtID);
         }
         return true;
     }

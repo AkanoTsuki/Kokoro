@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a73516c998793f94e89524133384c2e4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d44119e8325e0b04c822b564561cbe1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 7866484486042685580}
   - component: {fileID: 2456798866717019560}
   m_Layer: 5
-  m_Name: Image_Twine
+  m_Name: Image_Beer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 1737532349144809065}
   - component: {fileID: 7611203895620914777}
   m_Layer: 5
-  m_Name: Image_Wood (1)
+  m_Name: Image_Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 2318645876235130561}
   - component: {fileID: 8838601625361430611}
   m_Layer: 5
-  m_Name: Image_Stuff
+  m_Name: Image_Hero
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -646,7 +646,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 09c4f09f6be524f4ca743b62cde57dec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1700c08b2a7d95d478fa7b134c43b769, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -762,7 +762,7 @@ GameObject:
   - component: {fileID: 65389988125669089}
   - component: {fileID: 5968348623242827326}
   m_Layer: 5
-  m_Name: Image_Wood (1)
+  m_Name: Image_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1279,7 +1279,7 @@ GameObject:
   - component: {fileID: 4736600367338248644}
   - component: {fileID: 8327175071649827210}
   m_Layer: 5
-  m_Name: Image_Stone
+  m_Name: Image_Armor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1302,7 +1302,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 80, y: 0}
+  m_AnchoredPosition: {x: 160, y: 0}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &4736600367338248644
@@ -2140,7 +2140,7 @@ GameObject:
   - component: {fileID: 2986495011555080}
   - component: {fileID: 3393821916028590303}
   m_Layer: 5
-  m_Name: PopulationBlock
+  m_Name: InfoBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2157,17 +2157,18 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1742127679622885300}
   - {fileID: 6060037131918094037}
+  - {fileID: 6643346049263687246}
   - {fileID: 8626901280175278918}
   - {fileID: 8784995055680002534}
-  - {fileID: 6643346049263687246}
   m_Father: {fileID: 6607870711542914171}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 588, y: 32}
-  m_SizeDelta: {x: 269.2605, y: 178}
+  m_SizeDelta: {x: 269.2605, y: 170}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &2986495011555080
 CanvasRenderer:
@@ -2190,7 +2191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21176472, g: 0.23137257, b: 0.2627451, a: 1}
+  m_Color: {r: 0.21176472, g: 0.23137257, b: 0.2627451, a: 0.9411765}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2271,7 +2272,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 73ffa612cbadcfd4c8a0b0e240352460, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7fe7c01200a5714db3038b8bc70f13b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2555,7 +2556,7 @@ GameObject:
   - component: {fileID: 2910394653968483826}
   - component: {fileID: 4747581338181944618}
   m_Layer: 5
-  m_Name: Image_Stone
+  m_Name: Image_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2683,7 +2684,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 09c4f09f6be524f4ca743b62cde57dec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 276d06989d62a8945aa8946aeee9c730, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2799,7 +2800,7 @@ GameObject:
   - component: {fileID: 3324921898605451314}
   - component: {fileID: 2242276216977096274}
   m_Layer: 5
-  m_Name: Image_Metal (1)
+  m_Name: Image_Dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3137,7 +3138,7 @@ GameObject:
   - component: {fileID: 2457199118306937220}
   - component: {fileID: 3501654255222090067}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button_Resources
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3258,7 +3259,7 @@ GameObject:
   - component: {fileID: 7985860468543989228}
   - component: {fileID: 1277829082844206232}
   m_Layer: 5
-  m_Name: Image_Food
+  m_Name: Image_People
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3311,7 +3312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a73516c998793f94e89524133384c2e4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1a9fd68798e03124492bc521c61cb68f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3380,7 +3381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.25882354, g: 0.8117648, b: 0.93725497, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3388,8 +3389,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
-    m_FontStyle: 0
+    m_FontSize: 16
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -3428,7 +3429,7 @@ GameObject:
   - component: {fileID: 1480197867001876044}
   - component: {fileID: 5207588801990457532}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Button_Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3679,7 +3680,7 @@ GameObject:
   - component: {fileID: 718877117213942034}
   - component: {fileID: 500927646757727097}
   m_Layer: 5
-  m_Name: Image_Stone
+  m_Name: Image_Wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3942,7 +3943,7 @@ GameObject:
   - component: {fileID: 5652939620193176833}
   - component: {fileID: 4432502624934772617}
   m_Layer: 5
-  m_Name: Image_Metal
+  m_Name: Image_Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3995,7 +3996,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b3908a73fc0ea20429d084d643ed1b40, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b03183f78ba08e4c841e0324f2a12f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4205,7 +4206,7 @@ GameObject:
   - component: {fileID: 6171302990157940668}
   - component: {fileID: 3960567845994469675}
   m_Layer: 5
-  m_Name: Image_Metal
+  m_Name: Image_Jewelry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4228,7 +4229,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 160, y: 0}
+  m_AnchoredPosition: {x: 240, y: 0}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &6171302990157940668
@@ -4604,7 +4605,7 @@ GameObject:
   - component: {fileID: 8701491774668827496}
   - component: {fileID: 611547315684053669}
   m_Layer: 5
-  m_Name: Image_Leather (1)
+  m_Name: Image_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4868,7 +4869,7 @@ GameObject:
   - component: {fileID: 2151534140991233302}
   - component: {fileID: 1779750615701890034}
   m_Layer: 5
-  m_Name: Image_Cloth (1)
+  m_Name: Image_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5189,7 +5190,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a73516c998793f94e89524133384c2e4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7fe7c01200a5714db3038b8bc70f13b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5209,7 +5210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8550669918438455118}
   m_Layer: 5
-  m_Name: DistrictInfo
+  m_Name: Baseline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5231,9 +5232,9 @@ RectTransform:
   - {fileID: 1887343606927490199}
   - {fileID: 6152143078778851586}
   - {fileID: 776727740175958925}
-  - {fileID: 4918172974542938996}
-  - {fileID: 850792189392004431}
   - {fileID: 7513928465044096498}
+  - {fileID: 850792189392004431}
+  - {fileID: 4918172974542938996}
   m_Father: {fileID: 6607870711542914171}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5403,7 +5404,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -5578,7 +5579,7 @@ GameObject:
   - component: {fileID: 8033936546534072942}
   - component: {fileID: 6923787717850950784}
   m_Layer: 5
-  m_Name: Image_Wood
+  m_Name: Image_Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5690,7 +5691,7 @@ GameObject:
   - component: {fileID: 6797494786446497080}
   - component: {fileID: 3375143552328618188}
   m_Layer: 5
-  m_Name: Image_Total
+  m_Name: Image_Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5708,12 +5709,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3842237737426456971}
-  m_Father: {fileID: 6060037131918094037}
-  m_RootOrder: 3
+  m_Father: {fileID: 3995467390339453691}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -8, y: 24}
+  m_AnchoredPosition: {x: 8, y: 144}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &6797494786446497080
@@ -5743,7 +5744,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a73516c998793f94e89524133384c2e4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7a5c7e4f1ae7bbc4c9596187f3dfb69c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5818,7 +5819,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 09c4f09f6be524f4ca743b62cde57dec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 276d06989d62a8945aa8946aeee9c730, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5916,7 +5917,7 @@ GameObject:
   - component: {fileID: 1604118383109029332}
   - component: {fileID: 1108426084991018167}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Button_HideAll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5935,7 +5936,7 @@ RectTransform:
   m_Children:
   - {fileID: 8478861424578226836}
   m_Father: {fileID: 8550669918438455118}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -6872,7 +6873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.41960788, g: 0.8431373, b: 0.12941177, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6880,8 +6881,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
-    m_FontStyle: 0
+    m_FontSize: 16
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -6919,7 +6920,7 @@ GameObject:
   - component: {fileID: 1578012063279201888}
   - component: {fileID: 7738547377454354641}
   m_Layer: 5
-  m_Name: Image_Leather
+  m_Name: Image_SkillRoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6942,7 +6943,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 240, y: 0}
+  m_AnchoredPosition: {x: 320, y: 0}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &1578012063279201888
@@ -7047,7 +7048,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a73516c998793f94e89524133384c2e4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d44119e8325e0b04c822b564561cbe1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7069,7 +7070,7 @@ GameObject:
   - component: {fileID: 340981204680287723}
   - component: {fileID: 4558842889732035543}
   m_Layer: 5
-  m_Name: Image_Bone
+  m_Name: Image_Wine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7254,7 +7255,7 @@ GameObject:
   - component: {fileID: 3283052140912920213}
   - component: {fileID: 7555128423056729901}
   m_Layer: 5
-  m_Name: Image_Wood
+  m_Name: Image_Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7329,7 +7330,7 @@ GameObject:
   - component: {fileID: 2508046152448785187}
   - component: {fileID: 263273869596897598}
   m_Layer: 5
-  m_Name: Image_Stone (1)
+  m_Name: Image_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7498,7 +7499,7 @@ GameObject:
   - component: {fileID: 3666131169322344026}
   - component: {fileID: 1928539256652800621}
   m_Layer: 5
-  m_Name: Image_Wood
+  m_Name: Image_Cereal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7574,7 +7575,7 @@ GameObject:
   - component: {fileID: 7041074314651614169}
   - component: {fileID: 4675386636930024196}
   m_Layer: 5
-  m_Name: Button (5)
+  m_Name: Button_Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7593,7 +7594,7 @@ RectTransform:
   m_Children:
   - {fileID: 5321650880729394651}
   m_Father: {fileID: 8550669918438455118}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -7692,7 +7693,7 @@ GameObject:
   - component: {fileID: 7361811744113815414}
   - component: {fileID: 8529047594017652938}
   m_Layer: 5
-  m_Name: Image_Stone
+  m_Name: Image_Vegetable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7861,7 +7862,7 @@ GameObject:
   - component: {fileID: 6467318116285034623}
   - component: {fileID: 584322019925184415}
   m_Layer: 5
-  m_Name: Image_Cloth
+  m_Name: Image_Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7983,7 +7984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3529412, g: 0.34901962, b: 0.41960788, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7991,8 +7992,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
-    m_FontStyle: 0
+    m_FontSize: 16
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -8297,7 +8298,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -8509,7 +8510,7 @@ GameObject:
   - component: {fileID: 889152392220136619}
   - component: {fileID: 7816129811556484011}
   m_Layer: 5
-  m_Name: TextTotal
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8602,7 +8603,7 @@ GameObject:
   - component: {fileID: 5429290164018201729}
   - component: {fileID: 1508612095127209188}
   m_Layer: 5
-  m_Name: PopulationBlock (1)
+  m_Name: StatusBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8630,7 +8631,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 866, y: 32}
-  m_SizeDelta: {x: 128, y: 178}
+  m_SizeDelta: {x: 128, y: 170}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &5429290164018201729
 CanvasRenderer:
@@ -8653,7 +8654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21176472, g: 0.23137257, b: 0.2627451, a: 1}
+  m_Color: {r: 0.21176472, g: 0.23137257, b: 0.2627451, a: 0.9411765}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -8775,7 +8776,7 @@ GameObject:
   - component: {fileID: 3579397168485579428}
   - component: {fileID: 637033343101221848}
   m_Layer: 5
-  m_Name: Image_Twine (1)
+  m_Name: Image_Dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9140,7 +9141,7 @@ GameObject:
   - component: {fileID: 6967973403755832311}
   - component: {fileID: 5188144722148581099}
   m_Layer: 5
-  m_Name: Image_Wood (1)
+  m_Name: Image_Wind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9760,11 +9761,11 @@ RectTransform:
   - {fileID: 6882648500164284253}
   - {fileID: 4128895744861253185}
   m_Father: {fileID: 3995467390339453691}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 16, y: -80}
+  m_AnchoredPosition: {x: 16, y: -72}
   m_SizeDelta: {x: 240, y: 24}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &6024757239170114106
@@ -9826,7 +9827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7294118, b: 0.19215688, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -9834,8 +9835,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
-    m_FontStyle: 0
+    m_FontSize: 16
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -9873,7 +9874,7 @@ GameObject:
   - component: {fileID: 1375972857084711036}
   - component: {fileID: 8802295130404585119}
   m_Layer: 5
-  m_Name: Image_Wood
+  m_Name: Image_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9896,7 +9897,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 80, y: 0}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &1375972857084711036
@@ -9995,7 +9996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.77647066, g: 0.4431373, b: 0.93725497, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -10003,8 +10004,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
-    m_FontStyle: 0
+    m_FontSize: 16
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -10256,7 +10257,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 4, y: 32}
-  m_SizeDelta: {x: 576, y: 178}
+  m_SizeDelta: {x: 576, y: 170}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &8027492067802218342
 CanvasRenderer:
@@ -10279,7 +10280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21176472, g: 0.23137257, b: 0.2627451, a: 1}
+  m_Color: {r: 0.21176472, g: 0.23137257, b: 0.2627451, a: 0.9411765}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -10385,7 +10386,7 @@ GameObject:
   - component: {fileID: 6739549490487742246}
   - component: {fileID: 7228238272876152876}
   m_Layer: 5
-  m_Name: Image_Metal (1)
+  m_Name: Image_Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13319,7 +13320,7 @@ GameObject:
   - component: {fileID: 769744839127329723}
   - component: {fileID: 2706584585394809124}
   m_Layer: 5
-  m_Name: Image_Stone (1)
+  m_Name: Image_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13530,7 +13531,7 @@ GameObject:
   - component: {fileID: 5541425825415173611}
   - component: {fileID: 1724417930308717480}
   m_Layer: 5
-  m_Name: Image_Stone
+  m_Name: Image_Hero
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13583,7 +13584,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: feecba942e5f7e94bbdce483928f2593, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1700c08b2a7d95d478fa7b134c43b769, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14034,7 +14035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8784995055680002534}
   m_Layer: 5
-  m_Name: Element (1)
+  m_Name: Natural
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14057,11 +14058,11 @@ RectTransform:
   - {fileID: 4444379137457798629}
   - {fileID: 250961835852220447}
   m_Father: {fileID: 3995467390339453691}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 16, y: -126.99}
+  m_AnchoredPosition: {x: 16, y: -120}
   m_SizeDelta: {x: 240, y: 24}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7216073495997958534
@@ -14223,7 +14224,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a73516c998793f94e89524133384c2e4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7a5c7e4f1ae7bbc4c9596187f3dfb69c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14319,7 +14320,7 @@ GameObject:
   - component: {fileID: 2190325428870705821}
   - component: {fileID: 2536575731867460149}
   m_Layer: 5
-  m_Name: Image_Stuff (1)
+  m_Name: Image_Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14372,7 +14373,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 09c4f09f6be524f4ca743b62cde57dec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b03183f78ba08e4c841e0324f2a12f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14394,7 +14395,7 @@ GameObject:
   - component: {fileID: 5579359312796149958}
   - component: {fileID: 2782379785451126096}
   m_Layer: 5
-  m_Name: Image_Stone (1)
+  m_Name: Image_Metal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14469,7 +14470,7 @@ GameObject:
   - component: {fileID: 2619447777770422297}
   - component: {fileID: 2819894076359031345}
   m_Layer: 5
-  m_Name: Image_Metal
+  m_Name: Image_Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14819,17 +14820,75 @@ MonoBehaviour:
   left_buildBtn: {fileID: 1057639003341135846}
   left_buildingSelectBtn: {fileID: 8680846257872143924}
   left_marketBtn: {fileID: 7124198847499340430}
-  bottom_disImage: {fileID: 3913069010733568422}
-  bottom_nameText: {fileID: 253206247107564742}
-  bottom_foodText: {fileID: 1510492598354948337}
-  bottom_woodText: {fileID: 4531318926973685881}
-  bottom_stoneText: {fileID: 1561794870570426656}
-  bottom_metalText: {fileID: 7367691867910341723}
-  bottom_leatherText: {fileID: 6250384102830852219}
-  bottom_clothText: {fileID: 7223834426164573791}
-  bottom_twineText: {fileID: 4789198043633477726}
-  bottom_boneText: {fileID: 7961626813345167963}
-  bottom_totalText: {fileID: 1135668306378707662}
+  bottom_baseline_disImage: {fileID: 3913069010733568422}
+  bottom_baseline_nameText: {fileID: 253206247107564742}
+  bottom_baseline_resourcesBtn: {fileID: 3501654255222090067}
+  bottom_baseline_resourcesFoodText: {fileID: 1510492598354948337}
+  bottom_baseline_resourcesStuffText: {fileID: 3653263111051511060}
+  bottom_baseline_resourcesProductText: {fileID: 2874477415322372619}
+  bottom_baseline_resourcesSignText: {fileID: 1822260796551471783}
+  bottom_baseline_infoBtn: {fileID: 5207588801990457532}
+  bottom_baseline_infoPeopleText: {fileID: 3574939482832519957}
+  bottom_baseline_infoHeroText: {fileID: 5167084903391711568}
+  bottom_baseline_infoWorkerText: {fileID: 1013977655855701652}
+  bottom_baseline_infoSignText: {fileID: 5822173697783608911}
+  bottom_baseline_statusBtn: {fileID: 4028962297123568742}
+  bottom_baseline_messageBtn: {fileID: 4675386636930024196}
+  bottom_baseline_messageSignText: {fileID: 7041164877840854078}
+  bottom_baseline_openAllBtn: {fileID: 1228174700680618591}
+  bottom_baseline_openAllSignText: {fileID: 1303565044521525030}
+  bottom_baseline_hideAllBtn: {fileID: 1108426084991018167}
+  bottom_baseline_hideAllSignText: {fileID: 4827512483738680327}
+  bottom_resourcesBlockRt: {fileID: 2057546557045231451}
+  bottom_resources_foodCerealText: {fileID: 1238998684525784910}
+  bottom_resources_foodVegetableText: {fileID: 9103235151640279676}
+  bottom_resources_foodFruitText: {fileID: 4813516190396628527}
+  bottom_resources_foodMeatText: {fileID: 7956688364212672893}
+  bottom_resources_foodFishText: {fileID: 6131669624809770456}
+  bottom_resources_foodBeerText: {fileID: 8207813501994470542}
+  bottom_resources_foodWineText: {fileID: 8322091780458616288}
+  bottom_resources_foodTotalText: {fileID: 4882193897327539195}
+  bottom_resources_stuffWoodText: {fileID: 4531318926973685881}
+  bottom_resources_stuffStoneText: {fileID: 1561794870570426656}
+  bottom_resources_stuffMetalText: {fileID: 7367691867910341723}
+  bottom_resources_stuffLeatherText: {fileID: 6250384102830852219}
+  bottom_resources_stuffClothText: {fileID: 7223834426164573791}
+  bottom_resources_stuffTwineText: {fileID: 4789198043633477726}
+  bottom_resources_stuffBoneText: {fileID: 7961626813345167963}
+  bottom_resources_stuffWindText: {fileID: 3850082989687511283}
+  bottom_resources_stuffFireText: {fileID: 2347476255593302263}
+  bottom_resources_stuffWaterText: {fileID: 1284928270639751643}
+  bottom_resources_stuffGroundText: {fileID: 2338043829988455541}
+  bottom_resources_stuffLightText: {fileID: 2437019131871007063}
+  bottom_resources_stuffDarkText: {fileID: 5133373265595177789}
+  bottom_resources_stuffTotalText: {fileID: 1135668306378707662}
+  bottom_resources_productWeaponText: {fileID: 3431678482455945937}
+  bottom_resources_productArmorText: {fileID: 1392264863819817805}
+  bottom_resources_productJewelryText: {fileID: 7565869117670738106}
+  bottom_resources_productSkillRollText: {fileID: 3654756432914917753}
+  bottom_resources_productTotalText: {fileID: 2555263226825316428}
+  bottom_infoBlockRt: {fileID: 3995467390339453691}
+  bottom_info_personPeopleText: {fileID: 6829664259336841886}
+  bottom_info_personHeroText: {fileID: 6016346467159756700}
+  bottom_info_personWorkerText: {fileID: 8575965215764919530}
+  bottom_info_buildingBuildingText: {fileID: 7507735031380305354}
+  bottom_info_buildingGridText: {fileID: 4141799613665807038}
+  bottom_info_elementWindText: {fileID: 5346988398853813813}
+  bottom_info_elementFireText: {fileID: 1303629369777809910}
+  bottom_info_elementWaterText: {fileID: 6090760328883875105}
+  bottom_info_elementGroundText: {fileID: 4671690495191300374}
+  bottom_info_elementLightText: {fileID: 3216959462367201646}
+  bottom_info_elementDarkText: {fileID: 2928839774646916602}
+  bottom_info_naturalGrassText: {fileID: 7256811826642882937}
+  bottom_info_naturalWoodText: {fileID: 5308346604503874594}
+  bottom_info_naturalWaterText: {fileID: 4947474550819510651}
+  bottom_info_naturalStoneText: {fileID: 5149354786527975329}
+  bottom_info_naturalMetalText: {fileID: 8048288912544181525}
+  bottom_statusBlockRt: {fileID: 1052797360546270336}
+  IsShowResourcesBlock: 0
+  IsShowInfoBlock: 0
+  IsShowStatusBlock: 0
+  IsShowMessageBlock: 0
 --- !u!1 &7729542246234816803
 GameObject:
   m_ObjectHideFlags: 0
@@ -14915,7 +14974,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6643346049263687246}
   m_Layer: 5
-  m_Name: Element (2)
+  m_Name: Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14935,11 +14994,11 @@ RectTransform:
   - {fileID: 3421395390113703549}
   - {fileID: 323111476673839923}
   m_Father: {fileID: 3995467390339453691}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 16, y: -55}
+  m_AnchoredPosition: {x: 16, y: -50}
   m_SizeDelta: {x: 240, y: 24}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7755304053360171607
@@ -15185,7 +15244,7 @@ GameObject:
   - component: {fileID: 1934955062180204585}
   - component: {fileID: 1228174700680618591}
   m_Layer: 5
-  m_Name: Button (4)
+  m_Name: Button_OpenAll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15328,8 +15387,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 16, y: -148}
-  m_SizeDelta: {x: 700, y: 24}
+  m_AnchoredPosition: {x: 16, y: -144}
+  m_SizeDelta: {x: 560, y: 24}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7959468911196638588
 GameObject:
@@ -15343,7 +15402,7 @@ GameObject:
   - component: {fileID: 6268760676801193169}
   - component: {fileID: 1255856879048252584}
   m_Layer: 5
-  m_Name: Image_Stone
+  m_Name: Image_Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15620,8 +15679,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 16, y: -80}
-  m_SizeDelta: {x: 1180, y: 24}
+  m_AnchoredPosition: {x: 16, y: -76}
+  m_SizeDelta: {x: 560, y: 24}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &8136612770229057874
 GameObject:
@@ -15776,7 +15835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9058824, g: 0.14117648, b: 0.09411766, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -15784,8 +15843,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
-    m_FontStyle: 0
+    m_FontSize: 16
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -15972,7 +16031,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -16011,7 +16070,7 @@ GameObject:
   - component: {fileID: 6965650408320557822}
   - component: {fileID: 1093168762815517965}
   m_Layer: 5
-  m_Name: Image_Metal
+  m_Name: Image_Fruit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16087,7 +16146,7 @@ GameObject:
   - component: {fileID: 163371526719225703}
   - component: {fileID: 4028962297123568742}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Button_Status
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16206,7 +16265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6060037131918094037}
   m_Layer: 5
-  m_Name: Food
+  m_Name: Person
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16226,13 +16285,12 @@ RectTransform:
   - {fileID: 4184472093909576611}
   - {fileID: 5538674556248200568}
   - {fileID: 6847025765541865457}
-  - {fileID: 1742127679622885300}
   m_Father: {fileID: 3995467390339453691}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 16, y: -30}
+  m_AnchoredPosition: {x: 16, y: -26}
   m_SizeDelta: {x: 240, y: 24}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &8375698314199841844
@@ -16247,7 +16305,7 @@ GameObject:
   - component: {fileID: 2825522036542374940}
   - component: {fileID: 8413452983076587774}
   m_Layer: 5
-  m_Name: Image_Metal
+  m_Name: Image_Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16472,7 +16530,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 37f129bdbc9aef74f8f94d26a2d75167, type: 3}
-    m_FontSize: 18
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -16539,8 +16597,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 16, y: -30}
-  m_SizeDelta: {x: 700, y: 24}
+  m_AnchoredPosition: {x: 16, y: -26}
+  m_SizeDelta: {x: 560, y: 24}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &8513876225894724341
 GameObject:
@@ -16764,7 +16822,7 @@ GameObject:
   - component: {fileID: 4024296059371685476}
   - component: {fileID: 564785926425072436}
   m_Layer: 5
-  m_Name: Image_Wood
+  m_Name: Image_Wind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17063,7 +17121,7 @@ GameObject:
   - component: {fileID: 8988312103617182941}
   - component: {fileID: 7831380109867253015}
   m_Layer: 5
-  m_Name: Image_Leather
+  m_Name: Image_Meat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17729,7 +17787,7 @@ GameObject:
   - component: {fileID: 2202935145316323452}
   - component: {fileID: 7254710883397814489}
   m_Layer: 5
-  m_Name: Image_Wood
+  m_Name: Image_People
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

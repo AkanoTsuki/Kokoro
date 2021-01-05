@@ -102,7 +102,7 @@ public class BuildingPanel : BasePanel
         UpdateOutputInfoPart(buildingObject);
         UpdateSetManagerPart(buildingObject);
         UpdateSetWorkerPart(buildingObject);
-        UpdateHistoryInfoPart(buildingObject, 190f);
+        UpdateHistoryInfoPart(buildingObject, 122f);
         UpdateSetForgePart(buildingObject);
         UpdateTotalSetButton(buildingObject);
     }
@@ -113,7 +113,7 @@ public class BuildingPanel : BasePanel
         UpdateOutputInfoPart(buildingObject);
         UpdateSetManagerPart(buildingObject);
         UpdateSetWorkerPart(buildingObject);
-        UpdateHistoryInfoPart(buildingObject, 474f);
+        UpdateHistoryInfoPart(buildingObject, 406f);
         HideSetForgePart();
 
         UpdateTotalSetButton(buildingObject);
@@ -243,12 +243,12 @@ public class BuildingPanel : BasePanel
     {
         nameText.text = buildingObject.name;
         picImage.overrideSprite = Resources.Load("Image/BuildingPic/" + buildingObject.mainPic, typeof(Sprite)) as Sprite;
-        desText.text = gc.OutputSignStr("★", buildingObject.level) + "\n 维护费 " + buildingObject.expense;
+        desText.text = gc.OutputSignStr("★", buildingObject.level) + "[维护费 " + buildingObject.expense+"金币/月]\n"+ buildingObject.des;
     }
 
     public void UpdateOutputInfoPart(BuildingObject buildingObject)
     {
-        outputInfoRt.anchoredPosition = new Vector2(16f, -120f);
+        outputInfoRt.anchoredPosition = new Vector2(16f, -144f);
         switch (buildingObject.panelType)
         {
             case "Forge":
@@ -383,7 +383,7 @@ public class BuildingPanel : BasePanel
 
     public void UpdateSetManagerPart(BuildingObject buildingObject)
     {
-        setManagerRt.anchoredPosition = new Vector2(16f, -298f);
+        setManagerRt.anchoredPosition = new Vector2(16f, -320f);
         for (int i = 0; i < buildingObject.heroList.Count; i++)
         {
             setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
@@ -465,7 +465,7 @@ public class BuildingPanel : BasePanel
 
     public void UpdateSetWorkerPart(BuildingObject buildingObject)
     {
-        setWorkerRt.anchoredPosition = new Vector2(16f, -404f);
+        setWorkerRt.anchoredPosition = new Vector2(16f, -426f);
         int feed = gc.districtDic[gc.nowCheckingDistrictID].people - gc.districtDic[gc.nowCheckingDistrictID].worker;
         setWorker_desText.text = "空闲:" + feed + "\n 人数 " + buildingObject.workerNow + "/" + buildingObject.worker;
         if (buildingObject.workerNow > 0)
@@ -488,7 +488,7 @@ public class BuildingPanel : BasePanel
 
     public void UpdateHistoryInfoPart(BuildingObject buildingObject ,float height)
     {
-        infoHistoryRt.anchoredPosition = new Vector2(278f, -16f);
+        infoHistoryRt.anchoredPosition = new Vector2(278f, -84f);
         infoHistoryRt.sizeDelta = new Vector2(256f, height );
         string str = "";
         List<LogObject> temp = new List<LogObject> { };
@@ -637,10 +637,54 @@ public class BuildingPanel : BasePanel
         if (produceEquipID != -1)
         {
             ProduceEquipPrototype produceEquipPrototype = DataManager.mProduceEquipDict[produceEquipID];
-            for (int i = 0; i < produceEquipPrototype.OutputID.Count; i++)
+
+            switch (produceEquipPrototype.Type)
             {
-                outputStr += "<color=#" + gc.OutputItemRankColorString(DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Rank) + ">" + DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Name + "</color> ";
+                case ItemTypeSmall.Sword:
+                case ItemTypeSmall.Axe:
+                case ItemTypeSmall.Spear:
+                case ItemTypeSmall.Hammer:
+                case ItemTypeSmall.Bow:
+                case ItemTypeSmall.Staff:
+                case ItemTypeSmall.Shield:
+                case ItemTypeSmall.Dorlach:
+                case ItemTypeSmall.Neck:
+                case ItemTypeSmall.Finger:
+                case ItemTypeSmall.HeadH:
+                case ItemTypeSmall.BodyH:
+                case ItemTypeSmall.HandH:
+                case ItemTypeSmall.BackH:
+                case ItemTypeSmall.FootH:
+                case ItemTypeSmall.HeadL:
+                case ItemTypeSmall.BodyL:
+                case ItemTypeSmall.HandL:
+                case ItemTypeSmall.BackL:
+                case ItemTypeSmall.FootL:
+                    for (int i = 0; i < produceEquipPrototype.OutputID.Count; i++)
+                    {
+                        outputStr += "<color=#" + gc.OutputItemRankColorString(DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Rank) + ">" + DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Name + "</color> ";
+                    }
+                    break;
+                case ItemTypeSmall.ScrollWindI:
+                case ItemTypeSmall.ScrollFireI:
+                case ItemTypeSmall.ScrollWaterI:
+                case ItemTypeSmall.ScrollGroundI:
+                case ItemTypeSmall.ScrollLightI:
+                case ItemTypeSmall.ScrollDarkI:
+                case ItemTypeSmall.ScrollNone:
+                case ItemTypeSmall.ScrollWindII:
+                case ItemTypeSmall.ScrollFireII:
+                case ItemTypeSmall.ScrollWaterII:
+                case ItemTypeSmall.ScrollGroundII:
+                case ItemTypeSmall.ScrollLightII:
+                case ItemTypeSmall.ScrollDarkII:
+                    for (int i = 0; i < produceEquipPrototype.OutputID.Count; i++)
+                    {
+                        outputStr += "<color=#" + gc.OutputItemRankColorString(DataManager.mSkillDict[produceEquipPrototype.OutputID[i]].Rank) + ">" + DataManager.mSkillDict[produceEquipPrototype.OutputID[i]].Name + "</color> ";
+                    }
+                    break;
             }
+           
 
             if (produceEquipPrototype.InputWood != 0) { inputStr += "木材*" + produceEquipPrototype.InputWood + " "; }
             if (produceEquipPrototype.InputStone != 0) { inputStr += "石料*" + produceEquipPrototype.InputStone + " "; }

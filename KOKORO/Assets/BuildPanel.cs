@@ -128,19 +128,19 @@ public class BuildPanel : BasePanel
             go.transform.SetParent(buildingListGo.transform);
             go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f, -4 + i * -92f, 0f);
 
-            go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/BuildingPic/" + temp[i].MainPic);
-            go.transform.GetChild(1).GetComponent<Text>().text = temp[i].Name;
-            go.transform.GetChild(2).GetComponent<Text>().text =  CheckNeedToStr("wood", temp[i].NeedWood) + CheckNeedToStr("stone", temp[i].NeedStone)  + CheckNeedToStr("metal", temp[i].NeedMetal) + CheckNeedToStr("gold", temp[i].NeedGold) + 
-                "\n☀维持费 " + temp[i].Expense + "金/月\n" + temp[i].Des ;
+            go.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/BuildingPic/" + temp[i].MainPic);
+            go.transform.GetChild(2).GetComponent<Text>().text = temp[i].Name;
+            go.transform.GetChild(3).GetComponent<Text>().text =  CheckNeedToStr("wood", temp[i].NeedWood) + CheckNeedToStr("stone", temp[i].NeedStone)  + CheckNeedToStr("metal", temp[i].NeedMetal) + CheckNeedToStr("gold", temp[i].NeedGold) +
+                 "\n" + temp[i].Des + ".维持费" + temp[i].Expense + "金/月 " ;
 
-            go.transform.GetChild(4).GetComponent<Text>().text = CheckNeedToStr("grid", temp[i].Grid);
+            go.transform.GetChild(5).GetComponent<Text>().text = CheckNeedToStr("grid", temp[i].Grid);
             if (!CheckStuff(temp[i].Grid <= gc.districtDic[gc.nowCheckingDistrictID].gridEmpty,
                 temp[i].NeedWood<= gc.districtDic[gc.nowCheckingDistrictID].rStuffWood, 
                 temp[i].NeedStone <= gc.districtDic[gc.nowCheckingDistrictID].rStuffStone,
                 temp[i].NeedMetal <= gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal,
                 temp[i].NeedGold <= gc.gold))
             {
-                go.transform.GetChild(3).GetComponent<Button>().interactable = false;
+                go.transform.GetChild(4).GetComponent<Button>().interactable = false;
             }
             
             go.GetComponent<InteractiveLabel>().index = temp[i].ID;

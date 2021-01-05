@@ -22,13 +22,13 @@ public class MessagePanel : BasePanel
     public void OnShow(int x,int y)
     {
 
-        SetAnchoredPosition(0, 26);
+        SetAnchoredPosition(x, y);
 
     }
 
     public override void OnHide()
     {
-        SetAnchoredPosition(0, -156);
+        SetAnchoredPosition(0, 5000);
     }
 
     public void UpdateAllInfo(GameControl gc)
