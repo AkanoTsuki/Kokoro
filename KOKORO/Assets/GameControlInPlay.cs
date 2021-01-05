@@ -106,15 +106,23 @@ public class GameControlInPlay : MonoBehaviour
                 switch (gc.executeEventList[0].type)
                 {
                     case ExecuteEventType.ProduceResource:
-                        Debug.Log("  gc.standardTime=" + gc.standardTime + "   资源生产" + (StuffType)gc.executeEventList[0].value[2]+"*"+ gc.executeEventList[0].value[3]);
-                         districtID = (short)gc.executeEventList[0].value[0];
-                         buildingID = gc.executeEventList[0].value[1];
+                        //Debug.Log("  gc.standardTime=" + gc.standardTime + "   资源生产" + (StuffType)gc.executeEventList[0].value[2]+"*"+ gc.executeEventList[0].value[3]);
+                         districtID = (short)gc.executeEventList[0].value[0][0];
+                         buildingID = gc.executeEventList[0].value[1][0];
                         //if (gc.buildingDic[buildingID].produceEquipNow == -1)
                         //{
                         //    MessagePanel.Instance.AddMessage("接到停工命令，生产停止");
                         //    break;
                         //}
-                         isSuccess = gc.DistrictResourceAdd(districtID, buildingID,(StuffType)gc.executeEventList[0].value[2], gc.executeEventList[0].value[3]);
+                        List<StuffType> stuffTypes = new List<StuffType>();
+                        List<int> values = new List<int>();
+                        for (int i = 0; i < gc.executeEventList[0].value[2].Count; i++)
+                        {
+                            stuffTypes.Add((StuffType)gc.executeEventList[0].value[2][i]);
+                            values.Add(gc.executeEventList[0].value[3][i]);
+                        }
+
+                         isSuccess = gc.DistrictResourceAdd(districtID, buildingID, stuffTypes, values);
                         gc.executeEventList.RemoveAt(0);
                         if (isSuccess)
                         {
@@ -127,10 +135,10 @@ public class GameControlInPlay : MonoBehaviour
                         break;
                     case ExecuteEventType.ProduceItem:
                        // Debug.Log("  gc.standardTime=" + gc.standardTime + "   制作模板" + gc.executeEventList[0].value[2]);
-                         districtID = (short)gc.executeEventList[0].value[0];
-                         buildingID = gc.executeEventList[0].value[1];
-                         itemId = gc.executeEventList[0].value[2];
-                         isSuccess = gc.DistrictItemAdd(districtID, buildingID);
+                         districtID = (short)gc.executeEventList[0].value[0][0];
+                         buildingID = gc.executeEventList[0].value[1][0];
+                         itemId = gc.executeEventList[0].value[2][0];
+                         isSuccess = gc.DistrictItemOrSkillAdd(districtID, buildingID);
                         //Debug.Log(isSuccess);
                         gc.executeEventList.RemoveAt(0);
                         if (isSuccess)
@@ -143,14 +151,14 @@ public class GameControlInPlay : MonoBehaviour
                         }
                         break;
                     case ExecuteEventType.Build:
-                        districtID = (short)gc.executeEventList[0].value[0];
-                        buildingID = gc.executeEventList[0].value[1];
+                        districtID = (short)gc.executeEventList[0].value[0][0];
+                        buildingID = gc.executeEventList[0].value[1][0];
                         gc.BuildDone((short)buildingID);
                         gc.executeEventList.RemoveAt(0);
 
                         break;
                     case ExecuteEventType.Adventure:
-                        byte teamID = (byte)gc.executeEventList[0].value[0];
+                        byte teamID = (byte)gc.executeEventList[0].value[0][0];
 
                         /*战斗事件*/
                         gc.AdventureEventHappen(teamID);
@@ -281,7 +289,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            MarketPanel.Instance.OnShow(gc.nowCheckingDistrictID, ItemTypeBig.None, ItemTypeSmall.None,null, 64, -88);
+            MarketPanel.Instance.OnShow(gc.nowCheckingDistrictID, ItemTypeBig.None, ItemTypeSmall.None, 64, -88);
         }
     }
 

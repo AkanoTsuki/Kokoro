@@ -691,15 +691,21 @@ public class GameControl : MonoBehaviour
     void StartBuild(int districtID, int buildingID, int needTime)
     {
         //value0:地区实例ID value1:建筑实例ID 
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Build, standardTime, standardTime + needTime, new List<int> { districtID, buildingID }));
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Build, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { buildingID }, new List<int> { buildingID } }));
     }
     #endregion
 
     #region 【方法】建筑物配置生成资源/装备
-    void StartProduceResource(int districtID, int buildingID, int needTime, StuffType stuffType, int value)
+    void StartProduceResource(int districtID, int buildingID, int needTime, List<StuffType> stuffType, List<int> value)
     {
         //value0:地区实例ID value1:建筑实例ID value2:资源类型 value3:资源数量
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, (int)stuffType, value }));
+        List<int> stuffTypeInt = new List<int>();
+        for (int i = 0; i < stuffType.Count; i++)
+        {
+            stuffTypeInt.Add((int)stuffType[i]);
+        }
+
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID } , new List<int> { buildingID } , stuffTypeInt, value }));
     }
 
     public void StopProduceResource(int buildingID)
@@ -707,7 +713,7 @@ public class GameControl : MonoBehaviour
         List<int> tempList = new List<int>();
         for (int i = 0; i < executeEventList.Count; i++)
         {
-            if (executeEventList[i].type == ExecuteEventType.ProduceResource && executeEventList[i].value[1] == buildingID)
+            if (executeEventList[i].type == ExecuteEventType.ProduceResource && executeEventList[i].value[1][0] == buildingID)
             {
                 tempList.Add(i);
             }
@@ -727,7 +733,7 @@ public class GameControl : MonoBehaviour
     void StartProduceItem(int districtID, int buildingID, int needTime, short produceEquipNow)
     {
         //value0:地区实例ID value1:建筑实例ID value2:装备模板原型ID
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceItem, standardTime, standardTime + needTime, new List<int> { districtID, buildingID, produceEquipNow }));
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceItem, standardTime, standardTime + needTime, new List<List<int>> { new List<int>{ districtID }, new List<int>{ buildingID }, new List<int>{ produceEquipNow } }));
     }
 
     public void StopProduceItem(int buildingID)
@@ -735,7 +741,7 @@ public class GameControl : MonoBehaviour
         List<int> tempList = new List<int>();
         for (int i = 0; i < executeEventList.Count; i++)
         {
-            if (executeEventList[i].type == ExecuteEventType.ProduceItem && executeEventList[i].value[1] == buildingID)
+            if (executeEventList[i].type == ExecuteEventType.ProduceItem && executeEventList[i].value[1][0] == buildingID)
             {
                 tempList.Add(i);
             }
@@ -878,6 +884,13 @@ public class GameControl : MonoBehaviour
                 case 46:
                     nowLabor += heroDic[buildingDic[buildingID].heroList[i]].workMakeJewelry;
                     break;
+                case 73:
+                case 74:
+                case 75:
+                case 76:
+                case 77:
+                    nowLabor += heroDic[buildingDic[buildingID].heroList[i]].workMakeScroll;
+                    break;
             }
         }
 
@@ -901,72 +914,80 @@ public class GameControl : MonoBehaviour
         {
             case 9://麦田
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputCereal * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Cereal, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime,new List<StuffType> { StuffType.Cereal } ,new List<int> { num1 } );
                 break;
             case 10://菜田
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputVegetable * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Vegetable, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Vegetable }, new List<int> { num1 });
                 break;
             case 11://果园
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputFruit * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Fruit, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Fruit }, new List<int> { num1 });
                 break;
             case 12://亚麻田
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputTwine * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Twine, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Twine }, new List<int> { num1 });
                 break;
             case 13://牛圈
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMeat * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Meat, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Meat }, new List<int> { num1 });
                 break;
             case 14://羊圈
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMeat * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Meat, num1);
                 num2 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputCloth * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Cloth, num2);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Meat, StuffType.Cloth }, new List<int> { num1 , num2});
                 break;
             case 15://渔场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputFish * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Fish, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Fish }, new List<int> { num1 });
+                break;
+
+            case 25://啤酒厂
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputBeer * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Beer }, new List<int> { num1 });
+                break;
+            case 26://红酒厂
+                num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputWine * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Wine }, new List<int> { num1 });
                 break;
 
             case 16://伐木场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputWood * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Wood, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Wood }, new List<int> { num1 });
                 break;
             case 17://伐木场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputWood * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Wood, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Wood }, new List<int> { num1 });
                 break;
             case 18://伐木场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputWood * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Wood, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Wood }, new List<int> { num1 });
                 break;
 
             case 19://矿场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMetal * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Metal, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Metal }, new List<int> { num1 });
                 break;
             case 20://矿场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMetal * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Metal, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Metal }, new List<int> { num1 });
                 break;
             case 21://矿场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputMetal * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Metal, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Metal }, new List<int> { num1 });
                 break;
 
             case 22://采石场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputStone * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Stone, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Stone }, new List<int> { num1 });
                 break;
             case 23://采石场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputStone * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Stone, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Stone }, new List<int> { num1 });
                 break;
             case 24://采石场
                 num1 = (int)(DataManager.mProduceResourceDict[buildingDic[buildingID].prototypeID].OutputStone * (1f + GetProduceResourceOutputUp(buildingID)) * laborRate);
-                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, StuffType.Stone, num1);
+                StartProduceResource(buildingDic[buildingID].districtID, buildingID, needTime, new List<StuffType> { StuffType.Stone }, new List<int> { num1 });
                 break;
         }
     }
@@ -976,12 +997,12 @@ public class GameControl : MonoBehaviour
         buildingDic[buildingID].produceEquipNow = -1;
     }
 
-    public bool DistrictItemAdd(short districtID, int buildingID)
+    public bool DistrictItemOrSkillAdd(short districtID, int buildingID)
     {
 
         if (GetDistrictProductAll(districtID) >= districtDic[districtID].rProductLimit)
         {
-            MessagePanel.Instance.AddMessage("装备库房已满，生产停止");
+            MessagePanel.Instance.AddMessage("制品库房已满，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
                 BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
@@ -997,7 +1018,13 @@ public class GameControl : MonoBehaviour
             DataManager.mProduceEquipDict[moduleID].InputLeather > districtDic[districtID].rStuffLeather ||
             DataManager.mProduceEquipDict[moduleID].InputCloth > districtDic[districtID].rStuffCloth ||
             DataManager.mProduceEquipDict[moduleID].InputTwine > districtDic[districtID].rStuffTwine ||
-            DataManager.mProduceEquipDict[moduleID].InputBone > districtDic[districtID].rStuffBone)
+            DataManager.mProduceEquipDict[moduleID].InputBone > districtDic[districtID].rStuffBone||
+            DataManager.mProduceEquipDict[moduleID].InputWind > districtDic[districtID].rStuffWind ||
+            DataManager.mProduceEquipDict[moduleID].InputFire > districtDic[districtID].rStuffFire ||
+            DataManager.mProduceEquipDict[moduleID].InputWater > districtDic[districtID].rStuffWater ||
+            DataManager.mProduceEquipDict[moduleID].InputGround > districtDic[districtID].rStuffGround ||
+            DataManager.mProduceEquipDict[moduleID].InputLight > districtDic[districtID].rStuffLight ||
+            DataManager.mProduceEquipDict[moduleID].InputDark > districtDic[districtID].rStuffDark)
         {
             MessagePanel.Instance.AddMessage("原材料不足，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
@@ -1014,18 +1041,107 @@ public class GameControl : MonoBehaviour
         int probabilityCount = DataManager.mProduceEquipDict[moduleID].OutputRate.Count;
         int ran = Random.Range(0, 100);
         int lj = 0;
-        int itemID = -1;
+        int itemOrSkillID = -1;
         for (int i = 0; i < probabilityCount; i++)
         {
             lj += DataManager.mProduceEquipDict[moduleID].OutputRate[i];
 
             if (ran < lj)
             {
-                itemID = DataManager.mProduceEquipDict[moduleID].OutputID[i];
+                itemOrSkillID = DataManager.mProduceEquipDict[moduleID].OutputID[i];
                 break;
             }
         }
-        Debug.Log("DistrictItemAdd() 生产 " + DataManager.mItemDict[itemID].Name);
+        switch (DataManager.mProduceEquipDict[moduleID].Type)
+        {
+            case ItemTypeSmall.Sword:
+            case ItemTypeSmall.Axe:
+            case ItemTypeSmall.Spear:
+            case ItemTypeSmall.Hammer:
+            case ItemTypeSmall.Bow:
+            case ItemTypeSmall.Staff:
+            case ItemTypeSmall.Shield:
+            case ItemTypeSmall.Dorlach:
+            case ItemTypeSmall.Neck:
+            case ItemTypeSmall.Finger:
+            case ItemTypeSmall.HeadH:
+            case ItemTypeSmall.BodyH:
+            case ItemTypeSmall.HandH:
+            case ItemTypeSmall.BackH:
+            case ItemTypeSmall.FootH:
+            case ItemTypeSmall.HeadL:
+            case ItemTypeSmall.BodyL:
+            case ItemTypeSmall.HandL:
+            case ItemTypeSmall.BackL:
+            case ItemTypeSmall.FootL:
+                itemDic.Add(itemIndex, GenerateItemByRandom(itemOrSkillID, districtDic[districtID], buildingDic[buildingID].heroList));
+                itemIndex++;
+                switch (DataManager.mItemDict[itemOrSkillID].TypeBig)
+                {
+                    case ItemTypeBig.Weapon:
+                    case ItemTypeBig.Subhand:
+                        districtDic[districtID].rProductWeapon++;
+                        break;
+                    case ItemTypeBig.Armor:
+                        districtDic[districtID].rProductArmor++;
+                        break;
+                    case ItemTypeBig.Jewelry:
+                        districtDic[districtID].rProductJewelry++;
+                        break;
+                }
+                //增加管理人员的数据
+                for (int i = 0; i < buildingDic[buildingID].heroList.Count; i++)
+                {
+                    switch (DataManager.mItemDict[itemOrSkillID].TypeBig)
+                    {
+                        case ItemTypeBig.Weapon:
+                        case ItemTypeBig.Subhand:
+                            heroDic[buildingDic[buildingID].heroList[i]].countMakeWeapon++;
+                            break;
+                        case ItemTypeBig.Armor:
+                            heroDic[buildingDic[buildingID].heroList[i]].countMakeArmor++;
+                            break;
+                        case ItemTypeBig.Jewelry:
+                            heroDic[buildingDic[buildingID].heroList[i]].countMakeJewelry++;
+                            break;
+
+                    }
+                }
+                if (ItemListAndInfoPanel.Instance.isShow)
+                {
+                    ItemListAndInfoPanel.Instance.UpdateList(districtID, 1);
+                }
+                Debug.Log("DistrictItemAdd() 生产 " + DataManager.mItemDict[itemOrSkillID].Name);
+                break;
+            case ItemTypeSmall.ScrollWindI:
+            case ItemTypeSmall.ScrollFireI:
+            case ItemTypeSmall.ScrollWaterI:
+            case ItemTypeSmall.ScrollGroundI:
+            case ItemTypeSmall.ScrollLightI:
+            case ItemTypeSmall.ScrollDarkI:
+            case ItemTypeSmall.ScrollNone:
+            case ItemTypeSmall.ScrollWindII:
+            case ItemTypeSmall.ScrollFireII:
+            case ItemTypeSmall.ScrollWaterII:
+            case ItemTypeSmall.ScrollGroundII:
+            case ItemTypeSmall.ScrollLightII:
+            case ItemTypeSmall.ScrollDarkII:
+                skillDic.Add(skillIndex, GenerateSkillByRandom((short)itemOrSkillID));
+                skillIndex++;
+                Debug.Log("DistrictItemAdd() 生产 " + DataManager.mSkillDict[itemOrSkillID].Name);
+                districtDic[districtID].rProductScroll++;
+                for (int i = 0; i < buildingDic[buildingID].heroList.Count; i++)
+                {
+                    heroDic[buildingDic[buildingID].heroList[i]].countMakeScroll++;
+                }
+                if (SkillListAndInfoPanel.Instance.isShow)
+                {
+                    SkillListAndInfoPanel.Instance.UpdateList(districtID,null,-1, 0);
+                }
+                break;
+        }
+
+        
 
 
         districtDic[districtID].rStuffWood -= DataManager.mProduceEquipDict[moduleID].InputWood;
@@ -1035,116 +1151,152 @@ public class GameControl : MonoBehaviour
         districtDic[districtID].rStuffCloth -= DataManager.mProduceEquipDict[moduleID].InputCloth;
         districtDic[districtID].rStuffTwine -= DataManager.mProduceEquipDict[moduleID].InputTwine;
         districtDic[districtID].rStuffBone -= DataManager.mProduceEquipDict[moduleID].InputBone;
+        districtDic[districtID].rStuffWind -= DataManager.mProduceEquipDict[moduleID].InputWind;
+        districtDic[districtID].rStuffFire -= DataManager.mProduceEquipDict[moduleID].InputFire;
+        districtDic[districtID].rStuffWater -= DataManager.mProduceEquipDict[moduleID].InputWater;
+        districtDic[districtID].rStuffGround -= DataManager.mProduceEquipDict[moduleID].InputGround;
+        districtDic[districtID].rStuffLight -= DataManager.mProduceEquipDict[moduleID].InputLight;
+        districtDic[districtID].rStuffDark -= DataManager.mProduceEquipDict[moduleID].InputDark;
+
+       
 
 
-        itemDic.Add(itemIndex, GenerateItemByRandom(itemID, districtDic[districtID], buildingDic[buildingID].heroList));
-        itemIndex++;
 
-        switch (DataManager.mItemDict[itemID].TypeBig)
-        {
-            case ItemTypeBig.Weapon:
-            case ItemTypeBig.Subhand:
-                districtDic[districtID].rProductWeapon++;
-                break;
-            case ItemTypeBig.Armor:
-                districtDic[districtID].rProductArmor++;
-                break;
-            case ItemTypeBig.Jewelry:
-                districtDic[districtID].rProductJewelry++;
-                break;
-        }
+        
 
-        //增加管理人员的数据
-        for (int i = 0; i < buildingDic[buildingID].heroList.Count; i++)
-        {
-            switch (DataManager.mItemDict[itemID].TypeBig)
-            {
-                case ItemTypeBig.Weapon:
-                case ItemTypeBig.Subhand:
-                    heroDic[buildingDic[buildingID].heroList[i]].countMakeWeapon++;
-                    break;
-                case ItemTypeBig.Armor:
-                    heroDic[buildingDic[buildingID].heroList[i]].countMakeArmor++;
-                    break;
-                case ItemTypeBig.Jewelry:
-                    heroDic[buildingDic[buildingID].heroList[i]].countMakeJewelry++;
-                    break;
-            }
-        }
-
-        if (ItemListAndInfoPanel.Instance.isShow)
-        {
-            ItemListAndInfoPanel.Instance.UpdateList(districtID, 1);
-        }
+        
         if (districtID == nowCheckingDistrictID)
         {
             PlayMainPanel.Instance.UpdateResourcesInfo(districtID);
         }
-        CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemID });
+        CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemOrSkillID });
         return true;
         // itemDic.Add(GenerateItemByRandom(, districtDic[districtID],));
     }
 
-    public bool DistrictResourceAdd(short districtID, int buildingID, StuffType stuffType, int value)
+    public bool DistrictResourceAdd(short districtID, int buildingID, List<StuffType> stuffType, List<int> value)
     {
 
         Debug.Log("DistrictResourceAdd() " + districtID + " " + stuffType + " " + value);
-        switch (stuffType)
+
+        for (int i = 0; i < stuffType.Count; i++)
         {
-            case StuffType.Cereal:
-            case StuffType.Vegetable:
-            case StuffType.Fruit:
-            case StuffType.Meat:
-            case StuffType.Fish:
-                if (GetDistrictFoodAll(districtID) >= districtDic[districtID].rFoodLimit)
-                {
-                    MessagePanel.Instance.AddMessage("食物库房已满，生产停止");
-                    if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+            switch (stuffType[i])
+            {
+                case StuffType.Cereal:
+                case StuffType.Vegetable:
+                case StuffType.Fruit:
+                case StuffType.Meat:
+                case StuffType.Fish:
+                case StuffType.Beer:
+                case StuffType.Wine:
+                    if (GetDistrictFoodAll(districtID) >= districtDic[districtID].rFoodLimit)
                     {
-                        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
-                        BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+                        MessagePanel.Instance.AddMessage("食物库房已满，生产停止");
+                        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+                        {
+                            BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                            BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+                        }
+                        return false;
                     }
-                    return false;
-                }
-                break;
-            case StuffType.Wood:
-            case StuffType.Stone:
-            case StuffType.Metal:
-            case StuffType.Leather:
-            case StuffType.Cloth:
-            case StuffType.Twine:
-            case StuffType.Bone:
-                if (GetDistrictStuffAll(districtID) >= districtDic[districtID].rStuffLimit)
-                {
-                    MessagePanel.Instance.AddMessage("材料库房已满，生产停止");
-                    if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+                    break;
+                case StuffType.Wood:
+                case StuffType.Stone:
+                case StuffType.Metal:
+                case StuffType.Leather:
+                case StuffType.Cloth:
+                case StuffType.Twine:
+                case StuffType.Bone:
+                case StuffType.Wind:
+                case StuffType.Fire:
+                case StuffType.Water:
+                case StuffType.Ground:
+                case StuffType.Light:
+                case StuffType.Dark:
+                    if (GetDistrictStuffAll(districtID) >= districtDic[districtID].rStuffLimit)
                     {
-                        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
-                        BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+                        MessagePanel.Instance.AddMessage("材料库房已满，生产停止");
+                        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+                        {
+                            BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                            BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+                        }
+                        return false;
                     }
-                    return false;
-                }
-                break;
+                    break;
+            }
+        }
+       
+
+        int moduleID = buildingDic[buildingID].prototypeID;
+
+        if (DataManager.mProduceResourceDict[moduleID].InputWood > districtDic[districtID].rStuffWood ||
+            DataManager.mProduceResourceDict[moduleID].InputStone > districtDic[districtID].rStuffStone ||
+            DataManager.mProduceResourceDict[moduleID].InputMetal > districtDic[districtID].rStuffMetal ||
+            DataManager.mProduceResourceDict[moduleID].InputLeather > districtDic[districtID].rStuffLeather ||
+            DataManager.mProduceResourceDict[moduleID].InputCloth > districtDic[districtID].rStuffCloth ||
+            DataManager.mProduceResourceDict[moduleID].InputTwine > districtDic[districtID].rStuffTwine ||
+            DataManager.mProduceResourceDict[moduleID].InputBone > districtDic[districtID].rStuffBone ||
+            DataManager.mProduceResourceDict[moduleID].InputWind > districtDic[districtID].rStuffWind ||
+            DataManager.mProduceResourceDict[moduleID].InputFire > districtDic[districtID].rStuffFire ||
+            DataManager.mProduceResourceDict[moduleID].InputWater > districtDic[districtID].rStuffWater ||
+            DataManager.mProduceResourceDict[moduleID].InputGround > districtDic[districtID].rStuffGround ||
+            DataManager.mProduceResourceDict[moduleID].InputLight > districtDic[districtID].rStuffLight ||
+            DataManager.mProduceResourceDict[moduleID].InputDark > districtDic[districtID].rStuffDark)
+        {
+            MessagePanel.Instance.AddMessage("原材料不足，生产停止");
+            if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+            {
+                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+            }
+            return false;
         }
 
-
-        switch (stuffType)
+        for (int i = 0; i < stuffType.Count; i++)
         {
-            case StuffType.Cereal: districtDic[districtID].rFoodCereal += value; break;
-            case StuffType.Vegetable: districtDic[districtID].rFoodVegetable += value; break;
-            case StuffType.Fruit: districtDic[districtID].rFoodFruit += value; break;
-            case StuffType.Meat: districtDic[districtID].rFoodMeat += value; break;
-            case StuffType.Fish: districtDic[districtID].rFoodFish += value; break;
-            case StuffType.Wood: districtDic[districtID].rStuffWood += value; break;
-            case StuffType.Stone: districtDic[districtID].rStuffStone += value; break;
-            case StuffType.Metal: districtDic[districtID].rStuffMetal += value; break;
-            case StuffType.Leather: districtDic[districtID].rStuffLeather += value; break;
-            case StuffType.Cloth: districtDic[districtID].rStuffCloth += value; break;
-            case StuffType.Twine: districtDic[districtID].rStuffTwine += value; break;
-            case StuffType.Bone: districtDic[districtID].rStuffBone += value; break;
+            switch (stuffType[i])
+            {
+                case StuffType.Cereal: districtDic[districtID].rFoodCereal += value[i]; break;
+                case StuffType.Vegetable: districtDic[districtID].rFoodVegetable += value[i]; break;
+                case StuffType.Fruit: districtDic[districtID].rFoodFruit += value[i]; break;
+                case StuffType.Meat: districtDic[districtID].rFoodMeat += value[i]; break;
+                case StuffType.Fish: districtDic[districtID].rFoodFish += value[i]; break;
+                case StuffType.Beer: districtDic[districtID].rFoodBeer += value[i]; break;
+                case StuffType.Wine: districtDic[districtID].rFoodWine += value[i]; break;
+                case StuffType.Wood: districtDic[districtID].rStuffWood += value[i]; break;
+                case StuffType.Stone: districtDic[districtID].rStuffStone += value[i]; break;
+                case StuffType.Metal: districtDic[districtID].rStuffMetal += value[i]; break;
+                case StuffType.Leather: districtDic[districtID].rStuffLeather += value[i]; break;
+                case StuffType.Cloth: districtDic[districtID].rStuffCloth += value[i]; break;
+                case StuffType.Twine: districtDic[districtID].rStuffTwine += value[i]; break;
+                case StuffType.Bone: districtDic[districtID].rStuffBone += value[i]; break;
+                case StuffType.Wind: districtDic[districtID].rStuffWind += value[i]; break;
+                case StuffType.Fire: districtDic[districtID].rStuffFire += value[i]; break;
+                case StuffType.Water: districtDic[districtID].rStuffWater += value[i]; break;
+                case StuffType.Ground: districtDic[districtID].rStuffGround += value[i]; break;
+                case StuffType.Light: districtDic[districtID].rStuffLight += value[i]; break;
+                case StuffType.Dark: districtDic[districtID].rStuffDark += value[i]; break;
+            }
         }
+  
 
-        Debug.Log("AAAAADistrictResourceAdd() ");
+
+        districtDic[districtID].rStuffWood -= DataManager.mProduceResourceDict[moduleID].InputWood;
+        districtDic[districtID].rStuffStone -= DataManager.mProduceResourceDict[moduleID].InputStone;
+        districtDic[districtID].rStuffMetal -= DataManager.mProduceResourceDict[moduleID].InputMetal;
+        districtDic[districtID].rStuffLeather -= DataManager.mProduceResourceDict[moduleID].InputLeather;
+        districtDic[districtID].rStuffCloth -= DataManager.mProduceResourceDict[moduleID].InputCloth;
+        districtDic[districtID].rStuffTwine -= DataManager.mProduceResourceDict[moduleID].InputTwine;
+        districtDic[districtID].rStuffBone -= DataManager.mProduceResourceDict[moduleID].InputBone;
+        districtDic[districtID].rStuffWind -= DataManager.mProduceResourceDict[moduleID].InputWind;
+        districtDic[districtID].rStuffFire -= DataManager.mProduceResourceDict[moduleID].InputFire;
+        districtDic[districtID].rStuffWater -= DataManager.mProduceResourceDict[moduleID].InputWater;
+        districtDic[districtID].rStuffGround -= DataManager.mProduceResourceDict[moduleID].InputGround;
+        districtDic[districtID].rStuffLight -= DataManager.mProduceResourceDict[moduleID].InputLight;
+        districtDic[districtID].rStuffDark -= DataManager.mProduceResourceDict[moduleID].InputDark;
+
         if (DistrictMainPanel.Instance.isShow)
         {
             DistrictMainPanel.Instance.UpdateOutputInfo(districtDic[districtID]);
@@ -1789,7 +1941,7 @@ public class GameControl : MonoBehaviour
         List<int> tempList = new List<int>();
         for (int i = 0; i < executeEventList.Count; i++)
         {
-            if (executeEventList[i].type == ExecuteEventType.Adventure && executeEventList[i].value[0] == teamID)
+            if (executeEventList[i].type == ExecuteEventType.Adventure && executeEventList[i].value[0][0] == teamID)
             {
                 tempList.Add(i);
             }
@@ -1862,7 +2014,7 @@ public class GameControl : MonoBehaviour
 
     public void CreateAdventureEvent(byte teamID)
     {
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Adventure, standardTime, standardTime + 80, new List<int> { teamID }));
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Adventure, standardTime, standardTime + 80, new List<List<int>> { new List<int> { teamID } }));
     }
 
     void CreateAdventureEventPartLog(byte teamID, AdventureEvent adventureEvent,bool isPass,string log)
@@ -2089,7 +2241,31 @@ public class GameControl : MonoBehaviour
                         break;
                     case StuffType.Bone:
                         adventureTeamList[teamID].getBone += getNum;
-                        log = "[获得资源]骨块" + getNum;
+                        log = "[获得资源]骨块*" + getNum;
+                        break;
+                    case StuffType.Wind:
+                        adventureTeamList[teamID].getWind += getNum;
+                        log = "[获得资源]风粉尘*" + getNum;
+                        break;
+                    case StuffType.Fire:
+                        adventureTeamList[teamID].getFire += getNum;
+                        log = "[获得资源]火粉尘*" + getNum;
+                        break;
+                    case StuffType.Water:
+                        adventureTeamList[teamID].getWater += getNum;
+                        log = "[获得资源]水粉尘*" + getNum;
+                        break;
+                    case StuffType.Ground:
+                        adventureTeamList[teamID].getGround += getNum;
+                        log = "[获得资源]地粉尘*" + getNum;
+                        break;
+                    case StuffType.Light:
+                        adventureTeamList[teamID].getLight += getNum;
+                        log = "[获得资源]光粉尘*" + getNum;
+                        break;
+                    case StuffType.Dark:
+                        adventureTeamList[teamID].getDark += getNum;
+                        log = "[获得资源]暗粉尘*" + getNum;
                         break;
                 }
 
@@ -3936,17 +4112,18 @@ public class GameControl : MonoBehaviour
 
     public int GetDistrictFoodAll(int districtID)
     {
-        return districtDic[districtID].rFoodCereal + districtDic[districtID].rFoodVegetable + districtDic[districtID].rFoodFruit + districtDic[districtID].rFoodMeat + districtDic[districtID].rFoodFish;
+        return districtDic[districtID].rFoodCereal + districtDic[districtID].rFoodVegetable + districtDic[districtID].rFoodFruit + districtDic[districtID].rFoodMeat + districtDic[districtID].rFoodFish + districtDic[districtID].rFoodBeer + districtDic[districtID].rFoodWine;
     }
 
     public int GetDistrictStuffAll(int districtID)
     {
-        return districtDic[districtID].rStuffWood + districtDic[districtID].rStuffStone + districtDic[districtID].rStuffMetal + districtDic[districtID].rStuffLeather + districtDic[districtID].rStuffCloth + districtDic[districtID].rStuffTwine + districtDic[districtID].rStuffBone;
+        return districtDic[districtID].rStuffWood + districtDic[districtID].rStuffStone + districtDic[districtID].rStuffMetal + districtDic[districtID].rStuffLeather + districtDic[districtID].rStuffCloth + districtDic[districtID].rStuffTwine + districtDic[districtID].rStuffBone+
+            districtDic[districtID].rStuffWind + districtDic[districtID].rStuffFire + districtDic[districtID].rStuffWater + districtDic[districtID].rStuffGround + districtDic[districtID].rStuffLight + districtDic[districtID].rStuffDark ;
     }
     
     public int GetDistrictProductAll(int districtID)
     {
-        return districtDic[districtID].rProductWeapon + districtDic[districtID].rProductArmor + districtDic[districtID].rProductJewelry;
+        return districtDic[districtID].rProductWeapon + districtDic[districtID].rProductArmor + districtDic[districtID].rProductJewelry + districtDic[districtID].rProductScroll;
     }
 
     public float GetProduceResourceLaborRate(int buildingID)
@@ -3999,6 +4176,20 @@ public class GameControl : MonoBehaviour
                 for (int i = 0; i < buildingDic[buildingID].heroList.Count; i++)
                 {
                     outputUp += heroDic[buildingDic[buildingID].heroList[i]].workFishing / 100f;
+                }
+                break;
+
+            case 25://啤酒厂
+                for (int i = 0; i < buildingDic[buildingID].heroList.Count; i++)
+                {
+                    outputUp += heroDic[buildingDic[buildingID].heroList[i]].workSundry / 100f;
+                }
+                break;
+
+            case 26://红酒厂
+                for (int i = 0; i < buildingDic[buildingID].heroList.Count; i++)
+                {
+                    outputUp += heroDic[buildingDic[buildingID].heroList[i]].workSundry / 100f;
                 }
                 break;
 

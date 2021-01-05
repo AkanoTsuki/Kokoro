@@ -258,7 +258,7 @@ public class BuildingPanel : BasePanel
                     int nowTime = 0;
                     for (int i = 0; i < gc.executeEventList.Count; i++)
                     {
-                        if (gc.executeEventList[i].value[1] == buildingObject.id)
+                        if (gc.executeEventList[i].value[1][0] == buildingObject.id)
                         {
                             needTime = gc.executeEventList[i].endTime - gc.executeEventList[i].startTime;
                             nowTime = gc.standardTime - gc.executeEventList[i].startTime;
@@ -281,7 +281,13 @@ public class BuildingPanel : BasePanel
                         (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputLeather != 0 ? " 皮革" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputLeather : "") +
                         (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputCloth != 0 ? " 布料" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputCloth : "") +
                         (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputTwine != 0 ? " 麻绳" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputTwine : "") +
-                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputBone != 0 ? " 骨块" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputBone : "") +"\n";
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputBone != 0 ? " 骨块" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputBone : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWind != 0 ? " 风粉尘" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWind : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputFire != 0 ? " 火粉尘" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputFire : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWater != 0 ? " 水粉尘" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWater : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputGround != 0 ? " 地粉尘" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputGround : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputLight != 0 ? " 光粉尘" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputLight : "") +
+                        (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputDark != 0 ? " 暗粉尘" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputDark : "") + "\n";
                 }
                 else
                 {
@@ -299,7 +305,7 @@ public class BuildingPanel : BasePanel
                     int nowTime = 0;
                     for (int i = 0; i < gc.executeEventList.Count; i++)
                     {
-                        if (gc.executeEventList[i].value[1] == buildingObject.id)
+                        if (gc.executeEventList[i].value[1][0] == buildingObject.id)
                         {
                             needTime = gc.executeEventList[i].endTime - gc.executeEventList[i].startTime;
                             nowTime = gc.standardTime - gc.executeEventList[i].startTime;
@@ -328,7 +334,14 @@ public class BuildingPanel : BasePanel
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputLeather != 0 ? " 皮革" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputLeather : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCloth != 0 ? " 布料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputCloth : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputTwine != 0 ? " 麻绳" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputTwine : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone : "") + "\n基础产出" +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputBone : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputWind != 0 ? " 风粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputWind : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputFire != 0 ? " 火粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputFire : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputWater != 0 ? " 水粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputWater : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputGround != 0 ? " 地粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputGround : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputLight != 0 ? " 光粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputLight : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputDark != 0 ? " 暗粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].InputDark : "") +
+                        "\n基础产出" +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCereal != 0 ? " 谷物" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCereal+"(效率"+ (int)(gc.GetProduceResourceLaborRate(buildingObject.id) *100) + "%)" : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputVegetable != 0 ? " 蔬菜" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputVegetable + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFruit != 0 ? " 水果" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFruit + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
@@ -340,7 +353,13 @@ public class BuildingPanel : BasePanel
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLeather != 0 ? " 皮革" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLeather + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCloth != 0 ? " 布料" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputCloth + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
                         (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputTwine != 0 ? " 麻绳" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputTwine + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
-                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "");
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone != 0 ? " 骨块" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputBone + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWind != 0 ? " 风粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWind + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFire != 0 ? " 火粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputFire + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWater != 0 ? " 水粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputWater + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputGround != 0 ? " 地粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputGround + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLight != 0 ? " 光粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputLight + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "") +
+                        (DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputDark != 0 ? " 暗粉尘" + DataManager.mProduceResourceDict[buildingObject.produceEquipNow].OutputDark + "(效率" + (int)(gc.GetProduceResourceLaborRate(buildingObject.id) * 100) + "%)" : "");
 
                     if (gc.GetProduceResourceOutputUp(buildingObject.id) != 0f)
                     {
@@ -513,8 +532,14 @@ public class BuildingPanel : BasePanel
             case 46:
                 setForge_typeDd.ClearOptions();
                 setForge_typeDd.AddOptions(new List<string> { "项链", "戒指" });
-
-                //TODO:卷轴生产待做
+                break;
+            case 73:
+            case 74:
+            case 75:
+            case 76:
+            case 77:
+                setForge_typeDd.ClearOptions();
+                setForge_typeDd.AddOptions(new List<string> { "无属性卷轴", "风卷轴", "火卷轴", "水卷轴", "地卷轴", "光卷轴", "暗卷轴", "雷卷轴", "爆炸卷轴", "冰卷轴", "自然卷轴", "时空卷轴", "死亡卷轴" });
                 break;
         }
         setForge_typeDd.RefreshShownValue();
@@ -624,6 +649,12 @@ public class BuildingPanel : BasePanel
             if (produceEquipPrototype.InputCloth != 0) { inputStr += "布料*" + produceEquipPrototype.InputCloth + " "; }
             if (produceEquipPrototype.InputTwine != 0) { inputStr += "麻绳*" + produceEquipPrototype.InputTwine + " "; }
             if (produceEquipPrototype.InputBone != 0) { inputStr += "骨块*" + produceEquipPrototype.InputBone + " "; }
+            if (produceEquipPrototype.InputWind != 0) { inputStr += "风粉尘*" + produceEquipPrototype.InputWind + " "; }
+            if (produceEquipPrototype.InputFire != 0) { inputStr += "火粉尘*" + produceEquipPrototype.InputFire + " "; }
+            if (produceEquipPrototype.InputWater != 0) { inputStr += "水粉尘*" + produceEquipPrototype.InputWater + " "; }
+            if (produceEquipPrototype.InputGround != 0) { inputStr += "地粉尘*" + produceEquipPrototype.InputGround + " "; }
+            if (produceEquipPrototype.InputLight != 0) { inputStr += "光粉尘*" + produceEquipPrototype.InputLight + " "; }
+            if (produceEquipPrototype.InputDark != 0) { inputStr += "暗粉尘*" + produceEquipPrototype.InputDark + " "; }
 
         }
 

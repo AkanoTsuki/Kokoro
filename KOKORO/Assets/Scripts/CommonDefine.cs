@@ -10,13 +10,21 @@ public enum StuffType
     Fruit,
     Meat,
     Fish,
+    Beer,
+    Wine,
     Wood,
     Stone,
     Metal,
     Leather,
     Cloth,
     Twine,
-    Bone
+    Bone,
+    Wind,
+    Fire,
+    Water,
+    Ground,
+    Light,
+    Dark
 }
 
 //交互小标签类型
@@ -93,6 +101,19 @@ public enum ItemTypeSmall
     Finger,
     Shield,
     Dorlach,
+    ScrollNone,
+    ScrollWindI,
+    ScrollFireI,
+    ScrollWaterI,
+    ScrollGroundI,
+    ScrollLightI,
+    ScrollDarkI,
+    ScrollWindII,
+    ScrollFireII,
+    ScrollWaterII,
+    ScrollGroundII,
+    ScrollLightII,
+    ScrollDarkII,
     None
 }
 
@@ -401,6 +422,8 @@ public class SkillPrototype: ISerializationCallbackReceiver
     public AnimStatus ActionAnim;
     public string ActionAnimStr;
     public List<int> Element;
+    public ItemTypeSmall TypeSmall;
+    public string TypeSmallStr;
     public string Des;
     public short Mp;//消耗魔法
     public byte Probability;
@@ -455,6 +478,8 @@ public class SkillPrototype: ISerializationCallbackReceiver
         AnimStatus type = (AnimStatus)Enum.Parse(typeof(AnimStatus), ActionAnimStr);
         ActionAnim = type;
 
+        ItemTypeSmall type2 = (ItemTypeSmall)Enum.Parse(typeof(ItemTypeSmall), TypeSmallStr);
+        TypeSmall = type2;
     }
 
     public void OnBeforeSerialize()
@@ -969,6 +994,8 @@ public class DistrictObject
     private int RFoodFruit;
     private int RFoodMeat;
     private int RFoodFish;
+    private int RFoodBeer;
+    private int RFoodWine;
     private int RStuffWood;
     private int RStuffMetal;
     private int RStuffStone;
@@ -976,6 +1003,12 @@ public class DistrictObject
     private int RStuffTwine;
     private int RStuffCloth;
     private int RStuffBone;
+    private int RStuffWind;
+    private int RStuffFire;
+    private int RStuffWater;
+    private int RStuffGround;
+    private int RStuffLight;
+    private int RStuffDark;
     private int RProductWeapon;
     private int RProductArmor;
     private int RProductJewelry;
@@ -987,8 +1020,9 @@ public class DistrictObject
     public DistrictObject(short id, string name, string baseName, string des, bool isOpen, byte level, short people, short peopleLimit, short worker, short gridEmpty, short gridUsed,
         short totalGrass, short totalWood, short totalWater, short totalStone, short totalMetal, short usedGrass, short usedWood, short usedWater, short usedStone, short usedMetal, List<int> buildingList, List<int> heroList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
-        int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish,
+        int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, int rFoodBeer, int rFoodWine,
         int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
+        int rStuffWind, int rStuffFire, int rStuffWater, int rStuffGround, int rStuffLight, int rStuffDark,
         int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll,
         int rFoodLimit, int rStuffLimit, int rProductLimit, int rScrollLimit)
     {
@@ -1026,6 +1060,8 @@ public class DistrictObject
         this.RFoodFruit = rFoodFruit;
         this.RFoodMeat = rFoodMeat;
         this.RFoodFish = rFoodFish;
+        this.RFoodBeer = rFoodBeer;
+        this.RFoodWine = rFoodWine;
         this.RStuffWood = rStuffWood;
         this.RStuffMetal = rStuffMetal;
         this.RStuffStone = rStuffStone;
@@ -1033,6 +1069,12 @@ public class DistrictObject
         this.RStuffTwine = rStuffTwine;
         this.RStuffCloth = rStuffCloth;
         this.RStuffBone = rStuffBone;
+        this.RStuffWind = rStuffWind;
+        this.RStuffFire = rStuffFire;
+        this.RStuffWater = rStuffWater;
+        this.RStuffGround = rStuffGround;
+        this.RStuffLight = rStuffLight;
+        this.RStuffDark = rStuffDark;
         this.RProductWeapon = rProductWeapon;
         this.RProductArmor = rProductArmor;
         this.RProductJewelry = rProductJewelry;
@@ -1076,6 +1118,8 @@ public class DistrictObject
     public int rFoodFruit { get { return RFoodFruit; } set { RFoodFruit = value; } }
     public int rFoodMeat { get { return RFoodMeat; } set { RFoodMeat = value; } }
     public int rFoodFish { get { return RFoodFish; } set { RFoodFish = value; } }
+    public int rFoodBeer { get { return RFoodBeer; } set { RFoodBeer = value; } }
+    public int rFoodWine { get { return RFoodWine; } set { RFoodWine = value; } }
     public int rStuffWood { get { return RStuffWood; } set { RStuffWood = value; } }
     public int rStuffMetal { get { return RStuffMetal; } set { RStuffMetal = value; } }
     public int rStuffStone { get { return RStuffStone; } set { RStuffStone = value; } }
@@ -1083,6 +1127,12 @@ public class DistrictObject
     public int rStuffTwine { get { return RStuffTwine; } set { RStuffTwine = value; } }
     public int rStuffCloth { get { return RStuffCloth; } set { RStuffCloth = value; } }
     public int rStuffBone { get { return RStuffBone; } set { RStuffBone = value; } }
+    public int rStuffWind { get { return RStuffWind; } set { RStuffWind = value; } }
+    public int rStuffFire { get { return RStuffFire; } set { RStuffFire = value; } }
+    public int rStuffWater { get { return RStuffWater; } set { RStuffWater = value; } }
+    public int rStuffGround { get { return RStuffGround; } set { RStuffGround = value; } }
+    public int rStuffLight { get { return RStuffLight; } set { RStuffLight = value; } }
+    public int rStuffDark { get { return RStuffDark; } set { RStuffDark = value; } }
     public int rProductWeapon { get { return RProductWeapon; } set { RProductWeapon = value; } }
     public int rProductArmor { get { return RProductArmor; } set { RProductArmor = value; } }
     public int rProductJewelry { get { return RProductJewelry; } set { RProductJewelry = value; } }
@@ -1403,6 +1453,12 @@ public class AdventureTeamObject
     private short GetCloth;
     private short GetTwine;
     private short GetBone;
+    private short GetWind;
+    private short GetFire;
+    private short GetWater;
+    private short GetGround;
+    private short GetLight;
+    private short GetDark;
     private List<int> GetItemList;//战利品（结束），物品原型ID，结算时才生成实例
     private short KillNum;
     private List<string> Log;
@@ -1410,6 +1466,7 @@ public class AdventureTeamObject
     public AdventureTeamObject(byte id,short dungeonID, short dungeonEVWind, short dungeonEVFire, short dungeonEVWater, short dungeonEVGround, short dungeonEVLight, short dungeonEVDark, byte dungeonEPWind, byte dungeonEPFire, byte dungeonEPWater, byte dungeonEPGround, byte dungeonEPLight, byte dungeonEPDark,
         List<string> scenePicList, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, List<int> enemyIDList, byte nowDay, int standardTimeStart, AdventureState state, AdventureAction action, int fightRound,
         short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
+        short getWind, short getFire, short getWater, short getGround, short getLight, short getDark,
         List<int> getItemList, short killNum, List<string> log, List<AdventurePartObject> part)
     {
         this.ID = id;
@@ -1450,6 +1507,12 @@ public class AdventureTeamObject
         this.GetCloth = getCloth;
         this.GetTwine = getTwine;
         this.GetBone = getBone;
+        this.GetWind = getWind;
+        this.GetFire = getFire;
+        this.GetWater = getWater;
+        this.GetGround = getGround;
+        this.GetLight = getLight;
+        this.GetDark = getDark;
         this.GetItemList = getItemList;
         this.KillNum = killNum;
         this.Log = log;
@@ -1493,6 +1556,12 @@ public class AdventureTeamObject
     public short getCloth { get { return GetCloth; } set { GetCloth = value; } }
     public short getTwine { get { return GetTwine; } set { GetTwine = value; } }
     public short getBone { get { return GetBone; } set { GetBone = value; } }
+    public short getWind { get { return GetWind; } set { GetWind = value; } }
+    public short getFire { get { return GetFire; } set { GetFire = value; } }
+    public short getWater { get { return GetWater; } set { GetWater = value; } }
+    public short getGround { get { return GetGround; } set { GetGround = value; } }
+    public short getLight { get { return GetLight; } set { GetLight = value; } }
+    public short getDark { get { return GetDark; } set { GetDark = value; } }
     public List<int> getItemList { get { return GetItemList; } set { GetItemList = value; } }
     public short killNum { get { return KillNum; } set { KillNum = value; } }
     public List<string> log { get { return Log; } set { Log = value; } }
@@ -2281,6 +2350,12 @@ public class ProduceEquipPrototype: ISerializationCallbackReceiver
     public byte InputCloth;
     public byte InputTwine;
     public byte InputBone;
+    public byte InputWind;
+    public byte InputFire;
+    public byte InputWater;
+    public byte InputGround;
+    public byte InputLight;
+    public byte InputDark;
     public List<short> OutputID;
     public List<short> OutputRate;
 
@@ -2317,11 +2392,19 @@ public class ProduceResourcePrototype
     public short InputCloth;
     public short InputTwine;
     public short InputBone;
+    public short InputWind;
+    public short InputFire;
+    public short InputWater;
+    public short InputGround;
+    public short InputLight;
+    public short InputDark;
     public short OutputCereal;
     public short OutputVegetable;
     public short OutputFruit;
     public short OutputMeat;
     public short OutputFish;
+    public short OutputBeer;
+    public short OutputWine;
     public short OutputWood;
     public short OutputStone;
     public short OutputMetal;
@@ -2329,6 +2412,12 @@ public class ProduceResourcePrototype
     public short OutputCloth;
     public short OutputTwine;
     public short OutputBone;
+    public short OutputWind;
+    public short OutputFire;
+    public short OutputWater;
+    public short OutputGround;
+    public short OutputLight;
+    public short OutputDark;
 }
 
 public class ExecuteEventObject
@@ -2336,8 +2425,8 @@ public class ExecuteEventObject
     private ExecuteEventType Type;
     private int StartTime;
     private int EndTime;
-    private List<int> Value;
-    public ExecuteEventObject( ExecuteEventType type, int startTime, int endTime, List<int> value)
+    private List<List<int>> Value;
+    public ExecuteEventObject( ExecuteEventType type, int startTime, int endTime, List<List<int>> value)
     {
         this.Type = type;
         this.StartTime = startTime;
@@ -2347,7 +2436,7 @@ public class ExecuteEventObject
     public ExecuteEventType type { get { return Type; } }
     public int startTime { get { return StartTime; } }
     public int endTime { get { return EndTime; } }
-    public List<int> value { get { return Value; } }
+    public List<List<int>> value { get { return Value; } }
 
 }
 

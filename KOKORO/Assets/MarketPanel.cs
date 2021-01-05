@@ -48,12 +48,12 @@ public class MarketPanel : BasePanel
     }
     void Start()
     {
-        filter_typeBig_allBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.None, ItemTypeSmall.None,null); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.None); });
-        filter_typeBig_weaponBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.Weapon, ItemTypeSmall.None, null); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.Weapon); });
-        filter_typeBig_subhandBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.Subhand, ItemTypeSmall.None, null); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.Subhand); });
-        filter_typeBig_armorBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.Armor, ItemTypeSmall.None, null); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.Armor); });
-        filter_typeBig_jewelryBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.Jewelry, ItemTypeSmall.None, null); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.Jewelry); });
-        filter_typeBig_scrollBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.SkillRoll, ItemTypeSmall.None, null); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.SkillRoll); });
+        filter_typeBig_allBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.None, ItemTypeSmall.None); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.None); });
+        filter_typeBig_weaponBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.Weapon, ItemTypeSmall.None); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.Weapon); });
+        filter_typeBig_subhandBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.Subhand, ItemTypeSmall.None); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.Subhand); });
+        filter_typeBig_armorBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.Armor, ItemTypeSmall.None); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.Armor); });
+        filter_typeBig_jewelryBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.Jewelry, ItemTypeSmall.None); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.Jewelry); });
+        filter_typeBig_scrollBtn.onClick.AddListener(delegate () { UpdateList(gc.nowCheckingDistrictID, ItemTypeBig.SkillRoll, ItemTypeSmall.None); UpdateTypeSmallButton(gc.nowCheckingDistrictID, ItemTypeBig.SkillRoll); });
 
         supplyAndDemandBtn.onClick.AddListener(delegate () { SupplyAndDemandPanel.Instance.OnShow(gc.nowCheckingDistrictID, (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x + gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y); }); 
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
@@ -61,10 +61,10 @@ public class MarketPanel : BasePanel
 
 
 
-    public void OnShow(short districtID, ItemTypeBig itemTypeBig, ItemTypeSmall itemTypeSmall, List<int> skillTypeSmall, int x, int y)
+    public void OnShow(short districtID, ItemTypeBig itemTypeBig, ItemTypeSmall itemTypeSmall,  int x, int y)
     {
    
-        UpdateAllInfo(districtID, itemTypeBig, itemTypeSmall, skillTypeSmall);
+        UpdateAllInfo(districtID, itemTypeBig, itemTypeSmall);
         SetAnchoredPosition(x, y);
         isShow = true;
     }
@@ -75,11 +75,11 @@ public class MarketPanel : BasePanel
         isShow = false;
     }
 
-    public void UpdateAllInfo(short districtID, ItemTypeBig itemTypeBig, ItemTypeSmall itemTypeSmall, List<int> skillTypeSmall)
+    public void UpdateAllInfo(short districtID, ItemTypeBig itemTypeBig, ItemTypeSmall itemTypeSmall)
     {
         UpdateTypeBigButtonText(districtID);
         UpdateTypeSmallButton(districtID, itemTypeBig);
-        UpdateList(districtID, itemTypeBig, itemTypeSmall, skillTypeSmall);
+        UpdateList(districtID, itemTypeBig, itemTypeSmall);
     }
 
     public void UpdateTypeBigButtonText(short districtID)
@@ -155,37 +155,37 @@ public class MarketPanel : BasePanel
                 filter_typeSmall_allText.text="全部["+ (sword+ axe+ spear+ hammer+ bow+ staff) + "]";
                 filter_typeSmall_allBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_allBtn.onClick.RemoveAllListeners();
-                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, null); });
+                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None); });
 
                 filter_typeSmall_btnList[0].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[0].text = "剑[" + sword + "]";
                 filter_typeSmall_btnList[0].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Sword, null); });
+                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Sword); });
 
                 filter_typeSmall_btnList[1].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[1].text = "斧[" + axe + "]";
                 filter_typeSmall_btnList[1].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Axe, null); });
+                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Axe); });
 
                 filter_typeSmall_btnList[2].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[2].text = "枪[" + spear + "]";
                 filter_typeSmall_btnList[2].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[2].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Spear, null); });
+                filter_typeSmall_btnList[2].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Spear); });
 
                 filter_typeSmall_btnList[3].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[3].text = "锤[" + hammer + "]";
                 filter_typeSmall_btnList[3].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[3].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Hammer, null); });
+                filter_typeSmall_btnList[3].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Hammer); });
 
                 filter_typeSmall_btnList[4].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[4].text = "弓[" + bow + "]";
                 filter_typeSmall_btnList[4].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[4].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Bow, null); });
+                filter_typeSmall_btnList[4].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Bow); });
 
                 filter_typeSmall_btnList[5].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[5].text = "杖[" + staff + "]";
                 filter_typeSmall_btnList[5].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[5].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Staff, null); });
+                filter_typeSmall_btnList[5].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Staff); });
 
                 for (byte i = 6; i < 13; i++)
                 {
@@ -209,17 +209,17 @@ public class MarketPanel : BasePanel
                 filter_typeSmall_allText.text = "全部[" + (shield + dorlach ) + "]";
                 filter_typeSmall_allBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_allBtn.onClick.RemoveAllListeners();
-                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, null); });
+                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None); });
 
                 filter_typeSmall_btnList[0].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[0].text = "盾[" + shield + "]";
                 filter_typeSmall_btnList[0].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Shield, null); });
+                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Shield); });
 
                 filter_typeSmall_btnList[1].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[1].text = "箭袋[" + dorlach + "]";
                 filter_typeSmall_btnList[1].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Dorlach, null); });
+                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Dorlach); });
 
 
                 for (byte i = 3; i < 13; i++)
@@ -260,57 +260,57 @@ public class MarketPanel : BasePanel
                 filter_typeSmall_allText.text = "全部[" + (headH + bodyH+ handH+ backH+ footH+ headL+ bodyL+handL+ backL+ footL) + "]";
                 filter_typeSmall_allBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_allBtn.onClick.RemoveAllListeners();
-                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, null); });
+                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None); });
 
                 filter_typeSmall_btnList[0].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[0].text = "头(重)[" + headH + "]";
                 filter_typeSmall_btnList[0].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.HeadH, null); });
+                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.HeadH); });
 
                 filter_typeSmall_btnList[1].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[1].text = "身(重)[" + bodyH + "]";
                 filter_typeSmall_btnList[1].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.BodyH, null); });
+                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.BodyH); });
 
                 filter_typeSmall_btnList[2].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[2].text = "手(重)[" + handH + "]";
                 filter_typeSmall_btnList[2].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[2].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.HandH, null); });
+                filter_typeSmall_btnList[2].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.HandH); });
 
                 filter_typeSmall_btnList[3].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[3].text = "背(重)[" + backH + "]";
                 filter_typeSmall_btnList[3].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[3].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.BackH, null); });
+                filter_typeSmall_btnList[3].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.BackH); });
 
                 filter_typeSmall_btnList[4].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[4].text = "腿(重)[" + footH + "]";
                 filter_typeSmall_btnList[4].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[4].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.FootH, null); });
+                filter_typeSmall_btnList[4].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.FootH); });
 
                 filter_typeSmall_btnList[5].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[5].text = "头(轻)[" + headL + "]";
                 filter_typeSmall_btnList[5].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[5].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.HeadL, null); });
+                filter_typeSmall_btnList[5].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.HeadL); });
 
                 filter_typeSmall_btnList[6].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[6].text = "身(轻)[" + bodyL + "]";
                 filter_typeSmall_btnList[6].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[6].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.BodyL, null); });
+                filter_typeSmall_btnList[6].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.BodyL); });
 
                 filter_typeSmall_btnList[7].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[7].text = "手(轻)[" + handL + "]";
                 filter_typeSmall_btnList[7].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[7].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.HandL, null); });
+                filter_typeSmall_btnList[7].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.HandL); });
 
                 filter_typeSmall_btnList[8].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[8].text = "背(轻)[" + backL + "]";
                 filter_typeSmall_btnList[8].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[8].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.BackL, null); });
+                filter_typeSmall_btnList[8].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.BackL); });
 
                 filter_typeSmall_btnList[9].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[9].text = "腿(轻)[" + footL + "]";
                 filter_typeSmall_btnList[9].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[9].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.FootL, null); });
+                filter_typeSmall_btnList[9].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.FootL); });
 
                 for (byte i = 10; i < 13; i++)
                 {
@@ -334,17 +334,17 @@ public class MarketPanel : BasePanel
                 filter_typeSmall_allText.text = "全部[" + (neck + finger) + "]";
                 filter_typeSmall_allBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_allBtn.onClick.RemoveAllListeners();
-                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, null); });
+                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None); });
 
                 filter_typeSmall_btnList[0].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[0].text = "项链[" + neck + "]";
                 filter_typeSmall_btnList[0].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Neck, null); });
+                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Neck); });
 
                 filter_typeSmall_btnList[1].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[1].text = "戒指[" + finger + "]";
                 filter_typeSmall_btnList[1].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Finger, null); });
+                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.Finger); });
 
 
                 for (byte i = 3; i < 13; i++)
@@ -370,90 +370,95 @@ public class MarketPanel : BasePanel
                 {
                     if (kvp.Value.districtID == districtID && kvp.Value.isGoods)
                     {
-                        if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(0)){none++;}
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count==1&& DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(1)) { windI++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == 1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(2)) { fireI++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == 1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(3)) { waterI++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == 1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(4)) { groundI++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == 1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(5)) { lightI++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == 1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element.Contains(6)) { darkI++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0]==1 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==5) { windII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==2 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==4) { fireII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==3 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==6) { waterII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==4 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==3) { groundII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==5 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==1) { lightII++; }
-                        else if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[0] ==6 && DataManager.mSkillDict[kvp.Value.prototypeID].Element[1] ==2) { darkII++; }
+                        switch (DataManager.mSkillDict[kvp.Value.prototypeID].TypeSmall)
+                        {
+                            case ItemTypeSmall.ScrollWindI: windI++; break;
+                            case ItemTypeSmall.ScrollFireI: fireI++; break;
+                            case ItemTypeSmall.ScrollWaterI: waterI++; break;
+                            case ItemTypeSmall.ScrollGroundI: groundI++; break;
+                            case ItemTypeSmall.ScrollLightI: lightI++; break;
+                            case ItemTypeSmall.ScrollDarkI: darkI++; break;
+                            case ItemTypeSmall.ScrollNone: none++; break;
+                            case ItemTypeSmall.ScrollWindII: windII++; break;
+                            case ItemTypeSmall.ScrollFireII: fireII++; break;
+                            case ItemTypeSmall.ScrollWaterII: waterII++; break;
+                            case ItemTypeSmall.ScrollGroundII: groundII++; break;
+                            case ItemTypeSmall.ScrollLightII: lightII++; break;
+                            case ItemTypeSmall.ScrollDarkII: darkII++; break;
+
+                        }
+
                     }
                 }
                 filter_typeSmall_allText.text = "全部[" + (none + windI+ fireI+ waterI+ groundI+ lightI+ darkI+ windII+ fireII+ waterII+ groundII+ lightII+ darkII) + "]";
                 filter_typeSmall_allBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_allBtn.onClick.RemoveAllListeners();
-                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, null); });
+                filter_typeSmall_allBtn.onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None); });
 
                 filter_typeSmall_btnList[0].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[0].text = "无[" + none + "]";
                 filter_typeSmall_btnList[0].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 0}); });
+                filter_typeSmall_btnList[0].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollNone); });
 
                 filter_typeSmall_btnList[1].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[1].text = "风[" + windI + "]";
                 filter_typeSmall_btnList[1].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 1 }); });
+                filter_typeSmall_btnList[1].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollWindI); });
 
                 filter_typeSmall_btnList[2].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[2].text = "火[" + fireI + "]";
                 filter_typeSmall_btnList[2].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[2].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 2 }); });
+                filter_typeSmall_btnList[2].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollFireI); });
 
                 filter_typeSmall_btnList[3].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[3].text = "水[" + waterI + "]";
                 filter_typeSmall_btnList[3].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[3].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 3 }); });
+                filter_typeSmall_btnList[3].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollWaterI); });
 
                 filter_typeSmall_btnList[4].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[4].text = "地[" + groundI + "]";
                 filter_typeSmall_btnList[4].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[4].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 4 }); });
+                filter_typeSmall_btnList[4].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollGroundI); });
 
                 filter_typeSmall_btnList[5].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[5].text = "光[" + lightI + "]";
                 filter_typeSmall_btnList[5].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[5].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 5 }); });
+                filter_typeSmall_btnList[5].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollLightI); });
 
                 filter_typeSmall_btnList[6].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[6].text = "暗[" + darkI + "]";
                 filter_typeSmall_btnList[6].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[6].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 6 }); });
+                filter_typeSmall_btnList[6].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollDarkI); });
 
                 filter_typeSmall_btnList[7].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[7].text = "雷[" + windII + "]";
                 filter_typeSmall_btnList[7].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[7].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 1,5 }); });
+                filter_typeSmall_btnList[7].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollWindII); });
 
                 filter_typeSmall_btnList[8].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[8].text = "爆炸[" + fireII + "]";
                 filter_typeSmall_btnList[8].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[8].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 2 ,4}); });
+                filter_typeSmall_btnList[8].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollFireII); });
 
                 filter_typeSmall_btnList[9].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[9].text = "冰[" + waterII + "]";
                 filter_typeSmall_btnList[9].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[9].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 3 ,6}); });
+                filter_typeSmall_btnList[9].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollWaterII); });
 
                 filter_typeSmall_btnList[10].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[10].text = "自然[" + groundII + "]";
                 filter_typeSmall_btnList[10].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[10].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 4 ,3}); });
+                filter_typeSmall_btnList[10].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollGroundII); });
 
                 filter_typeSmall_btnList[11].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[11].text = "时空[" + lightII + "]";
                 filter_typeSmall_btnList[11].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[11].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 5 ,1}); });
+                filter_typeSmall_btnList[11].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollLightII); });
 
                 filter_typeSmall_btnList[12].GetComponent<RectTransform>().localScale = Vector2.one;
                 filter_typeSmall_textList[12].text = "死亡[" + darkII + "]";
                 filter_typeSmall_btnList[12].onClick.RemoveAllListeners();
-                filter_typeSmall_btnList[12].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.None, new List<int> { 6 ,2}); });
+                filter_typeSmall_btnList[12].onClick.AddListener(delegate () { UpdateList(districtID, itemTypeBig, ItemTypeSmall.ScrollDarkII); });
       
                 break;
 
@@ -462,10 +467,9 @@ public class MarketPanel : BasePanel
 
    
 
-    public void UpdateList(short districtID, ItemTypeBig itemTypeBig,ItemTypeSmall itemTypeSmall,List<int> skillTypeSmall)
+    public void UpdateList(short districtID, ItemTypeBig itemTypeBig,ItemTypeSmall itemTypeSmall)
     {
-        Debug.Log("itemTypeBig=" + itemTypeBig + " itemTypeSmall=" +( itemTypeSmall!=null? itemTypeSmall.ToString():"null") + " skillTypeSmall.Count=" + (skillTypeSmall!=null?skillTypeSmall.Count.ToString():"null"));
-
+        
 
         List<ItemObject> itemObjects = new List<ItemObject>();
 
@@ -509,25 +513,10 @@ public class MarketPanel : BasePanel
             {
                 if (kvp.Value.districtID == districtID && kvp.Value.isGoods)
                 {
-                    if (skillTypeSmall != null)//指定了小类
+                    if (itemTypeSmall != ItemTypeSmall.None)//指定了小类
                     {
-                        bool fh = true;
-                        if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == skillTypeSmall.Count)
-                        {
-                            for (byte i = 0; i < DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count; i++)
-                            {
-                                if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[i] != skillTypeSmall[i])
-                                {
-                                    fh = false; break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            fh = false;
-                        }
 
-                        if (fh)
+                        if (DataManager.mSkillDict[kvp.Value.prototypeID].TypeSmall == itemTypeSmall)
                         {
                             skillObjects.Add(kvp.Value);
                         }

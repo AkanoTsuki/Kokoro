@@ -191,19 +191,19 @@ public class SupplyAndDemandPanel : BasePanel
         UpdateSingle(districtID, ItemTypeSmall.BackL);
         UpdateSingle(districtID, ItemTypeSmall.FootL);
 
-        UpdateSingle(districtID, new List<int> { 1 });
-        UpdateSingle(districtID, new List<int> { 2 });
-        UpdateSingle(districtID, new List<int> { 3 });
-        UpdateSingle(districtID, new List<int> { 4 });
-        UpdateSingle(districtID, new List<int> { 5 });
-        UpdateSingle(districtID, new List<int> { 6 });
-        UpdateSingle(districtID, new List<int> { 0 });
-        UpdateSingle(districtID, new List<int> { 1, 5 });
-        UpdateSingle(districtID, new List<int> { 2, 4 });
-        UpdateSingle(districtID, new List<int> { 3, 6 });
-        UpdateSingle(districtID, new List<int> { 4, 3 });
-        UpdateSingle(districtID, new List<int> { 5, 1 });
-        UpdateSingle(districtID, new List<int> { 6, 2 });
+        UpdateSingle(districtID, ItemTypeSmall.ScrollWindI);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollFireI);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollWaterI);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollGroundI);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollLightI);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollDarkI);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollNone);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollWindII);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollFireII);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollWaterII);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollGroundII);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollLightII);
+        UpdateSingle(districtID, ItemTypeSmall.ScrollDarkII);
     }
 
 
@@ -244,6 +244,21 @@ public class SupplyAndDemandPanel : BasePanel
             case ItemTypeSmall.HandL: value = gc.supplyAndDemand.armorHandLValue[districtID]; rank = gc.supplyAndDemand.armorHandLRank[districtID]; num = gc.salesRecordDic[yearMonth].armorHandLNum[districtID]; break;
             case ItemTypeSmall.BackL: value = gc.supplyAndDemand.armorBackLValue[districtID]; rank = gc.supplyAndDemand.armorBackLRank[districtID]; num = gc.salesRecordDic[yearMonth].armorBackLNum[districtID]; break;
             case ItemTypeSmall.FootL: value = gc.supplyAndDemand.armorFootLValue[districtID]; rank = gc.supplyAndDemand.armorFootLRank[districtID]; num = gc.salesRecordDic[yearMonth].armorFootLNum[districtID]; break;
+
+            case ItemTypeSmall.ScrollWindI: value = gc.supplyAndDemand.scrollWindIValue[districtID]; rank = gc.supplyAndDemand.scrollWindIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollWindINum[districtID]; break;
+            case ItemTypeSmall.ScrollFireI: value = gc.supplyAndDemand.scrollFireIValue[districtID]; rank = gc.supplyAndDemand.scrollFireIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollFireINum[districtID]; break;
+            case ItemTypeSmall.ScrollWaterI: value = gc.supplyAndDemand.scrollWaterIValue[districtID]; rank = gc.supplyAndDemand.scrollWaterIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollWaterINum[districtID]; break;
+            case ItemTypeSmall.ScrollGroundI: value = gc.supplyAndDemand.scrollGroundIValue[districtID]; rank = gc.supplyAndDemand.scrollGroundIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollGroundINum[districtID]; break;
+            case ItemTypeSmall.ScrollLightI: value = gc.supplyAndDemand.scrollLightIValue[districtID]; rank = gc.supplyAndDemand.scrollLightIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollLightINum[districtID]; break;
+            case ItemTypeSmall.ScrollDarkI: value = gc.supplyAndDemand.scrollDarkIValue[districtID]; rank = gc.supplyAndDemand.scrollDarkIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollDarkINum[districtID]; break;
+            case ItemTypeSmall.ScrollNone: value = gc.supplyAndDemand.scrollNoneValue[districtID]; rank = gc.supplyAndDemand.scrollNoneRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollNoneNum[districtID]; break;
+            case ItemTypeSmall.ScrollWindII: value = gc.supplyAndDemand.scrollWindIIValue[districtID]; rank = gc.supplyAndDemand.scrollWindIIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollWindIINum[districtID]; break;
+            case ItemTypeSmall.ScrollFireII: value = gc.supplyAndDemand.scrollFireIIValue[districtID]; rank = gc.supplyAndDemand.scrollFireIIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollFireIINum[districtID]; break;
+            case ItemTypeSmall.ScrollWaterII: value = gc.supplyAndDemand.scrollWaterIIValue[districtID]; rank = gc.supplyAndDemand.scrollWaterIIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollWaterIINum[districtID]; break;
+            case ItemTypeSmall.ScrollGroundII: value = gc.supplyAndDemand.scrollGroundIIValue[districtID]; rank = gc.supplyAndDemand.scrollGroundIIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollGroundIINum[districtID]; break;
+            case ItemTypeSmall.ScrollLightII: value = gc.supplyAndDemand.scrollLightIIValue[districtID]; rank = gc.supplyAndDemand.scrollLightIIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollLightIINum[districtID]; break;
+            case ItemTypeSmall.ScrollDarkII: value = gc.supplyAndDemand.scrollDarkIIValue[districtID]; rank = gc.supplyAndDemand.scrollDarkIIRank[districtID]; num = gc.salesRecordDic[yearMonth].scrollDarkIINum[districtID]; break;
+
             default:
                 rank = 0; break;
         }
@@ -404,255 +419,67 @@ public class SupplyAndDemandPanel : BasePanel
 
     }
 
-    void UpdateSingle(short districtID,List<int> itemTypeSmall)
-    {
-        string str = "";
-        short value = 0;
-        byte rank=0;
-        int have = getHave(districtID, itemTypeSmall); ;
-        int num = 0;
-
-
-        string yearMonth = gc.timeYear + "/" + gc.timeMonth;
-
-        if (itemTypeSmall.Count==1&& itemTypeSmall.Contains(1))
-        {
-            value = gc.supplyAndDemand.scrollWindIValue[districtID]; 
-            rank = gc.supplyAndDemand.scrollWindIRank[districtID]; 
-            num = gc.salesRecordDic[yearMonth].scrollWindINum[districtID];
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(2))
-        {
-            value = gc.supplyAndDemand.scrollFireIValue[districtID];
-            rank = gc.supplyAndDemand.scrollFireIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollFireINum[districtID];
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(3))
-        {
-            value = gc.supplyAndDemand.scrollWaterIValue[districtID];
-            rank = gc.supplyAndDemand.scrollWaterIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollWaterINum[districtID];
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(4))
-        {
-            value = gc.supplyAndDemand.scrollGroundIValue[districtID];
-            rank = gc.supplyAndDemand.scrollGroundIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollGroundINum[districtID];
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(5))
-        {
-            value = gc.supplyAndDemand.scrollLightIValue[districtID];
-            rank = gc.supplyAndDemand.scrollLightIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollLightINum[districtID];
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(6))
-        {
-            value = gc.supplyAndDemand.scrollDarkIValue[districtID];
-            rank = gc.supplyAndDemand.scrollDarkIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollDarkINum[districtID];
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(0))
-        {
-            value = gc.supplyAndDemand.scrollNoneValue[districtID];
-            rank = gc.supplyAndDemand.scrollNoneRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollNoneNum[districtID];
-        }
-        else if (itemTypeSmall[0] == 1 && itemTypeSmall[1] == 5)
-        {
-            value = gc.supplyAndDemand.scrollWindIIValue[districtID];
-            rank = gc.supplyAndDemand.scrollWindIIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollWindIINum[districtID];
-        }
-        else if (itemTypeSmall[0] == 2 && itemTypeSmall[1] ==4)
-        {
-            value = gc.supplyAndDemand.scrollFireIIValue[districtID];
-            rank = gc.supplyAndDemand.scrollFireIIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollFireIINum[districtID];
-        }
-        else if (itemTypeSmall[0] == 3 && itemTypeSmall[1] ==6)
-        {
-            value = gc.supplyAndDemand.scrollWaterIIValue[districtID];
-            rank = gc.supplyAndDemand.scrollWaterIIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollWaterIINum[districtID];
-        }
-        else if (itemTypeSmall[0] == 4 && itemTypeSmall[1] ==3)
-        {
-            value = gc.supplyAndDemand.scrollGroundIIValue[districtID];
-            rank = gc.supplyAndDemand.scrollGroundIIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollGroundIINum[districtID];
-        }
-        else if (itemTypeSmall[0] == 5 && itemTypeSmall[1] ==1)
-        {
-            value = gc.supplyAndDemand.scrollLightIIValue[districtID];
-            rank = gc.supplyAndDemand.scrollLightIIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollLightIINum[districtID];
-        }
-        else if (itemTypeSmall[0] == 6 && itemTypeSmall[1] ==2)
-        {
-            value = gc.supplyAndDemand.scrollDarkIIValue[districtID];
-            rank = gc.supplyAndDemand.scrollDarkIIRank[districtID];
-            num = gc.salesRecordDic[yearMonth].scrollDarkIINum[districtID];
-        }
-
-        switch (rank)
-        {
-            case 0: str += "倾向 "; break;
-            case 1: str += "倾向 一般"; break;
-            case 2: str += "倾向 良好"; break;
-            case 3: str += "倾向 高档"; break;
-        }
-        str += "\n销量 " + num + "\n库存 " + have;
-
-
-        if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(1))
-        {
-            scrollWindIDesText.text = str;
-            scrollWindIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollWindIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollWindIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollWindIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(2))
-        {
-            scrollFireIDesText.text = str;
-            scrollFireIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollFireIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollFireIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollFireIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(3))
-        {
-            scrollWaterIDesText.text = str;
-            scrollWaterIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollWaterIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollWaterIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollWaterIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(4))
-        {
-            scrollGroundIDesText.text = str;
-            scrollGroundIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollGroundIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollGroundIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollGroundIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(5))
-        {
-            scrollLightIDesText.text = str;
-            scrollLightIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollLightIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollLightIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollLightIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(6))
-        {
-            scrollDarkIDesText.text = str;
-            scrollDarkIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollDarkIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollDarkIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollDarkIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall.Count == 1 && itemTypeSmall.Contains(0))
-        {
-            scrollNoneDesText.text = str;
-            scrollNoneValueImage.color = value > 0 ? cGreen : cRed;
-            scrollNoneValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollNoneValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollNoneValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall[0] == 1 && itemTypeSmall[1] == 5)
-        {
-            scrollWindIIDesText.text = str;
-            scrollWindIIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollWindIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollWindIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollWindIIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall[0] == 2 && itemTypeSmall[1] == 4)
-        {
-            scrollFireIIDesText.text = str;
-            scrollFireIIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollFireIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollFireIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollFireIIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall[0] == 3 && itemTypeSmall[1] == 6)
-        {
-            scrollWaterIIDesText.text = str;
-            scrollWaterIIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollWaterIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollWaterIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollWaterIIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall[0] == 4 && itemTypeSmall[1] == 3)
-        {
-            scrollGroundIIDesText.text = str;
-            scrollGroundIIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollGroundIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollGroundIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollGroundIIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall[0] == 5 && itemTypeSmall[1] == 1)
-        {
-            scrollLightIIDesText.text = str;
-            scrollLightIIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollLightIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollLightIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollLightIIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-        else if (itemTypeSmall[0] == 6 && itemTypeSmall[1] == 2)
-        {
-            scrollDarkIIDesText.text = str;
-            scrollDarkIIValueImage.color = value > 0 ? cGreen : cRed;
-            scrollDarkIIValueImage.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0.0f, (value > 0 ? 0.0f : 180.0f), 0.0f);
-            scrollDarkIIValueImage.GetComponent<RectTransform>().sizeDelta = new Vector2(System.Math.Abs(value) / 100f * 32, 16f);
-            scrollDarkIIValueText.text = (value > 0 ? "+" : "") + value;
-        }
-
-    }
-
+    
     int getHave(short districtID, ItemTypeSmall itemTypeSmall)
     {
         int have =0;
-        foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
+        switch (itemTypeSmall)
         {
-            if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1 && kvp.Value.isGoods == true && DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == itemTypeSmall)
-            {
-                have++;
-            }
+            case ItemTypeSmall.Sword:
+            case ItemTypeSmall.Axe:
+            case ItemTypeSmall.Spear:
+            case ItemTypeSmall.Hammer:
+            case ItemTypeSmall.Bow:
+            case ItemTypeSmall.Staff:
+            case ItemTypeSmall.Shield:
+            case ItemTypeSmall.Dorlach:
+            case ItemTypeSmall.Neck:
+            case ItemTypeSmall.Finger:
+            case ItemTypeSmall.HeadH:
+            case ItemTypeSmall.BodyH:
+            case ItemTypeSmall.HandH:
+            case ItemTypeSmall.BackH:
+            case ItemTypeSmall.FootH:
+            case ItemTypeSmall.HeadL:
+            case ItemTypeSmall.BodyL:
+            case ItemTypeSmall.HandL:
+            case ItemTypeSmall.BackL:
+            case ItemTypeSmall.FootL:
+                foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
+                {
+                    if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1 && kvp.Value.isGoods == true && DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == itemTypeSmall)
+                    {
+                        have++;
+                    }
+                }
+                break;
+            case ItemTypeSmall.ScrollWindI:
+            case ItemTypeSmall.ScrollFireI:
+            case ItemTypeSmall.ScrollWaterI:
+            case ItemTypeSmall.ScrollGroundI:
+            case ItemTypeSmall.ScrollLightI:
+            case ItemTypeSmall.ScrollDarkI:
+            case ItemTypeSmall.ScrollNone:
+            case ItemTypeSmall.ScrollWindII:
+            case ItemTypeSmall.ScrollFireII:
+            case ItemTypeSmall.ScrollWaterII:
+            case ItemTypeSmall.ScrollGroundII:
+            case ItemTypeSmall.ScrollLightII:
+            case ItemTypeSmall.ScrollDarkII:
+                foreach (KeyValuePair<int, SkillObject> kvp in gc.skillDic)
+                {
+                    if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1 && kvp.Value.isGoods == true && DataManager.mSkillDict[kvp.Value.prototypeID].TypeSmall == itemTypeSmall)
+                    {
+                        have++;
+                    }
+                }
+                break;
         }
+
+
+      
         return have;
     }
 
-    int getHave(short districtID, List<int> skillTypeSmall)
-    {
-        int have = 0;
-        foreach (KeyValuePair<int, SkillObject> kvp in gc.skillDic)
-        {
-            if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1 && kvp.Value.isGoods == true )
-            {
-                bool fh = true;
-                if (DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count == skillTypeSmall.Count)
-                {
-                    for (byte i = 0; i < DataManager.mSkillDict[kvp.Value.prototypeID].Element.Count; i++)
-                    {
-                        if (DataManager.mSkillDict[kvp.Value.prototypeID].Element[i] != skillTypeSmall[i])
-                        {
-                            fh = false; break;
-                        }
-                    }
-                }
-                else
-                {
-                    fh = false;
-                }
-                if (fh)
-                {
-                    have++;
-                }
-              
-            }
-        }
-        return have;
-    }
+   
 }
