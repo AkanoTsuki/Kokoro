@@ -42,8 +42,9 @@ public class GameControlInPlay : MonoBehaviour
                 gc.AdventureEventHappen(i);
             }
         }
-
-        InvokeRepeating("TimeFlow", 0, 0.05f / gc.timeFlowSpeed);
+        Time.timeScale = gc.timeFlowSpeed;
+        PlayMainPanel.Instance.UpdateTimeButtonState();
+        InvokeRepeating("TimeFlow", 0, 0.05f );
 
 
     }
@@ -157,6 +158,13 @@ public class GameControlInPlay : MonoBehaviour
                         gc.executeEventList.RemoveAt(0);
 
                         break;
+                    case ExecuteEventType.BuildingUpgrade:
+                        districtID = (short)gc.executeEventList[0].value[0][0];
+                        buildingID = gc.executeEventList[0].value[1][0];
+                        gc.BuildingUpgradeDone((short)buildingID);
+                        gc.executeEventList.RemoveAt(0);
+
+                        break;
                     case ExecuteEventType.Adventure:
                         byte teamID = (byte)gc.executeEventList[0].value[0][0];
 
@@ -177,21 +185,24 @@ public class GameControlInPlay : MonoBehaviour
     public void TimePause()
     {
         gc.timeFlowSpeed = 0;
-        CancelInvoke("TimeFlow");
+        Time.timeScale = gc.timeFlowSpeed;
+        //CancelInvoke("TimeFlow");
         PlayMainPanel.Instance.UpdateTimeButtonState();
     }
     public void TimePlay()
     {
         gc.timeFlowSpeed = 1;
-        CancelInvoke("TimeFlow");
-        InvokeRepeating("TimeFlow", 0, 0.05f /gc.timeFlowSpeed);
+        Time.timeScale = gc.timeFlowSpeed;
+        //CancelInvoke("TimeFlow");
+        //InvokeRepeating("TimeFlow", 0, 0.05f /gc.timeFlowSpeed);
         PlayMainPanel.Instance.UpdateTimeButtonState();
     }
     public void TimeFast()
     {
         gc.timeFlowSpeed = 2;
-        CancelInvoke("TimeFlow");
-        InvokeRepeating("TimeFlow", 0, 0.05f / gc.timeFlowSpeed);
+        Time.timeScale = gc.timeFlowSpeed;
+        //CancelInvoke("TimeFlow");
+        //InvokeRepeating("TimeFlow", 0, 0.05f / gc.timeFlowSpeed);
         PlayMainPanel.Instance.UpdateTimeButtonState();
     }
 

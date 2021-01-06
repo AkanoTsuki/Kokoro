@@ -17,11 +17,7 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
     void Start()
     {
         gc = GameObject.Find("GameManager").GetComponent<GameControl>();
-        if (labelType == LabelType.BuildingInBuild)
-        {
-            btn.onClick.AddListener(delegate () { gc.CreateBuildEvent((short)index); });
-        }
-        else if (labelType == LabelType.Item)
+        if (labelType == LabelType.Item)
         {
             btn.onClick.AddListener(delegate ()
             {

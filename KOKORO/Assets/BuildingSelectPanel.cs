@@ -163,7 +163,11 @@ public class BuildingSelectPanel : BasePanel
             {
                 go.transform.GetChild(2).GetComponent<Text>().text = "建造中";
             }
-            else
+            else if (temp[i].buildProgress == 2)
+            {
+                go.transform.GetChild(2).GetComponent<Text>().text = "升级中";
+            }
+            else if (temp[i].buildProgress == 1)
             {
                 switch (temp[i].panelType)
                 {
@@ -203,7 +207,7 @@ public class BuildingSelectPanel : BasePanel
             go.transform.GetComponent<InteractiveLabel>().index = temp[i].id;
             int index = temp[i].id;
             go.transform.GetComponent<Button>().onClick.RemoveAllListeners();
-            go.transform.GetComponent<Button>().onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index], (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ goRt.sizeDelta.x+ GameControl.spacing), -88, -45); });
+            go.transform.GetComponent<Button>().onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index], (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ goRt.sizeDelta.x+ GameControl.spacing), -88); });
 
 
         }

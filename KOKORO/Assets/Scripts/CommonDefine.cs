@@ -27,6 +27,15 @@ public enum StuffType
     Dark
 }
 
+//顾客访问的商店类型
+public enum ShopType
+{
+    WeaponAndSubhand,
+    Armor,
+    Jewelry,
+    Scroll
+}
+
 //交互小标签类型
 public enum LabelType
 {
@@ -281,7 +290,8 @@ public enum ExecuteEventType
     Build,
     ProduceItem,
     ProduceResource,
-    Adventure
+    Adventure,
+    BuildingUpgrade
 }
 
 public class ItemAttribute
@@ -1226,7 +1236,7 @@ public class BuildingObject
     private byte ELight;
     private byte EDark;
     private short ProduceEquipNow;//当前生产的装备模板原型ID 如果是资源类则对应资源生产关系表
-    private byte BuildProgress;//0建设中 1已完成
+    private byte BuildProgress;//0建设中 1已完成 2升级中
     public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, string mapPic, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
         byte natureGrass, byte natureWood, byte natureWater, byte natureStone, byte natureMetal, short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
@@ -2249,43 +2259,51 @@ public class CustomerObject
     private string Name;
     private string Pic;
     private int Gold;
-    private short DistrictID;
-    private List<ItemTypeBig> NeedItemTypeBig;
-    private List<ItemTypeSmall> NeedItemTypeSmall;
-    private List<List<int>> NeedSkillTypeSmall;
-    private List<short> NeedItemID;//原型ID
-    private List<short> NeedSkillID;
-    private List<short> NeedNum;
-    private List<byte> NeedRank;
-    public CustomerObject(int id, string name, string pic, int gold, short districtID,
-        List<ItemTypeBig> needItemTypeBig, List<ItemTypeSmall> needItemTypeSmall, List<List<int>> needSkillTypeSmall, List<short> needItemID, List<short> needSkillID,
-        List<short> needNum, List<byte> needRank)
+    private short DistrictID;//访问的地区
+    private ShopType ShopType;
+    private List<BucketList> BucketList;
+
+    public CustomerObject(int id, string name, string pic, int gold, short districtID, ShopType shopType, List<BucketList> bucketList
+        )
     {
         this.ID = id;
         this.Name = name;
         this.Pic = pic;
         this.Gold = gold;
         this.DistrictID = districtID;
-        this.NeedItemTypeBig = needItemTypeBig;
-        this.NeedItemTypeSmall = needItemTypeSmall;
-        this.NeedSkillTypeSmall = needSkillTypeSmall;
-        this.NeedItemID = needItemID;
-        this.NeedSkillID = needSkillID;
-        this.NeedNum = needNum;
-        this.NeedRank = needRank;
+        this.ShopType = shopType;
+        this.BucketList = bucketList;
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } }
     public string pic { get { return Pic; } }
     public int gold { get { return Gold; } set { Gold = value; } }
     public short districtID { get { return DistrictID; } }
-    public List<ItemTypeBig> needItemTypeBig { get { return NeedItemTypeBig; } }
-    public List<ItemTypeSmall> needItemTypeSmall { get { return NeedItemTypeSmall; } }
-    public List<List<int>> needSkillTypeSmall { get { return NeedSkillTypeSmall; } }
-    public List<short> needItemID { get { return NeedItemID; } }
-    public List<short> needSkillID { get { return NeedSkillID; } }
-    public List<short> needNum { get { return NeedNum; } }
-    public List<byte> needRank { get { return NeedRank; } }
+    public ShopType shopType { get { return ShopType; } }
+    public List<BucketList> bucketList { get { return BucketList; } }
+}
+
+//愿望单
+public class BucketList
+{
+    private ItemTypeBig TypeBig;
+    private ItemTypeSmall TypeSmall;
+    private short PrototypeID;//原型ID
+    private short Num;
+    private byte Rank;
+    public BucketList(ItemTypeBig typeBig, ItemTypeSmall typeSmall, short prototypeID, short num, byte rank)
+    {
+        this.TypeBig = typeBig;
+        this.TypeSmall = typeSmall;
+        this.PrototypeID = prototypeID;
+        this.Num = num;
+        this.Rank = rank;
+    }
+    public ItemTypeBig typeBig { get { return TypeBig; } }
+    public ItemTypeSmall typeSmall { get { return TypeSmall; } }
+    public short prototypeID { get { return PrototypeID; } }
+    public short num { get { return Num; } }
+    public byte rank { get { return Rank; } }
 }
 
 //装备词条原型

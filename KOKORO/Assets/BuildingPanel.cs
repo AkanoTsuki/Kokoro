@@ -45,6 +45,17 @@ public class BuildingPanel : BasePanel
     public Button setForge_updateBtn;
 
     public List<Button> totalSet_btnList;
+
+    public RectTransform upgradeBlockRt;
+    public Text upgradeBlock_nameText;
+    public Text upgradeBlock_desText;
+    public Button upgradeBlock_cancelBtn;
+    public Button upgradeBlock_confrimBtn;
+
+    public RectTransform pullDownBlockRt;
+    public Button pullDownBlock_cancelBtn;
+    public Button pullDownBlock_confrimBtn;
+
     public Button closeBtn;
 
     public int setForgeTypeSmall = 0;
@@ -60,13 +71,15 @@ public class BuildingPanel : BasePanel
 
     void Start()
     {
+        upgradeBlock_cancelBtn.onClick.AddListener(delegate () { HideUpgradeBlock(); });
+        pullDownBlock_cancelBtn.onClick.AddListener(delegate () { HidePullDownBlock(); });
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
         
         setForge_typeDd.onValueChanged.AddListener(delegate  { setForgeType = setForge_typeDd.value; UpdateSetForgeOutputInput(nowCheckingBuildingID, setForgeType, setForgeLevel); });
         setForge_levelDd.onValueChanged.AddListener(delegate { setForgeLevel = setForge_levelDd.value; UpdateSetForgeOutputInput(nowCheckingBuildingID, setForgeType, setForgeLevel); });
     }
 
-    public void OnShow(BuildingObject buildingObject, int x, int y, int connY)
+    public void OnShow(BuildingObject buildingObject, int x, int y)
     {
         nowCheckingBuildingID = buildingObject.id;
         switch (buildingObject.panelType)
@@ -85,7 +98,8 @@ public class BuildingPanel : BasePanel
         setWorker_addBtn.onClick.RemoveAllListeners();
         setWorker_addBtn.onClick.AddListener(delegate () { gc.BuildingWorkerAdd(buildingObject.id); });
 
-    
+        HideUpgradeBlock();
+        HidePullDownBlock();
     }
 
     public override void OnHide()
@@ -95,7 +109,7 @@ public class BuildingPanel : BasePanel
         nowCheckingBuildingID = -1;
     }
 
-
+    //制作设施模板配置
     public void UpdateForge(BuildingObject buildingObject)
     {
         UpdateBasicPart(buildingObject);
@@ -106,7 +120,7 @@ public class BuildingPanel : BasePanel
         UpdateSetForgePart(buildingObject);
         UpdateTotalSetButton(buildingObject);
     }
-
+    //基础资源设施模板配置
     public void UpdateResource(BuildingObject buildingObject)
     {
         UpdateBasicPart(buildingObject);
@@ -123,56 +137,71 @@ public class BuildingPanel : BasePanel
     //
     public void UpdateTotalSetButton(BuildingObject buildingObject)
     {
+        byte buttonIndex = 0;
         switch (buildingObject.panelType)
-        { 
+        {
             case "Resource":
                 //开工停工
-                totalSet_btnList[0].GetComponent<RectTransform>().localScale = Vector3.one;
-                totalSet_btnList[0].onClick.RemoveAllListeners();
-                if (buildingObject.produceEquipNow != -1)
+                if (buildingObject.buildProgress == 1)
                 {
-                    totalSet_btnList[0].transform.GetChild(0).GetComponent<Text>().text = "停工";
-                    totalSet_btnList[0].onClick.AddListener(delegate () {
-                        gc.StopProduceResource(buildingObject.id);
-                        UpdateTotalSetButton(buildingObject);
-                        if (BuildingSelectPanel.Instance.isShow)
-                        {
-                            BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
-                        }
-                    });
-                }
-                else
-                {
-                    totalSet_btnList[0].transform.GetChild(0).GetComponent<Text>().text = "开工";
-                    totalSet_btnList[0].onClick.AddListener(delegate () {
-                        if (buildingObject.workerNow == 0 )
-                        {
-                            MessagePanel.Instance.AddMessage("缺少工人，无法开工");
-                        }
-                        else
-                        {
-                            gc.CreateProduceResourceEvent(buildingObject.id); 
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    if (buildingObject.produceEquipNow != -1)
+                    {
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停工";
+                        totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                            gc.StopProduceResource(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
                             if (BuildingSelectPanel.Instance.isShow)
                             {
                                 BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
                             }
-                        }
-                    });
+                        });
+                    }
+                    else
+                    {
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "开工";
+                        totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                            if (buildingObject.workerNow == 0)
+                            {
+                                MessagePanel.Instance.AddMessage("缺少工人，无法开工");
+                            }
+                            else
+                            {
+                                gc.CreateProduceResourceEvent(buildingObject.id);
+                                UpdateTotalSetButton(buildingObject);
+                                if (BuildingSelectPanel.Instance.isShow)
+                                {
+                                    BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                                }
+                            }
+                        });
+                    }
+                    buttonIndex++;
                 }
                 //升级
-                totalSet_btnList[1].GetComponent<RectTransform>().localScale = Vector3.one;
-                totalSet_btnList[1].onClick.RemoveAllListeners();
-                totalSet_btnList[1].transform.GetChild(0).GetComponent<Text>().text = "升级";
-                totalSet_btnList[1].onClick.AddListener(delegate () { /*   */ });
+                if (buildingObject.upgradeTo != -1 && buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "升级";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowUpgradeBlock(buildingObject.id); });
+                    buttonIndex++;
+                }
+
 
                 //拆除
-                totalSet_btnList[2].GetComponent<RectTransform>().localScale = Vector3.one;
-                totalSet_btnList[2].onClick.RemoveAllListeners();
-                totalSet_btnList[2].transform.GetChild(0).GetComponent<Text>().text = "拆除";
-                totalSet_btnList[2].onClick.AddListener(delegate () { /*   */ });
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "拆除";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
+                    buttonIndex++;
+                }
 
-                for (int i = 3; i < 6; i++)
+
+                for (int i = buttonIndex; i < 6; i++)
                 {
                     totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
                 }
@@ -180,52 +209,66 @@ public class BuildingPanel : BasePanel
                 break;
             case "Forge":
                 //开工停工
-                totalSet_btnList[0].GetComponent<RectTransform>().localScale = Vector3.one;
-                totalSet_btnList[0].onClick.RemoveAllListeners();
-                if (buildingObject.produceEquipNow != -1)
+                if (buildingObject.buildProgress == 1)
                 {
-                    totalSet_btnList[0].transform.GetChild(0).GetComponent<Text>().text = "停工";
-                    totalSet_btnList[0].onClick.AddListener(delegate () {
-                        gc.StopProduceItem(buildingObject.id);
-                        UpdateTotalSetButton(buildingObject);
-                        if (BuildingSelectPanel.Instance.isShow)
-                        {
-                            BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
-                        }
-                    });
-                }
-                else
-                {
-                    totalSet_btnList[0].transform.GetChild(0).GetComponent<Text>().text = "开工";
-                    totalSet_btnList[0].onClick.AddListener(delegate () {
-                        if (buildingObject.workerNow == 0)
-                        {
-                            MessagePanel.Instance.AddMessage("缺少工人，无法开工");
-                        }
-                        else
-                        {
-                            gc.CreateProduceItemEvent(buildingObject.id);
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    if (buildingObject.produceEquipNow != -1)
+                    {
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停工";
+                        totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                            gc.StopProduceItem(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
                             if (BuildingSelectPanel.Instance.isShow)
                             {
                                 BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
                             }
-                        }
-                    });
+                        });
+                    }
+                    else
+                    {
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "开工";
+                        totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                            if (buildingObject.workerNow == 0)
+                            {
+                                MessagePanel.Instance.AddMessage("缺少工人，无法开工");
+                            }
+                            else
+                            {
+                                gc.CreateProduceItemEvent(buildingObject.id);
+                                UpdateTotalSetButton(buildingObject);
+                                if (BuildingSelectPanel.Instance.isShow)
+                                {
+                                    BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                                }
+                            }
+                        });
+                    }
+                    buttonIndex++;
                 }
                 //升级
-                totalSet_btnList[1].GetComponent<RectTransform>().localScale = Vector3.one;
-                totalSet_btnList[1].onClick.RemoveAllListeners();
-                totalSet_btnList[1].transform.GetChild(0).GetComponent<Text>().text = "升级";
-                totalSet_btnList[1].onClick.AddListener(delegate () { /*   */ });
+                if (buildingObject.upgradeTo != -1 && buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "升级";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowUpgradeBlock(buildingObject.id); });
+                    buttonIndex++;
+                }
+
 
                 //拆除
-                totalSet_btnList[2].GetComponent<RectTransform>().localScale = Vector3.one;
-                totalSet_btnList[2].onClick.RemoveAllListeners();
-                totalSet_btnList[2].transform.GetChild(0).GetComponent<Text>().text = "拆除";
-                totalSet_btnList[2].onClick.AddListener(delegate () { /*   */ });
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "拆除";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
+                    buttonIndex++;
+                }
 
-                for (int i = 3; i < 6; i++)
+
+                for (int i = buttonIndex; i < 6; i++)
                 {
                     totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
                 }
@@ -242,8 +285,16 @@ public class BuildingPanel : BasePanel
     public void UpdateBasicPart(BuildingObject buildingObject)
     {
         nameText.text = buildingObject.name;
+        if (buildingObject.buildProgress == 0)
+        {
+            nameText.text += "<color=#BC6223>(建造中)</color>";
+        }
+        else if (buildingObject.buildProgress == 2)
+        {
+            nameText.text += "<color=#BC6223>(升级中)</color>";
+        }
         picImage.overrideSprite = Resources.Load("Image/BuildingPic/" + buildingObject.mainPic, typeof(Sprite)) as Sprite;
-        desText.text = gc.OutputSignStr("★", buildingObject.level) + "[维护费 " + buildingObject.expense+"金币/月]\n"+ buildingObject.des;
+        desText.text =  "[维护费 " + buildingObject.expense+"金币/月]\n"+ buildingObject.des;
     }
 
     public void UpdateOutputInfoPart(BuildingObject buildingObject)
@@ -582,13 +633,20 @@ public class BuildingPanel : BasePanel
             setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "生产";
         }
         setForge_updateBtn.onClick.RemoveAllListeners();
-        setForge_updateBtn.onClick.AddListener(delegate () { 
-            gc.ChangeProduceEquipNow(buildingObject.id);
-            UpdateSetForgePart(buildingObject);
-            UpdateTotalSetButton(buildingObject);
-            if (BuildingSelectPanel.Instance.isShow)
+        setForge_updateBtn.onClick.AddListener(delegate () {
+            if (buildingObject.workerNow != 0)
             {
-                BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                gc.ChangeProduceEquipNow(buildingObject.id);
+                UpdateSetForgePart(buildingObject);
+                UpdateTotalSetButton(buildingObject);
+                if (BuildingSelectPanel.Instance.isShow)
+                {
+                    BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                }
+            }
+            else
+            {
+                MessagePanel.Instance.AddMessage("建筑物缺少工人，无法接受该指令");
             }
         });
 
@@ -709,5 +767,120 @@ public class BuildingPanel : BasePanel
     public void HideSetForgePart()
     {
         SetForgeRt.anchoredPosition = new Vector2(278f, 5000f);
+    }
+
+
+    //block
+    void ShowUpgradeBlock(int buildingID)
+    {
+        upgradeBlockRt.localScale = Vector2.one;
+
+        BuildingPrototype bp = DataManager.mBuildingDict[gc.buildingDic[buildingID].upgradeTo];
+        BuildingObject bo = gc.buildingDic[buildingID];
+        upgradeBlock_nameText.text = bp.Name;
+
+        string des = "所需资源\n" + CheckNeedToStr("wood", bp.NeedWood) + CheckNeedToStr("stone", bp.NeedStone) + CheckNeedToStr("metal", bp.NeedMetal) + CheckNeedToStr("gold", bp.NeedGold) +
+                 "\n";
+
+        des += CheckNatureToStr("grid",bo.gridList.Count, bp.Grid, gc.districtDic[bo.districtID].gridEmpty)+
+            CheckNatureToStr("grass", bo.natureGrass, bp.NatureGrass, gc.districtDic[bo.districtID].totalGrass - gc.districtDic[bo.districtID].usedGrass) +
+            CheckNatureToStr("wood", bo.natureWood, bp.NatureWood, gc.districtDic[bo.districtID].totalWood - gc.districtDic[bo.districtID].usedWood) +
+            CheckNatureToStr("water", bo.natureWater, bp.NatureWater, gc.districtDic[bo.districtID].totalWater - gc.districtDic[bo.districtID].usedWater) +
+            CheckNatureToStr("stone", bo.natureStone, bp.NatureStone, gc.districtDic[bo.districtID].totalStone - gc.districtDic[bo.districtID].usedStone) +
+            CheckNatureToStr("metal", bo.natureMetal, bp.NatureMetal, gc.districtDic[bo.districtID].totalMetal - gc.districtDic[bo.districtID].usedMetal) ;
+
+        upgradeBlock_desText.text = des;
+
+        bool canDo = true;
+        if (bp.NeedWood > gc.districtDic[gc.nowCheckingDistrictID].rStuffWood) { canDo = false; }
+        if (bp.NeedStone > gc.districtDic[gc.nowCheckingDistrictID].rStuffStone) { canDo = false; }
+        if (bp.NeedMetal > gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal) { canDo = false; }
+        if (bp.NeedGold > gc.gold) { canDo = false; }
+        if ((bp.Grid - bo.gridList.Count) > gc.districtDic[bo.districtID].gridEmpty) { canDo = false; }
+        if ((bp.NatureGrass - bo.natureGrass) > (gc.districtDic[bo.districtID].totalGrass - gc.districtDic[bo.districtID].usedGrass)) { canDo = false; }
+        if ((bp.NatureWood - bo.natureWood) > (gc.districtDic[bo.districtID].totalWood - gc.districtDic[bo.districtID].usedWood)) { canDo = false; }
+        if ((bp.NatureWater - bo.natureWater) > (gc.districtDic[bo.districtID].totalWater - gc.districtDic[bo.districtID].usedWater)) { canDo = false; }
+        if ((bp.NatureStone - bo.natureStone) > (gc.districtDic[bo.districtID].totalStone - gc.districtDic[bo.districtID].usedStone)) { canDo = false; }
+        if ((bp.NatureMetal - bo.natureMetal )> (gc.districtDic[bo.districtID].totalMetal - gc.districtDic[bo.districtID].usedMetal)) { canDo = false; }
+
+        if (canDo)
+        {
+            upgradeBlock_confrimBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+            upgradeBlock_confrimBtn.onClick.RemoveAllListeners();
+            upgradeBlock_confrimBtn.onClick.AddListener(delegate ()
+            {
+                gc.CreateBuildingUpgradeEvent(buildingID);
+                OnHide();
+                if (BuildingSelectPanel.Instance.isShow)
+                {
+                    BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                }
+                //OnShow(gc.buildingDic[buildingID], (int)GetComponent<RectTransform>().anchoredPosition.x, (int)GetComponent<RectTransform>().anchoredPosition.y);
+            });
+        }
+        else
+        {
+            upgradeBlock_confrimBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+    }
+
+    void HideUpgradeBlock()
+    {
+        upgradeBlockRt.localScale = Vector2.zero;
+    }
+
+    void ShowPullDownBlock(int buildingID)
+    {
+        pullDownBlockRt.localScale = Vector2.one;
+        pullDownBlock_confrimBtn.onClick.RemoveAllListeners();
+        pullDownBlock_confrimBtn.onClick.AddListener(delegate () {
+            gc.BuildingPullDown(buildingID);
+            OnHide();
+            if (BuildingSelectPanel.Instance.isShow)
+            {
+                BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+            }
+        });
+    }
+
+    void HidePullDownBlock()
+    {
+        pullDownBlockRt.localScale = Vector2.zero;
+    }
+
+    string CheckNeedToStr(string type, int value)
+    {
+        switch (type)
+        {
+            case "wood": return "<color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffWood ? "#FF5B5B>" : "white>") + "木材" + value + "</color>";
+            case "stone": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffStone ? "#FF5B5B>" : "white>") + "石料" + value + "</color>";
+            case "metal": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal ? "#FF5B5B>" : "white>") + "金属" + value + "</color>";
+            case "gold": return " <color=" + (value > gc.gold ? "#FF5B5B>" : "white>") + "金币" + value + "</color>";
+            default: return "未定义类型";
+        }
+    }
+    string CheckNatureToStr(string type, int nowValue,int newValue,int DisCanUse)
+    {
+        string str = "";
+        switch (type)
+        {
+            case "grid": str = "地块 "; break;
+            case "grass": str="草地资源占用 ";break;
+            case "wood": str = "森林资源占用 "; break;
+            case "water": str = "水域资源占用 "; break;
+            case "stone": str = "石矿资源占用 "; break;
+            case "metal": str = "金属矿资源占用 "; break;
+            default: return "未定义类型";
+        }
+
+        if (nowValue == newValue)
+        {
+            return "";
+            }
+        else
+        {
+            return "\n"+ str+"<color=" + ((DisCanUse > newValue - nowValue) ? "FF5B5B>" : "white>") + nowValue + "→" + newValue + "(当前可用 " + DisCanUse + ")</color>";
+
+        }
     }
 }

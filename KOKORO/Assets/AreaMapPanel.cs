@@ -66,6 +66,16 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
             AddIconByGrid(gc.buildingDic[buildingID].districtID, buildingID, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].X, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].Y);
         }
     }
+    public void RemoveIconByBuilding(int buildingID)
+    {
+        for (int i = 0; i < gc.buildingDic[buildingID].gridList.Count; i++)
+        {
+            RemoveIconByGrid( DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].X, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].Y);
+        
+        }
+    }
+
+
 
     public void AddIconByGrid(int districtID,int buildingID,int gridX, int gridY)
     {
@@ -98,7 +108,11 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
     }
 
-
+    public void RemoveIconByGrid(int gridX, int gridY)
+    {
+        GameObject go = GameObject.Find("Canvas/AreaMapPanel/Building/" + gridX + "," + gridY);
+        Destroy(go);
+    }
 
     /// <summary>
     /// 拖拽范围限制
