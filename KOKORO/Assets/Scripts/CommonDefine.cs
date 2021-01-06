@@ -703,6 +703,8 @@ public class HeroObject
     private int CountUseLight;
     private int CountUseDark;
     private int CountUseNone;
+    private Dictionary<short,HeroSkill> SkillInfo;
+    private List<string> Log;
     public HeroObject(int id, string name, short prototypeID, short level, int exp,byte sex,string pic, float groupRate,
         float hp, float mp, float hpRenew, float mpRenew,
         float atkMin, float atkMax, float mAtkMin, float mAtkMax, float def, float mDef,
@@ -718,7 +720,7 @@ public class HeroObject
         int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<int> skill,
         int workerInBuilding, short adventureInTeam,
         int countMakeWeapon, int countMakeArmor, int countMakeJewelry, int countMakeScroll, int countKill, int countDeath, int countAdventure, int countAdventureDone,
-        int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone
+        int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone, Dictionary<short, HeroSkill> skillInfo, List<string> log
         )
     {
         this.ID = id;
@@ -816,6 +818,8 @@ public class HeroObject
         this.CountUseLight = countUseLight;
         this.CountUseDark = countUseDark;
         this.CountUseNone = countUseNone;
+        this.SkillInfo = skillInfo;
+        this.Log = log;
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } set { Name = value; } }
@@ -847,7 +851,7 @@ public class HeroObject
     public short baseAtkMax { get { return BaseAtkMax; } }
     public short baseMAtkMin { get { return BaseMAtkMin; } }
     public short baseMAtkMax { get { return BaseMAtkMax; } }
-    public short baseDef { get { return BaseMDef; } }
+    public short baseDef { get { return BaseDef; } }
     public short baseMDef { get { return BaseMDef; } }
     public short baseHit { get { return BaseHit; } }
     public short baseDod { get { return BaseDod; } }
@@ -914,14 +918,31 @@ public class HeroObject
     public int countUseLight { get { return CountUseLight; } set { CountUseLight = value; } }
     public int countUseDark { get { return CountUseDark; } set { CountUseDark = value; } }
     public int countUseNone { get { return CountUseNone; } set { CountUseNone = value; } }
+    public Dictionary<short, HeroSkill> skillInfo  { get { return SkillInfo; } set { SkillInfo = value; } }
+    public List<string> log { get { return Log; } set { Log = value; } }
 }
 
+public class HeroSkill
+{
+    private short SkillID;//模板ID
+    private byte Level;
+    private int Exp;
+    public HeroSkill(short skillID, byte level, int exp)
+    {
+        this.SkillID = skillID;
+        this.Level = level;
+        this.Exp = exp;
+    }
+    public short skillID { get { return SkillID; } }
+    public byte level { get { return Level; } set { Level = value; } }
+    public int exp { get { return Exp; } set { Exp = value; } }
+}
 
 public class CreateHeroRank
 {
-    public int[] Value1;
-    public int[] Value2;
-    public byte[,] Probability;
+    private int[] Value1;
+    private int[] Value2;
+    private byte[,] Probability;
     public CreateHeroRank(int[] value1,int[] value2, byte[,] probability)
     {
         this.Value1 = value1;

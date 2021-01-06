@@ -216,7 +216,7 @@ public class SkillListAndInfoPanel : BasePanel
 
         foreach (KeyValuePair<int, SkillObject> kvp in gc.skillDic)
         {
-            Debug.Log("kvp.Value.districtID=" + kvp.Value.districtID + "districtID=" + districtID + "kvp.Value.heroID=" + kvp.Value.heroID);
+           // Debug.Log("kvp.Value.districtID=" + kvp.Value.districtID + "districtID=" + districtID + "kvp.Value.heroID=" + kvp.Value.heroID);
             if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1 && kvp.Value.isGoods == false)
             {
                 if (element != null)

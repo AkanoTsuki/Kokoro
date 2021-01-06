@@ -78,13 +78,27 @@ public class HeroPanel : BasePanel
     public List<Text> skill_Text;
 
     public Button totalSet_equipBtn;
-   // public Button totalSet_skillBtn;
+    // public Button totalSet_skillBtn;
 
+
+    public RectTransform pageSkillRt;
+    public GameObject pageSkill_listGo;
+
+    public RectTransform pageDataAndHistoryRt;
+    public Text pageDataAndHistory_dataText;
+    public Text pageDataAndHistory_historyText;
+
+    public Button skillBtn;
+    public Button dataAndHistoryBtn;
     public Button closeBtn;
 
     public int nowSelectedHeroID = -1;
     public bool nowEquipState = false;//false为查看模式 true为调整模式
-   // public bool nowSkillState = false;//false为查看模式 true为调整模式
+
+    bool IsShowPageSkill = false;
+    bool IsShowPageDataAndHistory = false;
+    //对象池
+    List<GameObject> skillGoPool = new List<GameObject>();
 
     void Awake()
     {
@@ -94,7 +108,26 @@ public class HeroPanel : BasePanel
 
     void Start()
     {
-
+        skillBtn.onClick.AddListener(delegate () {
+            if (IsShowPageSkill)
+            {
+                HideSkillPage();
+            }
+            else
+            {
+                ShowSkillPage(gc.heroDic[ nowSelectedHeroID]);
+            }
+            });
+        dataAndHistoryBtn.onClick.AddListener(delegate () {
+            if (IsShowPageDataAndHistory)
+            {
+                HideDataAndHistoryPage();
+            }
+            else
+            {
+                ShowDataAndHistoryPage(gc.heroDic[nowSelectedHeroID]);
+            }
+        });
         totalSet_equipBtn.onClick.AddListener(delegate () { nowEquipState = !nowEquipState; UpdateButtonStatus(); });
         //totalSet_skillBtn.onClick.AddListener(delegate () { nowSkillState = !nowSkillState; UpdateButtonStatus(); });
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
@@ -200,6 +233,9 @@ public class HeroPanel : BasePanel
         UpdateWorkInfo(heroObject);
         UpdateEquipAll(heroObject);
         UpdateSkillAll(heroObject);
+
+        HideSkillPage();
+        HideDataAndHistoryPage();
     }
 
     public void UpdateBasicInfo(HeroObject heroObject)
@@ -217,8 +253,8 @@ public class HeroPanel : BasePanel
             (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex==3?
             ("\n薪金 <color=#FFFFFF>150</color>金币/月" +
             ( heroObject.workerInBuilding!=-1?(" <color=#66D5FF>在" + DataManager.mDistrictDict[gc.buildingDic[heroObject.workerInBuilding].districtID].Name+"的"+  gc.buildingDic[heroObject.workerInBuilding].name + "工作</color>") :"")+
-            (heroObject.adventureInTeam!=-1?(" <color=#FF9167>已编入第" + (heroObject.adventureInTeam+1) + "探险队</color>") :"")+
-            "\n制作武器"+ heroObject.countMakeWeapon+"件 制作防具" + heroObject.countMakeArmor + "件 制作饰物" + heroObject.countMakeJewelry + "件 制作卷轴" + heroObject.countMakeScroll+ "件  冒险" + heroObject.countAdventure + "次(完成" + heroObject.countAdventureDone + "次)" + " 击杀" + heroObject.countKill + " 倒下" + heroObject.countDeath ):""
+            (heroObject.adventureInTeam!=-1?(" <color=#FF9167>已编入第" + (heroObject.adventureInTeam+1) + "探险队</color>") :"")
+             ):""
             )+
             "\n"+DataManager.mHeroDict[ heroObject.prototypeID].Des;
     }
@@ -2002,5 +2038,94 @@ public class HeroPanel : BasePanel
             skill_Image[skillIndex].overrideSprite = Resources.Load("Image/Other/icon007", typeof(Sprite)) as Sprite;
             skill_Text[skillIndex].text = "-";
         }
+    }
+
+
+    void ShowSkillPage(HeroObject heroObject)
+    {
+        HideDataAndHistoryPage();
+        pageSkillRt.localScale = Vector2.one;
+        IsShowPageSkill = true;
+
+
+        List<HeroSkill> heroSkills = new List<HeroSkill>();
+        foreach (KeyValuePair<short, HeroSkill> kvp in heroObject.skillInfo)
+        {
+            heroSkills.Add(kvp.Value);
+        }
+
+        GameObject go;
+        for (int i = 0; i < heroSkills.Count; i++)
+        {
+            if (i < skillGoPool.Count)
+            {
+                go = skillGoPool[i];
+                skillGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+            }
+            else
+            {
+                go = Instantiate(Resources.Load("Prefab/UILabel/Label_SkillInHero")) as GameObject;
+                go.transform.SetParent(pageSkill_listGo.transform);
+                skillGoPool.Add(go);
+            }
+
+            int row = i == 0 ? 0 : (i % 3);
+            int col = i == 0 ? 0 : (i / 3);
+            go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 164f, -4 + col * -36f, 0f);
+
+            go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/SkillPic/" +DataManager.mSkillDict[ heroSkills[i].skillID].Pic);
+            go.transform.GetChild(1).GetComponent<Text>().text = DataManager.mSkillDict[heroSkills[i].skillID].Name + " Lv.<color=" + (heroSkills[i].level == 10 ?"yellow>": "white>") + heroSkills[i].level+"</color>";
+            go.transform.GetChild(2).GetComponent<RectTransform>().sizeDelta = new Vector2(heroSkills[i].level!=10?(((float)heroSkills[i].exp/ (heroSkills[i].level*200)) * 124f):124f, 8f);
+
+        }
+        for (int i = heroSkills.Count ; i < skillGoPool.Count; i++)
+        {
+            skillGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+        pageSkill_listGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(505f, Mathf.Max(400f, 4 + (heroSkills.Count / 3) * 36f));
+
+    }
+
+    void HideSkillPage()
+    {
+        pageSkillRt.localScale = Vector2.zero;
+        IsShowPageSkill = false;
+    }
+
+    void ShowDataAndHistoryPage(HeroObject heroObject)
+    {
+        HideSkillPage();
+        pageDataAndHistoryRt.localScale = Vector2.one;
+        IsShowPageDataAndHistory = true;
+
+        int UseTotal = heroObject.countUseWind + heroObject.countUseFire + heroObject.countUseWater + heroObject.countUseGround + heroObject.countUseLight + heroObject.countUseDark+ heroObject.countUseNone;
+        pageDataAndHistory_dataText.text = "制作武器 " + heroObject.countMakeWeapon +
+            " 件\n制作防具 " + heroObject.countMakeArmor +
+            " 件\n制作饰物 " + heroObject.countMakeJewelry +
+            " 件\n制作卷轴 " + heroObject.countMakeScroll +
+            " 件\n\n冒险 " + heroObject.countAdventure +
+            " 次\n 完成 " + heroObject.countAdventureDone +
+            " 次\n击杀 " + heroObject.countKill +
+            " \n倒下 " + heroObject.countDeath +
+            "\n\n无属性技能使用 " + heroObject.countUseNone + " (" + System.Math.Round((float)heroObject.countUseNone / UseTotal*100, 2) + "%)" +
+            "\n风系技能使用 " + heroObject.countUseWind + " (" + System.Math.Round((float)heroObject.countUseWind / UseTotal * 100, 2) + "%)" +
+            "\n火系技能使用 " + heroObject.countUseFire + " (" + System.Math.Round((float)heroObject.countUseFire / UseTotal * 100, 2) + "%)" +
+            "\n水系技能使用 " + heroObject.countUseWater + " (" + System.Math.Round((float)heroObject.countUseWater / UseTotal * 100, 2) + "%)" +
+            "\n地系技能使用 " + heroObject.countUseGround + " (" + System.Math.Round((float)heroObject.countUseGround / UseTotal * 100, 2) + "%)" +
+            "\n光系技能使用 " + heroObject.countUseLight + " (" + System.Math.Round((float)heroObject.countUseLight / UseTotal * 100, 2) + "%)" +
+            "\n暗系技能使用 " + heroObject.countUseDark + " (" + System.Math.Round((float)heroObject.countUseDark / UseTotal * 100, 2) + "%)";
+
+        string log = "";
+        for (int i = heroObject.log.Count - 1; i >= 0; i--)
+        {
+            log += heroObject.log[i] + "\n";
+        }
+        pageDataAndHistory_historyText.text = log;
+    }
+
+    void HideDataAndHistoryPage()
+    {
+        pageDataAndHistoryRt.localScale = Vector2.zero;
+        IsShowPageDataAndHistory = false;
     }
 }

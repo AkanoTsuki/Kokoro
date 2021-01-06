@@ -54,7 +54,7 @@ public class GameControlInPlay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-           gc.skillDic.Add(gc.skillIndex , gc.GenerateSkillByRandom((short)Random.Range(0,DataManager.mSkillDict.Count)));
+           gc.skillDic.Add(gc.skillIndex , gc.GenerateSkillByRandom((short)Random.Range(0,DataManager.mSkillDict.Count),0));
             gc.skillIndex++;
         }
         if (Input.GetKeyDown(KeyCode.E))

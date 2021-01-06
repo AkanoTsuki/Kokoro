@@ -104,6 +104,7 @@ public class GameControlInNewGame : MonoBehaviour
 
         gc.heroDic.Add(0, temp_Leader);
         gc.heroDic[0].name = StartChoosePanel.Instance.leaderNameIf.text;
+        gc.heroDic[0].groupRate += 0.1f;//主角优待
         for (int i = 0; i < 5; i++)
         {
             gc.heroDic.Add(i + 1, temp_HeroList[i]);
@@ -178,8 +179,14 @@ public class GameControlInNewGame : MonoBehaviour
 
 
 
+        foreach (KeyValuePair<int, SkillPrototype> kvp in DataManager.mSkillDict)
+        {
+            gc.GenerateSkillByOriginal((short)kvp.Key);
+            gc.skillIndex++;
+        }
 
-        gc.CreateSalesRecord(gc.timeYear,gc.timeMonth);
+
+            gc.CreateSalesRecord(gc.timeYear,gc.timeMonth);
 
         gc.gold = 50000;
         gc.nowCheckingDistrictID = temp_districtID;

@@ -101,6 +101,16 @@ public class HeroSelectPanel : BasePanel
                     go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.HeroInSelectToCheck;
                     go.transform.GetComponent<InteractiveLabel>().index = temp[i].id;
 
+                    int oid = temp[i].id;
+                    go.GetComponent<Button>().onClick.RemoveAllListeners();
+                    go.GetComponent<Button>().onClick.AddListener(delegate ()
+                    {
+                        nowSelectedHeroID = oid;
+                        UpdateDesInfo();
+                        HeroPanel.Instance.nowSelectedHeroID = oid;
+                        HeroPanel.Instance.OnShow(gc.heroDic[oid], HeroPanel.Instance.nowEquipState, (int)(GetComponent<RectTransform>().anchoredPosition.x + GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(GetComponent<RectTransform>().anchoredPosition.y), 5000);
+
+                    });
                 }
                 for (int i = temp.Count; i < heroGo.Count; i++)
                 {
@@ -142,7 +152,13 @@ public class HeroSelectPanel : BasePanel
                     go.transform.GetChild(2).GetComponent<Text>().text = temp[i].workerInBuilding == -1 ? "<color=#00FF00>空闲</color>" : "<color=#7B68EE>" + gc.buildingDic[temp[i].workerInBuilding].name + "工作中</color>";
                     go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.HeroInSelect;
                     go.transform.GetComponent<InteractiveLabel>().index = temp[i].id;
-
+                    int oid = temp[i].id;
+                    go.GetComponent<Button>().onClick.RemoveAllListeners();
+                    go.GetComponent<Button>().onClick.AddListener(delegate ()
+                    {
+                        nowSelectedHeroID = oid;
+                        UpdateDesInfo();
+                    });
                 }
                 for (int i = temp.Count; i < heroGo.Count; i++)
                 {
@@ -191,6 +207,13 @@ public class HeroSelectPanel : BasePanel
                     go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.HeroInSelect;
                     go.transform.GetComponent<InteractiveLabel>().index = temp[i].id;
 
+                    int oid = temp[i].id;
+                    go.GetComponent<Button>().onClick.RemoveAllListeners();
+                    go.GetComponent<Button>().onClick.AddListener(delegate ()
+                    {
+                        nowSelectedHeroID = oid;
+                        UpdateDesInfo();
+                    });
                 }
                 for (int i = temp.Count; i < heroGo.Count; i++)
                 {

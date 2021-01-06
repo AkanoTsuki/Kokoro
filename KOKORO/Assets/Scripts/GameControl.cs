@@ -320,14 +320,13 @@ public class GameControl : MonoBehaviour
         byte workMakeJewelry = (byte)SetAttr(Attribute.WorkMakeJewelry, heroTypeID);
         byte workMakeScroll = (byte)SetAttr(Attribute.WorkMakeScroll, heroTypeID);
         byte workSundry = (byte)SetAttr(Attribute.WorkSundry, heroTypeID);
-
-
+       
         return new HeroObject(heroID, name, heroTypeID, 1, 0, sexCode, pic, groupRate, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
             (short)hp, (short)mp,  atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, 
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workMakeScroll, workSundry,
           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, -1, -1,
-          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, new Dictionary<short, HeroSkill>(),new List<string> { });
 
     }
 
@@ -369,17 +368,17 @@ public class GameControl : MonoBehaviour
                 rank = 999; break;
         }
 
-        int probabilityCount = DataManager.cCreateHeroRankDict[attr].Probability.GetLength(1);
+        int probabilityCount = DataManager.cCreateHeroRankDict[attr].probability.GetLength(1);
 
         int ran = Random.Range(0, 100);
         int lj = 0;
         for (int i = 0; i < probabilityCount; i++)
         {
-            lj += DataManager.cCreateHeroRankDict[attr].Probability[rank, i];
+            lj += DataManager.cCreateHeroRankDict[attr].probability[rank, i];
 
             if (ran < lj)
             {
-                return Random.Range(DataManager.cCreateHeroRankDict[attr].Value1[i], DataManager.cCreateHeroRankDict[attr].Value2[i]);
+                return Random.Range(DataManager.cCreateHeroRankDict[attr].value1[i], DataManager.cCreateHeroRankDict[attr].value2[i]);
             }
         }
 
@@ -417,6 +416,31 @@ public class GameControl : MonoBehaviour
 
         MessagePanel.Instance.AddMessage(heroDic[heroID].name+"等级升级到Lv."+ heroDic[heroID] .level+"，能力值提升了");
     }
+    void HeroSkillGetExp(int heroID, short spid, int exp)
+    {
+     
+
+        if (!heroDic[heroID].skillInfo.ContainsKey(spid))
+        {
+            heroDic[heroID].skillInfo.Add(spid, new HeroSkill(spid, 1, 0));
+        }
+
+        if (heroDic[heroID].skillInfo[spid].level >= 10)
+        {
+            return;
+        }
+        heroDic[heroID].skillInfo[spid].exp += exp;
+        int levelupNeedExp = heroDic[heroID].skillInfo[spid].level * 200;
+        while (heroDic[heroID].skillInfo[spid].exp >= levelupNeedExp&& heroDic[heroID].skillInfo[spid].level<10)
+        {
+            heroDic[heroID].skillInfo[spid].exp -= levelupNeedExp;
+            heroDic[heroID].skillInfo[spid].level++;
+            MessagePanel.Instance.AddMessage(heroDic[heroID].name +"的技能 "+ DataManager.mSkillDict[spid] .Name+ " 升级到Lv." + heroDic[heroID].skillInfo[spid].level );
+            levelupNeedExp = heroDic[heroID].skillInfo[spid].level * 200;
+        }
+
+    }
+
 
     public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject, List<int> heroObjectIDList)
     {
@@ -557,7 +581,7 @@ public class GameControl : MonoBehaviour
             DataManager.mItemDict[itemID].Des + ("于" + timeYear + "年" + timeMonth + "月" + (districtObject != null ? ("在" + districtObject.name + "制作") : "获得")), DataManager.mItemDict[itemID].Cost, districtObject != null ? districtObject.id : (short)-1, false, -1, EquipPart.None);
     }
 
-    public SkillObject GenerateSkillByRandom(short skillID)
+    public SkillObject GenerateSkillByRandom(short skillID,short districtID)
     {
         string name = DataManager.mSkillDict[skillID].Name;
         short RateModify = 0;
@@ -656,9 +680,14 @@ public class GameControl : MonoBehaviour
             }
         }
 
-        return new SkillObject(skillIndex, name, skillID, RateModify, MpModify, ComboRate, ComboMax, Gold, 5000, 0,false, -1, 0);
+        return new SkillObject(skillIndex, name, skillID, RateModify, MpModify, ComboRate, ComboMax, Gold, 5000, districtID, false, -1, 0);
 
     }
+    public SkillObject GenerateSkillByOriginal(short skillID)
+    {
+        return new SkillObject(skillIndex, DataManager.mSkillDict[skillID].Name, skillID, 0, 0, 0, 0, 0, 5000, -2, false, -1, 0);
+    }
+
     #endregion
 
     #region 【方法】建筑物建设
@@ -1407,7 +1436,7 @@ public class GameControl : MonoBehaviour
             case ItemTypeSmall.ScrollGroundII:
             case ItemTypeSmall.ScrollLightII:
             case ItemTypeSmall.ScrollDarkII:
-                skillDic.Add(skillIndex, GenerateSkillByRandom((short)itemOrSkillID));
+                skillDic.Add(skillIndex, GenerateSkillByRandom((short)itemOrSkillID, districtID));
                 skillIndex++;
                 Debug.Log("DistrictItemAdd() 生产 " + DataManager.mSkillDict[itemOrSkillID].Name);
                 districtDic[districtID].rProductScroll++;
@@ -2022,6 +2051,7 @@ public class GameControl : MonoBehaviour
     #endregion
 
     #region 【方法】市集出售
+    //TODO 报错的方法
     public void CreateSalesRecord(int year,int month)
     {
         salesRecordDic.Add(year + "/"+ month, new SalesRecordObject(new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
@@ -2715,7 +2745,7 @@ public class GameControl : MonoBehaviour
                         adventureTeamList[teamID].heroHpList[i] = 1;
                     }
                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[触发陷阱]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>损失10%体力");
-                    AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "weapon_2");
+                    AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "weapon_2",1f);
                     AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#F86A43>-" + (int)(GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
                 }
                 log = "探险队行进时触发陷阱，队伍成员的体力下降了";
@@ -2729,7 +2759,7 @@ public class GameControl : MonoBehaviour
                         adventureTeamList[teamID].heroMpList[i] = 1;
                     }
                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[触发陷阱]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>损失10%魔力");
-                    AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "weapon_2");
+                    AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "weapon_2",1f);
                     AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#D76FFA>-" + (int)(GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
                 }
                 log = "探险队行进时触发陷阱，队伍成员的魔下降了";
@@ -2743,7 +2773,7 @@ public class GameControl : MonoBehaviour
                         adventureTeamList[teamID].heroHpList[i] = GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]);  
                     }
                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[生命之泉]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>恢复10%体力");
-                    AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "impact_6");
+                    AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "impact_6",1f);
                     AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#6EFB6F>+" + (int)(GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
                 }
                 log = "探险队行进时发现生命之泉，队伍成员的体力恢复了";
@@ -2757,7 +2787,7 @@ public class GameControl : MonoBehaviour
                         adventureTeamList[teamID].heroMpList[i] = GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]); 
                     }
                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[智慧之泉]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>恢复10%魔力");
-                    AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "impact_5");
+                    AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "impact_5",1f);
                     AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#6FAAFA>+" + (int)(GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
                 }
                 log = "探险队行进时发现智慧之泉，队伍成员的魔力恢复了";
@@ -3125,9 +3155,12 @@ public class GameControl : MonoBehaviour
                     byte skillIndex = actionMenber[i].skillIndex;
                     
                     int skillID=-1;
+                   
                     if (actionMenber[i].side == 0)
                     {
                         skillID = heroDic[actionMenber[i].objectID].skill[skillIndex];
+                        
+                      //  if(heroDic[actionMenber[i].objectID].skillInfo.ContainsKey())
                     }
                     else if (actionMenber[i].side == 1)
                     {
@@ -3139,6 +3172,14 @@ public class GameControl : MonoBehaviour
                     {
                         SkillObject so = skillDic[skillID];
                         SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
+                        float skillLevelUp = 0f;
+                        if (actionMenber[i].side == 0)
+                        {
+                            if (heroDic[actionMenber[i].objectID].skillInfo.ContainsKey(so.prototypeID))
+                            {
+                                skillLevelUp = 0.1f * (heroDic[actionMenber[i].objectID].skillInfo[so.prototypeID].level - 1);
+                            }
+                        }
                         if (GetSkillMpCost(skillID) <= actionMenber[i].mpNow)
                         {
                             int ran = Random.Range(0, 100);
@@ -3235,11 +3276,14 @@ public class GameControl : MonoBehaviour
                                                     }
                                                 }
 
+                                                damageWithElement = (int)((1f + skillLevelUp)* damageWithElement);
+
                                                 int ranCri = Random.Range(0, 100);
                                                 if (ranCri < actionMenber[i].criR)
                                                 {
                                                     damageWithElement = (int)(damageWithElement * (actionMenber[i].criD / 100f));
                                                 }
+
 
                                                 byte damageTimes = 1;
                                                 if (so.comboMax != 0)
@@ -3258,7 +3302,7 @@ public class GameControl : MonoBehaviour
                                                     }
                                                 }
 
-                                                StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[j], sp, damage, damageTimes));
+                                                StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[j], sp, damageWithElement, damageTimes,1f+ skillLevelUp));
                                                
 
                                             }
@@ -3274,7 +3318,7 @@ public class GameControl : MonoBehaviour
                                         {
                                             if (sp.Dizzy != 0)
                                             {
-                                                int hitRate = System.Math.Max(0, sp.Dizzy - targetMenber[j].dizzyRes);
+                                                int hitRate = System.Math.Max(0,(int)( sp.Dizzy*(1f+ skillLevelUp) )- targetMenber[j].dizzyRes);
                                                 int ranHit = Random.Range(0, 100);
                                                 if (ranHit < hitRate)
                                                 {
@@ -3302,7 +3346,7 @@ public class GameControl : MonoBehaviour
                                             }
                                             if (sp.Confusion != 0)
                                             {
-                                                int hitRate = System.Math.Max(0, sp.Confusion - targetMenber[j].confusionRes);
+                                                int hitRate = System.Math.Max(0,(int)(sp.Confusion * (1f + skillLevelUp)) - targetMenber[j].confusionRes);
                                                 int ranHit = Random.Range(0, 100);
                                                 if (ranHit < hitRate)
                                                 {
@@ -3330,7 +3374,7 @@ public class GameControl : MonoBehaviour
                                             }
                                             if (sp.Sleep != 0)
                                             {
-                                                int hitRate = System.Math.Max(0, sp.Sleep - targetMenber[j].sleepRes);
+                                                int hitRate = System.Math.Max(0, (int)(sp.Sleep * (1f + skillLevelUp)) - targetMenber[j].sleepRes);
                                                 int ranHit = Random.Range(0, 100);
                                                 if (ranHit < hitRate)
                                                 {
@@ -3358,7 +3402,7 @@ public class GameControl : MonoBehaviour
                                             }
                                             if (sp.Poison != 0)
                                             {
-                                                int hitRate = System.Math.Max(0, sp.Poison - targetMenber[j].poisonRes);
+                                                int hitRate = System.Math.Max(0, (int)(sp.Poison * (1f + skillLevelUp))  - targetMenber[j].poisonRes);
                                                 int ranHit = Random.Range(0, 100);
                                                 if (ranHit < hitRate)
                                                 {
@@ -3390,7 +3434,7 @@ public class GameControl : MonoBehaviour
                                         if (sp.Cure != 0)
                                         {
                                             int cure = (int)(targetMenber[j].hp * (sp.Cure / 100f));
-
+                                            cure = (int)(cure * (1f + skillLevelUp));
 
                                             byte damageTimes = 1;
                                             if (so.comboMax != 0)
@@ -3427,9 +3471,9 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpAtk, (byte)sp.UpAtk, 2));
-                                                    targetMenber[j].atkMin += (short)(targetMenber[j].atkMin * (sp.UpAtk / 100f));
-                                                    targetMenber[j].atkMax += (short)(targetMenber[j].atkMax * (sp.UpAtk / 100f));
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpAtk, (byte)(sp.UpAtk*(1f + skillLevelUp)), 2));
+                                                    targetMenber[j].atkMin += (short)(targetMenber[j].atkMin * (sp.UpAtk * (1f + skillLevelUp) / 100f));
+                                                    targetMenber[j].atkMax += (short)(targetMenber[j].atkMax * (sp.UpAtk * (1f + skillLevelUp) / 100f));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理攻击提升了");
                                                 }
                                             }
@@ -3442,9 +3486,9 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMAtk, (byte)sp.UpMAtk, 2));
-                                                    targetMenber[j].mAtkMin += (short)(targetMenber[j].mAtkMin * (sp.UpMAtk / 100f));
-                                                    targetMenber[j].mAtkMax += (short)(targetMenber[j].mAtkMax * (sp.UpMAtk / 100f));
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMAtk, (byte)(sp.UpMAtk * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].mAtkMin += (short)(targetMenber[j].mAtkMin * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
+                                                    targetMenber[j].mAtkMax += (short)(targetMenber[j].mAtkMax * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法攻击提升了");
                                                 }
                                             }
@@ -3457,8 +3501,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDef, (byte)sp.UpDef, 2));
-                                                    targetMenber[j].def += (short)(targetMenber[j].def * (sp.UpDef / 100f));
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDef, (byte)(sp.UpDef * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].def += (short)(targetMenber[j].def * (sp.UpDef * (1f + skillLevelUp) / 100f));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理防御提升了");
                                                 }
                                             }
@@ -3471,8 +3515,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMDef, (byte)sp.UpMDef, 2));
-                                                    targetMenber[j].mDef += (short)(targetMenber[j].mDef * (sp.UpMDef / 100f));
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMDef, (byte)(sp.UpMDef * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].mDef += (short)(targetMenber[j].mDef * (sp.UpMDef * (1f + skillLevelUp) / 100f));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法防御提升了");
                                                 }
                                             }
@@ -3485,8 +3529,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpHit, (byte)sp.UpHit, 2));
-                                                    targetMenber[j].hit += (short)(targetMenber[j].hit * (sp.UpHit / 100f));
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpHit, (byte)(sp.UpHit * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].hit += (short)(targetMenber[j].hit * (sp.UpHit * (1f + skillLevelUp) / 100f));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "命中提升了");
                                                 }
                                             }
@@ -3499,8 +3543,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDod, (byte)sp.UpDod, 2));
-                                                    targetMenber[j].dod += (short)(targetMenber[j].dod * (sp.UpDod / 100f));
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDod, (byte)(sp.UpDod * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].dod += (short)(targetMenber[j].dod * (sp.UpDod * (1f + skillLevelUp) / 100f));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "闪避提升了");
                                                 }
                                             }
@@ -3513,8 +3557,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpCriD, (byte)sp.UpCriD, 2));
-                                                    targetMenber[j].criD += (short)(targetMenber[j].criD * (sp.UpCriD / 100f));
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpCriD, (byte)(sp.UpCriD * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].criD += (short)(targetMenber[j].criD * (sp.UpCriD * (1f + skillLevelUp) / 100f));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暴击伤害提升了");
                                                 }
                                             }
@@ -3528,8 +3572,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindDam, (byte)sp.UpWindDam, 2));
-                                                    targetMenber[j].windDam += sp.UpWindDam;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindDam, (byte)(sp.UpWindDam * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].windDam += (short)(sp.UpWindDam * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系伤害提升了");
                                                 }
                                             }
@@ -3542,8 +3586,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireDam, (byte)sp.UpFireDam, 2));
-                                                    targetMenber[j].fireDam += sp.UpFireDam;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireDam, (byte)(sp.UpFireDam * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].fireDam += (short)(sp.UpFireDam * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系伤害提升了");
                                                 }
                                             }
@@ -3556,8 +3600,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterDam, (byte)sp.UpWaterDam, 2));
-                                                    targetMenber[j].waterDam += sp.UpWaterDam;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterDam, (byte)(sp.UpWaterDam * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].waterDam += (short)(sp.UpWaterDam * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系伤害提升了");
                                                 }
                                             }
@@ -3570,8 +3614,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundDam, (byte)sp.UpGroundDam, 2));
-                                                    targetMenber[j].groundDam += sp.UpGroundDam;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundDam, (byte)(sp.UpGroundDam * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].groundDam += (short)(sp.UpGroundDam * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系伤害提升了");
                                                 }
                                             }
@@ -3584,8 +3628,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightDam, (byte)sp.UpLightDam, 2));
-                                                    targetMenber[j].lightDam += sp.UpLightDam;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightDam, (byte)(sp.UpLightDam * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].lightDam += (short)(sp.UpLightDam * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系伤害提升了");
                                                 }
                                             }
@@ -3598,8 +3642,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkDam, (byte)sp.UpDarkDam, 2));
-                                                    targetMenber[j].darkDam += sp.UpDarkDam;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkDam, (byte)(sp.UpDarkDam * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].darkDam += (short)(sp.UpDarkDam * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系伤害提升了");
                                                 }
                                             }
@@ -3613,8 +3657,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindRes, (byte)sp.UpWindRes, 2));
-                                                    targetMenber[j].windRes += sp.UpWindRes;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindRes, (byte)(sp.UpWindRes * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].windRes += (short)(sp.UpWindRes * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系抗性提升了");
                                                 }
                                             }
@@ -3627,8 +3671,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireRes, (byte)sp.UpFireRes, 2));
-                                                    targetMenber[j].fireRes += sp.UpFireRes;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireRes, (byte)(sp.UpFireRes * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].fireRes += (short)(sp.UpFireRes * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系抗性提升了");
                                                 }
                                             }
@@ -3641,8 +3685,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterRes, (byte)sp.UpWaterRes, 2));
-                                                    targetMenber[j].waterRes += sp.UpWaterRes;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterRes, (byte)(sp.UpWaterRes * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].waterRes += (short)(sp.UpWaterRes * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系抗性提升了");
                                                 }
                                             }
@@ -3655,8 +3699,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundRes, (byte)sp.UpGroundRes, 2));
-                                                    targetMenber[j].groundRes += sp.UpGroundRes;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundRes, (byte)(sp.UpGroundRes * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].groundRes += (short)(sp.UpGroundRes * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系抗性提升了");
                                                 }
                                             }
@@ -3669,8 +3713,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightRes, (byte)sp.UpLightRes, 2));
-                                                    targetMenber[j].lightRes += sp.UpLightRes;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightRes, (byte)(sp.UpLightRes * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].lightRes += (short)(sp.UpLightRes * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系抗性提升了");
                                                 }
                                             }
@@ -3683,8 +3727,8 @@ public class GameControl : MonoBehaviour
                                                 }
                                                 if (!buffExist)
                                                 {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkRes, (byte)sp.UpDarkRes, 2));
-                                                    targetMenber[j].darkRes += sp.UpDarkRes;
+                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkRes, (byte)(sp.UpDarkRes * (1f + skillLevelUp)), 2));
+                                                    targetMenber[j].darkRes += (short)(sp.UpDarkRes * (1f + skillLevelUp));
                                                     AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系抗性提升了");
                                                 }
                                             }
@@ -3726,7 +3770,7 @@ public class GameControl : MonoBehaviour
                                         {
                                             damage = (int)(damage * (actionMenber[i].criD / 100f));
                                         }
-                                        StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage,1));
+                                        StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage,1,1f));
                                   
                                     }
                                     else//未命中
@@ -3758,7 +3802,7 @@ public class GameControl : MonoBehaviour
                                         damage = (int)(damage * (actionMenber[i].criD / 100f));
                                     }
 
-                                    StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1));
+                                    StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1, 1f));
 
                                 }
                                 else//未命中
@@ -3789,7 +3833,7 @@ public class GameControl : MonoBehaviour
                                     damage = (int)(damage * (actionMenber[i].criD / 100f));
                                 }
 
-                                StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1));
+                                StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1, 1f));
 
                             }
                             else//未命中
@@ -4021,6 +4065,8 @@ public class GameControl : MonoBehaviour
             if (sp.Element.Contains(4)) { heroDic[actionMenber.objectID].countUseGround++; }
             if (sp.Element.Contains(5)) { heroDic[actionMenber.objectID].countUseLight++; }
             if (sp.Element.Contains(6)) { heroDic[actionMenber.objectID].countUseDark++; }
+
+            HeroSkillGetExp(actionMenber.objectID, sp.ID, 30);
         }
 
         if (sp != null)
@@ -4040,13 +4086,15 @@ public class GameControl : MonoBehaviour
     
     IEnumerator TakeCure(byte teamID, int round, FightMenberObject actionMenber, FightMenberObject targetMenber, SkillPrototype sp, Attribute attribute,int cure, byte times)
     {
-
+        float size = 1f;
         //Debug.Log("TakeCure() teamID=" + teamID);
         string effectName = "impact_6";
         string color = "6EFB6F";
         if (sp != null)
         {
             effectName = sp.Effect;
+
+           
         }
         else
         {
@@ -4092,7 +4140,7 @@ public class GameControl : MonoBehaviour
             cureTotal += cureSingle;
 
 
-            AdventureMainPanel.Instance.ShowEffect(teamID, targetMenber.side, targetMenber.sideIndex, effectName);
+            AdventureMainPanel.Instance.ShowEffect(teamID, targetMenber.side, targetMenber.sideIndex, effectName, size);
             AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "<b><color=#" + color + ">+" + cureSingle + "</color></b>");
             yield return new WaitForSeconds(0.5f);
             cureTotalStr += cureSingle + "/";
@@ -4140,9 +4188,10 @@ public class GameControl : MonoBehaviour
 
     }
 
-    IEnumerator TakeDamage(byte teamID,int round,FightMenberObject actionMenber, FightMenberObject targetMenber,SkillPrototype sp,int damage,byte times)
+    IEnumerator TakeDamage(byte teamID,int round,FightMenberObject actionMenber, FightMenberObject targetMenber,SkillPrototype sp,int damage,byte times, float size)
     {
         string effectName ;
+       // float size = 1f;
         if (sp != null)
         {
             effectName = sp.Effect;
@@ -4162,7 +4211,7 @@ public class GameControl : MonoBehaviour
             damageTotal += damageSingle;
 
             
-            AdventureMainPanel.Instance.ShowEffect(teamID, targetMenber.side, targetMenber.sideIndex, effectName);
+            AdventureMainPanel.Instance.ShowEffect(teamID, targetMenber.side, targetMenber.sideIndex, effectName, size);
             AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, damage > 0 ? ("<b><color=#F86A43>-" + damageSingle + "</color></b>") : "格挡");
             AdventureMainPanel.Instance.SetAnim(teamID, targetMenber.side, targetMenber.sideIndex, AnimStatus.Hit);
             yield return new WaitForSeconds(0.5f);

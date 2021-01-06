@@ -19,6 +19,7 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         gc = GameObject.Find("GameManager").GetComponent<GameControl>();
         if (labelType == LabelType.Item)
         {
+            btn.onClick.RemoveAllListeners();
             btn.onClick.AddListener(delegate ()
             {
                 ItemListAndInfoPanel.Instance.nowItemID = index;
@@ -27,23 +28,12 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
         else if (labelType == LabelType.HeroInSelect)
         {
-            btn.onClick.AddListener(delegate ()
-            {
-                HeroSelectPanel.Instance.nowSelectedHeroID = index;
-                HeroSelectPanel.Instance.UpdateDesInfo();
-            });
+            
         }
         else if (labelType == LabelType.HeroInSelectToCheck)
         {
 
-            btn.onClick.AddListener(delegate ()
-            {
-                HeroSelectPanel.Instance.nowSelectedHeroID = index;
-                HeroSelectPanel.Instance.UpdateDesInfo();
-                HeroPanel.Instance.nowSelectedHeroID = index;
-                HeroPanel.Instance.OnShow(gc.heroDic[index], HeroPanel.Instance.nowEquipState,   (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y), 5000);
-
-            });
+            
         }
         else if (labelType == LabelType.ItemToSet)
         {
@@ -51,6 +41,7 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
         else if (labelType == LabelType.DungeonInAdventure)
         {
+            btn.onClick.RemoveAllListeners();
             btn.onClick.AddListener(delegate ()
             {
                 AdventureMainPanel.Instance.nowSelectDungeonID= (short)index;
@@ -58,6 +49,7 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
         else if (labelType == LabelType.Skill)
         {
+            btn.onClick.RemoveAllListeners();
             btn.onClick.AddListener(delegate ()
             {
                 SkillListAndInfoPanel.Instance.nowSkillID = index;
@@ -134,6 +126,7 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             if (HeroPanel.Instance.nowSelectedHeroID == -1)
             {
+                //Debug.Log("HeroPanel.Instance.nowSelectedHeroID == -1");
                 HeroPanel.Instance.OnHide();
                 return;
             }

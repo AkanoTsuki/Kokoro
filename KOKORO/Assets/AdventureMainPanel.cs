@@ -739,7 +739,24 @@ public class AdventureMainPanel : BasePanel
                 }
                 else if (gc.adventureTeamList[teamID].action == AdventureAction.Fight)
                 {
-                    adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.Idle);
+                    int hp = 0;
+                    for (int j = 0; j < gc.fightMenberObjectSS[teamID].Count; j++)
+                    {
+                        if (gc.fightMenberObjectSS[teamID][j].side == 0 && gc.fightMenberObjectSS[teamID][j].sideIndex == i)
+                        {
+                            hp = gc.fightMenberObjectSS[teamID][j].hpNow;
+                            break;
+                        }
+                    }
+
+                    if (hp > 0)
+                    {
+                        adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.Idle);
+                    }
+                    else
+                    {
+                        adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.Death);
+                    }
                 }
                 else if (gc.adventureTeamList[teamID].action == AdventureAction.SpringHp ||
                     gc.adventureTeamList[teamID].action == AdventureAction.SpringMp ||
@@ -1207,7 +1224,7 @@ public class AdventureMainPanel : BasePanel
     }
    
     //显示特效
-    public void ShowEffect(byte teamID, byte side, byte index, string effectName)
+    public void ShowEffect(byte teamID, byte side, byte index, string effectName,float size)
     {
         GameObject go;
         if (effectPool.Count > 0)
@@ -1231,6 +1248,7 @@ public class AdventureMainPanel : BasePanel
         {
             targetLocation = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().dungeon_side1Go[index].GetComponent<RectTransform>().anchoredPosition;
         }
+        go.GetComponent<RectTransform>().sizeDelta = new Vector2(96f * size, 96f * size);
         go.GetComponent<MomentEffect>().Play(effectName, targetLocation);
     }
 
