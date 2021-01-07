@@ -509,7 +509,7 @@ public class SkillObject
     private byte ComboMax;
     private byte Gold;
     private short Cost;
-    private short DistrictID;
+    private short DistrictID;//-1 为整体收藏库 -2为初始化原始技能
     private bool IsGoods;//是否商品（DistrictID！=-1）
     private int HeroID;
     private int UseCount;

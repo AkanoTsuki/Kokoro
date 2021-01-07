@@ -90,9 +90,29 @@ public class GameControlInPlay : MonoBehaviour
 
             gc.timeHour++; gc.timeS = 0; 
         }
-        if (gc.timeHour >= 24) { gc.timeDay++; gc.timeHour = 0;gc.timeWeek++;if (gc.timeWeek > 7) { gc.timeWeek = 1; } }
-        if (gc.timeDay > 30) { gc.timeMonth++; if (gc.timeMonth > 12) { gc.timeMonth = 1; } gc.timeDay = 1; PlayMainPanel.Instance.UpdateYearSeason();gc.CreateSalesRecord(gc.timeYear, gc.timeMonth); }
-        if (gc.timeMonth > 12) { gc.timeYear++; }
+        if (gc.timeHour >= 24) { 
+            gc.timeDay++;
+            if (gc.timeDay > 30) 
+            { 
+                gc.timeMonth++; 
+                if (gc.timeMonth > 12) 
+                {
+                    gc.timeYear++;
+                    gc.timeMonth = 1; 
+                } 
+                gc.timeDay = 1;
+                PlayMainPanel.Instance.UpdateYearSeason(); 
+                gc.CreateSalesRecord(gc.timeYear, gc.timeMonth); 
+            }
+
+            gc.timeHour = 0;
+            gc.timeWeek++;
+            if (gc.timeWeek > 7) 
+            { 
+                gc.timeWeek = 1;
+            } 
+        }
+       
 
         
 

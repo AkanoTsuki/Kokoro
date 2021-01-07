@@ -578,7 +578,7 @@ public class GameControl : MonoBehaviour
 
 
         return new ItemObject(itemIndex, itemID, name, DataManager.mItemDict[itemID].Pic, DataManager.mItemDict[itemID].Rank, upLevel, attrList,
-            DataManager.mItemDict[itemID].Des + ("于" + timeYear + "年" + timeMonth + "月" + (districtObject != null ? ("在" + districtObject.name + "制作") : "获得")), DataManager.mItemDict[itemID].Cost, districtObject != null ? districtObject.id : (short)-1, false, -1, EquipPart.None);
+            DataManager.mItemDict[itemID].Des + (",于" + timeYear + "年" + timeMonth + "月" + (districtObject != null ? ("在" + districtObject.name + "制作") : "获得")), DataManager.mItemDict[itemID].Cost, districtObject != null ? districtObject.id : (short)-1, false, -1, EquipPart.None);
     }
 
     public SkillObject GenerateSkillByRandom(short skillID,short districtID)
@@ -2051,7 +2051,7 @@ public class GameControl : MonoBehaviour
     #endregion
 
     #region 【方法】市集出售
-    //TODO 报错的方法
+    //TODO 报错的方法，已修改，待观察
     public void CreateSalesRecord(int year,int month)
     {
         salesRecordDic.Add(year + "/"+ month, new SalesRecordObject(new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
