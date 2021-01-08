@@ -19,6 +19,7 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.Building);
         UIManager.Instance.InitPanel(UIPanelType.Hero);
         UIManager.Instance.InitPanel(UIPanelType.Build);
+        UIManager.Instance.InitPanel(UIPanelType.DistrictMap);
         UIManager.Instance.InitPanel(UIPanelType.Message);
         MessagePanel.Instance.OnShow(0, 26);
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);

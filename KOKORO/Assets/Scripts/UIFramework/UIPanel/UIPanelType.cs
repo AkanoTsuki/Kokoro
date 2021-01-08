@@ -21,7 +21,8 @@ public enum UIPanelType
     HeroSelect,
     SkillListAndInfo,
     Market,
-    SupplyAndDemand
+    SupplyAndDemand,
+    DistrictMap
 
 
 }

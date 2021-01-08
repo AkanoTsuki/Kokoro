@@ -10,6 +10,7 @@ public class DistinctMap : MonoBehaviour
     GameObject go;
     bool isChoose = false;
 
+
     Vector2 pos;
     void Start()
     {
@@ -43,11 +44,16 @@ public class DistinctMap : MonoBehaviour
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, Input.mousePosition, canvas.worldCamera, out pos))
             {
                
-                pos = new Vector2(((int)pos.x / 32) * 32f,((int)pos.y / 32) * 32f);
+                pos = new Vector2(((int)pos.x / 16) * 16f,((int)pos.y / 16) * 16f);
                 Debug.Log(pos);
                 go.GetComponent<RectTransform>().anchoredPosition = pos;
 
                 
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+
+                isChoose = false;
             }
         }
     }

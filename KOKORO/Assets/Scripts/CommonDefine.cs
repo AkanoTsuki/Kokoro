@@ -982,7 +982,7 @@ public class DistrictPrototype
 public class DistrictGridPrototype
 {
     public int ID;
-    public string Name;
+    //public string Name;
     public short DistrictID;
     public byte Level;
     public short X;
@@ -1176,17 +1176,17 @@ public class DistrictObject
 
 public class DistrictGridObject
 {
-    private int ID;
-    private string Pic;
+   // private int ID;
+  //  private string Pic;
     private int BuildingID;//-2未开放 -1未使用
-    public DistrictGridObject(int id, string pic, int buildingID)
+    public DistrictGridObject( int buildingID)
     {
-        this.ID = id;
-        this.Pic = pic;
+        //this.ID = id;
+      //  this.Pic = pic;
         this.BuildingID = buildingID;
     }
-    public int id { get { return ID; } }
-    public string pic { get { return Pic; } set { Pic = value; } }
+   // public int id { get { return ID; } }
+  //  public string pic { get { return Pic; } set { Pic = value; } }
     public int buildingID { get { return BuildingID; } set { BuildingID = value; } }
 }
 
@@ -1198,7 +1198,10 @@ public class BuildingPrototype
     public short ID;
     public string Name;
     public string MainPic;
-    public string MapPic;
+   // public string MapPic;
+    public byte SizeX;
+    public byte SizeY;
+    public byte SizeYBase;
     public string PanelType;
     public string Des;
     public byte Level;
@@ -1209,7 +1212,7 @@ public class BuildingPrototype
     public short NeedMetal;
     public int Expense;
     public short UpgradeTo;
-    public byte Grid;
+   // public byte Grid;
     public byte NatureGrass;
     public byte NatureWood;
     public byte NatureWater;
@@ -1233,14 +1236,17 @@ public class BuildingObject
     private short PrototypeID;
     private string Name;
     private string MainPic;
-    private string MapPic;
+    private short PositionX;
+    private short PositionY;
+    private byte Layer;
+    // private string MapPic;
     private string PanelType;
     private string Des;
     private byte Level;
     private int Expense;
     private short UpgradeTo;//升级后的建筑原型ID
     private bool IsOpen;
-    private List<int> GridList;//占用格子ID
+    private List<string> GridList;//占用格子ID
     private List<int> HeroList;
     private byte NatureGrass;
     private byte NatureWood;
@@ -1258,7 +1264,7 @@ public class BuildingObject
     private byte EDark;
     private short ProduceEquipNow;//当前生产的装备模板原型ID 如果是资源类则对应资源生产关系表
     private byte BuildProgress;//0建设中 1已完成 2升级中
-    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, string mapPic, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, List<int> gridList, List<int> heroList,
+    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, List<string> gridList, List<int> heroList,
         byte natureGrass, byte natureWood, byte natureWater, byte natureStone, byte natureMetal, short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
         short produceEquipNow, byte buildProgress)
@@ -1268,7 +1274,10 @@ public class BuildingObject
         this.DistrictID = districtID;
         this.Name = name;
         this.MainPic = mainPic;
-        this.MapPic = mapPic;
+        this.PositionX = positionX;
+        this.PositionY = positionY;
+        this.Layer = layer;
+        //   this.MapPic = mapPic;
         this.PanelType = panelType;
         this.Des = des;
         this.Level = level;
@@ -1299,14 +1308,17 @@ public class BuildingObject
     public short districtID { get { return DistrictID; } }
     public string name{ get { return Name; } set { Name = value; } }
     public string mainPic { get { return MainPic; } set { MainPic = value; } }
-    public string mapPic { get { return MapPic; } set { MapPic = value; } }
+    public short positionX { get { return PositionX; } }
+    public short positionY { get { return PositionY; } }
+    public byte layer { get { return Layer; } }
+    //   public string mapPic { get { return MapPic; } set { MapPic = value; } }
     public string panelType { get { return PanelType; } set { PanelType = value; } }
     public string des { get { return Des; } set { Des = value; } }
     public byte level { get { return Level; } set { Level = value; } }
     public int expense { get { return Expense; } set { Expense = value; } }
     public short upgradeTo { get { return UpgradeTo; } set { UpgradeTo = value; } }
     public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
-    public List<int> gridList { get { return GridList; } set { GridList = value; } }
+    public List<string> gridList { get { return GridList; } set { GridList = value; } }
     public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
     public byte natureGrass { get { return NatureGrass; } set { NatureGrass = value; } }
     public byte natureWood { get { return NatureWood; } set { NatureWood = value; } }

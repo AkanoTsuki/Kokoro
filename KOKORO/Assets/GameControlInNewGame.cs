@@ -97,9 +97,13 @@ public class GameControlInNewGame : MonoBehaviour
     //确认并正式开始游戏
     public void ConfirmAndStart()
     {
+        //districtNum=1
+        gc.districtGridDic.Add(new Dictionary<string, DistrictGridObject>());
+       // Debug.Log(" gc.districtGridDic.Count=" + gc.districtGridDic.Count);
         for (int i = 0; i < DataManager.mDistrictGridDict.Count; i++)
         {
-            gc.districtGridDic.Add(DataManager.mDistrictGridDict[i].ID, new DistrictGridObject(DataManager.mDistrictGridDict[i].ID, "", -1));
+            
+            gc.districtGridDic[DataManager.mDistrictGridDict[i].DistrictID].Add(DataManager.mDistrictGridDict[i].DistrictID+"_"+ DataManager.mDistrictGridDict[i].X+"," + DataManager.mDistrictGridDict[i].Y, new DistrictGridObject(  -1));
         }
 
         gc.heroDic.Add(0, temp_Leader);

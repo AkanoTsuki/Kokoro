@@ -47,6 +47,8 @@ public class BuildPanel : BasePanel
         UpdateAllInfo("All");
         UpdateFilterButtonText();
         SetAnchoredPosition(x, y);
+
+        DistrictMapPanel.Instance.OnShow(x + (int)transform.GetComponent<RectTransform>().sizeDelta.x, y );
         isShow = true;
     }
 
@@ -134,7 +136,7 @@ public class BuildPanel : BasePanel
                 CheckNeedToStr("NatureGrass", temp[i].NatureGrass) + CheckNeedToStr("NatureWood", temp[i].NatureWood) + CheckNeedToStr("NatureWater", temp[i].NatureWater) + CheckNeedToStr("NatureStone", temp[i].NatureStone) + CheckNeedToStr("NatureMetal", temp[i].NatureMetal) +
                  "\n" + temp[i].Des + ".维持费" + temp[i].Expense + "金/月 " ;
 
-            go.transform.GetChild(5).GetComponent<Text>().text = CheckNeedToStr("grid", temp[i].Grid);
+            go.transform.GetChild(5).GetComponent<Text>().text = temp[i].SizeX+ "x"+temp[i].SizeYBase;
 
             //Debug.Log(temp[i].Grid <= gc.districtDic[gc.nowCheckingDistrictID].gridEmpty);
             //Debug.Log(temp[i].NeedWood <= gc.districtDic[gc.nowCheckingDistrictID].rStuffWood);
@@ -147,7 +149,7 @@ public class BuildPanel : BasePanel
             //Debug.Log(temp[i].NatureStone <= (gc.districtDic[gc.nowCheckingDistrictID].totalStone - gc.districtDic[gc.nowCheckingDistrictID].usedStone));
             //Debug.Log(temp[i].NatureMetal <= (gc.districtDic[gc.nowCheckingDistrictID].totalMetal - gc.districtDic[gc.nowCheckingDistrictID].usedMetal));
             short bpID = temp[i].ID;
-            if (temp[i].Grid <= gc.districtDic[gc.nowCheckingDistrictID].gridEmpty &&
+            if (
                 temp[i].NeedWood <= gc.districtDic[gc.nowCheckingDistrictID].rStuffWood &&
                 temp[i].NeedStone <= gc.districtDic[gc.nowCheckingDistrictID].rStuffStone &&
                 temp[i].NeedMetal <= gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal &&
@@ -161,7 +163,10 @@ public class BuildPanel : BasePanel
             {
                 go.transform.GetChild(4).GetComponent<Button>().interactable = true;
                 go.transform.GetChild(4).GetComponent<Button>().onClick.RemoveAllListeners();
-                go.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(delegate () { gc.CreateBuildEvent(bpID); });
+                go.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(delegate () {
+                    DistrictMapPanel.Instance.ChoosePosition(bpID);
+                    //gc.CreateBuildEvent(bpID); 
+                });
                
             }
             else

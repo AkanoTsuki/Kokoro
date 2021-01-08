@@ -51,68 +51,68 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnShow( int x, int y)
     {
 
-        for (int i = 0; i < gc.buildingDic.Count; i++)
-        {
-            AddIconByBuilding(gc.buildingDic[i].id);
-        }
+        //for (int i = 0; i < gc.buildingDic.Count; i++)
+        //{
+        //    AddIconByBuilding(gc.buildingDic[i].id);
+        //}
         SetAnchoredPosition(x, y);
         //ShowByImmediately(true);
     }
 
-    public void AddIconByBuilding( int buildingID)
-    {
-        for (int i = 0; i < gc.buildingDic[buildingID].gridList.Count; i++)
-        {
-            AddIconByGrid(gc.buildingDic[buildingID].districtID, buildingID, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].X, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].Y);
-        }
-    }
-    public void RemoveIconByBuilding(int buildingID)
-    {
-        for (int i = 0; i < gc.buildingDic[buildingID].gridList.Count; i++)
-        {
-            RemoveIconByGrid( DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].X, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].Y);
+    //public void AddIconByBuilding( int buildingID)
+    //{
+    //    for (int i = 0; i < gc.buildingDic[buildingID].gridList.Count; i++)
+    //    {
+    //        AddIconByGrid(gc.buildingDic[buildingID].districtID, buildingID, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].X, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].Y);
+    //    }
+    //}
+    //public void RemoveIconByBuilding(int buildingID)
+    //{
+    //    for (int i = 0; i < gc.buildingDic[buildingID].gridList.Count; i++)
+    //    {
+    //        RemoveIconByGrid( DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].X, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].Y);
         
-        }
-    }
+    //    }
+    //}
 
 
 
-    public void AddIconByGrid(int districtID,int buildingID,int gridX, int gridY)
-    {
+    //public void AddIconByGrid(int districtID,int buildingID,int gridX, int gridY)
+    //{
 
-        string str = "";
-        if (buildingID == 59 || buildingID == 60 || buildingID == 61 ||
-            buildingID == 62 || buildingID == 63 || buildingID == 64)
-        {
-            str = "BuildingPic/"+ gc.buildingDic[buildingID].name;
-        }
-        else
-        {
-            switch (districtID)
-            {
-                case 2: str = "BuildingMap/Snow_"; break;
-                case 4: str = "BuildingMap/Sand_"; break;
-                default: str = "BuildingMap/Red_"; break;
-            }
-        }
+    //    string str = "";
+    //    if (buildingID == 59 || buildingID == 60 || buildingID == 61 ||
+    //        buildingID == 62 || buildingID == 63 || buildingID == 64)
+    //    {
+    //        str = "BuildingPic/"+ gc.buildingDic[buildingID].name;
+    //    }
+    //    else
+    //    {
+    //        switch (districtID)
+    //        {
+    //            case 2: str = "BuildingMap/Snow_"; break;
+    //            case 4: str = "BuildingMap/Sand_"; break;
+    //            default: str = "BuildingMap/Red_"; break;
+    //        }
+    //    }
         
 
 
-        GameObject go;
+    //    GameObject go;
 
-        go = Instantiate(Resources.Load("Prefab/UILabel/Label_MapGrid")) as GameObject;
-        go.transform.SetParent(buildingGo.transform);
-        go.GetComponent<RectTransform>().anchoredPosition = new Vector3(gridX * 16f, gridY * -16f, 0f);
-        go.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/" + str + gc.buildingDic[buildingID].mapPic);
-        go.name = gridX +","+ gridY;
+    //    go = Instantiate(Resources.Load("Prefab/UILabel/Label_MapGrid")) as GameObject;
+    //    go.transform.SetParent(buildingGo.transform);
+    //    go.GetComponent<RectTransform>().anchoredPosition = new Vector3(gridX * 16f, gridY * -16f, 0f);
+    //   // go.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/" + str + gc.buildingDic[buildingID].mapPic);
+    //    go.name = gridX +","+ gridY;
 
-    }
+    //}
 
-    public void RemoveIconByGrid(int gridX, int gridY)
-    {
-        GameObject go = GameObject.Find("Canvas/AreaMapPanel/Building/" + gridX + "," + gridY);
-        Destroy(go);
-    }
+    //public void RemoveIconByGrid(int gridX, int gridY)
+    //{
+    //    GameObject go = GameObject.Find("Canvas/AreaMapPanel/Building/" + gridX + "," + gridY);
+    //    Destroy(go);
+    //}
 
     /// <summary>
     /// 拖拽范围限制

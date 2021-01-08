@@ -782,7 +782,7 @@ public class BuildingPanel : BasePanel
         string des = "所需资源\n" + CheckNeedToStr("wood", bp.NeedWood) + CheckNeedToStr("stone", bp.NeedStone) + CheckNeedToStr("metal", bp.NeedMetal) + CheckNeedToStr("gold", bp.NeedGold) +
                  "\n";
 
-        des += CheckNatureToStr("grid",bo.gridList.Count, bp.Grid, gc.districtDic[bo.districtID].gridEmpty)+
+        des +=
             CheckNatureToStr("grass", bo.natureGrass, bp.NatureGrass, gc.districtDic[bo.districtID].totalGrass - gc.districtDic[bo.districtID].usedGrass) +
             CheckNatureToStr("wood", bo.natureWood, bp.NatureWood, gc.districtDic[bo.districtID].totalWood - gc.districtDic[bo.districtID].usedWood) +
             CheckNatureToStr("water", bo.natureWater, bp.NatureWater, gc.districtDic[bo.districtID].totalWater - gc.districtDic[bo.districtID].usedWater) +
@@ -796,7 +796,7 @@ public class BuildingPanel : BasePanel
         if (bp.NeedStone > gc.districtDic[gc.nowCheckingDistrictID].rStuffStone) { canDo = false; }
         if (bp.NeedMetal > gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal) { canDo = false; }
         if (bp.NeedGold > gc.gold) { canDo = false; }
-        if ((bp.Grid - bo.gridList.Count) > gc.districtDic[bo.districtID].gridEmpty) { canDo = false; }
+     
         if ((bp.NatureGrass - bo.natureGrass) > (gc.districtDic[bo.districtID].totalGrass - gc.districtDic[bo.districtID].usedGrass)) { canDo = false; }
         if ((bp.NatureWood - bo.natureWood) > (gc.districtDic[bo.districtID].totalWood - gc.districtDic[bo.districtID].usedWood)) { canDo = false; }
         if ((bp.NatureWater - bo.natureWater) > (gc.districtDic[bo.districtID].totalWater - gc.districtDic[bo.districtID].usedWater)) { canDo = false; }
