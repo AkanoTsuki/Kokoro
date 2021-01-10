@@ -56,12 +56,12 @@ public class HeroSelectPanel : BasePanel
     {
         if (columns == 2)
         {
-            goRt.sizeDelta = new Vector2(200f+154f, 538f);
+            goRt.sizeDelta = new Vector2(185f+154f, 520f);
             listRt.sizeDelta = new Vector2(174f + 154f, 438f);
         }
         else if (columns == 1)
         {
-            goRt.sizeDelta = new Vector2(200f, 538f);
+            goRt.sizeDelta = new Vector2(185f, 520f);
             listRt.sizeDelta = new Vector2(174f, 438f);
         }
         List<HeroObject> temp = new List<HeroObject> { };
@@ -108,7 +108,7 @@ public class HeroSelectPanel : BasePanel
                         nowSelectedHeroID = oid;
                         UpdateDesInfo();
                         HeroPanel.Instance.nowSelectedHeroID = oid;
-                        HeroPanel.Instance.OnShow(gc.heroDic[oid], HeroPanel.Instance.nowEquipState, (int)(GetComponent<RectTransform>().anchoredPosition.x + GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(GetComponent<RectTransform>().anchoredPosition.y), 5000);
+                        HeroPanel.Instance.OnShow(gc.heroDic[oid], HeroPanel.Instance.nowEquipState, (int)(GetComponent<RectTransform>().anchoredPosition.x + GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(GetComponent<RectTransform>().anchoredPosition.y));
 
                     });
                 }

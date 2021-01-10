@@ -9,7 +9,7 @@ public class HeroPanel : BasePanel
 
     GameControl gc;
 
-    public RectTransform connRt;
+   // public RectTransform connRt;
 
     public Text nameText;
     public Image picImage;
@@ -135,10 +135,10 @@ public class HeroPanel : BasePanel
         title_changeNameConfirmBtn.onClick.AddListener(delegate () { gc.HeroChangeName(nowSelectedHeroID, title_changeNameIf.text);HideChangeName(); });
     }
 
-    public void OnShow( HeroObject heroObject,bool equipState, int x,int y,int connY)
+    public void OnShow( HeroObject heroObject,bool equipState, int x,int y)
     {
 
-        UpdateAllInfo( heroObject, connY);
+        UpdateAllInfo( heroObject);
         nowEquipState = equipState;
         //nowSkillState = skillState;
         UpdateButtonStatus();
@@ -224,9 +224,9 @@ public class HeroPanel : BasePanel
         }
     }
 
-    public void UpdateAllInfo( HeroObject heroObject, int connY)
+    public void UpdateAllInfo( HeroObject heroObject)
     {
-        connRt.anchoredPosition = new Vector2(-19, connY);
+      //  connRt.anchoredPosition = new Vector2(-19, connY);
         HideChangeName();
         UpdateBasicInfo(heroObject);
         UpdateFightInfo(heroObject, EquipPart.None, null, 1);
@@ -2069,20 +2069,20 @@ public class HeroPanel : BasePanel
                 skillGoPool.Add(go);
             }
 
-            int row = i == 0 ? 0 : (i % 3);
-            int col = i == 0 ? 0 : (i / 3);
-            go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 164f, -4 + col * -36f, 0f);
+            int row = i == 0 ? 0 : (i % 4);
+            int col = i == 0 ? 0 : (i / 4);
+            go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 120f, -4 + col * -28f, 0f);
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/SkillPic/" +DataManager.mSkillDict[ heroSkills[i].skillID].Pic);
-            go.transform.GetChild(1).GetComponent<Text>().text = DataManager.mSkillDict[heroSkills[i].skillID].Name + " Lv.<color=" + (heroSkills[i].level == 10 ?"yellow>": "white>") + heroSkills[i].level+"</color>";
-            go.transform.GetChild(2).GetComponent<RectTransform>().sizeDelta = new Vector2(heroSkills[i].level!=10?(((float)heroSkills[i].exp/ (heroSkills[i].level*200)) * 124f):124f, 8f);
+            go.transform.GetChild(2).GetComponent<Text>().text = DataManager.mSkillDict[heroSkills[i].skillID].Name + "  Lv.<color=" + (heroSkills[i].level == 10 ?"yellow>": "white>") + heroSkills[i].level+"</color>";
+            go.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta = new Vector2(heroSkills[i].level!=10?(((float)heroSkills[i].exp/ (heroSkills[i].level*200)) * 92f):92f, 8f);
 
         }
         for (int i = heroSkills.Count ; i < skillGoPool.Count; i++)
         {
             skillGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
-        pageSkill_listGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(505f, Mathf.Max(400f, 4 + (heroSkills.Count / 3) * 36f));
+        pageSkill_listGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(484f, Mathf.Max(400f, 4 + (heroSkills.Count / 4) * 28f));
 
     }
 
@@ -2099,10 +2099,10 @@ public class HeroPanel : BasePanel
         IsShowPageDataAndHistory = true;
 
         int UseTotal = heroObject.countUseWind + heroObject.countUseFire + heroObject.countUseWater + heroObject.countUseGround + heroObject.countUseLight + heroObject.countUseDark+ heroObject.countUseNone;
-        pageDataAndHistory_dataText.text = "制作武器 " + heroObject.countMakeWeapon +
-            " 件\n制作防具 " + heroObject.countMakeArmor +
-            " 件\n制作饰物 " + heroObject.countMakeJewelry +
-            " 件\n制作卷轴 " + heroObject.countMakeScroll +
+        pageDataAndHistory_dataText.text = "生产/制作\n 制作武器 " + heroObject.countMakeWeapon +
+            " 件\n 制作防具 " + heroObject.countMakeArmor +
+            " 件\n 制作饰物 " + heroObject.countMakeJewelry +
+            " 件\n 制作卷轴 " + heroObject.countMakeScroll +
             " 件\n\n冒险 " + heroObject.countAdventure +
             " 次\n 完成 " + heroObject.countAdventureDone +
             " 次\n击杀 " + heroObject.countKill +

@@ -48,7 +48,8 @@ public class BuildPanel : BasePanel
         UpdateFilterButtonText();
         SetAnchoredPosition(x, y);
 
-        DistrictMapPanel.Instance.OnShow(x + (int)transform.GetComponent<RectTransform>().sizeDelta.x, y );
+        DistrictMapPanel.Instance.OnShow(0, -90 );
+        BuildingPanel.Instance.OnHide();
         isShow = true;
     }
 
@@ -128,37 +129,20 @@ public class BuildPanel : BasePanel
         {
             go = Instantiate(Resources.Load("Prefab/UILabel/Label_BuildingInBuild")) as GameObject;
             go.transform.SetParent(buildingListGo.transform);
-            go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f, -4 + i * -92f, 0f);
+            go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f+i*188f, -2f);
 
-            go.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/BuildingPic/" + temp[i].MainPic);
-            go.transform.GetChild(2).GetComponent<Text>().text = temp[i].Name;
-            go.transform.GetChild(3).GetComponent<Text>().text =  CheckNeedToStr("NeedWood", temp[i].NeedWood) + CheckNeedToStr("NeedStone", temp[i].NeedStone)  + CheckNeedToStr("NeedMetal", temp[i].NeedMetal) + CheckNeedToStr("gold", temp[i].NeedGold) +
-                CheckNeedToStr("NatureGrass", temp[i].NatureGrass) + CheckNeedToStr("NatureWood", temp[i].NatureWood) + CheckNeedToStr("NatureWater", temp[i].NatureWater) + CheckNeedToStr("NatureStone", temp[i].NatureStone) + CheckNeedToStr("NatureMetal", temp[i].NatureMetal) +
-                 "\n" + temp[i].Des + ".维持费" + temp[i].Expense + "金/月 " ;
+            go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/BuildingFace/" + temp[i].MainPic);
+            go.transform.GetChild(1).GetComponent<Text>().text = temp[i].Name;
+            go.transform.GetChild(2).GetComponent<Text>().text ="["+ temp[i].SizeX + "x" + temp[i].SizeYBase+ "]" + CheckNeedToStr("NeedWood", temp[i].NeedWood) + CheckNeedToStr("NeedStone", temp[i].NeedStone) + CheckNeedToStr("NeedMetal", temp[i].NeedMetal) + CheckNeedToStr("gold", temp[i].NeedGold);
+            go.transform.GetChild(3).GetChild(0).GetComponent<Text>().text =  temp[i].Des + ".维持费" + temp[i].Expense + "金/月 " ;
 
-            go.transform.GetChild(5).GetComponent<Text>().text = temp[i].SizeX+ "x"+temp[i].SizeYBase;
 
-            //Debug.Log(temp[i].Grid <= gc.districtDic[gc.nowCheckingDistrictID].gridEmpty);
-            //Debug.Log(temp[i].NeedWood <= gc.districtDic[gc.nowCheckingDistrictID].rStuffWood);
-            //Debug.Log(temp[i].NeedStone <= gc.districtDic[gc.nowCheckingDistrictID].rStuffStone);
-            //Debug.Log(temp[i].NeedMetal <= gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal);
-            //Debug.Log(temp[i].NeedGold <= gc.gold);
-            //Debug.Log(temp[i].NatureGrass <= (gc.districtDic[gc.nowCheckingDistrictID].totalGrass - gc.districtDic[gc.nowCheckingDistrictID].usedGrass));
-            //Debug.Log(temp[i].NatureWood <= (gc.districtDic[gc.nowCheckingDistrictID].totalWood - gc.districtDic[gc.nowCheckingDistrictID].usedWood));
-            //Debug.Log(temp[i].NatureWater <= (gc.districtDic[gc.nowCheckingDistrictID].totalWater - gc.districtDic[gc.nowCheckingDistrictID].usedWater));
-            //Debug.Log(temp[i].NatureStone <= (gc.districtDic[gc.nowCheckingDistrictID].totalStone - gc.districtDic[gc.nowCheckingDistrictID].usedStone));
-            //Debug.Log(temp[i].NatureMetal <= (gc.districtDic[gc.nowCheckingDistrictID].totalMetal - gc.districtDic[gc.nowCheckingDistrictID].usedMetal));
             short bpID = temp[i].ID;
             if (
                 temp[i].NeedWood <= gc.districtDic[gc.nowCheckingDistrictID].rStuffWood &&
                 temp[i].NeedStone <= gc.districtDic[gc.nowCheckingDistrictID].rStuffStone &&
                 temp[i].NeedMetal <= gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal &&
-                temp[i].NeedGold <= gc.gold &&
-                temp[i].NatureGrass <= (gc.districtDic[gc.nowCheckingDistrictID].totalGrass - gc.districtDic[gc.nowCheckingDistrictID].usedGrass) &&
-                temp[i].NatureWood <= (gc.districtDic[gc.nowCheckingDistrictID].totalWood - gc.districtDic[gc.nowCheckingDistrictID].usedWood) &&
-                temp[i].NatureWater <= (gc.districtDic[gc.nowCheckingDistrictID].totalWater - gc.districtDic[gc.nowCheckingDistrictID].usedWater) &&
-                temp[i].NatureStone <= (gc.districtDic[gc.nowCheckingDistrictID].totalStone - gc.districtDic[gc.nowCheckingDistrictID].usedStone) &&
-                temp[i].NatureMetal <= (gc.districtDic[gc.nowCheckingDistrictID].totalMetal - gc.districtDic[gc.nowCheckingDistrictID].usedMetal)
+                temp[i].NeedGold <= gc.gold 
                )
             {
                 go.transform.GetChild(4).GetComponent<Button>().interactable = true;
@@ -176,7 +160,7 @@ public class BuildPanel : BasePanel
             go.GetComponent<InteractiveLabel>().index = temp[i].ID;
 
         }
-        buildingListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(313f, Mathf.Max(231f, 4 + temp.Count * 92f));
+        buildingListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(Mathf.Max(4 + temp.Count * 188f, 1024f),148f );
 
 
     }
@@ -191,16 +175,11 @@ public class BuildPanel : BasePanel
         {
             switch (type)
             {
-                case "grid": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].gridEmpty ? "#FF5B5B>" : "white>") + "[占地 " + value + "]</color>";
+               
                 case "NeedWood": return "<color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffWood ? "#FF5B5B>" : "white>") + "木材" + value + "</color>";
                 case "NeedStone": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffStone ? "#FF5B5B>" : "white>") + "石料" + value + "</color>";
                 case "NeedMetal": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal ? "#FF5B5B>" : "white>") + "金属" + value + "</color>";
-                case "NatureGrass": return " <color=" + (value > (gc.districtDic[gc.nowCheckingDistrictID].totalGrass - gc.districtDic[gc.nowCheckingDistrictID].usedGrass )? "#FF5B5B>" : "white>") + "草地" + value + "</color>";
-                case "NatureWood": return " <color=" + (value > (gc.districtDic[gc.nowCheckingDistrictID].totalWood - gc.districtDic[gc.nowCheckingDistrictID].usedWood) ? "#FF5B5B>" : "white>") + "林地" + value + "</color>";
-                case "NatureWater": return " <color=" + (value > (gc.districtDic[gc.nowCheckingDistrictID].totalWater - gc.districtDic[gc.nowCheckingDistrictID].usedWater) ? "#FF5B5B>" : "white>") + "水域" + value + "</color>";
-                case "NatureStone": return " <color=" + (value > (gc.districtDic[gc.nowCheckingDistrictID].totalStone - gc.districtDic[gc.nowCheckingDistrictID].usedStone) ? "#FF5B5B>" : "white>") + "石头矿区" + value + "</color>";
-                case "NatureMetal": return " <color=" + (value > (gc.districtDic[gc.nowCheckingDistrictID].totalMetal - gc.districtDic[gc.nowCheckingDistrictID].usedMetal) ? "#FF5B5B>" : "white>") + "金属矿区" + value + "</color>";
-
+              
 
                 case "gold": return " <color=" + (value > gc.gold ? "#FF5B5B>" : "white>") + "金币" + value + "</color>";
                 default: return "未定义类型";

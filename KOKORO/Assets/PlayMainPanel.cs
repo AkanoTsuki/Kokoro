@@ -26,14 +26,14 @@ public class PlayMainPanel : BasePanel
     public Button top_setBtn;
     public Button top_homeBtn;
 
-    public Button left_districtMainBtn;
-    public Button left_inventoryMainBtn;
-    public Button left_inventoryScrollBtn;
+    public Dropdown top_districtDd;
+    public Button top_districtBtn;
+
     public Button left_heroMainBtn;
     public Button left_adventureMainBtn;
-    public Button left_buildBtn;
-    public Button left_buildingSelectBtn;
-    public Button left_marketBtn;
+
+
+
 
  
     public Image bottom_baseline_disImage;
@@ -97,7 +97,7 @@ public class PlayMainPanel : BasePanel
     public Text bottom_info_personWorkerText;
 
     public Text bottom_info_buildingBuildingText;
-    public Text bottom_info_buildingGridText;
+
 
     public Text bottom_info_elementWindText;
     public Text bottom_info_elementFireText;
@@ -106,11 +106,7 @@ public class PlayMainPanel : BasePanel
     public Text bottom_info_elementLightText;
     public Text bottom_info_elementDarkText;
 
-    public Text bottom_info_naturalGrassText;
-    public Text bottom_info_naturalWoodText;
-    public Text bottom_info_naturalWaterText;
-    public Text bottom_info_naturalStoneText;
-    public Text bottom_info_naturalMetalText;
+
 
     public RectTransform bottom_statusBlockRt;
 
@@ -132,24 +128,20 @@ public class PlayMainPanel : BasePanel
     {
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInPlay>();
         
-        left_districtMainBtn.onClick.AddListener(delegate () { gci.OpenDistrictMain(); });
-        left_inventoryMainBtn.onClick.AddListener(delegate () { gci.OpenItemListAndInfo(); });
-        left_inventoryScrollBtn.onClick.AddListener(delegate () { gci.OpenSkillListAndInfo(); });
-        left_buildBtn.onClick.AddListener(delegate () { gci.OpenBuild(); });
-        left_buildingSelectBtn.onClick.AddListener(delegate () { gci.OpenBuildingSelect(); });
+
         left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
         left_adventureMainBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
-        left_marketBtn.onClick.AddListener(delegate () { gci.OpenMarket(); });
+
+
+        top_districtDd.onValueChanged.AddListener(delegate { gc.nowCheckingDistrictID = (short)top_districtDd.value;  });
+        top_districtBtn.onClick.AddListener(delegate () { ShowDistrictMap(); });
 
         top_saveBtn.onClick.AddListener(delegate () { gci.GameSave(); });
         top_pauseBtn.onClick.AddListener(delegate () { gci.TimePause(); });
         top_playBtn.onClick.AddListener(delegate () { gci.TimePlay(); });
         top_fastBtn.onClick.AddListener(delegate () { gci.TimeFast(); });
       
-        leftBtnList.Add(left_districtMainBtn);
-        leftBtnList.Add(left_inventoryMainBtn);
-        leftBtnList.Add(left_buildBtn);
-        leftBtnList.Add(left_buildingSelectBtn);
+
         leftBtnList.Add(left_heroMainBtn);
         leftBtnList.Add(left_adventureMainBtn);
 
@@ -170,6 +162,8 @@ public class PlayMainPanel : BasePanel
         UpdateDateInfo();
         UpdateTimeButtonState();
         UpdateDistrictInfo(gc.nowCheckingDistrictID);
+
+        UpdateTopDistrict();
 
         HideResourcesBlock();
         HideInfoBlock();
@@ -287,6 +281,33 @@ public class PlayMainPanel : BasePanel
         
     }
 
+
+    public void UpdateTopDistrict()
+    {
+        List<string> disList = new List<string>();
+        for (int i = 0; i < gc.districtDic.Length; i++)
+        {
+            if (gc.districtDic[i].isOpen)
+            {
+                disList.Add(gc.districtDic[i].name + "·" + gc.districtDic[i].baseName);
+            }
+            
+        }
+
+        top_districtDd.ClearOptions();
+        top_districtDd.AddOptions(disList);
+    }
+
+    void ShowDistrictMap()
+    {
+        if (DistrictMapPanel.Instance.isShow == false)
+        {
+            DistrictMapPanel.Instance.OnShow(0, -90);
+            top_districtBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+       
+    }
+
     public void UpdateDistrictInfo(short districtID)
     {
         bottom_baseline_nameText.text = gc.districtDic[districtID].name+"·"+ gc.districtDic[districtID].baseName;
@@ -360,7 +381,7 @@ public class PlayMainPanel : BasePanel
         bottom_info_personWorkerText.text = gc.districtDic[districtID].worker.ToString();
 
         bottom_info_buildingBuildingText.text = gc.districtDic[districtID].buildingList.Count.ToString();
-        bottom_info_buildingGridText.text = (gc.districtDic[districtID].gridUsed + gc.districtDic[districtID].gridEmpty) + "(" + gc.districtDic[districtID].gridUsed + ")";
+
 
         bottom_info_elementWindText.text = "风 "+gc.districtDic[districtID].eWind;
         bottom_info_elementFireText.text = "火 " + gc.districtDic[districtID].eFire;
@@ -369,11 +390,7 @@ public class PlayMainPanel : BasePanel
         bottom_info_elementLightText.text = "光 " + gc.districtDic[districtID].eLight;
         bottom_info_elementDarkText.text = "暗 " + gc.districtDic[districtID].eDark;
 
-        bottom_info_naturalGrassText.text = gc.districtDic[districtID].totalGrass + "(" + gc.districtDic[districtID].usedGrass + ")";
-        bottom_info_naturalWoodText.text = gc.districtDic[districtID].totalWood + "(" + gc.districtDic[districtID].usedWood + ")";
-        bottom_info_naturalWaterText.text = gc.districtDic[districtID].totalWater + "(" + gc.districtDic[districtID].usedWater + ")";
-        bottom_info_naturalStoneText.text = gc.districtDic[districtID].totalStone + "(" + gc.districtDic[districtID].usedStone + ")";
-        bottom_info_naturalMetalText.text = gc.districtDic[districtID].totalMetal + "(" + gc.districtDic[districtID].usedMetal + ")";
+
     }
     public void ShowInfoBlock(short districtID)
     {

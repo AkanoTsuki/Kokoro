@@ -63,11 +63,7 @@ public class DistrictMainPanel : BasePanel
 
     public void UpdateNatureInfo(DistrictObject districtObject)
     {
-        natureDesText.text = "草地 " + districtObject.totalGrass + "<color=#76ee00> [已开发 " + districtObject.usedGrass + "]</color>" +
-        "\n林地 " + districtObject.totalWood + "<color=#76ee00> [已开发 " + districtObject.usedWood + "]</color>" +
-        "\n水域 " + districtObject.totalWater + "<color=#76ee00> [已开发 " + districtObject.usedWater + "]</color>" +
-        "\n岩石矿类 " + districtObject.totalStone + "<color=#76ee00> [已开发 " + districtObject.usedStone + "]</color>" +
-        "\n金属矿类 " + districtObject.totalMetal + "<color=#76ee00> [已开发 " + districtObject.usedMetal + "]</color>\n" +
+        natureDesText.text = 
         "\n<color=#26F39A>风 " + districtObject.eWind + "</color> <color=#E74624>  火 " + districtObject.eFire + "</color> <color=#24CDE7>  水 " + districtObject.eWater + "</color> " +
         "\n<color=#C08342>地 " + districtObject.eGround + "</color> <color=#E0DE60>  光 " + districtObject.eLight + "</color> <color=#DA7CFF>  暗 " + districtObject.eDark + "</color> ";
 
@@ -106,7 +102,7 @@ public class DistrictMainPanel : BasePanel
 
     public void UpdateBuildingInfo(DistrictObject districtObject)
     {
-        buildingText.text = districtObject.buildingList.Count + "个 占地 " + districtObject.gridUsed + "/" + (districtObject.gridUsed + districtObject.gridEmpty);
+        buildingText.text = districtObject.buildingList.Count + "个  " ;
 
         for (int i = 0; i < buildingListGo.transform.childCount; i++)
         {

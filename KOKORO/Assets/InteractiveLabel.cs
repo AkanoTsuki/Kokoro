@@ -63,12 +63,12 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (labelType == LabelType.NewGameHero)
         {
             GameControlInNewGame gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInNewGame>();
-            HeroPanel.Instance.OnShow(gci.temp_HeroList[index], false,  374, -32, -374);
+            HeroPanel.Instance.OnShow(gci.temp_HeroList[index], false,  374, -32);
         }
         else if (labelType == LabelType.NewGameLeader)
         {
             GameControlInNewGame gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInNewGame>();
-            HeroPanel.Instance.OnShow(gci.temp_Leader, false,  374, -32, -234);
+            HeroPanel.Instance.OnShow(gci.temp_Leader, false,  374, -32);
         }
         else if (labelType == LabelType.Item)
         {
@@ -77,11 +77,11 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         else if (labelType == LabelType.HeroInSelect)
         {
             HeroPanel.Instance.OnShow(gc.heroDic[index], false,  (int)(BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing),
-               (int)BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y, 5000);
+               (int)BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
         }
         else if (labelType == LabelType.HeroInSelectToCheck)
         {
-            HeroPanel.Instance.OnShow(gc.heroDic[index], false,  (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y), 5000);
+            HeroPanel.Instance.OnShow(gc.heroDic[index], false,  (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y));
         }
         else if (labelType == LabelType.EquipmentLook)
         {
@@ -131,7 +131,7 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 return;
             }
 
-            HeroPanel.Instance.OnShow(gc.heroDic[HeroPanel.Instance.nowSelectedHeroID], HeroPanel.Instance.nowEquipState,  (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y), 5000);
+            HeroPanel.Instance.OnShow(gc.heroDic[HeroPanel.Instance.nowSelectedHeroID], HeroPanel.Instance.nowEquipState,  (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y));
 
         }
         else if (labelType == LabelType.EquipmentLook)

@@ -83,12 +83,7 @@ public class StartChoosePanel : BasePanel
 
         bigMapRt.anchoredPosition = new Vector2(DataManager.mDistrictDict[districtID].BigMapX, DataManager.mDistrictDict[districtID].BigMapY);
         bigMapDesRt.anchoredPosition = new Vector2(DataManager.mDistrictDict[districtID].BigMapDesX, DataManager.mDistrictDict[districtID].BigMapDesY);
-        bigMapDesText.text = DataManager.mDistrictDict[districtID].Name +
-            "\n<i><color=#73FB8F>草地</color>" + DataManager.mDistrictDict[districtID].Grass[0] + "   <color=#FBE757>□地块</color>" + DataManager.mDistrictDict[districtID].StartGrid[0]+
-            "\n<color=#098522>林地</color> " + DataManager.mDistrictDict[districtID].Wood[0] +
-            "\n<color=#39BAFF>水域</color> " + DataManager.mDistrictDict[districtID].Water[0] +
-            "\n<color=#A2A2A2>石头矿藏</color> " + DataManager.mDistrictDict[districtID].Stone[0] +
-            "\n<color=#B7611D>金属矿藏</color> " + DataManager.mDistrictDict[districtID].Metal[0] + "</i>";
+        bigMapDesText.text = DataManager.mDistrictDict[districtID].Name;
     }
 
     //public void UpdateMenberAllInfo()

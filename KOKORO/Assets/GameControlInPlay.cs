@@ -45,7 +45,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         Time.timeScale = gc.timeFlowSpeed;
         PlayMainPanel.Instance.UpdateTimeButtonState();
-        InvokeRepeating("TimeFlow", 0, 0.05f );
+        InvokeRepeating("TimeFlow", 0, 0.1f );
 
 
     }
@@ -247,7 +247,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            BuildPanel.Instance.OnShow(64, -88);
+            BuildPanel.Instance.OnShow(0, -408);
         }  
     }
 

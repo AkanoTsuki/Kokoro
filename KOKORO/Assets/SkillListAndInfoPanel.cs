@@ -92,7 +92,7 @@ public class SkillListAndInfoPanel : BasePanel
         HideFuncBtn(3);
 
         UpdateAllInfo(districtID, element, heroID, heroSkillIndex);
-        SetAnchoredPosition(x - 200, y);
+        SetAnchoredPosition(x, y);
 
         nowDistrictID = districtID;
         nowHeroID = heroID;

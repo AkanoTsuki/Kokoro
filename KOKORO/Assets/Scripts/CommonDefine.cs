@@ -964,12 +964,6 @@ public class DistrictPrototype
     public short BigMapY;
     public short BigMapDesX;
     public short BigMapDesY;
-    public List<short> StartGrid;
-    public List<short> Grass;
-    public List<short> Wood;
-    public List<short> Water;
-    public List<short> Stone;
-    public List<short> Metal;
     public short EWind;
     public short EFire;
     public short EWater;
@@ -1000,18 +994,7 @@ public class DistrictObject
     private short People;//当前人口
     private short PeopleLimit;//人口上限
     private short Worker;//正在工作
-    private short GridEmpty;
-    private short GridUsed;
-    private short TotalGrass;
-    private short TotalWood;
-    private short TotalWater;
-    private short TotalStone;
-    private short TotalMetal;
-    private short UsedGrass;
-    private short UsedWood;
-    private short UsedWater;
-    private short UsedStone;
-    private short UsedMetal;
+
     private List<int> BuildingList;
     private List<int> HeroList;
     private short EWind;
@@ -1048,8 +1031,8 @@ public class DistrictObject
     private int RStuffLimit;
     private int RProductLimit;
     private int RScrollLimit;
-    public DistrictObject(short id, string name, string baseName, string des, bool isOpen, byte level, short people, short peopleLimit, short worker, short gridEmpty, short gridUsed,
-        short totalGrass, short totalWood, short totalWater, short totalStone, short totalMetal, short usedGrass, short usedWood, short usedWater, short usedStone, short usedMetal, List<int> buildingList, List<int> heroList,
+    public DistrictObject(short id, string name, string baseName, string des, bool isOpen, byte level, short people, short peopleLimit, short worker, 
+         List<int> buildingList, List<int> heroList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, int rFoodBeer, int rFoodWine,
         int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
@@ -1066,18 +1049,6 @@ public class DistrictObject
         this.People = people;
         this.PeopleLimit = peopleLimit;
         this.Worker = worker;
-        this.GridEmpty = gridEmpty;
-        this.GridUsed = gridUsed;
-        this.TotalGrass = totalGrass;
-        this.TotalWood = totalWood;
-        this.TotalWater = totalWater;
-        this.TotalStone = totalStone;
-        this.TotalMetal = totalMetal;
-        this.UsedGrass = usedGrass;
-        this.UsedWood = usedWood;
-        this.UsedWater = usedWater;
-        this.UsedStone = usedStone;
-        this.UsedMetal = usedMetal;
         this.BuildingList = buildingList;
         this.HeroList = heroList;
         this.EWind = eWind;
@@ -1124,18 +1095,6 @@ public class DistrictObject
     public short people { get { return People; } set { People = value; } }
     public short peopleLimit { get { return PeopleLimit; } set { PeopleLimit = value; } }
     public short worker { get { return Worker; } set { Worker = value; } }
-    public short gridEmpty { get { return GridEmpty; } set { GridEmpty = value; } }
-    public short gridUsed { get { return GridUsed; } set { GridUsed = value; } }
-    public short totalGrass { get { return TotalGrass; } set { TotalGrass = value; } }
-    public short totalWood { get { return TotalWood; } set { TotalWood = value; } }
-    public short totalWater { get { return TotalWater; } set { TotalWater = value; } }
-    public short totalStone { get { return TotalStone; } set { TotalStone = value; } }
-    public short totalMetal { get { return TotalMetal; } set { TotalMetal = value; } }
-    public short usedGrass { get { return UsedGrass; } set { UsedGrass = value; } }
-    public short usedWood { get { return UsedWood; } set { UsedWood = value; } }
-    public short usedWater { get { return UsedWater; } set { UsedWater = value; } }
-    public short usedStone { get { return UsedStone; } set { UsedStone = value; } }
-    public short usedMetal { get { return UsedMetal; } set { UsedMetal = value; } }
     public List<int> buildingList { get { return BuildingList; } set { BuildingList = value; } }
     public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
     public short eWind { get { return EWind; } set { EWind = value; } }
@@ -1176,17 +1135,15 @@ public class DistrictObject
 
 public class DistrictGridObject
 {
-   // private int ID;
-  //  private string Pic;
+
+    private byte Level;
     private int BuildingID;//-2未开放 -1未使用
-    public DistrictGridObject( int buildingID)
+    public DistrictGridObject(byte level, int buildingID)
     {
-        //this.ID = id;
-      //  this.Pic = pic;
+        this.Level = level;
         this.BuildingID = buildingID;
     }
-   // public int id { get { return ID; } }
-  //  public string pic { get { return Pic; } set { Pic = value; } }
+    public byte level { get { return Level; } }
     public int buildingID { get { return BuildingID; } set { BuildingID = value; } }
 }
 
@@ -1213,11 +1170,7 @@ public class BuildingPrototype
     public int Expense;
     public short UpgradeTo;
    // public byte Grid;
-    public byte NatureGrass;
-    public byte NatureWood;
-    public byte NatureWater;
-    public byte NatureStone;
-    public byte NatureMetal;
+
     public short People;//提供人口
     public short Worker;//工人上限
     public byte EWind;
@@ -1248,11 +1201,7 @@ public class BuildingObject
     private bool IsOpen;
     private List<string> GridList;//占用格子ID
     private List<int> HeroList;
-    private byte NatureGrass;
-    private byte NatureWood;
-    private byte NatureWater;
-    private byte NatureStone;
-    private byte NatureMetal;
+
     private short People;//提供人口
     private short Worker;//工人上限
     private short WorkerNow;
@@ -1265,7 +1214,7 @@ public class BuildingObject
     private short ProduceEquipNow;//当前生产的装备模板原型ID 如果是资源类则对应资源生产关系表
     private byte BuildProgress;//0建设中 1已完成 2升级中
     public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, List<string> gridList, List<int> heroList,
-        byte natureGrass, byte natureWood, byte natureWater, byte natureStone, byte natureMetal, short people, short worker, short workerNow,
+         short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
         short produceEquipNow, byte buildProgress)
     {
@@ -1286,11 +1235,6 @@ public class BuildingObject
         this.IsOpen = isOpen;
         this.GridList = gridList;
         this.HeroList = heroList;
-        this.NatureGrass = natureGrass;
-        this.NatureWood = natureWood;
-        this.NatureWater = natureWater;
-        this.NatureStone = natureStone;
-        this.NatureMetal = natureMetal;
         this.People = people;
         this.Worker = worker;
         this.WorkerNow = workerNow;
@@ -1320,11 +1264,7 @@ public class BuildingObject
     public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
     public List<string> gridList { get { return GridList; } set { GridList = value; } }
     public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
-    public byte natureGrass { get { return NatureGrass; } set { NatureGrass = value; } }
-    public byte natureWood { get { return NatureWood; } set { NatureWood = value; } }
-    public byte natureWater { get { return NatureWater; } set { NatureWater = value; } }
-    public byte natureStone { get { return NatureStone; } set { NatureStone = value; } }
-    public byte natureMetal { get { return NatureMetal; } set { NatureMetal = value; } }
+
     public short people { get { return People; } set { People = value; } }
     public short worker { get { return Worker; } set { Worker = value; } }
     public short workerNow { get { return WorkerNow; } set { WorkerNow = value; } }

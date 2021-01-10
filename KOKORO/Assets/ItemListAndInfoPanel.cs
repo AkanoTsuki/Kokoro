@@ -83,7 +83,7 @@ public class ItemListAndInfoPanel : BasePanel
     {
         nowEquipPart = EquipPart.None;
         titleText.text = "物品信息";
-        goRt.sizeDelta = new Vector2(732f - 232f-238f, 536f);
+        goRt.sizeDelta = new Vector2(712f - 232f-238f, 520f);
         listRt.sizeDelta = new Vector2(0, 450f);
         numText.text = "";
 
@@ -166,12 +166,12 @@ public class ItemListAndInfoPanel : BasePanel
 
         if (columns == 2)
         {
-            goRt.sizeDelta = new Vector2(732f, 536f);
+            goRt.sizeDelta = new Vector2(712f, 520f);
             listRt.sizeDelta = new Vector2(470f, 450f);
         }
         else if (columns == 1)
         {
-            goRt.sizeDelta = new Vector2(732f - 232f, 536f);
+            goRt.sizeDelta = new Vector2(712f - 232f, 520f);
             listRt.sizeDelta = new Vector2(470f - 232f, 450f);
         }
 
@@ -298,12 +298,12 @@ public class ItemListAndInfoPanel : BasePanel
 
         if (columns == 2)
         {
-            goRt.sizeDelta = new Vector2(732f, 536f);
+            goRt.sizeDelta = new Vector2(712f, 520f);
             listRt.sizeDelta = new Vector2(470f, 450f);
         }
         else if (columns == 1)
         {
-            goRt.sizeDelta = new Vector2(732f - 232f, 536f);
+            goRt.sizeDelta = new Vector2(712f - 232f, 520f);
             listRt.sizeDelta = new Vector2(470f - 232f, 450f);
         }
 

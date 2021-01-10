@@ -207,7 +207,7 @@ public class BuildingSelectPanel : BasePanel
             go.transform.GetComponent<InteractiveLabel>().index = temp[i].id;
             int index = temp[i].id;
             go.transform.GetComponent<Button>().onClick.RemoveAllListeners();
-            go.transform.GetComponent<Button>().onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index], (int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ goRt.sizeDelta.x+ GameControl.spacing), -88); });
+            go.transform.GetComponent<Button>().onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[index]); });
 
 
         }

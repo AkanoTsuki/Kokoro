@@ -65,7 +65,7 @@ public class GameControlInNewGame : MonoBehaviour
         }
         Debug.Log("temp_Leader.sex="+temp_Leader.sex);
         StartChoosePanel.Instance.UpdateLeaderInfo(temp_leaderHeroType);
-        HeroPanel.Instance.OnShow(temp_Leader, false,  374, -32, -234);
+        HeroPanel.Instance.OnShow(temp_Leader, false,  374, -32);
     }
 
     public void SetLeaderHeroType(short typeID)
@@ -73,7 +73,7 @@ public class GameControlInNewGame : MonoBehaviour
         temp_leaderHeroType = typeID;
         temp_Leader= gc.GenerateHeroByRandom(0, typeID, temp_leaderHeroSex);
         StartChoosePanel.Instance.UpdateLeaderInfo(typeID);
-        HeroPanel.Instance.OnShow(temp_Leader, false,  374, -32, -234);
+        HeroPanel.Instance.OnShow(temp_Leader, false,  374, -32);
     }
 
     public void RollMenberAll()
@@ -91,7 +91,7 @@ public class GameControlInNewGame : MonoBehaviour
         temp_HeroList[index]=gc.GenerateHeroByRandom(index+1, (short)ran,(byte)Random.Range(0, 2));
 
         StartChoosePanel.Instance.UpdateMenberInfo(index);
-        HeroPanel.Instance.UpdateAllInfo(temp_HeroList[index], -374);
+        HeroPanel.Instance.UpdateAllInfo(temp_HeroList[index]);
     }
 
     //确认并正式开始游戏
@@ -103,7 +103,7 @@ public class GameControlInNewGame : MonoBehaviour
         for (int i = 0; i < DataManager.mDistrictGridDict.Count; i++)
         {
             
-            gc.districtGridDic[DataManager.mDistrictGridDict[i].DistrictID].Add(DataManager.mDistrictGridDict[i].DistrictID+"_"+ DataManager.mDistrictGridDict[i].X+"," + DataManager.mDistrictGridDict[i].Y, new DistrictGridObject(  -1));
+            gc.districtGridDic[DataManager.mDistrictGridDict[i].DistrictID].Add(DataManager.mDistrictGridDict[i].DistrictID+"_"+ DataManager.mDistrictGridDict[i].X+"," + DataManager.mDistrictGridDict[i].Y, new DistrictGridObject(DataManager.mDistrictGridDict[i].Level,-1));
         }
 
         gc.heroDic.Add(0, temp_Leader);
@@ -116,9 +116,8 @@ public class GameControlInNewGame : MonoBehaviour
         gc.heroIndex = 6;
         for (int i = 0; i < 7; i++)
         {
-            gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des, temp_districtID == i, 1, 10, 20,0, DataManager.mDistrictDict[i].StartGrid[0], 0,
-                DataManager.mDistrictDict[i].Grass[0], DataManager.mDistrictDict[i].Wood[0], DataManager.mDistrictDict[i].Water[0], DataManager.mDistrictDict[i].Stone[0], DataManager.mDistrictDict[i].Metal[0],
-                0, 0, 0, 0, 0, new List<int> { }, temp_districtID == i? new List<int> { 0,1,2,3,4,5}: new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
+            gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des, temp_districtID == i, 1, 10, 20,0, 
+                 new List<int> { }, temp_districtID == i? new List<int> { 0,1,2,3,4,5}: new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
                 0, 0, 0, 0, 0, 0, 0, 5000, 5000, 1000, 500, 1000, 1000, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50000, 50000, 50, 50);
         }
 
@@ -156,6 +155,12 @@ public class GameControlInNewGame : MonoBehaviour
         gc.buildingUnlock[47]= true;
         gc.buildingUnlock[48]= true;
         gc.buildingUnlock[49]= true;
+        gc.buildingUnlock[59] = true;
+        gc.buildingUnlock[60] = true;
+        gc.buildingUnlock[61] = true;
+        gc.buildingUnlock[62] = true;
+        gc.buildingUnlock[63] = true;
+        gc.buildingUnlock[64] = true;
         gc.buildingUnlock[65]= true;
         gc.buildingUnlock[73] = true;
 

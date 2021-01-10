@@ -714,6 +714,14 @@ public class GameControl : MonoBehaviour
         }
         MessagePanel.Instance.AddMessage(districtDic[buildingDic[buildingId].districtID].name + "的" + buildingDic[buildingId].name + "建筑完成");
 
+        if (DistrictMapPanel.Instance.isShow)
+        {
+            DistrictMapPanel.Instance.UpdateSingleBuilding(buildingId);
+            DistrictMapPanel.Instance.UpdateBasicInfo();
+        }
+ 
+
+      //  GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + buildingDic[buildingId].layer + "/" + buildingId).GetComponent<image>;
     }
   
     public void BuildingUpgradeDone(short buildingId)
@@ -729,8 +737,9 @@ public class GameControl : MonoBehaviour
             DistrictMainPanel.Instance.UpdateOutputInfo(districtDic[nowCheckingDistrictID]);
             DistrictMainPanel.Instance.UpdateCultureInfo(districtDic[nowCheckingDistrictID]);
             DistrictMainPanel.Instance.UpdateBuildingInfo(districtDic[nowCheckingDistrictID]);
-        }
 
+        }
+       
    
         //BuildPanel.Instance.UpdateAllInfo(this);
         if (BuildingSelectPanel.Instance.isShow)
@@ -738,18 +747,18 @@ public class GameControl : MonoBehaviour
             BuildingSelectPanel.Instance.UpdateAllInfo(buildingDic[buildingId].districtID, BuildingSelectPanel.Instance.nowTypePanel, 2);
         }
         MessagePanel.Instance.AddMessage(districtDic[buildingDic[buildingId].districtID].name + "的" + buildingDic[buildingId].name + "升级完成");
-
+        DistrictMapPanel.Instance.UpdateSingleBuilding(buildingId);
     }
 
     void StartBuild(int districtID, int buildingID, int needTime)
     {
         //value0:地区实例ID value1:建筑实例ID 
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Build, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { buildingID }, new List<int> { buildingID } }));
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Build, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID }, new List<int> { buildingID } }));
     }
     void StartBuildingUpgrade(int districtID, int buildingID, int needTime)
     {
         //value0:地区实例ID value1:建筑实例ID 
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.BuildingUpgrade, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { buildingID }, new List<int> { buildingID } }));
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.BuildingUpgrade, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID }, new List<int> { buildingID } }));
     }
     public void CreateBuildEvent(short BuildingPrototypeID, short posX, short posY,byte layer,List<int> xList, List<int> yList)
     {
@@ -776,31 +785,7 @@ public class GameControl : MonoBehaviour
             return;
         }
 
-     
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureGrass > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedGrass)
-        {
-            BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
-            return;
-        }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureWood > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWood)
-        {
-            BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
-            return;
-        }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureWater > districtDic[nowCheckingDistrictID].totalGrass - districtDic[nowCheckingDistrictID].usedWater)
-        {
-            return;
-        }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureStone > districtDic[nowCheckingDistrictID].totalStone - districtDic[nowCheckingDistrictID].usedStone)
-        {
-            BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
-            return;
-        }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NatureMetal > districtDic[nowCheckingDistrictID].totalMetal - districtDic[nowCheckingDistrictID].usedMetal)
-        {
-            BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
-            return;
-        }
+
 
         short buildingId = BuildingPrototypeID;
         List<string> grid = new List<string> { };
@@ -809,33 +794,12 @@ public class GameControl : MonoBehaviour
 
         for (int i = 0; i < xList.Count; i++)
         {
-            districtGridDic[nowCheckingDistrictID]["nowCheckingDistrictID_"+xList[i]+","+yList[i]].buildingID= buildingIndex;
-            grid.Add("nowCheckingDistrictID_" + xList[i] + "," + yList[i]);
+           // Debug.Log("i=" + i);
+           // Debug.Log("nowCheckingDistrictID_" + xList[i] + "," + yList[i]);
+            districtGridDic[nowCheckingDistrictID][nowCheckingDistrictID+"_" +xList[i]+","+yList[i]].buildingID= buildingIndex;
+            grid.Add(nowCheckingDistrictID + "_" + xList[i] + "," + yList[i]);
         }
-        //foreach (KeyValuePair<int, DistrictGridObject> kvp in districtGridDic)
-        //{
-        //    if(count>0)
-        //    {
-        //        if (DataManager.mDistrictGridDict[kvp.Value.id].DistrictID == nowCheckingDistrictID &&
-        //        DataManager.mDistrictGridDict[kvp.Value.id].Level <= districtDic[nowCheckingDistrictID].level &&
-        //         kvp.Value.buildingID == -1)
-        //        {
-        //            grid.Add(kvp.Value.id);
-        //            districtGridDic[kvp.Value.id].buildingID = buildingIndex;
 
-        //            count--;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        break;
-        //    }
-        //}
-
-        //for (int i = 0; i < grid.Count; i++)
-        //{
-        //    districtGridDic[grid[i]].buildingID = buildingIndex;
-        //}
 
 
         districtDic[nowCheckingDistrictID].rStuffWood -= DataManager.mBuildingDict[buildingId].NeedWood;
@@ -843,11 +807,6 @@ public class GameControl : MonoBehaviour
         districtDic[nowCheckingDistrictID].rStuffMetal -= DataManager.mBuildingDict[buildingId].NeedMetal;
         gold -= DataManager.mBuildingDict[buildingId].NeedGold;
 
-        districtDic[nowCheckingDistrictID].usedGrass += DataManager.mBuildingDict[buildingId].NatureGrass;
-        districtDic[nowCheckingDistrictID].usedWood += DataManager.mBuildingDict[buildingId].NatureWood;
-        districtDic[nowCheckingDistrictID].usedWater += DataManager.mBuildingDict[buildingId].NatureWater;
-        districtDic[nowCheckingDistrictID].usedStone += DataManager.mBuildingDict[buildingId].NatureStone;
-        districtDic[nowCheckingDistrictID].usedMetal += DataManager.mBuildingDict[buildingId].NatureMetal;
 
         districtDic[nowCheckingDistrictID].eWind += DataManager.mBuildingDict[buildingId].EWind;
         districtDic[nowCheckingDistrictID].eFire += DataManager.mBuildingDict[buildingId].EFire;
@@ -877,7 +836,6 @@ public class GameControl : MonoBehaviour
 
 
         buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic,  posX,  posY,  layer, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, true, grid, new List<int> { },
-            DataManager.mBuildingDict[buildingId].NatureGrass, DataManager.mBuildingDict[buildingId].NatureWood, DataManager.mBuildingDict[buildingId].NatureWater, DataManager.mBuildingDict[buildingId].NatureStone, DataManager.mBuildingDict[buildingId].NatureMetal,
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,
             -1, 0));
@@ -949,11 +907,7 @@ public class GameControl : MonoBehaviour
         districtDic[nowCheckingDistrictID].rStuffMetal -= DataManager.mBuildingDict[newPrototypeID].NeedMetal;
         gold -= DataManager.mBuildingDict[newPrototypeID].NeedGold;
 
-        districtDic[nowCheckingDistrictID].usedGrass +=(byte) (DataManager.mBuildingDict[newPrototypeID].NatureGrass- DataManager.mBuildingDict[nowPrototypeID].NatureGrass);
-        districtDic[nowCheckingDistrictID].usedWood += (byte)(DataManager.mBuildingDict[newPrototypeID].NatureWood - DataManager.mBuildingDict[nowPrototypeID].NatureWood);
-        districtDic[nowCheckingDistrictID].usedWater += (byte)(DataManager.mBuildingDict[newPrototypeID].NatureWater - DataManager.mBuildingDict[nowPrototypeID].NatureWater);
-        districtDic[nowCheckingDistrictID].usedStone += (byte)(DataManager.mBuildingDict[newPrototypeID].NatureStone - DataManager.mBuildingDict[nowPrototypeID].NatureStone);
-        districtDic[nowCheckingDistrictID].usedMetal += (byte)(DataManager.mBuildingDict[newPrototypeID].NatureMetal - DataManager.mBuildingDict[nowPrototypeID].NatureMetal);
+
 
         districtDic[nowCheckingDistrictID].eWind +=(short)( DataManager.mBuildingDict[newPrototypeID].EWind- DataManager.mBuildingDict[nowPrototypeID].EWind);
         districtDic[nowCheckingDistrictID].eFire += (short)(DataManager.mBuildingDict[newPrototypeID].EFire - DataManager.mBuildingDict[nowPrototypeID].EFire);
@@ -981,11 +935,7 @@ public class GameControl : MonoBehaviour
         buildingDic[buildingID].upgradeTo = DataManager.mBuildingDict[newPrototypeID].UpgradeTo;
         buildingDic[buildingID].isOpen = true;
        // buildingDic[buildingID].gridList.AddRange(grid);
-        buildingDic[buildingID].natureGrass = DataManager.mBuildingDict[newPrototypeID].NatureGrass;
-        buildingDic[buildingID].natureWood = DataManager.mBuildingDict[newPrototypeID].NatureWood;
-        buildingDic[buildingID].natureWater = DataManager.mBuildingDict[newPrototypeID].NatureWater;
-        buildingDic[buildingID].natureStone = DataManager.mBuildingDict[newPrototypeID].NatureStone;
-        buildingDic[buildingID].natureMetal = DataManager.mBuildingDict[newPrototypeID].NatureMetal;
+
         buildingDic[buildingID].people = DataManager.mBuildingDict[newPrototypeID].People;
         buildingDic[buildingID].worker = DataManager.mBuildingDict[newPrototypeID].Worker;
         buildingDic[buildingID].eWind = DataManager.mBuildingDict[newPrototypeID].EWind;
@@ -1031,11 +981,7 @@ public class GameControl : MonoBehaviour
     public void BuildingPullDown(int buildingID)
     {
         int prototypeID = buildingDic[buildingID].prototypeID;
-        districtDic[nowCheckingDistrictID].usedGrass -= DataManager.mBuildingDict[prototypeID].NatureGrass ;
-        districtDic[nowCheckingDistrictID].usedWood-=DataManager.mBuildingDict[prototypeID].NatureWood;
-        districtDic[nowCheckingDistrictID].usedWater-=DataManager.mBuildingDict[prototypeID].NatureWater ;
-        districtDic[nowCheckingDistrictID].usedStone-=DataManager.mBuildingDict[prototypeID].NatureStone;
-        districtDic[nowCheckingDistrictID].usedMetal-=DataManager.mBuildingDict[prototypeID].NatureMetal;
+
 
         districtDic[nowCheckingDistrictID].eWind-=DataManager.mBuildingDict[prototypeID].EWind;
         districtDic[nowCheckingDistrictID].eFire-=DataManager.mBuildingDict[prototypeID].EFire ;
@@ -1094,7 +1040,14 @@ public class GameControl : MonoBehaviour
             {
                 PlayMainPanel.Instance.UpdateResourcesBlock(nowCheckingDistrictID);
             }
+
+            if (DistrictMapPanel.Instance.isShow)
+            {
+                DistrictMapPanel.Instance.DeleteBuilding(buildingID);
+                DistrictMapPanel.Instance.UpdateBasicInfo();
+            }
         }
+
         StopProduceResource(buildingID);
         buildingDic.Remove(buildingID);
         
@@ -1112,6 +1065,10 @@ public class GameControl : MonoBehaviour
         }
 
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID } , new List<int> { buildingID } , stuffTypeInt, value }));
+        if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+        {
+            DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+        }
     }
 
     public void StopProduceResource(int buildingID)
@@ -1134,12 +1091,21 @@ public class GameControl : MonoBehaviour
         {
             BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
         }
+        if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == buildingDic[buildingID].districtID)
+        {
+            DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+        }
     }
 
     void StartProduceItem(int districtID, int buildingID, int needTime, short produceEquipNow)
     {
         //value0:地区实例ID value1:建筑实例ID value2:装备模板原型ID
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceItem, standardTime, standardTime + needTime, new List<List<int>> { new List<int>{ districtID }, new List<int>{ buildingID }, new List<int>{ produceEquipNow } }));
+
+        if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+        {
+            DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+        }
     }
 
     public void StopProduceItem(int buildingID)
@@ -1162,11 +1128,16 @@ public class GameControl : MonoBehaviour
         {
             BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
         }
+        if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == buildingDic[buildingID].districtID )
+        {
+            DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+        }
     }
 
     
     public void CreateProduceItemEvent(int buildingID)
     {
+        //TODO:报错 停工后开工
         int needLabor = DataManager.mProduceEquipDict[buildingDic[buildingID].produceEquipNow].NeedLabor;
         int nowLabor = 20 + buildingDic[buildingID].workerNow * 20;
         for (int i = 1; i < buildingDic[buildingID].heroList.Count; i++)
@@ -1483,6 +1454,14 @@ public class GameControl : MonoBehaviour
                 PlayMainPanel.Instance.UpdateResourcesBlock(nowCheckingDistrictID);
             }
         }
+        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID== buildingID)
+        {
+            BuildingPanel.Instance.UpdateHistoryInfoPart(buildingDic[buildingID]);
+        }
+        if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+        {
+            DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+        }
         CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemOrSkillID });
         return true;
         // itemDic.Add(GenerateItemByRandom(, districtDic[districtID],));
@@ -1622,6 +1601,14 @@ public class GameControl : MonoBehaviour
             {
                 PlayMainPanel.Instance.UpdateResourcesBlock(districtID);
             }
+        }
+        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        {
+            BuildingPanel.Instance.UpdateHistoryInfoPart(buildingDic[buildingID]);
+        }
+        if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+        {
+            DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
         }
         return true;
     }

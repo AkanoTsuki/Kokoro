@@ -79,7 +79,7 @@ public class BuildingPanel : BasePanel
         setForge_levelDd.onValueChanged.AddListener(delegate { setForgeLevel = setForge_levelDd.value; UpdateSetForgeOutputInput(nowCheckingBuildingID, setForgeType, setForgeLevel); });
     }
 
-    public void OnShow(BuildingObject buildingObject, int x, int y)
+    public void OnShow(BuildingObject buildingObject)
     {
         nowCheckingBuildingID = buildingObject.id;
         switch (buildingObject.panelType)
@@ -90,7 +90,7 @@ public class BuildingPanel : BasePanel
                 UpdateResource(buildingObject); break;
             default:break;
         }
-        SetAnchoredPosition(x, y);
+        SetAnchoredPosition(0, -408);
         isShow = true;
         
         setWorker_minusBtn.onClick.RemoveAllListeners();
@@ -100,6 +100,8 @@ public class BuildingPanel : BasePanel
 
         HideUpgradeBlock();
         HidePullDownBlock();
+
+        BuildPanel.Instance.OnHide();
     }
 
     public override void OnHide()
@@ -116,7 +118,7 @@ public class BuildingPanel : BasePanel
         UpdateOutputInfoPart(buildingObject);
         UpdateSetManagerPart(buildingObject);
         UpdateSetWorkerPart(buildingObject);
-        UpdateHistoryInfoPart(buildingObject, 122f);
+        UpdateHistoryInfoPart(buildingObject);
         UpdateSetForgePart(buildingObject);
         UpdateTotalSetButton(buildingObject);
     }
@@ -127,7 +129,7 @@ public class BuildingPanel : BasePanel
         UpdateOutputInfoPart(buildingObject);
         UpdateSetManagerPart(buildingObject);
         UpdateSetWorkerPart(buildingObject);
-        UpdateHistoryInfoPart(buildingObject, 406f);
+        UpdateHistoryInfoPart(buildingObject);
         HideSetForgePart();
 
         UpdateTotalSetButton(buildingObject);
@@ -293,13 +295,13 @@ public class BuildingPanel : BasePanel
         {
             nameText.text += "<color=#BC6223>(升级中)</color>";
         }
-        picImage.overrideSprite = Resources.Load("Image/BuildingPic/" + buildingObject.mainPic, typeof(Sprite)) as Sprite;
+       // picImage.overrideSprite = Resources.Load("Image/BuildingPic/" + buildingObject.mainPic, typeof(Sprite)) as Sprite;
         desText.text =  "[维护费 " + buildingObject.expense+"金币/月]\n"+ buildingObject.des;
     }
 
     public void UpdateOutputInfoPart(BuildingObject buildingObject)
     {
-        outputInfoRt.anchoredPosition = new Vector2(16f, -144f);
+       // outputInfoRt.anchoredPosition = new Vector2(16f, -144f);
         switch (buildingObject.panelType)
         {
             case "Forge":
@@ -434,7 +436,7 @@ public class BuildingPanel : BasePanel
 
     public void UpdateSetManagerPart(BuildingObject buildingObject)
     {
-        setManagerRt.anchoredPosition = new Vector2(16f, -320f);
+        //setManagerRt.anchoredPosition = new Vector2(16f, -320f);
         for (int i = 0; i < buildingObject.heroList.Count; i++)
         {
             setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
@@ -500,7 +502,7 @@ public class BuildingPanel : BasePanel
                 setManager_btnList[i].gameObject.GetComponent<Image>().overrideSprite = Resources.Load("Image/Other/to_up", typeof(Sprite)) as Sprite;
                 setManager_btnList[i].onClick.RemoveAllListeners();
                 setManager_btnList[i].onClick.AddListener(delegate () {
-                    HeroSelectPanel.Instance.OnShow("指派管理者", buildingObject.districtID, buildingObject.id, 1,(int)(gameObject.GetComponent<RectTransform>().sizeDelta.x+ gameObject.GetComponent<RectTransform>().anchoredPosition.x+ GameControl.spacing),(int)( gameObject.GetComponent<RectTransform>().anchoredPosition.y));
+                    HeroSelectPanel.Instance.OnShow("指派管理者", buildingObject.districtID, buildingObject.id, 1,64,-88);
                 });
             }
             else
@@ -516,7 +518,7 @@ public class BuildingPanel : BasePanel
 
     public void UpdateSetWorkerPart(BuildingObject buildingObject)
     {
-        setWorkerRt.anchoredPosition = new Vector2(16f, -426f);
+       // setWorkerRt.anchoredPosition = new Vector2(16f, -426f);
         int feed = gc.districtDic[gc.nowCheckingDistrictID].people - gc.districtDic[gc.nowCheckingDistrictID].worker;
         setWorker_desText.text = "空闲:" + feed + "\n 人数 " + buildingObject.workerNow + "/" + buildingObject.worker;
         if (buildingObject.workerNow > 0)
@@ -537,12 +539,12 @@ public class BuildingPanel : BasePanel
         }
     }
 
-    public void UpdateHistoryInfoPart(BuildingObject buildingObject ,float height)
+    public void UpdateHistoryInfoPart(BuildingObject buildingObject )
     {
-        infoHistoryRt.anchoredPosition = new Vector2(278f, -84f);
-        infoHistoryRt.sizeDelta = new Vector2(256f, height );
+        //infoHistoryRt.anchoredPosition = new Vector2(278f, -84f);
+        //infoHistoryRt.sizeDelta = new Vector2(256f, height );
         string str = "";
-        List<LogObject> temp = new List<LogObject> { };
+        //List<LogObject> temp = new List<LogObject> { };
         foreach (KeyValuePair<int, LogObject> kvp in gc.logDic)
         {
             if (kvp.Value.type == LogType.ProduceDone && kvp.Value.value[1] == buildingObject.id)
@@ -555,7 +557,7 @@ public class BuildingPanel : BasePanel
 
     public void UpdateSetForgePart(BuildingObject buildingObject)
     {
-        SetForgeRt.anchoredPosition = new Vector2(278f, -212f);
+      //  SetForgeRt.anchoredPosition = new Vector2(278f, -212f);
 
 
         switch (buildingObject.prototypeID)
@@ -782,12 +784,7 @@ public class BuildingPanel : BasePanel
         string des = "所需资源\n" + CheckNeedToStr("wood", bp.NeedWood) + CheckNeedToStr("stone", bp.NeedStone) + CheckNeedToStr("metal", bp.NeedMetal) + CheckNeedToStr("gold", bp.NeedGold) +
                  "\n";
 
-        des +=
-            CheckNatureToStr("grass", bo.natureGrass, bp.NatureGrass, gc.districtDic[bo.districtID].totalGrass - gc.districtDic[bo.districtID].usedGrass) +
-            CheckNatureToStr("wood", bo.natureWood, bp.NatureWood, gc.districtDic[bo.districtID].totalWood - gc.districtDic[bo.districtID].usedWood) +
-            CheckNatureToStr("water", bo.natureWater, bp.NatureWater, gc.districtDic[bo.districtID].totalWater - gc.districtDic[bo.districtID].usedWater) +
-            CheckNatureToStr("stone", bo.natureStone, bp.NatureStone, gc.districtDic[bo.districtID].totalStone - gc.districtDic[bo.districtID].usedStone) +
-            CheckNatureToStr("metal", bo.natureMetal, bp.NatureMetal, gc.districtDic[bo.districtID].totalMetal - gc.districtDic[bo.districtID].usedMetal) ;
+        
 
         upgradeBlock_desText.text = des;
 
@@ -797,11 +794,7 @@ public class BuildingPanel : BasePanel
         if (bp.NeedMetal > gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal) { canDo = false; }
         if (bp.NeedGold > gc.gold) { canDo = false; }
      
-        if ((bp.NatureGrass - bo.natureGrass) > (gc.districtDic[bo.districtID].totalGrass - gc.districtDic[bo.districtID].usedGrass)) { canDo = false; }
-        if ((bp.NatureWood - bo.natureWood) > (gc.districtDic[bo.districtID].totalWood - gc.districtDic[bo.districtID].usedWood)) { canDo = false; }
-        if ((bp.NatureWater - bo.natureWater) > (gc.districtDic[bo.districtID].totalWater - gc.districtDic[bo.districtID].usedWater)) { canDo = false; }
-        if ((bp.NatureStone - bo.natureStone) > (gc.districtDic[bo.districtID].totalStone - gc.districtDic[bo.districtID].usedStone)) { canDo = false; }
-        if ((bp.NatureMetal - bo.natureMetal )> (gc.districtDic[bo.districtID].totalMetal - gc.districtDic[bo.districtID].usedMetal)) { canDo = false; }
+    
 
         if (canDo)
         {
