@@ -101,7 +101,15 @@ public class BuildingPanel : BasePanel
         HideUpgradeBlock();
         HidePullDownBlock();
 
-        BuildPanel.Instance.OnHide();
+        if (BuildPanel.Instance.isShow)
+        {
+            BuildPanel.Instance.OnHide();
+        }
+        if (DistrictMapPanel.Instance.IsShowResourcesBlock)
+        {
+            DistrictMapPanel.Instance.HideResourcesBlock();
+        }
+
     }
 
     public override void OnHide()
@@ -148,35 +156,38 @@ public class BuildingPanel : BasePanel
                 {
                     totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
-                    if (buildingObject.produceEquipNow != -1)
+                    if (buildingObject.isOpen)
                     {
                         totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停工";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             gc.StopProduceResource(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
-                            if (BuildingSelectPanel.Instance.isShow)
-                            {
-                                BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
-                            }
+
                         });
                     }
                     else
                     {
                         totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "开工";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
-                            if (buildingObject.workerNow == 0)
-                            {
-                                MessagePanel.Instance.AddMessage("缺少工人，无法开工");
-                            }
-                            else
+                            if (buildingObject.workerNow != 0&& buildingObject.produceEquipNow!=-1)
                             {
                                 gc.CreateProduceResourceEvent(buildingObject.id);
                                 UpdateTotalSetButton(buildingObject);
-                                if (BuildingSelectPanel.Instance.isShow)
+                        
+                              
+                            }
+                            else
+                            {
+                                if (buildingObject.workerNow == 0)
                                 {
-                                    BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                                    MessagePanel.Instance.AddMessage("缺少工人，无法开工");
+                                }
+                                if (buildingObject.produceEquipNow == -1)
+                                {
+                                    MessagePanel.Instance.AddMessage("未设置生产目标，无法开工");
                                 }
                             }
+                            
                         });
                     }
                     buttonIndex++;
@@ -215,33 +226,34 @@ public class BuildingPanel : BasePanel
                 {
                     totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
-                    if (buildingObject.produceEquipNow != -1)
+                    if (buildingObject.isOpen)
                     {
                         totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停工";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             gc.StopProduceItem(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
-                            if (BuildingSelectPanel.Instance.isShow)
-                            {
-                                BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
-                            }
+                           
                         });
                     }
                     else
                     {
                         totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "开工";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
-                            if (buildingObject.workerNow == 0)
-                            {
-                                MessagePanel.Instance.AddMessage("缺少工人，无法开工");
-                            }
-                            else
+                            if (buildingObject.workerNow != 0 && buildingObject.produceEquipNow != -1)
                             {
                                 gc.CreateProduceItemEvent(buildingObject.id);
                                 UpdateTotalSetButton(buildingObject);
-                                if (BuildingSelectPanel.Instance.isShow)
+                               
+                            }
+                            else
+                            {
+                                if (buildingObject.workerNow == 0)
                                 {
-                                    BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+                                    MessagePanel.Instance.AddMessage("缺少工人，无法开工");
+                                }
+                                if (buildingObject.produceEquipNow == -1)
+                                {
+                                    MessagePanel.Instance.AddMessage("未设置生产目标，无法开工");
                                 }
                             }
                         });
@@ -305,7 +317,7 @@ public class BuildingPanel : BasePanel
         switch (buildingObject.panelType)
         {
             case "Forge":
-                if (buildingObject.produceEquipNow != -1)
+                if (buildingObject.isOpen)
                 {
                     int needTime = 0;
                     int nowTime = 0;
@@ -352,7 +364,7 @@ public class BuildingPanel : BasePanel
                 }
                 break;
             case "Resource":
-                if (buildingObject.produceEquipNow != -1)
+                if (buildingObject.isOpen)
                 {
                     int needTime = 0;
                     int nowTime = 0;
@@ -632,24 +644,27 @@ public class BuildingPanel : BasePanel
         }
         else
         {
-            setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "生产";
+            setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "设置";
         }
         setForge_updateBtn.onClick.RemoveAllListeners();
         setForge_updateBtn.onClick.AddListener(delegate () {
-            if (buildingObject.workerNow != 0)
-            {
-                gc.ChangeProduceEquipNow(buildingObject.id);
-                UpdateSetForgePart(buildingObject);
-                UpdateTotalSetButton(buildingObject);
-                if (BuildingSelectPanel.Instance.isShow)
-                {
-                    BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
-                }
-            }
-            else
-            {
-                MessagePanel.Instance.AddMessage("建筑物缺少工人，无法接受该指令");
-            }
+            gc.ChangeProduceEquipNow(buildingObject.id);
+            //  buildingObject.produceEquipNow
+            //if (buildingObject.workerNow != 0)
+            //{
+
+            //    gc.ChangeProduceEquipNow(buildingObject.id);
+            //    UpdateSetForgePart(buildingObject);
+            //    UpdateTotalSetButton(buildingObject);
+            //    if (BuildingSelectPanel.Instance.isShow)
+            //    {
+            //        BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
+            //    }
+            //}
+            //else
+            //{
+            //    MessagePanel.Instance.AddMessage("建筑物缺少工人，无法接受该指令");
+            //}
         });
 
     }
@@ -804,10 +819,7 @@ public class BuildingPanel : BasePanel
             {
                 gc.CreateBuildingUpgradeEvent(buildingID);
                 OnHide();
-                if (BuildingSelectPanel.Instance.isShow)
-                {
-                    BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
-                }
+  
                 //OnShow(gc.buildingDic[buildingID], (int)GetComponent<RectTransform>().anchoredPosition.x, (int)GetComponent<RectTransform>().anchoredPosition.y);
             });
         }
@@ -829,10 +841,7 @@ public class BuildingPanel : BasePanel
         pullDownBlock_confrimBtn.onClick.AddListener(delegate () {
             gc.BuildingPullDown(buildingID);
             OnHide();
-            if (BuildingSelectPanel.Instance.isShow)
-            {
-                BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
-            }
+   
         });
     }
 

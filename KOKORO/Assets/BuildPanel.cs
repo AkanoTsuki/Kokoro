@@ -49,7 +49,14 @@ public class BuildPanel : BasePanel
         SetAnchoredPosition(x, y);
 
         DistrictMapPanel.Instance.OnShow(0, -90 );
-        BuildingPanel.Instance.OnHide();
+        if (BuildingPanel.Instance.isShow)
+        {
+            BuildingPanel.Instance.OnHide();
+        }
+        if (DistrictMapPanel.Instance.IsShowResourcesBlock)
+        {
+            DistrictMapPanel.Instance.HideResourcesBlock();
+        }
         isShow = true;
     }
 

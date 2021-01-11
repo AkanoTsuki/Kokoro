@@ -83,7 +83,7 @@ public class GameControlInPlay : MonoBehaviour
 
             if (BuildingPanel.Instance.isShow)
             {
-                if (gc.buildingDic[BuildingPanel.Instance.nowCheckingBuildingID].produceEquipNow != -1)
+                if (gc.buildingDic[BuildingPanel.Instance.nowCheckingBuildingID].isOpen)
                 {
                     BuildingPanel.Instance.UpdateOutputInfoPart(gc.buildingDic[BuildingPanel.Instance.nowCheckingBuildingID]);
                 }
@@ -152,7 +152,7 @@ public class GameControlInPlay : MonoBehaviour
                         }
                         else
                         {
-                            gc.buildingDic[buildingID].produceEquipNow = -1;
+                            gc.buildingDic[buildingID].isOpen = false;
                         }
                         break;
                     case ExecuteEventType.ProduceItem:
@@ -169,7 +169,7 @@ public class GameControlInPlay : MonoBehaviour
                         }
                         else//制作失败，停止继续生产
                         {
-                            gc.buildingDic[buildingID].produceEquipNow = -1;
+                            gc.buildingDic[buildingID].isOpen = false;
                         }
                         break;
                     case ExecuteEventType.Build:
@@ -253,14 +253,7 @@ public class GameControlInPlay : MonoBehaviour
 
     public void OpenBuildingSelect()
     {
-        if (BuildingSelectPanel.Instance.isShow)
-        {
-            BuildingSelectPanel.Instance.OnHide();
-        }
-        else
-        {
-            BuildingSelectPanel.Instance.OnShow(64, -88);
-        }     
+    
     }
 
     public void OpenHeroSelect()

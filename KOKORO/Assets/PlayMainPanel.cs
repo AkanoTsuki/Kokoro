@@ -39,19 +39,8 @@ public class PlayMainPanel : BasePanel
     public Image bottom_baseline_disImage;
     public Text bottom_baseline_nameText;
 
-    public Button bottom_baseline_resourcesBtn;
-    public Text bottom_baseline_resourcesFoodText;
-    public Text bottom_baseline_resourcesStuffText;
-    public Text bottom_baseline_resourcesProductText;
-    public Text bottom_baseline_resourcesSignText;
 
-    public Button bottom_baseline_infoBtn;
-    public Text bottom_baseline_infoPeopleText;
-    public Text bottom_baseline_infoHeroText;
-    public Text bottom_baseline_infoWorkerText;
-    public Text bottom_baseline_infoSignText;
 
-    public Button bottom_baseline_statusBtn;
   
     public Button bottom_baseline_messageBtn;
     public Text bottom_baseline_messageSignText;
@@ -60,36 +49,7 @@ public class PlayMainPanel : BasePanel
     public Button bottom_baseline_hideAllBtn;
     public Text bottom_baseline_hideAllSignText;
 
-    public RectTransform bottom_resourcesBlockRt;
-    public Text bottom_resources_foodCerealText;
-    public Text bottom_resources_foodVegetableText;
-    public Text bottom_resources_foodFruitText;
-    public Text bottom_resources_foodMeatText;
-    public Text bottom_resources_foodFishText;
-    public Text bottom_resources_foodBeerText;
-    public Text bottom_resources_foodWineText;
-    public Text bottom_resources_foodTotalText;
-
-    public Text bottom_resources_stuffWoodText;
-    public Text bottom_resources_stuffStoneText;
-    public Text bottom_resources_stuffMetalText;
-    public Text bottom_resources_stuffLeatherText;
-    public Text bottom_resources_stuffClothText;
-    public Text bottom_resources_stuffTwineText;
-    public Text bottom_resources_stuffBoneText;
-    public Text bottom_resources_stuffWindText;
-    public Text bottom_resources_stuffFireText;
-    public Text bottom_resources_stuffWaterText;
-    public Text bottom_resources_stuffGroundText;
-    public Text bottom_resources_stuffLightText;
-    public Text bottom_resources_stuffDarkText;
-    public Text bottom_resources_stuffTotalText;
-
-    public Text bottom_resources_productWeaponText;
-    public Text bottom_resources_productArmorText;
-    public Text bottom_resources_productJewelryText;
-    public Text bottom_resources_productSkillRollText;
-    public Text bottom_resources_productTotalText;
+ 
 
     public RectTransform bottom_infoBlockRt;
     public Text bottom_info_personPeopleText;
@@ -110,12 +70,8 @@ public class PlayMainPanel : BasePanel
 
     public RectTransform bottom_statusBlockRt;
 
-    List<Button> leftBtnList = new List<Button>();
-    short nowLeftIndex = -1;//TODO:关闭其他窗口系列，或子窗口
+ 
 
-    public bool IsShowResourcesBlock = false;
-    public bool IsShowInfoBlock = false;
-    public bool IsShowStatusBlock = false;
     public bool IsShowMessageBlock = false;
     bool Leftis0 = true;
     void Awake()
@@ -142,14 +98,9 @@ public class PlayMainPanel : BasePanel
         top_fastBtn.onClick.AddListener(delegate () { gci.TimeFast(); });
       
 
-        leftBtnList.Add(left_heroMainBtn);
-        leftBtnList.Add(left_adventureMainBtn);
+    
 
        
-        bottom_baseline_resourcesBtn.onClick.AddListener(delegate () { if (IsShowResourcesBlock) { HideResourcesBlock(); } else { ShowResourcesBlock(gc.nowCheckingDistrictID); }  });
-        bottom_baseline_infoBtn.onClick.AddListener(delegate () { if (IsShowInfoBlock) { HideInfoBlock(); } else { ShowInfoBlock(gc.nowCheckingDistrictID); } });
-        bottom_baseline_statusBtn.onClick.AddListener(delegate () { if (IsShowStatusBlock) { HideStatusBlock(); } else { ShowStatusBlock(gc.nowCheckingDistrictID); } });
-
         bottom_baseline_messageBtn.onClick.AddListener(delegate () { if (IsShowMessageBlock) { HideMessageBlock(); } else { ShowMessageBlock(); } });
     }
 
@@ -165,11 +116,7 @@ public class PlayMainPanel : BasePanel
 
         UpdateTopDistrict();
 
-        HideResourcesBlock();
-        HideInfoBlock();
-        HideStatusBlock();
-        UpdateBaselineResourcesText(gc.nowCheckingDistrictID);
-        UpdateBaselineInfoText(gc.nowCheckingDistrictID);
+ 
     }
 
     public void UpdateKingdomInfo()
@@ -314,112 +261,8 @@ public class PlayMainPanel : BasePanel
     }
 
 
-    public void UpdateBaselineResourcesText(short districtID)
-    {
-        bottom_baseline_resourcesFoodText.text = gc.GetDistrictFoodAll(districtID)+"/"+ gc.districtDic[districtID].rFoodLimit;
-        bottom_baseline_resourcesStuffText.text = gc.GetDistrictStuffAll(districtID) + "/" + gc.districtDic[districtID].rStuffLimit;
-        bottom_baseline_resourcesProductText.text = gc.GetDistrictProductAll(districtID) + "/" + gc.districtDic[districtID].rProductLimit;
-    }
-    public void UpdateBaselineInfoText(short districtID)
-    {
-        bottom_baseline_infoPeopleText.text = gc.districtDic[districtID].people + "/" + gc.districtDic[districtID].peopleLimit;
-        bottom_baseline_infoHeroText.text = gc.districtDic[districtID].heroList.Count.ToString();
-        bottom_baseline_infoWorkerText.text = gc.districtDic[districtID].worker.ToString();
-    }
 
-
-    public void UpdateResourcesBlock(short districtID)
-    {
-        bottom_resources_foodCerealText.text = gc.districtDic[districtID].rFoodCereal.ToString();
-        bottom_resources_foodVegetableText.text = gc.districtDic[districtID].rFoodVegetable.ToString();
-        bottom_resources_foodFruitText.text = gc.districtDic[districtID].rFoodFruit.ToString();
-        bottom_resources_foodMeatText.text = gc.districtDic[districtID].rFoodMeat.ToString();
-        bottom_resources_foodFishText.text = gc.districtDic[districtID].rFoodFish.ToString();
-        bottom_resources_foodBeerText.text = gc.districtDic[districtID].rFoodBeer.ToString();
-        bottom_resources_foodWineText.text = gc.districtDic[districtID].rFoodWine.ToString();
-        bottom_resources_foodTotalText.text ="食物库存 "+ gc.GetDistrictFoodAll(districtID) + "/" + gc.districtDic[districtID].rFoodLimit;
-
-        bottom_resources_stuffWoodText.text = gc.districtDic[districtID].rStuffWood.ToString();
-        bottom_resources_stuffStoneText.text = gc.districtDic[districtID].rStuffStone.ToString();
-        bottom_resources_stuffMetalText.text = gc.districtDic[districtID].rStuffMetal.ToString();
-        bottom_resources_stuffLeatherText.text = gc.districtDic[districtID].rStuffLeather.ToString();
-        bottom_resources_stuffClothText.text = gc.districtDic[districtID].rStuffCloth.ToString();
-        bottom_resources_stuffTwineText.text = gc.districtDic[districtID].rStuffTwine.ToString();
-        bottom_resources_stuffBoneText.text = gc.districtDic[districtID].rStuffBone.ToString();
-        bottom_resources_stuffWindText.text = gc.districtDic[districtID].rStuffWind.ToString();
-        bottom_resources_stuffFireText.text = gc.districtDic[districtID].rStuffFire.ToString();
-        bottom_resources_stuffWaterText.text = gc.districtDic[districtID].rStuffWater.ToString();
-        bottom_resources_stuffGroundText.text = gc.districtDic[districtID].rStuffGround.ToString();
-        bottom_resources_stuffLightText.text = gc.districtDic[districtID].rStuffLight.ToString();
-        bottom_resources_stuffDarkText.text = gc.districtDic[districtID].rStuffDark.ToString();
-        bottom_resources_stuffTotalText.text = "材料库存 " + gc.GetDistrictStuffAll(districtID) + "/" + gc.districtDic[districtID].rStuffLimit;
-
-        bottom_resources_productWeaponText.text = gc.districtDic[districtID].rProductWeapon.ToString();
-        bottom_resources_productArmorText.text = gc.districtDic[districtID].rProductArmor.ToString();
-        bottom_resources_productJewelryText.text = gc.districtDic[districtID].rProductJewelry.ToString();
-        bottom_resources_productSkillRollText.text = gc.districtDic[districtID].rProductScroll.ToString();
-        bottom_resources_productTotalText.text = "制品库存 " + gc.GetDistrictProductAll(districtID) + "/" + gc.districtDic[districtID].rProductLimit;
-    }
-    public void ShowResourcesBlock(short districtID)
-    {
-        UpdateResourcesBlock(districtID);
-        bottom_baseline_resourcesSignText.text = "▼";
-        bottom_resourcesBlockRt.localScale = Vector2.one;
-        IsShowResourcesBlock = true;
-    }
-    public void HideResourcesBlock()
-    {
-        bottom_baseline_resourcesSignText.text = "▲";
-        bottom_resourcesBlockRt.localScale = Vector2.zero;
-        IsShowResourcesBlock = false;
-    }
-
-    public void UpdateInfoBlock(short districtID)
-    {
-        bottom_info_personPeopleText.text = gc.districtDic[districtID].people + "/" + gc.districtDic[districtID].peopleLimit;
-        bottom_info_personHeroText.text = gc.districtDic[districtID].heroList.Count.ToString();
-        bottom_info_personWorkerText.text = gc.districtDic[districtID].worker.ToString();
-
-        bottom_info_buildingBuildingText.text = gc.districtDic[districtID].buildingList.Count.ToString();
-
-
-        bottom_info_elementWindText.text = "风 "+gc.districtDic[districtID].eWind;
-        bottom_info_elementFireText.text = "火 " + gc.districtDic[districtID].eFire;
-        bottom_info_elementWaterText.text = "水 " + gc.districtDic[districtID].eWater;
-        bottom_info_elementGroundText.text = "地 " + gc.districtDic[districtID].eGround;
-        bottom_info_elementLightText.text = "光 " + gc.districtDic[districtID].eLight;
-        bottom_info_elementDarkText.text = "暗 " + gc.districtDic[districtID].eDark;
-
-
-    }
-    public void ShowInfoBlock(short districtID)
-    {
-        UpdateInfoBlock(districtID);
-        bottom_baseline_infoSignText.text = "▼";
-        bottom_infoBlockRt.localScale = Vector2.one;
-        IsShowInfoBlock = true;
-    }
-    public void HideInfoBlock()
-    {
-        bottom_baseline_infoSignText.text = "▲";
-        bottom_infoBlockRt.localScale = Vector2.zero;
-        IsShowInfoBlock = false;
-    }
-
-    public void ShowStatusBlock(short districtID)
-    {
-        // UpdateStatusBlock(districtID);
-        //bottom_baseline_statusSignText.text = "▼";
-        bottom_statusBlockRt.localScale = Vector2.one;
-        IsShowStatusBlock = true;
-    }
-    public void HideStatusBlock()
-    {
-       // bottom_baseline_statusSignText.text = "▲";
-        bottom_statusBlockRt.localScale = Vector2.zero;
-        IsShowStatusBlock = false;
-    }
-
+  
     public void ShowMessageBlock()
     {
         // UpdateStatusBlock(districtID);

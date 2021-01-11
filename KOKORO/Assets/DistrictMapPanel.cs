@@ -23,11 +23,57 @@ public class DistrictMapPanel : BasePanel
     public Button left_inventoryScrollBtn;
     public Button left_marketBtn;
     public Button left_buildBtn;
+  
+
+    public Button bottom_baseline_resourcesBtn;
+    public Text bottom_baseline_resourcesFoodText;
+    public Text bottom_baseline_resourcesStuffText;
+    public Text bottom_baseline_resourcesProductText;
+    public Text bottom_baseline_resourcesSignText;
+
+    public Text bottom_baseline_elementWindText;
+    public Text bottom_baseline_elementFireText;
+    public Text bottom_baseline_elementWaterText;
+    public Text bottom_baseline_elementGroundText;
+    public Text bottom_baseline_elementLightText;
+    public Text bottom_baseline_elementDarkText;
+
+    public RectTransform bottom_resourcesBlockRt;
+    public Text bottom_resources_foodCerealText;
+    public Text bottom_resources_foodVegetableText;
+    public Text bottom_resources_foodFruitText;
+    public Text bottom_resources_foodMeatText;
+    public Text bottom_resources_foodFishText;
+    public Text bottom_resources_foodBeerText;
+    public Text bottom_resources_foodWineText;
+
+    public Text bottom_resources_stuffWoodText;
+    public Text bottom_resources_stuffStoneText;
+    public Text bottom_resources_stuffMetalText;
+    public Text bottom_resources_stuffLeatherText;
+    public Text bottom_resources_stuffClothText;
+    public Text bottom_resources_stuffTwineText;
+    public Text bottom_resources_stuffBoneText;
+    public Text bottom_resources_stuffWindText;
+    public Text bottom_resources_stuffFireText;
+    public Text bottom_resources_stuffWaterText;
+    public Text bottom_resources_stuffGroundText;
+    public Text bottom_resources_stuffLightText;
+    public Text bottom_resources_stuffDarkText;
+
+    public Text bottom_resources_productWeaponText;
+    public Text bottom_resources_productArmorText;
+    public Text bottom_resources_productJewelryText;
+    public Text bottom_resources_productSkillRollText;
 
 
     public Button closeBtn;
 
 
+    //配置
+    Color colorRes = new Color(255/ 255f,189/ 255f,88/ 255f, 1f);
+    Color colorMake = new Color(221/ 255f,90/ 255f,246/ 255f, 1f);
+    Color colorBuild = new Color(0/ 255f,98/ 255f,251/ 255f, 1f);
     //运行变量组
     GameObject wantBuidingGo;
     int wantBuidingSizeX;
@@ -46,10 +92,13 @@ public class DistrictMapPanel : BasePanel
     List<int> x = new List<int>();
     List<int> y = new List<int>();
 
+
+    public bool IsShowResourcesBlock = false;
+
     //对象池
     List<GameObject> buildingGoPool = new List<GameObject>();
 
-
+    Dictionary<int, Image> statusBarImageDic = new Dictionary<int, Image>();
 
     void Awake()
     {
@@ -67,20 +116,25 @@ public class DistrictMapPanel : BasePanel
         left_inventoryMainBtn.onClick.AddListener(delegate () { gci.OpenItemListAndInfo(); });
         left_inventoryScrollBtn.onClick.AddListener(delegate () { gci.OpenSkillListAndInfo(); });
         left_buildBtn.onClick.AddListener(delegate () { gci.OpenBuild(); });
-
         left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
-
         left_marketBtn.onClick.AddListener(delegate () { gci.OpenMarket(); });
+
+        bottom_baseline_resourcesBtn.onClick.AddListener(delegate () {
+            if (IsShowResourcesBlock)
+            {
+                HideResourcesBlock();
+            }
+            else { ShowResourcesBlock(gc.nowCheckingDistrictID); }
+        });
+
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
 
-        InvokeRepeating("UpdateBar", 0, 0.2f);
+       
     }
 
     // Update is called once per frame
     void Update()
     {
- 
-
         if (isChoose)
         {
 
@@ -131,7 +185,6 @@ public class DistrictMapPanel : BasePanel
             }
         }
 
-       
     }
 
 
@@ -142,7 +195,13 @@ public class DistrictMapPanel : BasePanel
         UpdateBasicInfo();
         UpdateAllBuilding(gc.nowCheckingDistrictID);
         HideTip();
+
+        HideResourcesBlock();
+        UpdateBaselineResourcesText(gc.nowCheckingDistrictID);
+        UpdateBaselineElementText(gc.nowCheckingDistrictID);
         isShow = true;
+
+        InvokeRepeating("UpdateBar", 0, 0.2f);
     }
     public override void OnHide()
     {
@@ -158,9 +217,16 @@ public class DistrictMapPanel : BasePanel
         {
             BuildingPanel.Instance.OnHide();
         }
+        if (IsShowResourcesBlock)
+        {
+            HideResourcesBlock();
+        }
+
         SetAnchoredPosition(0, 5000);
         PlayMainPanel.Instance.top_districtBtn.GetComponent<RectTransform>().localScale = Vector2.one;
         isShow = false;
+
+        CancelInvoke("UpdateBar");
     }
 
     public void UpdateBasicInfo()
@@ -223,8 +289,7 @@ public class DistrictMapPanel : BasePanel
                 y.Add(wantBuidingPosY + j);
             }
         }
-        string str = "";
-        string str2 = "";
+
         bool can = true;
         for (int i = 0; i < x.Count; i++)
         {
@@ -235,14 +300,12 @@ public class DistrictMapPanel : BasePanel
                 //Debug.Log("gc.districtGridDic[gc.nowCheckingDistrictID][index].level="+ gc.districtGridDic[gc.nowCheckingDistrictID][index].level);
                 if (gc.districtGridDic[gc.nowCheckingDistrictID][index].buildingID != -1|| gc.districtGridDic[gc.nowCheckingDistrictID][index].level>gc.districtDic[gc.nowCheckingDistrictID].level)
                 {
-                    str += "(" + x[i] + "," + y[i] + ")";
                     can = false;
                     break;
                 }
             }
             else 
             {
-                str2 += "(" + x[i] + "," + y[i] + ")";
                 can = false;
                 break;
             }
@@ -255,8 +318,6 @@ public class DistrictMapPanel : BasePanel
 
     void ToBuild()
     {
-        // wantBuidingGo.name = gc.buildingIndex.ToString();
-       
 
         isChoose = false;
         HideTip();
@@ -267,11 +328,10 @@ public class DistrictMapPanel : BasePanel
 
     public void  UpdateAllBuilding(int districtID)
     {
-       // buildingGoDic.Clear();
         List<BuildingObject> temp = new List<BuildingObject> { };
         foreach (KeyValuePair<int, BuildingObject> kvp in gc.buildingDic)
         {
-            if (kvp.Value.districtID == districtID)//&& kvp.Value.buildProgress==1
+            if (kvp.Value.districtID == districtID)
             {
                 temp.Add(kvp.Value);
             }
@@ -299,20 +359,21 @@ public class DistrictMapPanel : BasePanel
 
 
 
-     void SetBuilding(int buildingID,bool isNew,int index)
+    void SetBuilding(int buildingID, bool isNew, int index)
     {
-        Debug.Log("SetBuilding() buildingID="+ buildingID);
-        Debug.Log("SetBuilding() buildingGoPool.Count=" + buildingGoPool.Count);
+        //Debug.Log("SetBuilding() buildingID="+ buildingID);
+        //Debug.Log("SetBuilding() buildingGoPool.Count=" + buildingGoPool.Count);
         GameObject go;
 
         if (isNew)
         {
             go = Instantiate(Resources.Load("Prefab/UIBlock/Block_DisBuilding")) as GameObject;
             buildingGoPool.Add(go);
+
         }
         else
         {
-            if (index<buildingGoPool.Count )
+            if (index < buildingGoPool.Count)
             {
                 go = buildingGoPool[index];
                 //buildingGoPool.RemoveAt(buildingGoPool.Count - 1);
@@ -332,6 +393,10 @@ public class DistrictMapPanel : BasePanel
     {
         GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
         go.transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+        if (statusBarImageDic.ContainsKey(buildingID))
+        {
+            statusBarImageDic.Remove(buildingID);
+        }
     }
 
 
@@ -352,7 +417,11 @@ public class DistrictMapPanel : BasePanel
         Transform statusBarTf = go.transform.GetChild(2).GetChild(0);
         Transform statusSubTf = go.transform.GetChild(2).GetChild(2);
 
-        
+        if (!statusBarImageDic.ContainsKey(buildingID))
+        {
+            statusBarImageDic.Add(buildingID, go.transform.GetChild(2).GetChild(0).GetComponent<Image>());
+        }
+
         nameTf.GetComponent<Text>().text = gc.buildingDic[buildingID].name;
         nameBgTf.GetComponent<RectTransform>().sizeDelta = new Vector2(nameTf.GetComponent<Text>().preferredWidth + 6f, nameBgTf.GetComponent<RectTransform>().sizeDelta.y);
 
@@ -367,7 +436,7 @@ public class DistrictMapPanel : BasePanel
             statusTf.GetComponent<RectTransform>().localScale = Vector2.one;
             statusSubTf.GetComponent<Text>().text = "建筑中";
             statusBarTf.GetComponent<RectTransform>().localScale = Vector2.one;
-
+            statusBarImageDic[buildingID].color = colorBuild;
 
 
         }
@@ -381,7 +450,7 @@ public class DistrictMapPanel : BasePanel
             statusTf.GetComponent<RectTransform>().localScale = Vector2.one;
             statusSubTf.GetComponent<Text>().text = "升级中";
             statusBarTf.GetComponent<RectTransform>().localScale = Vector2.one;
-
+            statusBarImageDic[buildingID].color = colorBuild;
         }
         else if (gc.buildingDic[buildingID].buildProgress == 1)
         {
@@ -398,10 +467,11 @@ public class DistrictMapPanel : BasePanel
                     break;
                 case "Resource":
                     statusTf.GetComponent<RectTransform>().localScale = Vector2.one;
-                    if (gc.buildingDic[buildingID].produceEquipNow != -1)
+                    if (gc.buildingDic[buildingID].isOpen)
                     {
                         statusSubTf.GetComponent<Text>().text = "<color=#FFDC7C>运作中</color>";
                         statusBarTf.GetComponent<RectTransform>().localScale = Vector2.one;
+                        statusBarImageDic[buildingID].color = colorRes;
                     }
                     else
                     {
@@ -412,10 +482,11 @@ public class DistrictMapPanel : BasePanel
                     break;
                 case "Forge":
                     statusTf.GetComponent<RectTransform>().localScale = Vector2.one;
-                    if (gc.buildingDic[buildingID].produceEquipNow != -1)
+                    if (gc.buildingDic[buildingID].isOpen)
                     {
                         statusSubTf.GetComponent<Text>().text = "<color=#D583EC>" + gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[gc.buildingDic[buildingID].produceEquipNow].Type) + "(" + DataManager.mProduceEquipDict[gc.buildingDic[buildingID].produceEquipNow].Level + ")制作中</color>";
                         statusBarTf.GetComponent<RectTransform>().localScale = Vector2.one;
+                        statusBarImageDic[buildingID].color = colorMake;
                     }
                     else
                     {
@@ -438,15 +509,7 @@ public class DistrictMapPanel : BasePanel
 
     void UpdateBar()
     {
-        if (!isShow)
-        {
-            return;
-        }
 
-       // Debug.Log("UpdateBar");
-
-        int needTime;
-        int nowTime;
         for (int i = 0; i < gc.executeEventList.Count; i++)
         {
             if (gc.executeEventList[i].type == ExecuteEventType.Build)
@@ -454,58 +517,28 @@ public class DistrictMapPanel : BasePanel
               
                 if (gc.executeEventList[i].value[0][0] == gc.nowCheckingDistrictID)
                 {
-
-                    needTime = gc.executeEventList[i].endTime - gc.executeEventList[i].startTime;
-                    nowTime = gc.standardTime - gc.executeEventList[i].startTime;
-
-                    int buildingID = gc.executeEventList[i].value[1][0];
-                    GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
-                    Transform statusBarTf = go.transform.GetChild(2).GetChild(0);
-                    statusBarTf.GetComponent<RectTransform>().sizeDelta = new Vector2(((float)nowTime / needTime) * 40f, 12f);
+                    statusBarImageDic[gc.executeEventList[i].value[1][0]].fillAmount = (float)(gc.standardTime - gc.executeEventList[i].startTime) / (gc.executeEventList[i].endTime - gc.executeEventList[i].startTime);
                 }
             }
             else if (gc.executeEventList[i].type == ExecuteEventType.BuildingUpgrade)
             {
-               // Debug.Log("UpdateBar() gc.executeEventList[i].value[0][0]=" + gc.executeEventList[i].value[0][0]);
                 if (gc.executeEventList[i].value[0][0] == gc.nowCheckingDistrictID)
                 {
-
-                    needTime = gc.executeEventList[i].endTime - gc.executeEventList[i].startTime;
-                    nowTime = gc.standardTime - gc.executeEventList[i].startTime;
-
-                    int buildingID = gc.executeEventList[i].value[1][0];
-                    Debug.Log("buildingID=" + buildingID);
-                    GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
-                    Transform statusBarTf = go.transform.GetChild(2).GetChild(0);
-                    statusBarTf.GetComponent<RectTransform>().sizeDelta = new Vector2(((float)nowTime / needTime) * 40f, 12f);
+                    statusBarImageDic[gc.executeEventList[i].value[1][0]].fillAmount = (float)(gc.standardTime - gc.executeEventList[i].startTime) / (gc.executeEventList[i].endTime - gc.executeEventList[i].startTime);
                 }
             }
             else if (gc.executeEventList[i].type == ExecuteEventType.ProduceResource)
             {
                 if (gc.executeEventList[i].value[0][0] == gc.nowCheckingDistrictID)
                 {
-
-                    needTime = gc.executeEventList[i].endTime - gc.executeEventList[i].startTime;
-                    nowTime = gc.standardTime - gc.executeEventList[i].startTime;
-
-                    int buildingID = gc.executeEventList[i].value[1][0];
-                    GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
-                    Transform statusBarTf = go.transform.GetChild(2).GetChild(0);
-                    statusBarTf.GetComponent<RectTransform>().sizeDelta = new Vector2(((float)nowTime / needTime) * 40f, 12f);
+                    statusBarImageDic[gc.executeEventList[i].value[1][0]].fillAmount = (float)(gc.standardTime - gc.executeEventList[i].startTime) / (gc.executeEventList[i].endTime - gc.executeEventList[i].startTime);
                 }
             }
             else if (gc.executeEventList[i].type == ExecuteEventType.ProduceItem)
             {
                 if (gc.executeEventList[i].value[0][0] == gc.nowCheckingDistrictID)
                 {
-
-                    needTime = gc.executeEventList[i].endTime - gc.executeEventList[i].startTime;
-                    nowTime = gc.standardTime - gc.executeEventList[i].startTime;
-
-                    int buildingID = gc.executeEventList[i].value[1][0];
-                    GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
-                    Transform statusBarTf = go.transform.GetChild(2).GetChild(0);
-                    statusBarTf.GetComponent<RectTransform>().sizeDelta = new Vector2(((float)nowTime / needTime) * 40f, 12f);
+                    statusBarImageDic[gc.executeEventList[i].value[1][0]].fillAmount = (float)(gc.standardTime - gc.executeEventList[i].startTime) / (gc.executeEventList[i].endTime - gc.executeEventList[i].startTime);
                 }
             }
         }
@@ -523,8 +556,75 @@ public class DistrictMapPanel : BasePanel
         tipRt.localScale = Vector2.zero;
     }
 
+    public void UpdateBaselineResourcesText(short districtID)
+    {
+        bottom_baseline_resourcesFoodText.text = gc.GetDistrictFoodAll(districtID) + "/" + gc.districtDic[districtID].rFoodLimit;
+        bottom_baseline_resourcesStuffText.text = gc.GetDistrictStuffAll(districtID) + "/" + gc.districtDic[districtID].rStuffLimit;
+        bottom_baseline_resourcesProductText.text = gc.GetDistrictProductAll(districtID) + "/" + gc.districtDic[districtID].rProductLimit;
+    }
+    public void UpdateBaselineElementText(short districtID)
+    {      
+        bottom_baseline_elementWindText.text = "风 " + gc.districtDic[districtID].eWind;
+        bottom_baseline_elementFireText.text = "火 " + gc.districtDic[districtID].eFire;
+        bottom_baseline_elementWaterText.text = "水 " + gc.districtDic[districtID].eWater;
+        bottom_baseline_elementGroundText.text = "地 " + gc.districtDic[districtID].eGround;
+        bottom_baseline_elementLightText.text = "光 " + gc.districtDic[districtID].eLight;
+        bottom_baseline_elementDarkText.text = "暗 " + gc.districtDic[districtID].eDark;
+    }
+
+    public void UpdateResourcesBlock(short districtID)
+    {
+        bottom_resources_foodCerealText.text = gc.districtDic[districtID].rFoodCereal.ToString();
+        bottom_resources_foodVegetableText.text = gc.districtDic[districtID].rFoodVegetable.ToString();
+        bottom_resources_foodFruitText.text = gc.districtDic[districtID].rFoodFruit.ToString();
+        bottom_resources_foodMeatText.text = gc.districtDic[districtID].rFoodMeat.ToString();
+        bottom_resources_foodFishText.text = gc.districtDic[districtID].rFoodFish.ToString();
+        bottom_resources_foodBeerText.text = gc.districtDic[districtID].rFoodBeer.ToString();
+        bottom_resources_foodWineText.text = gc.districtDic[districtID].rFoodWine.ToString();
+   
+
+        bottom_resources_stuffWoodText.text = gc.districtDic[districtID].rStuffWood.ToString();
+        bottom_resources_stuffStoneText.text = gc.districtDic[districtID].rStuffStone.ToString();
+        bottom_resources_stuffMetalText.text = gc.districtDic[districtID].rStuffMetal.ToString();
+        bottom_resources_stuffLeatherText.text = gc.districtDic[districtID].rStuffLeather.ToString();
+        bottom_resources_stuffClothText.text = gc.districtDic[districtID].rStuffCloth.ToString();
+        bottom_resources_stuffTwineText.text = gc.districtDic[districtID].rStuffTwine.ToString();
+        bottom_resources_stuffBoneText.text = gc.districtDic[districtID].rStuffBone.ToString();
+        bottom_resources_stuffWindText.text = gc.districtDic[districtID].rStuffWind.ToString();
+        bottom_resources_stuffFireText.text = gc.districtDic[districtID].rStuffFire.ToString();
+        bottom_resources_stuffWaterText.text = gc.districtDic[districtID].rStuffWater.ToString();
+        bottom_resources_stuffGroundText.text = gc.districtDic[districtID].rStuffGround.ToString();
+        bottom_resources_stuffLightText.text = gc.districtDic[districtID].rStuffLight.ToString();
+        bottom_resources_stuffDarkText.text = gc.districtDic[districtID].rStuffDark.ToString();
 
 
-    //功能按钮组
+        bottom_resources_productWeaponText.text = gc.districtDic[districtID].rProductWeapon.ToString();
+        bottom_resources_productArmorText.text = gc.districtDic[districtID].rProductArmor.ToString();
+        bottom_resources_productJewelryText.text = gc.districtDic[districtID].rProductJewelry.ToString();
+        bottom_resources_productSkillRollText.text = gc.districtDic[districtID].rProductScroll.ToString();
+
+    }
+    public void ShowResourcesBlock(short districtID)
+    {
+        if (BuildPanel.Instance.isShow)
+        {
+            BuildPanel.Instance.OnHide();
+        }
+        if (BuildingPanel.Instance.isShow)
+        {
+            BuildingPanel.Instance.OnHide();
+        }
+
+        UpdateResourcesBlock(districtID);
+        bottom_baseline_resourcesSignText.text = "▲";
+        bottom_resourcesBlockRt.localScale = Vector2.one;
+        IsShowResourcesBlock = true;
+    }
+    public void HideResourcesBlock()
+    {
+        bottom_baseline_resourcesSignText.text = "▼";
+        bottom_resourcesBlockRt.localScale = Vector2.zero;
+        IsShowResourcesBlock = false;
+    }
 
 }

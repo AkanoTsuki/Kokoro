@@ -175,7 +175,7 @@ public class BuildingSelectPanel : BasePanel
                         go.transform.GetChild(2).GetComponent<Text>().text = "";
                         break;
                     case "Resource":
-                        if (temp[i].produceEquipNow != -1)
+                        if (temp[i].isOpen)
                         {
                             go.transform.GetChild(2).GetComponent<Text>().text = "<color=#FFDC7C>运作中</color>";
                         }
@@ -186,7 +186,7 @@ public class BuildingSelectPanel : BasePanel
 
                         break;
                     case "Forge":
-                        if (temp[i].produceEquipNow != -1)
+                        if (temp[i].isOpen)
                         {
                             go.transform.GetChild(2).GetComponent<Text>().text = "<color=#D583EC>" + gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[temp[i].produceEquipNow].Type) + "(" + DataManager.mProduceEquipDict[temp[i].produceEquipNow].Level + ")制作中</color>";
 
