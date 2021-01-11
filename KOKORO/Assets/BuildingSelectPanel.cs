@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BuildingSelectPanel : BasePanel
 {
+    //TODO:可能要删除的类，暂时用不上
+
     GameControl gc;
     public static BuildingSelectPanel Instance;
 

@@ -77,6 +77,7 @@ public class ItemListAndInfoPanel : BasePanel
    
        
         SetAnchoredPosition(x, y);
+        transform.SetAsLastSibling();
         isShow = true;
     }
     public void OnShow(int itemID, int x, int y)//用作查看物品信息
@@ -93,6 +94,7 @@ public class ItemListAndInfoPanel : BasePanel
         UpdateInfo(gc.itemDic[itemID]);
 
         SetAnchoredPosition(x, y);
+        transform.SetAsLastSibling();
         isShow = true;
     }
 
@@ -117,6 +119,7 @@ public class ItemListAndInfoPanel : BasePanel
        
 
         SetAnchoredPosition(x, y);
+        transform.SetAsLastSibling();
         isShow = true;
     }
 

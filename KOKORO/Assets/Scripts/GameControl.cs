@@ -2197,6 +2197,8 @@ public class GameControl : MonoBehaviour
    
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);
         AdventureMainPanel.Instance.TeamLogAdd(teamID, heroDic[heroID].name + "离开了队伍");
+
+        PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
     }
 
     public void AdventureTeamHeroAdd(byte teamID, int heroID)
@@ -2217,6 +2219,8 @@ public class GameControl : MonoBehaviour
      
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);
         AdventureMainPanel.Instance.TeamLogAdd(teamID, heroDic[heroID].name + "加入了队伍");
+
+        PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
     }
 
     public void AdventureTeamSend(byte teamID)
@@ -2283,6 +2287,7 @@ public class GameControl : MonoBehaviour
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);//下面代码包括了
         AdventureMainPanel.Instance.UpdateTeam(teamID);
 
+        PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
         CreateAdventureEvent(teamID);
     }
 
@@ -2331,7 +2336,7 @@ public class GameControl : MonoBehaviour
             MessagePanel.Instance.AddMessage("第" + (teamID + 1) + "探险队撤退回来了");
         }
         AdventureMainPanel.Instance.TeamLogAdd(teamID, "本次探险于"+OutputDateStr(adventureTeamList[teamID].standardTimeStart,"Y年M月D日")+ "出发," + OutputDateStr(standardTime, "Y年M月D日")  + "返回,耗时"+ OutputUseDateStr(adventureTeamList[teamID].standardTimeStart,standardTime) + "天");
-
+        PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
         if (AdventureTeamPanel.Instance.isShow&& AdventureTeamPanel.Instance.nowTeam== teamID)
         {
             AdventureTeamPanel.Instance.UpdateHero(teamID);
@@ -2379,6 +2384,7 @@ public class GameControl : MonoBehaviour
             mpList.Add(adventureTeamList[teamID].heroMpList[i]);
         }
 
+        PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
         adventureTeamList[teamID].part.Add(new AdventurePartObject(adventureEvent, isPass, hpList, mpList, new List<byte> { adventureTeamList[teamID].dungeonEPWind, adventureTeamList[teamID].dungeonEPFire, adventureTeamList[teamID].dungeonEPWater, adventureTeamList[teamID].dungeonEPGround, adventureTeamList[teamID].dungeonEPLight, adventureTeamList[teamID].dungeonEPDark }, log));
 
         if (AdventureTeamPanel.Instance.isShow && AdventureTeamPanel.Instance.nowTeam == teamID)
@@ -2510,6 +2516,7 @@ public class GameControl : MonoBehaviour
         }
 
          CreateAdventureEventPartLog(teamID, AdventureEvent.None,true, "");
+    
     }
 
     IEnumerator AdventureGetSomething(byte teamID, AdventureEvent adventureEvent)
@@ -2627,7 +2634,7 @@ public class GameControl : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         CreateAdventureEventPartLog(teamID, adventureEvent, true, "探险队发现了一些东西\n" + log);
-
+    
         if (adventureTeamList[teamID].state == AdventureState.Retreat)
         {
             AdventureTeamBack(teamID, AdventureState.Retreat);
@@ -2992,10 +2999,10 @@ public class GameControl : MonoBehaviour
             adventureTeamList[teamID].action = AdventureAction.Fight;
             adventureTeamList[teamID].fightRound = 1;
 
-           
 
+            
             AdventureMainPanel.Instance.TeamLogAdd(teamID, "遭遇了" + monsterNameList + ",开始战斗！");
-
+            PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
         }
         AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);

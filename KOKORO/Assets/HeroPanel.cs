@@ -143,7 +143,7 @@ public class HeroPanel : BasePanel
         //nowSkillState = skillState;
         UpdateButtonStatus();
         SetAnchoredPosition(x, y);
-
+        transform.SetAsLastSibling();
         isShow = true;
     }
 

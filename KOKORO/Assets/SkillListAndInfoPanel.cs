@@ -93,7 +93,7 @@ public class SkillListAndInfoPanel : BasePanel
 
         UpdateAllInfo(districtID, element, heroID, heroSkillIndex);
         SetAnchoredPosition(x, y);
-
+        transform.SetAsLastSibling();
         nowDistrictID = districtID;
         nowHeroID = heroID;
         nowHeroSkillIndex = heroSkillIndex;
@@ -134,6 +134,7 @@ public class SkillListAndInfoPanel : BasePanel
 
 
         SetAnchoredPosition(x, y);
+        transform.SetAsLastSibling();
         nowDistrictID = districtID;
         isShow = true;
 

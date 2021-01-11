@@ -90,7 +90,7 @@ public class BuildingPanel : BasePanel
                 UpdateResource(buildingObject); break;
             default:break;
         }
-        SetAnchoredPosition(0, -408);
+        SetAnchoredPosition(0, -432);
         isShow = true;
         
         setWorker_minusBtn.onClick.RemoveAllListeners();

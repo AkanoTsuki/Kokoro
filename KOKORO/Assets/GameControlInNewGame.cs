@@ -123,6 +123,8 @@ public class GameControlInNewGame : MonoBehaviour
 
         gc.adventureTeamList.Add(new AdventureTeamObject(0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.NotSend, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
         gc.adventureTeamList.Add(new AdventureTeamObject(1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.NotSend, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
+        
+
 
         gc.dungeonList.Add(new DungeonObject(0, true));
         gc.dungeonList.Add(new DungeonObject(1, true));

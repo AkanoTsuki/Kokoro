@@ -32,16 +32,25 @@ public class PlayMainPanel : BasePanel
     public Button left_heroMainBtn;
     public Button left_adventureMainBtn;
 
+    public Button bottom_adventureLastBtn;
+    public Button bottom_adventureNextBtn;
+    public Text bottom_adventurePageText;
+
+    public List<RectTransform> bottom_adventureRt;
+    public List<Text> bottom_adventure_teamNameText;
+    public List<Button> bottom_adventure_detailBtn;
+    public List<Image> bottom_adventure_mapImage;
+    public List<Text> bottom_adventure_desText;
+    public List<Text> bottom_adventure_logText;
+    public List<Transform> bottom_adventure_herosTf;
+    //public List<List<RectTransform>> bottom_adventure_heroRt;
+    //public List<List<Image>> bottom_adventure_hero_picImage;
+    //public List<List<Text>> bottom_adventure_hero_levelText;
+    //public List<List<RectTransform>> bottom_adventure_hero_hpRt;
+    //public List<List<RectTransform>> bottom_adventure_hero_mpRt;
 
 
 
- 
-    public Image bottom_baseline_disImage;
-    public Text bottom_baseline_nameText;
-
-
-
-  
     public Button bottom_baseline_messageBtn;
     public Text bottom_baseline_messageSignText;
     public Button bottom_baseline_openAllBtn;
@@ -49,28 +58,9 @@ public class PlayMainPanel : BasePanel
     public Button bottom_baseline_hideAllBtn;
     public Text bottom_baseline_hideAllSignText;
 
- 
 
-    public RectTransform bottom_infoBlockRt;
-    public Text bottom_info_personPeopleText;
-    public Text bottom_info_personHeroText;
-    public Text bottom_info_personWorkerText;
-
-    public Text bottom_info_buildingBuildingText;
-
-
-    public Text bottom_info_elementWindText;
-    public Text bottom_info_elementFireText;
-    public Text bottom_info_elementWaterText;
-    public Text bottom_info_elementGroundText;
-    public Text bottom_info_elementLightText;
-    public Text bottom_info_elementDarkText;
-
-
-
-    public RectTransform bottom_statusBlockRt;
-
- 
+    public List<byte> adventureTeamIDList = new List<byte>();
+    byte adventureStartIndex = 0;
 
     public bool IsShowMessageBlock = false;
     bool Leftis0 = true;
@@ -85,6 +75,8 @@ public class PlayMainPanel : BasePanel
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInPlay>();
         
 
+
+
         left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
         left_adventureMainBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
 
@@ -96,11 +88,11 @@ public class PlayMainPanel : BasePanel
         top_pauseBtn.onClick.AddListener(delegate () { gci.TimePause(); });
         top_playBtn.onClick.AddListener(delegate () { gci.TimePlay(); });
         top_fastBtn.onClick.AddListener(delegate () { gci.TimeFast(); });
-      
 
-    
 
-       
+
+        bottom_adventureLastBtn.onClick.AddListener(delegate () { AdventureStartIndexToLast(); });
+        bottom_adventureNextBtn.onClick.AddListener(delegate () { AdventureStartIndexToNext(); });
         bottom_baseline_messageBtn.onClick.AddListener(delegate () { if (IsShowMessageBlock) { HideMessageBlock(); } else { ShowMessageBlock(); } });
     }
 
@@ -112,11 +104,11 @@ public class PlayMainPanel : BasePanel
         UpdateGold();
         UpdateDateInfo();
         UpdateTimeButtonState();
-        UpdateDistrictInfo(gc.nowCheckingDistrictID);
+
 
         UpdateTopDistrict();
-
- 
+        UpdateAdventurePageText();
+        UpdateAdventureAll();
     }
 
     public void UpdateKingdomInfo()
@@ -223,10 +215,6 @@ public class PlayMainPanel : BasePanel
         }
     }
 
-    public void UpdateLeftButtonState()
-    {
-        
-    }
 
 
     public void UpdateTopDistrict()
@@ -255,14 +243,179 @@ public class PlayMainPanel : BasePanel
        
     }
 
-    public void UpdateDistrictInfo(short districtID)
+    void UpdateAdventurePageText()
     {
-        bottom_baseline_nameText.text = gc.districtDic[districtID].name+"·"+ gc.districtDic[districtID].baseName;
+        string str = "";
+        for (byte i = 0; i < gc.adventureTeamList.Count; i++)
+        {
+            if (adventureTeamIDList.Contains(i))
+            {
+                str += "◈";
+            }
+            else
+            {
+                str += "·";
+            }
+        }
+        bottom_adventurePageText.text = str;
+
+        bottom_adventurePageText.GetComponentInParent<RectTransform>().sizeDelta = new Vector2(bottom_adventurePageText.preferredWidth + 40f, 24f);
     }
 
+    void AdventureStartIndexToLast()
+    {
+        if (adventureStartIndex == 0)
+        {
+            return;
+        }
+
+        adventureStartIndex--;
+
+    
+        UpdateAdventureAll();
+    }
+
+    void AdventureStartIndexToNext()
+    {
+        if (gc.adventureTeamList.Count <= 3)
+        {
+            return;
+        }
+        if (adventureStartIndex >=gc.adventureTeamList.Count-3 )
+        {
+            return;
+        }
+
+        adventureStartIndex++;
+
+     
+        UpdateAdventureAll();
+    }
+
+    public void UpdateAdventureAll()
+    {
+        adventureTeamIDList.Clear();
+        for (byte i = 0; i < System.Math.Min(gc.adventureTeamList.Count, 3); i++)
+        {
+            adventureTeamIDList.Add((byte)(adventureStartIndex + i));
+        }
+        UpdateAdventurePageText();
+        for (int i = 0 ; i <System.Math.Min(gc.adventureTeamList.Count, 3) ; i++)
+        {
+            UpdateAdventure(i, (byte)(adventureStartIndex + i));
+        }
+        for (int i = System.Math.Min(gc.adventureTeamList.Count, 3); i < 3; i++)
+        {
+            HideAdventure(i);
+        }
+
+    }
+
+    public void UpdateAdventureSingle(byte teamID)
+    {
+        if (adventureTeamIDList.Contains(teamID))
+        {
+            UpdateAdventure(adventureTeamIDList.IndexOf(teamID), teamID);
+        }
+    }
+
+    public void UpdateAdventure(int index,byte teamID)
+    {
+        bottom_adventureRt[index].localScale=Vector2.one;
+        bottom_adventure_teamNameText[index].text="第"+(teamID+1) +"探险队";
+        // bottom_adventure_detailBtn[index].;
+
+        if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
+        {
+            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_B", typeof(Sprite)) as Sprite;
+            bottom_adventure_desText[index].text = "城镇";
+        }
+        else if (gc.adventureTeamList[teamID].state == AdventureState.Doing)
+        {
+            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[0] + "_B", typeof(Sprite)) as Sprite;
+            float rate = (float)gc.adventureTeamList[teamID].nowDay / DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].PartNum;
 
 
-  
+            if (gc.adventureTeamList[teamID].action == AdventureAction.Fight)
+            {
+                bottom_adventure_desText[index].text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name + "[" + (int)(rate * 100) + "%][战斗中]";
+            }
+            else
+            {
+                bottom_adventure_desText[index].text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name + "[" + (int)(rate * 100) + "%][行进中]";
+            }
+        }
+        else
+        {
+            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[0] + "_B", typeof(Sprite)) as Sprite;
+            float rate = (float)gc.adventureTeamList[teamID].nowDay / DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].PartNum;
+
+            if (gc.adventureTeamList[teamID].state == AdventureState.Done)
+            {
+                bottom_adventure_desText[index].text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name + "[" + (int)(rate * 100) + "%]<color=green>[完成]</color>";
+            }
+            else if (gc.adventureTeamList[teamID].state == AdventureState.Retreat)
+            {
+                bottom_adventure_desText[index].text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name + "[" + (int)(rate * 100) + "%]<color=red>[中止]</color>";
+            }
+            else if (gc.adventureTeamList[teamID].state == AdventureState.Fail)
+            {
+                bottom_adventure_desText[index].text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name + "[" + (int)(rate * 100) + "%]<color=red>[失败]</color>";
+            }
+        }
+
+        if (gc.adventureTeamList[teamID].log.Count > 1)
+        {
+            bottom_adventure_logText[index].text = gc.adventureTeamList[teamID].log[gc.adventureTeamList[teamID].log.Count - 1] + "\n" + gc.adventureTeamList[teamID].log[gc.adventureTeamList[teamID].log.Count - 2];
+        }
+        else if (gc.adventureTeamList[teamID].log.Count ==1)
+        {
+            bottom_adventure_logText[index].text = gc.adventureTeamList[teamID].log[0];
+        }
+        else
+        {
+            bottom_adventure_logText[index].text = "";
+        }
+
+
+        for (int i = 0; i < gc.adventureTeamList[teamID].heroIDList.Count; i++)
+        {
+            bottom_adventure_herosTf[index].GetChild(i).GetComponent<RectTransform>().localScale = Vector2.one;
+            bottom_adventure_herosTf[index].GetChild(i).GetComponent<Image>().overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].pic+"/Pic", typeof(Sprite)) as Sprite;
+            bottom_adventure_herosTf[index].GetChild(i).GetChild(0).GetComponent<Text>().text = gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].level.ToString();
+            bottom_adventure_herosTf[index].GetChild(i).GetChild(1).GetComponent<RectTransform>().sizeDelta = new Vector2((float)gc.adventureTeamList[teamID].heroHpList[i] / gc.GetHeroAttr(Attribute.Hp, gc.adventureTeamList[teamID].heroIDList[i]) * 32f, 4f);
+            bottom_adventure_herosTf[index].GetChild(i).GetChild(2).GetComponent<RectTransform>().sizeDelta = new Vector2((float)gc.adventureTeamList[teamID].heroMpList[i] / gc.GetHeroAttr(Attribute.Mp, gc.adventureTeamList[teamID].heroIDList[i]) * 32f, 4f);
+
+
+        }
+        for (int i = gc.adventureTeamList[teamID].heroIDList.Count; i < 3; i++)
+        {
+            bottom_adventure_herosTf[index].GetChild(i).GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+
+        if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
+        {
+            bottom_adventure_detailBtn[index].GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+        else
+        {
+            bottom_adventure_detailBtn[index].GetComponent<RectTransform>().localScale = Vector2.one;
+            bottom_adventure_detailBtn[index].onClick.RemoveAllListeners();
+            bottom_adventure_detailBtn[index].onClick.AddListener(delegate ()
+            {
+                /*详情*/
+                AdventureTeamPanel.Instance.OnShow(teamID, 60, -88);
+            });
+        }
+      
+
+    }
+
+    public void HideAdventure(int index)
+    {
+        bottom_adventureRt[index].localScale = Vector2.zero;
+    }
+
     public void ShowMessageBlock()
     {
         // UpdateStatusBlock(districtID);

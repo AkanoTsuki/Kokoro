@@ -67,6 +67,8 @@ public class DistrictMapPanel : BasePanel
     public Text bottom_resources_productSkillRollText;
 
 
+
+
     public Button closeBtn;
 
 
@@ -312,6 +314,16 @@ public class DistrictMapPanel : BasePanel
 
         }
 
+        if (DataManager.mBuildingDict[wantBuidingPID].PanelType == "Forge")
+        {
+            Debug.Log("wantBuidingPosY=" + wantBuidingPosY + " wantBuidingSizeYBase=" + wantBuidingSizeYBase);
+            if ((wantBuidingPosY + wantBuidingSizeYBase-1) != 10 && (wantBuidingPosY + wantBuidingSizeYBase-1) != 18)
+            {
+                can = false;
+            }
+        }
+
+
         return can;       
     }
 
@@ -326,7 +338,7 @@ public class DistrictMapPanel : BasePanel
         Destroy(wantBuidingGo);
     }
 
-    public void  UpdateAllBuilding(int districtID)
+    public void UpdateAllBuilding(int districtID)
     {
         List<BuildingObject> temp = new List<BuildingObject> { };
         foreach (KeyValuePair<int, BuildingObject> kvp in gc.buildingDic)

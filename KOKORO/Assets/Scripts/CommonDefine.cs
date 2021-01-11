@@ -1159,6 +1159,7 @@ public class BuildingPrototype
     public byte SizeX;
     public byte SizeY;
     public byte SizeYBase;
+    public byte DoorPosition;
     public string PanelType;
     public string Des;
     public byte Level;

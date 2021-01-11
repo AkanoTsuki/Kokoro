@@ -161,6 +161,7 @@ public class SupplyAndDemandPanel : BasePanel
 
         UpdateAllInfo(districtID);
         SetAnchoredPosition(x, y);
+        transform.SetAsLastSibling();
         isShow = true;
     }
     public override void OnHide()
