@@ -740,6 +740,9 @@ public class AdventureMainPanel : BasePanel
                 else if (gc.adventureTeamList[teamID].action == AdventureAction.Fight)
                 {
                     int hp = 0;
+                    //TODO:报错
+                    Debug.Log("teamID=" + teamID);
+                    Debug.Log("gc.fightMenberObjectSS.Count=" + gc.fightMenberObjectSS.Count);
                     for (int j = 0; j < gc.fightMenberObjectSS[teamID].Count; j++)
                     {
                         if (gc.fightMenberObjectSS[teamID][j].side == 0 && gc.fightMenberObjectSS[teamID][j].sideIndex == i)

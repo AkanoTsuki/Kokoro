@@ -1031,6 +1031,10 @@ public class DistrictObject
     private int RProductArmor;
     private int RProductJewelry;
     private int RProductScroll;
+    private int RProductGoodWeapon;
+    private int RProductGoodArmor;
+    private int RProductGoodJewelry;
+    private int RProductGoodScroll;
     private int RFoodLimit;//库存上限
     private int RStuffLimit;
     private int RProductLimit;
@@ -1041,7 +1045,7 @@ public class DistrictObject
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, int rFoodBeer, int rFoodWine,
         int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
         int rStuffWind, int rStuffFire, int rStuffWater, int rStuffGround, int rStuffLight, int rStuffDark,
-        int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll,
+        int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll, int rProductGoodWeapon, int rProductGoodArmor, int rProductGoodJewelry, int rProductGoodScroll,
         int rFoodLimit, int rStuffLimit, int rProductLimit, int rScrollLimit)
     {
         this.ID = id;
@@ -1085,6 +1089,10 @@ public class DistrictObject
         this.RProductArmor = rProductArmor;
         this.RProductJewelry = rProductJewelry;
         this.RProductScroll = rProductScroll;
+        this.RProductGoodWeapon = rProductGoodWeapon;
+        this.RProductGoodArmor = rProductGoodArmor;
+        this.RProductGoodJewelry = rProductGoodJewelry;
+        this.RProductGoodScroll = rProductGoodScroll;
         this.RFoodLimit = rFoodLimit;//库存上限
         this.RStuffLimit = rStuffLimit;
         this.RProductLimit = rProductLimit;
@@ -1131,6 +1139,10 @@ public class DistrictObject
     public int rProductArmor { get { return RProductArmor; } set { RProductArmor = value; } }
     public int rProductJewelry { get { return RProductJewelry; } set { RProductJewelry = value; } }
     public int rProductScroll { get { return RProductScroll; } set { RProductScroll = value; } }
+    public int rProductGoodWeapon { get { return RProductGoodWeapon; } set { RProductGoodWeapon = value; } }
+    public int rProductGoodArmor { get { return RProductGoodArmor; } set { RProductGoodArmor = value; } }
+    public int rProductGoodJewelry { get { return RProductGoodJewelry; } set { RProductGoodJewelry = value; } }
+    public int rProductGoodScroll { get { return RProductGoodScroll; } set { RProductGoodScroll = value; } }
     public int rFoodLimit { get { return RFoodLimit; } set { RFoodLimit = value; } }
     public int rStuffLimit { get { return RStuffLimit; } set { RStuffLimit = value; } }
     public int rProductLimit { get { return RProductLimit; } set { RProductLimit = value; } }
@@ -2257,8 +2269,8 @@ public class CustomerObject
     private ShopType ShopType;//目标店铺的类型
     private List<int> BuildingIDList;//根据地区和类型选定的店铺建筑ID列表
     private List<BucketList> BucketList;
-
-    public CustomerObject(int id, string name, string pic, int gold, short districtID, ShopType shopType, List<int> buildingIDList, List<BucketList> bucketList
+    private bool IsOnline;
+    public CustomerObject(int id, string name, string pic, int gold, short districtID, ShopType shopType, List<int> buildingIDList, List<BucketList> bucketList, bool isOnline
         )
     {
         this.ID = id;
@@ -2269,6 +2281,7 @@ public class CustomerObject
         this.ShopType = shopType;
         this.BuildingIDList = buildingIDList;
         this.BucketList = bucketList;
+        this.IsOnline = isOnline;
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } }
@@ -2278,6 +2291,7 @@ public class CustomerObject
     public ShopType shopType { get { return ShopType; } }
     public List<int> buildingIDList { get { return BuildingIDList; } set { BuildingIDList = value; } }
     public List<BucketList> bucketList { get { return BucketList; } }
+    public bool isOnline { get { return IsOnline; } set { IsOnline = value; } }
 }
 
 //愿望单

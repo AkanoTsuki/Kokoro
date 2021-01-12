@@ -9,6 +9,8 @@ public class AnimatiorControlByNPC : MonoBehaviour
     private float time = 0;
     private int currentIndex = 0;
 
+    private float timeCX = 0;
+
     Sprite[] idleFrames;
     Sprite[] walk_DownFrames;
     Sprite[] walk_LeftFrames;
@@ -19,6 +21,7 @@ public class AnimatiorControlByNPC : MonoBehaviour
 
     bool isPlay = false;
     bool isLoop = false;
+    bool isNeedStop = false;
     public string charaName = "chara1_1";
     // Start is called before the first frame update
     void Start()
@@ -32,6 +35,7 @@ public class AnimatiorControlByNPC : MonoBehaviour
         if (isPlay)
         {
             time += Time.deltaTime;
+       
             if (time >= 1.0f / fps)
             {
                 gameObject.GetComponent<Image>().sprite = needFrames[currentIndex];
@@ -40,12 +44,19 @@ public class AnimatiorControlByNPC : MonoBehaviour
                 if (currentIndex > needFrames.Length - 1)
                 {
                     currentIndex = 0;
-                    if (!isLoop)
-                    {
-                        SetAnim(AnimStatus.Idle);
-                    }
+
                 }
             }
+            if (isNeedStop)
+            {
+                timeCX -= Time.deltaTime;
+                if (timeCX <= 0)
+                {
+                    isNeedStop = false;
+                    isPlay = false;
+                }
+            }
+           
         }
     }
 
@@ -111,6 +122,52 @@ public class AnimatiorControlByNPC : MonoBehaviour
         }
         gameObject.GetComponent<Image>().sprite = needFrames[1];
         currentIndex = 0;
+        Play();
+
+    }
+
+    public void SetAnim(AnimStatus animStatus,float time)
+    {
+        //Debug.Log("SetAnim animStatus=" + animStatus + " charaName=" + charaName);
+
+        switch (animStatus)
+        {
+            case AnimStatus.WalkUp:
+                needFrames[0] = walk_UpFrames[0];
+                needFrames[1] = walk_UpFrames[2];
+                needFrames[2] = walk_UpFrames[1];
+           
+                break;
+            case AnimStatus.WalkLeft:
+                needFrames[0] = walk_LeftFrames[0];
+                needFrames[1] = walk_LeftFrames[2];
+                needFrames[2] = walk_LeftFrames[1];
+       
+                break;
+            case AnimStatus.WalkRight:
+                needFrames[0] = walk_RightFrames[0];
+                needFrames[1] = walk_RightFrames[2];
+                needFrames[2] = walk_RightFrames[1];
+         
+                break;
+            case AnimStatus.WalkDown:
+                needFrames[0] = walk_DownFrames[0];
+                needFrames[1] = walk_DownFrames[2];
+                needFrames[2] = walk_DownFrames[1];
+             
+                break;
+            case AnimStatus.Idle:
+                needFrames[0] = idleFrames[0];
+                needFrames[1] = idleFrames[2];
+                needFrames[2] = idleFrames[1];
+           
+                break;
+
+        }
+        gameObject.GetComponent<Image>().sprite = needFrames[1];
+        currentIndex = 0;
+        isNeedStop = true;
+        timeCX = time;
         Play();
 
     }

@@ -594,8 +594,8 @@ public class BuildingPanel : BasePanel
 
     public void UpdateSetForgePart(BuildingObject buildingObject)
     {
-      //  SetForgeRt.anchoredPosition = new Vector2(278f, -212f);
-
+        //  SetForgeRt.anchoredPosition = new Vector2(278f, -212f);
+        SetForgeRt.localScale = Vector2.one;
 
         switch (buildingObject.prototypeID)
         {
@@ -808,7 +808,7 @@ public class BuildingPanel : BasePanel
 
     public void HideSetForgePart()
     {
-        SetForgeRt.anchoredPosition = new Vector2(278f, 5000f);
+        SetForgeRt.localScale= Vector2.zero;
     }
 
 
