@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 public class DistrictMapPanel : BasePanel
 {
     GameControl gc;
@@ -639,4 +640,131 @@ public class DistrictMapPanel : BasePanel
         IsShowResourcesBlock = false;
     }
 
+
+    //访客部分
+    public void CreateCustomer(int customerID)
+    {
+        GameObject go= Instantiate(Resources.Load("Prefab/UIBlock/Block_DisCustomer")) as GameObject;
+        go.name = "Customer_"+ customerID;
+       
+        float roleHeight = 54f;//人物高度
+        Vector2 startPos;
+        Vector2 targetPos;
+        Vector2 doorPos;
+        Vector2 backPos;
+        int startX = 20 * gc.districtDic[gc.customerDic[customerID].districtID].level + 10;
+        if (gc.customerDic[customerID].buildingIDList.Count > 0)
+        {
+            int buildingID = gc.customerDic[customerID].buildingIDList[0];
+            go.transform.SetParent(layer[gc.buildingDic[buildingID].layer].transform);
+
+            
+   
+            startPos = new Vector2((64 + startX*(Random.Range(0, 2) == 0?-1:1)) * 16f, (gc.buildingDic[buildingID].positionY + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase) * -16f + roleHeight);
+            doorPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition - gc.buildingDic[buildingID].customerList.Count) * 16f, (gc.buildingDic[buildingID].positionY + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase) * -16f + roleHeight);
+            targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + gc.buildingDic[buildingID].customerList.Count) * -1 : gc.buildingDic[buildingID].customerList.Count)) * 16f, (gc.buildingDic[buildingID].positionY + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase) * -16f + roleHeight);
+
+            go.GetComponent<RectTransform>().anchoredPosition = startPos;
+            go.GetComponent<AnimatiorControlByNPC>().SetCharaFrames(gc.customerDic[customerID].pic);
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+            go.GetComponent<AnimatiorControlByNPC>().Play();
+            go.transform.DOLocalMove(targetPos, 5f);
+
+            StartCoroutine(CustomerStandInLine(customerID,go, 5f, (targetPos.x > doorPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight));
+
+        }
+        else
+        {
+        
+            int ranY = Random.Range(0, 2);
+            int layerIndex = (ranY == 0 ? 11 : 18);
+            go.transform.SetParent(layer[layerIndex].transform);
+            startPos = new Vector2((64 + startX * (Random.Range(0, 2) == 0 ? -1 : 1)) * 16f, (layerIndex+1) * -16f + roleHeight);
+            targetPos = new Vector2(Random.Range(58, 72) * 16f, (layerIndex + 1) * -16f + roleHeight);
+            backPos = new Vector2((64 + startX * (Random.Range(0, 2) == 0 ? -1 : 1)) * 16f, (layerIndex + 1) * -16f + roleHeight);
+
+            go.GetComponent<RectTransform>().anchoredPosition = startPos;
+            go.GetComponent<AnimatiorControlByNPC>().SetCharaFrames(gc.customerDic[customerID].pic);
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+            go.GetComponent<AnimatiorControlByNPC>().Play();
+            go.transform.DOLocalMove(targetPos, 5f);
+
+            StartCoroutine(CustomerGoBack(customerID,go, 5f, backPos, (backPos.x > targetPos.x) ? AnimStatus.WalkRight : AnimStatus.WalkLeft));
+        }
+
+
+    }
+    IEnumerator CustomerStandInLine(int customerID,GameObject customerGo ,float waitTime, AnimStatus endFaceTo)
+    {
+        yield return new WaitForSeconds(waitTime);
+        customerGo.transform.DOComplete();
+        customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(endFaceTo);
+        customerGo.GetComponent<AnimatiorControlByNPC>().Stop();
+    }
+
+    IEnumerator CustomerGoBack(int customerID,GameObject customerGo, float waitTime, Vector2 backPos, AnimStatus backFaceTo)
+    {
+        yield return new WaitForSeconds(waitTime);
+        customerGo.transform.DOComplete();
+        customerGo.GetComponent<AnimatiorControlByNPC>().Stop();
+       GameObject go = Instantiate(Resources.Load("Prefab/Moment/Moment_Talk")) as GameObject;
+        go.transform.SetParent(customerGo.transform);
+
+        int ran = Random.Range(0, 5);
+        string str = "";
+        switch (ran)
+        {
+            case 0: str = "没有合适的店啊"; break;
+            case 1: str = "回去了"; break;
+            case 2: str = "白来一趟了"; break;
+            case 3: str = "好荒凉啊"; break;
+            case 4:
+                switch (gc.customerDic[customerID].shopType)
+                {
+                    case ShopType.WeaponAndSubhand: str = "这里没有武器店吗？"; break;
+                    case ShopType.Armor: str = "这里没有防具店吗？"; break;
+                    case ShopType.Jewelry: str = "这里没有饰品店吗？"; break;
+                    case ShopType.Scroll: str = "这里没有卷轴店吗？"; break;
+                }
+                break;
+
+        }
+
+        go.GetComponent<MomentTalk>().Show(str, 0, new Vector2(0,48f));
+        yield return new WaitForSeconds(2f);
+        customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(backFaceTo);
+        customerGo.transform.DOLocalMove(backPos, 5f);
+        yield return new WaitForSeconds(5f);
+        customerGo.transform.DOComplete();
+        customerGo.GetComponent<AnimatiorControlByNPC>().Stop();
+    }
+
+    public IEnumerator CustomerGoToBuilding(int customerID)
+    {
+        GameObject customerGo = GameObject.Find("Customer_" + customerID);
+        customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim( AnimStatus.WalkUp);
+        customerGo.transform.DOLocalMove(customerGo.transform.localPosition+ Vector3.up*10f, 1f);
+        yield return new WaitForSeconds(1f);
+        customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkDown);
+        customerGo.transform.DOLocalMove(customerGo.transform.localPosition + Vector3.down * 10f, 1f);
+        yield return new WaitForSeconds(1f);
+        customerGo.transform.DOLocalMove(customerGo.transform.localPosition + Vector3.left * 200f, 5f);
+    }
+
+    public void UpdateBuildingCustomer(int buildingID)
+    {
+        int targetBuildingID = -1;
+        Vector2 targetPos;
+
+        // targetPos=new Vector2(gc.customerDic[customerID].buildingIDList[0])
+
+        for (int i = 0; i < gc.buildingDic[buildingID].customerList.Count; i++)
+        {
+            GameObject customerGo = GameObject.Find("Customer_" + gc.buildingDic[buildingID].customerList[i]);
+            customerGo.transform.DOLocalMove(new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + i) * 16f, (gc.buildingDic[buildingID].positionY + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase) * 16f), 0.5f);
+        
+
+        }
+
+    }
 }

@@ -835,7 +835,7 @@ public class GameControl : MonoBehaviour
 
         districtDic[nowCheckingDistrictID].buildingList.Add(buildingIndex);
 
-        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic,  posX,  posY,  layer, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false, grid, new List<int> { },
+        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic,  posX,  posY,  layer, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false,false, grid, new List<int> { }, new List<int> { },
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,
             -1, 0));
@@ -896,7 +896,7 @@ public class GameControl : MonoBehaviour
         buildingDic[buildingID].expense = DataManager.mBuildingDict[newPrototypeID].Expense;
         buildingDic[buildingID].upgradeTo = DataManager.mBuildingDict[newPrototypeID].UpgradeTo;
         buildingDic[buildingID].isOpen = false;
-
+        buildingDic[buildingID].isSale = false;
         buildingDic[buildingID].people = DataManager.mBuildingDict[newPrototypeID].People;
         buildingDic[buildingID].worker = DataManager.mBuildingDict[newPrototypeID].Worker;
         buildingDic[buildingID].eWind = DataManager.mBuildingDict[newPrototypeID].EWind;
@@ -1587,6 +1587,37 @@ public class GameControl : MonoBehaviour
         //}
 
     }
+
+
+    public void CreateBuildingSaleEvent(int buildingID)
+    {
+
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.BuildingSale, standardTime, standardTime + 24, new List<List<int>> { new List<int> { buildingDic[buildingID].districtID }, new List<int> { buildingID } }));
+
+    }
+    public void DeleteBuildingSaleEvent(int buildingID)
+    {
+        List<int> tempList = new List<int>();
+        for (int i = 0; i < executeEventList.Count; i++)
+        {
+            if (executeEventList[i].type == ExecuteEventType.BuildingSale && executeEventList[i].value[1][0] == buildingID)
+            {
+                tempList.Add(i);
+            }
+        }
+        for (int i = tempList.Count - 1; i >= 0; i--)
+        {
+            executeEventList.RemoveAt(tempList[i]);
+        }
+    }
+    public void BuildingSale(int buildingID)
+    {
+        if (buildingDic[buildingID].customerList.Count > 0)
+        {
+            CustomerCheckGoods(buildingDic[buildingID].customerList[0]);
+        }
+        StartCoroutine(DistrictMapPanel.Instance.CustomerGoToBuilding(buildingDic[buildingID].customerList[0]));
+    }
     #endregion
 
     #region 【方法】建筑物配置管理者、工人
@@ -1991,6 +2022,9 @@ public class GameControl : MonoBehaviour
     #endregion
 
     #region 【方法】市集出售
+
+
+
     //TODO 报错的方法，已修改，待观察
     public void CreateSalesRecord(int year,int month)
     {
@@ -2019,25 +2053,88 @@ public class GameControl : MonoBehaviour
         string name = "";
         string pic = "";
         int sexCode = Random.Range(0, 2);
-
+        int heroType = Random.Range(0, 5);
         if (sexCode == 0)
         {
             name = DataManager.mNameMan[Random.Range(0, DataManager.mNameMan.Length)];
-            pic = DataManager.mHeroDict[0].PicMan[Random.Range(0, DataManager.mHeroDict[0].PicMan.Count)];
+            pic = DataManager.mHeroDict[heroType].PicMan[Random.Range(0, DataManager.mHeroDict[0].PicMan.Count)];
         }
         else
         {
             name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
-            pic = DataManager.mHeroDict[0].PicWoman[Random.Range(0, DataManager.mHeroDict[0].PicWoman.Count)];
+            pic = DataManager.mHeroDict[heroType].PicWoman[Random.Range(0, DataManager.mHeroDict[0].PicWoman.Count)];
         }
 
         List<BucketList> bucketLists = new List<BucketList>();
-        bucketLists.Add(new BucketList(ItemTypeBig.Weapon, ItemTypeSmall.Axe, -1, 2, 0));
-        bucketLists.Add(new BucketList(ItemTypeBig.Weapon, ItemTypeSmall.Bow, -1, 1, 0));
+        ShopType shopType = ShopType.None;
+        //test
+        int ran = Random.Range(0, 2);
+        switch (ran)
+        {
+            case 0:
+                shopType = ShopType.WeaponAndSubhand;
+                bucketLists.Add(new BucketList(ItemTypeBig.Weapon, ItemTypeSmall.Axe, -1, 2, 0));
+                bucketLists.Add(new BucketList(ItemTypeBig.Weapon, ItemTypeSmall.Bow, -1, 1, 0));
+                break;
+            case 1:
+                shopType = ShopType.Armor;
+                bucketLists.Add(new BucketList(ItemTypeBig.Armor, ItemTypeSmall.BodyH, -1, 2, 0));
+                break;
+            case 2:
+                shopType = ShopType.Jewelry;
+                bucketLists.Add(new BucketList(ItemTypeBig.Jewelry, ItemTypeSmall.Neck, -1, 2, 0));
+                break;
+            case 3:
+                shopType = ShopType.Scroll;
+                bucketLists.Add(new BucketList(ItemTypeBig.SkillRoll, ItemTypeSmall.ScrollFireI, -1, 2, 0));
+                break;
+        }
 
 
-        customerDic.Add(customerIndex, new CustomerObject(customerIndex, name, pic, 5000, 0, ShopType.WeaponAndSubhand, bucketLists));
+
+
+        customerDic.Add(customerIndex, new CustomerObject(customerIndex, name, pic, 5000, 0, shopType, new List<int> { }, bucketLists));
+        CustomerChooseShop(customerIndex);
+        Debug.Log("customerDic[customerIndex].buildingIDList.Count=" + customerDic[customerIndex].buildingIDList.Count);
+
+        DistrictMapPanel.Instance.CreateCustomer(customerIndex);
+
         customerIndex++;
+
+       
+    }
+    public void CustomerChooseShop(int customerID)
+    {
+   
+        for (int i = 0; i < districtDic[customerDic[customerID].districtID].buildingList.Count; i++)
+        {
+            int buildingID = districtDic[customerDic[customerID].districtID].buildingList[i];
+            if (DataManager.mBuildingDict[ buildingDic[buildingID].prototypeID].ShopType == customerDic[customerID].shopType)
+            {
+                if (buildingDic[buildingID].isOpen)
+                {
+                    customerDic[customerID].buildingIDList.Add(buildingID);
+                    buildingDic[buildingID].customerList.Add(customerID);
+                }
+              
+            }
+        }
+    }
+    public void CustomerVisitShop(int customerID)
+    {
+        if (customerDic[customerID].buildingIDList.Count == 0)
+        {
+            MessagePanel.Instance.AddMessage("顾客" + customerDic[customerID] + "回去了");
+            return;
+        }
+
+        if (DataManager.mBuildingDict[customerDic[customerID].buildingIDList[0]].ShopType == ShopType.WeaponAndSubhand
+            || DataManager.mBuildingDict[customerDic[customerID].buildingIDList[0]].ShopType == ShopType.Armor
+            || DataManager.mBuildingDict[customerDic[customerID].buildingIDList[0]].ShopType == ShopType.Jewelry)
+        {
+            
+        }
+
     }
 
     public void CustomerGone(int customerID)
@@ -2157,6 +2254,11 @@ public class GameControl : MonoBehaviour
             skillDic.Remove(buySkillList[i]);
         }
         gold += spend;
+
+        if ((buyItemList.Count + buySkillList.Count) == 0)
+        {
+            Debug.Log(customerDic[customerID].name+"啥都没买回去了");
+        }
     }
     #endregion
 

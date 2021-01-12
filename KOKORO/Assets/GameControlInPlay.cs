@@ -194,7 +194,14 @@ public class GameControlInPlay : MonoBehaviour
                         gc.executeEventList.RemoveAt(0);
 
                         break;
+                    case ExecuteEventType.BuildingSale:
 
+                        buildingID = gc.executeEventList[0].value[1][0];
+
+                        gc.BuildingSale(buildingID);
+                        gc.executeEventList.RemoveAt(0);
+                        gc.CreateBuildingSaleEvent(buildingID);
+                        break;
                     default: break;
                 }
             }

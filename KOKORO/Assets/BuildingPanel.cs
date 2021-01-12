@@ -158,7 +158,7 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
                     if (buildingObject.isOpen)
                     {
-                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停工";
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停产";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             gc.StopProduceResource(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
@@ -167,7 +167,7 @@ public class BuildingPanel : BasePanel
                     }
                     else
                     {
-                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "开工";
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "生产";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             if (buildingObject.workerNow != 0&& buildingObject.produceEquipNow!=-1)
                             {
@@ -228,7 +228,7 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
                     if (buildingObject.isOpen)
                     {
-                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停工";
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停产";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             gc.StopProduceItem(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
@@ -237,7 +237,7 @@ public class BuildingPanel : BasePanel
                     }
                     else
                     {
-                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "开工";
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "生产";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             if (buildingObject.workerNow != 0 && buildingObject.produceEquipNow != -1)
                             {
@@ -256,6 +256,31 @@ public class BuildingPanel : BasePanel
                                     MessagePanel.Instance.AddMessage("未设置生产目标，无法开工");
                                 }
                             }
+                        });
+                    }
+                    buttonIndex++;
+                }
+                //销售/关闭
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    if (buildingObject.isSale)
+                    {
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停止销售";
+                        totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                            buildingObject.isSale = false;
+                            gc.DeleteBuildingSaleEvent(buildingObject.id);
+                            UpdateTotalSetButton(buildingObject);
+                        });
+                    }
+                    else
+                    {
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "允许销售";
+                        totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                            buildingObject.isSale = true;
+                            gc.CreateBuildingSaleEvent(buildingObject.id);
+                            UpdateTotalSetButton(buildingObject);
                         });
                     }
                     buttonIndex++;

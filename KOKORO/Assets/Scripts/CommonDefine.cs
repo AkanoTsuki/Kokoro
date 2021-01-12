@@ -33,7 +33,8 @@ public enum ShopType
     WeaponAndSubhand,
     Armor,
     Jewelry,
-    Scroll
+    Scroll,
+    None
 }
 
 //交互小标签类型
@@ -275,7 +276,9 @@ public enum AnimStatus
     Death,
     SpringAppear,
     ChestOpen,
-    AttackLoop
+    AttackLoop,
+    WalkUp,
+    WalkDown
 }
 
 public enum LogType
@@ -291,7 +294,8 @@ public enum ExecuteEventType
     ProduceItem,
     ProduceResource,
     Adventure,
-    BuildingUpgrade
+    BuildingUpgrade,
+    BuildingSale
 }
 
 public class ItemAttribute
@@ -1150,7 +1154,7 @@ public class DistrictGridObject
 
 //建筑物原型
 [System.Serializable]
-public class BuildingPrototype
+public class BuildingPrototype : ISerializationCallbackReceiver
 {
     public short ID;
     public string Name;
@@ -1161,6 +1165,8 @@ public class BuildingPrototype
     public byte SizeYBase;
     public byte DoorPosition;
     public string PanelType;
+    public ShopType ShopType;
+    public string ShopTypeStr;
     public string Des;
     public byte Level;
     public short BuildTime;//建造时间 单位小时
@@ -1180,6 +1186,16 @@ public class BuildingPrototype
     public byte EGround;
     public byte ELight;
     public byte EDark;
+    public void OnAfterDeserialize()
+    {
+        ShopType type = (ShopType)Enum.Parse(typeof(ShopType), ShopTypeStr);
+        ShopType = type;
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 //建筑实例
@@ -1190,7 +1206,7 @@ public class BuildingObject
     private short PrototypeID;
     private string Name;
     private string MainPic;
-    private short PositionX;
+    private short PositionX; //基准点，没包括16f
     private short PositionY;
     private byte Layer;
     // private string MapPic;
@@ -1200,9 +1216,10 @@ public class BuildingObject
     private int Expense;
     private short UpgradeTo;//升级后的建筑原型ID
     private bool IsOpen;
+    private bool IsSale;
     private List<string> GridList;//占用格子ID
     private List<int> HeroList;
-
+    private List<int> CustomerList;
     private short People;//提供人口
     private short Worker;//工人上限
     private short WorkerNow;
@@ -1214,7 +1231,7 @@ public class BuildingObject
     private byte EDark;
     private short ProduceEquipNow;//当前生产的装备模板原型ID 如果是资源类则对应资源生产关系表
     private byte BuildProgress;//0建设中 1已完成 2升级中
-    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, List<string> gridList, List<int> heroList,
+    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, bool isSale, List<string> gridList, List<int> heroList, List<int> customerList,
          short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
         short produceEquipNow, byte buildProgress)
@@ -1234,8 +1251,10 @@ public class BuildingObject
         this.Expense = expense;
         this.UpgradeTo = upgradeTo;
         this.IsOpen = isOpen;
+        this.IsSale = isSale;
         this.GridList = gridList;
         this.HeroList = heroList;
+        this.CustomerList = customerList;
         this.People = people;
         this.Worker = worker;
         this.WorkerNow = workerNow;
@@ -1263,9 +1282,10 @@ public class BuildingObject
     public int expense { get { return Expense; } set { Expense = value; } }
     public short upgradeTo { get { return UpgradeTo; } set { UpgradeTo = value; } }
     public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
+    public bool isSale { get { return IsSale; } set { IsSale = value; } }
     public List<string> gridList { get { return GridList; } set { GridList = value; } }
     public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
-
+    public List<int> customerList { get { return CustomerList; } set { CustomerList = value; } }
     public short people { get { return People; } set { People = value; } }
     public short worker { get { return Worker; } set { Worker = value; } }
     public short workerNow { get { return WorkerNow; } set { WorkerNow = value; } }
@@ -2234,10 +2254,11 @@ public class CustomerObject
     private string Pic;
     private int Gold;
     private short DistrictID;//访问的地区
-    private ShopType ShopType;
+    private ShopType ShopType;//目标店铺的类型
+    private List<int> BuildingIDList;//根据地区和类型选定的店铺建筑ID列表
     private List<BucketList> BucketList;
 
-    public CustomerObject(int id, string name, string pic, int gold, short districtID, ShopType shopType, List<BucketList> bucketList
+    public CustomerObject(int id, string name, string pic, int gold, short districtID, ShopType shopType, List<int> buildingIDList, List<BucketList> bucketList
         )
     {
         this.ID = id;
@@ -2246,6 +2267,7 @@ public class CustomerObject
         this.Gold = gold;
         this.DistrictID = districtID;
         this.ShopType = shopType;
+        this.BuildingIDList = buildingIDList;
         this.BucketList = bucketList;
     }
     public int id { get { return ID; } }
@@ -2254,6 +2276,7 @@ public class CustomerObject
     public int gold { get { return Gold; } set { Gold = value; } }
     public short districtID { get { return DistrictID; } }
     public ShopType shopType { get { return ShopType; } }
+    public List<int> buildingIDList { get { return BuildingIDList; } set { BuildingIDList = value; } }
     public List<BucketList> bucketList { get { return BucketList; } }
 }
 
