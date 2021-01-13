@@ -11,9 +11,9 @@ public class MarketPanel : BasePanel
     GameControl gc;
 
     public Text titleText;
-
-     public Text numText;
-
+    public Text infoText;
+    public Text numText;
+  
     public Button filter_typeBig_allBtn;
     public Button filter_typeBig_weaponBtn;
     public Button filter_typeBig_subhandBtn;
@@ -83,6 +83,7 @@ public class MarketPanel : BasePanel
         this.itemTypeSmall = itemTypeSmall;
         UpdateTypeBigButtonText(districtID);
         UpdateTypeSmallButton(districtID, itemTypeBig);
+        UpdateInfo(districtID);
         UpdateList(districtID, itemTypeBig, itemTypeSmall);
     }
 
@@ -469,12 +470,29 @@ public class MarketPanel : BasePanel
         }
     }
 
-   
+    public void UpdateInfo(short districtID)
+    {
+        infoText.text = "本月访客 <color=#FFFFFF>"+gc.customerRecordDic[gc.timeYear+"/"+gc.timeMonth].comeNum[districtID] +
+            "</color>\n访客层次 <color=#B3A795>贫穷</color> <color=#FFFFFF>"+ gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].goldPoorNum[districtID] + 
+            "</color>/<color=#B0D769>一般</color> <color=#FFFFFF>"+ gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].goldNormalNum[districtID] + 
+            "</color>/<color=#FFC362>富裕</color> <color=#FFFFFF>"+ gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].goldRichNum[districtID] +
+            "</color>/<color=#FFF813>十分富裕</color> <color=#FFFFFF>"+ gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].goldVeryRichNum[districtID] +
+            "</color>\n进店访客 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].goToShopNum[districtID] +
+            "</color>[武器店 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].goToShopWeaponNum[districtID] +
+            "</color>][防具店 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].goToShopArmorNum[districtID] +
+            "</color>][饰品店 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].goToShopJewelryNum[districtID] +
+            "</color>][卷轴店 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].goToShopScrollNum[districtID] +
+            "</color>]\n消费访客 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].buyNum[districtID] +
+            "</color>[武器店 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].buyWeaponNum[districtID] +
+            "</color>][防具店 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].buyArmorNum[districtID] +
+            "</color>][饰品店 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].buyJewelryNum[districtID] +
+            "</color>][卷轴店 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].buyScrollNum[districtID] +
+            "</color>]\n未进店访客 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].backNum[districtID] +
+            "</color>\n整体满意度 <color=#FFFFFF>" + gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].satisfaction[districtID] + "</color>";
+    }
 
     public void UpdateList(short districtID, ItemTypeBig itemTypeBig,ItemTypeSmall itemTypeSmall)
     {
-        
-
         List<ItemObject> itemObjects = new List<ItemObject>();
 
         if (itemTypeBig != ItemTypeBig.SkillRoll)

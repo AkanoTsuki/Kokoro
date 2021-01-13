@@ -15,6 +15,9 @@ public class DistrictMapPanel : BasePanel
     public Text peopleText;
     public Text buildingText;
 
+    public Image skyBgImage;
+    public Image skyFgImage;
+
     public RectTransform tipRt;
     public Text tipText;
     public RectTransform customerInfoRt;
@@ -25,7 +28,11 @@ public class DistrictMapPanel : BasePanel
     public Button left_districtMainBtn;
     public Button left_heroMainBtn;
     public Button left_inventoryMainBtn;
+    public RectTransform left_inventoryMainNumRt;
+    public Text left_inventoryMainNumText;
     public Button left_inventoryScrollBtn;
+    public RectTransform left_inventoryScrollNumRt;
+    public Text left_inventoryScrollNumText;
     public Button left_marketBtn;
     public Button left_buildBtn;
   
@@ -82,6 +89,55 @@ public class DistrictMapPanel : BasePanel
     Color colorRes = new Color(255/ 255f,189/ 255f,88/ 255f, 1f);
     Color colorMake = new Color(221/ 255f,90/ 255f,246/ 255f, 1f);
     Color colorBuild = new Color(0/ 255f,98/ 255f,251/ 255f, 1f);
+
+    List<Color> colorHourBg = new List<Color> { new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),//0
+        new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
+        new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
+        new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),//6
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),
+        new Color(1f, 1f, 1f, 1f),
+        new Color(1f, 1f, 1f, 1f),
+        new Color(1f, 1f, 1f, 1f),
+        new Color(1f, 1f, 1f, 1f),//12
+        new Color(1f, 1f, 1f, 1f),
+        new Color(1f, 1f, 1f, 1f),
+        new Color(1f, 1f, 1f, 1f),
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),//18
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),
+        new Color(219 / 255f, 223 / 255f, 245 / 255f, 1f),
+        new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
+        new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
+        new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f)};
+    List<Color> colorHourFg = new List<Color> { new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f) ,//0
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f) ,
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f) ,
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 150 / 255f) , 
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 110 / 255f) ,
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 110 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 80 / 255f),//6
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 50 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 30 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 30 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),//12
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 30 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 30 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 50 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 80 / 255f),//18
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 110 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 110 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 150 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f)};
     //运行变量组
     GameObject wantBuidingGo;
     int wantBuidingSizeX;
@@ -208,6 +264,9 @@ public class DistrictMapPanel : BasePanel
         HideCustomerInfo();
         UpdateBaselineResourcesText(gc.nowCheckingDistrictID);
         UpdateBaselineElementText(gc.nowCheckingDistrictID);
+        ChangeSkyColor();
+        UpdateButtonItemNum(gc.nowCheckingDistrictID);
+        UpdateButtonScrollNum(gc.nowCheckingDistrictID);
         isShow = true;
 
         InvokeRepeating("UpdateBar", 0, 0.2f);
@@ -685,9 +744,9 @@ public class DistrictMapPanel : BasePanel
             int ranY = Random.Range(0, 2);
             int layerIndex = (ranY == 0 ? 11 : 18);
             go.transform.SetParent(layer[layerIndex].transform);
-            startPos = new Vector2((64 + startX * (Random.Range(0, 2) == 0 ? -1 : 1)) * 16f, (layerIndex+1) * -16f + roleHeight);
+            startPos = new Vector2((256 + startX * (Random.Range(0, 2) == 0 ? -1 : 1)) * 16f, (layerIndex + 1) * -16f + roleHeight);
             targetPos = new Vector2(Random.Range(58, 72) * 16f, (layerIndex + 1) * -16f + roleHeight);
-            backPos = new Vector2((64 + startX * (Random.Range(0, 2) == 0 ? -1 : 1)) * 16f, (layerIndex + 1) * -16f + roleHeight);
+            backPos = new Vector2((256 + startX * (Random.Range(0, 2) == 0 ? -1 : 1)) * 16f, (layerIndex + 1) * -16f + roleHeight);
 
             go.GetComponent<RectTransform>().anchoredPosition = startPos;
             go.GetComponent<AnimatiorControlByNPC>().SetCharaFrames(gc.customerDic[customerID].pic);
@@ -740,10 +799,11 @@ public class DistrictMapPanel : BasePanel
         go.GetComponent<MomentTalk>().Show(str, 0, new Vector2(0,40f));
         yield return new WaitForSeconds(2f);
         customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(backFaceTo);
-        customerGo.transform.DOLocalMove(backPos, 5f);
-        yield return new WaitForSeconds(5f);
-        customerGo.transform.DOComplete();
-        customerGo.GetComponent<AnimatiorControlByNPC>().Stop();
+        customerGo.transform.DOLocalMove(backPos, 15f);
+        yield return new WaitForSeconds(15f);
+        gc.CustomerGone(customerID);
+        Destroy(customerGo);
+ 
     }
 
     public IEnumerator CustomerGoToBuilding(int customerID,string talkContent)
@@ -901,26 +961,80 @@ public class DistrictMapPanel : BasePanel
  
         customerInfo_desText.text = "<color=#" + DataManager.mHeroDict[gc.customerDic[customerID].heroType].Color + ">" + DataManager.mHeroDict[gc.customerDic[customerID].heroType].Name + "</color>想要"+ str;
 
+       // Debug.Log(gc.customerDic[customerID].gold.ToString());
         if (gc.customerDic[customerID].gold < 200)
         {
-            customerInfo_goldImage.overrideSprite = Resources.Load("Image/ItemPic/icon361", typeof(Sprite)) as Sprite;
+            customerInfo_goldImage.overrideSprite = Resources.Load("Image/Other/icon361", typeof(Sprite)) as Sprite;
         }
         else if (gc.customerDic[customerID].gold >= 200&& gc.customerDic[customerID].gold < 500)
         {
-            customerInfo_goldImage.overrideSprite = Resources.Load("Image/ItemPic/icon362", typeof(Sprite)) as Sprite;
+            customerInfo_goldImage.overrideSprite = Resources.Load("Image/Other/icon362", typeof(Sprite)) as Sprite;
         }
         else if (gc.customerDic[customerID].gold >= 500 && gc.customerDic[customerID].gold < 1000)
         {
-            customerInfo_goldImage.overrideSprite = Resources.Load("Image/ItemPic/icon366", typeof(Sprite)) as Sprite;
+            customerInfo_goldImage.overrideSprite = Resources.Load("Image/Other/icon366", typeof(Sprite)) as Sprite;
         }
         else 
         {
-            customerInfo_goldImage.overrideSprite = Resources.Load("Image/ItemPic/icon367", typeof(Sprite)) as Sprite;
+            customerInfo_goldImage.overrideSprite = Resources.Load("Image/Other/icon367", typeof(Sprite)) as Sprite;
         }
     }
 
     public void HideCustomerInfo()
     {
         customerInfoRt.anchoredPosition =  Vector2.up * 5000f;
+    }
+
+    public void ChangeSkyColor()
+    {
+        skyBgImage.DOColor (colorHourBg[gc.timeHour],1f);
+        skyFgImage.DOColor(colorHourFg[gc.timeHour], 1f);
+    }
+
+    public void UpdateButtonItemNum(short districtID)
+    {
+        int num = 0;
+        foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
+        {
+            if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1 && kvp.Value.isGoods == false)
+            {
+                num++;
+            }
+        }
+
+        if (num > 0)
+        {
+            left_inventoryMainNumText.text = num.ToString();
+            left_inventoryMainNumRt.sizeDelta = new Vector2(left_inventoryMainNumText.preferredWidth + 8f, 20f);
+        }
+        else
+        {
+            left_inventoryMainNumText.text = "";
+            left_inventoryMainNumRt.sizeDelta = Vector2.zero;
+        }
+      
+    }
+    public void UpdateButtonScrollNum(short districtID)
+    {
+        int num = 0;
+        foreach (KeyValuePair<int, SkillObject> kvp in gc.skillDic)
+        {
+            if (kvp.Value.districtID == districtID && kvp.Value.heroID == -1 && kvp.Value.isGoods == false)
+            {
+                num++;
+            }
+        }
+
+        if (num > 0)
+        {
+            left_inventoryScrollNumText.text = num.ToString();
+            left_inventoryScrollNumRt.sizeDelta = new Vector2(left_inventoryScrollNumText.preferredWidth + 8f, 20f);
+        }
+        else
+        {
+            left_inventoryScrollNumText.text = "";
+            left_inventoryScrollNumRt.sizeDelta = Vector2.zero;
+        }
+        
     }
 }

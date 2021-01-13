@@ -143,8 +143,8 @@ public class SupplyAndDemandPanel : BasePanel
 
     public Button closeBtn;
 
-    Color cGreen = new Color(72 / 255f, 161 / 255f, 79 / 255f, 188 / 255f);
-    Color cRed = new Color(193 / 255f, 56 / 255f, 30 / 255f, 188 / 255f);
+    Color cGreen = new Color(91/ 255f, 217 / 255f, 101 / 255f, 1f);
+    Color cRed = new Color(255 / 255f, 76 / 255f, 42/ 255f, 1f);
 
     void Awake()
     {

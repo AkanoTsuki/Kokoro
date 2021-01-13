@@ -143,7 +143,7 @@ public class GameDataConfig : MonoBehaviour
         //Debug.Log(DataManager.cCreateHeroTypeDict[1].Name);
         //Debug.Log(DataManager.mBuildingDict[5].Name);
         //Debug.Log(DataManager.mMonsterDict[1].Name);
-       Debug.Log(DataManager.mDistrictDict.Count);
+       //Debug.Log(DataManager.mDistrictDict.Count);
         //Debug.Log(DataManager.mDungeonDict[0].FixEvent[0]);
     }
 

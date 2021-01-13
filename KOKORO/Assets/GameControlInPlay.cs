@@ -47,7 +47,7 @@ public class GameControlInPlay : MonoBehaviour
         PlayMainPanel.Instance.UpdateTimeButtonState();
         InvokeRepeating("TimeFlow", 0, 0.05f );
         InvokeRepeating("SupplyAndDemandChangeRegular", 10f, 10f );
-
+        InvokeRepeating("CustomerCome", 3f, 3f);
     }
 
     // Update is called once per frame
@@ -87,6 +87,10 @@ public class GameControlInPlay : MonoBehaviour
                 {
                     BuildingPanel.Instance.UpdateOutputInfoPart(gc.buildingDic[BuildingPanel.Instance.nowCheckingBuildingID]);
                 }
+            }
+            if (DistrictMapPanel.Instance.isShow)
+            {
+                DistrictMapPanel.Instance.ChangeSkyColor();
             }
 
             gc.timeHour++; gc.timeS = 0; 
@@ -234,18 +238,42 @@ public class GameControlInPlay : MonoBehaviour
         //InvokeRepeating("TimeFlow", 0, 0.05f / gc.timeFlowSpeed);
         PlayMainPanel.Instance.UpdateTimeButtonState();
     }
-
+    //定时事件
     void SupplyAndDemandChangeRegular()
     {
-        for (int i = 0; i < DataManager.mDistrictDict.Count; i++)
+        for (short i = 0; i < DataManager.mDistrictDict.Count; i++)
         {
-            gc.SupplyAndDemandChangeRegular((short)i);
+            if (gc.districtDic[i].isOpen)
+            {
+                gc.SupplyAndDemandChangeRegular(i);
+            }
+        
         }
         if (SupplyAndDemandPanel.Instance.isShow)
         {
             SupplyAndDemandPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID);
         }
     }
+
+    void CustomerCome()
+    {
+        for (short i = 0; i < DataManager.mDistrictDict.Count; i++)
+        {
+            if (gc.districtDic[i].isOpen)
+            {
+                if (gc.timeHour >= 6 && gc.timeHour < 18)
+                {
+                    if (Random.Range(0, 5) > 0)
+                    {
+                        gc.CustomerCome(i);
+                    }
+                 
+                }
+            }
+        }
+       
+    }
+
 
     public void OpenDistrictMain()
     {

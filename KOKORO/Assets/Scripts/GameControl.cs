@@ -1360,6 +1360,10 @@ public class GameControl : MonoBehaviour
                 {
                     ItemListAndInfoPanel.Instance.UpdateList(districtID, 1);
                 }
+                if (DistrictMapPanel.Instance.isShow)
+                {
+                    DistrictMapPanel.Instance.UpdateButtonItemNum(districtID);
+                }
                 Debug.Log("DistrictItemAdd() 生产 " + DataManager.mItemDict[itemOrSkillID].Name);
                 break;
             case ItemTypeSmall.ScrollWindI:
@@ -1386,6 +1390,10 @@ public class GameControl : MonoBehaviour
                 if (SkillListAndInfoPanel.Instance.isShow)
                 {
                     SkillListAndInfoPanel.Instance.UpdateList(districtID,null,-1, 0);
+                }
+                if (DistrictMapPanel.Instance.isShow)
+                {
+                    DistrictMapPanel.Instance.UpdateButtonScrollNum(districtID);
                 }
                 break;
         }
@@ -1420,6 +1428,7 @@ public class GameControl : MonoBehaviour
             {
                 DistrictMapPanel.Instance.UpdateResourcesBlock(nowCheckingDistrictID);
             }
+          
         }
         CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemOrSkillID });
         return true;
@@ -1912,6 +1921,10 @@ public class GameControl : MonoBehaviour
         {
             ItemListAndInfoPanel.Instance.OnShow(districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
         }
+        if (DistrictMapPanel.Instance.isShow)
+        {
+            DistrictMapPanel.Instance.UpdateButtonItemNum(districtID);
+        }
     }
 
     public void ItemToCollection(int itemID)
@@ -1939,6 +1952,10 @@ public class GameControl : MonoBehaviour
         if (ItemListAndInfoPanel.Instance.isShow)
         {
             ItemListAndInfoPanel.Instance.OnShow(districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
+        }
+        if (DistrictMapPanel.Instance.isShow)
+        {
+            DistrictMapPanel.Instance.UpdateButtonItemNum(districtID);
         }
     }
 
@@ -1981,6 +1998,10 @@ public class GameControl : MonoBehaviour
         {
             DistrictMapPanel.Instance.UpdateResourcesBlock(districtID);
         }
+        if (DistrictMapPanel.Instance.isShow)
+        {
+            DistrictMapPanel.Instance.UpdateButtonItemNum(districtID);
+        }
     }
 
     public void ItemToGoods(int itemID)
@@ -2017,6 +2038,10 @@ public class GameControl : MonoBehaviour
         {
             DistrictMapPanel.Instance.UpdateResourcesBlock(itemDic[itemID].districtID);
         }
+        if (DistrictMapPanel.Instance.isShow)
+        {
+            DistrictMapPanel.Instance.UpdateButtonItemNum(itemDic[itemID].districtID);
+        }
     }
 
     public void SkillToCollectionAll(short districtID)
@@ -2036,6 +2061,10 @@ public class GameControl : MonoBehaviour
         {
             SkillListAndInfoPanel.Instance.OnShow(districtID, null, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y);
         }
+        if (DistrictMapPanel.Instance.isShow)
+        {
+            DistrictMapPanel.Instance.UpdateButtonScrollNum(districtID);
+        }
     }
 
     public void SkillToCollection(int skillID)
@@ -2048,6 +2077,10 @@ public class GameControl : MonoBehaviour
         if (SkillListAndInfoPanel.Instance.isShow)
         {
             SkillListAndInfoPanel.Instance.OnShow(districtID, null, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y);
+        }
+        if (DistrictMapPanel.Instance.isShow)
+        {
+            DistrictMapPanel.Instance.UpdateButtonScrollNum(districtID);
         }
     }
 
@@ -2064,6 +2097,10 @@ public class GameControl : MonoBehaviour
         if (SkillListAndInfoPanel.Instance.isShow)
         {
             SkillListAndInfoPanel.Instance.OnShow(districtID, null, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y);
+        }
+        if (DistrictMapPanel.Instance.isShow)
+        {
+            DistrictMapPanel.Instance.UpdateButtonScrollNum(districtID);
         }
     }
 
@@ -2084,6 +2121,10 @@ public class GameControl : MonoBehaviour
         if (SkillListAndInfoPanel.Instance.isShow)
         {
             SkillListAndInfoPanel.Instance.OnShow(skillDic[skillID].districtID, null, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y);
+        }
+        if (DistrictMapPanel.Instance.isShow)
+        {
+            DistrictMapPanel.Instance.UpdateButtonScrollNum(skillDic[skillID].districtID);
         }
     }
     #endregion
@@ -2238,7 +2279,7 @@ public class GameControl : MonoBehaviour
         }
         bucketLists.Add(new BucketList(wantBuyTypeBig, wantBuyTypeSmall, -1,(short)Random.Range(1,3), 0));
 
-        int gold = Random.Range(150, 1200);
+        int gold = Random.Range(50, 1100);
         if (gold < 200)
         {
             customerRecordDic[timeYear + "/" + timeMonth].goldPoorNum[districtID]++;
@@ -2299,7 +2340,7 @@ public class GameControl : MonoBehaviour
             }
         }
 
-        Debug.Log("CustomerChooseShop() customerDic[customerID].buildingIDList.Count=" + customerDic[customerID].buildingIDList.Count);
+        
     }
   
 
@@ -2315,6 +2356,10 @@ public class GameControl : MonoBehaviour
     public void CustomerGone(int customerID)
     {
         customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]= (short)((float)(customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]* customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID]+ customerDic[customerID].satisfaction) /(customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID]+1));
+        if (MarketPanel.Instance.isShow && nowCheckingDistrictID == customerDic[customerID].districtID)
+        {
+            MarketPanel.Instance.UpdateInfo(customerDic[customerID].districtID);
+        }
         customerDic.Remove(customerID);
     }
     //TODO
@@ -2578,6 +2623,7 @@ public class GameControl : MonoBehaviour
         }
         else
         {
+
             switch (DataManager.mBuildingDict[buildingDic[customerDic[customerID].buildingIDList[0]].prototypeID].ShopType)
             {
                 case ShopType.WeaponAndSubhand: customerRecordDic[timeYear + "/" + timeMonth].buyWeaponNum[customerDic[customerID].districtID]++; break;
@@ -2585,6 +2631,7 @@ public class GameControl : MonoBehaviour
                 case ShopType.Jewelry: customerRecordDic[timeYear + "/" + timeMonth].buyJewelryNum[customerDic[customerID].districtID]++; break;
                 case ShopType.Scroll: customerRecordDic[timeYear + "/" + timeMonth].buyScrollNum[customerDic[customerID].districtID]++; break;
             }
+            customerRecordDic[timeYear + "/" + timeMonth].buyNum[customerDic[customerID].districtID]++;
         }
         string str = "";
         if ((buyItemList.Count + buySkillList.Count) == 0)
