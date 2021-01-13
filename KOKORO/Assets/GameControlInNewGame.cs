@@ -186,13 +186,7 @@ public class GameControlInNewGame : MonoBehaviour
              new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }
              );
 
-        gc.supplyAndDemand.weaponSwordValue[temp_districtID] = 50;//test
-        gc.supplyAndDemand.weaponAxeValue[temp_districtID] = -30;//test
-        gc.supplyAndDemand.weaponSpearValue[temp_districtID] =2;
-        gc.supplyAndDemand.armorBackHValue[temp_districtID] = 3;
-        gc.supplyAndDemand.armorBackLValue[temp_districtID] = 4;
-        gc.supplyAndDemand.scrollLightIValue[temp_districtID] = -5;
-        gc.supplyAndDemand.scrollLightIIValue[temp_districtID] = -6;
+
 
 
 
@@ -203,7 +197,8 @@ public class GameControlInNewGame : MonoBehaviour
         }
 
 
-            gc.CreateSalesRecord(gc.timeYear,gc.timeMonth);
+        gc.CreateSalesRecord(gc.timeYear, gc.timeMonth);
+        gc.CreateCustomerRecord(gc.timeYear, gc.timeMonth);
 
         gc.gold = 50000;
         gc.nowCheckingDistrictID = temp_districtID;

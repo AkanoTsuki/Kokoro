@@ -38,6 +38,8 @@ public class MarketPanel : BasePanel
     public Button supplyAndDemandBtn;
     public Button closeBtn;
 
+    public ItemTypeBig itemTypeBig;
+    public ItemTypeSmall itemTypeSmall;
     //对象池
     List<GameObject> itemSkillGoPool = new List<GameObject>();
 
@@ -77,6 +79,8 @@ public class MarketPanel : BasePanel
 
     public void UpdateAllInfo(short districtID, ItemTypeBig itemTypeBig, ItemTypeSmall itemTypeSmall)
     {
+        this.itemTypeBig = itemTypeBig;
+        this.itemTypeSmall = itemTypeSmall;
         UpdateTypeBigButtonText(districtID);
         UpdateTypeSmallButton(districtID, itemTypeBig);
         UpdateList(districtID, itemTypeBig, itemTypeSmall);

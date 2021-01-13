@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-
-public class AnimatiorControlByNPC : MonoBehaviour
+using UnityEngine.EventSystems;
+//除了控制动画，顺带控制鼠标焦点事件
+public class AnimatiorControlByNPC : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private float fps = 10.0f;
     private float time = 0;
@@ -23,6 +24,7 @@ public class AnimatiorControlByNPC : MonoBehaviour
     bool isLoop = false;
     bool isNeedStop = false;
     public string charaName = "chara1_1";
+    public int customerID = -1;
     // Start is called before the first frame update
     void Start()
     {
@@ -170,5 +172,14 @@ public class AnimatiorControlByNPC : MonoBehaviour
         timeCX = time;
         Play();
 
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        DistrictMapPanel.Instance.ShowCustomerInfo(customerID, GetComponent<RectTransform>().anchoredPosition);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        DistrictMapPanel.Instance.HideCustomerInfo();
     }
 }

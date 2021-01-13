@@ -208,7 +208,7 @@ public class SupplyAndDemandPanel : BasePanel
     }
 
 
-    void UpdateSingle(short districtID,ItemTypeSmall  itemTypeSmall)
+    public void UpdateSingle(short districtID,ItemTypeSmall  itemTypeSmall)
     {
         Debug.Log(districtID);
         string str = "";

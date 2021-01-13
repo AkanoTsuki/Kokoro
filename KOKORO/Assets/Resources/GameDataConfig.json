@@ -12,6 +12,17 @@
       "PicWoman": [
         "chara1_4"
       ],
+      "WantBuyStr": [
+        "Sword",
+        "Sword",
+        "Axe",
+        "Shield",
+        "HeadH",
+        "BodyH",
+        "HandH",
+        "BackH",
+        "FootH"
+      ],
       "GroupRate": 1.2,
       "Hp": 2,
       "Mp": 0,
@@ -72,6 +83,16 @@
       "PicWoman": [
         "chara1_6"
       ],
+      "WantBuyStr": [
+        "Staff",
+        "HeadL",
+        "BodyL",
+        "HandL",
+        "BackL",
+        "FootL",
+        "ScrollWindI",
+        "ScrollFireI"
+      ],
       "GroupRate": 1.2,
       "Hp": 0,
       "Mp": 2,
@@ -123,7 +144,7 @@
     },
     {
       "ID": 2,
-      "Name": "神射手",
+      "Name": "猎人",
       "Des": "",
       "Color": "29FF1C",
       "PicMan": [
@@ -131,6 +152,16 @@
       ],
       "PicWoman": [
         "chara3_1"
+      ],
+      "WantBuyStr": [
+        "Bow",
+        "Spear",
+        "Dorlach",
+        "HeadL",
+        "BodyL",
+        "HandL",
+        "BackL",
+        "FootL"
       ],
       "GroupRate": 1.2,
       "Hp": 1,
@@ -192,6 +223,13 @@
       "PicWoman": [
         "chara3_7"
       ],
+      "WantBuyStr": [
+        "Hammer",
+        "Axe",
+        "HandH",
+        "BackH",
+        "FootH"
+      ],
       "GroupRate": 1.2,
       "Hp": 0,
       "Mp": 0,
@@ -243,7 +281,7 @@
     },
     {
       "ID": 4,
-      "Name": "制作大师",
+      "Name": "制作者",
       "Des": "",
       "Color": "EAA2F8",
       "PicMan": [
@@ -251,6 +289,11 @@
       ],
       "PicWoman": [
         "chara4_3"
+      ],
+      "WantBuyStr": [
+        "Hammer",
+        "BodyH",
+        "HandH"
       ],
       "GroupRate": 1.2,
       "Hp": 0,
@@ -303,7 +346,7 @@
     },
     {
       "ID": 5,
-      "Name": "打杂",
+      "Name": "打杂工",
       "Des": "",
       "Color": "55DFFF",
       "PicMan": [
@@ -311,6 +354,10 @@
       ],
       "PicWoman": [
         "chara3_3"
+      ],
+      "WantBuyStr": [
+        "Spear",
+        "FootL"
       ],
       "GroupRate": 1.2,
       "Hp": 0,

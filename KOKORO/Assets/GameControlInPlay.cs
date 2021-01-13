@@ -46,7 +46,7 @@ public class GameControlInPlay : MonoBehaviour
         Time.timeScale = gc.timeFlowSpeed;
         PlayMainPanel.Instance.UpdateTimeButtonState();
         InvokeRepeating("TimeFlow", 0, 0.05f );
-
+        InvokeRepeating("SupplyAndDemandChangeRegular", 10f, 10f );
 
     }
 
@@ -68,7 +68,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            gc.CustomerCome();
+            gc.CustomerCome(gc.nowCheckingDistrictID);
         
         }
     }
@@ -103,7 +103,8 @@ public class GameControlInPlay : MonoBehaviour
                 } 
                 gc.timeDay = 1;
                 PlayMainPanel.Instance.UpdateYearSeason(); 
-                gc.CreateSalesRecord(gc.timeYear, gc.timeMonth); 
+                gc.CreateSalesRecord(gc.timeYear, gc.timeMonth);
+                gc.CreateCustomerRecord(gc.timeYear, gc.timeMonth);
             }
 
             gc.timeHour = 0;
@@ -232,6 +233,18 @@ public class GameControlInPlay : MonoBehaviour
         //CancelInvoke("TimeFlow");
         //InvokeRepeating("TimeFlow", 0, 0.05f / gc.timeFlowSpeed);
         PlayMainPanel.Instance.UpdateTimeButtonState();
+    }
+
+    void SupplyAndDemandChangeRegular()
+    {
+        for (int i = 0; i < DataManager.mDistrictDict.Count; i++)
+        {
+            gc.SupplyAndDemandChangeRegular((short)i);
+        }
+        if (SupplyAndDemandPanel.Instance.isShow)
+        {
+            SupplyAndDemandPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID);
+        }
     }
 
     public void OpenDistrictMain()

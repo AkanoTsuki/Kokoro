@@ -17,6 +17,10 @@ public class DistrictMapPanel : BasePanel
 
     public RectTransform tipRt;
     public Text tipText;
+    public RectTransform customerInfoRt;
+    public Text customerInfo_nameText;
+    public Text customerInfo_desText;
+    public Image customerInfo_goldImage;
 
     public Button left_districtMainBtn;
     public Button left_heroMainBtn;
@@ -66,6 +70,7 @@ public class DistrictMapPanel : BasePanel
     public Text bottom_resources_productArmorText;
     public Text bottom_resources_productJewelryText;
     public Text bottom_resources_productSkillRollText;
+
 
 
 
@@ -200,6 +205,7 @@ public class DistrictMapPanel : BasePanel
         HideTip();
 
         HideResourcesBlock();
+        HideCustomerInfo();
         UpdateBaselineResourcesText(gc.nowCheckingDistrictID);
         UpdateBaselineElementText(gc.nowCheckingDistrictID);
         isShow = true;
@@ -646,7 +652,7 @@ public class DistrictMapPanel : BasePanel
     {
         GameObject go= Instantiate(Resources.Load("Prefab/UIBlock/Block_DisCustomer")) as GameObject;
         go.name = "Customer_"+ customerID;
-       
+        go.GetComponent<AnimatiorControlByNPC>().customerID = customerID;
         float roleHeight = 54f;//人物高度
         Vector2 startPos;
         Vector2 targetPos;
@@ -716,7 +722,7 @@ public class DistrictMapPanel : BasePanel
         switch (ran)
         {
             case 0: str = "没有合适的店啊"; break;
-            case 1: str = "回去了"; break;
+            case 1: str = "icon_talk_sad"; break;
             case 2: str = "白来一趟了"; break;
             case 3: str = "好荒凉啊"; break;
             case 4:
@@ -740,7 +746,7 @@ public class DistrictMapPanel : BasePanel
         customerGo.GetComponent<AnimatiorControlByNPC>().Stop();
     }
 
-    public IEnumerator CustomerGoToBuilding(int customerID)
+    public IEnumerator CustomerGoToBuilding(int customerID,string talkContent)
     {
         GameObject customerGo = GameObject.Find("Customer_" + customerID);
 
@@ -769,34 +775,13 @@ public class DistrictMapPanel : BasePanel
         customerGo.transform.DOLocalMove(customerGo.transform.localPosition + Vector3.down * 10f, 1f);
         gc.CustomerLeaveShop(customerID);
 
-        GameObject go = Instantiate(Resources.Load("Prefab/Moment/Moment_Talk")) as GameObject;
-        go.transform.SetParent(customerGo.transform);
-        string str = "";
-        switch (gc.customerDic[customerID].shopType)
+        if (talkContent != "")
         {
-            case ShopType.WeaponAndSubhand:
-                switch (gc.customerDic[customerID].bucketList[0].typeSmall)
-                {
-                    case ItemTypeSmall.Sword: str = "好剑"; break;
-                    case ItemTypeSmall.Axe: str = "这斧头很锋利"; break;
-                    case ItemTypeSmall.Spear: str = "没合适的啊"; break;
-                    case ItemTypeSmall.Hammer: str = "好重的锤子啊"; break;
-                    case ItemTypeSmall.Bow: str = "狩猎利器！"; break;
-                    case ItemTypeSmall.Staff: str = "法力无边"; break;
-                }
-
-
-                break;
-            case ShopType.Armor: str = "这防具不错"; break;
-            case ShopType.Jewelry: str = "闪亮闪亮的"; break;
-            case ShopType.Scroll: str = "感受到了魔力"; break;
+            GameObject go = Instantiate(Resources.Load("Prefab/Moment/Moment_Talk")) as GameObject;
+            go.transform.SetParent(customerGo.transform);
+            go.GetComponent<MomentTalk>().Show(talkContent, 0, new Vector2(0, 40f));
         }
-
-
-
-
-
-        go.GetComponent<MomentTalk>().Show(str, 0, new Vector2(0, 40f));
+    
         yield return new WaitForSeconds(1f);
         customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkLeft);
         customerGo.transform.DOLocalMove(customerGo.transform.localPosition + Vector3.left * 1000f, 10f);
@@ -805,10 +790,10 @@ public class DistrictMapPanel : BasePanel
         Destroy(customerGo);
     }
 
+  
+
     public void UpdateBuildingCustomer(int buildingID, Vector3 FaceTo, AnimStatus FaceToAnim)
     {
-
-
         for (int i = 0; i < gc.buildingDic[buildingID].customerList.Count; i++)
         {
             if (gc.customerDic[gc.buildingDic[buildingID].customerList[i]].isOnline)
@@ -819,12 +804,123 @@ public class DistrictMapPanel : BasePanel
                 Vector2 targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + i) * -1 : i)) * 16f, (gc.buildingDic[buildingID].positionY + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase) * -16f + 54f);
                 customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(FaceToAnim, 1f);
                 customerGo.transform.DOLocalMove(targetPos, 1f);
-
             }
-           
-        
-
         }
+    }
 
+    public void ShowCustomerInfo(int customerID,Vector2 pos)
+    {
+        customerInfoRt.anchoredPosition = pos + Vector2.up * 50f;
+        customerInfo_nameText.text = gc.customerDic[customerID].name;
+        string str = "";
+        for (int i = 0; i < gc.customerDic[customerID].bucketList.Count; i++)
+        {
+            if (gc.customerDic[customerID].shopType == ShopType.WeaponAndSubhand
+            || gc.customerDic[customerID].shopType == ShopType.Armor
+            || gc.customerDic[customerID].shopType == ShopType.Jewelry)
+            {
+                if (gc.customerDic[customerID].bucketList[i].prototypeID != -1)
+                {
+                    str += "[" + DataManager.mItemDict[gc.customerDic[customerID].bucketList[i].prototypeID].Name + "]";
+                }
+                else
+                {
+                    if (gc.customerDic[customerID].bucketList[i].typeSmall != ItemTypeSmall.None)
+                    {
+                        switch (gc.customerDic[customerID].bucketList[i].typeSmall)
+                        {
+                            case ItemTypeSmall.Sword: str += "[剑类武器]"; break;
+                            case ItemTypeSmall.Axe: str += "[斧镰类武器]"; break;
+                            case ItemTypeSmall.Spear: str += "[枪矛类武器]"; break;
+                            case ItemTypeSmall.Hammer: str += "[锤棍类武器]"; break;
+                            case ItemTypeSmall.Bow: str += "[弓类武器]"; break;
+                            case ItemTypeSmall.Staff: str += "[杖类武器]"; break;
+                            case ItemTypeSmall.Shield: str += "[盾]"; break;
+                            case ItemTypeSmall.Dorlach: str += "[箭袋]"; break;
+                            case ItemTypeSmall.HeadH: str += "[重型头部防具]"; break;
+                            case ItemTypeSmall.BodyH: str += "[重型身体防具]"; break;
+                            case ItemTypeSmall.HandH: str += "[重型手部防具]"; break;
+                            case ItemTypeSmall.BackH: str += "[重型背部防具]"; break;
+                            case ItemTypeSmall.FootH: str += "[重型腿部防具]"; break;
+                            case ItemTypeSmall.HeadL: str += "[轻型头部防具]"; break;
+                            case ItemTypeSmall.BodyL: str += "[轻型身体防具]"; break;
+                            case ItemTypeSmall.HandL: str += "[轻型手部防具]"; break;
+                            case ItemTypeSmall.BackL: str += "[轻型背部防具]"; break;
+                            case ItemTypeSmall.FootL: str += "[轻型腿部防具]"; break;
+                            case ItemTypeSmall.Neck: str += "[项链]"; break;
+                            case ItemTypeSmall.Finger: str += "[指环]"; break;
+                        }
+                    }
+                    else
+                    {
+                        switch (gc.customerDic[customerID].bucketList[i].typeBig)
+                        {
+                            case  ItemTypeBig.Weapon: str += "[武器]"; break;
+                            case ItemTypeBig.Subhand: str += "[副手]"; break;
+                            case ItemTypeBig.Armor: str += "[防具]"; break;
+                            case ItemTypeBig.Jewelry: str += "[饰品]"; break;
+                        }
+                    }
+                }
+            }
+            else if(gc.customerDic[customerID].shopType == ShopType.Scroll)
+            {
+                if (gc.customerDic[customerID].bucketList[i].prototypeID != -1)
+                {
+                    str += "[" + DataManager.mSkillDict[gc.customerDic[customerID].bucketList[i].prototypeID].Name + "卷轴]";
+                }
+                else
+                {
+                    if (gc.customerDic[customerID].bucketList[i].typeSmall != ItemTypeSmall.None)
+                    {
+                        switch (gc.customerDic[customerID].bucketList[i].typeSmall)
+                        {
+                            case ItemTypeSmall.ScrollWindI: str += "[风系卷轴]"; break;
+                            case ItemTypeSmall.ScrollFireI: str += "[火系卷轴]"; break;
+                            case ItemTypeSmall.ScrollWaterI: str += "[水系卷轴]"; break;
+                            case ItemTypeSmall.ScrollGroundI: str += "[地系卷轴]"; break;
+                            case ItemTypeSmall.ScrollLightI: str += "[光系卷轴]"; break;
+                            case ItemTypeSmall.ScrollDarkI: str += "[暗系卷轴]"; break;
+                            case ItemTypeSmall.ScrollNone: str += "[无元素卷轴]"; break;
+                            case ItemTypeSmall.ScrollWindII: str += "[雷系卷轴]"; break;
+                            case ItemTypeSmall.ScrollFireII: str += "[爆炸系卷轴]"; break;
+                            case ItemTypeSmall.ScrollWaterII: str += "[冰系卷轴]"; break;
+                            case ItemTypeSmall.ScrollGroundII: str += "[自然系卷轴]"; break;
+                            case ItemTypeSmall.ScrollLightII: str += "[时空系卷轴]"; break;
+                            case ItemTypeSmall.ScrollDarkII: str += "[死亡系卷轴]"; break;
+                        }
+                    }
+                    else
+                    {
+                        str += "[卷轴]";
+                    }
+                }
+            }
+               
+        }
+ 
+        customerInfo_desText.text = "<color=#" + DataManager.mHeroDict[gc.customerDic[customerID].heroType].Color + ">" + DataManager.mHeroDict[gc.customerDic[customerID].heroType].Name + "</color>想要"+ str;
+
+        if (gc.customerDic[customerID].gold < 200)
+        {
+            customerInfo_goldImage.overrideSprite = Resources.Load("Image/ItemPic/icon361", typeof(Sprite)) as Sprite;
+        }
+        else if (gc.customerDic[customerID].gold >= 200&& gc.customerDic[customerID].gold < 500)
+        {
+            customerInfo_goldImage.overrideSprite = Resources.Load("Image/ItemPic/icon362", typeof(Sprite)) as Sprite;
+        }
+        else if (gc.customerDic[customerID].gold >= 500 && gc.customerDic[customerID].gold < 1000)
+        {
+            customerInfo_goldImage.overrideSprite = Resources.Load("Image/ItemPic/icon366", typeof(Sprite)) as Sprite;
+        }
+        else 
+        {
+            customerInfo_goldImage.overrideSprite = Resources.Load("Image/ItemPic/icon367", typeof(Sprite)) as Sprite;
+        }
+    }
+
+    public void HideCustomerInfo()
+    {
+        customerInfoRt.anchoredPosition =  Vector2.up * 5000f;
     }
 }

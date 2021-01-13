@@ -551,7 +551,7 @@ public class SkillObject
 
 //英雄原型T
 [System.Serializable]
-public class HeroPrototype
+public class HeroPrototype : ISerializationCallbackReceiver
 {
     public short ID;
     public string Name;
@@ -559,6 +559,8 @@ public class HeroPrototype
     public string Color;
     public List<string> PicMan;
     public List<string> PicWoman;
+    public List<ItemTypeSmall> WantBuy = new List<ItemTypeSmall>();
+    public List<string> WantBuyStr;
     public float GroupRate;
     public byte Hp;//级别 0 1 2
     public byte Mp;
@@ -607,6 +609,20 @@ public class HeroPrototype
     public byte WorkMakeJewelry;
     public byte WorkMakeScroll;
     public byte WorkSundry;
+    public void OnAfterDeserialize()
+    {
+        for (int i = 0; i < WantBuyStr.Count; i++)
+        {
+            ItemTypeSmall fixPart = (ItemTypeSmall)Enum.Parse(typeof(ItemTypeSmall), WantBuyStr[i]);
+            WantBuy.Add(fixPart);
+        }
+ 
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 
@@ -2258,11 +2274,73 @@ public class SalesRecordObject
     public List<int> scrollDarkIIGold { get { return ScrollDarkIIGold; } set { ScrollDarkIIGold = value; } }
 }
 
+//顾客来访记录实例
+public class CustomerRecordObject
+{
+    private List<short> ComeNum;
+    private List<short> GoldPoorNum;
+    private List<short> GoldNormalNum;
+    private List<short> GoldRichNum;
+    private List<short> GoldVeryRichNum;
+    private List<short> GoToShopNum;
+    private List<short> GoToShopWeaponNum;
+    private List<short> GoToShopArmorNum;
+    private List<short> GoToShopJewelryNum;
+    private List<short> GoToShopScrollNum;
+    private List<short> BuyNum;
+    private List<short> BuyWeaponNum;
+    private List<short> BuyArmorNum;
+    private List<short> BuyJewelryNum;
+    private List<short> BuyScrollNum;
+    private List<short> BackNum;
+    private List<short> Satisfaction;
+    public CustomerRecordObject(List<short> comeNum, List<short> goldPoorNum, List<short> goldNormalNum, List<short> goldRichNum, List<short> goldVeryRichNum,
+         List<short> goToShopNum, List<short> goToShopWeaponNum, List<short> goToShopArmorNum, List<short> goToShopJewelryNum, List<short> goToShopScrollNum,
+         List<short> buyNum, List<short> buyWeaponNum, List<short> buyArmorNum, List<short> buyJewelryNum, List<short> buyScrollNum, List<short> backNum, List<short> satisfaction)
+    {
+        this.ComeNum = comeNum;
+        this.GoldPoorNum = goldPoorNum;
+        this.GoldNormalNum = goldNormalNum;
+        this.GoldRichNum = goldRichNum;
+        this.GoldVeryRichNum = goldVeryRichNum;
+        this.GoToShopNum = goToShopNum;
+        this.GoToShopWeaponNum = goToShopWeaponNum;
+        this.GoToShopArmorNum = goToShopArmorNum;
+        this.GoToShopJewelryNum = goToShopJewelryNum;
+        this.GoToShopScrollNum = goToShopScrollNum;
+        this.BuyNum = buyNum;
+        this.BuyWeaponNum = buyWeaponNum;
+        this.BuyArmorNum = buyArmorNum;
+        this.BuyJewelryNum = buyJewelryNum;
+        this.BuyScrollNum = buyScrollNum;
+        this.BackNum = backNum;
+        this.Satisfaction = satisfaction;
+    }
+   public List<short> comeNum { get { return ComeNum; } set { ComeNum = value; } }
+    public List<short> goldPoorNum { get { return GoldPoorNum; } set { GoldPoorNum = value; } }
+    public List<short> goldNormalNum { get { return GoldNormalNum; } set { GoldNormalNum = value; } }
+    public List<short> goldRichNum { get { return GoldRichNum; } set { GoldRichNum = value; } }
+    public List<short> goldVeryRichNum { get { return GoldVeryRichNum; } set { GoldVeryRichNum = value; } }
+    public List<short> goToShopNum { get { return GoToShopNum; } set { GoToShopNum = value; } }
+    public List<short> goToShopWeaponNum { get { return GoToShopWeaponNum; } set { GoToShopWeaponNum = value; } }
+    public List<short> goToShopArmorNum { get { return GoToShopArmorNum; } set { GoToShopArmorNum = value; } }
+    public List<short> goToShopJewelryNum { get { return GoToShopJewelryNum; } set { GoToShopJewelryNum = value; } }
+    public List<short> goToShopScrollNum { get { return GoToShopScrollNum; } set { GoToShopScrollNum = value; } }
+    public List<short> buyNum { get { return BuyNum; } set { BuyNum = value; } }
+    public List<short> buyWeaponNum { get { return BuyWeaponNum; } set { BuyWeaponNum = value; } }
+    public List<short> buyArmorNum { get { return BuyArmorNum; } set { BuyArmorNum = value; } }
+    public List<short> buyJewelryNum { get { return BuyJewelryNum; } set { BuyJewelryNum = value; } }
+    public List<short> buyScrollNum { get { return BuyScrollNum; } set { BuyScrollNum = value; } }
+    public List<short> backNum { get { return BackNum; } set { BackNum = value; } }
+    public List<short> satisfaction { get { return Satisfaction; } set { Satisfaction = value; } }
+}
+
 //顾客实例
 public class CustomerObject
 {
     private int ID;
     private string Name;
+    private short HeroType;
     private string Pic;
     private int Gold;
     private short DistrictID;//访问的地区
@@ -2270,11 +2348,13 @@ public class CustomerObject
     private List<int> BuildingIDList;//根据地区和类型选定的店铺建筑ID列表
     private List<BucketList> BucketList;
     private bool IsOnline;
-    public CustomerObject(int id, string name, string pic, int gold, short districtID, ShopType shopType, List<int> buildingIDList, List<BucketList> bucketList, bool isOnline
+    private short Satisfaction;
+    public CustomerObject(int id, string name, short heroType, string pic, int gold, short districtID, ShopType shopType, List<int> buildingIDList, List<BucketList> bucketList, bool isOnline, short satisfaction
         )
     {
         this.ID = id;
         this.Name = name;
+        this.HeroType = heroType;
         this.Pic = pic;
         this.Gold = gold;
         this.DistrictID = districtID;
@@ -2282,9 +2362,11 @@ public class CustomerObject
         this.BuildingIDList = buildingIDList;
         this.BucketList = bucketList;
         this.IsOnline = isOnline;
+        this.Satisfaction = satisfaction;
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } }
+    public short heroType { get { return HeroType; } }
     public string pic { get { return Pic; } }
     public int gold { get { return Gold; } set { Gold = value; } }
     public short districtID { get { return DistrictID; } }
@@ -2292,6 +2374,7 @@ public class CustomerObject
     public List<int> buildingIDList { get { return BuildingIDList; } set { BuildingIDList = value; } }
     public List<BucketList> bucketList { get { return BucketList; } }
     public bool isOnline { get { return IsOnline; } set { IsOnline = value; } }
+    public short satisfaction { get { return Satisfaction; } set { Satisfaction = value; } }
 }
 
 //愿望单

@@ -45,6 +45,7 @@ public class GameControl : MonoBehaviour
     public SupplyAndDemandObject supplyAndDemand ;
     public Dictionary<string, SalesRecordObject> salesRecordDic = new Dictionary<string, SalesRecordObject>();
     public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
+    public Dictionary<string, CustomerRecordObject> customerRecordDic = new Dictionary<string, CustomerRecordObject>();
     /// <summary>
     /// 用作存档的数据类
     /// </summary>
@@ -85,6 +86,7 @@ public class GameControl : MonoBehaviour
         public SupplyAndDemandObject supplyAndDemand;
         public Dictionary<string, SalesRecordObject> salesRecordDic = new Dictionary<string, SalesRecordObject>();
         public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
+        public Dictionary<string, CustomerRecordObject> customerRecordDic = new Dictionary<string, CustomerRecordObject>();
     }
 
 
@@ -133,6 +135,7 @@ public class GameControl : MonoBehaviour
         t.supplyAndDemand = this.supplyAndDemand;
         t.salesRecordDic = this.salesRecordDic;
         t.customerDic = this.customerDic;
+        t.customerRecordDic = this.customerRecordDic;
         //保存数据
         IOHelper.SetData(filename, t);
     }
@@ -187,6 +190,7 @@ public class GameControl : MonoBehaviour
             this.supplyAndDemand = t1.supplyAndDemand;
             this.salesRecordDic = t1.salesRecordDic;
             this.customerDic = t1.customerDic;
+            this.customerRecordDic = t1.customerRecordDic;
         }
         else
         {
@@ -1617,7 +1621,7 @@ public class GameControl : MonoBehaviour
             if (customerDic[buildingDic[buildingID].customerList[0]].isOnline)
             {
                 CustomerCheckGoods(buildingDic[buildingID].customerList[0]);
-                StartCoroutine(DistrictMapPanel.Instance.CustomerGoToBuilding(buildingDic[buildingID].customerList[0]));
+                
             }
        
         }
@@ -2085,7 +2089,7 @@ public class GameControl : MonoBehaviour
     #endregion
 
     #region 【方法】市集出售
-
+    
 
 
     //TODO 报错的方法，已修改，待观察
@@ -2111,7 +2115,19 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    public void CustomerCome()
+    public void CreateCustomerRecord(int year, int month)
+    {
+        customerRecordDic.Add(year + "/" + month, new CustomerRecordObject(new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
+            new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
+            new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }));
+
+        if (customerRecordDic.Count > 12)
+        {
+            customerRecordDic.Remove((year - 1) + "/" + month);
+        }
+    }
+
+    public void CustomerCome(short districtID)
     {
         string name = "";
         string pic = "";
@@ -2130,52 +2146,120 @@ public class GameControl : MonoBehaviour
 
         List<BucketList> bucketLists = new List<BucketList>();
         ShopType shopType = ShopType.None;
-        //test
-        int ran = Random.Range(0, 11);
-        switch (ran)
+        ItemTypeBig wantBuyTypeBig = ItemTypeBig.None;
+        ItemTypeSmall wantBuyTypeSmall = DataManager.mHeroDict[heroType].WantBuy[Random.Range(0, DataManager.mHeroDict[heroType].WantBuy.Count)];
+        bool hesitate = true;
+        byte thinkTime = 3;
+        short pdz = -10;
+        while (hesitate && thinkTime > 0)
         {
-            case 0:
-                shopType = ShopType.WeaponAndSubhand;
-                bucketLists.Add(new BucketList(ItemTypeBig.Weapon, ItemTypeSmall.Axe, -1, 2, 0));
-                bucketLists.Add(new BucketList(ItemTypeBig.Weapon, ItemTypeSmall.Bow, -1, 1, 0));
-                break;
-            case 1:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-                shopType = ShopType.Armor;
-                bucketLists.Add(new BucketList(ItemTypeBig.Armor, ItemTypeSmall.BodyH, -1, 2, 0));
-                break;
-            case 2:
-                shopType = ShopType.Jewelry;
-                bucketLists.Add(new BucketList(ItemTypeBig.Jewelry, ItemTypeSmall.Neck, -1, 2, 0));
-                break;
-            case 3:
-                shopType = ShopType.Scroll;
-                bucketLists.Add(new BucketList(ItemTypeBig.SkillRoll, ItemTypeSmall.ScrollFireI, -1, 2, 0));
-                break;
-            case 4:
-                shopType = ShopType.WeaponAndSubhand;
-                bucketLists.Add(new BucketList(ItemTypeBig.Weapon, ItemTypeSmall.Sword, -1, 1, 0));
-                break;
-            case 5:
-                shopType = ShopType.WeaponAndSubhand;
-                bucketLists.Add(new BucketList(ItemTypeBig.Weapon, ItemTypeSmall.Spear, -1, 1, 0));
-                break;
-            case 6:
-                shopType = ShopType.WeaponAndSubhand;
-                bucketLists.Add(new BucketList(ItemTypeBig.Weapon, ItemTypeSmall.Staff, -1, 1, 0));
-                break;
+            wantBuyTypeSmall = DataManager.mHeroDict[heroType].WantBuy[Random.Range(0, DataManager.mHeroDict[heroType].WantBuy.Count)];
+            switch (wantBuyTypeSmall)
+            {
+                case ItemTypeSmall.Sword:if (supplyAndDemand.weaponSwordValue[districtID] > pdz) { hesitate = false; }break;
+                case ItemTypeSmall.Hammer: if (supplyAndDemand.weaponHammerValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.Spear: if (supplyAndDemand.weaponSpearValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.Axe: if (supplyAndDemand.weaponAxeValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.Bow: if (supplyAndDemand.weaponBowValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.Staff: if (supplyAndDemand.weaponStaffValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.HeadH: if (supplyAndDemand.armorHeadHValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.HeadL: if (supplyAndDemand.armorHeadLValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.BodyH: if (supplyAndDemand.armorBodyHValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.BodyL: if (supplyAndDemand.armorBodyLValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.HandH: if (supplyAndDemand.armorHandHValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.HandL: if (supplyAndDemand.armorHandLValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.BackH: if (supplyAndDemand.armorBackHValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.BackL: if (supplyAndDemand.armorBackLValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.FootH: if (supplyAndDemand.armorFootHValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.FootL: if (supplyAndDemand.armorFootLValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.Neck: if (supplyAndDemand.jewelryNeckValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.Finger: if (supplyAndDemand.jewelryFingerValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.Shield: if (supplyAndDemand.subhandShieldValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.Dorlach: if (supplyAndDemand.subhandDorlachValue[districtID] > pdz) { hesitate = false; } break;
+
+                case ItemTypeSmall.ScrollWindI: if (supplyAndDemand.scrollWindIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollFireI: if (supplyAndDemand.scrollFireIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollWaterI: if (supplyAndDemand.scrollWaterIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollGroundI: if (supplyAndDemand.scrollGroundIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollLightI: if (supplyAndDemand.scrollLightIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollDarkI: if (supplyAndDemand.scrollDarkIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollNone: if (supplyAndDemand.scrollNoneValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollWindII: if (supplyAndDemand.scrollWindIIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollFireII: if (supplyAndDemand.scrollFireIIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollWaterII: if (supplyAndDemand.scrollWaterIIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollGroundII: if (supplyAndDemand.scrollGroundIIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollLightII: if (supplyAndDemand.scrollLightIIValue[districtID] > pdz) { hesitate = false; } break;
+                case ItemTypeSmall.ScrollDarkII: if (supplyAndDemand.scrollDarkIIValue[districtID] > pdz) { hesitate = false; } break;
+
+            }
+            thinkTime--;
         }
 
 
+     
 
+        switch (wantBuyTypeSmall)
+        {
+            case ItemTypeSmall.Sword:
+            case ItemTypeSmall.Hammer: 
+            case ItemTypeSmall.Spear: 
+            case ItemTypeSmall.Axe: 
+            case ItemTypeSmall.Bow:
+            case ItemTypeSmall.Staff: shopType = ShopType.WeaponAndSubhand; wantBuyTypeBig = ItemTypeBig.Weapon; break;
+            case ItemTypeSmall.HeadH:
+            case ItemTypeSmall.HeadL:
+            case ItemTypeSmall.BodyH: 
+            case ItemTypeSmall.BodyL: 
+            case ItemTypeSmall.HandH:
+            case ItemTypeSmall.HandL:
+            case ItemTypeSmall.BackH:
+            case ItemTypeSmall.BackL: 
+            case ItemTypeSmall.FootH: 
+            case ItemTypeSmall.FootL: shopType = ShopType.Armor; wantBuyTypeBig = ItemTypeBig.Armor; break;
+            case ItemTypeSmall.Neck: 
+            case ItemTypeSmall.Finger: shopType = ShopType.Jewelry; wantBuyTypeBig = ItemTypeBig.Jewelry; break;
+            case ItemTypeSmall.Shield:
+            case ItemTypeSmall.Dorlach: shopType = ShopType.WeaponAndSubhand; wantBuyTypeBig = ItemTypeBig.Subhand; break;
 
-        customerDic.Add(customerIndex, new CustomerObject(customerIndex, name, pic, 400, 0, shopType, new List<int> { }, bucketLists,false));
+            case ItemTypeSmall.ScrollWindI: 
+            case ItemTypeSmall.ScrollFireI:
+            case ItemTypeSmall.ScrollWaterI: 
+            case ItemTypeSmall.ScrollGroundI: 
+            case ItemTypeSmall.ScrollLightI: 
+            case ItemTypeSmall.ScrollDarkI: 
+            case ItemTypeSmall.ScrollNone: 
+            case ItemTypeSmall.ScrollWindII: 
+            case ItemTypeSmall.ScrollFireII:
+            case ItemTypeSmall.ScrollWaterII: 
+            case ItemTypeSmall.ScrollGroundII:
+            case ItemTypeSmall.ScrollLightII: 
+            case ItemTypeSmall.ScrollDarkII: shopType = ShopType.Scroll; wantBuyTypeBig = ItemTypeBig.SkillRoll; break;
+
+        }
+        bucketLists.Add(new BucketList(wantBuyTypeBig, wantBuyTypeSmall, -1,(short)Random.Range(1,3), 0));
+
+        int gold = Random.Range(150, 1200);
+        if (gold < 200)
+        {
+            customerRecordDic[timeYear + "/" + timeMonth].goldPoorNum[districtID]++;
+        }
+        else if (gold >= 200 && gold < 500)
+        {
+            customerRecordDic[timeYear + "/" + timeMonth].goldNormalNum[districtID]++;
+        }
+        else if (gold >= 500 && gold < 1000)
+        {
+            customerRecordDic[timeYear + "/" + timeMonth].goldRichNum[districtID]++;
+        }
+        else
+        {
+            customerRecordDic[timeYear + "/" + timeMonth].goldVeryRichNum[districtID]++;
+        }
+        customerRecordDic[timeYear + "/" + timeMonth].comeNum[districtID]++;
+
+        customerDic.Add(customerIndex, new CustomerObject(customerIndex, name,(short)heroType, pic, gold, districtID, shopType, new List<int> { }, bucketLists,false,50));
         CustomerChooseShop(customerIndex);
-        Debug.Log("customerDic[customerIndex].buildingIDList.Count=" + customerDic[customerIndex].buildingIDList.Count);
-
+       
         DistrictMapPanel.Instance.CreateCustomer(customerIndex);
 
         customerIndex++;
@@ -2198,24 +2282,26 @@ public class GameControl : MonoBehaviour
               
             }
         }
-        Debug.Log("CustomerChooseShop() customerDic[customerID].buildingIDList.Count=" + customerDic[customerID].buildingIDList.Count);
-    }
-    public void CustomerVisitShop(int customerID)
-    {
         if (customerDic[customerID].buildingIDList.Count == 0)
         {
-            MessagePanel.Instance.AddMessage("顾客" + customerDic[customerID] + "回去了");
-            return;
+            customerRecordDic[timeYear + "/" + timeMonth].backNum[customerDic[customerID].districtID]++;
         }
-
-        if (DataManager.mBuildingDict[customerDic[customerID].buildingIDList[0]].ShopType == ShopType.WeaponAndSubhand
-            || DataManager.mBuildingDict[customerDic[customerID].buildingIDList[0]].ShopType == ShopType.Armor
-            || DataManager.mBuildingDict[customerDic[customerID].buildingIDList[0]].ShopType == ShopType.Jewelry)
+        else
         {
-            
+            customerRecordDic[timeYear + "/" + timeMonth].goToShopNum[customerDic[customerID].districtID]++;
+
+            switch (DataManager.mBuildingDict[buildingDic[customerDic[customerID].buildingIDList[0]].prototypeID].ShopType)
+            {
+                case ShopType.WeaponAndSubhand: customerRecordDic[timeYear + "/" + timeMonth].goToShopWeaponNum[customerDic[customerID].districtID]++;break;
+                case ShopType.Armor: customerRecordDic[timeYear + "/" + timeMonth].goToShopArmorNum[customerDic[customerID].districtID]++; break;
+                case ShopType.Jewelry: customerRecordDic[timeYear + "/" + timeMonth].goToShopJewelryNum[customerDic[customerID].districtID]++; break;
+                case ShopType.Scroll: customerRecordDic[timeYear + "/" + timeMonth].goToShopScrollNum[customerDic[customerID].districtID]++; break;
+            }
         }
 
+        Debug.Log("CustomerChooseShop() customerDic[customerID].buildingIDList.Count=" + customerDic[customerID].buildingIDList.Count);
     }
+  
 
 
     public void CustomerLeaveShop(int customerID)
@@ -2228,6 +2314,7 @@ public class GameControl : MonoBehaviour
 
     public void CustomerGone(int customerID)
     {
+        customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]= (short)((float)(customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]* customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID]+ customerDic[customerID].satisfaction) /(customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID]+1));
         customerDic.Remove(customerID);
     }
     //TODO
@@ -2248,7 +2335,7 @@ public class GameControl : MonoBehaviour
                 {
                     if (kvp.Value.isGoods == true && kvp.Value.districtID == districtID && kvp.Value.heroID == -1)
                     {
-                        Debug.Log("有商品");
+                      //  Debug.Log("有商品");
                         if (customerDic[customerID].bucketList[i].prototypeID != -1)
                         {
                             if (kvp.Value.prototypeID == customerDic[customerID].bucketList[i].prototypeID)
@@ -2264,10 +2351,10 @@ public class GameControl : MonoBehaviour
                         }
                         else if (customerDic[customerID].bucketList[i].typeSmall != ItemTypeSmall.None)
                         {
-                            Debug.Log("指定了小类");
+                          //  Debug.Log("指定了小类");
                             if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == customerDic[customerID].bucketList[i].typeSmall)
                             {
-                                Debug.Log("符合小类");
+                              //  Debug.Log("符合小类");
                                 if (customerDic[customerID].gold >= kvp.Value.cost)
                                 {
                                     buyItemList.Add(kvp.Value.objectID);
@@ -2337,35 +2424,95 @@ public class GameControl : MonoBehaviour
 
         for (int i = 0; i < buyItemList.Count; i++)
         {
+            customerDic[customerID].satisfaction += 5;
             Debug.Log("出售了"+itemDic[buyItemList[i]].name);
             if (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeBig == ItemTypeBig.Weapon)
             {
                 districtDic[itemDic[buyItemList[i]].districtID].rProductWeapon--;
                 districtDic[itemDic[buyItemList[i]].districtID].rProductGoodWeapon--;
+                switch (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeSmall)
+                {
+                    case ItemTypeSmall.Sword:salesRecordDic[timeYear + "/" + timeMonth].weaponSwordNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].weaponSwordGold[districtID]+= itemDic[buyItemList[i]].cost;  break;
+                    case ItemTypeSmall.Axe: salesRecordDic[timeYear + "/" + timeMonth].weaponAxeNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].weaponAxeGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.Spear: salesRecordDic[timeYear + "/" + timeMonth].weaponSpearNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].weaponSpearGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.Hammer: salesRecordDic[timeYear + "/" + timeMonth].weaponHammerNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].weaponHammerGold[districtID] += itemDic[buyItemList[i]].cost;break;
+                    case ItemTypeSmall.Bow: salesRecordDic[timeYear + "/" + timeMonth].weaponBowNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].weaponBowGold[districtID] += itemDic[buyItemList[i]].cost;  break;
+                    case ItemTypeSmall.Staff: salesRecordDic[timeYear + "/" + timeMonth].weaponStaffNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].weaponStaffGold[districtID] += itemDic[buyItemList[i]].cost;  break;
+                }
             }
             else if (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeBig == ItemTypeBig.Subhand)
             {
                 districtDic[itemDic[buyItemList[i]].districtID].rProductWeapon--;
                 districtDic[itemDic[buyItemList[i]].districtID].rProductGoodWeapon--;
+                switch (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeSmall)
+                {
+                    case ItemTypeSmall.Shield: salesRecordDic[timeYear + "/" + timeMonth].subhandShieldNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].subhandShieldGold[districtID] += itemDic[buyItemList[i]].cost;  break;
+                    case ItemTypeSmall.Dorlach: salesRecordDic[timeYear + "/" + timeMonth].subhandDorlachNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].subhandDorlachGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                }
             }
             else if (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeBig == ItemTypeBig.Armor)
             {
                 districtDic[itemDic[buyItemList[i]].districtID].rProductArmor--;
                 districtDic[itemDic[buyItemList[i]].districtID].rProductGoodArmor--;
+                switch (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeSmall)
+                {
+                    case ItemTypeSmall.HeadH: salesRecordDic[timeYear + "/" + timeMonth].armorHeadHNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorHeadHGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.BodyH: salesRecordDic[timeYear + "/" + timeMonth].armorBodyHNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorBodyHGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.HandH: salesRecordDic[timeYear + "/" + timeMonth].armorHandHNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorHandHGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.BackH: salesRecordDic[timeYear + "/" + timeMonth].armorBackHNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorBackHGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.FootH: salesRecordDic[timeYear + "/" + timeMonth].armorFootHNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorFootHGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.HeadL: salesRecordDic[timeYear + "/" + timeMonth].armorHeadLNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorHeadLGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.BodyL: salesRecordDic[timeYear + "/" + timeMonth].armorBodyLNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorBodyLGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.HandL: salesRecordDic[timeYear + "/" + timeMonth].armorHandLNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorHandLGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.BackL: salesRecordDic[timeYear + "/" + timeMonth].armorBackLNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorBackLGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.FootL: salesRecordDic[timeYear + "/" + timeMonth].armorFootLNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].armorFootLGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                }
             }
             else if (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeBig == ItemTypeBig.Jewelry)
             {
                 districtDic[itemDic[buyItemList[i]].districtID].rProductJewelry--;
                 districtDic[itemDic[buyItemList[i]].districtID].rProductGoodJewelry--;
+                switch (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeSmall)
+                {
+                    case ItemTypeSmall.Neck: salesRecordDic[timeYear + "/" + timeMonth].jewelryNeckNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].jewelryNeckGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                    case ItemTypeSmall.Finger: salesRecordDic[timeYear + "/" + timeMonth].jewelryFingerNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].jewelryFingerGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                }
             }
-
+            SupplyAndDemandChange(districtID, DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeSmall, Random.Range(0, 3)*-1);
+            if (SupplyAndDemandPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+            {
+                SupplyAndDemandPanel.Instance.UpdateSingle(districtID, DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeSmall);
+            }
             itemDic.Remove(buyItemList[i]);
         }
         for (int i = 0; i < buySkillList.Count; i++)
         {
+            customerDic[customerID].satisfaction += 5;
             Debug.Log("出售了" + skillDic[buySkillList[i]].name);
             districtDic[skillDic[buySkillList[i]].districtID].rProductScroll--;
             districtDic[skillDic[buySkillList[i]].districtID].rProductGoodScroll--;
+            switch (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeSmall)
+            {
+                case ItemTypeSmall.ScrollWindI: salesRecordDic[timeYear + "/" + timeMonth].scrollWindINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollWindIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollFireI: salesRecordDic[timeYear + "/" + timeMonth].scrollFireINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollFireIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollWaterI: salesRecordDic[timeYear + "/" + timeMonth].scrollWaterINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollWaterIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollGroundI: salesRecordDic[timeYear + "/" + timeMonth].scrollGroundINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollGroundIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollLightI: salesRecordDic[timeYear + "/" + timeMonth].scrollLightINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollLightIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollDarkI: salesRecordDic[timeYear + "/" + timeMonth].scrollDarkINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollDarkIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollNone: salesRecordDic[timeYear + "/" + timeMonth].scrollNoneNum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollNoneGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollWindII: salesRecordDic[timeYear + "/" + timeMonth].scrollWindIINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollWindIIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollFireII: salesRecordDic[timeYear + "/" + timeMonth].scrollFireIINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollFireIIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollWaterII: salesRecordDic[timeYear + "/" + timeMonth].scrollWaterIINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollWaterIIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollGroundII: salesRecordDic[timeYear + "/" + timeMonth].scrollGroundIINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollGroundIIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollLightII: salesRecordDic[timeYear + "/" + timeMonth].scrollLightIINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollLightIIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                case ItemTypeSmall.ScrollDarkII: salesRecordDic[timeYear + "/" + timeMonth].scrollDarkIINum[districtID]++; salesRecordDic[timeYear + "/" + timeMonth].scrollDarkIIGold[districtID] += itemDic[buyItemList[i]].cost; break;
+                
+            }
+            SupplyAndDemandChange(districtID, DataManager.mSkillDict[skillDic[buySkillList[i]].prototypeID].TypeSmall, Random.Range(0, 3)*-1);
+            if (SupplyAndDemandPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+            {
+                SupplyAndDemandPanel.Instance.UpdateSingle(districtID, DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeSmall);
+            }
             skillDic.Remove(buySkillList[i]);
         }
         gold += spend;
@@ -2378,12 +2525,288 @@ public class GameControl : MonoBehaviour
                 DistrictMapPanel.Instance.UpdateResourcesBlock(districtID);
             }
         }
-
+        if (MarketPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+        {
+            MarketPanel.Instance.UpdateAllInfo(districtID, MarketPanel.Instance.itemTypeBig, MarketPanel.Instance.itemTypeSmall);
+        }
+       
 
         if ((buyItemList.Count + buySkillList.Count) == 0)
         {
+            customerDic[customerID].satisfaction -= 20;
             Debug.Log(customerDic[customerID].name+"啥都没买回去了");
+            switch (customerDic[customerID].bucketList[0].typeSmall)
+            {
+                case ItemTypeSmall.Sword: supplyAndDemand.weaponSwordValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.Hammer: supplyAndDemand.weaponHammerValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.Spear: supplyAndDemand.weaponSpearValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.Axe: supplyAndDemand.weaponAxeValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.Bow: supplyAndDemand.weaponBowValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.Staff: supplyAndDemand.weaponStaffValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.HeadH: supplyAndDemand.armorHeadHValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.HeadL: supplyAndDemand.armorHeadLValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.BodyH: supplyAndDemand.armorBodyHValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.BodyL: supplyAndDemand.armorBodyLValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.HandH: supplyAndDemand.armorHandHValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.HandL: supplyAndDemand.armorHandLValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.BackH: supplyAndDemand.armorBackHValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.BackL: supplyAndDemand.armorBackLValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.FootH: supplyAndDemand.armorFootHValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.FootL: supplyAndDemand.armorFootLValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.Neck: supplyAndDemand.jewelryNeckValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.Finger: supplyAndDemand.jewelryFingerValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.Shield: supplyAndDemand.subhandShieldValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.Dorlach: supplyAndDemand.subhandDorlachValue[districtID] +=(short)Random.Range(0,2);break;
+
+                case ItemTypeSmall.ScrollWindI: supplyAndDemand.scrollWindIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollFireI: supplyAndDemand.scrollFireIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollWaterI: supplyAndDemand.scrollWaterIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollGroundI: supplyAndDemand.scrollGroundIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollLightI: supplyAndDemand.scrollLightIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollDarkI: supplyAndDemand.scrollDarkIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollNone: supplyAndDemand.scrollNoneValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollWindII: supplyAndDemand.scrollWindIIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollFireII: supplyAndDemand.scrollFireIIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollWaterII: supplyAndDemand.scrollWaterIIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollGroundII: supplyAndDemand.scrollGroundIIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollLightII: supplyAndDemand.scrollLightIIValue[districtID] +=(short)Random.Range(0,2);break;
+                case ItemTypeSmall.ScrollDarkII: supplyAndDemand.scrollDarkIIValue[districtID] +=(short)Random.Range(0,2);break;
+
+            }
+           
+
         }
+        else
+        {
+            switch (DataManager.mBuildingDict[buildingDic[customerDic[customerID].buildingIDList[0]].prototypeID].ShopType)
+            {
+                case ShopType.WeaponAndSubhand: customerRecordDic[timeYear + "/" + timeMonth].buyWeaponNum[customerDic[customerID].districtID]++; break;
+                case ShopType.Armor: customerRecordDic[timeYear + "/" + timeMonth].buyArmorNum[customerDic[customerID].districtID]++; break;
+                case ShopType.Jewelry: customerRecordDic[timeYear + "/" + timeMonth].buyJewelryNum[customerDic[customerID].districtID]++; break;
+                case ShopType.Scroll: customerRecordDic[timeYear + "/" + timeMonth].buyScrollNum[customerDic[customerID].districtID]++; break;
+            }
+        }
+        string str = "";
+        if ((buyItemList.Count + buySkillList.Count) == 0)
+        {
+            str = OutputRandomStr(new List<string> { "没有合适的", "空手而回", "", "" });
+        }
+        else
+        {
+            int ran2 = Random.Range(0, 3);
+            if ((buyItemList.Count + buySkillList.Count) == 1)
+            {
+                ran2 = 1;
+            }
+            if (ran2 == 0)
+            {
+                str = OutputRandomStr(new List<string> { "这次买了"+ (buyItemList.Count + buySkillList.Count)+"件", "满载而归", "钱花光了", "买买买", "" });
+            }
+            else
+            {
+                switch (customerDic[customerID].shopType)
+                {
+                    case ShopType.WeaponAndSubhand:
+                        if (customerDic[customerID].bucketList[0].prototypeID != -1)
+                        {
+                            int ran = Random.Range(0, 2);
+                            if (ran == 0)
+                            {
+                                str = OutputRandomStr(new List<string> { "买下了" + DataManager.mItemDict[customerDic[customerID].bucketList[0].prototypeID].Name, "", "" });
+                            }
+                            else
+                            {
+                                switch (customerDic[customerID].bucketList[0].typeSmall)
+                                {
+                                    case ItemTypeSmall.Sword: str = OutputRandomStr(new List<string> { "好剑", "好剑好剑", "", "" }); break;
+                                    case ItemTypeSmall.Axe: str = OutputRandomStr(new List<string> { "这斧头很锋利", "哈", "", "" }); break;
+                                    case ItemTypeSmall.Spear: str = OutputRandomStr(new List<string> { "好像是刚锻造的", "突刺", "", "" }); break;
+                                    case ItemTypeSmall.Hammer: str = OutputRandomStr(new List<string> { "好重", "给你一棒槌", "", "" }); break;
+                                    case ItemTypeSmall.Bow: str = OutputRandomStr(new List<string> { "狩猎利器", "这弓似乎有灵性", "", "" }); break;
+                                    case ItemTypeSmall.Staff: str = OutputRandomStr(new List<string> { "法力无边", "走上魔法使之路", "", "" }); break;
+                                    case ItemTypeSmall.Shield: str = OutputRandomStr(new List<string> { "这下安心多了", "坚固的盾", "", "" }); break;
+                                    case ItemTypeSmall.Dorlach: str = OutputRandomStr(new List<string> { "可以多带几支箭了", "哈", "", "" }); break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            switch (customerDic[customerID].bucketList[0].typeSmall)
+                            {
+                                case ItemTypeSmall.Sword: str = OutputRandomStr(new List<string> { "好剑", "好剑好剑", "", "" }); break;
+                                case ItemTypeSmall.Axe: str = OutputRandomStr(new List<string> { "这斧头很锋利", "哈", "", "" }); break;
+                                case ItemTypeSmall.Spear: str = OutputRandomStr(new List<string> { "好像是刚锻造的", "突刺", "", "" }); break;
+                                case ItemTypeSmall.Hammer: str = OutputRandomStr(new List<string> { "好重", "给你一棒槌", "", "" }); break;
+                                case ItemTypeSmall.Bow: str = OutputRandomStr(new List<string> { "狩猎利器", "这弓似乎有灵性", "", "" }); break;
+                                case ItemTypeSmall.Staff: str = OutputRandomStr(new List<string> { "法力无边", "走上魔法使之路", "", "" }); break;
+                                case ItemTypeSmall.Shield: str = OutputRandomStr(new List<string> { "这下安心多了", "坚固的盾", "", "" }); break;
+                                case ItemTypeSmall.Dorlach: str = OutputRandomStr(new List<string> { "可以多带几支箭了", "哈", "", "" }); break;
+                            }
+                        }
+                        break;
+                    case ShopType.Armor:
+                        if (customerDic[customerID].bucketList[0].prototypeID != -1)
+                        {
+                            int ran = Random.Range(0, 2);
+                            if (ran == 0)
+                            {
+                                str = OutputRandomStr(new List<string> { "买下了" + DataManager.mItemDict[customerDic[customerID].bucketList[0].prototypeID].Name, "", "" });
+                            }
+                            else
+                            {
+                                switch (customerDic[customerID].bucketList[0].typeSmall)
+                                {
+                                    case ItemTypeSmall.HeadH: str = OutputRandomStr(new List<string> { "好重的头盔啊", "变得更耐打了", "", "" }); break;
+                                    case ItemTypeSmall.BodyH: str = OutputRandomStr(new List<string> { "厚实的护甲", "变得更耐打了", "", "" }); break;
+                                    case ItemTypeSmall.HandH: str = OutputRandomStr(new List<string> { "坚固的护腕", "变得更耐打了", "", "" }); break;
+                                    case ItemTypeSmall.BackH: str = OutputRandomStr(new List<string> { "很拉风的披风", "变得更耐打了", "", "" }); break;
+                                    case ItemTypeSmall.FootH: str = OutputRandomStr(new List<string> { "坚固的战靴", "变得更耐打了", "", "" }); break;
+                                    case ItemTypeSmall.HeadL: str = OutputRandomStr(new List<string> { "轻巧的帽子", "魔法防御加强了", "", "" }); break;
+                                    case ItemTypeSmall.BodyL: str = OutputRandomStr(new List<string> { "不错的衣服", "魔法防御加强了", "", "" }); break;
+                                    case ItemTypeSmall.HandL: str = OutputRandomStr(new List<string> { "很暖和的手套", "魔法防御加强了", "", "" }); break;
+                                    case ItemTypeSmall.BackL: str = OutputRandomStr(new List<string> { "这斗篷很好", "魔法防御加强了", "", "" }); break;
+                                    case ItemTypeSmall.FootL: str = OutputRandomStr(new List<string> { "很合适的鞋子", "魔法防御加强了", "", "" }); break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            switch (customerDic[customerID].bucketList[0].typeSmall)
+                            {
+                                case ItemTypeSmall.HeadH: str = OutputRandomStr(new List<string> { "好重的头盔啊", "变得更耐打了", "", "" }); break;
+                                case ItemTypeSmall.BodyH: str = OutputRandomStr(new List<string> { "厚实的护甲", "变得更耐打了", "", "" }); break;
+                                case ItemTypeSmall.HandH: str = OutputRandomStr(new List<string> { "坚固的护腕", "变得更耐打了", "", "" }); break;
+                                case ItemTypeSmall.BackH: str = OutputRandomStr(new List<string> { "很拉风的披风", "变得更耐打了", "", "" }); break;
+                                case ItemTypeSmall.FootH: str = OutputRandomStr(new List<string> { "坚固的战靴", "变得更耐打了", "", "" }); break;
+                                case ItemTypeSmall.HeadL: str = OutputRandomStr(new List<string> { "轻巧的帽子", "魔法防御加强了", "", "" }); break;
+                                case ItemTypeSmall.BodyL: str = OutputRandomStr(new List<string> { "不错的衣服", "魔法防御加强了", "", "" }); break;
+                                case ItemTypeSmall.HandL: str = OutputRandomStr(new List<string> { "很暖和的手套", "魔法防御加强了", "", "" }); break;
+                                case ItemTypeSmall.BackL: str = OutputRandomStr(new List<string> { "这斗篷很好", "魔法防御加强了", "", "" }); break;
+                                case ItemTypeSmall.FootL: str = OutputRandomStr(new List<string> { "很合适的鞋子", "魔法防御加强了", "", "" }); break;
+                            }
+                        }
+                        break;
+                    case ShopType.Jewelry:
+                        if (customerDic[customerID].bucketList[0].prototypeID != -1)
+                        {
+                            int ran = Random.Range(0, 2);
+                            if (ran == 0)
+                            {
+                                str = OutputRandomStr(new List<string> { "买下了" + DataManager.mItemDict[customerDic[customerID].bucketList[0].prototypeID].Name, "", "" });
+                            }
+                            else
+                            {
+                                switch (customerDic[customerID].bucketList[0].typeSmall)
+                                {
+                                    case ItemTypeSmall.Neck: str = OutputRandomStr(new List<string> { "漂亮的项链", "漂亮的勋章", "", "" }); break;
+                                    case ItemTypeSmall.Finger: str = OutputRandomStr(new List<string> { "闪亮闪亮的", "不错的指环", "", "" }); break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            switch (customerDic[customerID].bucketList[0].typeSmall)
+                            {
+                                case ItemTypeSmall.Neck: str = OutputRandomStr(new List<string> { "漂亮的项链", "漂亮的勋章", "", "" }); break;
+                                case ItemTypeSmall.Finger: str = OutputRandomStr(new List<string> { "闪亮闪亮的", "不错的指环", "", "" }); break;
+
+                            }
+                        }
+                        break;
+
+
+                    case ShopType.Scroll: str = "感受到了魔力"; break;
+                }
+            }
+           
+        }
+       
+
+        StartCoroutine(DistrictMapPanel.Instance.CustomerGoToBuilding(customerID, str));
+    }
+    public void SupplyAndDemandChangeRegular(short districtID)
+    {
+        
+
+        supplyAndDemand.weaponSwordValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponSwordValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.weaponHammerValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponHammerValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.weaponSpearValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponSpearValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.weaponAxeValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponAxeValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.weaponBowValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponBowValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.weaponStaffValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponStaffValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorHeadHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorHeadHValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorHeadLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorHeadLValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorBodyHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorBodyHValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorBodyLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorBodyLValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorHandHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorHandHValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorHandLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorHandLValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorBackHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorBackHValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorBackLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorBackLValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorFootHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorFootHValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.armorFootLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorFootLValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.jewelryNeckValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.jewelryNeckValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.jewelryFingerValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.jewelryFingerValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.subhandShieldValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.subhandShieldValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.subhandDorlachValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.subhandDorlachValue[districtID] += (short)Random.Range(-4, 7)));
+
+        supplyAndDemand.scrollWindIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollWindIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollFireIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollFireIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollWaterIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollWaterIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollGroundIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollGroundIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollLightIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollLightIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollDarkIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollDarkIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollNoneValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollNoneValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollWindIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollWindIIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollFireIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollFireIIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollWaterIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollWaterIIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollGroundIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollGroundIIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollLightIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollLightIIValue[districtID] += (short)Random.Range(-4, 7)));
+        supplyAndDemand.scrollDarkIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollDarkIIValue[districtID] += (short)Random.Range(-4, 7)));
+
+    }
+
+    void SupplyAndDemandChange(short districtID,ItemTypeSmall itemTypeSmall,int value)
+    {
+       
+        switch (itemTypeSmall)
+        {
+            case ItemTypeSmall.Sword: supplyAndDemand.weaponSwordValue[districtID]=System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponSwordValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.Hammer: supplyAndDemand.weaponHammerValue[districtID]= System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponHammerValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.Spear: supplyAndDemand.weaponSpearValue[districtID]= System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponSpearValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.Axe: supplyAndDemand.weaponAxeValue[districtID]=System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponAxeValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.Bow: supplyAndDemand.weaponBowValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponBowValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.Staff: supplyAndDemand.weaponStaffValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponStaffValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.HeadH: supplyAndDemand.armorHeadHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorHeadHValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.HeadL: supplyAndDemand.armorHeadLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorHeadLValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.BodyH: supplyAndDemand.armorBodyHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorBodyHValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.BodyL: supplyAndDemand.armorBodyLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorBodyLValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.HandH: supplyAndDemand.armorHandHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorHandHValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.HandL: supplyAndDemand.armorHandLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorHandLValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.BackH: supplyAndDemand.armorBackHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorBackHValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.BackL: supplyAndDemand.armorBackLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorBackLValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.FootH: supplyAndDemand.armorFootHValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorFootHValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.FootL: supplyAndDemand.armorFootLValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.armorFootLValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.Neck: supplyAndDemand.jewelryNeckValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.jewelryNeckValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.Finger: supplyAndDemand.jewelryFingerValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.jewelryFingerValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.Shield: supplyAndDemand.subhandShieldValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.subhandShieldValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.Dorlach: supplyAndDemand.subhandDorlachValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.subhandDorlachValue[districtID] += (short)value)); break;
+
+            case ItemTypeSmall.ScrollWindI: supplyAndDemand.scrollWindIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollWindIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollFireI: supplyAndDemand.scrollFireIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollFireIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollWaterI: supplyAndDemand.scrollWaterIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollWaterIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollGroundI: supplyAndDemand.scrollGroundIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollGroundIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollLightI: supplyAndDemand.scrollLightIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollLightIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollDarkI: supplyAndDemand.scrollDarkIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollDarkIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollNone: supplyAndDemand.scrollNoneValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollNoneValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollWindII: supplyAndDemand.scrollWindIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollWindIIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollFireII: supplyAndDemand.scrollFireIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollFireIIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollWaterII: supplyAndDemand.scrollWaterIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollWaterIIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollGroundII: supplyAndDemand.scrollGroundIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollGroundIIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollLightII: supplyAndDemand.scrollLightIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollLightIIValue[districtID] += (short)value)); break;
+            case ItemTypeSmall.ScrollDarkII: supplyAndDemand.scrollDarkIIValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.scrollDarkIIValue[districtID] += (short)value)); break;
+
+        }
+
     }
     #endregion
 
@@ -5012,6 +5435,11 @@ public class GameControl : MonoBehaviour
     #endregion
 
     #region 【辅助方法集】输出字符
+    public string OutputRandomStr(List<string> strs)
+    {
+        return strs[Random.Range(0, strs.Count)];
+    }
+
     public string OutputItemTypeSmallStr(ItemTypeSmall itemTypeSmall)
     {
         switch (itemTypeSmall)
