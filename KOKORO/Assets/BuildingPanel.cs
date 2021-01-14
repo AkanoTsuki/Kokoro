@@ -273,7 +273,7 @@ public class BuildingPanel : BasePanel
                         totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停止销售";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             buildingObject.isSale = false;
-                            gc.DeleteBuildingSaleEvent(buildingObject.id);
+                            gc.BuildingStopSale(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
                         });
                     }

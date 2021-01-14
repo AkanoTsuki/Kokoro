@@ -2,6 +2,17 @@
 using UnityEngine;
 
 using System;
+
+//访客阶段
+public enum CustomerStage
+{ 
+    Come,
+    Observe,
+    Wait,
+    IntoShop,
+    Gone
+}
+
 //库存资源类型
 public enum StuffType
 {
@@ -1237,6 +1248,7 @@ public class BuildingObject
     private short PositionX; //基准点，没包括16f
     private short PositionY;
     private byte Layer;
+    private AnimStatus DoorInLine;//门在队伍的左还是右
     // private string MapPic;
     private string PanelType;
     private string Des;
@@ -1259,7 +1271,7 @@ public class BuildingObject
     private byte EDark;
     private short ProduceEquipNow;//当前生产的装备模板原型ID 如果是资源类则对应资源生产关系表
     private byte BuildProgress;//0建设中 1已完成 2升级中
-    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, bool isSale, List<string> gridList, List<int> heroList, List<int> customerList,
+    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, AnimStatus doorInLine, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, bool isSale, List<string> gridList, List<int> heroList, List<int> customerList,
          short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
         short produceEquipNow, byte buildProgress)
@@ -1272,6 +1284,7 @@ public class BuildingObject
         this.PositionX = positionX;
         this.PositionY = positionY;
         this.Layer = layer;
+        this.DoorInLine = doorInLine;
         //   this.MapPic = mapPic;
         this.PanelType = panelType;
         this.Des = des;
@@ -1303,6 +1316,7 @@ public class BuildingObject
     public short positionX { get { return PositionX; } }
     public short positionY { get { return PositionY; } }
     public byte layer { get { return Layer; } }
+    public AnimStatus doorInLine { get { return DoorInLine; } }
     //   public string mapPic { get { return MapPic; } set { MapPic = value; } }
     public string panelType { get { return PanelType; } set { PanelType = value; } }
     public string des { get { return Des; } set { Des = value; } }
@@ -2345,11 +2359,12 @@ public class CustomerObject
     private int Gold;
     private short DistrictID;//访问的地区
     private ShopType ShopType;//目标店铺的类型
-    private List<int> BuildingIDList;//根据地区和类型选定的店铺建筑ID列表
-    private List<BucketList> BucketList;
-    private bool IsOnline;
+    private int BuildingID;//根据地区和类型选定的店铺建筑ID列表
+    private BucketList BucketList;
+    private CustomerStage Stage;
+    private byte Layer;
     private short Satisfaction;
-    public CustomerObject(int id, string name, short heroType, string pic, int gold, short districtID, ShopType shopType, List<int> buildingIDList, List<BucketList> bucketList, bool isOnline, short satisfaction
+    public CustomerObject(int id, string name, short heroType, string pic, int gold, short districtID, ShopType shopType, int buildingID, BucketList bucketList, CustomerStage stage, byte layer, short satisfaction
         )
     {
         this.ID = id;
@@ -2359,9 +2374,10 @@ public class CustomerObject
         this.Gold = gold;
         this.DistrictID = districtID;
         this.ShopType = shopType;
-        this.BuildingIDList = buildingIDList;
+        this.BuildingID = buildingID;
         this.BucketList = bucketList;
-        this.IsOnline = isOnline;
+        this.Stage = stage;
+        this.Layer = layer;
         this.Satisfaction = satisfaction;
     }
     public int id { get { return ID; } }
@@ -2371,9 +2387,10 @@ public class CustomerObject
     public int gold { get { return Gold; } set { Gold = value; } }
     public short districtID { get { return DistrictID; } }
     public ShopType shopType { get { return ShopType; } }
-    public List<int> buildingIDList { get { return BuildingIDList; } set { BuildingIDList = value; } }
-    public List<BucketList> bucketList { get { return BucketList; } }
-    public bool isOnline { get { return IsOnline; } set { IsOnline = value; } }
+    public int buildingID { get { return BuildingID; } set { BuildingID = value; } }
+    public BucketList bucketList { get { return BucketList; } }
+    public CustomerStage stage { get { return Stage; } set { Stage = value; } }
+    public byte layer { get { return Layer; } }
     public short satisfaction { get { return Satisfaction; } set { Satisfaction = value; } }
 }
 

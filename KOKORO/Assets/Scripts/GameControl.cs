@@ -839,7 +839,7 @@ public class GameControl : MonoBehaviour
 
         districtDic[nowCheckingDistrictID].buildingList.Add(buildingIndex);
 
-        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic,  posX,  posY,  layer, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false,false, grid, new List<int> { }, new List<int> { },
+        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic,  posX,  posY,  layer, posX>64?AnimStatus.WalkLeft: AnimStatus.WalkRight, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false,false, grid, new List<int> { }, new List<int> { },
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,
             -1, 0));
@@ -1623,10 +1623,9 @@ public class GameControl : MonoBehaviour
 
     public void CreateBuildingSaleEvent(int buildingID)
     {
-
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.BuildingSale, standardTime, standardTime + 80, new List<List<int>> { new List<int> { buildingDic[buildingID].districtID }, new List<int> { buildingID } }));
-
     }
+
     public void DeleteBuildingSaleEvent(int buildingID)
     {
         List<int> tempList = new List<int>();
@@ -1642,18 +1641,30 @@ public class GameControl : MonoBehaviour
             executeEventList.RemoveAt(tempList[i]);
         }
     }
+
     public void BuildingSale(int buildingID)
     {
         if (buildingDic[buildingID].customerList.Count > 0)
         {
-            if (customerDic[buildingDic[buildingID].customerList[0]].isOnline)
+            if (customerDic[buildingDic[buildingID].customerList[0]].stage== CustomerStage.Wait)
             {
-                CustomerCheckGoods(buildingDic[buildingID].customerList[0]);
-                
+                CustomerCheckGoods(buildingDic[buildingID].customerList[0]);  
             }
-       
+        }   
+    }
+
+    public void BuildingStopSale(int buildingID)
+    {
+        DeleteBuildingSaleEvent(buildingID);
+        for (int i = 0; i < buildingDic[buildingID].customerList.Count; i++)
+        {
+            customerRecordDic[timeYear + "/" + timeMonth].backNum[buildingDic[buildingID].districtID]++;
+            StartCoroutine(DistrictMapPanel.Instance.CustomerCease(buildingDic[buildingID].customerList[i]));
         }
-        
+        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        {
+            BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+        }
     }
     #endregion
 
@@ -2204,7 +2215,7 @@ public class GameControl : MonoBehaviour
             pic = DataManager.mHeroDict[heroType].PicWoman[Random.Range(0, DataManager.mHeroDict[heroType].PicWoman.Count)];
         }
 
-        List<BucketList> bucketLists = new List<BucketList>();
+       
         ShopType shopType = ShopType.None;
         ItemTypeBig wantBuyTypeBig = ItemTypeBig.None;
         ItemTypeSmall wantBuyTypeSmall = DataManager.mHeroDict[heroType].WantBuy[Random.Range(0, DataManager.mHeroDict[heroType].WantBuy.Count)];
@@ -2255,9 +2266,6 @@ public class GameControl : MonoBehaviour
             thinkTime--;
         }
 
-
-     
-
         switch (wantBuyTypeSmall)
         {
             case ItemTypeSmall.Sword:
@@ -2296,7 +2304,7 @@ public class GameControl : MonoBehaviour
             case ItemTypeSmall.ScrollDarkII: shopType = ShopType.Scroll; wantBuyTypeBig = ItemTypeBig.SkillRoll; break;
 
         }
-        bucketLists.Add(new BucketList(wantBuyTypeBig, wantBuyTypeSmall, -1,(short)Random.Range(1,3), 0));
+        BucketList bucketList =new BucketList(wantBuyTypeBig, wantBuyTypeSmall, -1,(short)Random.Range(1,3), 0);
 
         int gold = Random.Range(50, 1100);
         if (gold < 200)
@@ -2317,10 +2325,10 @@ public class GameControl : MonoBehaviour
         }
         customerRecordDic[timeYear + "/" + timeMonth].comeNum[districtID]++;
 
-        customerDic.Add(customerIndex, new CustomerObject(customerIndex, name,(short)heroType, pic, gold, districtID, shopType, new List<int> { }, bucketLists,false,50));
+        customerDic.Add(customerIndex, new CustomerObject(customerIndex, name,(short)heroType, pic, gold, districtID, shopType, -1, bucketList, CustomerStage.Come,0,50));
         CustomerChooseShop(customerIndex);
        
-        DistrictMapPanel.Instance.CreateCustomer(customerIndex);
+       // DistrictMapPanel.Instance.CustomerCome(customerIndex);
 
         customerIndex++;
 
@@ -2336,28 +2344,13 @@ public class GameControl : MonoBehaviour
             {
                 if (buildingDic[buildingID].isSale)
                 {
-                    customerDic[customerID].buildingIDList.Add(buildingID);
+                    customerDic[customerID].buildingID=buildingID;
                     buildingDic[buildingID].customerList.Add(customerID);
                 }
               
             }
         }
-        if (customerDic[customerID].buildingIDList.Count == 0)
-        {
-            customerRecordDic[timeYear + "/" + timeMonth].backNum[customerDic[customerID].districtID]++;
-        }
-        else
-        {
-            customerRecordDic[timeYear + "/" + timeMonth].goToShopNum[customerDic[customerID].districtID]++;
-
-            switch (DataManager.mBuildingDict[buildingDic[customerDic[customerID].buildingIDList[0]].prototypeID].ShopType)
-            {
-                case ShopType.WeaponAndSubhand: customerRecordDic[timeYear + "/" + timeMonth].goToShopWeaponNum[customerDic[customerID].districtID]++;break;
-                case ShopType.Armor: customerRecordDic[timeYear + "/" + timeMonth].goToShopArmorNum[customerDic[customerID].districtID]++; break;
-                case ShopType.Jewelry: customerRecordDic[timeYear + "/" + timeMonth].goToShopJewelryNum[customerDic[customerID].districtID]++; break;
-                case ShopType.Scroll: customerRecordDic[timeYear + "/" + timeMonth].goToShopScrollNum[customerDic[customerID].districtID]++; break;
-            }
-        }
+        
 
         
     }
@@ -2366,10 +2359,9 @@ public class GameControl : MonoBehaviour
 
     public void CustomerLeaveShop(int customerID)
     {
-        for (int i = 0; i < customerDic[customerID].buildingIDList.Count; i++)
-        {
-            buildingDic[customerDic[customerID].buildingIDList[i]].customerList.Remove(customerID);
-        }
+        
+            buildingDic[customerDic[customerID].buildingID].customerList.Remove(customerID);
+        
     }
 
     public void CustomerGone(int customerID)
@@ -2393,16 +2385,15 @@ public class GameControl : MonoBehaviour
             || customerDic[customerID].shopType == ShopType.Armor
             || customerDic[customerID].shopType == ShopType.Jewelry)
         {
-            for (int i = 0; i < customerDic[customerID].bucketList.Count; i++)
-            {
+
                 foreach (KeyValuePair<int, ItemObject> kvp in itemDic)
                 {
                     if (kvp.Value.isGoods == true && kvp.Value.districtID == districtID && kvp.Value.heroID == -1)
                     {
                       //  Debug.Log("有商品");
-                        if (customerDic[customerID].bucketList[i].prototypeID != -1)
+                        if (customerDic[customerID].bucketList.prototypeID != -1)
                         {
-                            if (kvp.Value.prototypeID == customerDic[customerID].bucketList[i].prototypeID)
+                            if (kvp.Value.prototypeID == customerDic[customerID].bucketList.prototypeID)
                             {
                                 if (customerDic[customerID].gold >= kvp.Value.cost)
                                 {
@@ -2413,10 +2404,10 @@ public class GameControl : MonoBehaviour
 
                             }
                         }
-                        else if (customerDic[customerID].bucketList[i].typeSmall != ItemTypeSmall.None)
+                        else if (customerDic[customerID].bucketList.typeSmall != ItemTypeSmall.None)
                         {
                           //  Debug.Log("指定了小类");
-                            if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == customerDic[customerID].bucketList[i].typeSmall)
+                            if (DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall == customerDic[customerID].bucketList.typeSmall)
                             {
                               //  Debug.Log("符合小类");
                                 if (customerDic[customerID].gold >= kvp.Value.cost)
@@ -2428,9 +2419,9 @@ public class GameControl : MonoBehaviour
 
                             }
                         }
-                        else if (customerDic[customerID].bucketList[i].typeBig != ItemTypeBig.None)
+                        else if (customerDic[customerID].bucketList.typeBig != ItemTypeBig.None)
                         {
-                            if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == customerDic[customerID].bucketList[i].typeBig)
+                            if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == customerDic[customerID].bucketList.typeBig)
                             {
                                 if (customerDic[customerID].gold >= kvp.Value.cost)
                                 {
@@ -2443,20 +2434,19 @@ public class GameControl : MonoBehaviour
                         }
                     }
                 }
-            }
+            
 
         }
         else if (customerDic[customerID].shopType == ShopType.Scroll)
         {
-            for (int i = 0; i < customerDic[customerID].bucketList.Count; i++)
-            {
+            
                 foreach (KeyValuePair<int, SkillObject> kvp in skillDic)
                 {
                     if (kvp.Value.isGoods == true && kvp.Value.districtID == districtID && kvp.Value.heroID == -1)
                     {
-                        if (customerDic[customerID].bucketList[i].prototypeID != -1)
+                        if (customerDic[customerID].bucketList.prototypeID != -1)
                         {
-                            if (kvp.Value.prototypeID == customerDic[customerID].bucketList[i].prototypeID)
+                            if (kvp.Value.prototypeID == customerDic[customerID].bucketList.prototypeID)
                             {
                                 if (customerDic[customerID].gold >= kvp.Value.cost)
                                 {
@@ -2467,9 +2457,9 @@ public class GameControl : MonoBehaviour
 
                             }
                         }
-                        else if (customerDic[customerID].bucketList[i].typeSmall != ItemTypeSmall.None)
+                        else if (customerDic[customerID].bucketList.typeSmall != ItemTypeSmall.None)
                         {
-                            if (DataManager.mSkillDict[kvp.Value.prototypeID].TypeSmall == customerDic[customerID].bucketList[i].typeSmall)
+                            if (DataManager.mSkillDict[kvp.Value.prototypeID].TypeSmall == customerDic[customerID].bucketList.typeSmall)
                             {
                                 if (customerDic[customerID].gold >= kvp.Value.cost)
                                 {
@@ -2483,7 +2473,7 @@ public class GameControl : MonoBehaviour
 
                     }
                 }
-            }
+            
         }
 
         for (int i = 0; i < buyItemList.Count; i++)
@@ -2599,7 +2589,7 @@ public class GameControl : MonoBehaviour
         {
             customerDic[customerID].satisfaction -= 20;
             Debug.Log(customerDic[customerID].name+"啥都没买回去了");
-            switch (customerDic[customerID].bucketList[0].typeSmall)
+            switch (customerDic[customerID].bucketList.typeSmall)
             {
                 case ItemTypeSmall.Sword: supplyAndDemand.weaponSwordValue[districtID] +=(short)Random.Range(0,2);break;
                 case ItemTypeSmall.Hammer: supplyAndDemand.weaponHammerValue[districtID] +=(short)Random.Range(0,2);break;
@@ -2643,7 +2633,7 @@ public class GameControl : MonoBehaviour
         else
         {
 
-            switch (DataManager.mBuildingDict[buildingDic[customerDic[customerID].buildingIDList[0]].prototypeID].ShopType)
+            switch (DataManager.mBuildingDict[buildingDic[customerDic[customerID].buildingID].prototypeID].ShopType)
             {
                 case ShopType.WeaponAndSubhand: customerRecordDic[timeYear + "/" + timeMonth].buyWeaponNum[customerDic[customerID].districtID]++; break;
                 case ShopType.Armor: customerRecordDic[timeYear + "/" + timeMonth].buyArmorNum[customerDic[customerID].districtID]++; break;
@@ -2652,6 +2642,18 @@ public class GameControl : MonoBehaviour
             }
             customerRecordDic[timeYear + "/" + timeMonth].buyNum[customerDic[customerID].districtID]++;
         }
+
+
+        customerRecordDic[timeYear + "/" + timeMonth].goToShopNum[customerDic[customerID].districtID]++;
+
+        switch (DataManager.mBuildingDict[buildingDic[customerDic[customerID].buildingID].prototypeID].ShopType)
+        {
+            case ShopType.WeaponAndSubhand: customerRecordDic[timeYear + "/" + timeMonth].goToShopWeaponNum[customerDic[customerID].districtID]++; break;
+            case ShopType.Armor: customerRecordDic[timeYear + "/" + timeMonth].goToShopArmorNum[customerDic[customerID].districtID]++; break;
+            case ShopType.Jewelry: customerRecordDic[timeYear + "/" + timeMonth].goToShopJewelryNum[customerDic[customerID].districtID]++; break;
+            case ShopType.Scroll: customerRecordDic[timeYear + "/" + timeMonth].goToShopScrollNum[customerDic[customerID].districtID]++; break;
+        }
+
         string str = "";
         if ((buyItemList.Count + buySkillList.Count) == 0)
         {
@@ -2673,16 +2675,16 @@ public class GameControl : MonoBehaviour
                 switch (customerDic[customerID].shopType)
                 {
                     case ShopType.WeaponAndSubhand:
-                        if (customerDic[customerID].bucketList[0].prototypeID != -1)
+                        if (customerDic[customerID].bucketList.prototypeID != -1)
                         {
                             int ran = Random.Range(0, 2);
                             if (ran == 0)
                             {
-                                str = OutputRandomStr(new List<string> { "买下了" + DataManager.mItemDict[customerDic[customerID].bucketList[0].prototypeID].Name, "", "" });
+                                str = OutputRandomStr(new List<string> { "买下了" + DataManager.mItemDict[customerDic[customerID].bucketList.prototypeID].Name, "", "" });
                             }
                             else
                             {
-                                switch (customerDic[customerID].bucketList[0].typeSmall)
+                                switch (customerDic[customerID].bucketList.typeSmall)
                                 {
                                     case ItemTypeSmall.Sword: str = OutputRandomStr(new List<string> { "好剑", "好剑好剑", "", "" }); break;
                                     case ItemTypeSmall.Axe: str = OutputRandomStr(new List<string> { "这斧头很锋利", "哈", "", "" }); break;
@@ -2697,7 +2699,7 @@ public class GameControl : MonoBehaviour
                         }
                         else
                         {
-                            switch (customerDic[customerID].bucketList[0].typeSmall)
+                            switch (customerDic[customerID].bucketList.typeSmall)
                             {
                                 case ItemTypeSmall.Sword: str = OutputRandomStr(new List<string> { "好剑", "好剑好剑", "", "" }); break;
                                 case ItemTypeSmall.Axe: str = OutputRandomStr(new List<string> { "这斧头很锋利", "哈", "", "" }); break;
@@ -2711,16 +2713,16 @@ public class GameControl : MonoBehaviour
                         }
                         break;
                     case ShopType.Armor:
-                        if (customerDic[customerID].bucketList[0].prototypeID != -1)
+                        if (customerDic[customerID].bucketList.prototypeID != -1)
                         {
                             int ran = Random.Range(0, 2);
                             if (ran == 0)
                             {
-                                str = OutputRandomStr(new List<string> { "买下了" + DataManager.mItemDict[customerDic[customerID].bucketList[0].prototypeID].Name, "", "" });
+                                str = OutputRandomStr(new List<string> { "买下了" + DataManager.mItemDict[customerDic[customerID].bucketList.prototypeID].Name, "", "" });
                             }
                             else
                             {
-                                switch (customerDic[customerID].bucketList[0].typeSmall)
+                                switch (customerDic[customerID].bucketList.typeSmall)
                                 {
                                     case ItemTypeSmall.HeadH: str = OutputRandomStr(new List<string> { "好重的头盔啊", "变得更耐打了", "", "" }); break;
                                     case ItemTypeSmall.BodyH: str = OutputRandomStr(new List<string> { "厚实的护甲", "变得更耐打了", "", "" }); break;
@@ -2737,7 +2739,7 @@ public class GameControl : MonoBehaviour
                         }
                         else
                         {
-                            switch (customerDic[customerID].bucketList[0].typeSmall)
+                            switch (customerDic[customerID].bucketList.typeSmall)
                             {
                                 case ItemTypeSmall.HeadH: str = OutputRandomStr(new List<string> { "好重的头盔啊", "变得更耐打了", "", "" }); break;
                                 case ItemTypeSmall.BodyH: str = OutputRandomStr(new List<string> { "厚实的护甲", "变得更耐打了", "", "" }); break;
@@ -2753,16 +2755,16 @@ public class GameControl : MonoBehaviour
                         }
                         break;
                     case ShopType.Jewelry:
-                        if (customerDic[customerID].bucketList[0].prototypeID != -1)
+                        if (customerDic[customerID].bucketList.prototypeID != -1)
                         {
                             int ran = Random.Range(0, 2);
                             if (ran == 0)
                             {
-                                str = OutputRandomStr(new List<string> { "买下了" + DataManager.mItemDict[customerDic[customerID].bucketList[0].prototypeID].Name, "", "" });
+                                str = OutputRandomStr(new List<string> { "买下了" + DataManager.mItemDict[customerDic[customerID].bucketList.prototypeID].Name, "", "" });
                             }
                             else
                             {
-                                switch (customerDic[customerID].bucketList[0].typeSmall)
+                                switch (customerDic[customerID].bucketList.typeSmall)
                                 {
                                     case ItemTypeSmall.Neck: str = OutputRandomStr(new List<string> { "漂亮的项链", "漂亮的勋章", "", "" }); break;
                                     case ItemTypeSmall.Finger: str = OutputRandomStr(new List<string> { "闪亮闪亮的", "不错的指环", "", "" }); break;
@@ -2771,7 +2773,7 @@ public class GameControl : MonoBehaviour
                         }
                         else
                         {
-                            switch (customerDic[customerID].bucketList[0].typeSmall)
+                            switch (customerDic[customerID].bucketList.typeSmall)
                             {
                                 case ItemTypeSmall.Neck: str = OutputRandomStr(new List<string> { "漂亮的项链", "漂亮的勋章", "", "" }); break;
                                 case ItemTypeSmall.Finger: str = OutputRandomStr(new List<string> { "闪亮闪亮的", "不错的指环", "", "" }); break;
