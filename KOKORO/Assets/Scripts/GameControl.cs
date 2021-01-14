@@ -1033,6 +1033,10 @@ public class GameControl : MonoBehaviour
 
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID } , new List<int> { buildingID } , stuffTypeInt, value }));
         buildingDic[buildingID].isOpen = true;
+        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        {
+            BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+        }
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
         {
             DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
@@ -1057,6 +1061,7 @@ public class GameControl : MonoBehaviour
         MessagePanel.Instance.AddMessage("接到停工命令，生产停止");
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
         {
+            BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
             BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
         }
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == buildingDic[buildingID].districtID)
@@ -1070,6 +1075,10 @@ public class GameControl : MonoBehaviour
         //value0:地区实例ID value1:建筑实例ID value2:装备模板原型ID
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceItem, standardTime, standardTime + needTime, new List<List<int>> { new List<int>{ districtID }, new List<int>{ buildingID }, new List<int>{ produceEquipNow } }));
         buildingDic[buildingID].isOpen = true;
+        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        {
+            BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+        }
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
         {
             DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
@@ -1094,6 +1103,7 @@ public class GameControl : MonoBehaviour
         MessagePanel.Instance.AddMessage("接到停工命令，生产停止");
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
         {
+            BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
             BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
         }
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == buildingDic[buildingID].districtID )
@@ -1254,8 +1264,13 @@ public class GameControl : MonoBehaviour
             MessagePanel.Instance.AddMessage("制品库房已满，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
+                BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
                 BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
                 BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+            }
+            if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+            {
+                DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
             }
             return false;
         }
@@ -1278,8 +1293,13 @@ public class GameControl : MonoBehaviour
             MessagePanel.Instance.AddMessage("原材料不足，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
+                BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
                 BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
                 BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+            }
+            if (DistrictMapPanel.Instance.isShow&&nowCheckingDistrictID== districtID)
+            {
+                DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
             }
             return false;
         }
@@ -1593,11 +1613,10 @@ public class GameControl : MonoBehaviour
                 break;
             }
         }
-        //Debug.Log("buildingDic[buildingID].produceEquipNow=" + buildingDic[buildingID].produceEquipNow);
-        //if (needStart)
-        //{
-        //    CreateProduceItemEvent(buildingID);
-        //}
+        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        {
+            BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+        }
 
     }
 

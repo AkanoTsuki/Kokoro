@@ -114,30 +114,30 @@ public class DistrictMapPanel : BasePanel
         new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
         new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
         new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f)};
-    List<Color> colorHourFg = new List<Color> { new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f) ,//0
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f) ,
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f) ,
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 150 / 255f) , 
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 110 / 255f) ,
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 110 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 80 / 255f),//6
+    List<Color> colorHourFg = new List<Color> { new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) ,//0
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) ,
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) ,
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) , 
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) ,
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 50 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 30 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 30 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 50 / 255f),//6
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),//12
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 30 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 30 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 0 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 50 / 255f),//18
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 50 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 80 / 255f),//18
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 110 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 110 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 150 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f),
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 177 / 255f)};
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f),
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f)};
     //运行变量组
     GameObject wantBuidingGo;
     int wantBuidingSizeX;

@@ -17,6 +17,9 @@ public class BuildingPanel : BasePanel
     public Image picImage;
     public Text desText;
 
+    public List<RectTransform> titleSubRt;
+    public List<Text> titleSubText;
+
     public RectTransform outputInfoRt;
     public List<Image> outputInfo_iconImage;
     public Text outputInfo_desText;
@@ -228,7 +231,7 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
                     if (buildingObject.isOpen)
                     {
-                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停产";
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停止制作";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             gc.StopProduceItem(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
@@ -237,7 +240,7 @@ public class BuildingPanel : BasePanel
                     }
                     else
                     {
-                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "生产";
+                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "允许制作";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             if (buildingObject.workerNow != 0 && buildingObject.produceEquipNow != -1)
                             {
@@ -323,17 +326,71 @@ public class BuildingPanel : BasePanel
     //各栏目更新
     public void UpdateBasicPart(BuildingObject buildingObject)
     {
+        int subTitleIndex = 0;
         nameText.text = buildingObject.name;
         if (buildingObject.buildProgress == 0)
         {
-            nameText.text += "<color=#BC6223>(建造中)</color>";
+            titleSubRt[subTitleIndex].localScale = Vector2.one;
+            titleSubText[subTitleIndex].text = "<color=#7AC4FF>建造中</color>";
+            subTitleIndex++;
         }
         else if (buildingObject.buildProgress == 2)
         {
-            nameText.text += "<color=#BC6223>(升级中)</color>";
+            titleSubRt[subTitleIndex].localScale = Vector2.one;
+            titleSubText[subTitleIndex].text = "<color=#7AC4FF>升级中</color>";
+            subTitleIndex++;
         }
-       // picImage.overrideSprite = Resources.Load("Image/BuildingPic/" + buildingObject.mainPic, typeof(Sprite)) as Sprite;
-        desText.text =  "[维护费 " + buildingObject.expense+"金币/月]\n"+ buildingObject.des;
+
+        switch (buildingObject.panelType)
+        {
+            case "Resource":
+                if (buildingObject.isOpen)
+                {
+                    titleSubRt[subTitleIndex].localScale = Vector2.one;
+                    titleSubText[subTitleIndex].text = "<color=#4FFF5F>生产中</color>";
+                    subTitleIndex++;
+                }
+                else 
+                {
+                    titleSubRt[subTitleIndex].localScale = Vector2.one;
+                    titleSubText[subTitleIndex].text = "<color=#FF342F>停止生产</color>";
+                    subTitleIndex++;
+                }
+                break;
+            case "Forge":
+                if (buildingObject.isOpen)
+                {
+                    titleSubRt[subTitleIndex].localScale = Vector2.one;
+                    titleSubText[subTitleIndex].text = "<color=#4FFF5F>制作中</color>";
+                    subTitleIndex++;
+                }
+                else
+                {
+                    titleSubRt[subTitleIndex].localScale = Vector2.one;
+                    titleSubText[subTitleIndex].text = "<color=#FF342F>停止制作</color>";
+                    subTitleIndex++;
+                }
+                if (buildingObject.isSale)
+                {
+                    titleSubRt[subTitleIndex].localScale = Vector2.one;
+                    titleSubText[subTitleIndex].text = "<color=#4FFF5F>销售中</color>";
+                    subTitleIndex++;
+                }
+                else
+                {
+                    titleSubRt[subTitleIndex].localScale = Vector2.one;
+                    titleSubText[subTitleIndex].text = "<color=#FF342F>停止销售</color>";
+                    subTitleIndex++;
+                }
+                break;
+        }
+        for (int i = subTitleIndex; i < titleSubRt.Count; i++)
+        {
+            titleSubRt[i].localScale = Vector2.zero;
+        }
+
+                // picImage.overrideSprite = Resources.Load("Image/BuildingPic/" + buildingObject.mainPic, typeof(Sprite)) as Sprite;
+                desText.text =  "[维护费 " + buildingObject.expense+"金币/月]\n"+ buildingObject.des;
     }
 
     public void UpdateOutputInfoPart(BuildingObject buildingObject)
@@ -342,6 +399,15 @@ public class BuildingPanel : BasePanel
         switch (buildingObject.panelType)
         {
             case "Forge":
+                if (buildingObject.produceEquipNow != -1)
+                {
+                    outputInfo_desText.text = "生产目标:" + "工艺" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level + "的" + gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Type);
+                }
+                else
+                {
+                    outputInfo_desText.text = "生产目标:未设置";
+                }
+
                 if (buildingObject.isOpen)
                 {
                     int needTime = 0;
@@ -363,8 +429,7 @@ public class BuildingPanel : BasePanel
                         outputInfo_iconImage[i].color = Color.clear ;
                     }
                     
-                    outputInfo_desText.text = "工艺"+DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level +"的"+gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Type) +
-                        ""  + "制作中[" + nowTime + "/" + needTime + "]\n消耗"+
+                    outputInfo_desText.text += "\n制作中[" + nowTime + "/" + needTime + "]\n消耗"+
                         (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWood!=0?" 木材"+ DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputWood:"")+
                         (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputStone != 0 ? " 石料" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputStone : "") +
                         (DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputMetal != 0 ? " 金属" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].InputMetal : "") +
@@ -385,7 +450,7 @@ public class BuildingPanel : BasePanel
                     {
                         outputInfo_iconImage[i].color = Color.clear;
                     }
-                    outputInfo_desText.text = "<color=#FF4500>停工中</color>";
+                    outputInfo_desText.text = "\n<color=#FF4500>停工中</color>";
                 }
                 break;
             case "Resource":
