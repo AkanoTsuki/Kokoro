@@ -19,7 +19,12 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.Building);
         UIManager.Instance.InitPanel(UIPanelType.Hero);
         UIManager.Instance.InitPanel(UIPanelType.Build);
+        UIManager.Instance.InitPanel(UIPanelType.PlayMain);
+        PlayMainPanel.Instance.OnShow();
         UIManager.Instance.InitPanel(UIPanelType.DistrictMap);
+        DistrictMapPanel.Instance.nowDistrict = -1;
+        DistrictMapPanel.Instance.OnShow();
+        DistrictMapPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.Message);
         MessagePanel.Instance.OnShow(0, 26);
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
@@ -32,8 +37,7 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
         UIManager.Instance.InitPanel(UIPanelType.Market);
         UIManager.Instance.InitPanel(UIPanelType.SupplyAndDemand);
-        UIManager.Instance.InitPanel(UIPanelType.PlayMain);
-        PlayMainPanel.Instance.OnShow();
+
 
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
@@ -47,7 +51,7 @@ public class GameControlInPlay : MonoBehaviour
         PlayMainPanel.Instance.UpdateTimeButtonState();
         InvokeRepeating("TimeFlow", 0, 0.05f );
         InvokeRepeating("SupplyAndDemandChangeRegular", 10f, 10f );
-        InvokeRepeating("CustomerCome", 3f, 3f);
+       // InvokeRepeating("CustomerCome", 3f, 3f);
     }
 
     // Update is called once per frame

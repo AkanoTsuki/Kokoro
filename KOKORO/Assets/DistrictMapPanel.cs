@@ -86,6 +86,8 @@ public class DistrictMapPanel : BasePanel
 
 
     //配置
+    float roleWidth = 24f;//人物宽度
+    float roleHeight = 54f;//人物高度
     Color colorRes = new Color(255/ 255f,189/ 255f,88/ 255f, 1f);
     Color colorMake = new Color(221/ 255f,90/ 255f,246/ 255f, 1f);
     Color colorBuild = new Color(0/ 255f,98/ 255f,251/ 255f, 1f);
@@ -156,12 +158,13 @@ public class DistrictMapPanel : BasePanel
     List<int> x = new List<int>();
     List<int> y = new List<int>();
 
+    public short nowDistrict=-1;
 
     public bool IsShowResourcesBlock = false;
 
     //对象池
     List<GameObject> buildingGoPool = new List<GameObject>();
-    List<GameObject> customerGoPool = new List<GameObject>();
+    List<GameObject> customerGoPool = new List<GameObject>();//用作保存空闲的go
 
     Dictionary<int, Image> statusBarImageDic = new Dictionary<int, Image>();
 
@@ -246,10 +249,15 @@ public class DistrictMapPanel : BasePanel
     }
 
 
-    public void OnShow(int x, int y)
+    public override void OnShow()
     {
+        if (gc.nowCheckingDistrictID != nowDistrict)
+        {
+            nowDistrict = gc.nowCheckingDistrictID;
+            UpdateAllCustomer(nowDistrict);
+        }
 
-        SetAnchoredPosition(x, y);
+        SetAnchoredPosition(0, -90);
         UpdateBasicInfo();
         UpdateAllBuilding(gc.nowCheckingDistrictID);
         HideTip();
@@ -418,27 +426,7 @@ public class DistrictMapPanel : BasePanel
         }
     }
 
-    public void UpdateAllCustomer(int districtID)
-    {
-        List<CustomerObject> temp = new List<CustomerObject> { };
-        foreach (KeyValuePair<int, CustomerObject> kvp in gc.customerDic)
-        {
-            if (kvp.Value.districtID == districtID)
-            {
-                temp.Add(kvp.Value);
-            }
-        }
-
-        for (int i = 0; i < temp.Count; i++)
-        {
-            SetCustomer(temp[i].id, false, i);
-        }
-        for (int i = temp.Count; i < customerGoPool.Count; i++)
-        {
-            customerGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
-        }
-    }
-
+   
 
     public void UpdateSingleBuilding( int buildingID)
     {
@@ -473,43 +461,7 @@ public class DistrictMapPanel : BasePanel
         UpdateBuildingGo(go, buildingID);
     }
 
-    void SetCustomer(int customerID, bool isNew, int index)
-    {
-        GameObject go;
-
-        if (isNew)
-        {
-            go = Instantiate(Resources.Load("Prefab/UIBlock/Block_DisCustomer")) as GameObject;
-            customerGoPool.Add(go);
-        }
-        else
-        {
-            if (index < customerGoPool.Count)
-            {
-                go = customerGoPool[index];
-                customerGoPool[index].transform.GetComponent<RectTransform>().localScale = Vector2.one;
-            }
-            else
-            {
-                go = Instantiate(Resources.Load("Prefab/UIBlock/Block_DisCustomer")) as GameObject;
-                customerGoPool.Add(go);
-            }
-        }
-        go.name = "Customer_" + customerID;
-        go.GetComponent<AnimatiorControlByNPC>().customerID = customerID;
-        if (gc.customerDic[customerID].buildingID!=-1)
-        {
-            int buildingID = gc.customerDic[customerID].buildingID;
-            go.transform.SetParent(layer[gc.buildingDic[buildingID].layer].transform);
-        }
-        else
-        {
-            int ranY = Random.Range(0, 2);
-            int layerIndex = (ranY == 0 ? 11 : 18);
-            go.transform.SetParent(layer[layerIndex].transform);
-        }
-    }
-
+    
     public void DeleteBuilding(int buildingID)
     {
         GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
@@ -754,27 +706,160 @@ public class DistrictMapPanel : BasePanel
 
 
     //访客部分
+    public void UpdateAllCustomer(int districtID)
+    {
+        List<CustomerObject> temp = new List<CustomerObject> { };
+        foreach (KeyValuePair<int, CustomerObject> kvp in gc.customerDic)
+        {
+            if (kvp.Value.districtID == districtID)
+            {
+                temp.Add(kvp.Value);
+            }
+        }
 
+        for (int i = 0; i < temp.Count; i++)
+        {
+            SetCustomer(temp[i].id, true);
+            UpdateCustomerByStage(temp[i].id);
+        }
+        for (int i = temp.Count; i < customerGoPool.Count; i++)
+        {
+            customerGoPool[i].transform.GetComponent<Image>().color = Color.clear;
+            customerGoPool[i].transform.GetComponent<AnimatiorControlByNPC>().Stop();
+        }
+    }
+    public void UpdateSingleCustomer(int customerID)
+    {
+        SetCustomer(customerID, false);
+    }
+
+
+    //创建访客实例 isNew 用作进入游戏第一次打开本面板，
+    void SetCustomer(int customerID, bool isNew)
+    {
+        GameObject go;
+
+        if (isNew)
+        {
+            go = Instantiate(Resources.Load("Prefab/UIBlock/Block_DisCustomer")) as GameObject;
+           // customerGoPool.Add(go);
+        }
+        else
+        {
+            if (customerGoPool.Count>0)
+            {
+                go = customerGoPool[0];
+                go.GetComponent<Image>().color = Color.white;
+                customerGoPool.RemoveAt(0);
+            }
+            else
+            {
+                go = Instantiate(Resources.Load("Prefab/UIBlock/Block_DisCustomer")) as GameObject;
+            }
+        }
+        go.name = "Customer_" + customerID;
+        go.GetComponent<AnimatiorControlByNPC>().customerID = customerID;
+        go.GetComponent<AnimatiorControlByNPC>().SetCharaFrames(gc.customerDic[customerID].pic);
+ 
+
+        if (gc.customerDic[customerID].buildingID != -1)
+        {
+            int buildingID = gc.customerDic[customerID].buildingID;      
+            gc.customerDic[customerID].layer =(byte)( gc.buildingDic[buildingID].layer+1);
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim(gc.buildingDic[buildingID].doorInLine);
+        }
+        else
+        {
+            if(gc.customerDic[customerID].layer==0)
+            {
+                int ranY = Random.Range(0, 2);
+                int layerIndex = (ranY == 0 ? 11 : 19);
+
+                gc.customerDic[customerID].layer = (byte)layerIndex;
+            }
+    
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim(Random.Range(0,2)==0? AnimStatus.WalkLeft: AnimStatus.WalkRight);
+
+        }
+        go.GetComponent<AnimatiorControlByNPC>().Stop();
+        go.transform.SetParent(layer[gc.customerDic[customerID].layer].transform);
+        SetCustomerPos(customerID);
+    }
+
+    //初始化访客位置
+    void SetCustomerPos(int customerID)
+    {
+        float roleHeight = 54f;
+        Debug.Log("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
+        GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
+        int buildingID = gc.customerDic[customerID].buildingID;
+        int waitIndex;
+        int ranY;
+        int layerIndex;
+        Vector2 startPos;
+        switch (gc.customerDic[customerID].stage)
+        {
+            case CustomerStage.Come:
+             
+                int startX = 20 * gc.districtDic[gc.customerDic[customerID].districtID].level +Random.Range( 10,100);
+                startPos = new Vector2((64 + startX * (Random.Range(0, 2) == 0 ? -1 : 1)) * 16f, gc.customerDic[customerID].layer * -16f + roleHeight);
+
+                break;
+            case CustomerStage.Observe:
+                 //ranY = Random.Range(0, 2);
+                 //layerIndex = (ranY == 0 ? 11 : 19);
+                 startPos = new Vector2(Random.Range(58, 72) * 16f, gc.customerDic[customerID].layer * -16f + roleHeight);
+                break;
+            case CustomerStage.Wait:
+                 waitIndex = gc.buildingDic[buildingID].customerList.IndexOf(customerID);
+                startPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + waitIndex) * -1 : waitIndex)) * 16f, gc.customerDic[customerID].layer * -16f + 54f);
+
+                break;
+            case CustomerStage.IntoShop:
+                waitIndex = 0;
+                startPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + waitIndex) * -1 : waitIndex)) * 16f, gc.customerDic[customerID].layer * -16f + 54f);
+
+                break;
+            case CustomerStage.Gone:
+                if (buildingID != -1)
+                {
+                    waitIndex = gc.buildingDic[buildingID].customerList.IndexOf(customerID);
+                    startPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + waitIndex) * -1 : waitIndex)) * 16f, gc.customerDic[customerID].layer * -16f + 54f);
+
+                }
+                else
+                {
+                    ranY = Random.Range(0, 2);
+                    layerIndex = (ranY == 0 ? 11 : 18);
+                    startPos = new Vector2(Random.Range(58, 72) * 16f, layerIndex  * -16f + roleHeight);
+                }
+                break;
+            default:
+                startPos = Vector2.zero;
+                break;
+        }
+        go.GetComponent<RectTransform>().anchoredPosition = startPos;
+    }
 
     public void UpdateCustomerByStage(int customerID)
     {
-        GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/" + customerID);
+        GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
         switch (gc.customerDic[customerID].stage)
         {
             case CustomerStage.Come:
                 StartCoroutine(CustomerCome(customerID,go));
                 break;
             case CustomerStage.Observe:
-
+                StartCoroutine(CustomerObserve(customerID, go));
                 break;
             case CustomerStage.Wait:
-
+                StartCoroutine(CustomerWait(customerID, go));
                 break;
             case CustomerStage.IntoShop:
-
+                StartCoroutine(CustomerIntoShop(customerID, go));
                 break;
             case CustomerStage.Gone:
-
+                StartCoroutine(CustomerGone(customerID, go));
                 break;
         }
     }
@@ -782,23 +867,18 @@ public class DistrictMapPanel : BasePanel
 
     IEnumerator CustomerCome(int customerID, GameObject go)
     {
-   
-    
-        float roleHeight = 54f;//人物高度
-        Vector2 startPos;
+
+        Vector2 startPos=go.transform.localPosition;
         Vector2 targetPos;
-        int startX = 20 * gc.districtDic[gc.customerDic[customerID].districtID].level + 10;
+
         if (gc.customerDic[customerID].buildingID!=-1)
         {
             int buildingID = gc.customerDic[customerID].buildingID;
 
-            startPos = new Vector2((64 + startX*(Random.Range(0, 2) == 0?-1:1)) * 16f, (gc.buildingDic[buildingID].positionY + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase) * -16f + roleHeight);
-            targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + gc.buildingDic[buildingID].customerList.Count) * -1 : gc.buildingDic[buildingID].customerList.Count)) * 16f, (gc.buildingDic[buildingID].positionY + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase) * -16f + roleHeight);
+            targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + gc.buildingDic[buildingID].customerList.Count) * -1 : gc.buildingDic[buildingID].customerList.Count)) * 16f, gc.customerDic[customerID].layer * -16f + roleHeight);
 
-            go.GetComponent<RectTransform>().anchoredPosition = startPos;
-            go.GetComponent<AnimatiorControlByNPC>().SetCharaFrames(gc.customerDic[customerID].pic);
+
             go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
-            go.GetComponent<AnimatiorControlByNPC>().Play();
             go.transform.DOLocalMove(targetPos, 5f);
 
             yield return new WaitForSeconds(5f);
@@ -808,144 +888,122 @@ public class DistrictMapPanel : BasePanel
             go.GetComponent<AnimatiorControlByNPC>().SetAnim(gc.buildingDic[buildingID].doorInLine);
             go.GetComponent<AnimatiorControlByNPC>().Stop();
             gc.customerDic[customerID].stage = CustomerStage.Wait;
-           // StartCoroutine(CustomerWait(customerID,go, 5f, );
+            UpdateCustomerByStage(customerID);
 
         }
         else
         {
-            startPos = new Vector2((256 + startX * (Random.Range(0, 2) == 0 ? -1 : 1)) * 16f, (layerIndex + 1) * -16f + roleHeight);
-            targetPos = new Vector2(Random.Range(58, 72) * 16f, (layerIndex + 1) * -16f + roleHeight);
+            targetPos = new Vector2(Random.Range(54, 74) * 16f, gc.customerDic[customerID].layer  * -16f + roleHeight);
        
             go.GetComponent<RectTransform>().anchoredPosition = startPos;
-            go.GetComponent<AnimatiorControlByNPC>().SetCharaFrames(gc.customerDic[customerID].pic);
+
             go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
-            go.GetComponent<AnimatiorControlByNPC>().Play();
+
             go.transform.DOLocalMove(targetPos, 5f);
 
             yield return new WaitForSeconds(5f);
             gc.customerDic[customerID].stage = CustomerStage.Observe;
-
+            UpdateCustomerByStage(customerID);
         }
+       // Debug.Log("startPos=" + startPos);
+       // Debug.Log("targetPos=" + targetPos);
     }
 
-    //IEnumerator CustomerWait(int customerID, GameObject go)
-    //{
+    IEnumerator CustomerWait(int customerID, GameObject go)
+    {
+        int buildingID = gc.customerDic[customerID].buildingID;
+        int waitIndex= gc.buildingDic[buildingID].customerList.IndexOf(customerID);
+        Vector2 startPos = go.transform.localPosition;
+        Vector2 targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + waitIndex) * -1 : waitIndex)) * 16f, gc.customerDic[customerID].layer * -16f + roleHeight);
 
-    //    gc.customerDic[customerID].stage = CustomerStage.Wait;
-    //    go.GetComponent<AnimatiorControlByNPC>().SetAnim(endFaceTo);
-    //    go.GetComponent<AnimatiorControlByNPC>().Stop();
-    //}
+        go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x> targetPos.x)? AnimStatus.WalkLeft: AnimStatus.WalkRight);
+        go.GetComponent<AnimatiorControlByNPC>().Play();
+        go.transform.DOLocalMove(targetPos, 1f);
+        yield return new WaitForSeconds(1f);
+        go.GetComponent<AnimatiorControlByNPC>().Stop();
+    }
 
-    IEnumerator CustomerGoBack(int customerID,GameObject customerGo, float waitTime, Vector2 backPos, AnimStatus backFaceTo)
+    IEnumerator CustomerObserve(int customerID,GameObject go)
     {
         gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].backNum[gc.customerDic[customerID].districtID]++;
-        yield return new WaitForSeconds(waitTime);
-        customerGo.transform.DOComplete();
-        customerGo.GetComponent<AnimatiorControlByNPC>().Stop();
 
+        go.transform.DOComplete();
+        go.GetComponent<AnimatiorControlByNPC>().Stop();
+      
 
-        //GameObject go = Instantiate(Resources.Load("Prefab/Moment/Moment_Talk")) as GameObject;
-        //go.transform.SetParent(customerGo.transform);
-        //int ran = Random.Range(0, 5);
-        //string str = "";
-        //switch (ran)
-        //{
-        //    case 0: str = "没有合适的店啊"; break;
-        //    case 1: str = "icon_talk_sad"; break;
-        //    case 2: str = "白来一趟了"; break;
-        //    case 3: str = "好荒凉啊"; break;
-        //    case 4:
-        //        switch (gc.customerDic[customerID].shopType)
-        //        {
-        //            case ShopType.WeaponAndSubhand: str = "这里没有武器店吗？"; break;
-        //            case ShopType.Armor: str = "这里没有防具店吗？"; break;
-        //            case ShopType.Jewelry: str = "这里没有饰品店吗？"; break;
-        //            case ShopType.Scroll: str = "这里没有卷轴店吗？"; break;
-        //        }
-        //        break;
-        //}
-        //go.GetComponent<MomentTalk>().Show(str, 0, new Vector2(0,40f));
+        yield return new WaitForSeconds( Random.Range(1.5f,2.5f) );
 
-        yield return new WaitForSeconds(2f);
-        customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(backFaceTo);
-        customerGo.transform.DOLocalMove(backPos, 15f);
-        yield return new WaitForSeconds(15f);
-        gc.CustomerGone(customerID);
-        Destroy(customerGo);
- 
+        gc.customerDic[customerID].stage = CustomerStage.Gone;
+        UpdateCustomerByStage(customerID);
     }
 
-    public IEnumerator CustomerGoToBuilding(int customerID,string talkContent)
+    IEnumerator CustomerIntoShop(int customerID, GameObject go)
     {
-        GameObject customerGo = GameObject.Find("Customer_" + customerID);
-
-        float doorPosX;
         int buildingID = gc.customerDic[customerID].buildingID;
-        doorPosX = (gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition)*16f;
+        float doorPosX = (gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition)*16f;
 
-        if (customerGo.transform.localPosition.x > doorPosX)
+        if (go.transform.localPosition.x > doorPosX)
         {
-            customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkLeft);
-            customerGo.transform.DOLocalMove(customerGo.transform.localPosition + Vector3.left * (customerGo.transform.localPosition.x - doorPosX), 1f);
-          UpdateBuildingCustomer(buildingID, Vector3.left, AnimStatus.WalkLeft);
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkLeft);
+            go.transform.DOLocalMove(go.transform.localPosition + Vector3.left * (go.transform.localPosition.x - doorPosX), 1f);
+         // UpdateBuildingCustomer(buildingID, Vector3.left, AnimStatus.WalkLeft);
         }
         else
         {
-            customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkRight);
-            customerGo.transform.DOLocalMove(customerGo.transform.localPosition + Vector3.right * (doorPosX-customerGo.transform.localPosition.x  -8f), 1f);
-           UpdateBuildingCustomer(buildingID, Vector3.right, AnimStatus.WalkRight);
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkRight);
+            go.transform.DOLocalMove(go.transform.localPosition + Vector3.right * (doorPosX-go.transform.localPosition.x  -8f), 1f);
+         //  UpdateBuildingCustomer(buildingID, Vector3.right, AnimStatus.WalkRight);
         }
         yield return new WaitForSeconds(1f);
 
-        customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim( AnimStatus.WalkUp);
-        customerGo.transform.DOLocalMove(customerGo.transform.localPosition+ Vector3.up*10f, 1f);
+        go.GetComponent<AnimatiorControlByNPC>().SetAnim( AnimStatus.WalkUp);
+        go.transform.DOLocalMove(go.transform.localPosition+ Vector3.up*10f, 1f);
         yield return new WaitForSeconds(1f);
-        customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkDown);
-        customerGo.transform.DOLocalMove(customerGo.transform.localPosition + Vector3.down * 10f, 1f);
-        gc.CustomerLeaveShop(customerID);
+        go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkDown);
+        go.transform.DOLocalMove(go.transform.localPosition + Vector3.down * 10f, 1f);
+       // gc.CustomerLeaveShop(customerID);
 
-        if (talkContent != "")
-        {
-            GameObject go = Instantiate(Resources.Load("Prefab/Moment/Moment_Talk")) as GameObject;
-            go.transform.SetParent(customerGo.transform);
-            go.GetComponent<MomentTalk>().Show(talkContent, 0, new Vector2(0, 40f));
-        }
+        //if (talkContent != "")
+        //{
+        //    GameObject go = Instantiate(Resources.Load("Prefab/Moment/Moment_Talk")) as GameObject;
+        //    go.transform.SetParent(go.transform);
+        //    go.GetComponent<MomentTalk>().Show(talkContent, 0, new Vector2(0, 40f));
+        //}
     
         yield return new WaitForSeconds(1f);
-        customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkLeft);
-        customerGo.transform.DOLocalMove(customerGo.transform.localPosition + Vector3.left * 1000f, 10f);
+        gc.customerDic[customerID].stage = CustomerStage.Gone;
+        UpdateCustomerByStage(customerID);
+    }
+    IEnumerator CustomerGone(int customerID, GameObject go)
+    {
+        int ran = Random.Range(0, 2);
+
+        go.GetComponent<AnimatiorControlByNPC>().SetAnim(ran==0?AnimStatus.WalkLeft: AnimStatus.WalkRight);
+        go.transform.DOLocalMove(go.transform.localPosition + (ran == 0?Vector3.left: Vector3.right) * Random.Range(950f, 1100f), 10f);
         yield return new WaitForSeconds(10f);
+        go.GetComponent<AnimatiorControlByNPC>().Stop();
+        go.GetComponent<Image>().color = Color.clear;
+        customerGoPool.Add(go);
         gc.CustomerGone(customerID);
-        Destroy(customerGo);
+
     }
 
-    public IEnumerator CustomerCease(int customerID)
-    {
-        GameObject customerGo = GameObject.Find("Customer_" + customerID);
 
-        yield return new WaitForSeconds(1f);
-        customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkLeft);
-        customerGo.transform.DOLocalMove(customerGo.transform.localPosition + Vector3.left * 1000f, 10f);
-        yield return new WaitForSeconds(10f);
-        gc.CustomerGone(customerID);
-        Destroy(customerGo);
-    }
-
-    public void UpdateBuildingCustomer(int buildingID, Vector3 FaceTo, AnimStatus FaceToAnim)
-    {
-        for (int i = 0; i < gc.buildingDic[buildingID].customerList.Count; i++)
-        {
-            if (gc.customerDic[gc.buildingDic[buildingID].customerList[i]].stage== CustomerStage.Wait)
-            {
-                GameObject customerGo = GameObject.Find("Customer_" + gc.buildingDic[buildingID].customerList[i]);
+    //public void UpdateBuildingCustomer(int buildingID, Vector3 FaceTo, AnimStatus FaceToAnim)
+    //{
+    //    for (int i = 0; i < gc.buildingDic[buildingID].customerList.Count; i++)
+    //    {
+    //        if (gc.customerDic[gc.buildingDic[buildingID].customerList[i]].stage== CustomerStage.Wait)
+    //        {
+    //            GameObject customerGo = GameObject.Find("Customer_" + gc.buildingDic[buildingID].customerList[i]);
                 
 
-                Vector2 targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + i) * -1 : i)) * 16f, (gc.buildingDic[buildingID].positionY + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase) * -16f + 54f);
-                customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(FaceToAnim, 1f);
-                customerGo.transform.DOLocalMove(targetPos, 1f);
-            }
-        }
-    }
+    //            Vector2 targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + i) * -1 : i)) * 16f, gc.customerDic[gc.buildingDic[buildingID].customerList[i]].layer * -16f + roleHeight);
+    //            customerGo.GetComponent<AnimatiorControlByNPC>().SetAnim(FaceToAnim, 1f);
+    //            customerGo.transform.DOLocalMove(targetPos, 1f);
+    //        }
+    //    }
+    //}
 
     public void ShowCustomerInfo(int customerID,Vector2 pos)
     {
@@ -1115,4 +1173,27 @@ public class DistrictMapPanel : BasePanel
         }
         
     }
+
+
+    //GameObject go = Instantiate(Resources.Load("Prefab/Moment/Moment_Talk")) as GameObject;
+    //go.transform.SetParent(customerGo.transform);
+    //int ran = Random.Range(0, 5);
+    //string str = "";
+    //switch (ran)
+    //{
+    //    case 0: str = "没有合适的店啊"; break;
+    //    case 1: str = "icon_talk_sad"; break;
+    //    case 2: str = "白来一趟了"; break;
+    //    case 3: str = "好荒凉啊"; break;
+    //    case 4:
+    //        switch (gc.customerDic[customerID].shopType)
+    //        {
+    //            case ShopType.WeaponAndSubhand: str = "这里没有武器店吗？"; break;
+    //            case ShopType.Armor: str = "这里没有防具店吗？"; break;
+    //            case ShopType.Jewelry: str = "这里没有饰品店吗？"; break;
+    //            case ShopType.Scroll: str = "这里没有卷轴店吗？"; break;
+    //        }
+    //        break;
+    //}
+    //go.GetComponent<MomentTalk>().Show(str, 0, new Vector2(0,40f));
 }

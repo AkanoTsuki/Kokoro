@@ -1582,7 +1582,7 @@ RectTransform:
   - {fileID: 4689205944345140295}
   - {fileID: 2352881409170505160}
   m_Father: {fileID: 3639839188929969195}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -5010,6 +5010,7 @@ MonoBehaviour:
   - {fileID: 6226293259904069314}
   - {fileID: 3557440774866713174}
   - {fileID: 7951890417704940610}
+  - {fileID: 7454674104255291814}
   IsShowResourcesBlock: 0
 --- !u!1 &3639839188929969194
 GameObject:
@@ -5061,6 +5062,7 @@ RectTransform:
   - {fileID: 3557440774866713174}
   - {fileID: 101994684664669686}
   - {fileID: 7951890417704940610}
+  - {fileID: 7454674104255291814}
   - {fileID: 1623869609579767539}
   - {fileID: 247105143899677860}
   m_Father: {fileID: 3639839190386437125}
@@ -7471,6 +7473,41 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: -6}
   m_SizeDelta: {x: 76, y: 156}
+  m_Pivot: {x: 0, y: 1}
+--- !u!1 &4758777212476889960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7454674104255291814}
+  m_Layer: 5
+  m_Name: 19
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7454674104255291814
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4758777212476889960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3639839188929969195}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 2048, y: 320}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &4804067345757258618
 GameObject:
@@ -10049,7 +10086,7 @@ RectTransform:
   - {fileID: 6992642535485604181}
   - {fileID: 2994401322090977878}
   m_Father: {fileID: 3639839188929969195}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}

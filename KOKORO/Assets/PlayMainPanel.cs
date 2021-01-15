@@ -237,7 +237,7 @@ public class PlayMainPanel : BasePanel
     {
         if (DistrictMapPanel.Instance.isShow == false)
         {
-            DistrictMapPanel.Instance.OnShow(0, -90);
+            DistrictMapPanel.Instance.OnShow();
             top_districtBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
        

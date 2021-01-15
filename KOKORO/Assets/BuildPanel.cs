@@ -48,7 +48,6 @@ public class BuildPanel : BasePanel
         UpdateFilterButtonText();
         SetAnchoredPosition(x, y);
 
-        DistrictMapPanel.Instance.OnShow(0, -90 );
         if (BuildingPanel.Instance.isShow)
         {
             BuildingPanel.Instance.OnHide();

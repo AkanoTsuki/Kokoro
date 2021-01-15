@@ -2390,7 +2390,7 @@ public class CustomerObject
     public int buildingID { get { return BuildingID; } set { BuildingID = value; } }
     public BucketList bucketList { get { return BucketList; } }
     public CustomerStage stage { get { return Stage; } set { Stage = value; } }
-    public byte layer { get { return Layer; } }
+    public byte layer { get { return Layer; } set { Layer = value; } }
     public short satisfaction { get { return Satisfaction; } set { Satisfaction = value; } }
 }
 
