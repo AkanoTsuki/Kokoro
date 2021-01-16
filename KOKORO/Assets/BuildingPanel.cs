@@ -450,7 +450,7 @@ public class BuildingPanel : BasePanel
                     {
                         outputInfo_iconImage[i].color = Color.clear;
                     }
-                    outputInfo_desText.text = "\n<color=#FF4500>停工中</color>";
+                    outputInfo_desText.text += "\n<color=#FF4500>停工中</color>";
                 }
                 break;
             case "Resource":

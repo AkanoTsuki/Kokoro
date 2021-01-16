@@ -1648,26 +1648,34 @@ public class GameControl : MonoBehaviour
 
     public void BuildingSale(int buildingID)
     {
-        for (int i = 0; i < buildingDic[buildingID].customerList.Count; i++)
+        int customerID ;
+        if (buildingDic[buildingID].customerList.Count > 0)
         {
-            Debug.Log("i=" + i + " customerID=" + buildingDic[buildingID].customerList[i]);
-            if (i == 0)
+            Debug.Log("buildingDic[buildingID].customerList.Count=" + buildingDic[buildingID].customerList.Count);
+
+            for (int i = 1; i < buildingDic[buildingID].customerList.Count; i++)
             {
-                if (customerDic[buildingDic[buildingID].customerList[0]].stage == CustomerStage.Wait)
+                Debug.Log("i=" + i + " customerID=" + buildingDic[buildingID].customerList[i]);
+                customerID = buildingDic[buildingID].customerList[i];
+                if (customerDic[customerID].stage == CustomerStage.Wait)
                 {
-                    int customerID = buildingDic[buildingID].customerList[0];
-                    CustomerCheckGoods(customerID);
-                    buildingDic[customerDic[customerID].buildingID].customerList.Remove(customerID);
-                    customerDic[customerID].stage = CustomerStage.IntoShop;
-                    Debug.Log("BuildingSale() =" + customerID);
-                    DistrictMapPanel.Instance.UpdateCustomerByStage(customerID);
+                    DistrictMapPanel.Instance.UpdateCustomerByStage(buildingDic[buildingID].customerList[i]);
                 }
+               
             }
-            else
+            customerID = buildingDic[buildingID].customerList[0];
+            if (customerDic[customerID].stage == CustomerStage.Wait)
             {
-                DistrictMapPanel.Instance.UpdateCustomerByStage(buildingDic[buildingID].customerList[i]);
+             
+                CustomerCheckGoods(customerID);
+                buildingDic[customerDic[customerID].buildingID].customerList.Remove(customerID);
+                customerDic[customerID].stage = CustomerStage.IntoShop;
+
+                DistrictMapPanel.Instance.UpdateCustomerByStage(customerID);
             }
+                
         }
+       
     }
 
     public void BuildingStopSale(int buildingID)
@@ -1676,10 +1684,18 @@ public class GameControl : MonoBehaviour
         for (int i = 0; i < buildingDic[buildingID].customerList.Count; i++)
         {
             customerRecordDic[timeYear + "/" + timeMonth].backNum[buildingDic[buildingID].districtID]++;
-            customerDic[buildingDic[buildingID].customerList[i]].stage = CustomerStage.Gone;
+
+            if(customerDic[buildingDic[buildingID].customerList[i]].stage== CustomerStage.Wait)
+            { 
+                customerDic[buildingDic[buildingID].customerList[i]].stage = CustomerStage.Gone;
+            }
+            else if (customerDic[buildingDic[buildingID].customerList[i]].stage == CustomerStage.Come)
+            {
+                customerDic[buildingDic[buildingID].customerList[i]].stage = CustomerStage.Observe;
+            }
             DistrictMapPanel.Instance.UpdateCustomerByStage(buildingDic[buildingID].customerList[i]);
         }
-
+        buildingDic[buildingID].customerList.Clear();
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
         {
             BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
@@ -2377,7 +2393,13 @@ public class GameControl : MonoBehaviour
 
     public void CustomerGone(int customerID)
     {
-        customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]= (short)((float)(customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]* customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID]+ customerDic[customerID].satisfaction) /(customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID]+1));
+        Debug.Log("customerID=" + customerID);
+        Debug.Log("satisfaction=" + customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]);
+        float nowAllSat = (float)(customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID] * customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID] + customerDic[customerID].satisfaction);
+
+
+        //TODO：报错
+        customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]= (short)(nowAllSat / (customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID]+1));
         if (MarketPanel.Instance.isShow && nowCheckingDistrictID == customerDic[customerID].districtID)
         {
             MarketPanel.Instance.UpdateInfo(customerDic[customerID].districtID);
@@ -2800,7 +2822,8 @@ public class GameControl : MonoBehaviour
            
         }
 
-    
+        StartCoroutine( DistrictMapPanel.Instance.CustomerTalk(customerID, str,1.8f));
+
 
         //StartCoroutine(DistrictMapPanel.Instance.CustomerGoToBuilding(customerID, str));
     }
