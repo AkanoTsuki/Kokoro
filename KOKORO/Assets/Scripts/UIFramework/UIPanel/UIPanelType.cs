@@ -22,7 +22,8 @@ public enum UIPanelType
     SkillListAndInfo,
     Market,
     SupplyAndDemand,
-    DistrictMap
+    DistrictMap,
+    Technology
 
 
 }

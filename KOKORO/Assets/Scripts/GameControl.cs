@@ -46,6 +46,7 @@ public class GameControl : MonoBehaviour
     public Dictionary<string, SalesRecordObject> salesRecordDic = new Dictionary<string, SalesRecordObject>();
     public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
     public Dictionary<string, CustomerRecordObject> customerRecordDic = new Dictionary<string, CustomerRecordObject>();
+    public Dictionary<int, TechnologyObject> technologyDic = new Dictionary<int, TechnologyObject>();
     /// <summary>
     /// 用作存档的数据类
     /// </summary>
@@ -87,6 +88,7 @@ public class GameControl : MonoBehaviour
         public Dictionary<string, SalesRecordObject> salesRecordDic = new Dictionary<string, SalesRecordObject>();
         public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
         public Dictionary<string, CustomerRecordObject> customerRecordDic = new Dictionary<string, CustomerRecordObject>();
+        public Dictionary<int, TechnologyObject> technologyDic = new Dictionary<int, TechnologyObject>();
     }
 
 
@@ -136,6 +138,7 @@ public class GameControl : MonoBehaviour
         t.salesRecordDic = this.salesRecordDic;
         t.customerDic = this.customerDic;
         t.customerRecordDic = this.customerRecordDic;
+        t.technologyDic = this.technologyDic;
         //保存数据
         IOHelper.SetData(filename, t);
     }
@@ -191,6 +194,7 @@ public class GameControl : MonoBehaviour
             this.salesRecordDic = t1.salesRecordDic;
             this.customerDic = t1.customerDic;
             this.customerRecordDic = t1.customerRecordDic;
+            this.technologyDic = t1.technologyDic;
         }
         else
         {
@@ -842,7 +846,7 @@ public class GameControl : MonoBehaviour
         buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic,  posX,  posY,  layer, posX>64?AnimStatus.WalkLeft: AnimStatus.WalkRight, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false,false, grid, new List<int> { }, new List<int> { },
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,
-            -1, 0));
+            -1, 0,new List<StuffType> { }));
 
 
         int needTime = DataManager.mBuildingDict[BuildingPrototypeID].BuildTime * 10;
@@ -1620,6 +1624,10 @@ public class GameControl : MonoBehaviour
 
     }
 
+    public void ChangeProduceEquipAddStuff(int buildingID,int addIndex,StuffType newStuff)
+    { 
+      //  buildingDic[buildingID].forgeAddStuff
+    }
 
     public void CreateBuildingSaleEvent(int buildingID)
     {

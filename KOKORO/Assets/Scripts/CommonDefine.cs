@@ -560,6 +560,54 @@ public class SkillObject
 }
 
 
+//技术原型
+[System.Serializable]
+public class TechnologyPrototype : ISerializationCallbackReceiver
+{
+    public short ID;
+    public string Name;
+    public string Des;
+    public string Pic;
+    public string Type;
+    public List<short> ParentID;
+    public List<short> ChildrenID;
+    public short NeedTime;//研究需要天
+    public List<StuffType> NeedStuff = new List<StuffType>();
+    public List<string> NeedStuffStr;
+    public List<int> NeedStuffValue;
+    public short NeedGold;
+    public short NeedBuilding;
+    public void OnAfterDeserialize()
+    {
+        for (int i = 0; i < NeedStuffStr.Count; i++)
+        {
+            StuffType resourceType = (StuffType)Enum.Parse(typeof(StuffType), NeedStuffStr[i]);
+            NeedStuff.Add(resourceType);
+        }
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class TechnologyObject
+{
+    private short ID;
+    private bool IsOpen;
+    private bool IsDone;
+    public TechnologyObject(short id, bool isOpen, bool isDone)
+    {
+        this.ID = id;
+        this.IsOpen = isOpen;
+        this.IsDone = isDone;
+    }
+    public short id { get { return ID; } }
+    public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
+    public bool isDone { get { return IsDone; } set { IsDone = value; } }
+}
+
 //英雄原型T
 [System.Serializable]
 public class HeroPrototype : ISerializationCallbackReceiver
@@ -1271,10 +1319,11 @@ public class BuildingObject
     private byte EDark;
     private short ProduceEquipNow;//当前生产的装备模板原型ID 如果是资源类则对应资源生产关系表
     private byte BuildProgress;//0建设中 1已完成 2升级中
+    private List<StuffType> ForgeAddStuff;
     public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, AnimStatus doorInLine, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, bool isSale, List<string> gridList, List<int> heroList, List<int> customerList,
          short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
-        short produceEquipNow, byte buildProgress)
+        short produceEquipNow, byte buildProgress, List<StuffType> forgeAddStuff)
     {
         this.ID = id;
         this.PrototypeID = prototypeID;
@@ -1307,6 +1356,7 @@ public class BuildingObject
         this.EDark = eDark;
         this.ProduceEquipNow = produceEquipNow;
         this.BuildProgress = buildProgress;
+        this.ForgeAddStuff = forgeAddStuff;
     }
     public int id{ get { return ID; } }
     public short prototypeID { get { return PrototypeID; } set { PrototypeID = value; } }
@@ -1339,6 +1389,7 @@ public class BuildingObject
     public byte eDark { get { return EDark; } set { EDark = value; } }
     public short produceEquipNow { get { return ProduceEquipNow; } set { ProduceEquipNow = value; } }
     public byte buildProgress { get { return BuildProgress; } set { BuildProgress = value; } }
+    public List<StuffType> forgeAddStuff { get { return ForgeAddStuff; } set { ForgeAddStuff = value; } }
 }
 
 

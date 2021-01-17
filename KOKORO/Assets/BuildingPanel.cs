@@ -45,6 +45,7 @@ public class BuildingPanel : BasePanel
     public List<Image> setForge_imageList;
     public List<Text> setForge_textList;
     public List<Button> setForge_btnList;
+    public RectTransform setForge_addBlockRt;
     public Button setForge_updateBtn;
 
     public List<Button> totalSet_btnList;
@@ -65,6 +66,8 @@ public class BuildingPanel : BasePanel
     public int setForgeType = 0;
     public int setForgeLevel = 0;
 
+    int setForgeAddIndex = 0;
+
     public int nowCheckingBuildingID = -1;
     void Awake()
     {
@@ -80,6 +83,9 @@ public class BuildingPanel : BasePanel
         
         setForge_typeDd.onValueChanged.AddListener(delegate  { setForgeType = setForge_typeDd.value; UpdateSetForgeOutputInput(nowCheckingBuildingID, setForgeType, setForgeLevel); });
         setForge_levelDd.onValueChanged.AddListener(delegate { setForgeLevel = setForge_levelDd.value; UpdateSetForgeOutputInput(nowCheckingBuildingID, setForgeType, setForgeLevel); });
+        setForge_btnList[0].onClick.AddListener(delegate () { setForgeAddIndex = 0;ShowSetForgeAddBlock(); });
+        setForge_btnList[1].onClick.AddListener(delegate () { setForgeAddIndex = 1; ShowSetForgeAddBlock(); });
+        setForge_btnList[2].onClick.AddListener(delegate () { setForgeAddIndex = 2; ShowSetForgeAddBlock(); });
     }
 
     public void OnShow(BuildingObject buildingObject)
@@ -661,6 +667,7 @@ public class BuildingPanel : BasePanel
     {
         //  SetForgeRt.anchoredPosition = new Vector2(278f, -212f);
         SetForgeRt.localScale = Vector2.one;
+        HideSetForgeAddBlock();
 
         switch (buildingObject.prototypeID)
         {
@@ -670,7 +677,20 @@ public class BuildingPanel : BasePanel
             case 35:
             case 36:
                 setForge_typeDd.ClearOptions();
-                setForge_typeDd.AddOptions(new List<string> { "剑", "斧、镰刀", "枪、矛", "锤、棍棒", "弓", "杖", "箭袋", "盾" });
+
+                setForge_typeDd.AddOptions(new List<Dropdown.OptionData> { new Dropdown.OptionData("剑", Resources.Load<Sprite>("Image/ItemPic/w_sword_1")),
+                    new Dropdown.OptionData("斧、镰刀", Resources.Load<Sprite>("Image/ItemPic/w_axe_1")),
+                    new Dropdown.OptionData("枪、矛", Resources.Load<Sprite>("Image/ItemPic/w_spear_1")),
+                    new Dropdown.OptionData("锤、棍棒", Resources.Load<Sprite>("Image/ItemPic/w_hammer_1")),
+                    new Dropdown.OptionData("弓", Resources.Load<Sprite>("Image/ItemPic/w_bow_1")),
+                    new Dropdown.OptionData("杖", Resources.Load<Sprite>("Image/ItemPic/w_staff_1")),
+                    new Dropdown.OptionData("箭袋", Resources.Load<Sprite>("Image/ItemPic/s_dorlach_1")),
+                    new Dropdown.OptionData("盾", Resources.Load<Sprite>("Image/ItemPic/s_shield_1")) });
+
+              //  setForge_typeDd.AddOptions(new List<string> { "剑", "斧、镰刀", "枪、矛", "锤、棍棒", "弓", "杖", "箭袋", "盾" });
+
+  
+          
                 break;
             case 37:
             case 38:
@@ -694,7 +714,7 @@ public class BuildingPanel : BasePanel
             case 76:
             case 77:
                 setForge_typeDd.ClearOptions();
-                setForge_typeDd.AddOptions(new List<string> { "无属性卷轴", "风卷轴", "火卷轴", "水卷轴", "地卷轴", "光卷轴", "暗卷轴", "雷卷轴", "爆炸卷轴", "冰卷轴", "自然卷轴", "时空卷轴", "死亡卷轴" });
+                setForge_typeDd.AddOptions(new List<string> { "无属性卷轴", "风属性卷轴", "火属性卷轴", "水属性卷轴", "地属性卷轴", "光属性卷轴", "暗属性卷轴", "雷卷轴", "爆炸卷轴", "冰卷轴", "自然卷轴", "时空卷轴", "死亡卷轴" });
                 break;
         }
         setForge_typeDd.RefreshShownValue();
@@ -728,6 +748,46 @@ public class BuildingPanel : BasePanel
 
         // setForgeLevel = setForge_levelDd.value;
 
+        for (int i = 0; i < buildingObject.forgeAddStuff.Count; i++)
+        {
+            //setForge_imageList
+            setForge_btnList[i].interactable = true;
+
+            switch (buildingObject.forgeAddStuff[i])
+            {
+                case StuffType.Wood:setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon959");setForge_textList[i].text = "木材*10";break;
+                case StuffType.Stone: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon858"); setForge_textList[i].text = "石料*10"; break;
+                case StuffType.Metal: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon961"); setForge_textList[i].text = "金属*10"; break;
+                case StuffType.Leather: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon956"); setForge_textList[i].text = "皮革*10"; break;
+                case StuffType.Cloth: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon426"); setForge_textList[i].text = "布料*10"; break;
+                case StuffType.Twine: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon397"); setForge_textList[i].text = "麻绳*10"; break;
+                case StuffType.Bone: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon892"); setForge_textList[i].text = "骨块*10"; break;
+                case StuffType.Wind: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon920"); setForge_textList[i].text = "风粉尘*10"; break;
+                case StuffType.Fire: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon921"); setForge_textList[i].text = "火粉尘*10"; break;
+                case StuffType.Water: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon922"); setForge_textList[i].text = "水粉尘*10"; break;
+                case StuffType.Ground: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon927"); setForge_textList[i].text = "地粉尘*10"; break;
+                case StuffType.Light: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon925"); setForge_textList[i].text = "光粉尘*10"; break;
+                case StuffType.Dark: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/ItemPic/icon924"); setForge_textList[i].text = "暗粉尘*10"; break;
+            }
+
+        }
+        for (int i = buildingObject.forgeAddStuff.Count; i < setForge_btnList.Count; i++)
+        {
+            setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Empty");
+            if (i == buildingObject.forgeAddStuff.Count)
+            {
+                setForge_btnList[i].interactable = true;
+                setForge_textList[i].text = "<点击设置>";
+
+            }
+            else
+            {
+                setForge_btnList[i].interactable = false;
+                setForge_textList[i].text = "";
+            }
+        }
+
+
         if (buildingObject.produceEquipNow != -1)
         {
             setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "更新";
@@ -739,52 +799,22 @@ public class BuildingPanel : BasePanel
         setForge_updateBtn.onClick.RemoveAllListeners();
         setForge_updateBtn.onClick.AddListener(delegate () {
             gc.ChangeProduceEquipNow(buildingObject.id);
-            //  buildingObject.produceEquipNow
-            //if (buildingObject.workerNow != 0)
-            //{
-
-            //    gc.ChangeProduceEquipNow(buildingObject.id);
-            //    UpdateSetForgePart(buildingObject);
-            //    UpdateTotalSetButton(buildingObject);
-            //    if (BuildingSelectPanel.Instance.isShow)
-            //    {
-            //        BuildingSelectPanel.Instance.UpdateAllInfo(gc.nowCheckingDistrictID, BuildingSelectPanel.Instance.nowTypePanel, 2);
-            //    }
-            //}
-            //else
-            //{
-            //    MessagePanel.Instance.AddMessage("建筑物缺少工人，无法接受该指令");
-            //}
         });
 
     }
 
-    void UpdateSetForgeOutputInput(short produceEquipID)
+    void ShowSetForgeAddBlock()
     {
-        string outputStr = "";
-        string inputStr = "";
-        if (produceEquipID != -1)
-        {
-            ProduceEquipPrototype produceEquipPrototype = DataManager.mProduceEquipDict[produceEquipID];
-            for (int i = 0; i < produceEquipPrototype.OutputID.Count; i++)
-            {
-                outputStr += "<color=#" + gc.OutputItemRankColorString(DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Rank) + ">" + DataManager.mItemDict[produceEquipPrototype.OutputID[i]].Name + "</color> ";
-            }
+        setForge_addBlockRt.localScale = Vector2.one;
 
-            if (produceEquipPrototype.InputWood != 0) { inputStr += "木材*" + produceEquipPrototype.InputWood + " "; }
-            if (produceEquipPrototype.InputStone != 0) { inputStr += "石料*" + produceEquipPrototype.InputStone + " "; }
-            if (produceEquipPrototype.InputMetal != 0) { inputStr += "金属*" + produceEquipPrototype.InputMetal + " "; }
-            if (produceEquipPrototype.InputLeather != 0) { inputStr += "皮革*" + produceEquipPrototype.InputLeather + " "; }
-            if (produceEquipPrototype.InputCloth != 0) { inputStr += "布料*" + produceEquipPrototype.InputCloth + " "; }
-            if (produceEquipPrototype.InputTwine != 0) { inputStr += "麻绳*" + produceEquipPrototype.InputTwine + " "; }
-            if (produceEquipPrototype.InputBone != 0) { inputStr += "骨块*" + produceEquipPrototype.InputBone + " "; }
 
-        }
 
-        setForge_outputText.text = outputStr;
-        setForge_inputText.text = inputStr;
     }
+    void HideSetForgeAddBlock()
+    {
+        setForge_addBlockRt.localScale = Vector2.one;
 
+    }
     void UpdateSetForgeOutputInput(int buildingID,int type,int level)
     {
         int produceEquipID = -1;
@@ -875,6 +905,8 @@ public class BuildingPanel : BasePanel
     {
         SetForgeRt.localScale= Vector2.zero;
     }
+
+
 
 
     //block

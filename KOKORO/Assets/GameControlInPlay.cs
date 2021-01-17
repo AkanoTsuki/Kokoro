@@ -37,7 +37,7 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
         UIManager.Instance.InitPanel(UIPanelType.Market);
         UIManager.Instance.InitPanel(UIPanelType.SupplyAndDemand);
-
+        UIManager.Instance.InitPanel(UIPanelType.Technology);
 
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
