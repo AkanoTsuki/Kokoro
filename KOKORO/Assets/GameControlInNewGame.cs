@@ -127,7 +127,7 @@ public class GameControlInNewGame : MonoBehaviour
         gc.heroIndex = 6;
         for (int i = 0; i < 7; i++)
         {
-            gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des, temp_districtID == i, 1, 10, 20,0, 
+            gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des,true, temp_districtID == i, 1, 10, 20,0, 
                  new List<int> { }, temp_districtID == i? new List<int> { 0,1,2,3,4,5}: new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
                 0, 0, 0, 0, 0, 0, 0, 5000, 5000, 1000, 500, 1000, 1000, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50000, 50000, 50, 50);
         }

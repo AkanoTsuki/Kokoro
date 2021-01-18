@@ -1070,6 +1070,7 @@ public class DistrictObject
     private string BaseName;
     private string Des;
     private bool IsOpen;
+    private bool IsOwn;
     private byte Level;
     private short People;//当前人口
     private short PeopleLimit;//人口上限
@@ -1115,7 +1116,7 @@ public class DistrictObject
     private int RStuffLimit;
     private int RProductLimit;
     private int RScrollLimit;
-    public DistrictObject(short id, string name, string baseName, string des, bool isOpen, byte level, short people, short peopleLimit, short worker, 
+    public DistrictObject(short id, string name, string baseName, string des, bool isOpen, bool isOwn, byte level, short people, short peopleLimit, short worker, 
          List<int> buildingList, List<int> heroList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, int rFoodBeer, int rFoodWine,
@@ -1129,6 +1130,7 @@ public class DistrictObject
         this.BaseName = baseName;
         this.Des = des;
         this.IsOpen = isOpen;
+        this.IsOwn = isOwn;
         this.Level = level;
         this.People = people;
         this.PeopleLimit = peopleLimit;
@@ -1179,6 +1181,7 @@ public class DistrictObject
     public string baseName { get { return BaseName; } set { BaseName = value; } }
     public string des { get { return Des; } set { Des = value; } }
     public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
+    public bool isOwn { get { return IsOwn; } set { IsOwn = value; } }
     public byte level { get { return Level; } set { Level = value; } }
     public short people { get { return People; } set { People = value; } }
     public short peopleLimit { get { return PeopleLimit; } set { PeopleLimit = value; } }
