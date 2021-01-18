@@ -211,6 +211,12 @@ public class GameControlInPlay : MonoBehaviour
                         gc.executeEventList.RemoveAt(0);
                         gc.CreateBuildingSaleEvent(buildingID);
                         break;
+                    case ExecuteEventType.TechnologyResearch:
+
+                        int technologyID = gc.executeEventList[0].value[1][0];
+
+                        gc.TechnologyResearchDone(technologyID);
+                        break;
                     default: break;
                 }
             }
@@ -367,6 +373,18 @@ public class GameControlInPlay : MonoBehaviour
         }
     }
 
+
+    public void OpenTechnology()
+    {
+        if (TechnologyPanel.Instance.isShow)
+        {
+            TechnologyPanel.Instance.OnHide();
+        }
+        else
+        {
+            TechnologyPanel.Instance.OnShow();
+        }
+    }
 
     public void GameSave()
     {

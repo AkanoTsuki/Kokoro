@@ -306,7 +306,8 @@ public enum ExecuteEventType
     ProduceResource,
     Adventure,
     BuildingUpgrade,
-    BuildingSale
+    BuildingSale,
+    TechnologyResearch
 }
 
 public class ItemAttribute
@@ -576,7 +577,7 @@ public class TechnologyPrototype : ISerializationCallbackReceiver
     public List<string> NeedStuffStr;
     public List<int> NeedStuffValue;
     public short NeedGold;
-    public short NeedBuilding;
+    public List<short> NeedBuilding;
     public void OnAfterDeserialize()
     {
         for (int i = 0; i < NeedStuffStr.Count; i++)

@@ -10080,6 +10080,7 @@ MonoBehaviour:
   top_homeBtn: {fileID: 5557383919915036233}
   top_districtDd: {fileID: 2809174418548535721}
   top_districtBtn: {fileID: 158801639717697457}
+  left_technologyBtn: {fileID: 3392291023694118400}
   left_heroMainBtn: {fileID: 6607870709644215020}
   left_adventureMainBtn: {fileID: 6607870711590549805}
   bottom_adventureLastBtn: {fileID: 2545903320933243125}
@@ -12407,7 +12408,7 @@ GameObject:
   - component: {fileID: 3392291023694118400}
   - component: {fileID: 4664760775041761391}
   m_Layer: 5
-  m_Name: Button_InventoryMain (2)
+  m_Name: Button_TechnologyMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

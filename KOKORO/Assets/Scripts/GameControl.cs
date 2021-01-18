@@ -1765,6 +1765,217 @@ public class GameControl : MonoBehaviour
     }
     #endregion
 
+    #region 【方法】科技研究
+    public void CreateTechnologyResearchEvent(int districtID, int technologyID)
+    {
+        for (int i = 0; i < DataManager.mTechnologyDict[technologyID].ParentID.Count; i++)
+        {
+            if (technologyDic[DataManager.mTechnologyDict[technologyID].ParentID[i]].isDone == false)
+            {
+                TechnologyPanel.Instance.UpdateInfo(technologyID);
+                return;
+            }
+        }
+
+        if (DataManager.mTechnologyDict[technologyID].NeedBuilding.Count != 0)
+        {
+            bool ok = false;
+            foreach (KeyValuePair<int, BuildingObject> kvp in buildingDic)
+            {
+                if ( DataManager.mTechnologyDict[technologyID].NeedBuilding.Contains(kvp.Value.prototypeID) && kvp.Value.districtID == districtID)
+                {
+                    ok = true;
+                    break;
+                }
+            }
+            if (!ok)
+            {
+                TechnologyPanel.Instance.UpdateInfo(technologyID);
+                return;
+            }
+        }
+
+        for (int i = 0; i < DataManager.mTechnologyDict[technologyID].NeedStuff.Count; i++)
+        {
+            switch (DataManager.mTechnologyDict[technologyID].NeedStuff[i])
+            {
+                case StuffType.Wood:
+                    if (districtDic[districtID].rStuffWood < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Stone:
+                    if (districtDic[districtID].rStuffStone < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Metal:
+                    if (districtDic[districtID].rStuffMetal < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Leather:
+                    if (districtDic[districtID].rStuffLeather < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Cloth:
+                    if (districtDic[districtID].rStuffCloth < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Twine:
+                    if (districtDic[districtID].rStuffTwine < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Bone:
+                    if (districtDic[districtID].rStuffBone < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Wind:
+                    if (districtDic[districtID].rStuffWind < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Fire:
+                    if (districtDic[districtID].rStuffFire < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Water:
+                    if (districtDic[districtID].rStuffWater < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Ground:
+                    if (districtDic[districtID].rStuffGround < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Light:
+                    if (districtDic[districtID].rStuffLight < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+                case StuffType.Dark:
+                    if (districtDic[districtID].rStuffDark < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    {
+                        TechnologyPanel.Instance.UpdateInfo(technologyID);
+                        return;
+                    }
+                    break;
+
+            }
+        }
+        if (DataManager.mTechnologyDict[technologyID].NeedGold != 0)
+        {
+            if (gold < DataManager.mTechnologyDict[technologyID].NeedGold)
+            {
+                TechnologyPanel.Instance.UpdateInfo(technologyID);
+                return;
+            }
+        }
+
+        for (int i = 0; i < DataManager.mTechnologyDict[technologyID].NeedStuff.Count; i++)
+        {
+            switch (DataManager.mTechnologyDict[technologyID].NeedStuff[i])
+            {
+                case StuffType.Wood:
+                    districtDic[districtID].rStuffWood -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Stone:
+                    districtDic[districtID].rStuffStone -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Metal:
+                    districtDic[districtID].rStuffMetal -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Leather:
+                    districtDic[districtID].rStuffLeather -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Cloth:
+                    districtDic[districtID].rStuffCloth -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Twine:
+                    districtDic[districtID].rStuffTwine -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Bone:
+                    districtDic[districtID].rStuffBone -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Wind:
+                    districtDic[districtID].rStuffWind -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Fire:
+                    districtDic[districtID].rStuffFire -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Water:
+                    districtDic[districtID].rStuffWater -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Ground:
+                    districtDic[districtID].rStuffGround -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Light:
+                    districtDic[districtID].rStuffLight -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+                case StuffType.Dark:
+                    districtDic[districtID].rStuffDark -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    break;
+
+            }
+        }
+        gold -= DataManager.mTechnologyDict[technologyID].NeedGold;
+        int needTime = DataManager.mTechnologyDict[technologyID].NeedTime * 240;
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID }, new List<int> { technologyID } }));
+
+    }
+    public void TechnologyResearchDone(int technologyID)
+    {
+        technologyDic[technologyID].isDone = true;
+
+        for (int i = 0; i < DataManager.mTechnologyDict[technologyID].ChildrenID.Count; i++)
+        {
+            technologyDic[DataManager.mTechnologyDict[technologyID].ChildrenID[i]].isOpen = true;
+        }
+
+        if (TechnologyPanel.Instance.isShow)
+        {
+            TechnologyPanel.Instance.UpdateList("done");
+            TechnologyPanel.Instance.UpdateList("none");
+            if (TechnologyPanel.Instance.nowCheckingTechnology == technologyID)
+            {
+                TechnologyPanel.Instance.UpdateInfo(technologyID);
+            }
+        }
+        MessagePanel.Instance.AddMessage(DataManager.mTechnologyDict[technologyID].Name+ "的研究已经完成");
+    }
+
+    #endregion
+
     #region 【方法】英雄装备/卸下，技能配置
     public void HeroEquipSet(int heroID, EquipPart equipPart, int itemID)
     {

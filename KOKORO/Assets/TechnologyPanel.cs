@@ -19,6 +19,9 @@ public class TechnologyPanel : BasePanel
     public Button doBtn;
     public Button closeBtn;
 
+    public int nowCheckingTechnology = -1;
+    public int nowSelectDistrict = -1;
+
     void Awake()
     {
         Instance = this;
@@ -49,47 +52,82 @@ public class TechnologyPanel : BasePanel
 
     public void UpdateAllInfo()
     {
-        
+        UpdateList("done");
+        UpdateList("none");
+        ClearInfo();
     }
 
-    public void UpdateListDone()
+    public void UpdateList(string type)
     {
         List<TechnologyObject> technologyObjects = new List<TechnologyObject>();
 
         foreach (KeyValuePair<int, TechnologyObject> kvp in gc.technologyDic)
         {
-            if (kvp.Value.isDone)
+            if (type == "done")
             {
-                technologyObjects.Add(kvp.Value);
+                if (kvp.Value.isDone)
+                {
+                    technologyObjects.Add(kvp.Value);
+                }
+            }
+            else if (type == "none")
+            {
+                if (kvp.Value.isOpen && !kvp.Value.isDone)
+                {
+                    technologyObjects.Add(kvp.Value);
+                }
             }
         }
 
         GameObject go;
         for (int i = 0; i < technologyObjects.Count; i++)
         {
-            if (i < technologyObjects.Count)
+            int technologyID = technologyObjects[i].id;
+            if (i < technologyGoPool.Count)
             {
                 go = technologyGoPool[i];
                 technologyGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
             }
             else
             {
-                go = Instantiate(Resources.Load("Prefab/UILabel/Label_Item")) as GameObject;
-                go.transform.SetParent(list_doneGo.transform);
-                technologyGoPool.Add(go);
+                go = Instantiate(Resources.Load("Prefab/UILabel/Label_Technology")) as GameObject;
+                if (type == "done")
+                {
+                    go.transform.SetParent(list_doneGo.transform);
+                }
+                else if (type == "none")
+                {
+                    go.transform.SetParent(list_noneGo.transform);
+                }
+                    technologyGoPool.Add(go);
             }
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f, i * -44f);
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/TechnologyPic/" + DataManager.mTechnologyDict[technologyObjects[i].id].Pic);
             go.transform.GetChild(1).GetComponent<Text>().text = DataManager.mTechnologyDict[technologyObjects[i].id].Name;
 
             go.GetComponent<Button>().onClick.RemoveAllListeners();
-            go.GetComponent<Button>().onClick.AddListener(delegate () { UpdateInfo(technologyObjects[i].id); });
+            go.GetComponent<Button>().onClick.AddListener(delegate () { UpdateInfo(technologyID); });
+        }
+        for (int i = technologyObjects.Count; i < technologyGoPool.Count; i++)
+        {
+            technologyGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+
+        if (type == "done")
+        {
+            list_doneGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(220f, Mathf.Max(400f, technologyObjects.Count * 44f));
+        }
+        else if (type == "none")
+        {
+            list_noneGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(220f, Mathf.Max(400f, technologyObjects.Count * 44f));
         }
     }
 
-    public void UpdateInfo(int technologyID)
+   public void UpdateInfo(int technologyID)
     {
-        info_picImage.sprite = Resources.Load<Sprite>("Image/TechnologyPic/" + DataManager.mTechnologyDict[technologyID].Pic);
+        nowCheckingTechnology = technologyID;
+
+        info_picImage.sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mTechnologyDict[technologyID].Pic);
         info_nameText.text = DataManager.mTechnologyDict[technologyID].Name;
 
         string str = "";
@@ -101,21 +139,26 @@ public class TechnologyPanel : BasePanel
 
         if (DataManager.mTechnologyDict[technologyID].ParentID.Count != 0)
         {
-            str += "\n<color=#EFDDB1>前置条件</color>";
+            str += "\n<color=#EFDDB1>前置研究</color>";
             for (int i = 0; i < DataManager.mTechnologyDict[technologyID].ParentID.Count; i++)
             {
-                str += "\n  完成["+ DataManager.mTechnologyDict[DataManager.mTechnologyDict[technologyID].ParentID[i]].Name+"]";
+                str += "\n  完成[" + DataManager.mTechnologyDict[DataManager.mTechnologyDict[technologyID].ParentID[i]].Name + "]";
             }
         }
-        if (DataManager.mTechnologyDict[technologyID].NeedBuilding != -1)
+        if (DataManager.mTechnologyDict[technologyID].NeedBuilding.Count!= 0)
         {
-            str += "\n<color=#EFDDB1>需要建筑</color>";
-            str += "\n  " + DataManager.mBuildingDict[DataManager.mTechnologyDict[technologyID].NeedBuilding].Name ;
+            str += "\n<color=#EFDDB1>需要设施</color>\n  ";
+            for (int i = 0; i < DataManager.mTechnologyDict[technologyID].NeedBuilding.Count; i++)
+            {
+                str += DataManager.mBuildingDict[DataManager.mTechnologyDict[technologyID].NeedBuilding[i]].Name+" ";
+            }
+
+             
         }
 
-        if (DataManager.mTechnologyDict[technologyID].NeedStuff.Count != 0|| DataManager.mTechnologyDict[technologyID].NeedGold!=0)
+        if (DataManager.mTechnologyDict[technologyID].NeedStuff.Count != 0 || DataManager.mTechnologyDict[technologyID].NeedGold != 0)
         {
-            str += "\n<color=#EFDDB1>需要资源</color>";
+            str += "\n<color=#EFDDB1>资源消耗</color>";
 
             string strStuff = "\n ";
 
@@ -123,7 +166,7 @@ public class TechnologyPanel : BasePanel
             {
                 switch (DataManager.mTechnologyDict[technologyID].NeedStuff[i])
                 {
-                    case StuffType.Wood: strStuff += " 木材*"+ DataManager.mTechnologyDict[technologyID].NeedStuffValue[i]; break;
+                    case StuffType.Wood: strStuff += " 木材*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i]; break;
                     case StuffType.Stone: strStuff += " 石料*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i]; break;
                     case StuffType.Metal: strStuff += " 金属*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i]; break;
                     case StuffType.Leather: strStuff += " 皮革*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i]; break;
@@ -138,7 +181,7 @@ public class TechnologyPanel : BasePanel
                     case StuffType.Dark: strStuff += " 暗粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i]; break;
                 }
 
-                
+
             }
             if (DataManager.mTechnologyDict[technologyID].NeedGold != 0)
             {
@@ -147,18 +190,36 @@ public class TechnologyPanel : BasePanel
 
             str += strStuff;
         }
-        str += "<color=#EFDDB1>研究时间</color> " + DataManager.mTechnologyDict[technologyID].NeedTime+"天";
+        str += "\n<color=#EFDDB1>研究时间</color> " + DataManager.mTechnologyDict[technologyID].NeedTime + "天";
         str += "\n\n" + DataManager.mTechnologyDict[technologyID].Des;
         if (DataManager.mTechnologyDict[technologyID].ChildrenID.Count != 0)
         {
             str += "\n解锁";
             for (int i = 0; i < DataManager.mTechnologyDict[technologyID].ChildrenID.Count; i++)
             {
-                str += "["+ DataManager.mTechnologyDict[DataManager.mTechnologyDict[technologyID].ChildrenID [i]].Name+ "]";
+                str += "[" + DataManager.mTechnologyDict[DataManager.mTechnologyDict[technologyID].ChildrenID[i]].Name + "]";
             }
         }
 
         info_desText.text = str;
 
+        if (gc.technologyDic[technologyID].isOpen && !gc.technologyDic[technologyID].isDone)
+        {
+            doBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+            doBtn.onClick.RemoveAllListeners();
+            doBtn.onClick.AddListener(delegate () { gc.CreateTechnologyResearchEvent(nowSelectDistrict,technologyID); });
+        }
+        else
+        {
+            doBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+    }
+
+    void ClearInfo()
+    {
+        nowCheckingTechnology = -1;
+        info_picImage.sprite = Resources.Load<Sprite>("Image/Empty");
+        info_nameText.text = "";
+        info_desText.text = "";
     }
 }

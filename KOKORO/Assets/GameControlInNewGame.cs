@@ -106,6 +106,17 @@ public class GameControlInNewGame : MonoBehaviour
             gc.districtGridDic[DataManager.mDistrictGridDict[i].DistrictID].Add(DataManager.mDistrictGridDict[i].DistrictID+"_"+ DataManager.mDistrictGridDict[i].X+"," + DataManager.mDistrictGridDict[i].Y, new DistrictGridObject(DataManager.mDistrictGridDict[i].Level,-1));
         }
 
+        for (int i = 0; i < DataManager.mTechnologyDict.Count; i++)
+        {
+            gc.technologyDic.Add(i, new TechnologyObject((short)i, false, false));
+            if (DataManager.mTechnologyDict[i].ParentID.Count == 0)
+            {
+                gc.technologyDic[i].isOpen = true;
+            }
+        }
+    
+
+
         gc.heroDic.Add(0, temp_Leader);
         gc.heroDic[0].name = StartChoosePanel.Instance.leaderNameIf.text;
         gc.heroDic[0].groupRate += 0.1f;//主角优待
@@ -185,7 +196,6 @@ public class GameControlInNewGame : MonoBehaviour
              new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 },
              new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }
              );
-
 
 
 

@@ -23295,7 +23295,7 @@
   "Building": [
     {
       "ID": 0,
-      "Name": "小住宅",
+      "Name": "小型住宅",
       "MainPic": "HouseSmall_1",
       "SizeX": 5,
       "SizeY": 5,
@@ -23324,7 +23324,7 @@
     },
     {
       "ID": 1,
-      "Name": "舒适小住宅",
+      "Name": "舒适小型住宅",
       "MainPic": "HouseSmall_2",
       "SizeX": 5,
       "SizeY": 5,
@@ -23353,7 +23353,7 @@
     },
     {
       "ID": 2,
-      "Name": "豪华小住宅",
+      "Name": "豪华小型住宅",
       "MainPic": "HouseSmall_3",
       "SizeX": 5,
       "SizeY": 5,
@@ -23382,7 +23382,7 @@
     },
     {
       "ID": 3,
-      "Name": "中住宅",
+      "Name": "中型住宅",
       "MainPic": "HouseMiddle_1",
       "SizeX": 7,
       "SizeY": 5,
@@ -23411,7 +23411,7 @@
     },
     {
       "ID": 4,
-      "Name": "舒适中住宅",
+      "Name": "舒适中型住宅",
       "MainPic": "HouseMiddle_2",
       "SizeX": 7,
       "SizeY": 5,
@@ -23440,7 +23440,7 @@
     },
     {
       "ID": 5,
-      "Name": "豪华中住宅",
+      "Name": "豪华中型住宅",
       "MainPic": "HouseMiddle_3",
       "SizeX": 7,
       "SizeY": 5,
@@ -23469,7 +23469,7 @@
     },
     {
       "ID": 6,
-      "Name": "大住宅",
+      "Name": "大型住宅",
       "MainPic": "HouseBig_1",
       "SizeX": 7,
       "SizeY": 7,
@@ -23498,7 +23498,7 @@
     },
     {
       "ID": 7,
-      "Name": "舒适大住宅",
+      "Name": "舒适大型住宅",
       "MainPic": "HouseBig_2",
       "SizeX": 7,
       "SizeY": 7,
@@ -23527,7 +23527,7 @@
     },
     {
       "ID": 8,
-      "Name": "豪华大住宅",
+      "Name": "豪华大型住宅",
       "MainPic": "HouseBig_3",
       "SizeX": 7,
       "SizeY": 7,
@@ -28337,7 +28337,7 @@
         1
       ],
       "TypeSmallStr": "ScrollWindI",
-      "Des": "",
+      "Des": "操纵强力的风袭击敌人",
       "Mp": 15,
       "Probability": 75,
       "Max": 1,
@@ -28398,7 +28398,7 @@
         1
       ],
       "TypeSmallStr": "ScrollWindI",
-      "Des": "",
+      "Des": "召唤龙卷风对大量敌人造成伤害",
       "Mp": 25,
       "Probability": 35,
       "Max": 3,
@@ -28459,7 +28459,7 @@
         1
       ],
       "TypeSmallStr": "ScrollWindI",
-      "Des": "",
+      "Des": "召唤龙卷风群对所有敌人造成巨大伤害",
       "Mp": 40,
       "Probability": 50,
       "Max": 3,
@@ -28511,7 +28511,7 @@
     },
     {
       "ID": 4,
-      "Name": "闪电",
+      "Name": "电击",
       "Pic": "wind_ii_1",
       "Effect": "lightning_2",
       "Rank": 1,
@@ -28521,7 +28521,7 @@
         5
       ],
       "TypeSmallStr": "ScrollWindII",
-      "Des": "",
+      "Des": "高压电流对敌人造成伤害",
       "Mp": 30,
       "Probability": 90,
       "Max": 1,
@@ -28583,7 +28583,7 @@
         5
       ],
       "TypeSmallStr": "ScrollWindII",
-      "Des": "",
+      "Des": "在空中形成一道大型雷电劈向目标",
       "Mp": 45,
       "Probability": 75,
       "Max": 1,
@@ -28645,7 +28645,7 @@
         5
       ],
       "TypeSmallStr": "ScrollWindII",
-      "Des": "",
+      "Des": "对整个区域进行大规模的雷击",
       "Mp": 60,
       "Probability": 60,
       "Max": 3,
@@ -28707,7 +28707,7 @@
         5
       ],
       "TypeSmallStr": "ScrollWindII",
-      "Des": "",
+      "Des": "对整个区域进行大规模的持续雷击",
       "Mp": 100,
       "Probability": 45,
       "Max": 3,
@@ -29010,7 +29010,7 @@
       "ActionAnimStr": "Magic",
       "Element": [
         2,
-        4
+        1
       ],
       "TypeSmallStr": "ScrollFireII",
       "Des": "连锁点燃空气中的易爆粉肠，炸伤敌人",
@@ -29026,10 +29026,10 @@
       "Hammer": 0,
       "Bow": 0,
       "Staff": 0,
-      "Wind": 0,
+      "Wind": 15,
       "Fire": 30,
       "Water": 0,
-      "Ground": 15,
+      "Ground": 0,
       "Light": 0,
       "Dark": 0,
       "FlagDebuff": 0,
@@ -29072,7 +29072,7 @@
       "ActionAnimStr": "Magic",
       "Element": [
         2,
-        4
+        1
       ],
       "TypeSmallStr": "ScrollFireII",
       "Des": "巨型爆炸",
@@ -29088,10 +29088,10 @@
       "Hammer": 0,
       "Bow": 0,
       "Staff": 0,
-      "Wind": 0,
+      "Wind": 25,
       "Fire": 55,
       "Water": 0,
-      "Ground": 25,
+      "Ground": 0,
       "Light": 0,
       "Dark": 0,
       "FlagDebuff": 0,
@@ -29134,7 +29134,7 @@
       "ActionAnimStr": "Magic",
       "Element": [
         2,
-        4
+        1
       ],
       "TypeSmallStr": "ScrollFireII",
       "Des": "召唤一颗陨石砸向目标",
@@ -29150,10 +29150,10 @@
       "Hammer": 0,
       "Bow": 0,
       "Staff": 0,
-      "Wind": 0,
+      "Wind": 50,
       "Fire": 120,
       "Water": 0,
-      "Ground": 50,
+      "Ground": 0,
       "Light": 0,
       "Dark": 0,
       "FlagDebuff": 0,
@@ -29196,7 +29196,7 @@
       "ActionAnimStr": "Magic",
       "Element": [
         2,
-        4
+        1
       ],
       "TypeSmallStr": "ScrollFireII",
       "Des": "带有辐射的超大型爆炸",
@@ -29212,10 +29212,10 @@
       "Hammer": 0,
       "Bow": 0,
       "Staff": 0,
-      "Wind": 0,
+      "Wind": 180,
       "Fire": 300,
       "Water": 0,
-      "Ground": 180,
+      "Ground": 0,
       "Light": 0,
       "Dark": 0,
       "FlagDebuff": 0,
@@ -29505,7 +29505,7 @@
         6
       ],
       "TypeSmallStr": "ScrollWaterII",
-      "Des": "",
+      "Des": "用低温冰块对敌人造成伤害",
       "Mp": 30,
       "Probability": 95,
       "Max": 1,
@@ -29567,7 +29567,7 @@
         6
       ],
       "TypeSmallStr": "ScrollWaterII",
-      "Des": "",
+      "Des": "用低温冰块对大量敌人造成伤害",
       "Mp": 45,
       "Probability": 85,
       "Max": 3,
@@ -29691,7 +29691,7 @@
         6
       ],
       "TypeSmallStr": "ScrollWaterII",
-      "Des": "",
+      "Des": "温度急速下降，寒气就像千万刀刃刺入骨头",
       "Mp": 100,
       "Probability": 35,
       "Max": 1,
@@ -30486,7 +30486,7 @@
       "ActionAnimStr": "Magic",
       "Element": [
         5,
-        1
+        4
       ],
       "TypeSmallStr": "ScrollLightII",
       "Des": "",
@@ -30548,7 +30548,7 @@
       "ActionAnimStr": "Magic",
       "Element": [
         5,
-        1
+        4
       ],
       "TypeSmallStr": "ScrollLightII",
       "Des": "",
@@ -30564,10 +30564,10 @@
       "Hammer": 0,
       "Bow": 0,
       "Staff": 0,
-      "Wind": 25,
+      "Wind": 0,
       "Fire": 0,
       "Water": 0,
-      "Ground": 0,
+      "Ground": 25,
       "Light": 40,
       "Dark": 0,
       "FlagDebuff": 0,
@@ -30610,7 +30610,7 @@
       "ActionAnimStr": "Magic",
       "Element": [
         5,
-        1
+        4
       ],
       "TypeSmallStr": "ScrollLightII",
       "Des": "",
@@ -30626,10 +30626,10 @@
       "Hammer": 0,
       "Bow": 0,
       "Staff": 0,
-      "Wind": 20,
+      "Wind": 0,
       "Fire": 0,
       "Water": 0,
-      "Ground": 0,
+      "Ground": 20,
       "Light": 50,
       "Dark": 0,
       "FlagDebuff": 0,
@@ -30672,10 +30672,10 @@
       "ActionAnimStr": "Magic",
       "Element": [
         5,
-        1
+        4
       ],
       "TypeSmallStr": "ScrollLightII",
-      "Des": "",
+      "Des": "召唤时空漩涡，被吸入的物体都无法逃脱",
       "Mp": 100,
       "Probability": 35,
       "Max": 3,
@@ -30688,10 +30688,10 @@
       "Hammer": 0,
       "Bow": 0,
       "Staff": 0,
-      "Wind": 50,
+      "Wind": 0,
       "Fire": 0,
       "Water": 0,
-      "Ground": 0,
+      "Ground": 50,
       "Light": 100,
       "Dark": 0,
       "FlagDebuff": 0,
@@ -39957,6 +39957,583 @@
       "OutputGround": 0,
       "OutputLight": 0,
       "OutputDark": 0
+    }
+  ],
+  "Technology": [
+    {
+      "ID": 0,
+      "Name": "马轭",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "种植业收获时间减少10%",
+      "NeedTime": 5,
+      "ParentID": [],
+      "ChildrenID": [
+        1
+      ],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 500,
+      "NeedBuilding": [
+        9
+      ]
+    },
+    {
+      "ID": 1,
+      "Name": "重犁",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "种植业产量增加10%",
+      "NeedTime": 10,
+      "ParentID": [
+        0
+      ],
+      "ChildrenID": [
+        2
+      ],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 1000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 2,
+      "Name": "轮作",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "种植业产量增加10%",
+      "NeedTime": 20,
+      "ParentID": [
+        1
+      ],
+      "ChildrenID": [
+        3,
+        4
+      ],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 2000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 3,
+      "Name": "种子改良",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "种植业收获时产出元素粉尘概率提升10%",
+      "NeedTime": 15,
+      "ParentID": [
+        2
+      ],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 3500,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 4,
+      "Name": "土壤改良",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "种植业收获时产出元素粉尘概率提升10%",
+      "NeedTime": 15,
+      "ParentID": [
+        2
+      ],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 3500,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 5,
+      "Name": "双刃斧",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "伐木速度提升10%",
+      "NeedTime": 5,
+      "ParentID": [],
+      "ChildrenID": [
+        6
+      ],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 500,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 6,
+      "Name": "弓形锯",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "木材产量增加10%",
+      "NeedTime": 10,
+      "ParentID": [
+        5
+      ],
+      "ChildrenID": [
+        7
+      ],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 1000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 7,
+      "Name": "双人锯",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "木材产量增加10%",
+      "NeedTime": 10,
+      "ParentID": [
+        6
+      ],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 2000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 8,
+      "Name": "采金术",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "金属产量增加10%",
+      "NeedTime": 10,
+      "ParentID": [],
+      "ChildrenID": [
+        9
+      ],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 1000,
+      "NeedBuilding": [
+        19,
+        20
+      ]
+    },
+    {
+      "ID": 9,
+      "Name": "钻井采金术",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "采矿发现元素粉尘概率提升10%",
+      "NeedTime": 20,
+      "ParentID": [
+        8
+      ],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 2000,
+      "NeedBuilding": [
+        19,
+        20,
+        21
+      ]
+    },
+    {
+      "ID": 10,
+      "Name": "采石术",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "石料产量增加10%",
+      "NeedTime": 10,
+      "ParentID": [],
+      "ChildrenID": [
+        11
+      ],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 1000,
+      "NeedBuilding": [
+        22,
+        23
+      ]
+    },
+    {
+      "ID": 11,
+      "Name": "钻井采石术",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "采矿发现元素粉尘概率提升10%",
+      "NeedTime": 20,
+      "ParentID": [
+        10
+      ],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 2000,
+      "NeedBuilding": [
+        22,
+        23,
+        24
+      ]
+    },
+    {
+      "ID": 12,
+      "Name": "捕鱼网",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "鱼业产量增加10%",
+      "NeedTime": 10,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 1000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 13,
+      "Name": "石匠",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "设施建筑与升级消耗材料减少20%",
+      "NeedTime": 20,
+      "ParentID": [],
+      "ChildrenID": [
+        14
+      ],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 1500,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 14,
+      "Name": "起重机",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "设施建筑与升级速度提速33%",
+      "NeedTime": 20,
+      "ParentID": [
+        13
+      ],
+      "ChildrenID": [
+        15
+      ],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 2500,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 15,
+      "Name": "建筑学",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "设施的元素附加提升50%",
+      "NeedTime": 20,
+      "ParentID": [
+        14
+      ],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 5000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 16,
+      "Name": "养殖学",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "畜牧业肉类产量增加10%",
+      "NeedTime": 20,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 1000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 17,
+      "Name": "织布机",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "畜牧业布料产量增加10%",
+      "NeedTime": 20,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 1000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 18,
+      "Name": "元素注入术·武器",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "武器锻造与副手装备制作可以注入元素粉尘",
+      "NeedTime": 20,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 5000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 19,
+      "Name": "元素注入术·防具",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "防具制作可以注入元素粉尘",
+      "NeedTime": 20,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 5000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 20,
+      "Name": "元素注入术·饰品",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "饰品制作可以注入元素粉尘",
+      "NeedTime": 20,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 5000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 21,
+      "Name": "淬火",
+      "Pic": "icon952",
+      "Type": "Work",
+      "Des": "武器锻造时提升高阶物品的产出率",
+      "NeedTime": 20,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 5000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 22,
+      "Name": "剑术精进I",
+      "Pic": "icon952",
+      "Type": "Fight",
+      "Des": "战斗中，剑类武器伤害提升2%",
+      "NeedTime": 10,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 5000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 23,
+      "Name": "剑术精进II",
+      "Pic": "icon952",
+      "Type": "Fight",
+      "Des": "战斗中，剑类武器伤害提升5%",
+      "NeedTime": 10,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 5000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 24,
+      "Name": "斧术精进I",
+      "Pic": "icon952",
+      "Type": "Fight",
+      "Des": "战斗中，剑类武器伤害提升2%",
+      "NeedTime": 10,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 5000,
+      "NeedBuilding": []
+    },
+    {
+      "ID": 25,
+      "Name": "斧术精进II",
+      "Pic": "icon952",
+      "Type": "Fight",
+      "Des": "战斗中，剑类武器伤害提升5%",
+      "NeedTime": 10,
+      "ParentID": [],
+      "ChildrenID": [],
+      "NeedStuff": [
+        "Wood",
+        "Meat"
+      ],
+      "NeedStuffNum": [
+        200,
+        100
+      ],
+      "NeedGold": 5000,
+      "NeedBuilding": []
     }
   ]
 }

@@ -29,8 +29,10 @@ public class PlayMainPanel : BasePanel
     public Dropdown top_districtDd;
     public Button top_districtBtn;
 
+    public Button left_technologyBtn;
     public Button left_heroMainBtn;
     public Button left_adventureMainBtn;
+ 
 
     public Button bottom_adventureLastBtn;
     public Button bottom_adventureNextBtn;
@@ -73,10 +75,10 @@ public class PlayMainPanel : BasePanel
     void Start()
     {
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInPlay>();
-        
 
 
 
+        left_technologyBtn.onClick.AddListener(delegate () { gci.OpenTechnology(); });
         left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
         left_adventureMainBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
 
