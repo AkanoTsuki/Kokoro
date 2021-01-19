@@ -3,6 +3,15 @@ using UnityEngine;
 
 using System;
 
+
+public enum TechnologyStage
+{
+    Close,
+    Open,
+    Research,
+    Done
+}
+
 //访客阶段
 public enum CustomerStage
 { 
@@ -596,17 +605,23 @@ public class TechnologyPrototype : ISerializationCallbackReceiver
 public class TechnologyObject
 {
     private short ID;
-    private bool IsOpen;
-    private bool IsDone;
-    public TechnologyObject(short id, bool isOpen, bool isDone)
+    private TechnologyStage Stage;
+    public TechnologyObject(short id, TechnologyStage stage)
     {
         this.ID = id;
-        this.IsOpen = isOpen;
-        this.IsDone = isDone;
+        this.Stage = stage;
     }
     public short id { get { return ID; } }
-    public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
-    public bool isDone { get { return IsDone; } set { IsDone = value; } }
+    public TechnologyStage stage { get { return Stage; } set { Stage = value; } }
+
+}
+
+//寻路点
+public class AreaPathPointPrototype
+{
+    public short ID;
+    public int X;
+    public int Y;
 }
 
 //英雄原型T
@@ -1040,6 +1055,7 @@ public class DistrictPrototype
     public short ID;
     public string Name;
     public string Des;
+    public string Pic;
     public short BigMapX;
     public short BigMapY;
     public short BigMapDesX;

@@ -115,7 +115,7 @@ public class PlayMainPanel : BasePanel
 
     public void UpdateKingdomInfo()
     {
-        top_nameText.text = gc.heroDic[0].name+"的领地";
+        top_nameText.text = "克克洛地区";
       
     }
     public void UpdateGold()

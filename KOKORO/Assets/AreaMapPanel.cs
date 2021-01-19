@@ -24,6 +24,8 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     float rangeY;               //拖拽范围
 
 
+    public List<GameObject> pathPoint;
+
     void Awake()
     {
         Instance = this;
@@ -41,6 +43,12 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
         minHeight = rt.rect.height / 2;
         maxHeight = Screen.height - (rt.rect.height / 2);
 
+        string str = "";
+        for (int i = 0; i < pathPoint.Count; i++)
+        {
+            str += pathPoint[i] .name+ ","+ (int)pathPoint[i].transform.GetComponent<RectTransform>().anchoredPosition.x + "," + (int)pathPoint[i].transform.GetComponent<RectTransform>().anchoredPosition.y+"\\n";
+        }
+        Debug.Log(str);
     }
 
     void Update()
@@ -59,6 +67,12 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
         //ShowByImmediately(true);
     }
 
+    void CreateTraveller(int StartPoint)
+    {
+        
+    }
+
+
     //public void AddIconByBuilding( int buildingID)
     //{
     //    for (int i = 0; i < gc.buildingDic[buildingID].gridList.Count; i++)
@@ -71,7 +85,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     //    for (int i = 0; i < gc.buildingDic[buildingID].gridList.Count; i++)
     //    {
     //        RemoveIconByGrid( DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].X, DataManager.mDistrictGridDict[gc.buildingDic[buildingID].gridList[i]].Y);
-        
+
     //    }
     //}
 
@@ -95,7 +109,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     //            default: str = "BuildingMap/Red_"; break;
     //        }
     //    }
-        
+
 
 
     //    GameObject go;

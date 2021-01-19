@@ -108,11 +108,8 @@ public class GameControlInNewGame : MonoBehaviour
 
         for (int i = 0; i < DataManager.mTechnologyDict.Count; i++)
         {
-            gc.technologyDic.Add(i, new TechnologyObject((short)i, false, false));
-            if (DataManager.mTechnologyDict[i].ParentID.Count == 0)
-            {
-                gc.technologyDic[i].isOpen = true;
-            }
+            gc.technologyDic.Add(i, new TechnologyObject((short)i, (DataManager.mTechnologyDict[i].ParentID.Count == 0? TechnologyStage.Open:TechnologyStage.Close)));
+   
         }
     
 
@@ -125,7 +122,7 @@ public class GameControlInNewGame : MonoBehaviour
             gc.heroDic.Add(i + 1, temp_HeroList[i]);
         }
         gc.heroIndex = 6;
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < DataManager.mDistrictDict.Count; i++)
         {
             gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "初始村", DataManager.mDistrictDict[i].Des,true, temp_districtID == i, 1, 10, 20,0, 
                  new List<int> { }, temp_districtID == i? new List<int> { 0,1,2,3,4,5}: new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
@@ -183,18 +180,18 @@ public class GameControlInNewGame : MonoBehaviour
         gc.buildingUnlock[65]= true;
         gc.buildingUnlock[73] = true;
 
-        gc.supplyAndDemand = new SupplyAndDemandObject(new List<short> { 0,0,0,0,0,0,0}, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 },
-             new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0 }
+        gc.supplyAndDemand = new SupplyAndDemandObject(new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+             new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
              );
 
 

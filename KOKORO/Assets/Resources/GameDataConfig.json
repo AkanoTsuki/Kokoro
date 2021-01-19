@@ -12338,8 +12338,9 @@
   "District": [
     {
       "ID": 0,
-      "Name": "湖畔地区",
+      "Name": "格兰蒂斯城",
       "Des": "位于半岛中部，浮月之湖西侧，有大片的平原。",
+      "Pic": "city_1",
       "BigMapX": -256,
       "BigMapY": 914,
       "BigMapDesX": 1024,
@@ -12353,8 +12354,9 @@
     },
     {
       "ID": 1,
-      "Name": "高原地区",
+      "Name": "雅特村",
       "Des": "西北部高原地区，矿产丰富",
+      "Pic": "village_3",
       "BigMapX": -36,
       "BigMapY": 456,
       "BigMapDesX": 774,
@@ -12368,8 +12370,9 @@
     },
     {
       "ID": 2,
-      "Name": "雪原地区",
+      "Name": "克士赛村",
       "Des": "半岛北部山脉，大部分地方常年被冰雪覆盖",
+      "Pic": "village_1",
       "BigMapX": -36,
       "BigMapY": 36,
       "BigMapDesX": 759,
@@ -12383,8 +12386,9 @@
     },
     {
       "ID": 3,
-      "Name": "山林地区",
+      "Name": "拉托德达村",
       "Des": "东北部地区，有大片原始森林，东侧有部分海岸",
+      "Pic": "village_1",
       "BigMapX": -529,
       "BigMapY": 256,
       "BigMapDesX": 1461,
@@ -12398,8 +12402,9 @@
     },
     {
       "ID": 4,
-      "Name": "荒漠地区",
+      "Name": "冈尔科埃城",
       "Des": "西南部小半岛，大部分地区已经是荒漠",
+      "Pic": "city_1",
       "BigMapX": 264,
       "BigMapY": 1286,
       "BigMapDesX": 500,
@@ -12413,8 +12418,9 @@
     },
     {
       "ID": 5,
-      "Name": "从林地区",
+      "Name": "里拉斯镇",
       "Des": "南部热带丛林，境内有半岛唯一的火山，南侧为狭长的沙滩",
+      "Pic": "town_2",
       "BigMapX": -290,
       "BigMapY": 1286,
       "BigMapDesX": 870,
@@ -12428,8 +12434,9 @@
     },
     {
       "ID": 6,
-      "Name": "河原地区",
+      "Name": "菲科坦厄镇",
       "Des": "半岛东南部，境内河流穿越大片草原，土地肥沃",
+      "Pic": "town_1",
       "BigMapX": -700,
       "BigMapY": 800,
       "BigMapDesX": 1600,
@@ -12440,6 +12447,70 @@
       "EGround": 5,
       "ELight": 10,
       "EDark": 5
+    },
+    {
+      "ID": 7,
+      "Name": "帕拉然镇",
+      "Des": "",
+      "Pic": "town_2",
+      "BigMapX": 0.0,
+      "BigMapY": 0.0,
+      "BigMapDesX": 0.0,
+      "BigMapDesY": 0.0,
+      "EWind": 0.0,
+      "EFire": 0.0,
+      "EWater": 0.0,
+      "EGround": 0.0,
+      "ELight": 0.0,
+      "EDark": 0.0
+    },
+    {
+      "ID": 8,
+      "Name": "海德尔村",
+      "Des": "",
+      "Pic": "village_2",
+      "BigMapX": 0.0,
+      "BigMapY": 0.0,
+      "BigMapDesX": 0.0,
+      "BigMapDesY": 0.0,
+      "EWind": 0.0,
+      "EFire": 0.0,
+      "EWater": 0.0,
+      "EGround": 0.0,
+      "ELight": 0.0,
+      "EDark": 0.0
+    },
+    {
+      "ID": 9,
+      "Name": "布罗德村",
+      "Des": "",
+      "Pic": "village_2",
+      "BigMapX": 0.0,
+      "BigMapY": 0.0,
+      "BigMapDesX": 0.0,
+      "BigMapDesY": 0.0,
+      "EWind": 0.0,
+      "EFire": 0.0,
+      "EWater": 0.0,
+      "EGround": 0.0,
+      "ELight": 0.0,
+      "EDark": 0.0
+    },
+    {
+      "ID": 10,
+      "Name": "临冬镇",
+      "Des": "",
+      "Pic": "town_1",
+      "BigMapX": 0.0,
+      "BigMapY": 0.0,
+      "BigMapDesX": 0.0,
+      "BigMapDesY": 0.0,
+      "EWind": 0.0,
+      "EFire": 0.0,
+      "EWater": 0.0,
+      "EGround": 0.0,
+      "ELight": 0.0,
+      "EDark": 0.0
     }
   ],
   "DistrictGrid": [
@@ -39971,11 +40042,11 @@
       "ChildrenID": [
         1
       ],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -39997,11 +40068,11 @@
       "ChildrenID": [
         2
       ],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40022,11 +40093,11 @@
         3,
         4
       ],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40044,11 +40115,11 @@
         2
       ],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40066,11 +40137,11 @@
         2
       ],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40088,11 +40159,11 @@
       "ChildrenID": [
         6
       ],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40112,11 +40183,11 @@
       "ChildrenID": [
         7
       ],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40134,11 +40205,11 @@
         6
       ],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40156,11 +40227,11 @@
       "ChildrenID": [
         9
       ],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40181,11 +40252,11 @@
         8
       ],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40207,11 +40278,11 @@
       "ChildrenID": [
         11
       ],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40232,11 +40303,11 @@
         10
       ],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40256,11 +40327,11 @@
       "NeedTime": 10,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40278,11 +40349,11 @@
       "ChildrenID": [
         14
       ],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40302,11 +40373,11 @@
       "ChildrenID": [
         15
       ],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40324,11 +40395,11 @@
         14
       ],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40344,11 +40415,11 @@
       "NeedTime": 20,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40364,11 +40435,11 @@
       "NeedTime": 20,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40384,11 +40455,11 @@
       "NeedTime": 20,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40404,11 +40475,11 @@
       "NeedTime": 20,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40424,11 +40495,11 @@
       "NeedTime": 20,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40444,11 +40515,11 @@
       "NeedTime": 20,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40464,11 +40535,11 @@
       "NeedTime": 10,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40484,11 +40555,11 @@
       "NeedTime": 10,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40504,11 +40575,11 @@
       "NeedTime": 10,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
@@ -40524,16 +40595,17 @@
       "NeedTime": 10,
       "ParentID": [],
       "ChildrenID": [],
-      "NeedStuff": [
+      "NeedStuffStr": [
         "Wood",
         "Meat"
       ],
-      "NeedStuffNum": [
+      "NeedStuffValue": [
         200,
         100
       ],
       "NeedGold": 5000,
       "NeedBuilding": []
     }
-  ]
+  ],
+  "AreaPath": []
 }
