@@ -24,6 +24,7 @@ public class DataManager
         public List<ProduceEquipPrototype> ProduceEquip;
         public List<ProduceResourcePrototype> ProduceResource;
         public List<TechnologyPrototype> Technology;
+        public List<AreaPathPrototype> AreaPath;
         public List<AreaPathPointPrototype> AreaPathPoint;
     }
 
@@ -45,7 +46,7 @@ public class DataManager
     public static Dictionary<int, ProduceEquipPrototype> mProduceEquipDict = new Dictionary<int, ProduceEquipPrototype>();
     public static Dictionary<int, ProduceResourcePrototype> mProduceResourceDict = new Dictionary<int, ProduceResourcePrototype>();
     public static Dictionary<int, TechnologyPrototype> mTechnologyDict = new Dictionary<int, TechnologyPrototype>();
-
+    public static Dictionary<string, AreaPathPrototype> mAreaPathDict = new Dictionary<string, AreaPathPrototype>();
     public static Dictionary<int, AreaPathPointPrototype> mAreaPathPointDict = new Dictionary<int, AreaPathPointPrototype>();
 
     public static string[] mNameMan = { "亚伦", "亚伯", "亚伯拉罕", "亚当", "艾德里安", "艾登", "艾丹", "阿尔瓦", "亚历克斯", "亚历山大", "艾伦", "艾伯特", "阿尔弗雷德", "安德鲁", "安迪", "安格斯", "安东尼", "阿波罗", "阿诺德", "亚瑟", "奥古斯特", "奥斯汀", "本", "本杰明", "伯特", "本森", "比尔", "比利", "布莱克", "鲍伯", "鲍比", "布拉德", "布兰登", "布兰特", "布伦特", "布赖恩", "布朗", "布鲁斯", "迦勒", "卡梅伦", "卡尔", "卡洛斯", "凯里", "卡斯帕", "塞西", "查尔斯", "采尼", "克里斯", "克里斯蒂安", "克里斯多夫", "克拉克", "柯利弗", "科迪", "科尔", "科林", "科兹莫", "丹尼尔", "丹尼", "达尔文", "大卫", "丹尼斯", "德里克", "狄克", "唐纳德", "道格拉斯", "杜克", "迪伦", "埃迪", "埃德加", "爱迪生", "艾德蒙", "爱德华", "艾德文", "以利亚", "艾略特", "埃尔维斯", "埃里克", "伊桑", "埃文", "福特", "弗兰克思", "弗兰克", "富兰克林", "弗瑞德", "加百利", "加比", "加菲尔德", "加里", "加文", "杰弗里", "乔治", "基诺", "格林", "格林顿", "汉克", "哈帝", "哈里森", "哈利", "海顿", "亨利", "希尔顿", "雨果", "汉克", "霍华德", "亨利", "伊恩", "伊格纳茨", "伊凡", "艾萨克", "以赛亚", "艾塞亚", "杰克", "杰克逊", "雅各布", "詹姆士", "詹森", "杰伊", "杰弗瑞", "杰罗姆", "杰瑞", "杰西", "吉姆", "吉米", "乔", "约翰", "约翰尼", "乔尼", "乔纳森", "乔丹", "约瑟夫", "约书亚", "贾斯汀", "凯斯", "肯", "肯尼迪", "肯尼斯", "肯尼", "凯文", "凯尔", "兰斯", "拉里", "劳伦特", "劳伦斯", "利安德尔", "李", "雷欧", "雷纳德", "利奥波特", "莱斯利", "劳伦", "劳瑞", "劳瑞恩", "路易斯", "卢克", "路加", "马库斯", "马西", "马克", "马科斯", "马尔斯", "马歇尔", "马丁", "马文", "梅森", "马修", "马克斯", "迈克尔", "米奇", "麦克", "纳撒尼尔", "尼尔", "尼尔森", "尼古拉斯", "尼克", "诺亚", "诺曼", "奥利弗", "奥斯卡", "欧文", "帕特里克", "派翠克", "保罗", "彼得", "菲利普", "菲比", "昆廷", "兰德尔", "伦道夫", "兰迪", "雷", "列得", "雷克斯", "理查德", "里奇", "赖利", "瑞利", "罗伯特", "罗宾", "罗宾逊", "鲁宾逊", "洛克", "罗杰", "罗纳德", "罗文", "罗伊", "赖安", "萨姆", "山姆", "萨米", "塞缪尔", "斯考特", "肖恩", "西德尼", "西蒙", "所罗门", "斯帕克", "斯宾塞", "斯派克", "斯坦利", "史蒂夫", "史蒂文", "斯图尔特", "斯图亚特", "特伦斯", "特里", "泰德", "托马斯", "提姆", "蒂莫西", "托德", "汤米", "汤姆", "托马斯", "托尼", "泰勒", "奥特曼", "尤利塞斯", "范", "弗恩", "弗农", "维克多", "文森特", "华纳", "沃伦", "韦恩", "卫斯理", "威廉", "威利", "维利", "扎克", "圣扎迦利" };
@@ -130,8 +131,16 @@ public class DataManager
         if (jsonObject.Technology == null) { Debug.LogError("Technology data null"); }
         foreach (TechnologyPrototype item in jsonObject.Technology) { mTechnologyDict[item.ID] = item; }
 
-        //if (jsonObject.AreaPathPoint == null) { Debug.LogError("AreaPathPoint data null"); }
-        //foreach (AreaPathPointPrototype item in jsonObject.AreaPathPoint) { mAreaPathPointDict[item.ID] = item; }
+        if (jsonObject.AreaPath == null) { Debug.LogError("AreaPath data null"); }
+        foreach (AreaPathPrototype item in jsonObject.AreaPath) { mAreaPathDict[item.StartDistrict + "-" + item.EndDistrict] = item; }
+
+        if (jsonObject.AreaPathPoint == null) { Debug.LogError("AreaPathPoint data null"); }
+        foreach (AreaPathPointPrototype item in jsonObject.AreaPathPoint) { mAreaPathPointDict[item.ID] = item; }
+
+ 
+
+     
+
     }
     public static void Clear()
     {

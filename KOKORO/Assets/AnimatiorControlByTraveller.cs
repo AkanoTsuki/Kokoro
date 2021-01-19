@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class AnimatiorControlByTraveller : MonoBehaviour
 {
-    private float speed = 10.0f;
+    private float speed = 30.0f;
     private float fps = 10.0f;
     private float time = 0;
     private int currentIndex = 0;
@@ -18,7 +18,6 @@ public class AnimatiorControlByTraveller : MonoBehaviour
     Sprite[] needFrames = new Sprite[3];
 
     bool isPlay = false;
-    bool isLoop = false;
     public string charaName = "chara1_1";
 
     public int travellerID=-1;
@@ -29,15 +28,36 @@ public class AnimatiorControlByTraveller : MonoBehaviour
 
     RectTransform rt;
     Vector2 targetPos;
+    private void Awake()
+    {
+        rt =transform.GetComponent<RectTransform>();
+    }
+
     void Start()
     {
-        rt = GetComponent<RectTransform>();
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (isPlay)
+        {
+            time += Time.deltaTime;
+
+            if (time >= 1.0f / fps)
+            {
+                gameObject.GetComponent<Image>().sprite = needFrames[currentIndex];
+                currentIndex++;
+                time = 0;
+                if (currentIndex > needFrames.Length - 1)
+                {
+                    currentIndex = 0;
+
+                }
+            }
+            Move();
+        }
     }
     public void Play()
     {
@@ -47,6 +67,8 @@ public class AnimatiorControlByTraveller : MonoBehaviour
     {
         isPlay = false;
     }
+
+
     public void SetCharaFrames(string name)
     {
         charaName = name;
@@ -63,7 +85,7 @@ public class AnimatiorControlByTraveller : MonoBehaviour
     }
     public void SetAnim(AnimStatus animStatus)
     {
-        //Debug.Log("SetAnim animStatus=" + animStatus + " charaName=" + charaName);
+      //  Debug.Log("SetAnim animStatus=" + animStatus + " charaName=" + charaName);
 
         switch (animStatus)
         {
@@ -71,31 +93,31 @@ public class AnimatiorControlByTraveller : MonoBehaviour
                 needFrames[0] = walk_UpFrames[0];
                 needFrames[1] = walk_UpFrames[2];
                 needFrames[2] = walk_UpFrames[1];
-                isLoop = true;
+             //   isLoop = true;
                 break;
             case AnimStatus.WalkLeft:
                 needFrames[0] = walk_LeftFrames[0];
                 needFrames[1] = walk_LeftFrames[2];
                 needFrames[2] = walk_LeftFrames[1];
-                isLoop = true;
+              //  isLoop = true;
                 break;
             case AnimStatus.WalkRight:
                 needFrames[0] = walk_RightFrames[0];
                 needFrames[1] = walk_RightFrames[2];
                 needFrames[2] = walk_RightFrames[1];
-                isLoop = true;
+             //   isLoop = true;
                 break;
             case AnimStatus.WalkDown:
                 needFrames[0] = walk_DownFrames[0];
                 needFrames[1] = walk_DownFrames[2];
                 needFrames[2] = walk_DownFrames[1];
-                isLoop = true;
+              //  isLoop = true;
                 break;
             case AnimStatus.Idle:
                 needFrames[0] = idleFrames[0];
                 needFrames[1] = idleFrames[2];
                 needFrames[2] = idleFrames[1];
-                isLoop = true;
+              //  isLoop = true;
                 break;
 
         }
@@ -107,56 +129,88 @@ public class AnimatiorControlByTraveller : MonoBehaviour
 
     public void SetFaceTo(Vector2 startPos,Vector2 targetPos)
     {
-        if (startPos.y >= targetPos.y)
+
+        if (System.Math.Abs(startPos.y - targetPos.y) >= System.Math.Abs(startPos.x - targetPos.x))
         {
-            SetAnim(AnimStatus.WalkDown);
+            if (startPos.y >= targetPos.y)
+            {
+                SetAnim(AnimStatus.WalkDown);
+            }
+            else if (startPos.y < targetPos.y)
+            {
+                SetAnim(AnimStatus.WalkUp);
+            }
         }
-        else if (startPos.y < targetPos.y)
+        else
         {
-            SetAnim(AnimStatus.WalkUp);
+            if (startPos.x >= targetPos.x)
+            {
+                SetAnim(AnimStatus.WalkLeft);
+            }
+            else if (startPos.x < targetPos.x)
+            {
+                SetAnim(AnimStatus.WalkRight);
+            }
         }
-        else if (startPos.x >= targetPos.x)
-        {
-            SetAnim(AnimStatus.WalkLeft);
-        }
-        else if (startPos.x < targetPos.x)
-        {
-            SetAnim(AnimStatus.WalkRight);
-        }
+       
+       
 
     }
 
+    public void StartMove()
+    {
+        nowPointIndex = 1;
+        targetPos = new Vector2(DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].X, DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].Y);
+        SetFaceTo(rt.anchoredPosition, targetPos);
+        Play();
+    }
+
+
     public void Move()
     {
-        if (Vector2.Distance(rt.anchoredPosition, targetPos) > 0.1f)
+        if (Vector2.Distance(rt.anchoredPosition, targetPos) > 1f)
         {
             if (rt.anchoredPosition.y >= targetPos.y)
             {
                 transform.Translate(Vector3.down * speed * Time.deltaTime);
             }
-            else if (rt.anchoredPosition.y < targetPos.y)
+             if (rt.anchoredPosition.y < targetPos.y)
             {
                 transform.Translate(Vector3.up * speed * Time.deltaTime);
             }
-            else if (rt.anchoredPosition.x >= targetPos.x)
+             if (rt.anchoredPosition.x >= targetPos.x)
             {
                 transform.Translate(Vector3.left * speed * Time.deltaTime);
             }
-            else if (rt.anchoredPosition.x < targetPos.x)
+             if (rt.anchoredPosition.x < targetPos.x)
             {
                 transform.Translate(Vector3.right * speed * Time.deltaTime);
             }
         }
         else
         {
+           // Debug.Log("接近节点 距离="+ Vector2.Distance(rt.anchoredPosition, targetPos));
             rt.anchoredPosition = targetPos;
             if (nowPointIndex == pathPointList.Count-1)
             {
                 //到达
+                Stop();
+                gameObject.GetComponent<Image>().sprite = walk_DownFrames[2];
+                //MessagePanel.Instance.AddMessage("到达了");
+
+                gameObject.transform.localScale = Vector2.zero;
+                AreaMapPanel.Instance.travellerGoPool.Add(gameObject);
+
             }
             else
             {
+
                 nowPointIndex++;
+
+              //  Debug.Log("nowPointIndex=" + nowPointIndex);
+                targetPos = new Vector2(DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].X, DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].Y);
+              //  Debug.Log("nowPointIndex=" + nowPointIndex+ " targetPos="+ targetPos);
+                SetFaceTo(rt.anchoredPosition, targetPos);
             }
      
         }

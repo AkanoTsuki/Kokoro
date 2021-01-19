@@ -51,7 +51,8 @@ public class GameControlInPlay : MonoBehaviour
         PlayMainPanel.Instance.UpdateTimeButtonState();
         InvokeRepeating("TimeFlow", 0, 0.05f );
         InvokeRepeating("SupplyAndDemandChangeRegular", 10f, 10f );
-       // InvokeRepeating("CustomerCome", 3f, 3f);
+        // InvokeRepeating("CustomerCome", 3f, 3f);
+        InvokeRepeating("TravellerCome", 3f, 3f);
     }
 
     // Update is called once per frame
@@ -280,10 +281,35 @@ public class GameControlInPlay : MonoBehaviour
                  
                 }
             }
-        }
-       
+        }      
     }
+    void TravellerCome()
+    {
+        if (Random.Range(0, 3) > 0)
+        {
+            int heroType = Random.Range(0, DataManager.mHeroDict.Count);
+            string pic = "";
+            int sexCode = Random.Range(0, 2);
+            if (sexCode == 0)
+            {
+                pic = DataManager.mHeroDict[heroType].PicMan[Random.Range(0, DataManager.mHeroDict[heroType].PicMan.Count)];
+            }
+            else
+            {
+                pic = DataManager.mHeroDict[heroType].PicWoman[Random.Range(0, DataManager.mHeroDict[heroType].PicWoman.Count)];
+            }
 
+            int startDistrict = Random.Range(0, 11);
+            int endDistrict = Random.Range(0, 11);
+            while (startDistrict == endDistrict)
+            {
+                endDistrict = Random.Range(0, 11);
+            }
+
+            AreaMapPanel.Instance.CreateTraveller(startDistrict, endDistrict, pic, new List<int> { });
+        }
+   
+    }
 
     public void OpenDistrictMain()
     {

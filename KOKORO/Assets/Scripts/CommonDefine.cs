@@ -617,6 +617,14 @@ public class TechnologyObject
 }
 
 //寻路点
+[System.Serializable]
+public class AreaPathPrototype
+{
+    public int StartDistrict;
+    public int EndDistrict;
+    public List<int> Path;
+}
+[System.Serializable]
 public class AreaPathPointPrototype
 {
     public short ID;
