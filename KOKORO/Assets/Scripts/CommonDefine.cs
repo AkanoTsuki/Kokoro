@@ -3,6 +3,13 @@ using UnityEngine;
 
 using System;
 
+public enum DungeonStage
+{
+    Close,
+    Open,
+    OpenUp,
+    Done
+}
 
 public enum TechnologyStage
 {
@@ -1500,14 +1507,20 @@ public class DungeonPrototype : ISerializationCallbackReceiver
 public class DungeonObject
 {
     private short ID;
-    private bool Unlock;
-    public DungeonObject(short id, bool unlock)
+    private DungeonStage Stage;
+    private List<byte> TeamList;
+    private byte Level;
+    public DungeonObject(short id, DungeonStage stage, List<byte> teamList, byte level)
     {
         this.ID = id;
-        this.Unlock = unlock;
+        this.Stage = stage;
+        this.TeamList = teamList;
+        this.Level = level;
     }
     public short id { get { return ID; }  }
-    public bool unlock { get { return Unlock; } set { Unlock = value; } }
+    public DungeonStage stage { get { return Stage; } set { Stage = value; } }
+    public List<byte> teamList { get { return TeamList; } set { TeamList = value; } }
+    public byte level { get { return Level; } set { Level = value; } }
 }
 
 //怪物原型

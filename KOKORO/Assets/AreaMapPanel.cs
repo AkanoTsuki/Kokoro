@@ -23,6 +23,8 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public List<Image> districtForceImage;
     public List<GameObject> districtHeroListGo;
 
+    public List<GameObject> dungeonGo;
+    public List<GameObject> dungeonHeroListGo;
 
     Vector3 offset;
     RectTransform rt;
@@ -83,6 +85,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
         SetAnchoredPosition(x, y);
         UpdateDistrictAll();
+        UpdateDungeonAll();
         SetTraveller();
         HideInfoBlock();
     }
@@ -142,7 +145,13 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
         }
         else if (type == "dungeon")
         {
-            str += gc.dungeonList[id].unlock == true ? "已开放" : "未开放";
+            switch (gc.dungeonList[id].stage)
+            {
+                case DungeonStage.Open: str += "可探索"; break;
+                case DungeonStage.OpenUp: str += "开拓中"; break;
+                case DungeonStage.Done: str += "已探索"; break;
+            }
+        
         }
         infoBlock_desText.text = str;
     }
@@ -261,6 +270,69 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     }
 
 
+    public void UpdateDungeonAll()
+    {
+        for (int i = 0; i < DataManager.mDungeonDict.Count; i++)
+        {
+            UpdateDungeonSingle(i);
+        }
+    }
+
+    public void UpdateDungeonSingle(int dungeonID)
+    {
+        if (gc.dungeonList[dungeonID].stage == DungeonStage.Close)
+        {
+            dungeonGo[dungeonID].GetComponent<RectTransform>().localScale = Vector2.zero;
+            return;
+        }
+        for (int i = 0; i < dungeonHeroListGo[dungeonID].transform.childCount; i++)
+        {
+            dungeonHeroListGo[dungeonID].transform.GetChild(i).GetComponent<RectTransform>().localScale = Vector2.zero;
+            heroInGo.Add(dungeonHeroListGo[dungeonID].transform.GetChild(i).gameObject);
+        }
+
+        int heroNum = 0;
+        for (int i = 0; i < gc.dungeonList[dungeonID].teamList.Count; i++)
+        {
+            heroNum += gc.adventureTeamList[gc.dungeonList[dungeonID].teamList[i]].heroIDList.Count;
+            for (int j = 0; j < gc.adventureTeamList[gc.dungeonList[dungeonID].teamList[i]].heroIDList.Count; j++)
+            {
+                
+            }
+        }
+
+        if (heroNum > 0)
+        {
+            int index = 0;
+            GameObject go;
+            for (int i = 0; i < gc.dungeonList[dungeonID].teamList.Count; i++)
+            {
+                for (int j = 0; j < gc.adventureTeamList[gc.dungeonList[dungeonID].teamList[i]].heroIDList.Count; j++)
+                {
+                    if (heroInGo.Count > 0)
+                    {
+                        go = heroInGo[0];
+                        heroInGo[0].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+                        heroInGo.RemoveAt(0);
+                    }
+                    else
+                    {
+                        go = Instantiate(Resources.Load("Prefab/UILabel/Label_AreaMapHeroIn")) as GameObject;
+                    }
+                    go.transform.SetParent(dungeonHeroListGo[dungeonID].transform);
+                    go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + index * 26f, -4);
+
+                    go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + gc.heroDic[gc.adventureTeamList[gc.dungeonList[dungeonID].teamList[i]].heroIDList[j]].pic + "/Pic");
+                    index++;
+                }
+            }
+            dungeonHeroListGo[dungeonID].transform.GetComponent<RectTransform>().sizeDelta = new Vector2(6f + heroNum * 26f, 36f);
+        }
+        else
+        {
+            dungeonHeroListGo[dungeonID].transform.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+        }
+    }
 
     //    GameObject go;
 

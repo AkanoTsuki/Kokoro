@@ -3268,10 +3268,16 @@ public class GameControl : MonoBehaviour
         adventureTeamList[teamID].state = AdventureState.Doing;
         adventureTeamList[teamID].action = AdventureAction.Walk;
 
+        dungeonList[adventureTeamList[teamID].dungeonID].teamList.Add(teamID);
+        AreaMapPanel.Instance.UpdateDungeonSingle(adventureTeamList[teamID].dungeonID);
+
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);//下面代码包括了
         AdventureMainPanel.Instance.UpdateTeam(teamID);
 
         PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
+
+
+
         CreateAdventureEvent(teamID);
     }
 
@@ -3294,6 +3300,9 @@ public class GameControl : MonoBehaviour
 
         adventureTeamList[teamID].state = adventureState;
         adventureTeamList[teamID].action = AdventureAction.None;
+
+        dungeonList[adventureTeamList[teamID].dungeonID].teamList.Remove(teamID);
+        AreaMapPanel.Instance.UpdateDungeonSingle(adventureTeamList[teamID].dungeonID);
 
         AdventureMainPanel.Instance.UpdateTeam(teamID);
         for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)

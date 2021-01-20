@@ -440,7 +440,7 @@ public class AdventureMainPanel : BasePanel
         List<int> dungeonID = new List<int> { };
         for (int i = 0; i < gc.dungeonList.Count; i++)
         {
-            if (gc.dungeonList[i].unlock)
+            if (gc.dungeonList[i].stage!= DungeonStage.Close)
             {
                 dungeonID.Add(i);
             }

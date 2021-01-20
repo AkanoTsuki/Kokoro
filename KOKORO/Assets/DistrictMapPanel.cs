@@ -363,7 +363,6 @@ public class DistrictMapPanel : BasePanel
         bool can = true;
         for (int i = 0; i < x.Count; i++)
         {
-
             string index = gc.nowCheckingDistrictID + "_" + x[i] + "," + y[i];
             if (gc.districtGridDic[gc.nowCheckingDistrictID].ContainsKey(index))
             {
