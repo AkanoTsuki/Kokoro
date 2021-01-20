@@ -75,7 +75,8 @@ public enum LabelType
     DungeonInAdventure,
     AdventureTeam,
     AdventurePart,
-    Skill
+    Skill,
+   // AreaMapDistrict
 }
 
 public enum Element
@@ -630,6 +631,28 @@ public class AreaPathPointPrototype
     public short ID;
     public int X;
     public int Y;
+}
+
+public class TravellerObject
+{
+    private string Pic;
+    private List<int> PathPointList;
+    private int NowPointIndex;
+    private float X;
+    private float Y;
+    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y)
+    {
+        this.Pic = pic;
+        this.PathPointList = pathPointList;
+        this.NowPointIndex = nowPointIndex;
+        this.X = x;
+        this.Y = y;
+    }
+    public string pic { get { return Pic; }  }
+    public List<int> pathPointList { get { return PathPointList; } }
+    public int nowPointIndex { get { return NowPointIndex; } set { NowPointIndex = value; } }
+    public float x { get { return X; } set { X = value; } }
+    public float y { get { return Y; } set { Y = value; } }
 }
 
 //英雄原型T

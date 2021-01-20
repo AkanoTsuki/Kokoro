@@ -10,8 +10,18 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     GameControl gc;
     public GameObject roadGo;
     public GameObject travellerGo;
-
     public GameObject wallGo;
+
+    public RectTransform infoBlockRt;
+    public Text infoBlock_desText;
+    public Button infoBlock_GotoBtn;
+    public Button infoBlock_DetailBtn;
+    public Button infoBlock_ManagerBtn;
+   // public Button infoBlock_closeBtn;
+
+    public List<GameObject> districtGo;
+    public List<Image> districtForceImage;
+    public List<GameObject> districtHeroListGo;
 
 
     Vector3 offset;
@@ -28,6 +38,10 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public List<GameObject> pathPoint;//TODO：开发阶段用
 
     public List<GameObject> travellerGoPool = new List<GameObject>();
+    List<GameObject> heroInGo = new List<GameObject>();
+
+    public string infoBlockType = "";
+    public int infoBlockID = -1;
 
     void Awake()
     {
@@ -67,17 +81,90 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnShow( int x, int y)
     {
 
-        //for (int i = 0; i < gc.buildingDic.Count; i++)
-        //{
-        //    AddIconByBuilding(gc.buildingDic[i].id);
-        //}
         SetAnchoredPosition(x, y);
-        //ShowByImmediately(true);
+        UpdateDistrictAll();
+        SetTraveller();
+        HideInfoBlock();
     }
 
-   public void CreateTraveller(int StartDistrict, int EndDistrict,string pic, List<int> heroID)
+    public void ShowInfoBlock(string type, int id,int x, int y)
     {
-        List<int> pathList = DataManager.mAreaPathDict[StartDistrict + "-" + EndDistrict].Path;
+        if (infoBlockType == type && infoBlockID == id)
+        {
+            HideInfoBlock();
+            return;
+        }
+        infoBlockType = type;
+        infoBlockID = id;
+        infoBlockRt.anchoredPosition = new Vector2(x, y);
+
+        string str = "";
+        if (type == "district")
+        {
+            str += gc.districtDic[id].level+ "级据点\n<color=#EFDDB1>设施</color> " + gc.districtDic[id].buildingList.Count+ "   <color=#EFDDB1>人口</color> " + gc.districtDic[id].people+"/"+ gc.districtDic[id].peopleLimit+"\n";
+            if (gc.districtDic[id].isOwn)
+            {
+                str += "<color=#EFDDB1>领主</color> " + gc.heroDic[0].name + "(己方)";
+
+                infoBlock_GotoBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                infoBlock_GotoBtn.onClick.RemoveAllListeners();
+                infoBlock_GotoBtn.onClick.AddListener(delegate () {
+                    /*移动*/
+                });
+
+                infoBlock_ManagerBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                infoBlock_ManagerBtn.onClick.RemoveAllListeners();
+                infoBlock_ManagerBtn.onClick.AddListener(delegate () {
+                    gc.nowCheckingDistrictID = (short)id;
+                    DistrictMapPanel.Instance.OnShow();
+                    HideInfoBlock();
+                });
+
+            }
+            else
+            {
+                infoBlock_ManagerBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+                if (gc.districtDic[id].isOpen)
+                {
+                    str += "已获得通行权";
+                    infoBlock_GotoBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                    infoBlock_GotoBtn.onClick.RemoveAllListeners();
+                    infoBlock_GotoBtn.onClick.AddListener(delegate () {
+                        /*移动*/
+                    });
+                }
+                else
+                {
+                    str += "未获得通行权";
+                    infoBlock_GotoBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+                }
+            }
+        }
+        else if (type == "dungeon")
+        {
+            str += gc.dungeonList[id].unlock == true ? "已开放" : "未开放";
+        }
+        infoBlock_desText.text = str;
+    }
+
+    public void HideInfoBlock()
+    {
+        infoBlockType = "";
+        infoBlockID = -1;
+        infoBlockRt.anchoredPosition = new Vector2(0, 5000);
+    }
+
+    public void SetTraveller()
+    {
+        foreach (KeyValuePair<int, TravellerObject> kvp in gc.travellerDic)
+        {
+            CreateTraveller(kvp.Key, kvp.Value.pathPointList, kvp.Value.nowPointIndex, kvp.Value.pic, new List<int> { });
+        }
+    }
+
+    public void CreateTraveller(int travellerID, List<int> pathList,int nowPointIndex, string pic, List<int> heroID)
+    {
+      //  List<int> pathList = DataManager.mAreaPathDict[StartDistrict + "-" + EndDistrict].Path;
 
         GameObject go;
 
@@ -93,19 +180,85 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
             go.transform.SetParent(travellerGo.transform);
         }
 
-        go.name = "FROM" + StartDistrict + "TO" + EndDistrict;
+        go.name = "Traveller_" + travellerID ;
 
 
-        go.GetComponent<RectTransform>().anchoredPosition = new Vector2(DataManager.mAreaPathPointDict[pathList[0]].X, DataManager.mAreaPathPointDict[pathList[0]].Y);
+        //go.GetComponent<RectTransform>().anchoredPosition = new Vector2(DataManager.mAreaPathPointDict[pathList[nowPointIndex]].X, DataManager.mAreaPathPointDict[pathList[nowPointIndex]].Y);
+        go.GetComponent<AnimatiorControlByTraveller>().travellerID=  travellerID;
         go.GetComponent<AnimatiorControlByTraveller>().pathPointList = pathList;
         go.GetComponent<AnimatiorControlByTraveller>().SetCharaFrames(pic);
-        go.GetComponent<AnimatiorControlByTraveller>().StartMove();
+        go.GetComponent<AnimatiorControlByTraveller>().nowPointIndex = nowPointIndex;
+
+        if (nowPointIndex == 0)
+        {
+            go.GetComponent<AnimatiorControlByTraveller>().StartMove();
+        }
+        else
+        {
+            go.GetComponent<AnimatiorControlByTraveller>().ContinueMove();
+        }
 
     }
 
+    public void UpdateDistrictAll()
+    {
+        for (int i = 0; i < DataManager.mDistrictDict.Count; i++)
+        {
+            UpdateDistrictSingle(i);
+        }
+    }
+
+    public void UpdateDistrictSingle(int districtID)
+    {
+        districtGo[districtID].GetComponent<Button>().onClick.RemoveAllListeners();
+        districtGo[districtID].GetComponent<Button>().onClick.AddListener(delegate () { ShowInfoBlock("district", districtID,(int)( districtGo[districtID].GetComponent<RectTransform>().anchoredPosition.x+60f),(int)( districtGo[districtID].GetComponent<RectTransform>().anchoredPosition.y)); });
 
 
+        if (gc.districtDic[districtID].isOwn)
+        {
+            districtForceImage[districtID].sprite = Resources.Load<Sprite>("Image/Other/icon834");
+        }
+        else
+        {
+            districtForceImage[districtID].sprite = Resources.Load<Sprite>("Image/Empty");
+        }
 
+        for (int i = 0; i < districtHeroListGo[districtID].transform.childCount; i++)
+        {
+            districtHeroListGo[districtID].transform.GetChild(i).GetComponent<RectTransform>().localScale = Vector2.zero;
+            heroInGo.Add(districtHeroListGo[districtID].transform.GetChild(i).gameObject);
+        }
+
+        if (gc.districtDic[districtID].heroList.Count > 0)
+        {
+            GameObject go;
+
+            for (int i = 0; i < gc.districtDic[districtID].heroList.Count; i++)
+            {
+                if (heroInGo.Count > 0)
+                {
+                    go = heroInGo[0];
+                    heroInGo[0].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+                    heroInGo.RemoveAt(0);
+                }
+                else
+                {
+                    go = Instantiate(Resources.Load("Prefab/UILabel/Label_AreaMapHeroIn")) as GameObject;
+                }
+                go.transform.SetParent(districtHeroListGo[districtID].transform);
+                go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + i * 26f, -4);
+
+                go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + gc.heroDic[gc.districtDic[districtID].heroList[i]].pic + "/Pic");
+            }
+
+            districtHeroListGo[districtID].transform.GetComponent<RectTransform>().sizeDelta = new Vector2(6f + gc.districtDic[districtID].heroList.Count * 26f, 36f);
+        }
+        else
+        {
+            districtHeroListGo[districtID].transform.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+
+        }
+    }
 
 
 

@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class AnimatiorControlByTraveller : MonoBehaviour
 {
+    GameControl gc;
+
     private float speed = 30.0f;
     private float fps = 10.0f;
     private float time = 0;
@@ -31,6 +33,7 @@ public class AnimatiorControlByTraveller : MonoBehaviour
     private void Awake()
     {
         rt =transform.GetComponent<RectTransform>();
+        gc = GameObject.Find("GameManager").GetComponent<GameControl>();
     }
 
     void Start()
@@ -129,7 +132,6 @@ public class AnimatiorControlByTraveller : MonoBehaviour
 
     public void SetFaceTo(Vector2 startPos,Vector2 targetPos)
     {
-
         if (System.Math.Abs(startPos.y - targetPos.y) >= System.Math.Abs(startPos.x - targetPos.x))
         {
             if (startPos.y >= targetPos.y)
@@ -152,19 +154,29 @@ public class AnimatiorControlByTraveller : MonoBehaviour
                 SetAnim(AnimStatus.WalkRight);
             }
         }
-       
-       
-
     }
 
     public void StartMove()
     {
-        nowPointIndex = 1;
+        // nowPointIndex = 1;
+        rt.anchoredPosition= new Vector2(DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].X, DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].Y);
+    
+        nowPointIndex++;
+        gc.travellerDic[travellerID].x = rt.anchoredPosition.x;
+        gc.travellerDic[travellerID].y = rt.anchoredPosition.y;
+        gc.travellerDic[travellerID].nowPointIndex = nowPointIndex;
         targetPos = new Vector2(DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].X, DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].Y);
         SetFaceTo(rt.anchoredPosition, targetPos);
         Play();
     }
 
+    public void ContinueMove()
+    {
+        rt.anchoredPosition = new Vector2(gc.travellerDic[travellerID].x,  gc.travellerDic[travellerID].y);
+        targetPos = new Vector2(DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].X, DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].Y);
+        SetFaceTo(rt.anchoredPosition, targetPos);
+        Play();
+    }
 
     public void Move()
     {
@@ -186,35 +198,35 @@ public class AnimatiorControlByTraveller : MonoBehaviour
             {
                 transform.Translate(Vector3.right * speed * Time.deltaTime);
             }
+            gc.travellerDic[travellerID].x = rt.anchoredPosition.x;
+            gc.travellerDic[travellerID].y = rt.anchoredPosition.y;
         }
         else
         {
-           // Debug.Log("接近节点 距离="+ Vector2.Distance(rt.anchoredPosition, targetPos));
             rt.anchoredPosition = targetPos;
             if (nowPointIndex == pathPointList.Count-1)
             {
-                //到达
                 Stop();
                 gameObject.GetComponent<Image>().sprite = walk_DownFrames[2];
                 //MessagePanel.Instance.AddMessage("到达了");
 
                 gameObject.transform.localScale = Vector2.zero;
                 AreaMapPanel.Instance.travellerGoPool.Add(gameObject);
-
+                gc.travellerDic.Remove(travellerID);
             }
             else
             {
-
                 nowPointIndex++;
-
-              //  Debug.Log("nowPointIndex=" + nowPointIndex);
+                gc.travellerDic[travellerID].nowPointIndex = nowPointIndex;
+                //  Debug.Log("nowPointIndex=" + nowPointIndex);
                 targetPos = new Vector2(DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].X, DataManager.mAreaPathPointDict[pathPointList[nowPointIndex]].Y);
               //  Debug.Log("nowPointIndex=" + nowPointIndex+ " targetPos="+ targetPos);
                 SetFaceTo(rt.anchoredPosition, targetPos);
-            }
-     
+                gc.travellerDic[travellerID].x = rt.anchoredPosition.x;
+                gc.travellerDic[travellerID].y = rt.anchoredPosition.y;
+            }    
         }
-
+     
     }
     public void SetTargetPos()
     {

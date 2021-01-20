@@ -287,26 +287,7 @@ public class GameControlInPlay : MonoBehaviour
     {
         if (Random.Range(0, 3) > 0)
         {
-            int heroType = Random.Range(0, DataManager.mHeroDict.Count);
-            string pic = "";
-            int sexCode = Random.Range(0, 2);
-            if (sexCode == 0)
-            {
-                pic = DataManager.mHeroDict[heroType].PicMan[Random.Range(0, DataManager.mHeroDict[heroType].PicMan.Count)];
-            }
-            else
-            {
-                pic = DataManager.mHeroDict[heroType].PicWoman[Random.Range(0, DataManager.mHeroDict[heroType].PicWoman.Count)];
-            }
-
-            int startDistrict = Random.Range(0, 11);
-            int endDistrict = Random.Range(0, 11);
-            while (startDistrict == endDistrict)
-            {
-                endDistrict = Random.Range(0, 11);
-            }
-
-            AreaMapPanel.Instance.CreateTraveller(startDistrict, endDistrict, pic, new List<int> { });
+            gc.CreateTravellerByRandom();
         }
    
     }

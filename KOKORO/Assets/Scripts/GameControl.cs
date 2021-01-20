@@ -29,6 +29,7 @@ public class GameControl : MonoBehaviour
     public int skillIndex = 0;
     public int customerIndex = 0;
     public int buildingIndex = 0;
+    public int travellerIndex = 0;
     public bool[] buildingUnlock = new bool[78];
     public int logIndex = 0;
     public string playerName = "AAA";
@@ -47,6 +48,7 @@ public class GameControl : MonoBehaviour
     public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
     public Dictionary<string, CustomerRecordObject> customerRecordDic = new Dictionary<string, CustomerRecordObject>();
     public Dictionary<int, TechnologyObject> technologyDic = new Dictionary<int, TechnologyObject>();
+    public Dictionary<int, TravellerObject> travellerDic = new Dictionary<int, TravellerObject>();
     /// <summary>
     /// 用作存档的数据类
     /// </summary>
@@ -71,6 +73,7 @@ public class GameControl : MonoBehaviour
         public int skillIndex = 0;
         public int customerIndex = 0;
         public int buildingIndex = 0;
+        public int travellerIndex = 0;
         public bool[] buildingUnlock = new bool[78];
         public int logIndex = 0;
         public string playerName = "";
@@ -89,6 +92,7 @@ public class GameControl : MonoBehaviour
         public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
         public Dictionary<string, CustomerRecordObject> customerRecordDic = new Dictionary<string, CustomerRecordObject>();
         public Dictionary<int, TechnologyObject> technologyDic = new Dictionary<int, TechnologyObject>();
+        public Dictionary<int, TravellerObject> travellerDic = new Dictionary<int, TravellerObject>();
     }
 
 
@@ -121,6 +125,7 @@ public class GameControl : MonoBehaviour
         t.skillIndex = this.skillIndex;
         t.customerIndex = this.customerIndex;
         t.buildingIndex = this.buildingIndex;
+        t.travellerIndex = this.travellerIndex;
         t.buildingUnlock = this.buildingUnlock;
         t.logIndex = this.logIndex;
         t.playerName = this.playerName;
@@ -139,6 +144,7 @@ public class GameControl : MonoBehaviour
         t.customerDic = this.customerDic;
         t.customerRecordDic = this.customerRecordDic;
         t.technologyDic = this.technologyDic;
+        t.travellerDic = this.travellerDic;
         //保存数据
         IOHelper.SetData(filename, t);
     }
@@ -177,6 +183,7 @@ public class GameControl : MonoBehaviour
             this.skillIndex = t1.skillIndex;
             this.customerIndex = t1.customerIndex;
             this.buildingIndex = t1.buildingIndex;
+            this.travellerIndex = t1.travellerIndex;
             this.buildingUnlock = t1.buildingUnlock;
             this.logIndex = t1.logIndex;
             this.playerName = t1.playerName;
@@ -195,6 +202,7 @@ public class GameControl : MonoBehaviour
             this.customerDic = t1.customerDic;
             this.customerRecordDic = t1.customerRecordDic;
             this.technologyDic = t1.technologyDic;
+            this.travellerDic = t1.travellerDic;
         }
         else
         {
@@ -5413,6 +5421,41 @@ public class GameControl : MonoBehaviour
             }
         }
         executeEventList.Add(executeEventObject);
+    }
+    #endregion
+
+    #region 【方法】大地图旅人
+    public void CreateTravellerByRandom()
+    {
+        int heroType = Random.Range(0, DataManager.mHeroDict.Count);
+        string pic;
+        int sexCode = Random.Range(0, 2);
+        if (sexCode == 0)
+        {
+            pic = DataManager.mHeroDict[heroType].PicMan[Random.Range(0, DataManager.mHeroDict[heroType].PicMan.Count)];
+        }
+        else
+        {
+            pic = DataManager.mHeroDict[heroType].PicWoman[Random.Range(0, DataManager.mHeroDict[heroType].PicWoman.Count)];
+        }
+
+        int startDistrict = Random.Range(0, 11);
+        int endDistrict = Random.Range(0, 11);
+        while (startDistrict == endDistrict)
+        {
+            endDistrict = Random.Range(0, 11);
+        }
+        List<int> pathList = DataManager.mAreaPathDict[startDistrict + "-" + endDistrict].Path;
+        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0));
+        AreaMapPanel.Instance.CreateTraveller(travellerIndex, pathList,0, pic, new List<int> { });
+        travellerIndex++;
+    }
+
+    public void CreateTravellerByHero(List<int> heroID, int startDistrict, int endDistrict)
+    {
+        string pic = heroDic[heroID[0]].pic;
+
+        //AreaMapPanel.Instance.CreateTraveller(startDistrict, endDistrict, pic, heroID);
     }
     #endregion
 
