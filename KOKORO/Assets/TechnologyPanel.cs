@@ -302,7 +302,7 @@ public class TechnologyPanel : BasePanel
             districtGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
 
-        selectBuildingBlockRt.sizeDelta = new Vector2(320f, Mathf.Max(180f, 130+ (districtObjects.Count / 4) * 50f));
+        selectBuildingBlockRt.sizeDelta = new Vector2(320f, Mathf.Max(200f, 150+ (districtObjects.Count / 4) * 50f));
 
 
         if (districtObjects.Count > 0)

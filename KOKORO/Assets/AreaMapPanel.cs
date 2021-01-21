@@ -116,6 +116,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                 });
 
                 infoBlock_ManagerBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                infoBlock_ManagerBtn.transform.GetChild(0).GetComponent<Text>().text = "管理";
                 infoBlock_ManagerBtn.onClick.RemoveAllListeners();
                 infoBlock_ManagerBtn.onClick.AddListener(delegate () {
                     gc.nowCheckingDistrictID = (short)id;
@@ -126,7 +127,23 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
             }
             else
             {
-                infoBlock_ManagerBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+                if (gc.districtDic[id].heroList.Count > 0)
+                {
+                    infoBlock_ManagerBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                    infoBlock_ManagerBtn.transform.GetChild(0).GetComponent<Text>().text = "访问";
+                    infoBlock_ManagerBtn.onClick.RemoveAllListeners();
+                    infoBlock_ManagerBtn.onClick.AddListener(delegate ()
+                    {
+                        gc.nowCheckingDistrictID = (short)id;
+                        DistrictMapPanel.Instance.OnShow();
+                        HideInfoBlock();
+                    });
+                }
+                else
+                {
+                    infoBlock_ManagerBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+                }
+               
                 if (gc.districtDic[id].isOpen)
                 {
                     str += "已获得通行权";
@@ -135,12 +152,19 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                     infoBlock_GotoBtn.onClick.AddListener(delegate () {
                         /*移动*/
                     });
+
+
                 }
                 else
                 {
                     str += "未获得通行权";
                     infoBlock_GotoBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
+            }
+
+            if (gc.districtDic[id].heroList.Count > 0)
+            {
+                str += "\n<color=#EFDDB1>派驻英雄</color> " + gc.districtDic[id].heroList.Count;
             }
         }
         else if (type == "dungeon")
@@ -167,7 +191,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     {
         foreach (KeyValuePair<int, TravellerObject> kvp in gc.travellerDic)
         {
-            CreateTraveller(kvp.Key, kvp.Value.pathPointList, kvp.Value.nowPointIndex, kvp.Value.pic, new List<int> { });
+            CreateTraveller(kvp.Key, kvp.Value.pathPointList, kvp.Value.nowPointIndex, kvp.Value.pic, kvp.Value.heroList);
         }
     }
 

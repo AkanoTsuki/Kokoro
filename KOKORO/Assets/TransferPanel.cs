@@ -100,7 +100,7 @@ public class TransferPanel : BasePanel
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + row * 154f, -4 + col * -52f);
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/"+ heroObjects[i].pic + "/Pic" );
             go.transform.GetChild(1).GetComponent<Text>().text= heroObjects[i].name ;
-            string str = "Lv." + heroObjects[i].level + "<color=#" + DataManager.mHeroDict[heroObjects[i].prototypeID].Color + ">" + DataManager.mHeroDict[heroObjects[i].prototypeID].Name + "</color>+\n";
+            string str = "Lv." + heroObjects[i].level + "<color=#" + DataManager.mHeroDict[heroObjects[i].prototypeID].Color + ">" + DataManager.mHeroDict[heroObjects[i].prototypeID].Name + "</color>\n";
             if (heroObjects[i].workerInBuilding != -1)
             {
                 str += "[" + gc.buildingDic[heroObjects[i].workerInBuilding].name + "工作]";
@@ -244,7 +244,7 @@ public class TransferPanel : BasePanel
         {
             districtGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
-        list_districtGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(512f, Mathf.Max(100f,  (districtObjects.Count / 6) * 100f));
+        list_districtGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(512f, Mathf.Max(100f, 100+ (districtObjects.Count / 6) * 100f));
     }
 
     public void UpdateDistrictListSingle(short districtID)

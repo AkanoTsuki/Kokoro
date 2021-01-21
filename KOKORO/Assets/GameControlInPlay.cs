@@ -76,6 +76,15 @@ public class GameControlInPlay : MonoBehaviour
             gc.CustomerCome(gc.nowCheckingDistrictID);
         
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
+            {
+                Debug.Log(kvp.Value.name + " inDistrict=" + kvp.Value.inDistrict);
+                Debug.Log(" gc.districtDic[ kvp.Value.inDistrict].heroList.Count=" + gc.districtDic[ kvp.Value.inDistrict].heroList.Count);
+            }
+
+        }
     }
     public void TimeFlow()
     {

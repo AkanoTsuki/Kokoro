@@ -5477,6 +5477,17 @@ public class GameControl : MonoBehaviour
 
     public void Transfer(short startDistrictID, short endDistrictID,List<int> heroList)
     {
+        if (endDistrictID == -1)
+        {
+            MessagePanel.Instance.AddMessage("未指定目的地");
+            return;
+        }
+        if (heroList.Count == 0)
+        {
+            MessagePanel.Instance.AddMessage("未选择移动的角色");
+            return;
+        }
+
         for (int i = 0; i < heroList.Count; i++)
         {
             districtDic[startDistrictID].heroList.Remove(heroList[i]);
@@ -5495,10 +5506,17 @@ public class GameControl : MonoBehaviour
         travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, heroList, endDistrictID));
         AreaMapPanel.Instance.CreateTraveller(travellerIndex, pathList, 0, pic, heroList);
         travellerIndex++;
+
+        TransferPanel.Instance.OnHide();
+        if (!districtDic[startDistrictID].isOwn && districtDic[startDistrictID].heroList.Count == 0)
+        {
+            DistrictMapPanel.Instance.OnHide();
+        }
     }
 
     public void TransferDone(int travellerID)
     {
+        Debug.Log("TransferDone() travellerDic[travellerID].heroList.Count=" + travellerDic[travellerID].heroList.Count);
         for (int i = 0; i < travellerDic[travellerID].heroList.Count; i++)
         {
             districtDic[travellerDic[travellerID].endDistrictID].heroList.Add(travellerDic[travellerID].heroList[i]);

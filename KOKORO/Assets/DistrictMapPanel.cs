@@ -267,14 +267,23 @@ public class DistrictMapPanel : BasePanel
 
         HideResourcesBlock();
         HideCustomerInfo();
+
         UpdateBaselineResourcesText(gc.nowCheckingDistrictID);
         UpdateBaselineElementText(gc.nowCheckingDistrictID);
         ChangeSkyColor();
-        UpdateButtonItemNum(gc.nowCheckingDistrictID);
-        UpdateButtonScrollNum(gc.nowCheckingDistrictID);
-        isShow = true;
+
+        if (gc.districtDic[gc.nowCheckingDistrictID].isOwn)
+        {    
+            UpdateButtonItemNum(gc.nowCheckingDistrictID);
+            UpdateButtonScrollNum(gc.nowCheckingDistrictID);
+        }
+        SetFunctionButton(gc.districtDic[gc.nowCheckingDistrictID].isOwn);
+
+
 
         InvokeRepeating("UpdateBar", 0, 0.2f);
+
+        isShow = true;
     }
     public override void OnHide()
     {
@@ -301,6 +310,26 @@ public class DistrictMapPanel : BasePanel
 
         CancelInvoke("UpdateBar");
     }
+
+    void SetFunctionButton(bool isOwn)
+    {
+        if (isOwn)
+        {
+            left_inventoryMainBtn.transform.localScale = Vector2.one;
+            left_inventoryScrollBtn.transform.localScale = Vector2.one;
+            left_marketBtn.transform.localScale = Vector2.one;
+            left_buildBtn.transform.localScale = Vector2.one;
+        }
+        else
+        {
+            left_inventoryMainBtn.transform.localScale = Vector2.zero;
+            left_inventoryScrollBtn.transform.localScale = Vector2.zero;
+            left_marketBtn.transform.localScale = Vector2.zero;
+            left_buildBtn.transform.localScale = Vector2.zero;
+        }
+
+    }
+
 
     public void UpdateBasicInfo()
     {
@@ -637,9 +666,18 @@ public class DistrictMapPanel : BasePanel
 
     public void UpdateBaselineResourcesText(short districtID)
     {
-        bottom_baseline_resourcesFoodText.text = gc.GetDistrictFoodAll(districtID) + "/" + gc.districtDic[districtID].rFoodLimit;
-        bottom_baseline_resourcesStuffText.text = gc.GetDistrictStuffAll(districtID) + "/" + gc.districtDic[districtID].rStuffLimit;
-        bottom_baseline_resourcesProductText.text = gc.GetDistrictProductAll(districtID)+ "<color=#92FF9D>[" + gc.GetDistrictProductGoodsAll(districtID) + "]</color>/" + gc.districtDic[districtID].rProductLimit;
+        if (gc.districtDic[districtID].isOwn)
+        {
+            bottom_baseline_resourcesFoodText.text = gc.GetDistrictFoodAll(districtID) + "/" + gc.districtDic[districtID].rFoodLimit;
+            bottom_baseline_resourcesStuffText.text = gc.GetDistrictStuffAll(districtID) + "/" + gc.districtDic[districtID].rStuffLimit;
+            bottom_baseline_resourcesProductText.text = gc.GetDistrictProductAll(districtID) + "<color=#92FF9D>[" + gc.GetDistrictProductGoodsAll(districtID) + "]</color>/" + gc.districtDic[districtID].rProductLimit;
+        }
+        else
+        {
+            bottom_baseline_resourcesFoodText.text = "-";
+            bottom_baseline_resourcesStuffText.text = "-";
+            bottom_baseline_resourcesProductText.text = "-";
+        }
     }
     public void UpdateBaselineElementText(short districtID)
     {      
@@ -685,6 +723,12 @@ public class DistrictMapPanel : BasePanel
     }
     public void ShowResourcesBlock(short districtID)
     {
+        if (!gc.districtDic[districtID].isOwn)
+        {
+            return;
+        }
+
+
         if (BuildPanel.Instance.isShow)
         {
             BuildPanel.Instance.OnHide();
