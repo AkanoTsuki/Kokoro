@@ -23,7 +23,8 @@ public enum UIPanelType
     Market,
     SupplyAndDemand,
     DistrictMap,
-    Technology
+    Technology,
+    Transfer
 
 
 }

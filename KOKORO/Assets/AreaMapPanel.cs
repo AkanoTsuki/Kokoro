@@ -191,7 +191,14 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
         go.name = "Traveller_" + travellerID ;
 
-
+        if (heroID.Count > 0)
+        {
+            go.transform.GetChild(0).localScale = Vector2.one;
+        }
+        else
+        {
+            go.transform.GetChild(0).localScale = Vector2.zero;
+        }
         //go.GetComponent<RectTransform>().anchoredPosition = new Vector2(DataManager.mAreaPathPointDict[pathList[nowPointIndex]].X, DataManager.mAreaPathPointDict[pathList[nowPointIndex]].Y);
         go.GetComponent<AnimatiorControlByTraveller>().travellerID=  travellerID;
         go.GetComponent<AnimatiorControlByTraveller>().pathPointList = pathList;
@@ -258,6 +265,22 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                 go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + i * 26f, -4);
 
                 go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + gc.heroDic[gc.districtDic[districtID].heroList[i]].pic + "/Pic");
+
+                if (gc.heroDic[gc.districtDic[districtID].heroList[i]].adventureInTeam != -1)
+                {
+                    if (gc.adventureTeamList[gc.heroDic[gc.districtDic[districtID].heroList[i]].adventureInTeam].state == AdventureState.Doing)
+                    {
+                        go.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
+                    }
+                    else
+                    {
+                        go.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                    }
+                }
+                else
+                {
+                    go.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                }
             }
 
             districtHeroListGo[districtID].transform.GetComponent<RectTransform>().sizeDelta = new Vector2(6f + gc.districtDic[districtID].heroList.Count * 26f, 36f);
@@ -280,6 +303,9 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void UpdateDungeonSingle(int dungeonID)
     {
+        dungeonGo[dungeonID].GetComponent<Button>().onClick.RemoveAllListeners();
+        dungeonGo[dungeonID].GetComponent<Button>().onClick.AddListener(delegate () { ShowInfoBlock("dungeon", dungeonID, (int)(dungeonGo[dungeonID].GetComponent<RectTransform>().anchoredPosition.x + 60f), (int)(dungeonGo[dungeonID].GetComponent<RectTransform>().anchoredPosition.y)); });
+
         if (gc.dungeonList[dungeonID].stage == DungeonStage.Close)
         {
             dungeonGo[dungeonID].GetComponent<RectTransform>().localScale = Vector2.zero;

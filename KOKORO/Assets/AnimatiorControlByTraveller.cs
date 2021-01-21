@@ -212,6 +212,11 @@ public class AnimatiorControlByTraveller : MonoBehaviour
 
                 gameObject.transform.localScale = Vector2.zero;
                 AreaMapPanel.Instance.travellerGoPool.Add(gameObject);
+
+                if (gc.travellerDic[travellerID].heroList.Count>0)
+                {
+                    gc.TransferDone(travellerID);
+                }
                 gc.travellerDic.Remove(travellerID);
             }
             else

@@ -267,13 +267,13 @@ public class GameControl : MonoBehaviour
         HeroPanel.Instance.UpdateBasicInfo(heroDic[heroID]);
     }
 
-    public void CreateHero(short pid)
+    public void CreateHero(short pid, short districtID)
     {
-        heroDic.Add(heroIndex, GenerateHeroByRandom(heroIndex, pid, (byte)Random.Range(0, 2)));
+        heroDic.Add(heroIndex, GenerateHeroByRandom(heroIndex, pid, (byte)Random.Range(0, 2), districtID));
         heroIndex++;
     }
 
-    public HeroObject GenerateHeroByRandom(int heroID, short heroTypeID, byte sexCode)
+    public HeroObject GenerateHeroByRandom(int heroID, short heroTypeID, byte sexCode,short districtID)
     {
         string name;
         string pic;
@@ -341,7 +341,7 @@ public class GameControl : MonoBehaviour
             (short)hp, (short)mp,  atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, 
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workMakeScroll, workSundry,
-          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, -1, -1,
+          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, -1, -1, districtID,
           0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, new Dictionary<short, HeroSkill>(),new List<string> { });
 
     }
@@ -3271,6 +3271,19 @@ public class GameControl : MonoBehaviour
         dungeonList[adventureTeamList[teamID].dungeonID].teamList.Add(teamID);
         AreaMapPanel.Instance.UpdateDungeonSingle(adventureTeamList[teamID].dungeonID);
 
+        List<short> needUpdateDistrict = new List<short>();
+        for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
+        {
+            if (!needUpdateDistrict.Contains(heroDic[adventureTeamList[teamID].heroIDList[i]].inDistrict))
+            {
+                needUpdateDistrict.Add(heroDic[adventureTeamList[teamID].heroIDList[i]].inDistrict);
+            }
+        }
+        for (int i = 0; i < needUpdateDistrict.Count; i++)
+        {
+            AreaMapPanel.Instance.UpdateDistrictSingle(needUpdateDistrict[i]);
+        }
+
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);//下面代码包括了
         AdventureMainPanel.Instance.UpdateTeam(teamID);
 
@@ -5433,7 +5446,67 @@ public class GameControl : MonoBehaviour
     }
     #endregion
 
-    #region 【方法】大地图旅人
+    #region 【方法】大地图旅人、移动
+    public void SetTransferHero(int heroID)
+    {
+        if (TransferPanel.Instance.selectedHeroID.Contains(heroID))
+        {
+            TransferPanel.Instance.selectedHeroID.Remove(heroID);
+        }
+        else
+        {
+            TransferPanel.Instance.selectedHeroID.Add(heroID);
+        }
+        TransferPanel.Instance.UpdateHeroNum();
+        TransferPanel.Instance.UpdateHeroListSingle(heroID);
+    }
+
+    public void SetTransferDistrict(short districtID)
+    {
+        short old = TransferPanel.Instance.selectedDistrict;
+        TransferPanel.Instance.selectedDistrict = districtID;
+
+        if (old != -1)
+        {
+            TransferPanel.Instance.UpdateDistrictListSingle(old);
+        }
+
+        TransferPanel.Instance.UpdateDistrictListSingle(districtID);
+    }
+
+
+    public void Transfer(short startDistrictID, short endDistrictID,List<int> heroList)
+    {
+        for (int i = 0; i < heroList.Count; i++)
+        {
+            districtDic[startDistrictID].heroList.Remove(heroList[i]);
+            heroDic[heroList[i]].inDistrict = -1;
+
+            if (heroDic[heroList[i]].workerInBuilding != -1)
+            {
+                buildingDic[heroDic[heroList[i]].workerInBuilding].heroList.Remove(heroList[i]);
+                heroDic[heroList[i]].workerInBuilding = -1;
+            }
+        }
+        AreaMapPanel.Instance.UpdateDistrictSingle(startDistrictID);
+
+        string pic = heroDic[heroList[0]].pic;
+        List<int> pathList = DataManager.mAreaPathDict[startDistrictID + "-" + endDistrictID].Path;
+        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, heroList, endDistrictID));
+        AreaMapPanel.Instance.CreateTraveller(travellerIndex, pathList, 0, pic, heroList);
+        travellerIndex++;
+    }
+
+    public void TransferDone(int travellerID)
+    {
+        for (int i = 0; i < travellerDic[travellerID].heroList.Count; i++)
+        {
+            districtDic[travellerDic[travellerID].endDistrictID].heroList.Add(travellerDic[travellerID].heroList[i]);
+            heroDic[travellerDic[travellerID].heroList[i]].inDistrict = travellerDic[travellerID].endDistrictID;
+        }
+        AreaMapPanel.Instance.UpdateDistrictSingle(travellerDic[travellerID].endDistrictID);
+    }
+
     public void CreateTravellerByRandom()
     {
         int heroType = Random.Range(0, DataManager.mHeroDict.Count);
@@ -5455,7 +5528,7 @@ public class GameControl : MonoBehaviour
             endDistrict = Random.Range(0, 11);
         }
         List<int> pathList = DataManager.mAreaPathDict[startDistrict + "-" + endDistrict].Path;
-        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0));
+        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, new List<int> { },(short) endDistrict));
         AreaMapPanel.Instance.CreateTraveller(travellerIndex, pathList,0, pic, new List<int> { });
         travellerIndex++;
     }

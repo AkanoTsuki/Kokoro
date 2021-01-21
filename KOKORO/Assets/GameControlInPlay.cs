@@ -38,7 +38,7 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.Market);
         UIManager.Instance.InitPanel(UIPanelType.SupplyAndDemand);
         UIManager.Instance.InitPanel(UIPanelType.Technology);
-
+        UIManager.Instance.InitPanel(UIPanelType.Transfer);
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
             if (gc.adventureTeamList[i].action == AdventureAction.Fight)
@@ -60,7 +60,7 @@ public class GameControlInPlay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-           gc.skillDic.Add(gc.skillIndex , gc.GenerateSkillByRandom((short)Random.Range(0,DataManager.mSkillDict.Count),0));
+           gc.skillDic.Add(gc.skillIndex , gc.GenerateSkillByRandom((short)Random.Range(0,DataManager.mSkillDict.Count),1));
             gc.skillIndex++;
         }
         if (Input.GetKeyDown(KeyCode.E))
@@ -380,6 +380,17 @@ public class GameControlInPlay : MonoBehaviour
         }
     }
 
+    public void OpenTransfer()
+    {
+        if (TransferPanel.Instance.isShow)
+        {
+            TransferPanel.Instance.OnHide();
+        }
+        else
+        {
+            TransferPanel.Instance.OnShow(gc.nowCheckingDistrictID);
+        }
+    }
 
     public void OpenTechnology()
     {

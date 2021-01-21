@@ -647,19 +647,25 @@ public class TravellerObject
     private int NowPointIndex;
     private float X;
     private float Y;
-    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y)
+    private List<int> HeroList;
+    short EndDistrictID;
+    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y, List<int> heroList, short endDistrictID)
     {
         this.Pic = pic;
         this.PathPointList = pathPointList;
         this.NowPointIndex = nowPointIndex;
         this.X = x;
         this.Y = y;
+        this.HeroList = heroList;
+        this.EndDistrictID = endDistrictID;
     }
     public string pic { get { return Pic; }  }
     public List<int> pathPointList { get { return PathPointList; } }
     public int nowPointIndex { get { return NowPointIndex; } set { NowPointIndex = value; } }
     public float x { get { return X; } set { X = value; } }
     public float y { get { return Y; } set { Y = value; } }
+    public List<int> heroList { get { return HeroList; }  }
+    public short endDistrictID { get { return EndDistrictID; } }
 }
 
 //英雄原型T
@@ -821,6 +827,7 @@ public class HeroObject
     private List<int> Skill;
     private int WorkerInBuilding;
     private short AdventureInTeam;
+    private short InDistrict;
     private int CountMakeWeapon;
     private int CountMakeArmor;
     private int CountMakeJewelry;
@@ -851,7 +858,7 @@ public class HeroObject
         byte workMakeWeapon, byte workMakeArmor, byte workMakeJewelry, byte workMakeScroll,
         byte workSundry,
         int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<int> skill,
-        int workerInBuilding, short adventureInTeam,
+        int workerInBuilding, short adventureInTeam, short inDistrict,
         int countMakeWeapon, int countMakeArmor, int countMakeJewelry, int countMakeScroll, int countKill, int countDeath, int countAdventure, int countAdventureDone,
         int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone, Dictionary<short, HeroSkill> skillInfo, List<string> log
         )
@@ -936,6 +943,7 @@ public class HeroObject
         this.Skill = skill;
         this.WorkerInBuilding = workerInBuilding;
         this.AdventureInTeam = adventureInTeam;
+        this.InDistrict = inDistrict;
         this.CountMakeWeapon = countMakeWeapon;
         this.CountMakeArmor = countMakeArmor;
         this.CountMakeJewelry = countMakeJewelry;
@@ -1035,6 +1043,7 @@ public class HeroObject
     public List<int> skill { get { return Skill; } set { Skill = value; } }
     public int workerInBuilding { get { return WorkerInBuilding; } set { WorkerInBuilding = value; } }
     public short adventureInTeam { get { return AdventureInTeam; } set { AdventureInTeam = value; } }
+    public short inDistrict { get { return InDistrict; } set { InDistrict = value; } }
 
     public int countMakeWeapon { get { return CountMakeWeapon; } set { CountMakeWeapon = value; } }
     public int countMakeArmor { get { return CountMakeArmor; } set { CountMakeArmor = value; } }
@@ -1104,6 +1113,7 @@ public class DistrictPrototype
     public short EGround;
     public short ELight;
     public short EDark;
+    public List<short> DungeonList;
 }
 
 [System.Serializable]
