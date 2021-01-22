@@ -3375,7 +3375,7 @@ public class GameControl : MonoBehaviour
 
     public void CreateAdventureEvent(byte teamID)
     {
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Adventure, standardTime, standardTime + 80, new List<List<int>> { new List<int> { teamID } }));
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Adventure, standardTime, standardTime + 160, new List<List<int>> { new List<int> { teamID } }));
     }
 
     void CreateAdventureEventPartLog(byte teamID, AdventureEvent adventureEvent,bool isPass,string log)
@@ -3527,6 +3527,14 @@ public class GameControl : MonoBehaviour
 
     IEnumerator AdventureGetSomething(byte teamID, AdventureEvent adventureEvent)
     {
+        if (adventureTeamList[teamID].state == AdventureState.Retreat)
+        {
+            AdventureTeamBack(teamID, AdventureState.Retreat);
+            yield break;
+        }
+
+        CreateAdventureEvent(teamID);
+
         adventureTeamList[teamID].action = AdventureAction.GetSomething;
         AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
         AdventureMainPanel.Instance.UpdateSceneEnemy(teamID);
@@ -3641,24 +3649,31 @@ public class GameControl : MonoBehaviour
 
         CreateAdventureEventPartLog(teamID, adventureEvent, true, "探险队发现了一些东西\n" + log);
     
-        if (adventureTeamList[teamID].state == AdventureState.Retreat)
-        {
-            AdventureTeamBack(teamID, AdventureState.Retreat);
-        }
-        else
-        {
-            adventureTeamList[teamID].action = AdventureAction.Walk;
-            AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
-            AdventureMainPanel.Instance.UpdateSceneRole(teamID);
-            AdventureMainPanel.Instance.UpdateTeam(teamID);
+        //if (adventureTeamList[teamID].state == AdventureState.Retreat)
+        //{
+        //    AdventureTeamBack(teamID, AdventureState.Retreat);
+        //}
+        //else
+        //{
+          
 
-            CreateAdventureEvent(teamID);
-        }
-       
+        
+        //}
+        adventureTeamList[teamID].action = AdventureAction.Walk;
+        AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
+        AdventureMainPanel.Instance.UpdateSceneRole(teamID);
+        AdventureMainPanel.Instance.UpdateTeam(teamID);
+
     }
 
     IEnumerator AdventureTrapOrSpring(byte teamID, AdventureEvent adventureEvent)
     {
+        if (adventureTeamList[teamID].state == AdventureState.Retreat)
+        {
+            AdventureTeamBack(teamID, AdventureState.Retreat);
+            yield break;
+        }
+        CreateAdventureEvent(teamID);
         switch (adventureEvent)
         {
             case AdventureEvent.TrapHp:
@@ -3752,20 +3767,17 @@ public class GameControl : MonoBehaviour
 
         CreateAdventureEventPartLog(teamID, adventureEvent, true, log);
 
-        if (adventureTeamList[teamID].state == AdventureState.Retreat)
-        {
-            AdventureTeamBack(teamID, AdventureState.Retreat);
-        }
-        else
-        {
+      
+        //else
+        //{
             adventureTeamList[teamID].action = AdventureAction.Walk;
             AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
             AdventureMainPanel.Instance.UpdateSceneRole(teamID);
             AdventureMainPanel.Instance.UpdateTeam(teamID);
 
-            CreateAdventureEvent(teamID);
+         
 
-        }
+       // }
         
     }
 

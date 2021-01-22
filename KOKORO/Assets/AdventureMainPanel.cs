@@ -40,6 +40,18 @@ public class AdventureMainPanel : BasePanel
     void Start()
     {
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
+
+        for (byte i = 0; i < gc.adventureTeamList.Count; i++)
+        {
+            if (gc.adventureTeamList[i].state == AdventureState.Doing)
+            {
+                if (gc.adventureTeamList[i].action != AdventureAction.Fight)
+                {
+                    gc.adventureTeamList[i].action = AdventureAction.Walk;
+                }
+            }
+       
+        }
     }
 
     void Update()
@@ -191,6 +203,7 @@ public class AdventureMainPanel : BasePanel
             HideElementPoint(teamID);
             //TeamLogAdd()
             TeamLogShow(teamID);
+            UpdateProgress(teamID);
             //go.GetComponent<AdventureTeamBlock>().contentText.text = gc.adventureTeamList[teamID].log;
 
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
@@ -247,6 +260,8 @@ public class AdventureMainPanel : BasePanel
                 case AdventureAction.SpringMp:
                     HideSceneRoleHpMp(teamID);
                     HideSceneRoleBuff(teamID);
+                    UpdateSceneRole(teamID);
+                    UpdateSceneEnemy(teamID);
                     HideElementPoint(teamID);
                     break;
             }
@@ -271,6 +286,8 @@ public class AdventureMainPanel : BasePanel
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.Done)
         {
+            Debug.Log("cf done");
+
             adventureTeamBlock.dungeon_nameText.text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name+"(终点)";
 
             for (int i = 0; i < gc.adventureTeamList[teamID].scenePicList.Count; i++)
@@ -286,6 +303,8 @@ public class AdventureMainPanel : BasePanel
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
             HideElementPoint(teamID);
+            TeamLogShow(teamID);
+            UpdateProgress(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -295,6 +314,8 @@ public class AdventureMainPanel : BasePanel
             {
                 ShowGets(teamID);
             });
+
+          
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.Fail)
         {
@@ -313,6 +334,8 @@ public class AdventureMainPanel : BasePanel
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
             HideElementPoint(teamID);
+            TeamLogShow(teamID);
+            UpdateProgress(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -340,6 +363,8 @@ public class AdventureMainPanel : BasePanel
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
             HideElementPoint(teamID);
+            TeamLogShow(teamID);
+            UpdateProgress(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -628,7 +653,11 @@ public class AdventureMainPanel : BasePanel
             UpdateProgress(teamID);
             if (gc.adventureTeamList[teamID].nowDay>=DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].PartNum)
             {
-                gc.AdventureTeamBack(teamID, AdventureState.Done);
+                //if (gc.adventureTeamList[teamID].state == AdventureState.Doing)
+               // {
+                    gc.AdventureTeamBack(teamID, AdventureState.Done);
+              //  }
+              
             }
 
             rollCount[teamID] = 0f;
@@ -767,7 +796,7 @@ public class AdventureMainPanel : BasePanel
                     gc.adventureTeamList[teamID].action == AdventureAction.TrapMp ||
                     gc.adventureTeamList[teamID].action == AdventureAction.GetSomething)
                 {
-                    adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.Idle);
+                    adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.WalkRight);
                 }
                 else
                 {

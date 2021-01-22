@@ -208,9 +208,10 @@ public class GameControlInPlay : MonoBehaviour
                     case ExecuteEventType.Adventure:
                         byte teamID = (byte)gc.executeEventList[0].value[0][0];
 
-                        /*战斗事件*/
-                        gc.AdventureEventHappen(teamID);
+                        /*事件*/
                         gc.executeEventList.RemoveAt(0);
+                        gc.AdventureEventHappen(teamID);
+                     
 
                         break;
                     case ExecuteEventType.BuildingSale:
