@@ -234,7 +234,8 @@ public enum AdventureState
     Doing,
     Done,
     Fail,
-    Retreat
+    Retreat,
+    Free
 }
 
 public enum AdventureAction
@@ -828,6 +829,7 @@ public class HeroObject
     private int WorkerInBuilding;
     private short AdventureInTeam;
     private short InDistrict;
+
     private int CountMakeWeapon;
     private int CountMakeArmor;
     private int CountMakeJewelry;
@@ -1587,6 +1589,7 @@ public class MonsterPrototype
 public class AdventureTeamObject
 {
     private byte ID;
+    private short DistrictID;
     private short DungeonID;
     private short DungeonEVWind;
     private short DungeonEVFire;
@@ -1634,13 +1637,14 @@ public class AdventureTeamObject
     private short KillNum;
     private List<string> Log;
     private List<AdventurePartObject> Part;
-    public AdventureTeamObject(byte id,short dungeonID, short dungeonEVWind, short dungeonEVFire, short dungeonEVWater, short dungeonEVGround, short dungeonEVLight, short dungeonEVDark, byte dungeonEPWind, byte dungeonEPFire, byte dungeonEPWater, byte dungeonEPGround, byte dungeonEPLight, byte dungeonEPDark,
+    public AdventureTeamObject(byte id, short districtID,short dungeonID, short dungeonEVWind, short dungeonEVFire, short dungeonEVWater, short dungeonEVGround, short dungeonEVLight, short dungeonEVDark, byte dungeonEPWind, byte dungeonEPFire, byte dungeonEPWater, byte dungeonEPGround, byte dungeonEPLight, byte dungeonEPDark,
         List<string> scenePicList, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, List<int> enemyIDList, byte nowDay, int standardTimeStart, AdventureState state, AdventureAction action, int fightRound,
         short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
         short getWind, short getFire, short getWater, short getGround, short getLight, short getDark,
         List<int> getItemList, short killNum, List<string> log, List<AdventurePartObject> part)
     {
         this.ID = id;
+        this.DistrictID = districtID;
         this.DungeonID = dungeonID;
         this.DungeonEVWind = dungeonEVWind;
         this.DungeonEVFire = dungeonEVFire;
@@ -1690,6 +1694,7 @@ public class AdventureTeamObject
         this.Part = part;
     }
     public byte id { get { return ID; } }
+    public short districtID { get { return DistrictID; } set { DistrictID = value; } }
     public short dungeonID { get { return DungeonID; } set { DungeonID = value; } }
     public short dungeonEVWind { get { return DungeonEVWind; } set { DungeonEVWind = value; } }
     public short dungeonEVFire { get { return DungeonEVFire; } set { DungeonEVFire = value; } }

@@ -3207,7 +3207,39 @@ public class GameControl : MonoBehaviour
         PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
     }
 
-    public void AdventureTeamSend(byte teamID)
+    //TODO
+    //从据点向地牢派出
+    public void AdventureTeamSend(short districtID,short dungeonID,byte teamID,List<int> heroIDList)
+    {
+        if (districtID == -1)
+        {
+            MessagePanel.Instance.AddMessage("据点不能为空");
+            return;
+        }
+        if (dungeonID == -1)
+        {
+            MessagePanel.Instance.AddMessage("未选择目的地");
+            return;
+        }
+        if (adventureTeamList[teamID].heroIDList.Count == 0)
+        {
+            MessagePanel.Instance.AddMessage("队伍无探险者");
+            return;
+        }
+        adventureTeamList[teamID].districtID = districtID;
+        adventureTeamList[teamID].dungeonID = dungeonID;
+
+
+        for (int i = 0; i < heroIDList.Count; i++)
+        {
+            adventureTeamList[teamID].heroIDList.Add(heroIDList[i]);
+
+            adventureTeamList[teamID].heroHpList.Add(GetHeroAttr(Attribute.Hp, heroIDList[i]));
+            adventureTeamList[teamID].heroMpList.Add(GetHeroAttr(Attribute.Mp, heroIDList[i]));
+        }
+    }
+
+    public void AdventureTeamStart(byte teamID)
     {
         if (adventureTeamList[teamID].dungeonID == -1)
         {
@@ -3294,7 +3326,7 @@ public class GameControl : MonoBehaviour
         CreateAdventureEvent(teamID);
     }
 
-    public void AdventureTeamBack(byte teamID, AdventureState adventureState)
+    public void AdventureTeamEnd(byte teamID, AdventureState adventureState)
     {
         List<int> tempList = new List<int>();
         for (int i = 0; i < executeEventList.Count; i++)
@@ -3514,7 +3546,7 @@ public class GameControl : MonoBehaviour
     {
         if (adventureTeamList[teamID].state == AdventureState.Retreat)
         {
-            AdventureTeamBack(teamID, AdventureState.Retreat);
+            AdventureTeamEnd(teamID, AdventureState.Retreat);
         }
         else
         {
@@ -3529,7 +3561,7 @@ public class GameControl : MonoBehaviour
     {
         if (adventureTeamList[teamID].state == AdventureState.Retreat)
         {
-            AdventureTeamBack(teamID, AdventureState.Retreat);
+            AdventureTeamEnd(teamID, AdventureState.Retreat);
             yield break;
         }
 
@@ -3670,7 +3702,7 @@ public class GameControl : MonoBehaviour
     {
         if (adventureTeamList[teamID].state == AdventureState.Retreat)
         {
-            AdventureTeamBack(teamID, AdventureState.Retreat);
+            AdventureTeamEnd(teamID, AdventureState.Retreat);
             yield break;
         }
         CreateAdventureEvent(teamID);
@@ -4990,7 +5022,7 @@ public class GameControl : MonoBehaviour
             }
 
             CreateAdventureEventPartLog(teamID, AdventureEvent.Monster,false, log + "\n在战斗中不敌对手,全军覆没");
-            AdventureTeamBack(teamID, AdventureState.Fail);
+            AdventureTeamEnd(teamID, AdventureState.Fail);
         }
         else
         {
@@ -5005,7 +5037,7 @@ public class GameControl : MonoBehaviour
                 }
 
                 CreateAdventureEventPartLog(teamID, AdventureEvent.Monster,false, log + "\n全队撤出了战斗,返回据点");
-                AdventureTeamBack(teamID, AdventureState.Retreat);
+                AdventureTeamEnd(teamID, AdventureState.Retreat);
             }
         }
         

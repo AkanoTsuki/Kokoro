@@ -7,6 +7,10 @@ public class AdventureSendPanel : BasePanel
     public static AdventureSendPanel Instance;
 
     GameControl gc;
+    public List<Button> team_Btn;
+    public List<RectTransform> team_selectedRt;
+    public List<Text> team_desText;
+
     public GameObject list_heroGo;
     public Text list_heroNumText;
 
@@ -57,6 +61,19 @@ public class AdventureSendPanel : BasePanel
         isShow = false;
     }
 
+    public void UpdateTeamList()
+    {
+        List<AdventureTeamObject> teamObjects = new List<AdventureTeamObject>();
+        for (int i = 0; i < gc.adventureTeamList.Count; i++)
+        {
+            if (gc.adventureTeamList[i].state == AdventureState.Free)
+            {
+                team_Btn[i].GetComponent<RectTransform>().localScale = Vector2.one;
+
+            }
+        }
+    }
+
     public void UpdateHeroNum()
     {
         list_heroNumText.text = "选择角色(已选择" + selectedHeroID.Count + "/3人)";
@@ -67,7 +84,7 @@ public class AdventureSendPanel : BasePanel
 
         foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
         {
-            if (kvp.Value.inDistrict == districtID)
+            if (kvp.Value.inDistrict == districtID && kvp.Value.adventureInTeam == -1)
             {
                 heroObjects.Add(kvp.Value);
             }
@@ -142,6 +159,7 @@ public class AdventureSendPanel : BasePanel
         }
         list_heroGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(681f, Mathf.Max(245f, 4 + (heroObjects.Count / 4) * 52f));
     }
+
     public void UpdateHeroListSingle(int heroID)
     {
         GameObject go = GameObject.Find("Canvas/AdventureSendPanel/HeroList/ScrollView/Viewport/Content/Hero_" + heroID);
@@ -155,6 +173,7 @@ public class AdventureSendPanel : BasePanel
         bool canSelect = true;
         if (gc.heroDic[heroID].adventureInTeam != -1)
         {
+            str += "[已编入"+(gc.heroDic[heroID].adventureInTeam+1) +"]";
             if (gc.adventureTeamList[gc.heroDic[heroID].adventureInTeam].state != AdventureState.Doing)
             {
                 canSelect = false;
@@ -186,13 +205,13 @@ public class AdventureSendPanel : BasePanel
         }
     }
 
-    public void UpdateFromDistrictList(short districtID)
+    public void UpdateFromDistrictList(short dungeonID)
     {
         List<DistrictObject> districtObjects = new List<DistrictObject>();
 
         for (int i = 0; i < gc.districtDic.Length; i++)
         {
-            if (gc.districtDic[i].isOpen && gc.districtDic[i].id != districtID)
+            if (gc.districtDic[i].isOpen && DataManager.mDistrictDict[i].DungeonList.Contains(dungeonID))
             {
                 districtObjects.Add(gc.districtDic[i]);
             }
@@ -258,19 +277,19 @@ public class AdventureSendPanel : BasePanel
             go.GetComponent<Button>().onClick.AddListener(delegate () { gc.SetTransferDistrict(districtID); });
         }
     }
-    public void UpdateFromNow(short districtID)
+    public void UpdateFromNow(short dungeonID)
     {
-        from_now_picImage.sprite = Resources.Load<Sprite>("Image/AreaPic/" + DataManager.mDistrictDict[districtID].Pic);
-        from_now_desText.text = DataManager.mDistrictDict[districtID].Name;
+        from_now_picImage.sprite = Resources.Load<Sprite>("Image/AreaPic/" + DataManager.mDungeonDict[dungeonID].ScenePic[0]);
+        from_now_desText.text = DataManager.mDungeonDict[dungeonID].Name;
     }
 
-    public void UpdateToDungeonList(short dungeonID)
+    public void UpdateToDungeonList(short districtID)
     {
         List<DungeonObject> dungeonObjects = new List<DungeonObject>();
 
         for (int i = 0; i < gc.dungeonList.Count; i++)
         {
-            if (gc.dungeonList[i].stage== DungeonStage.Open )
+            if (gc.dungeonList[i].stage== DungeonStage.Open &&DataManager.mDistrictDict[districtID].DungeonList.Contains((short)i))
             {
                 dungeonObjects.Add(gc.dungeonList[i]);
             }
@@ -286,29 +305,30 @@ public class AdventureSendPanel : BasePanel
             }
             else
             {
-                go = Instantiate(Resources.Load("Prefab/UILabel/Label_CityButtonInTransfer")) as GameObject;
+                go = Instantiate(Resources.Load("Prefab/UILabel/Label_DungeonButton")) as GameObject;
                 go.transform.SetParent(from_list_districtGo.transform);
                 districtGoPool.Add(go);
             }
-            go.name = "District_" + dungeonObjects[i].id;
+            go.name = "Dungeon_" + dungeonObjects[i].id;
 
             int row = i == 0 ? 0 : (i % 6);
             int col = i == 0 ? 0 : (i / 6);
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(16f + row * 80f, col * -100f);
-            go.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/AreaPic/" + DataManager.mDistrictDict[dungeonObjects[i].id].Pic);
-           // go.transform.GetChild(0).GetComponent<Text>().text = dungeonObjects[i].name + (dungeonObjects[i].isOwn ? "\n[领地]" : "");
 
-            if (selectedDistrict == dungeonObjects[i].id)
+            go.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/AdventureBG/" + DataManager.mDungeonDict[dungeonObjects[i].id].ScenePic[0]+ "_B");
+            go.transform.GetChild(2).GetComponent<Text>().text = DataManager.mDungeonDict[dungeonObjects[i].id].Name;
+
+            if (selectedDungeon == dungeonObjects[i].id)
             {
-                go.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector2.one;
+                go.transform.GetChild(3).GetComponent<RectTransform>().localScale = Vector2.one;
                 go.GetComponent<Button>().onClick.RemoveAllListeners();
             }
             else
             {
-                go.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector2.zero;
+                go.transform.GetChild(3).GetComponent<RectTransform>().localScale = Vector2.zero;
                 go.GetComponent<Button>().onClick.RemoveAllListeners();
                 short did = dungeonObjects[i].id;
-                go.GetComponent<Button>().onClick.AddListener(delegate () { gc.SetTransferDistrict(did); });
+                go.GetComponent<Button>().onClick.AddListener(delegate () {/**/ });
             }
 
         }
@@ -317,5 +337,28 @@ public class AdventureSendPanel : BasePanel
             districtGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
         from_list_districtGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(512f, Mathf.Max(100f, 100 + (dungeonObjects.Count / 6) * 100f));
+    }
+
+    public void UpdateToDungeonListSingle(short dungeonID)
+    {
+        GameObject go = GameObject.Find("Canvas/AdventureSendPanel/DungeonList/ScrollView/Viewport/Content/Dungeon_" + dungeonID);
+        if (selectedDungeon == dungeonID)
+        {
+            go.transform.GetChild(3).GetComponent<RectTransform>().localScale = Vector2.one;
+            go.GetComponent<Button>().onClick.RemoveAllListeners();
+        }
+        else
+        {
+            go.transform.GetChild(3).GetComponent<RectTransform>().localScale = Vector2.zero;
+            go.GetComponent<Button>().onClick.RemoveAllListeners();
+            //short did = dungeonObjects[i].id;
+            go.GetComponent<Button>().onClick.AddListener(delegate () {/**/ });
+        }
+    }
+
+    public void UpdateToNow(short districtID)
+    {
+        to_now_picImage.sprite = Resources.Load<Sprite>("Image/AreaPic/" + DataManager.mDistrictDict[districtID].Pic);
+        to_now_desText.text = DataManager.mDistrictDict[districtID].Name;
     }
 }

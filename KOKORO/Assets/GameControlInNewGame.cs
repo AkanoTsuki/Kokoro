@@ -134,8 +134,8 @@ public class GameControlInNewGame : MonoBehaviour
         gc.heroIndex = 6;
         
 
-        gc.adventureTeamList.Add(new AdventureTeamObject(0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.NotSend, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
-        gc.adventureTeamList.Add(new AdventureTeamObject(1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.NotSend, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
+        gc.adventureTeamList.Add(new AdventureTeamObject(0, -1,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.NotSend, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
+        gc.adventureTeamList.Add(new AdventureTeamObject(1, -1,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.NotSend, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
 
         //最多7个冒险队
         for (int i = 0; i < 7; i++)

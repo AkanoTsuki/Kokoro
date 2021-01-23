@@ -8,6 +8,8 @@ public class TransferPanel : BasePanel
 
     GameControl gc;
 
+  
+
     public GameObject list_heroGo;
     public GameObject list_districtGo;
 
@@ -108,6 +110,7 @@ public class TransferPanel : BasePanel
             bool canSelect = true;
             if (heroObjects[i].adventureInTeam != -1)
             {
+   
                 if (gc.adventureTeamList[heroObjects[i].adventureInTeam].state != AdventureState.Doing)
                 {
                     canSelect = false;
@@ -160,6 +163,7 @@ public class TransferPanel : BasePanel
         bool canSelect = true;
         if (gc.heroDic[heroID].adventureInTeam != -1)
         {
+
             if (gc.adventureTeamList[gc.heroDic[heroID].adventureInTeam].state != AdventureState.Doing)
             {
                 canSelect = false;

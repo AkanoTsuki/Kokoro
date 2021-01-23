@@ -139,7 +139,7 @@ public class AdventureMainPanel : BasePanel
             {
                 if (gc.adventureTeamList[teamID].action == AdventureAction.Walk)
                 {
-                    gc.AdventureTeamBack(teamID, AdventureState.Retreat);
+                    gc.AdventureTeamEnd(teamID, AdventureState.Retreat);
                 }
                 else
                 {
@@ -213,7 +213,7 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.startBtn.onClick.RemoveAllListeners();
             adventureTeamBlock.startBtn.onClick.AddListener(delegate ()
             {
-                gc.AdventureTeamSend(teamID);
+                gc.AdventureTeamStart(teamID);
             });
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.Doing)
@@ -655,7 +655,7 @@ public class AdventureMainPanel : BasePanel
             {
                 //if (gc.adventureTeamList[teamID].state == AdventureState.Doing)
                // {
-                    gc.AdventureTeamBack(teamID, AdventureState.Done);
+                    gc.AdventureTeamEnd(teamID, AdventureState.Done);
               //  }
               
             }
