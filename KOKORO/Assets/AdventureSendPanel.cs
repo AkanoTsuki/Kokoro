@@ -35,7 +35,7 @@ public class AdventureSendPanel : BasePanel
     public List<int> selectedHeroID = new List<int>();
     public short selectedDistrict = -1;
     public short selectedDungeon = -1;
-
+    public short selectedTeam = -1;
 
     void Awake()
     {
@@ -46,13 +46,67 @@ public class AdventureSendPanel : BasePanel
 
     void Start()
     {
+        team_Btn[0].onClick.AddListener(delegate () { selectedTeam=0; UpdateTeamList(); });
+        team_Btn[1].onClick.AddListener(delegate () { selectedTeam = 1; UpdateTeamList(); });
+        team_Btn[2].onClick.AddListener(delegate () { selectedTeam = 2; UpdateTeamList(); });
+        team_Btn[3].onClick.AddListener(delegate () { selectedTeam = 3; UpdateTeamList(); });
+        team_Btn[4].onClick.AddListener(delegate () { selectedTeam = 4; UpdateTeamList(); });
+        team_Btn[5].onClick.AddListener(delegate () { selectedTeam = 5; UpdateTeamList(); });
+        team_Btn[6].onClick.AddListener(delegate () { selectedTeam = 6; UpdateTeamList(); });
 
+        doBtn.onClick.AddListener(delegate () {
+            if (selectedTeam == -1)
+            {
+                MessagePanel.Instance.AddMessage("未指定队伍");
+                return;
+            }
+            if (selectedDungeon == -1)
+            {
+                MessagePanel.Instance.AddMessage("未指定目的地");
+                return;
+            }
+            if (selectedDistrict == -1)
+            {
+                MessagePanel.Instance.AddMessage("未指定据点");
+                return;
+            }
+            if (selectedHeroID.Count == 0)
+            {
+                MessagePanel.Instance.AddMessage("队伍无成员");
+                return;
+            }
+            gc.AdventureTeamSend(selectedDistrict, selectedDungeon,  (byte)selectedTeam, selectedHeroID); 
+
+        });
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 
     public void OnShow(string type,short districtOrDungeonID)
     {
-        
+        selectedHeroID.Clear();
+        selectedDistrict = -1;
+        selectedDungeon = -1;
+        selectedTeam = -1;
+        UpdateTeamList();
+        if (type == "To")//从据点指派
+        {
+            selectedDistrict = districtOrDungeonID;
+            UpdateHeroList(districtOrDungeonID);
+            UpdateHeroNum();
+            UpdateToDungeonList(districtOrDungeonID);
+            UpdateToNow(districtOrDungeonID);
+        }
+        else if (type == "From")//从地牢要求指派
+        {
+            selectedDungeon = districtOrDungeonID;
+            ClearUpdateHeroList();
+            UpdateHeroNum();
+            UpdateFromDistrictList(districtOrDungeonID);
+            UpdateFromNow(districtOrDungeonID);
+        }
+
+        SetAnchoredPosition(60, -88);
+        isShow = true;
     }
 
     public override void OnHide()
@@ -63,14 +117,35 @@ public class AdventureSendPanel : BasePanel
 
     public void UpdateTeamList()
     {
-        List<AdventureTeamObject> teamObjects = new List<AdventureTeamObject>();
+
         for (int i = 0; i < gc.adventureTeamList.Count; i++)
         {
+            team_Btn[i].GetComponent<RectTransform>().localScale = Vector2.one;
+            string str = "第" + (i + 1) + "探险队\n";
             if (gc.adventureTeamList[i].state == AdventureState.Free)
             {
-                team_Btn[i].GetComponent<RectTransform>().localScale = Vector2.one;
-
+                str += "<空闲>";
+                team_Btn[i].interactable = true;
             }
+            else
+            {
+                str += "<已派遣>";
+                team_Btn[i].interactable =false;
+            }
+            team_desText[i].text = str;
+
+            if (selectedTeam == i)
+            {
+                team_selectedRt[i].localScale = Vector2.one;
+            }
+            else
+            {
+                team_selectedRt[i].localScale = Vector2.zero;
+            }
+        }
+        for (int i = gc.adventureTeamList.Count; i < team_Btn.Count; i++)
+        {
+            team_Btn[i].GetComponent<RectTransform>().localScale = Vector2.zero;
         }
     }
 
@@ -102,7 +177,7 @@ public class AdventureSendPanel : BasePanel
             }
             else
             {
-                go = Instantiate(Resources.Load("Prefab/UILabel/Label_HeroInTransfer")) as GameObject;
+                go = Instantiate(Resources.Load("Prefab/UILabel/Label_HeroInAdventureSend")) as GameObject;
                 go.transform.SetParent(list_heroGo.transform);
                 heroGoPool.Add(go);
             }
@@ -113,12 +188,14 @@ public class AdventureSendPanel : BasePanel
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + row * 154f, -4 + col * -52f);
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + heroObjects[i].pic + "/Pic");
             go.transform.GetChild(1).GetComponent<Text>().text = heroObjects[i].name;
+            bool canSelect = true;
             string str = "Lv." + heroObjects[i].level + "<color=#" + DataManager.mHeroDict[heroObjects[i].prototypeID].Color + ">" + DataManager.mHeroDict[heroObjects[i].prototypeID].Name + "</color>\n";
             if (heroObjects[i].workerInBuilding != -1)
             {
-                str += "[" + gc.buildingDic[heroObjects[i].workerInBuilding].name + "工作]";
+                canSelect = false;
+                str += "[" + gc.buildingDic[heroObjects[i].workerInBuilding].name + "工作中]";
             }
-            bool canSelect = true;
+          
             if (heroObjects[i].adventureInTeam != -1)
             {
                 if (gc.adventureTeamList[heroObjects[i].adventureInTeam].state != AdventureState.Doing)
@@ -135,6 +212,22 @@ public class AdventureSendPanel : BasePanel
                 if (selectedHeroID.Contains(heroObjects[i].id))
                 {
                     go.transform.GetChild(4).GetComponent<RectTransform>().localScale = Vector2.one;
+                    int index = selectedHeroID.IndexOf(heroObjects[i].id);
+                    switch (index)
+                    {
+                        case 0:
+                            go.transform.GetChild(4).GetComponent<Image>().color = new Color(51 / 255f, 70 / 255f, 212 / 255f, 1f);
+                            go.transform.GetChild(4).GetChild(0).GetComponent<Text>().text = "1";
+                            break;
+                        case 1:
+                            go.transform.GetChild(4).GetComponent<Image>().color = new Color(212 / 255f, 70 / 255f, 51 / 255f, 1f);
+                            go.transform.GetChild(4).GetChild(0).GetComponent<Text>().text = "2";
+                            break;
+                        case 2:
+                            go.transform.GetChild(4).GetComponent<Image>().color = new Color(51 / 255f, 212 / 255f, 70 / 255f, 1f);
+                            go.transform.GetChild(4).GetChild(0).GetComponent<Text>().text = "3";
+                            break;
+                    }
                 }
                 else
                 {
@@ -144,7 +237,11 @@ public class AdventureSendPanel : BasePanel
                 go.GetComponent<Button>().interactable = true;
                 go.GetComponent<Button>().onClick.RemoveAllListeners();
                 int heroID = heroObjects[i].id;
-                go.GetComponent<Button>().onClick.AddListener(delegate () { gc.SetTransferHero(heroID); });
+                go.GetComponent<Button>().onClick.AddListener(delegate () {
+
+                    gc.AdventureTeamSetHero(heroID);
+
+                });
             }
             else
             {
@@ -160,17 +257,28 @@ public class AdventureSendPanel : BasePanel
         list_heroGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(681f, Mathf.Max(245f, 4 + (heroObjects.Count / 4) * 52f));
     }
 
+    public void ClearUpdateHeroList()
+    {
+        selectedHeroID.Clear();
+        for (int i = 0; i < heroGoPool.Count; i++)
+        {
+            heroGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+        list_heroGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(681f, 245f);
+    }
+
     public void UpdateHeroListSingle(int heroID)
     {
         GameObject go = GameObject.Find("Canvas/AdventureSendPanel/HeroList/ScrollView/Viewport/Content/Hero_" + heroID);
 
-
+        bool canSelect = true;
         string str = "Lv." + gc.heroDic[heroID].level + "<color=#" + DataManager.mHeroDict[gc.heroDic[heroID].prototypeID].Color + ">" + DataManager.mHeroDict[gc.heroDic[heroID].prototypeID].Name + "</color>";
         if (gc.heroDic[heroID].workerInBuilding != -1)
         {
-            str += "[" + gc.buildingDic[gc.heroDic[heroID].workerInBuilding].name + "工作]";
+            canSelect = false;
+            str += "[" + gc.buildingDic[gc.heroDic[heroID].workerInBuilding].name + "工作中]";
         }
-        bool canSelect = true;
+      
         if (gc.heroDic[heroID].adventureInTeam != -1)
         {
             str += "[已编入"+(gc.heroDic[heroID].adventureInTeam+1) +"]";
@@ -188,6 +296,23 @@ public class AdventureSendPanel : BasePanel
             if (selectedHeroID.Contains(gc.heroDic[heroID].id))
             {
                 go.transform.GetChild(4).GetComponent<RectTransform>().localScale = Vector2.one;
+
+                int index = selectedHeroID.IndexOf(gc.heroDic[heroID].id);
+                switch (index)
+                {
+                    case 0:
+                        go.transform.GetChild(4).GetComponent<Image>().color = new Color(51 / 255f, 70 / 255f, 212 / 255f, 1f);
+                        go.transform.GetChild(4).GetChild(0).GetComponent<Text>().text = "1";
+                        break;
+                    case 1:
+                        go.transform.GetChild(4).GetComponent<Image>().color = new Color(212 / 255f, 70 / 255f, 51 / 255f, 1f);
+                        go.transform.GetChild(4).GetChild(0).GetComponent<Text>().text = "2";
+                        break;
+                    case 2:
+                        go.transform.GetChild(4).GetComponent<Image>().color = new Color( 51/ 255f, 212 / 255f, 70 / 255f, 1f);
+                        go.transform.GetChild(4).GetChild(0).GetComponent<Text>().text = "3";
+                        break;
+                }
             }
             else
             {
@@ -196,7 +321,7 @@ public class AdventureSendPanel : BasePanel
 
             go.GetComponent<Button>().interactable = true;
             go.GetComponent<Button>().onClick.RemoveAllListeners();
-            go.GetComponent<Button>().onClick.AddListener(delegate () { gc.SetTransferHero(heroID); });
+            go.GetComponent<Button>().onClick.AddListener(delegate () { gc.AdventureTeamSetHero(heroID); });
         }
         else
         {
@@ -207,6 +332,9 @@ public class AdventureSendPanel : BasePanel
 
     public void UpdateFromDistrictList(short dungeonID)
     {
+        fromRt.localScale = Vector2.one;
+        toRt.localScale = Vector2.zero;
+
         List<DistrictObject> districtObjects = new List<DistrictObject>();
 
         for (int i = 0; i < gc.districtDic.Length; i++)
@@ -237,7 +365,7 @@ public class AdventureSendPanel : BasePanel
             int col = i == 0 ? 0 : (i / 6);
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(16f + row * 80f, col * -100f);
             go.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/AreaPic/" + DataManager.mDistrictDict[districtObjects[i].id].Pic);
-            go.transform.GetChild(0).GetComponent<Text>().text = districtObjects[i].name + (districtObjects[i].isOwn ? "\n[领地]" : "");
+            go.transform.GetChild(0).GetComponent<Text>().text = districtObjects[i].name + (gc.districtDic[districtObjects[i].id].heroList.Count > 0 ? ("\n[" + gc.districtDic[districtObjects[i].id].heroList.Count + "人]") : "") + (districtObjects[i].isOwn ? "\n[领地]" : "");
 
             if (selectedDistrict == districtObjects[i].id)
             {
@@ -248,8 +376,20 @@ public class AdventureSendPanel : BasePanel
             {
                 go.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector2.zero;
                 go.GetComponent<Button>().onClick.RemoveAllListeners();
-                short did = districtObjects[i].id;
-                go.GetComponent<Button>().onClick.AddListener(delegate () { gc.SetTransferDistrict(did); });
+                
+                short newID = districtObjects[i].id;
+                go.GetComponent<Button>().onClick.AddListener(delegate () {
+                    short oldID = selectedDistrict;
+                    selectedDistrict = newID;
+                    if (oldID != -1)
+                    {
+                        UpdateFromDistrictListSingle(oldID);
+                    }
+                    UpdateFromDistrictListSingle(newID);
+                    selectedHeroID.Clear();
+                    UpdateHeroList(newID);
+                    UpdateHeroNum();
+                });
             }
 
         }
@@ -257,14 +397,14 @@ public class AdventureSendPanel : BasePanel
         {
             districtGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
-        from_list_districtGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(512f, Mathf.Max(100f, 100 + (districtObjects.Count / 6) * 100f));
+        from_list_districtGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(512f, Mathf.Max(85f, 85 + (districtObjects.Count / 6) * 85f));
     }
     public void UpdateFromDistrictListSingle(short districtID)
     {
-        GameObject go = GameObject.Find("Canvas/AdventureSendPanel/DistrictList/ScrollView/Viewport/Content/District_" + districtID);
+        GameObject go = GameObject.Find("Canvas/AdventureSendPanel/From/DistrictList/ScrollView/Viewport/Content/District_" + districtID);
 
-        Debug.Log("districtID=" + districtID + " selectedDistrict=" + selectedDistrict);
-        Debug.Log(" go.name=" + go.name);
+        //Debug.Log("districtID=" + districtID + " selectedDistrict=" + selectedDistrict);
+        //Debug.Log(" go.name=" + go.name);
         if (selectedDistrict == districtID)
         {
             go.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector2.one;
@@ -274,27 +414,46 @@ public class AdventureSendPanel : BasePanel
         {
             go.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector2.zero;
             go.GetComponent<Button>().onClick.RemoveAllListeners();
-            go.GetComponent<Button>().onClick.AddListener(delegate () { gc.SetTransferDistrict(districtID); });
+       
+            short newID = districtID;
+            go.GetComponent<Button>().onClick.AddListener(delegate () {
+                short oldID = selectedDistrict;
+                selectedDistrict = newID;
+                if (oldID != -1)
+                {
+                    UpdateFromDistrictListSingle(oldID);
+                }
+                UpdateFromDistrictListSingle(newID);
+                selectedHeroID.Clear();
+                UpdateHeroList(newID);
+                UpdateHeroNum();
+            });
         }
     }
     public void UpdateFromNow(short dungeonID)
     {
-        from_now_picImage.sprite = Resources.Load<Sprite>("Image/AreaPic/" + DataManager.mDungeonDict[dungeonID].ScenePic[0]);
+        from_now_picImage.sprite = Resources.Load<Sprite>("Image/AdventureBG/ABG_" + DataManager.mDungeonDict[dungeonID].ScenePic[0]+"_B");
         from_now_desText.text = DataManager.mDungeonDict[dungeonID].Name;
     }
 
     public void UpdateToDungeonList(short districtID)
     {
+        toRt.localScale = Vector2.one;
+        fromRt.localScale = Vector2.zero;
+
         List<DungeonObject> dungeonObjects = new List<DungeonObject>();
+
+        //Debug.Log(" gc.dungeonList.Count=" + gc.dungeonList.Count);
 
         for (int i = 0; i < gc.dungeonList.Count; i++)
         {
+            //Debug.Log(" DataManager.mDistrictDict[districtID].DungeonList.Count=" + DataManager.mDistrictDict[districtID].DungeonList.Count);
             if (gc.dungeonList[i].stage== DungeonStage.Open &&DataManager.mDistrictDict[districtID].DungeonList.Contains((short)i))
             {
                 dungeonObjects.Add(gc.dungeonList[i]);
             }
         }
-
+      //  Debug.Log(" dungeonObjects.Count=" + dungeonObjects.Count);
         GameObject go;
         for (int i = 0; i < dungeonObjects.Count; i++)
         {
@@ -306,7 +465,7 @@ public class AdventureSendPanel : BasePanel
             else
             {
                 go = Instantiate(Resources.Load("Prefab/UILabel/Label_DungeonButton")) as GameObject;
-                go.transform.SetParent(from_list_districtGo.transform);
+                go.transform.SetParent(to_list_dungeonGo.transform);
                 districtGoPool.Add(go);
             }
             go.name = "Dungeon_" + dungeonObjects[i].id;
@@ -315,7 +474,7 @@ public class AdventureSendPanel : BasePanel
             int col = i == 0 ? 0 : (i / 6);
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(16f + row * 80f, col * -100f);
 
-            go.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/AdventureBG/" + DataManager.mDungeonDict[dungeonObjects[i].id].ScenePic[0]+ "_B");
+            go.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/AdventureBG/ABG_" + DataManager.mDungeonDict[dungeonObjects[i].id].ScenePic[0]+ "_B");
             go.transform.GetChild(2).GetComponent<Text>().text = DataManager.mDungeonDict[dungeonObjects[i].id].Name;
 
             if (selectedDungeon == dungeonObjects[i].id)
@@ -327,8 +486,17 @@ public class AdventureSendPanel : BasePanel
             {
                 go.transform.GetChild(3).GetComponent<RectTransform>().localScale = Vector2.zero;
                 go.GetComponent<Button>().onClick.RemoveAllListeners();
-                short did = dungeonObjects[i].id;
-                go.GetComponent<Button>().onClick.AddListener(delegate () {/**/ });
+           
+                short newID = dungeonObjects[i].id;
+                go.GetComponent<Button>().onClick.AddListener(delegate () {
+                    short oldID = selectedDungeon;
+                    selectedDungeon = newID;
+                    if (oldID != -1)
+                    {
+                        UpdateToDungeonListSingle(oldID);
+                    }
+                    UpdateToDungeonListSingle(newID);
+                });
             }
 
         }
@@ -336,12 +504,12 @@ public class AdventureSendPanel : BasePanel
         {
             districtGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
-        from_list_districtGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(512f, Mathf.Max(100f, 100 + (dungeonObjects.Count / 6) * 100f));
+        to_list_dungeonGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(512f, Mathf.Max(85f, 85 + (dungeonObjects.Count / 6) * 85f));
     }
 
     public void UpdateToDungeonListSingle(short dungeonID)
     {
-        GameObject go = GameObject.Find("Canvas/AdventureSendPanel/DungeonList/ScrollView/Viewport/Content/Dungeon_" + dungeonID);
+        GameObject go = GameObject.Find("Canvas/AdventureSendPanel/To/DungeonList/ScrollView/Viewport/Content/Dungeon_" + dungeonID);
         if (selectedDungeon == dungeonID)
         {
             go.transform.GetChild(3).GetComponent<RectTransform>().localScale = Vector2.one;
@@ -351,8 +519,17 @@ public class AdventureSendPanel : BasePanel
         {
             go.transform.GetChild(3).GetComponent<RectTransform>().localScale = Vector2.zero;
             go.GetComponent<Button>().onClick.RemoveAllListeners();
-            //short did = dungeonObjects[i].id;
-            go.GetComponent<Button>().onClick.AddListener(delegate () {/**/ });
+    
+            short newID = dungeonID;
+            go.GetComponent<Button>().onClick.AddListener(delegate () {
+                short oldID = selectedDungeon;
+                selectedDungeon = newID;
+                if (oldID != -1)
+                {
+                    UpdateToDungeonListSingle(oldID);
+                }
+                UpdateToDungeonListSingle(newID);
+            });
         }
     }
 

@@ -24,7 +24,8 @@ public enum UIPanelType
     SupplyAndDemand,
     DistrictMap,
     Technology,
-    Transfer
+    Transfer,
+    AdventureSend
 
 
 }

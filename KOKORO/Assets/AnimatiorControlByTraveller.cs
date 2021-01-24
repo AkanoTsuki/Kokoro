@@ -215,7 +215,24 @@ public class AnimatiorControlByTraveller : MonoBehaviour
 
                 if (gc.travellerDic[travellerID].heroList.Count>0)
                 {
-                    gc.TransferDone(travellerID);
+                    if (gc.travellerDic[travellerID].endType == "District")
+                    {
+                        if (gc.travellerDic[travellerID].team == -1)
+                        {
+                            gc.TransferDone(travellerID);
+                        }
+                        else
+                        {
+                            gc.AdventureBackDone(travellerID);
+                        }
+                   
+
+                    }
+                    else if (gc.travellerDic[travellerID].endType == "Dungeon")
+                    {
+                        gc.AdventureSendDone(travellerID);
+
+                    }
                 }
                 gc.travellerDic.Remove(travellerID);
             }

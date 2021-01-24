@@ -12,7 +12,6 @@ public class AdventureTeamBlock : MonoBehaviour
     public List<Image> dungeon_elementImage;
 
     public GameObject dungeon_bgListGo;
-    public GameObject dungeon_heroListGo;//TODO:可能要移除
     public GameObject dungeon_fgListGo;
     public GameObject dungeon_effectLayerGo;
     public GameObject dungeon_numLayerGo;
@@ -36,12 +35,12 @@ public class AdventureTeamBlock : MonoBehaviour
 
     public RectTransform dungeon_destinationRt;
     public Image dungeon_destinationImage;
-    public Button dungeon_selectBtn;
+    //public Button dungeon_selectBtn;
 
     public List<Image> hero_picImage;
     public List<Text> hero_nameText;
     public List<Text> hero_hpmpText;
-    public List<Button> hero_setBtn;
+   // public List<Button> hero_setBtn;
 
     public Text contentText;
 
@@ -53,6 +52,6 @@ public class AdventureTeamBlock : MonoBehaviour
     public Button detailBtn;
     public Button startBtn;
 
-
+    public RectTransform freeRt;
 
 }

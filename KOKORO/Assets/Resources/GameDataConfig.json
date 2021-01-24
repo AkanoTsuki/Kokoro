@@ -12343,10 +12343,15 @@
       "Pic": "city_1",
       "InitLevel": 2,
       "MaxLevel": 5,
-      "BigMapX": -256,
-      "BigMapY": 914,
-      "BigMapDesX": 1024,
-      "BigMapDesY": -1163,
+      "DungeonList": [
+        7,
+        11,
+        12,
+        10,
+        25
+      ],
+      "BigMapX": 953,
+      "BigMapY": -1180,
       "EWind": 10,
       "EFire": 10,
       "EWater": 10,
@@ -12361,10 +12366,14 @@
       "Pic": "village_3",
       "InitLevel": 1,
       "MaxLevel": 3,
-      "BigMapX": -36,
-      "BigMapY": 456,
-      "BigMapDesX": 774,
-      "BigMapDesY": -687,
+      "DungeonList": [
+        9,
+        1,
+        2,
+        10
+      ],
+      "BigMapX": 1588,
+      "BigMapY": -1122,
       "EWind": 30,
       "EFire": 5,
       "EWater": 5,
@@ -12379,10 +12388,14 @@
       "Pic": "village_1",
       "InitLevel": 1,
       "MaxLevel": 3,
-      "BigMapX": -36,
-      "BigMapY": 36,
-      "BigMapDesX": 759,
-      "BigMapDesY": -157,
+      "DungeonList": [
+        8,
+        6,
+        14,
+        26
+      ],
+      "BigMapX": 333,
+      "BigMapY": -1529,
       "EWind": 5,
       "EFire": 5,
       "EWater": 10,
@@ -12397,10 +12410,13 @@
       "Pic": "village_1",
       "InitLevel": 1,
       "MaxLevel": 3,
-      "BigMapX": -529,
-      "BigMapY": 256,
-      "BigMapDesX": 1461,
-      "BigMapDesY": -512,
+      "DungeonList": [
+        18,
+        17,
+        24
+      ],
+      "BigMapX": 496,
+      "BigMapY": -513,
       "EWind": 5,
       "EFire": 10,
       "EWater": 5,
@@ -12415,10 +12431,14 @@
       "Pic": "city_1",
       "InitLevel": 2,
       "MaxLevel": 5,
-      "BigMapX": 264,
-      "BigMapY": 1286,
-      "BigMapDesX": 500,
-      "BigMapDesY": -1429,
+      "DungeonList": [
+        15,
+        16,
+        17,
+        26
+      ],
+      "BigMapX": 392,
+      "BigMapY": -686,
       "EWind": 10,
       "EFire": 5,
       "EWater": 5,
@@ -12433,10 +12453,13 @@
       "Pic": "town_2",
       "InitLevel": 1,
       "MaxLevel": 4,
-      "BigMapX": -290,
-      "BigMapY": 1286,
-      "BigMapDesX": 870,
-      "BigMapDesY": -1652,
+      "DungeonList": [
+        9,
+        3,
+        5
+      ],
+      "BigMapX": 1417,
+      "BigMapY": -1470,
       "EWind": 5,
       "EFire": 30,
       "EWater": 5,
@@ -12451,10 +12474,13 @@
       "Pic": "town_1",
       "InitLevel": 1,
       "MaxLevel": 4,
-      "BigMapX": -700,
-      "BigMapY": 800,
-      "BigMapDesX": 1600,
-      "BigMapDesY": -1010,
+      "DungeonList": [
+        5,
+        13,
+        4
+      ],
+      "BigMapX": 1049,
+      "BigMapY": -1851,
       "EWind": 5,
       "EFire": 5,
       "EWater": 30,
@@ -12469,10 +12495,16 @@
       "Pic": "town_2",
       "InitLevel": 1,
       "MaxLevel": 4,
-      "BigMapX": -700,
-      "BigMapY": 800,
-      "BigMapDesX": 1600,
-      "BigMapDesY": -1010,
+      "DungeonList": [
+        22,
+        20,
+        0,
+        19,
+        29,
+        21
+      ],
+      "BigMapX": 1394,
+      "BigMapY": -578,
       "EWind": 5,
       "EFire": 5,
       "EWater": 30,
@@ -12487,10 +12519,13 @@
       "Pic": "village_2",
       "InitLevel": 1,
       "MaxLevel": 3,
-      "BigMapX": -700,
-      "BigMapY": 800,
-      "BigMapDesX": 1600,
-      "BigMapDesY": -1010,
+      "DungeonList": [
+        7,
+        13,
+        12
+      ],
+      "BigMapX": 876,
+      "BigMapY": -1376,
       "EWind": 5,
       "EFire": 5,
       "EWater": 30,
@@ -12505,10 +12540,14 @@
       "Pic": "village_2",
       "InitLevel": 1,
       "MaxLevel": 3,
-      "BigMapX": -700,
-      "BigMapY": 800,
-      "BigMapDesX": 1600,
-      "BigMapDesY": -1010,
+      "DungeonList": [
+        22,
+        23,
+        25,
+        24
+      ],
+      "BigMapX": 1244,
+      "BigMapY": -720,
       "EWind": 5,
       "EFire": 5,
       "EWater": 30,
@@ -12523,10 +12562,12 @@
       "Pic": "town_1",
       "InitLevel": 1,
       "MaxLevel": 4,
-      "BigMapX": -700,
-      "BigMapY": 800,
-      "BigMapDesX": 1600,
-      "BigMapDesY": -1010,
+      "DungeonList": [
+        28,
+        27
+      ],
+      "BigMapX": 559,
+      "BigMapY": -132,
       "EWind": 5,
       "EFire": 5,
       "EWater": 30,
@@ -30602,6 +30643,8 @@
         "Forest_02"
       ],
       "Des": "怪物很少的平原，适合采集",
+      "BigMapX": 1059,
+      "BigMapY": -450,
       "PartNum": 100,
       "FixPart": [
         9
@@ -30661,6 +30704,8 @@
         "Beach_01"
       ],
       "Des": "各种陷阱和泉水",
+      "BigMapX": 1730,
+      "BigMapY": -1074,
       "PartNum": 100,
       "FixPart": [
         9
@@ -30718,6 +30763,8 @@
         "Desert_01"
       ],
       "Des": "介绍",
+      "BigMapX": 1404,
+      "BigMapY": -1153,
       "PartNum": 100,
       "FixPart": [
         9
@@ -30777,6 +30824,8 @@
         "Forest_03"
       ],
       "Des": "介绍",
+      "BigMapX": 1266,
+      "BigMapY": -1517,
       "PartNum": 100,
       "FixPart": [
         9
@@ -30834,6 +30883,8 @@
         "River_02"
       ],
       "Des": "介绍",
+      "BigMapX": 1054,
+      "BigMapY": -1652,
       "PartNum": 100,
       "FixPart": [
         9
@@ -30891,6 +30942,8 @@
         "Beach_01"
       ],
       "Des": "介绍",
+      "BigMapX": 1361,
+      "BigMapY": -1851,
       "PartNum": 100,
       "FixPart": [
         9
@@ -30948,6 +31001,8 @@
         "Forest_03"
       ],
       "Des": "很多蛇出没",
+      "BigMapX": 285,
+      "BigMapY": -1429,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31005,6 +31060,8 @@
         "Desert_02"
       ],
       "Des": "介绍",
+      "BigMapX": 1037,
+      "BigMapY": -1392,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31062,6 +31119,8 @@
         "Desert_01"
       ],
       "Des": "介绍",
+      "BigMapX": 560,
+      "BigMapY": -1568,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31125,6 +31184,8 @@
         "Snow_01"
       ],
       "Des": "介绍",
+      "BigMapX": 1423,
+      "BigMapY": -1359,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31182,6 +31243,8 @@
         "Beach_01"
       ],
       "Des": "介绍",
+      "BigMapX": 1349,
+      "BigMapY": -1010,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31239,6 +31302,8 @@
         "River_02"
       ],
       "Des": "介绍",
+      "BigMapX": 1077,
+      "BigMapY": -1072,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31296,6 +31361,8 @@
         "Forest_01"
       ],
       "Des": "介绍",
+      "BigMapX": 801,
+      "BigMapY": -1134,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31353,6 +31420,8 @@
         "Forest_03"
       ],
       "Des": "介绍",
+      "BigMapX": 864,
+      "BigMapY": -1602,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31410,6 +31479,8 @@
         "Hill_02"
       ],
       "Des": "介绍",
+      "BigMapX": 446,
+      "BigMapY": -1760,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31467,6 +31538,8 @@
         "Hill_01"
       ],
       "Des": "介绍",
+      "BigMapX": 309,
+      "BigMapY": -870,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31524,6 +31597,8 @@
         "Forest_03"
       ],
       "Des": "介绍",
+      "BigMapX": 220,
+      "BigMapY": -717,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31581,6 +31656,8 @@
         "Hill_01"
       ],
       "Des": "介绍",
+      "BigMapX": 787,
+      "BigMapY": -704,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31638,6 +31715,8 @@
         "Forest_03"
       ],
       "Des": "介绍",
+      "BigMapX": 735,
+      "BigMapY": -540,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31695,6 +31774,8 @@
         "Hill_01"
       ],
       "Des": "介绍",
+      "BigMapX": 1414,
+      "BigMapY": -417,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31752,6 +31833,8 @@
         "Forest_03"
       ],
       "Des": "介绍",
+      "BigMapX": 1278,
+      "BigMapY": -370,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31809,6 +31892,8 @@
         "Desert_02"
       ],
       "Des": "介绍",
+      "BigMapX": 1882,
+      "BigMapY": -611,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31866,6 +31951,8 @@
         "Forest_03"
       ],
       "Des": "介绍",
+      "BigMapX": 1296,
+      "BigMapY": -626,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31923,6 +32010,8 @@
         "Beach_01"
       ],
       "Des": "介绍",
+      "BigMapX": 1460,
+      "BigMapY": -815,
       "PartNum": 100,
       "FixPart": [
         9
@@ -31980,6 +32069,8 @@
         "Beach_01"
       ],
       "Des": "介绍",
+      "BigMapX": 978,
+      "BigMapY": -689,
       "PartNum": 100,
       "FixPart": [
         9
@@ -32037,6 +32128,8 @@
         "Forest_01"
       ],
       "Des": "介绍",
+      "BigMapX": 1019,
+      "BigMapY": -871,
       "PartNum": 100,
       "FixPart": [
         9
@@ -32094,6 +32187,8 @@
         "Beach_01"
       ],
       "Des": "介绍",
+      "BigMapX": 397,
+      "BigMapY": -1279,
       "PartNum": 100,
       "FixPart": [
         9
@@ -32151,6 +32246,8 @@
         "Snow_01"
       ],
       "Des": "介绍",
+      "BigMapX": 181,
+      "BigMapY": -173,
       "PartNum": 100,
       "FixPart": [
         9
@@ -32208,6 +32305,8 @@
         "Hill_01"
       ],
       "Des": "介绍",
+      "BigMapX": 792,
+      "BigMapY": -221,
       "PartNum": 100,
       "FixPart": [
         9
@@ -32265,6 +32364,8 @@
         "Hill_02"
       ],
       "Des": "介绍",
+      "BigMapX": 1270,
+      "BigMapY": -125,
       "PartNum": 100,
       "FixPart": [
         9
@@ -46715,11 +46816,13 @@
   ],
   "AreaPath": [
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 0,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 0,
       "Path": [
@@ -46740,6 +46843,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 0,
       "Path": [
@@ -46760,6 +46864,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 0,
       "Path": [
@@ -46775,6 +46880,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 0,
       "Path": [
@@ -46791,6 +46897,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 0,
       "Path": [
@@ -46812,6 +46919,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 0,
       "Path": [
@@ -46831,6 +46939,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 0,
       "Path": [
@@ -46847,6 +46956,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 0,
       "Path": [
@@ -46858,6 +46968,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 0,
       "Path": [
@@ -46871,6 +46982,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 0,
       "Path": [
@@ -46895,6 +47007,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 1,
       "Path": [
@@ -46915,11 +47028,13 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 1,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 1,
       "Path": [
@@ -46948,6 +47063,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 1,
       "Path": [
@@ -46976,6 +47092,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 1,
       "Path": [
@@ -47005,6 +47122,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 1,
       "Path": [
@@ -47024,6 +47142,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 1,
       "Path": [
@@ -47055,6 +47174,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 1,
       "Path": [
@@ -47084,6 +47204,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 1,
       "Path": [
@@ -47103,6 +47224,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 1,
       "Path": [
@@ -47129,6 +47251,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 1,
       "Path": [
@@ -47166,6 +47289,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 2,
       "Path": [
@@ -47186,6 +47310,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 2,
       "Path": [
@@ -47214,11 +47339,13 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 2,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 2,
       "Path": [
@@ -47247,6 +47374,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 2,
       "Path": [
@@ -47276,6 +47404,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 2,
       "Path": [
@@ -47305,6 +47434,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 2,
       "Path": [
@@ -47328,6 +47458,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 2,
       "Path": [
@@ -47357,6 +47488,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 2,
       "Path": [
@@ -47374,6 +47506,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 2,
       "Path": [
@@ -47400,6 +47533,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 2,
       "Path": [
@@ -47437,6 +47571,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 3,
       "Path": [
@@ -47452,6 +47587,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 3,
       "Path": [
@@ -47480,6 +47616,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 3,
       "Path": [
@@ -47508,11 +47645,13 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 3,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 3,
       "Path": [
@@ -47524,6 +47663,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 3,
       "Path": [
@@ -47553,6 +47693,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 3,
       "Path": [
@@ -47580,6 +47721,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 3,
       "Path": [
@@ -47597,6 +47739,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 3,
       "Path": [
@@ -47616,6 +47759,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 3,
       "Path": [
@@ -47634,6 +47778,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 3,
       "Path": [
@@ -47651,6 +47796,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 4,
       "Path": [
@@ -47667,6 +47813,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 4,
       "Path": [
@@ -47696,6 +47843,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 4,
       "Path": [
@@ -47725,6 +47873,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 4,
       "Path": [
@@ -47736,11 +47885,13 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 4,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 4,
       "Path": [
@@ -47771,6 +47922,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 4,
       "Path": [
@@ -47799,6 +47951,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 4,
       "Path": [
@@ -47819,6 +47972,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 4,
       "Path": [
@@ -47839,6 +47993,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 4,
       "Path": [
@@ -47860,6 +48015,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 4,
       "Path": [
@@ -47880,6 +48036,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 5,
       "Path": [
@@ -47901,6 +48058,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 5,
       "Path": [
@@ -47920,6 +48078,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 5,
       "Path": [
@@ -47949,6 +48108,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 5,
       "Path": [
@@ -47978,6 +48138,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 5,
       "Path": [
@@ -48008,11 +48169,13 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 5,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 5,
       "Path": [
@@ -48033,6 +48196,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 5,
       "Path": [
@@ -48063,6 +48227,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 5,
       "Path": [
@@ -48083,6 +48248,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 5,
       "Path": [
@@ -48110,6 +48276,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 5,
       "Path": [
@@ -48148,6 +48315,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 6,
       "Path": [
@@ -48167,6 +48335,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 6,
       "Path": [
@@ -48182,104 +48351,6 @@
         37,
         36,
         35,
-        33,
-        32,
-        31,
-        30,
-        29,
-        28,
-        27,
-        26,
-        25,
-        24,
-        23,
-        22,
-        89
-      ]
-    },
-    {
-      "StartDistrict": 2,
-      "EndDistrict": 6,
-      "Path": [
-        47,
-        46,
-        45,
-        44,
-        43,
-        42,
-        41,
-        40,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        89
-      ]
-    },
-    {
-      "StartDistrict": 3,
-      "EndDistrict": 6,
-      "Path": [
-        74,
-        73,
-        69,
-        68,
-        67,
-        65,
-        66,
-        51,
-        50,
-        49,
-        48,
-        12,
-        13,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        89
-      ]
-    },
-    {
-      "StartDistrict": 4,
-      "EndDistrict": 6,
-      "Path": [
-        72,
-        71,
-        70,
-        69,
-        68,
-        67,
-        65,
-        66,
-        51,
-        50,
-        49,
-        48,
-        12,
-        13,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        89
-      ]
-    },
-    {
-      "StartDistrict": 5,
-      "EndDistrict": 6,
-      "Path": [
-        34,
         33,
         32,
         31,
@@ -48296,11 +48367,115 @@
       ]
     },
     {
+      "Type": "A",
+      "StartDistrict": 2,
+      "EndDistrict": 6,
+      "Path": [
+        47,
+        46,
+        45,
+        44,
+        43,
+        42,
+        41,
+        40,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        89
+      ]
+    },
+    {
+      "Type": "A",
+      "StartDistrict": 3,
+      "EndDistrict": 6,
+      "Path": [
+        74,
+        73,
+        69,
+        68,
+        67,
+        65,
+        66,
+        51,
+        50,
+        49,
+        48,
+        12,
+        13,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        89
+      ]
+    },
+    {
+      "Type": "A",
+      "StartDistrict": 4,
+      "EndDistrict": 6,
+      "Path": [
+        72,
+        71,
+        70,
+        69,
+        68,
+        67,
+        65,
+        66,
+        51,
+        50,
+        49,
+        48,
+        12,
+        13,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        89
+      ]
+    },
+    {
+      "Type": "A",
+      "StartDistrict": 5,
+      "EndDistrict": 6,
+      "Path": [
+        34,
+        33,
+        32,
+        31,
+        30,
+        29,
+        28,
+        27,
+        26,
+        25,
+        24,
+        23,
+        22,
+        89
+      ]
+    },
+    {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 6,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 6,
       "Path": [
@@ -48329,6 +48504,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 6,
       "Path": [
@@ -48345,6 +48521,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 6,
       "Path": [
@@ -48370,6 +48547,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 6,
       "Path": [
@@ -48406,6 +48584,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 7,
       "Path": [
@@ -48422,6 +48601,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 7,
       "Path": [
@@ -48451,6 +48631,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 7,
       "Path": [
@@ -48480,6 +48661,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 7,
       "Path": [
@@ -48497,6 +48679,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 7,
       "Path": [
@@ -48518,6 +48701,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 7,
       "Path": [
@@ -48548,6 +48732,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 7,
       "Path": [
@@ -48576,11 +48761,13 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 7,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 7,
       "Path": [
@@ -48601,6 +48788,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 7,
       "Path": [
@@ -48612,6 +48800,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 7,
       "Path": [
@@ -48636,6 +48825,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 8,
       "Path": [
@@ -48647,6 +48837,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 8,
       "Path": [
@@ -48666,6 +48857,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 8,
       "Path": [
@@ -48683,6 +48875,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 8,
       "Path": [
@@ -48702,6 +48895,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 8,
       "Path": [
@@ -48722,6 +48916,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 8,
       "Path": [
@@ -48742,6 +48937,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 8,
       "Path": [
@@ -48758,6 +48954,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 8,
       "Path": [
@@ -48778,11 +48975,13 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 8,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 8,
       "Path": [
@@ -48800,6 +48999,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 8,
       "Path": [
@@ -48828,6 +49028,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 9,
       "Path": [
@@ -48841,6 +49042,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 9,
       "Path": [
@@ -48867,6 +49069,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 9,
       "Path": [
@@ -48893,6 +49096,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 9,
       "Path": [
@@ -48911,6 +49115,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 9,
       "Path": [
@@ -48933,6 +49138,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 9,
       "Path": [
@@ -48960,6 +49166,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 9,
       "Path": [
@@ -48985,6 +49192,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 9,
       "Path": [
@@ -48996,6 +49204,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 9,
       "Path": [
@@ -49013,11 +49222,13 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 9,
       "Path": []
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 9,
       "Path": [
@@ -49043,6 +49254,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 0,
       "EndDistrict": 10,
       "Path": [
@@ -49067,6 +49279,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 1,
       "EndDistrict": 10,
       "Path": [
@@ -49104,6 +49317,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 2,
       "EndDistrict": 10,
       "Path": [
@@ -49141,6 +49355,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 3,
       "EndDistrict": 10,
       "Path": [
@@ -49158,6 +49373,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 4,
       "EndDistrict": 10,
       "Path": [
@@ -49179,6 +49395,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 5,
       "EndDistrict": 10,
       "Path": [
@@ -49217,6 +49434,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 6,
       "EndDistrict": 10,
       "Path": [
@@ -49253,6 +49471,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 7,
       "EndDistrict": 10,
       "Path": [
@@ -49277,6 +49496,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 8,
       "EndDistrict": 10,
       "Path": [
@@ -49305,6 +49525,7 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 9,
       "EndDistrict": 10,
       "Path": [
@@ -49330,9 +49551,532 @@
       ]
     },
     {
+      "Type": "A",
       "StartDistrict": 10,
       "EndDistrict": 10,
       "Path": []
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 0,
+      "EndDistrict": 7,
+      "Path": [
+        50,
+        49,
+        48,
+        11,
+        10,
+        9,
+        91
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 0,
+      "EndDistrict": 11,
+      "Path": [
+        50,
+        51,
+        95
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 0,
+      "EndDistrict": 12,
+      "Path": [
+        50,
+        49,
+        48,
+        92,
+        93,
+        94
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 0,
+      "EndDistrict": 10,
+      "Path": [
+        50,
+        51,
+        52,
+        96,
+        97
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 0,
+      "EndDistrict": 25,
+      "Path": [
+        50,
+        51,
+        66,
+        65,
+        98
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 1,
+      "EndDistrict": 9,
+      "Path": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        104
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 1,
+      "EndDistrict": 1,
+      "Path": [
+        0,
+        101,
+        102,
+        103
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 1,
+      "EndDistrict": 2,
+      "Path": [
+        0,
+        1,
+        2,
+        3,
+        99,
+        100
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 1,
+      "EndDistrict": 10,
+      "Path": [
+        0,
+        1,
+        2,
+        3,
+        99,
+        100,
+        105,
+        106
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 2,
+      "EndDistrict": 8,
+      "Path": [
+        47,
+        46,
+        107
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 2,
+      "EndDistrict": 6,
+      "Path": [
+        47,
+        46,
+        108,
+        109
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 2,
+      "EndDistrict": 14,
+      "Path": [
+        47,
+        46,
+        107,
+        110
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 2,
+      "EndDistrict": 26,
+      "Path": [
+        47,
+        46,
+        108,
+        109,
+        111,
+        112,
+        113,
+        114
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 3,
+      "EndDistrict": 18,
+      "Path": [
+        74,
+        75,
+        76,
+        77,
+        116
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 3,
+      "EndDistrict": 17,
+      "Path": [
+        74,
+        73,
+        69,
+        119,
+        120,
+        121
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 3,
+      "EndDistrict": 24,
+      "Path": [
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        63,
+        117,
+        118
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 4,
+      "EndDistrict": 15,
+      "Path": [
+        72,
+        71,
+        124,
+        125
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 4,
+      "EndDistrict": 16,
+      "Path": [
+        72,
+        71,
+        124,
+        122,
+        123
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 4,
+      "EndDistrict": 17,
+      "Path": [
+        72,
+        71,
+        70,
+        69,
+        119,
+        120,
+        121
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 4,
+      "EndDistrict": 26,
+      "Path": [
+        72,
+        71,
+        70,
+        69,
+        68,
+        67,
+        126,
+        127
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 5,
+      "EndDistrict": 9,
+      "Path": [
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        6,
+        104
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 5,
+      "EndDistrict": 3,
+      "Path": [
+        34,
+        35,
+        36,
+        37,
+        128
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 5,
+      "EndDistrict": 5,
+      "Path": [
+        34,
+        33,
+        32,
+        31,
+        30,
+        129
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 6,
+      "EndDistrict": 5,
+      "Path": [
+        89,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        129
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 6,
+      "EndDistrict": 13,
+      "Path": [
+        89,
+        21,
+        20,
+        19,
+        18,
+        17,
+        16,
+        115
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 6,
+      "EndDistrict": 4,
+      "Path": [
+        89,
+        21,
+        20,
+        19,
+        130
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 7,
+      "EndDistrict": 22,
+      "Path": [
+        60,
+        59,
+        58
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 7,
+      "EndDistrict": 20,
+      "Path": [
+        60,
+        59,
+        137,
+        138,
+        139,
+        140
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 7,
+      "EndDistrict": 0,
+      "Path": [
+        60,
+        59,
+        137,
+        138,
+        142,
+        143,
+        144
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 7,
+      "EndDistrict": 19,
+      "Path": [
+        60,
+        59,
+        131,
+        132,
+        133,
+        134
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 7,
+      "EndDistrict": 29,
+      "Path": [
+        60,
+        59,
+        137,
+        138,
+        139,
+        141
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 7,
+      "EndDistrict": 21,
+      "Path": [
+        60,
+        59,
+        135,
+        136
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 8,
+      "EndDistrict": 7,
+      "Path": [
+        90,
+        12,
+        11,
+        10,
+        9,
+        91
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 8,
+      "EndDistrict": 13,
+      "Path": [
+        90,
+        13,
+        14,
+        15,
+        115
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 8,
+      "EndDistrict": 12,
+      "Path": [
+        90,
+        12,
+        92,
+        93,
+        94
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 9,
+      "EndDistrict": 22,
+      "Path": [
+        56,
+        57,
+        58
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 9,
+      "EndDistrict": 23,
+      "Path": [
+        56,
+        57,
+        152,
+        153,
+        154
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 9,
+      "EndDistrict": 25,
+      "Path": [
+        56,
+        55,
+        54,
+        155
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 9,
+      "EndDistrict": 24,
+      "Path": [
+        56,
+        57,
+        58,
+        61,
+        62,
+        117,
+        118
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 10,
+      "EndDistrict": 28,
+      "Path": [
+        88,
+        87,
+        86,
+        145,
+        146
+      ]
+    },
+    {
+      "Type": "B",
+      "StartDistrict": 10,
+      "EndDistrict": 27,
+      "Path": [
+        88,
+        87,
+        147,
+        148,
+        149,
+        150,
+        151
+      ]
     }
   ],
   "AreaPathPoint": [
@@ -49790,6 +50534,331 @@
       "ID": 90,
       "X": 917,
       "Y": -1432
+    },
+    {
+      "ID": 91,
+      "X": 1044,
+      "Y": -1414
+    },
+    {
+      "ID": 92,
+      "X": 935,
+      "Y": -1344
+    },
+    {
+      "ID": 93,
+      "X": 813,
+      "Y": -1344
+    },
+    {
+      "ID": 94,
+      "X": 813,
+      "Y": -1154
+    },
+    {
+      "ID": 95,
+      "X": 1085,
+      "Y": -1096
+    },
+    {
+      "ID": 96,
+      "X": 1175,
+      "Y": -1062
+    },
+    {
+      "ID": 97,
+      "X": 1240,
+      "Y": -1062
+    },
+    {
+      "ID": 98,
+      "X": 945,
+      "Y": -951
+    },
+    {
+      "ID": 99,
+      "X": 1413,
+      "Y": -1238
+    },
+    {
+      "ID": 100,
+      "X": 1413,
+      "Y": -1174
+    },
+    {
+      "ID": 101,
+      "X": 1660,
+      "Y": -1170
+    },
+    {
+      "ID": 102,
+      "X": 1660,
+      "Y": -1094
+    },
+    {
+      "ID": 103,
+      "X": 1739,
+      "Y": -1094
+    },
+    {
+      "ID": 104,
+      "X": 1430,
+      "Y": -1382
+    },
+    {
+      "ID": 105,
+      "X": 1350,
+      "Y": -1174
+    },
+    {
+      "ID": 106,
+      "X": 1350,
+      "Y": -1149
+    },
+    {
+      "ID": 107,
+      "X": 568,
+      "Y": -1591
+    },
+    {
+      "ID": 108,
+      "X": 292,
+      "Y": -1591
+    },
+    {
+      "ID": 109,
+      "X": 292,
+      "Y": -1449
+    },
+    {
+      "ID": 110,
+      "X": 568,
+      "Y": -1660
+    },
+    {
+      "ID": 111,
+      "X": 376,
+      "Y": -1450
+    },
+    {
+      "ID": 112,
+      "X": 376,
+      "Y": -1400
+    },
+    {
+      "ID": 113,
+      "X": 404,
+      "Y": -1400
+    },
+    {
+      "ID": 114,
+      "X": 404,
+      "Y": -1298
+    },
+    {
+      "ID": 115,
+      "X": 871,
+      "Y": -1623
+    },
+    {
+      "ID": 116,
+      "X": 759,
+      "Y": -554
+    },
+    {
+      "ID": 117,
+      "X": 970,
+      "Y": -743
+    },
+    {
+      "ID": 118,
+      "X": 970,
+      "Y": -705
+    },
+    {
+      "ID": 119,
+      "X": 554,
+      "Y": -808
+    },
+    {
+      "ID": 120,
+      "X": 554,
+      "Y": -714
+    },
+    {
+      "ID": 121,
+      "X": 780,
+      "Y": -714
+    },
+    {
+      "ID": 122,
+      "X": 240,
+      "Y": -760
+    },
+    {
+      "ID": 123,
+      "X": 240,
+      "Y": -733
+    },
+    {
+      "ID": 124,
+      "X": 383,
+      "Y": -760
+    },
+    {
+      "ID": 125,
+      "X": 383,
+      "Y": -824
+    },
+    {
+      "ID": 126,
+      "X": 600,
+      "Y": -951
+    },
+    {
+      "ID": 127,
+      "X": 600,
+      "Y": -1130
+    },
+    {
+      "ID": 128,
+      "X": 1305,
+      "Y": -1512
+    },
+    {
+      "ID": 129,
+      "X": 1368,
+      "Y": -1832
+    },
+    {
+      "ID": 130,
+      "X": 1000,
+      "Y": -1718
+    },
+    {
+      "ID": 131,
+      "X": 1472,
+      "Y": -648
+    },
+    {
+      "ID": 132,
+      "X": 1472,
+      "Y": -460
+    },
+    {
+      "ID": 133,
+      "X": 1430,
+      "Y": -460
+    },
+    {
+      "ID": 134,
+      "X": 1430,
+      "Y": -435
+    },
+    {
+      "ID": 135,
+      "X": 1878,
+      "Y": -648
+    },
+    {
+      "ID": 136,
+      "X": 1878,
+      "Y": -619
+    },
+    {
+      "ID": 137,
+      "X": 1212,
+      "Y": -648
+    },
+    {
+      "ID": 138,
+      "X": 1212,
+      "Y": -424
+    },
+    {
+      "ID": 139,
+      "X": 1285,
+      "Y": -424
+    },
+    {
+      "ID": 140,
+      "X": 1285,
+      "Y": -389
+    },
+    {
+      "ID": 141,
+      "X": 1285,
+      "Y": -148
+    },
+    {
+      "ID": 142,
+      "X": 1145,
+      "Y": -424
+    },
+    {
+      "ID": 143,
+      "X": 1145,
+      "Y": -460
+    },
+    {
+      "ID": 144,
+      "X": 1080,
+      "Y": -460
+    },
+    {
+      "ID": 145,
+      "X": 647,
+      "Y": -240
+    },
+    {
+      "ID": 146,
+      "X": 800,
+      "Y": -240
+    },
+    {
+      "ID": 147,
+      "X": 432,
+      "Y": -200
+    },
+    {
+      "ID": 148,
+      "X": 432,
+      "Y": -176
+    },
+    {
+      "ID": 149,
+      "X": 350,
+      "Y": -176
+    },
+    {
+      "ID": 150,
+      "X": 350,
+      "Y": -154
+    },
+    {
+      "ID": 151,
+      "X": 244,
+      "Y": -154
+    },
+    {
+      "ID": 152,
+      "X": 1303,
+      "Y": -707
+    },
+    {
+      "ID": 153,
+      "X": 1455,
+      "Y": -707
+    },
+    {
+      "ID": 154,
+      "X": 1455,
+      "Y": -826
+    },
+    {
+      "ID": 155,
+      "X": 1120,
+      "Y": -903
     }
   ]
 }

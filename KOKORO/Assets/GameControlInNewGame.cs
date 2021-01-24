@@ -8,6 +8,7 @@ public class GameControlInNewGame : MonoBehaviour
 
     GameControl gc;
     short temp_districtID = -1;
+    byte temp_flag = 0;
     public byte temp_leaderHeroSex = 0;
     public short temp_leaderHeroType = -1;
     public HeroObject temp_Leader = null;
@@ -25,31 +26,22 @@ public class GameControlInNewGame : MonoBehaviour
         //HeroPanel.Instance.OnHide();
 
         //gc.Delete();
-
+        temp_districtID = 1;
         temp_leaderHeroSex = 0;
         SetLeaderHeroType(0);
-        SetDistrict(0);
+        SetFlag(0);
+        StartChoosePanel.Instance.UpdateFlag(0);
         RollMenberAll();
         HeroPanel.Instance.OnHide();
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+
+    public void SetFlag(byte flag)
     {
-        
+        gc.forceFlag = flag;
     }
-
-    public void SetDistrict(short districtID)
-    {
-        temp_districtID = districtID;
-        StartChoosePanel.Instance.UpdateDistrictInfo(districtID);
-    }
-
-
-    //public void SetLeaderName(string name)
-    //{      
-    //    gc.playerName = name;
-    //}
 
     public void SetLeaderHeroSex(byte sex)
     {
@@ -99,12 +91,12 @@ public class GameControlInNewGame : MonoBehaviour
     {
         //districtNum=1
         
-         Debug.Log(" gc.districtDic.Length=" + gc.districtDic.Length);
+        // Debug.Log(" gc.districtDic.Length=" + gc.districtDic.Length);
         for (int i = 0; i < DataManager.mDistrictDict.Count; i++)
         {
             Debug.Log(i);
 
-            gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "", DataManager.mDistrictDict[i].Des, true, temp_districtID == i, 1, 10, 20, 0,
+            gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "", DataManager.mDistrictDict[i].Des, true, temp_districtID == i, DataManager.mDistrictDict[i].InitLevel, 10, 20, 0,
                  new List<int> { }, temp_districtID == i ? new List<int> { 0, 1, 2, 3, 4, 5 } : new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
                 0, 0, 0, 0, 0, 0, 0, 5000, 5000, 1000, 500, 1000, 1000, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50000, 50000, 50, 50);
 
@@ -134,8 +126,8 @@ public class GameControlInNewGame : MonoBehaviour
         gc.heroIndex = 6;
         
 
-        gc.adventureTeamList.Add(new AdventureTeamObject(0, -1,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.NotSend, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
-        gc.adventureTeamList.Add(new AdventureTeamObject(1, -1,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.NotSend, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
+        gc.adventureTeamList.Add(new AdventureTeamObject(0, -1,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.Free, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
+        gc.adventureTeamList.Add(new AdventureTeamObject(1, -1,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<string> { }, new List<int> { }, new List<int> { }, new List<int> { }, new List<int> { }, 0, 0, AdventureState.Free, AdventureAction.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<int> { }, 0, new List<string> { }, new List<AdventurePartObject> { }));
 
         //最多7个冒险队
         for (int i = 0; i < 7; i++)

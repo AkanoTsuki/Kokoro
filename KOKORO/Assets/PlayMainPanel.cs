@@ -115,6 +115,7 @@ public class PlayMainPanel : BasePanel
 
     public void UpdateKingdomInfo()
     {
+        top_flagImage.overrideSprite = Resources.Load("Image/Other/icon_flag_"+gc.forceFlag+"_a", typeof(Sprite)) as Sprite;
         top_nameText.text = "克克洛地区";
       
     }
@@ -326,11 +327,25 @@ public class PlayMainPanel : BasePanel
         bottom_adventureRt[index].localScale=Vector2.one;
         bottom_adventure_teamNameText[index].text="第"+(teamID+1) +"探险队";
         // bottom_adventure_detailBtn[index].;
-
-        if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
+        if (gc.adventureTeamList[teamID].state == AdventureState.Free)
         {
             bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_B", typeof(Sprite)) as Sprite;
-            bottom_adventure_desText[index].text = "城镇";
+            bottom_adventure_desText[index].text = "未指派";
+        }
+        else if (gc.adventureTeamList[teamID].state == AdventureState.Sending)
+        {
+            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_B", typeof(Sprite)) as Sprite;
+            bottom_adventure_desText[index].text = "前往目的地中";
+        }
+        else if (gc.adventureTeamList[teamID].state == AdventureState.Backing)
+        {
+            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_B", typeof(Sprite)) as Sprite;
+            bottom_adventure_desText[index].text = "返回中";
+        }
+        else if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
+        {
+            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[0] + "_B", typeof(Sprite)) as Sprite;
+            bottom_adventure_desText[index].text = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].Name + "[营地待命]";
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.Doing)
         {
@@ -395,7 +410,11 @@ public class PlayMainPanel : BasePanel
             bottom_adventure_herosTf[index].GetChild(i).GetComponent<RectTransform>().localScale = Vector2.zero;
         }
 
-        if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
+
+        if (gc.adventureTeamList[teamID].state == AdventureState.Free||
+            gc.adventureTeamList[teamID].state == AdventureState.Sending ||
+            gc.adventureTeamList[teamID].state == AdventureState.Backing ||
+            gc.adventureTeamList[teamID].state == AdventureState.NotSend)
         {
             bottom_adventure_detailBtn[index].GetComponent<RectTransform>().localScale = Vector2.zero;
         }

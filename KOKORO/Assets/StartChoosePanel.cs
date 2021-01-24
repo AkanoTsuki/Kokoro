@@ -9,12 +9,8 @@ public class StartChoosePanel : BasePanel
     GameControl gc;
     GameControlInNewGame gci;
 
-    public RectTransform bigMapRt;
-    public RectTransform bigMapDesRt;
-    public Text bigMapDesText;
-
-    public Text desText;
-    public List<Button> districtBtnList;
+    public List<Button> flagBtnList;
+    public List<RectTransform> flagSelectedRt;
 
     public InputField leaderNameIf;
     public List<Button> leaderBtnList;
@@ -44,14 +40,14 @@ public class StartChoosePanel : BasePanel
         gc = GameObject.Find("GameManager").GetComponent<GameControl>();
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInNewGame>();
 
-    
-        districtBtnList[0].onClick.AddListener(delegate () { gci.SetDistrict(0);  });
-        districtBtnList[1].onClick.AddListener(delegate () { gci.SetDistrict(1);  });
-        districtBtnList[2].onClick.AddListener(delegate () { gci.SetDistrict(2); });
-        districtBtnList[3].onClick.AddListener(delegate () { gci.SetDistrict(3);  });
-        districtBtnList[4].onClick.AddListener(delegate () { gci.SetDistrict(4);  });
-        districtBtnList[5].onClick.AddListener(delegate () { gci.SetDistrict(5);  });
-        districtBtnList[6].onClick.AddListener(delegate () { gci.SetDistrict(6); });
+        flagBtnList[0].onClick.AddListener(delegate () { gci.SetFlag(0); UpdateFlag(0); });
+        flagBtnList[1].onClick.AddListener(delegate () { gci.SetFlag(1); UpdateFlag(1); });
+        flagBtnList[2].onClick.AddListener(delegate () { gci.SetFlag(2); UpdateFlag(2); });
+        flagBtnList[3].onClick.AddListener(delegate () { gci.SetFlag(3); UpdateFlag(3); });
+        flagBtnList[4].onClick.AddListener(delegate () { gci.SetFlag(4); UpdateFlag(4); });
+        flagBtnList[5].onClick.AddListener(delegate () { gci.SetFlag(5); UpdateFlag(5); });
+        flagBtnList[6].onClick.AddListener(delegate () { gci.SetFlag(6); UpdateFlag(6); });
+        flagBtnList[7].onClick.AddListener(delegate () { gci.SetFlag(7); UpdateFlag(7); });
 
         leaderBtnList[0].onClick.AddListener(delegate () { gci.SetLeaderHeroType(0); });
         leaderBtnList[1].onClick.AddListener(delegate () { gci.SetLeaderHeroType(1); });
@@ -76,23 +72,26 @@ public class StartChoosePanel : BasePanel
 
     }
 
-    public void UpdateDistrictInfo(int districtID)
+    public void UpdateFlag(byte flag)
     {
-        //Debug.Log("districtID=" + districtID);
-        desText.text = DataManager.mDistrictDict[districtID].Des;
+        for (byte i = 0; i < 8; i++)
+        {
+            if (i == flag)
+            {
+                flagSelectedRt[i].localScale = Vector2.one;
+            }
+            else
+            {
+                flagSelectedRt[i].localScale = Vector2.zero;
+            }
 
-        bigMapRt.anchoredPosition = new Vector2(DataManager.mDistrictDict[districtID].BigMapX, DataManager.mDistrictDict[districtID].BigMapY);
-        bigMapDesRt.anchoredPosition = new Vector2(DataManager.mDistrictDict[districtID].BigMapDesX, DataManager.mDistrictDict[districtID].BigMapDesY);
-        bigMapDesText.text = DataManager.mDistrictDict[districtID].Name;
+
+        }
+        
     }
 
-    //public void UpdateMenberAllInfo()
-    //{
-    //    for (int i= 0; i < 5; i++)
-    //    {
-    //        UpdateMenberInfo(i);
-    //    }
-    //}
+
+
     public void UpdateLeaderInfo(int index)
     {
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInNewGame>();

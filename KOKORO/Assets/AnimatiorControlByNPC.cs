@@ -21,7 +21,7 @@ public class AnimatiorControlByNPC : MonoBehaviour, IPointerEnterHandler, IPoint
     Sprite[] needFrames = new Sprite[3];
 
     bool isPlay = false;
-    bool isLoop = false;
+  //  bool isLoop = false;
     bool isNeedStop = false;
     public string charaName = "chara1_1";
     public int customerID = -1;
@@ -94,31 +94,31 @@ public class AnimatiorControlByNPC : MonoBehaviour, IPointerEnterHandler, IPoint
                 needFrames[0] = walk_UpFrames[0];
                 needFrames[1] = walk_UpFrames[2];
                 needFrames[2] = walk_UpFrames[1];
-                isLoop = true;
+               // isLoop = true;
                 break;
             case AnimStatus.WalkLeft:
                 needFrames[0] = walk_LeftFrames[0];
                 needFrames[1] = walk_LeftFrames[2];
                 needFrames[2] = walk_LeftFrames[1];
-                isLoop = true;
+               // isLoop = true;
                 break;
             case AnimStatus.WalkRight:
                 needFrames[0] = walk_RightFrames[0];
                 needFrames[1] = walk_RightFrames[2];
                 needFrames[2] = walk_RightFrames[1];
-                isLoop = true;
+               // isLoop = true;
                 break;
             case AnimStatus.WalkDown:
                 needFrames[0] = walk_DownFrames[0];
                 needFrames[1] = walk_DownFrames[2];
                 needFrames[2] = walk_DownFrames[1];
-                isLoop = true;
+              //  isLoop = true;
                 break;
             case AnimStatus.Idle:
                 needFrames[0] = idleFrames[0];
                 needFrames[1] = idleFrames[2];
                 needFrames[2] = idleFrames[1];
-                isLoop = true;
+               // isLoop = true;
                 break;
 
         }

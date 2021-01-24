@@ -235,7 +235,9 @@ public enum AdventureState
     Done,
     Fail,
     Retreat,
-    Free
+    Free,
+    Sending,
+    Backing
 }
 
 public enum AdventureAction
@@ -629,6 +631,7 @@ public class TechnologyObject
 [System.Serializable]
 public class AreaPathPrototype
 {
+    public string Type;
     public int StartDistrict;
     public int EndDistrict;
     public List<int> Path;
@@ -649,8 +652,10 @@ public class TravellerObject
     private float X;
     private float Y;
     private List<int> HeroList;
-    short EndDistrictID;
-    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y, List<int> heroList, short endDistrictID)
+    private short EndDistrictOrDungeonID;
+    private string EndType;
+    private short Team;
+    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y, List<int> heroList, short endDistrictOrDungeonID,string endType, short team)
     {
         this.Pic = pic;
         this.PathPointList = pathPointList;
@@ -658,7 +663,9 @@ public class TravellerObject
         this.X = x;
         this.Y = y;
         this.HeroList = heroList;
-        this.EndDistrictID = endDistrictID;
+        this.EndDistrictOrDungeonID = endDistrictOrDungeonID;
+        this.EndType = endType;
+        this.Team = team;
     }
     public string pic { get { return Pic; }  }
     public List<int> pathPointList { get { return PathPointList; } }
@@ -666,7 +673,9 @@ public class TravellerObject
     public float x { get { return X; } set { X = value; } }
     public float y { get { return Y; } set { Y = value; } }
     public List<int> heroList { get { return HeroList; }  }
-    public short endDistrictID { get { return EndDistrictID; } }
+    public short endDistrictOrDungeonID { get { return EndDistrictOrDungeonID; } }
+    public string endType { get { return EndType; } }
+    public short team { get { return Team; } }
 }
 
 //英雄原型T
@@ -1105,10 +1114,8 @@ public class DistrictPrototype
     public string Name;
     public string Des;
     public string Pic;
-    public short BigMapX;
-    public short BigMapY;
-    public short BigMapDesX;
-    public short BigMapDesY;
+   // public short BigMapX;
+   // public short BigMapY;
     public short EWind;
     public short EFire;
     public short EWater;
@@ -1116,6 +1123,8 @@ public class DistrictPrototype
     public short ELight;
     public short EDark;
     public List<short> DungeonList;
+    public byte InitLevel;
+    public byte MaxLevel;
 }
 
 [System.Serializable]
@@ -1472,6 +1481,8 @@ public class DungeonPrototype : ISerializationCallbackReceiver
     public byte Level;
     public List<string> ScenePic;
     public string Des;
+    //public short BigMapX;
+    //public short BigMapY;
     public byte PartNum;
     public List<byte> FixPart;
     public List<AdventureEvent> FixEvent=new List<AdventureEvent>();

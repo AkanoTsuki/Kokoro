@@ -132,7 +132,7 @@ public class DataManager
         foreach (TechnologyPrototype item in jsonObject.Technology) { mTechnologyDict[item.ID] = item; }
 
         if (jsonObject.AreaPath == null) { Debug.LogError("AreaPath data null"); }
-        foreach (AreaPathPrototype item in jsonObject.AreaPath) { mAreaPathDict[item.StartDistrict + "-" + item.EndDistrict] = item; }
+        foreach (AreaPathPrototype item in jsonObject.AreaPath) { mAreaPathDict[item.Type + "-"+item.StartDistrict + "-" + item.EndDistrict] = item; }
 
         if (jsonObject.AreaPathPoint == null) { Debug.LogError("AreaPathPoint data null"); }
         foreach (AreaPathPointPrototype item in jsonObject.AreaPathPoint) { mAreaPathPointDict[item.ID] = item; }

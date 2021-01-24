@@ -14,7 +14,7 @@ public class GameControlInPlay : MonoBehaviour
 
         UIManager.Instance.SceneUIInit();
         UIManager.Instance.InitPanel(UIPanelType.AreaMap);
-        AreaMapPanel.Instance.OnShow(DataManager.mDistrictDict[gc.nowCheckingDistrictID].BigMapX, DataManager.mDistrictDict[gc.nowCheckingDistrictID].BigMapY);
+        AreaMapPanel.Instance.OnShow(-288, 818);
         UIManager.Instance.InitPanel(UIPanelType.DistrictMain);
         UIManager.Instance.InitPanel(UIPanelType.Building);
         UIManager.Instance.InitPanel(UIPanelType.Hero);
@@ -33,6 +33,7 @@ public class GameControlInPlay : MonoBehaviour
         AdventureMainPanel.Instance.OnShow(64, 5000);
         AdventureMainPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.AdventureTeam);
+        UIManager.Instance.InitPanel(UIPanelType.AdventureSend);
         UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
         UIManager.Instance.InitPanel(UIPanelType.Market);
@@ -399,6 +400,18 @@ public class GameControlInPlay : MonoBehaviour
         else
         {
             TransferPanel.Instance.OnShow(gc.nowCheckingDistrictID);
+        }
+    }
+
+    public void OpenAdventureSend()
+    {
+        if (AdventureSendPanel.Instance.isShow)
+        {
+            AdventureSendPanel.Instance.OnHide();
+        }
+        else
+        {
+            AdventureSendPanel.Instance.OnShow("To",gc.nowCheckingDistrictID);
         }
     }
 

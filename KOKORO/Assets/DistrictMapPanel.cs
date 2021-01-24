@@ -37,6 +37,7 @@ public class DistrictMapPanel : BasePanel
     public Button left_buildBtn;
 
     public Button right_transferBtn;
+    public Button right_adventureSendBtn;
 
     public Button bottom_baseline_resourcesBtn;
     public Text bottom_baseline_resourcesFoodText;
@@ -189,6 +190,8 @@ public class DistrictMapPanel : BasePanel
         left_marketBtn.onClick.AddListener(delegate () { gci.OpenMarket(); });
 
         right_transferBtn.onClick.AddListener(delegate () { gci.OpenTransfer(); });
+        right_adventureSendBtn.onClick.AddListener(delegate () { gci.OpenAdventureSend(); });
+
 
         bottom_baseline_resourcesBtn.onClick.AddListener(delegate () {
             if (IsShowResourcesBlock)
