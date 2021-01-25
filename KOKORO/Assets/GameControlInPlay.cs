@@ -399,7 +399,7 @@ public class GameControlInPlay : MonoBehaviour
         }
     }
 
-    public void OpenTransfer()
+    public void OpenTransfer(string tpye)
     {
         if (TransferPanel.Instance.isShow)
         {
@@ -407,7 +407,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            TransferPanel.Instance.OnShow(gc.nowCheckingDistrictID);
+            TransferPanel.Instance.OnShow(tpye,gc.nowCheckingDistrictID);
         }
     }
 

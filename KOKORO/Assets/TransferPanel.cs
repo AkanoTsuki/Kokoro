@@ -8,7 +8,9 @@ public class TransferPanel : BasePanel
 
     GameControl gc;
 
-  
+    public RectTransform listRt;
+    public RectTransform arrowRt;
+    public RectTransform nowRt;
 
     public GameObject list_heroGo;
     public GameObject list_districtGo;
@@ -40,17 +42,44 @@ public class TransferPanel : BasePanel
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 
-    public void OnShow(short districtID)
+    public void OnShow(string type, short districtID)
     {
-        selectedHeroID.Clear();
-        selectedDistrict = -1;
-        doBtn.onClick.RemoveAllListeners();
-        doBtn.onClick.AddListener(delegate () { gc.Transfer(districtID, selectedDistrict, selectedHeroID); });
+       
 
-        UpdateHeroNum();
-        UpdateHeroList(districtID);
-        UpdateDistrictList(districtID);
-        UpdateNow(districtID);
+        
+
+        if (type == "To")
+        {
+
+            selectedDistrict = -1;
+            doBtn.onClick.RemoveAllListeners();
+            doBtn.onClick.AddListener(delegate () { gc.Transfer(districtID, selectedDistrict, selectedHeroID); });
+          
+            UpdateHeroList(districtID);
+            UpdateHeroNum();
+            UpdateDistrictList(type,districtID);
+            UpdateNow( districtID);
+            listRt.anchoredPosition = new Vector2(114.5f, -26f);
+            arrowRt.anchoredPosition = new Vector2(96f, -70f);
+            nowRt.anchoredPosition = new Vector2(6f, -26f);
+        }
+        else if (type == "From")
+        {
+            //selectedHeroID.Clear();
+            selectedDistrict = -1;
+            doBtn.onClick.RemoveAllListeners();
+            doBtn.onClick.AddListener(delegate () { gc.Transfer( selectedDistrict, districtID, selectedHeroID); });
+      
+            ClearUpdateHeroList();
+            UpdateHeroNum();
+            UpdateDistrictList(type, districtID);
+            UpdateNow(districtID);
+            listRt.anchoredPosition = new Vector2(6f, -26f);
+            arrowRt.anchoredPosition = new Vector2(538f, -70f);
+            nowRt.anchoredPosition = new Vector2(556f, -26f);
+        }
+
+      
         SetAnchoredPosition(64, -88);
         isShow = true;
 
@@ -67,8 +96,9 @@ public class TransferPanel : BasePanel
         list_heroNumText.text = "选择角色(已选择"+ selectedHeroID .Count+ "人)";
     }
 
-    public void UpdateHeroList(short districtID)
+    public void UpdateHeroList( short districtID)
     {
+        selectedHeroID.Clear();
         List<HeroObject> heroObjects = new List<HeroObject>();
 
         foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
@@ -195,16 +225,35 @@ public class TransferPanel : BasePanel
         }
     }
 
+    public void ClearUpdateHeroList()
+    {
+        selectedHeroID.Clear();
+        for (int i = 0; i < heroGoPool.Count; i++)
+        {
+            heroGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+        list_heroGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(681f, 245f);
+    }
 
-    public void UpdateDistrictList(short districtID)
+    public void UpdateDistrictList(string type, short districtID)
     {
         List<DistrictObject> districtObjects = new List<DistrictObject>();
 
         for (int i = 0; i < gc.districtDic.Length; i++)
         {
-            if(gc.districtDic[i].isOpen&& gc.districtDic[i].id!= districtID)
+            if (type == "To")
             {
-                districtObjects.Add(gc.districtDic[i]);
+                if (gc.districtDic[i].isOpen && gc.districtDic[i].id != districtID)
+                {
+                    districtObjects.Add(gc.districtDic[i]);
+                }
+            }
+            else if (type == "From")
+            {
+                if (gc.districtDic[i].heroList.Count>0 && gc.districtDic[i].id != districtID)
+                {
+                    districtObjects.Add(gc.districtDic[i]);
+                }
             }
         }
 
@@ -241,7 +290,14 @@ public class TransferPanel : BasePanel
                 go.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector2.zero;
                 go.GetComponent<Button>().onClick.RemoveAllListeners();
                 short did = districtObjects[i].id;
-                go.GetComponent<Button>().onClick.AddListener(delegate () { gc.SetTransferDistrict(did); });
+                go.GetComponent<Button>().onClick.AddListener(delegate () { 
+                    gc.SetTransferDistrict(type, did);
+                    if (type == "From")
+                    {
+                        UpdateHeroList(did);
+                    }
+                       
+                });
             }
 
         }
@@ -252,7 +308,7 @@ public class TransferPanel : BasePanel
         list_districtGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(512f, Mathf.Max(100f, 100+ (districtObjects.Count / 6) * 100f));
     }
 
-    public void UpdateDistrictListSingle(short districtID)
+    public void UpdateDistrictListSingle(string type, short districtID)
     {
         GameObject go = GameObject.Find("Canvas/TransferPanel/DistrictList/ScrollView/Viewport/Content/District_" + districtID);
 
@@ -267,11 +323,17 @@ public class TransferPanel : BasePanel
         {
             go.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector2.zero;
             go.GetComponent<Button>().onClick.RemoveAllListeners();
-            go.GetComponent<Button>().onClick.AddListener(delegate () { gc.SetTransferDistrict(districtID); });
+            go.GetComponent<Button>().onClick.AddListener(delegate () { 
+                gc.SetTransferDistrict(type, districtID);
+                if (type == "From")
+                {
+                    UpdateHeroList(districtID);
+                }
+            });
         }
     }
 
-    public void UpdateNow(short districtID)
+    public void UpdateNow( short districtID)
     {
         now_picImage.sprite = Resources.Load<Sprite>("Image/AreaPic/" + DataManager.mDistrictDict[districtID].Pic);
         now_desText.text = DataManager.mDistrictDict[districtID].Name;

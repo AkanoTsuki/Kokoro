@@ -1967,7 +1967,7 @@ public class GameControl : MonoBehaviour
         }
         gold -= DataManager.mTechnologyDict[technologyID].NeedGold;
         int needTime = DataManager.mTechnologyDict[technologyID].NeedTime * 240;
-        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.ProduceResource, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID }, new List<int> { technologyID } }));
+        ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.TechnologyResearch, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID }, new List<int> { technologyID } }));
 
     }
     public void TechnologyResearchDone(int technologyID)
@@ -5539,17 +5539,17 @@ public class GameControl : MonoBehaviour
         TransferPanel.Instance.UpdateHeroListSingle(heroID);
     }
 
-    public void SetTransferDistrict(short districtID)
+    public void SetTransferDistrict(string type, short districtID)
     {
         short old = TransferPanel.Instance.selectedDistrict;
         TransferPanel.Instance.selectedDistrict = districtID;
 
         if (old != -1)
         {
-            TransferPanel.Instance.UpdateDistrictListSingle(old);
+            TransferPanel.Instance.UpdateDistrictListSingle(type, old);
         }
 
-        TransferPanel.Instance.UpdateDistrictListSingle(districtID);
+        TransferPanel.Instance.UpdateDistrictListSingle(type, districtID);
     }
 
 
@@ -5588,7 +5588,7 @@ public class GameControl : MonoBehaviour
         }
 
         List<int> pathList = DataManager.mAreaPathDict["A-" + startDistrictID + "-" + endDistrictID].Path;
-        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, heroListTemp, endDistrictID, "District", -1,0,"冒险者"));
+        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, heroListTemp, endDistrictID, "District", -1,0,"冒险者", heroListTemp.Count));
         AreaMapPanel.Instance.CreateTraveller(travellerIndex, pathList, 0, pic, heroListTemp);
         travellerIndex++;
 
@@ -5623,7 +5623,7 @@ public class GameControl : MonoBehaviour
         }
 
         List<int> pathList = DataManager.mAreaPathDict["B-" + startDistrictID + "-" + endDungeonID].Path;
-        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, heroListTemp, endDungeonID, "Dungeon", teamID,0,"冒险者"));
+        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, heroListTemp, endDungeonID, "Dungeon", teamID,0,"冒险者", heroListTemp.Count));
         AreaMapPanel.Instance.CreateTraveller(travellerIndex, pathList, 0, pic, heroListTemp);
         travellerIndex++;
 
@@ -5654,7 +5654,7 @@ public class GameControl : MonoBehaviour
         {
             pathList.Add(DataManager.mAreaPathDict["B-" + adventureTeamList[teamID].districtID + "-" + adventureTeamList[teamID].dungeonID].Path[i]);
         }
-        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, heroListTemp, adventureTeamList[teamID].districtID, "District", teamID,0,"冒险者"));
+        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, heroListTemp, adventureTeamList[teamID].districtID, "District", teamID,0,"冒险者", heroListTemp.Count));
         AreaMapPanel.Instance.CreateTraveller(travellerIndex, pathList, 0, pic, heroListTemp);
         travellerIndex++;
 
@@ -5666,7 +5666,7 @@ public class GameControl : MonoBehaviour
 
     public void TransferDone(int travellerID)
     {
-        Debug.Log("TransferDone() travellerDic[travellerID].heroList.Count=" + travellerDic[travellerID].heroList.Count);
+        Debug.Log("TransferDone() travellerDic[travellerID].endDistrictOrDungeonID=" + travellerDic[travellerID].endDistrictOrDungeonID);
         for (int i = 0; i < travellerDic[travellerID].heroList.Count; i++)
         {
             districtDic[travellerDic[travellerID].endDistrictOrDungeonID].heroList.Add(travellerDic[travellerID].heroList[i]);
@@ -5753,7 +5753,7 @@ public class GameControl : MonoBehaviour
             case 4: personType = (force != -1? "士兵":"民兵"); break;
         }
 
-        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, new List<int> { }, (short)endDistrict, "District", -1, force, personType));
+        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, new List<int> { }, (short)endDistrict, "District", -1, force, personType,Random.Range(1,4)));
         AreaMapPanel.Instance.CreateTraveller(travellerIndex, pathList, 0, pic, new List<int> { });
         travellerIndex++;
     }
@@ -5787,7 +5787,7 @@ public class GameControl : MonoBehaviour
         {
             force = (short)Random.Range(1, forceDic.Count);
         }
-        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, new List<int> { }, (short)endDungeon, "Dungeon", -1, force,"冒险者"));
+        travellerDic.Add(travellerIndex, new TravellerObject(pic, pathList, 1, 0, 0, new List<int> { }, (short)endDungeon, "Dungeon", -1, force,"冒险者", Random.Range(1, 4)));
         AreaMapPanel.Instance.CreateTraveller(travellerIndex, pathList, 0, pic, new List<int> { });
         travellerIndex++;
     }

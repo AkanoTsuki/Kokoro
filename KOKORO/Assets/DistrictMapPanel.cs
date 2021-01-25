@@ -189,7 +189,7 @@ public class DistrictMapPanel : BasePanel
         left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
         left_marketBtn.onClick.AddListener(delegate () { gci.OpenMarket(); });
 
-        right_transferBtn.onClick.AddListener(delegate () { gci.OpenTransfer(); });
+        right_transferBtn.onClick.AddListener(delegate () { gci.OpenTransfer("To"); });
         right_adventureSendBtn.onClick.AddListener(delegate () { gci.OpenAdventureSend(); });
 
 

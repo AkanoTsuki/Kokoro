@@ -657,8 +657,8 @@ public class TravellerObject
     private short Team;
     private short Force;//先作效果展示，无实际应用
     private string PersonType;
-
-    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y, List<int> heroList, short endDistrictOrDungeonID,string endType, short team, short force, string personType)
+    private int PersonNum;
+    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y, List<int> heroList, short endDistrictOrDungeonID,string endType, short team, short force, string personType, int personNum)
     {
         this.Pic = pic;
         this.PathPointList = pathPointList;
@@ -671,6 +671,7 @@ public class TravellerObject
         this.Team = team;
         this.Force = force;
         this.PersonType = personType;
+        this.PersonNum = personNum;
     }
     public string pic { get { return Pic; }  }
     public List<int> pathPointList { get { return PathPointList; } }
@@ -683,6 +684,7 @@ public class TravellerObject
     public short team { get { return Team; } }
     public short force { get { return Force; } }
     public string personType { get { return PersonType; } }
+    public int personNum { get { return PersonNum; } }
 }
 
 //英雄原型T

@@ -17,6 +17,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public Image districtInfoBlock_flagImage;
     public Text districtInfoBlock_desText;
     public Button districtInfoBlock_GotoBtn;
+    public Button districtInfoBlock_LeaveBtn;
     public Button districtInfoBlock_DetailBtn;
     public Button districtInfoBlock_ManagerBtn;
 
@@ -157,6 +158,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                 districtInfoBlock_GotoBtn.onClick.AddListener(delegate ()
                 {
                     /*移动*/
+                    TransferPanel.Instance.OnShow("From", (short)id);
                 });
 
                 districtInfoBlock_ManagerBtn.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -196,6 +198,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                     districtInfoBlock_GotoBtn.onClick.AddListener(delegate ()
                     {
                         /*移动*/
+                        TransferPanel.Instance.OnShow("From", (short)id);
                     });
 
 
@@ -207,6 +210,20 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                 }
             }
 
+            if (gc.districtDic[id].heroList.Count > 0)
+            {
+                districtInfoBlock_LeaveBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                districtInfoBlock_LeaveBtn.onClick.RemoveAllListeners();
+                districtInfoBlock_LeaveBtn.onClick.AddListener(delegate ()
+                {
+                    /*移动*/
+                    TransferPanel.Instance.OnShow("To", (short)id);
+                });
+            }
+            else
+            {
+                districtInfoBlock_LeaveBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+            }
         }
         else
         {
@@ -439,7 +456,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void ShowTravellerInfoBlock(int id, int x, int y)
     {
-        string str = "      "+ gc.travellerDic[id].personType+ "["+(gc.travellerDic[id].heroList.Count>0? gc.travellerDic[id].heroList.Count : Random.Range(1,5))+"人]\n";
+        string str = "      "+ gc.travellerDic[id].personType+ "["+ gc.travellerDic[id].personNum + "人]\n";
         if (gc.travellerDic[id].force != -1)
         {
             str += "从属 " + gc.forceDic[gc.travellerDic[id].force].name+"\n";
@@ -533,16 +550,22 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void UpdateDistrictSingle(int districtID)
     {
-        //Debug.Log("gc.districtDic[districtID].heroList.Count=" + gc.districtDic[districtID].heroList.Count);
+
+       //Debug.Log("districtID=" + districtID);
 
         districtGo[districtID].GetComponent<Button>().onClick.RemoveAllListeners();
         districtGo[districtID].GetComponent<Button>().onClick.AddListener(delegate () {
 
-            float x = Screen.width/2f-districtGo[districtID].GetComponent<RectTransform>().anchoredPosition.x ;
-            float y = -districtGo[districtID].GetComponent<RectTransform>().anchoredPosition.y- Screen.height / 2f;
+            if (districtInfoBlockID != districtID)
+            {
+                float x = Screen.width / 2f - districtGo[districtID].GetComponent<RectTransform>().anchoredPosition.x;
+                float y = -districtGo[districtID].GetComponent<RectTransform>().anchoredPosition.y - Screen.height / 2f;
+                transform.DOComplete();
+                transform.DOLocalMove(new Vector2(x - Screen.width / 2f, y + Screen.height / 2f), 0.5f);
+            }
 
-            transform.DOComplete();
-            transform.DOLocalMove(new Vector2(x- Screen.width / 2f, y+ Screen.height / 2f), 1f);
+
+
             ShowDistrictInfoBlock( districtID,(int)( districtGo[districtID].GetComponent<RectTransform>().anchoredPosition.x+60f),(int)( districtGo[districtID].GetComponent<RectTransform>().anchoredPosition.y)); 
         });
 
@@ -556,10 +579,13 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
             districtForceImage[districtID].sprite = Resources.Load<Sprite>("Image/Empty");
         }
 
-        for (int i = 0; i < districtHeroListGo[districtID].transform.childCount; i++)
+        for (int i = districtHeroListGo[districtID].transform.childCount-1; i >=0; i--)
         {
+          
             districtHeroListGo[districtID].transform.GetChild(i).GetComponent<RectTransform>().localScale = Vector2.zero;
             heroInGo.Add(districtHeroListGo[districtID].transform.GetChild(i).gameObject);
+            districtHeroListGo[districtID].transform.GetChild(i).SetParent(districtHeroListGo[districtID].transform.parent);
+           
         }
 
         if (gc.districtDic[districtID].heroList.Count > 0)
@@ -622,12 +648,15 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     {
         dungeonGo[dungeonID].GetComponent<Button>().onClick.RemoveAllListeners();
         dungeonGo[dungeonID].GetComponent<Button>().onClick.AddListener(delegate () {
-            float x = Screen.width / 2f - dungeonGo[dungeonID].GetComponent<RectTransform>().anchoredPosition.x;
-            float y = -dungeonGo[dungeonID].GetComponent<RectTransform>().anchoredPosition.y - Screen.height / 2f;
-            transform.DOComplete();
 
-            transform.DOLocalMove(new Vector2(x - Screen.width / 2f, y + Screen.height / 2f), 1f);
-            // transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
+            if (dungeonInfoBlockID != dungeonID)
+            {
+                float x = Screen.width / 2f - dungeonGo[dungeonID].GetComponent<RectTransform>().anchoredPosition.x;
+                float y = -dungeonGo[dungeonID].GetComponent<RectTransform>().anchoredPosition.y - Screen.height / 2f;
+                transform.DOComplete();
+                transform.DOLocalMove(new Vector2(x - Screen.width / 2f, y + Screen.height / 2f), 0.5f);
+            }
+
             ShowDungeonInfoBlock( dungeonID, (int)(dungeonGo[dungeonID].GetComponent<RectTransform>().anchoredPosition.x + 60f), (int)(dungeonGo[dungeonID].GetComponent<RectTransform>().anchoredPosition.y)); });
 
         if (gc.dungeonList[dungeonID].stage == DungeonStage.Close)
@@ -710,6 +739,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     /// </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
+        transform.DOComplete();
         Vector3 globalMousePos;
 
         //将屏幕坐标转换成世界坐标
