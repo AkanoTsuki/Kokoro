@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class AnimatiorControlByTraveller : MonoBehaviour
+public class AnimatiorControlByTraveller : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     GameControl gc;
 
@@ -26,7 +26,7 @@ public class AnimatiorControlByTraveller : MonoBehaviour
 
     public List<int> pathPointList = new List<int>();
     public int nowPointIndex = 0;
-    // Start is called before the first frame update
+
 
     RectTransform rt;
     Vector2 targetPos;
@@ -36,12 +36,7 @@ public class AnimatiorControlByTraveller : MonoBehaviour
         gc = GameObject.Find("GameManager").GetComponent<GameControl>();
     }
 
-    void Start()
-    {
-       
-    }
 
-    // Update is called once per frame
     void Update()
     {
         if (isPlay)
@@ -61,6 +56,15 @@ public class AnimatiorControlByTraveller : MonoBehaviour
             }
             Move();
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        AreaMapPanel.Instance.ShowTravellerInfoBlock(travellerID, (int)(GetComponent<RectTransform>().anchoredPosition.x + 20f), (int)(GetComponent<RectTransform>().anchoredPosition.y+30f));
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        AreaMapPanel.Instance.HideTravellerInfoBlock();
     }
     public void Play()
     {

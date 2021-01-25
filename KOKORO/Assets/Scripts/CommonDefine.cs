@@ -655,7 +655,10 @@ public class TravellerObject
     private short EndDistrictOrDungeonID;
     private string EndType;
     private short Team;
-    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y, List<int> heroList, short endDistrictOrDungeonID,string endType, short team)
+    private short Force;//先作效果展示，无实际应用
+    private string PersonType;
+
+    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y, List<int> heroList, short endDistrictOrDungeonID,string endType, short team, short force, string personType)
     {
         this.Pic = pic;
         this.PathPointList = pathPointList;
@@ -666,6 +669,8 @@ public class TravellerObject
         this.EndDistrictOrDungeonID = endDistrictOrDungeonID;
         this.EndType = endType;
         this.Team = team;
+        this.Force = force;
+        this.PersonType = personType;
     }
     public string pic { get { return Pic; }  }
     public List<int> pathPointList { get { return PathPointList; } }
@@ -676,6 +681,8 @@ public class TravellerObject
     public short endDistrictOrDungeonID { get { return EndDistrictOrDungeonID; } }
     public string endType { get { return EndType; } }
     public short team { get { return Team; } }
+    public short force { get { return Force; } }
+    public string personType { get { return PersonType; } }
 }
 
 //英雄原型T
@@ -1145,7 +1152,7 @@ public class DistrictObject
     private string BaseName;
     private string Des;
     private bool IsOpen;
-    private bool IsOwn;
+    private short Force;
     private byte Level;
     private short People;//当前人口
     private short PeopleLimit;//人口上限
@@ -1191,7 +1198,7 @@ public class DistrictObject
     private int RStuffLimit;
     private int RProductLimit;
     private int RScrollLimit;
-    public DistrictObject(short id, string name, string baseName, string des, bool isOpen, bool isOwn, byte level, short people, short peopleLimit, short worker, 
+    public DistrictObject(short id, string name, string baseName, string des, bool isOpen, short force, byte level, short people, short peopleLimit, short worker, 
          List<int> buildingList, List<int> heroList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, int rFoodBeer, int rFoodWine,
@@ -1205,7 +1212,7 @@ public class DistrictObject
         this.BaseName = baseName;
         this.Des = des;
         this.IsOpen = isOpen;
-        this.IsOwn = isOwn;
+        this.Force = force;
         this.Level = level;
         this.People = people;
         this.PeopleLimit = peopleLimit;
@@ -1256,7 +1263,7 @@ public class DistrictObject
     public string baseName { get { return BaseName; } set { BaseName = value; } }
     public string des { get { return Des; } set { Des = value; } }
     public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
-    public bool isOwn { get { return IsOwn; } set { IsOwn = value; } }
+    public short force { get { return Force; } set { Force = value; } }
     public byte level { get { return Level; } set { Level = value; } }
     public short people { get { return People; } set { People = value; } }
     public short peopleLimit { get { return PeopleLimit; } set { PeopleLimit = value; } }
@@ -2688,6 +2695,38 @@ public class ProduceResourcePrototype
     public short OutputGround;
     public short OutputLight;
     public short OutputDark;
+}
+
+public class ForceObject
+{
+    private byte ID;
+    private byte FlagIndex;
+    private string Name;
+    private string Leader;
+    private byte ParentID;
+    private List<byte> ChildrenID;
+    private List<short> DistrictID;
+    private Dictionary<byte, short> Relation;
+    public ForceObject(byte id, byte flagIndex,string name, string leader, byte parentID, List<byte> childrenID, List<short> districtID, Dictionary<byte, short> relation)
+    {
+        this.ID = id;
+        this.FlagIndex = flagIndex;
+        this.Name = name;
+        this.Leader = leader;
+        this.ParentID = parentID;
+        this.ChildrenID = childrenID;
+        this.DistrictID = districtID;
+        this.Relation = relation;
+    }
+    public byte id { get { return ID; } }
+    public byte flagIndex { get { return FlagIndex; } }
+    public string name { get { return Name; } set { Name = value; } }
+    public string leader { get { return Leader; } set { Leader = value; } }
+    public byte parentID { get { return ParentID; } set { ParentID = value; } }
+    public List<byte> childrenID { get { return ChildrenID; } set { ChildrenID = value; } }
+    public List<short> districtID { get { return DistrictID; } set { DistrictID = value; } }
+    public Dictionary<byte, short> relation { get { return Relation; } set { Relation = value; } }
+
 }
 
 public class ExecuteEventObject

@@ -266,7 +266,7 @@ public class TechnologyPanel : BasePanel
         List<DistrictObject> districtObjects = new List<DistrictObject>();
         for (int i = 0; i < gc.districtDic.Length; i++)
         {
-            if (gc.districtDic[i].isOwn)
+            if (gc.districtDic[i].force == 0)
             {
                 districtObjects.Add(gc.districtDic[i]);
             }

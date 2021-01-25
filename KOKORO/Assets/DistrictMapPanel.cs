@@ -275,12 +275,12 @@ public class DistrictMapPanel : BasePanel
         UpdateBaselineElementText(gc.nowCheckingDistrictID);
         ChangeSkyColor();
 
-        if (gc.districtDic[gc.nowCheckingDistrictID].isOwn)
+        if (gc.districtDic[gc.nowCheckingDistrictID].force == 0)
         {    
             UpdateButtonItemNum(gc.nowCheckingDistrictID);
             UpdateButtonScrollNum(gc.nowCheckingDistrictID);
         }
-        SetFunctionButton(gc.districtDic[gc.nowCheckingDistrictID].isOwn);
+        SetFunctionButton(gc.districtDic[gc.nowCheckingDistrictID].force == 0);
 
 
 
@@ -669,7 +669,7 @@ public class DistrictMapPanel : BasePanel
 
     public void UpdateBaselineResourcesText(short districtID)
     {
-        if (gc.districtDic[districtID].isOwn)
+        if (gc.districtDic[districtID].force == 0)
         {
             bottom_baseline_resourcesFoodText.text = gc.GetDistrictFoodAll(districtID) + "/" + gc.districtDic[districtID].rFoodLimit;
             bottom_baseline_resourcesStuffText.text = gc.GetDistrictStuffAll(districtID) + "/" + gc.districtDic[districtID].rStuffLimit;
@@ -726,7 +726,7 @@ public class DistrictMapPanel : BasePanel
     }
     public void ShowResourcesBlock(short districtID)
     {
-        if (!gc.districtDic[districtID].isOwn)
+        if (gc.districtDic[districtID].force != 0)
         {
             return;
         }

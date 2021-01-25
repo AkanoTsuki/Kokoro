@@ -11,9 +11,6 @@ public class AdventureMainPanel : BasePanel
     GameControl gc;
     public GameObject teamListGo;
 
-    //public RectTransform dungeonRt;
-    //public GameObject dungeonListGo;
-    //public Button dungeonBtn;
 
     public Button closeBtn;
 
@@ -21,7 +18,6 @@ public class AdventureMainPanel : BasePanel
 
     //对象池
     List<GameObject> adventureTeamGo = new List<GameObject>();
-    //List<GameObject> dungeonGo = new List<GameObject>();
     public List<GameObject> effectPool = new List<GameObject>();
     public List<GameObject> numPool = new List<GameObject>();
     public List<GameObject> talkPool = new List<GameObject>();

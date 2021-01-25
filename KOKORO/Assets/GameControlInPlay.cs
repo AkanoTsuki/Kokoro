@@ -54,6 +54,7 @@ public class GameControlInPlay : MonoBehaviour
         InvokeRepeating("SupplyAndDemandChangeRegular", 10f, 10f );
         // InvokeRepeating("CustomerCome", 3f, 3f);
         InvokeRepeating("TravellerCome", 3f, 3f);
+        InvokeRepeating("AdventureTravellerCome", 10f, 10f);
     }
 
     // Update is called once per frame
@@ -299,8 +300,15 @@ public class GameControlInPlay : MonoBehaviour
         if (Random.Range(0, 3) > 0)
         {
             gc.CreateTravellerByRandom();
+        }  
+    }
+
+    void AdventureTravellerCome()
+    {
+        if (Random.Range(0, 3) > 0)
+        {
+            gc.CreateAdventureTravellerByRandom();
         }
-   
     }
 
     public void OpenDistrictMain()

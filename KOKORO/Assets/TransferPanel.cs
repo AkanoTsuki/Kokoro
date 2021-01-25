@@ -229,7 +229,7 @@ public class TransferPanel : BasePanel
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(16f + row * 80f,  col * -100f);
             go.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/AreaPic/" + DataManager.mDistrictDict[districtObjects[i].id].Pic);
 
-            go.transform.GetChild(0).GetComponent<Text>().text = districtObjects[i].name + (gc.districtDic[districtObjects[i].id].heroList.Count >0?("\n[" + gc.districtDic[districtObjects[i].id].heroList.Count + "人]"):"") + (districtObjects[i].isOwn? "\n[领地]":"") ;
+            go.transform.GetChild(0).GetComponent<Text>().text = districtObjects[i].name + (gc.districtDic[districtObjects[i].id].heroList.Count >0?("\n[" + gc.districtDic[districtObjects[i].id].heroList.Count + "人]"):"") + (districtObjects[i].force==0? "\n[领地]":"") ;
 
             if (selectedDistrict == districtObjects[i].id)
             {

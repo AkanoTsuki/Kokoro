@@ -418,9 +418,10 @@ MonoBehaviour:
   customerIndex: 0
   buildingIndex: 0
   travellerIndex: 0
+  forceIndex: 0
   buildingUnlock: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   logIndex: 0
-  playerName: 
+  forceFlag: 0
 --- !u!114 &559004349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,7 +692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.3219669, b: 0.23113209, a: 1}
+  m_Color: {r: 0.9245283, g: 0.7771628, b: 0.30962977, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
