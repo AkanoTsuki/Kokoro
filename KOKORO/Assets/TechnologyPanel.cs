@@ -388,133 +388,133 @@ public class TechnologyPanel : BasePanel
             {
                 case StuffType.Wood:
                     Debug.Log("districtID=" + districtID + " technologyID=" + technologyID + " i=" + i);
-                    if (gc.districtDic[districtID].rStuffWood >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffWood >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "木材*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffWood + ") ";
+                        str += "木材*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffWood + ") ";
                     }
                     else
                     {
-                        str += "<color=red>木材*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffWood + ")</color> ";
+                        str += "<color=red>木材*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffWood + ")</color> ";
                     }
                     break;
                 case StuffType.Stone:
-                    if (gc.districtDic[districtID].rStuffStone >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffStone >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "石料*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffStone + ") ";
+                        str += "石料*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffStone + ") ";
                     }
                     else
                     {
-                        str += "<color=red>石料*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffStone + ")</color> ";
+                        str += "<color=red>石料*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffStone + ")</color> ";
                     }
                     break;
                 case StuffType.Metal:
-                    if (gc.districtDic[districtID].rStuffMetal >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffMetal >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "金属*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffMetal + ") ";
+                        str += "金属*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffMetal + ") ";
                     }
                     else
                     {
-                        str += "<color=red>金属*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffMetal + ")</color> ";
+                        str += "<color=red>金属*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffMetal + ")</color> ";
                     }
                     break;
                 case StuffType.Leather:
-                    if (gc.districtDic[districtID].rStuffLeather >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffLeather >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "皮革*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffLeather + ") ";
+                        str += "皮革*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffLeather + ") ";
                     }
                     else
                     {
-                        str += "<color=red>皮革*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffLeather + ")</color> ";
+                        str += "<color=red>皮革*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffLeather + ")</color> ";
                     }
                     break;
                 case StuffType.Cloth:
-                    if (gc.districtDic[districtID].rStuffCloth >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffCloth >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "布料*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffCloth + ") ";
+                        str += "布料*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffCloth + ") ";
                     }
                     else
                     {
-                        str += "<color=red>布料*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffCloth + ")</color> ";
+                        str += "<color=red>布料*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffCloth + ")</color> ";
                     }
                     break;
                 case StuffType.Twine:
-                    if (gc.districtDic[districtID].rStuffTwine >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffTwine >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "麻绳*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffTwine + ") ";
+                        str += "麻绳*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffTwine + ") ";
                     }
                     else
                     {
-                        str += "<color=red>麻绳*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffTwine + ")</color> ";
+                        str += "<color=red>麻绳*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffTwine + ")</color> ";
                     }
                     break;
                 case StuffType.Bone:
-                    if (gc.districtDic[districtID].rStuffBone >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffBone >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "骨块*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffBone + ") ";
+                        str += "骨块*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffBone + ") ";
                     }
                     else
                     {
-                        str += "<color=red>骨块*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffBone + ")</color> ";
+                        str += "<color=red>骨块*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffBone + ")</color> ";
                     }
                     break;
                 case StuffType.Wind:
-                    if (gc.districtDic[districtID].rStuffWind >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffWind >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "风粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffWind + ") ";
+                        str += "风粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffWind + ") ";
                     }
                     else
                     {
-                        str += "<color=red>风粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffWind + ")</color> ";
+                        str += "<color=red>风粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffWind + ")</color> ";
                     }
                     break;
                 case StuffType.Fire:
-                    if (gc.districtDic[districtID].rStuffFire >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffFire >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "火粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffFire + ") ";
+                        str += "火粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffFire + ") ";
                     }
                     else
                     {
-                        str += "<color=red>火粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffFire + ")</color> ";
+                        str += "<color=red>火粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffFire + ")</color> ";
                     }
                     break;
                 case StuffType.Water:
-                    if (gc.districtDic[districtID].rStuffWater >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffWater >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "水粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffWater + ") ";
+                        str += "水粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffWater + ") ";
                     }
                     else
                     {
-                        str += "<color=red>水粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffWater + ")</color> ";
+                        str += "<color=red>水粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffWater + ")</color> ";
                     }
                     break;
                 case StuffType.Ground:
-                    if (gc.districtDic[districtID].rStuffGround >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffGround >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "地粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffGround + ") ";
+                        str += "地粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffGround + ") ";
                     }
                     else
                     {
-                        str += "<color=red>地粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffGround + ")</color> ";
+                        str += "<color=red>地粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffGround + ")</color> ";
                     }
                     break;
                 case StuffType.Light:
-                    if (gc.districtDic[districtID].rStuffLight >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffLight >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "光粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffLight + ") ";
+                        str += "光粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffLight + ") ";
                     }
                     else
                     {
-                        str += "<color=red>光粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffLight + ")</color> ";
+                        str += "<color=red>光粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffLight + ")</color> ";
                     }
                     break;
                 case StuffType.Dark:
-                    if (gc.districtDic[districtID].rStuffDark >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (gc.forceDic[0].rStuffDark >= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
-                        str += "暗粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffDark + ") ";
+                        str += "暗粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffDark + ") ";
                     }
                     else
                     {
-                        str += "<color=red>暗粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.districtDic[districtID].rStuffDark + ")</color> ";
+                        str += "<color=red>暗粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i] + "(" + gc.forceDic[0].rStuffDark + ")</color> ";
                     }
                     break;
 

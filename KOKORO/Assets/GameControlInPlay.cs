@@ -435,6 +435,30 @@ public class GameControlInPlay : MonoBehaviour
         }
     }
 
+    public void OpenInventoryEquip()
+    {
+        if (ItemListAndInfoPanel.Instance.isShow)
+        {
+            ItemListAndInfoPanel.Instance.OnHide();
+        }
+        else
+        {
+            ItemListAndInfoPanel.Instance.OnShow(-1,64,-88,2);
+        }
+    }
+
+    public void OpenInventorySkill()
+    {
+        if (SkillListAndInfoPanel.Instance.isShow)
+        {
+            SkillListAndInfoPanel.Instance.OnHide();
+        }
+        else
+        {
+            SkillListAndInfoPanel.Instance.OnShow(-1,null, 64, -88);
+        }
+    }
+
     public void GameSave()
     {
         gc.Save();

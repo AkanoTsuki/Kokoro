@@ -71,7 +71,14 @@ public class HeroSelectPanel : BasePanel
             case "":
                 foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
                 {
-                    if (gc.districtDic[districtID].heroList.Contains(kvp.Key))
+                    if (districtID != -1)
+                    {
+                        if (gc.districtDic[districtID].heroList.Contains(kvp.Key))
+                        {
+                            temp.Add(kvp.Value);
+                        }
+                    }
+                    else
                     {
                         temp.Add(kvp.Value);
                     }

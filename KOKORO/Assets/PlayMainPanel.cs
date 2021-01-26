@@ -26,13 +26,53 @@ public class PlayMainPanel : BasePanel
     public Button top_setBtn;
     public Button top_homeBtn;
 
-    public Dropdown top_districtDd;
-    public Button top_districtBtn;
+    //public Dropdown top_districtDd;
+    //public Button top_districtBtn;
+    public Button top_resourcesBtn;
+    public Text top_resourcesSignText;
+    public Text top_resourcesFoodText;
+    public Text top_resourcesStuffText;
+    public RectTransform top_resourcesBlockRt;
+    public Text top_resourcesBlock_foodCerealText;
+    public Text top_resourcesBlock_foodVegetableText;
+    public Text top_resourcesBlock_foodFruitText;
+    public Text top_resourcesBlock_foodMeatText;
+    public Text top_resourcesBlock_foodFishText;
+    public Text top_resourcesBlock_foodBeerText;
+    public Text top_resourcesBlock_foodWineText;
 
+    public Text top_resourcesBlock_stuffWoodText;
+    public Text top_resourcesBlock_stuffStoneText;
+    public Text top_resourcesBlock_stuffMetalText;
+    public Text top_resourcesBlock_stuffLeatherText;
+    public Text top_resourcesBlock_stuffClothText;
+    public Text top_resourcesBlock_stuffTwineText;
+    public Text top_resourcesBlock_stuffBoneText;
+    public Text top_resourcesBlock_stuffWindText;
+    public Text top_resourcesBlock_stuffFireText;
+    public Text top_resourcesBlock_stuffWaterText;
+    public Text top_resourcesBlock_stuffGroundText;
+    public Text top_resourcesBlock_stuffLightText;
+    public Text top_resourcesBlock_stuffDarkText;
+
+    public Button left_inventoryEquipBtn;
+    public RectTransform left_inventoryEquipNumRt;
+    public Text left_inventoryEquipNumText;
+    public Button left_inventoryScrollBtn;
+    public RectTransform left_inventoryScrollNumRt;
+    public Text left_inventoryScrollNumText;
+    public Button left_fiscalBtn;
     public Button left_technologyBtn;
-    public Button left_heroMainBtn;
-    public Button left_adventureMainBtn;
- 
+    public RectTransform left_technologyTipRt;
+    public Button left_diplomacyBtn;
+    public Button left_policyBtn;
+    public Button left_heroBtn;
+    public RectTransform left_heroNumRt;
+    public Text left_heroNumText;
+
+    public Button left_warBtn;
+    public Button left_adventureBtn;
+    public RectTransform left_adventureTipRt;
 
     public Button bottom_adventureLastBtn;
     public Button bottom_adventureNextBtn;
@@ -65,6 +105,7 @@ public class PlayMainPanel : BasePanel
     byte adventureStartIndex = 0;
 
     public bool IsShowMessageBlock = false;
+    public bool IsShowResourcesBlock = false;
     bool Leftis0 = true;
     void Awake()
     {
@@ -76,20 +117,30 @@ public class PlayMainPanel : BasePanel
     {
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInPlay>();
 
-
+        left_inventoryEquipBtn.onClick.AddListener(delegate () { gci.OpenInventoryEquip(); });
+        left_inventoryScrollBtn.onClick.AddListener(delegate () { gci.OpenInventorySkill(); });
 
         left_technologyBtn.onClick.AddListener(delegate () { gci.OpenTechnology(); });
-        left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
-        left_adventureMainBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
+        left_heroBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
+        left_adventureBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
 
 
-        top_districtDd.onValueChanged.AddListener(delegate { gc.nowCheckingDistrictID = (short)top_districtDd.value;  });
-        top_districtBtn.onClick.AddListener(delegate () { ShowDistrictMap(); });
+        //top_districtDd.onValueChanged.AddListener(delegate { gc.nowCheckingDistrictID = (short)top_districtDd.value;  });
+        //top_districtBtn.onClick.AddListener(delegate () { ShowDistrictMap(); });
 
         top_saveBtn.onClick.AddListener(delegate () { gci.GameSave(); });
         top_pauseBtn.onClick.AddListener(delegate () { gci.TimePause(); });
         top_playBtn.onClick.AddListener(delegate () { gci.TimePlay(); });
         top_fastBtn.onClick.AddListener(delegate () { gci.TimeFast(); });
+
+        top_resourcesBtn.onClick.AddListener(delegate ()
+        {
+            if (IsShowResourcesBlock)
+            {
+                HideResourcesBlock();
+            }
+            else { ShowResourcesBlock(); }
+        });
 
 
 
@@ -104,11 +155,15 @@ public class PlayMainPanel : BasePanel
 
         UpdateKingdomInfo();
         UpdateGold();
+        UpdateResources();
         UpdateDateInfo();
         UpdateTimeButtonState();
 
+        UpdateButtonItemNum();
+        UpdateButtonSkillNum();
 
-        UpdateTopDistrict();
+        HideResourcesBlock();
+        //UpdateTopDistrict();
         UpdateAdventurePageText();
         UpdateAdventureAll();
     }
@@ -122,6 +177,11 @@ public class PlayMainPanel : BasePanel
     public void UpdateGold()
     {
         top_goldText.text = gc.gold.ToString();
+    }
+    public void UpdateResources()
+    {
+        top_resourcesFoodText.text = gc.GetForceFoodAll(0)+ "/"+gc.forceDic[0].rFoodLimit;
+        top_resourcesStuffText.text = gc.GetForceStuffAll(0) + "/" + gc.forceDic[0].rStuffLimit;
     }
 
     public void UpdateDateInfo()
@@ -220,31 +280,31 @@ public class PlayMainPanel : BasePanel
 
 
 
-    public void UpdateTopDistrict()
-    {
-        List<string> disList = new List<string>();
-        for (int i = 0; i < gc.districtDic.Length; i++)
-        {
-            if (gc.districtDic[i].isOpen)
-            {
-                disList.Add(gc.districtDic[i].name + "·" + gc.districtDic[i].baseName);
-            }
+    //public void UpdateTopDistrict()
+    //{
+    //    List<string> disList = new List<string>();
+    //    for (int i = 0; i < gc.districtDic.Length; i++)
+    //    {
+    //        if (gc.districtDic[i].isOpen)
+    //        {
+    //            disList.Add(gc.districtDic[i].name + "·" + gc.districtDic[i].baseName);
+    //        }
             
-        }
+    //    }
 
-        top_districtDd.ClearOptions();
-        top_districtDd.AddOptions(disList);
-    }
+    //    top_districtDd.ClearOptions();
+    //    top_districtDd.AddOptions(disList);
+    //}
 
-    void ShowDistrictMap()
-    {
-        if (DistrictMapPanel.Instance.isShow == false)
-        {
-            DistrictMapPanel.Instance.OnShow();
-            top_districtBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
-        }
+    //void ShowDistrictMap()
+    //{
+    //    if (DistrictMapPanel.Instance.isShow == false)
+    //    {
+    //        DistrictMapPanel.Instance.OnShow();
+    //        top_districtBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+    //    }
        
-    }
+    //}
 
     void UpdateAdventurePageText()
     {
@@ -450,5 +510,103 @@ public class PlayMainPanel : BasePanel
         bottom_baseline_messageSignText.text = "消息框 ▲ ";
         MessagePanel.Instance.OnHide();
         IsShowMessageBlock = false;
+    }
+
+    public void UpdateResourcesBlock()
+    {
+        top_resourcesBlock_foodCerealText.text = gc.forceDic[0].rFoodCereal.ToString();
+        top_resourcesBlock_foodVegetableText.text = gc.forceDic[0].rFoodVegetable.ToString();
+        top_resourcesBlock_foodFruitText.text = gc.forceDic[0].rFoodFruit.ToString();
+        top_resourcesBlock_foodMeatText.text = gc.forceDic[0].rFoodMeat.ToString();
+        top_resourcesBlock_foodFishText.text = gc.forceDic[0].rFoodFish.ToString();
+        top_resourcesBlock_foodBeerText.text = gc.forceDic[0].rFoodBeer.ToString();
+        top_resourcesBlock_foodWineText.text = gc.forceDic[0].rFoodWine.ToString();
+
+
+        top_resourcesBlock_stuffWoodText.text = gc.forceDic[0].rStuffWood.ToString();
+        top_resourcesBlock_stuffStoneText.text = gc.forceDic[0].rStuffStone.ToString();
+        top_resourcesBlock_stuffMetalText.text = gc.forceDic[0].rStuffMetal.ToString();
+        top_resourcesBlock_stuffLeatherText.text = gc.forceDic[0].rStuffLeather.ToString();
+        top_resourcesBlock_stuffClothText.text = gc.forceDic[0].rStuffCloth.ToString();
+        top_resourcesBlock_stuffTwineText.text = gc.forceDic[0].rStuffTwine.ToString();
+        top_resourcesBlock_stuffBoneText.text = gc.forceDic[0].rStuffBone.ToString();
+        top_resourcesBlock_stuffWindText.text = gc.forceDic[0].rStuffWind.ToString();
+        top_resourcesBlock_stuffFireText.text = gc.forceDic[0].rStuffFire.ToString();
+        top_resourcesBlock_stuffWaterText.text = gc.forceDic[0].rStuffWater.ToString();
+        top_resourcesBlock_stuffGroundText.text = gc.forceDic[0].rStuffGround.ToString();
+        top_resourcesBlock_stuffLightText.text = gc.forceDic[0].rStuffLight.ToString();
+        top_resourcesBlock_stuffDarkText.text = gc.forceDic[0].rStuffDark.ToString();
+
+
+    }
+    public void ShowResourcesBlock()
+    {
+
+        if (BuildPanel.Instance.isShow)
+        {
+            BuildPanel.Instance.OnHide();
+        }
+        if (BuildingPanel.Instance.isShow)
+        {
+            BuildingPanel.Instance.OnHide();
+        }
+
+        UpdateResourcesBlock();
+        top_resourcesSignText.text = "▲";
+        top_resourcesBlockRt.localScale = Vector2.one;
+        IsShowResourcesBlock = true;
+    }
+    public void HideResourcesBlock()
+    {
+        top_resourcesSignText.text = "▼";
+        top_resourcesBlockRt.localScale = Vector2.zero;
+        IsShowResourcesBlock = false;
+    }
+
+    public void UpdateButtonItemNum()
+    {
+        int num = 0;
+        foreach (KeyValuePair<int, ItemObject> kvp in gc.itemDic)
+        {
+            if (kvp.Value.districtID == -1 && kvp.Value.heroID == -1 && kvp.Value.isGoods == false)
+            {
+                num++;
+            }
+        }
+
+        if (num > 0)
+        {
+            left_inventoryEquipNumText.text = num.ToString();
+            left_inventoryEquipNumRt.sizeDelta = new Vector2(left_inventoryEquipNumText.preferredWidth + 8f, 20f);
+        }
+        else
+        {
+            left_inventoryEquipNumText.text = "";
+            left_inventoryEquipNumRt.sizeDelta = Vector2.zero;
+        }
+
+    }
+    public void UpdateButtonSkillNum()
+    {
+        int num = 0;
+        foreach (KeyValuePair<int, SkillObject> kvp in gc.skillDic)
+        {
+            if (kvp.Value.districtID == -1 && kvp.Value.heroID == -1 && kvp.Value.isGoods == false)
+            {
+                num++;
+            }
+        }
+
+        if (num > 0)
+        {
+            left_inventoryScrollNumText.text = num.ToString();
+            left_inventoryScrollNumRt.sizeDelta = new Vector2(left_inventoryScrollNumText.preferredWidth + 8f, 20f);
+        }
+        else
+        {
+            left_inventoryScrollNumText.text = "";
+            left_inventoryScrollNumRt.sizeDelta = Vector2.zero;
+        }
+
     }
 }

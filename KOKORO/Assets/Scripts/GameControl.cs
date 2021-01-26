@@ -736,11 +736,11 @@ public class GameControl : MonoBehaviour
 
         if (prototypeID == 47)
         {
-            districtDic[nowCheckingDistrictID].rFoodLimit += 1000;
+            forceDic[0].rFoodLimit += 1000;
         }
         else if (prototypeID == 48)
         {
-            districtDic[nowCheckingDistrictID].rStuffLimit += 1000;
+            forceDic[0].rStuffLimit += 1000;
         }
         else if (prototypeID == 49)
         {
@@ -763,7 +763,7 @@ public class GameControl : MonoBehaviour
             DistrictMapPanel.Instance.UpdateBaselineElementText(nowCheckingDistrictID);
         }
 
-
+        PlayMainPanel.Instance.UpdateResources();
 
         MessagePanel.Instance.AddMessage(districtDic[buildingDic[buildingId].districtID].name + "的" + buildingDic[buildingId].name + "建筑完成");
 
@@ -822,17 +822,17 @@ public class GameControl : MonoBehaviour
     {
         Debug.Log("CreateBuildEvent() BuildingPrototypeID=" + BuildingPrototypeID);
         //再次判断是应对面板打开的时候，相关数据已经产生变化
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NeedWood > districtDic[nowCheckingDistrictID].rStuffWood)
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NeedWood > forceDic[0].rStuffWood)
         {
             BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
             return;
         }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NeedStone > districtDic[nowCheckingDistrictID].rStuffStone)
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NeedStone > forceDic[0].rStuffStone)
         {
             BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
             return;
         }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NeedMetal > districtDic[nowCheckingDistrictID].rStuffMetal)
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NeedMetal > forceDic[0].rStuffMetal)
         {
             BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
             return;
@@ -853,9 +853,9 @@ public class GameControl : MonoBehaviour
         }
 
 
-        districtDic[nowCheckingDistrictID].rStuffWood -= DataManager.mBuildingDict[buildingId].NeedWood;
-        districtDic[nowCheckingDistrictID].rStuffStone -= DataManager.mBuildingDict[buildingId].NeedStone;
-        districtDic[nowCheckingDistrictID].rStuffMetal -= DataManager.mBuildingDict[buildingId].NeedMetal;
+        forceDic[0].rStuffWood -= DataManager.mBuildingDict[buildingId].NeedWood;
+        forceDic[0].rStuffStone -= DataManager.mBuildingDict[buildingId].NeedStone;
+        forceDic[0].rStuffMetal -= DataManager.mBuildingDict[buildingId].NeedMetal;
         gold -= DataManager.mBuildingDict[buildingId].NeedGold;
 
         districtDic[nowCheckingDistrictID].buildingList.Add(buildingIndex);
@@ -874,13 +874,13 @@ public class GameControl : MonoBehaviour
 
 
 
-        if (DistrictMapPanel.Instance.IsShowResourcesBlock)
+        if (PlayMainPanel.Instance.IsShowResourcesBlock)
         {
-            DistrictMapPanel.Instance.UpdateResourcesBlock(nowCheckingDistrictID);
+            PlayMainPanel.Instance.UpdateResourcesBlock();
         }
 
         PlayMainPanel.Instance.UpdateGold();
-
+        PlayMainPanel.Instance.UpdateResources();
         if (DistrictMapPanel.Instance.isShow)
         {
             DistrictMapPanel.Instance.UpdateBaselineResourcesText(nowCheckingDistrictID);
@@ -895,9 +895,9 @@ public class GameControl : MonoBehaviour
         short newPrototypeID = DataManager.mBuildingDict[nowPrototypeID].UpgradeTo;
 
 
-        districtDic[nowCheckingDistrictID].rStuffWood -= DataManager.mBuildingDict[newPrototypeID].NeedWood;
-        districtDic[nowCheckingDistrictID].rStuffStone -= DataManager.mBuildingDict[newPrototypeID].NeedStone;
-        districtDic[nowCheckingDistrictID].rStuffMetal -= DataManager.mBuildingDict[newPrototypeID].NeedMetal;
+        forceDic[0].rStuffWood -= DataManager.mBuildingDict[newPrototypeID].NeedWood;
+        forceDic[0].rStuffStone -= DataManager.mBuildingDict[newPrototypeID].NeedStone;
+        forceDic[0].rStuffMetal -= DataManager.mBuildingDict[newPrototypeID].NeedMetal;
         gold -= DataManager.mBuildingDict[newPrototypeID].NeedGold;
 
 
@@ -945,7 +945,7 @@ public class GameControl : MonoBehaviour
         BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
         if (buildingDic[buildingID].districtID == nowCheckingDistrictID)
         {
-            PlayMainPanel.Instance.UpdateGold();
+       
             if (DistrictMapPanel.Instance.isShow)
             {
                 DistrictMapPanel.Instance.UpdateBaselineResourcesText(nowCheckingDistrictID);
@@ -960,12 +960,14 @@ public class GameControl : MonoBehaviour
 
             }
 
-            if (DistrictMapPanel.Instance.IsShowResourcesBlock)
-            {
-                DistrictMapPanel.Instance.UpdateResourcesBlock(nowCheckingDistrictID);
-            }
+            
         }
-
+        PlayMainPanel.Instance.UpdateGold();
+        PlayMainPanel.Instance.UpdateResources();
+        if (PlayMainPanel.Instance.IsShowResourcesBlock)
+        {
+            PlayMainPanel.Instance.UpdateResourcesBlock();
+        }
     }
 
     public void BuildingPullDown(int buildingID)
@@ -984,11 +986,11 @@ public class GameControl : MonoBehaviour
 
         if (prototypeID == 47)
         {
-            districtDic[nowCheckingDistrictID].rFoodLimit -= 1000;
+            forceDic[0].rFoodLimit -= 1000;
         }
         else if (prototypeID == 48)
         {
-            districtDic[nowCheckingDistrictID].rStuffLimit -= 1000;
+            forceDic[0].rStuffLimit -= 1000;
         }
         else if (prototypeID == 49)
         {
@@ -1024,10 +1026,6 @@ public class GameControl : MonoBehaviour
 
 
 
-            if (DistrictMapPanel.Instance.IsShowResourcesBlock)
-            {
-                DistrictMapPanel.Instance.UpdateResourcesBlock(nowCheckingDistrictID);
-            }
 
             if (DistrictMapPanel.Instance.isShow)
             {
@@ -1035,6 +1033,7 @@ public class GameControl : MonoBehaviour
                 DistrictMapPanel.Instance.UpdateBasicInfo();
             }
         }
+        PlayMainPanel.Instance.UpdateResources();
 
         StopProduceResource(buildingID);
         buildingDic.Remove(buildingID);
@@ -1297,19 +1296,19 @@ public class GameControl : MonoBehaviour
         }
         int moduleID = buildingDic[buildingID].produceEquipNow;
 
-        if (DataManager.mProduceEquipDict[moduleID].InputWood > districtDic[districtID].rStuffWood ||
-            DataManager.mProduceEquipDict[moduleID].InputStone > districtDic[districtID].rStuffStone ||
-            DataManager.mProduceEquipDict[moduleID].InputMetal > districtDic[districtID].rStuffMetal ||
-            DataManager.mProduceEquipDict[moduleID].InputLeather > districtDic[districtID].rStuffLeather ||
-            DataManager.mProduceEquipDict[moduleID].InputCloth > districtDic[districtID].rStuffCloth ||
-            DataManager.mProduceEquipDict[moduleID].InputTwine > districtDic[districtID].rStuffTwine ||
-            DataManager.mProduceEquipDict[moduleID].InputBone > districtDic[districtID].rStuffBone ||
-            DataManager.mProduceEquipDict[moduleID].InputWind > districtDic[districtID].rStuffWind ||
-            DataManager.mProduceEquipDict[moduleID].InputFire > districtDic[districtID].rStuffFire ||
-            DataManager.mProduceEquipDict[moduleID].InputWater > districtDic[districtID].rStuffWater ||
-            DataManager.mProduceEquipDict[moduleID].InputGround > districtDic[districtID].rStuffGround ||
-            DataManager.mProduceEquipDict[moduleID].InputLight > districtDic[districtID].rStuffLight ||
-            DataManager.mProduceEquipDict[moduleID].InputDark > districtDic[districtID].rStuffDark)
+        if (DataManager.mProduceEquipDict[moduleID].InputWood > forceDic[0].rStuffWood ||
+            DataManager.mProduceEquipDict[moduleID].InputStone > forceDic[0].rStuffStone ||
+            DataManager.mProduceEquipDict[moduleID].InputMetal > forceDic[0].rStuffMetal ||
+            DataManager.mProduceEquipDict[moduleID].InputLeather > forceDic[0].rStuffLeather ||
+            DataManager.mProduceEquipDict[moduleID].InputCloth > forceDic[0].rStuffCloth ||
+            DataManager.mProduceEquipDict[moduleID].InputTwine > forceDic[0].rStuffTwine ||
+            DataManager.mProduceEquipDict[moduleID].InputBone > forceDic[0].rStuffBone ||
+            DataManager.mProduceEquipDict[moduleID].InputWind > forceDic[0].rStuffWind ||
+            DataManager.mProduceEquipDict[moduleID].InputFire > forceDic[0].rStuffFire ||
+            DataManager.mProduceEquipDict[moduleID].InputWater > forceDic[0].rStuffWater ||
+            DataManager.mProduceEquipDict[moduleID].InputGround > forceDic[0].rStuffGround ||
+            DataManager.mProduceEquipDict[moduleID].InputLight > forceDic[0].rStuffLight ||
+            DataManager.mProduceEquipDict[moduleID].InputDark > forceDic[0].rStuffDark)
         {
             MessagePanel.Instance.AddMessage("原材料不足，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
@@ -1442,19 +1441,19 @@ public class GameControl : MonoBehaviour
 
 
 
-        districtDic[districtID].rStuffWood -= DataManager.mProduceEquipDict[moduleID].InputWood;
-        districtDic[districtID].rStuffStone -= DataManager.mProduceEquipDict[moduleID].InputStone;
-        districtDic[districtID].rStuffMetal -= DataManager.mProduceEquipDict[moduleID].InputMetal;
-        districtDic[districtID].rStuffLeather -= DataManager.mProduceEquipDict[moduleID].InputLeather;
-        districtDic[districtID].rStuffCloth -= DataManager.mProduceEquipDict[moduleID].InputCloth;
-        districtDic[districtID].rStuffTwine -= DataManager.mProduceEquipDict[moduleID].InputTwine;
-        districtDic[districtID].rStuffBone -= DataManager.mProduceEquipDict[moduleID].InputBone;
-        districtDic[districtID].rStuffWind -= DataManager.mProduceEquipDict[moduleID].InputWind;
-        districtDic[districtID].rStuffFire -= DataManager.mProduceEquipDict[moduleID].InputFire;
-        districtDic[districtID].rStuffWater -= DataManager.mProduceEquipDict[moduleID].InputWater;
-        districtDic[districtID].rStuffGround -= DataManager.mProduceEquipDict[moduleID].InputGround;
-        districtDic[districtID].rStuffLight -= DataManager.mProduceEquipDict[moduleID].InputLight;
-        districtDic[districtID].rStuffDark -= DataManager.mProduceEquipDict[moduleID].InputDark;
+        forceDic[0].rStuffWood -= DataManager.mProduceEquipDict[moduleID].InputWood;
+        forceDic[0].rStuffStone -= DataManager.mProduceEquipDict[moduleID].InputStone;
+        forceDic[0].rStuffMetal -= DataManager.mProduceEquipDict[moduleID].InputMetal;
+        forceDic[0].rStuffLeather -= DataManager.mProduceEquipDict[moduleID].InputLeather;
+        forceDic[0].rStuffCloth -= DataManager.mProduceEquipDict[moduleID].InputCloth;
+        forceDic[0].rStuffTwine -= DataManager.mProduceEquipDict[moduleID].InputTwine;
+        forceDic[0].rStuffBone -= DataManager.mProduceEquipDict[moduleID].InputBone;
+        forceDic[0].rStuffWind -= DataManager.mProduceEquipDict[moduleID].InputWind;
+        forceDic[0].rStuffFire -= DataManager.mProduceEquipDict[moduleID].InputFire;
+        forceDic[0].rStuffWater -= DataManager.mProduceEquipDict[moduleID].InputWater;
+        forceDic[0].rStuffGround -= DataManager.mProduceEquipDict[moduleID].InputGround;
+        forceDic[0].rStuffLight -= DataManager.mProduceEquipDict[moduleID].InputLight;
+        forceDic[0].rStuffDark -= DataManager.mProduceEquipDict[moduleID].InputDark;
 
 
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
@@ -1465,11 +1464,13 @@ public class GameControl : MonoBehaviour
         {
             DistrictMapPanel.Instance.UpdateBaselineResourcesText(districtID);
             DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
-            if (DistrictMapPanel.Instance.IsShowResourcesBlock)
-            {
-                DistrictMapPanel.Instance.UpdateResourcesBlock(nowCheckingDistrictID);
-            }
+         
 
+        }
+        PlayMainPanel.Instance.UpdateResources();
+        if (PlayMainPanel.Instance.IsShowResourcesBlock)
+        {
+            PlayMainPanel.Instance.UpdateResourcesBlock();
         }
         CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemOrSkillID });
         return true;
@@ -1492,7 +1493,7 @@ public class GameControl : MonoBehaviour
                 case StuffType.Fish:
                 case StuffType.Beer:
                 case StuffType.Wine:
-                    if (GetDistrictFoodAll(districtID) >= districtDic[districtID].rFoodLimit)
+                    if (GetForceFoodAll(0) >= forceDic[0].rFoodLimit)
                     {
                         MessagePanel.Instance.AddMessage("食物库房已满，生产停止");
                         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
@@ -1516,7 +1517,7 @@ public class GameControl : MonoBehaviour
                 case StuffType.Ground:
                 case StuffType.Light:
                 case StuffType.Dark:
-                    if (GetDistrictStuffAll(districtID) >= districtDic[districtID].rStuffLimit)
+                    if (GetForceStuffAll(0) >= forceDic[0].rStuffLimit)
                     {
                         MessagePanel.Instance.AddMessage("材料库房已满，生产停止");
                         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
@@ -1533,19 +1534,19 @@ public class GameControl : MonoBehaviour
 
         int moduleID = buildingDic[buildingID].prototypeID;
 
-        if (DataManager.mProduceResourceDict[moduleID].InputWood > districtDic[districtID].rStuffWood ||
-            DataManager.mProduceResourceDict[moduleID].InputStone > districtDic[districtID].rStuffStone ||
-            DataManager.mProduceResourceDict[moduleID].InputMetal > districtDic[districtID].rStuffMetal ||
-            DataManager.mProduceResourceDict[moduleID].InputLeather > districtDic[districtID].rStuffLeather ||
-            DataManager.mProduceResourceDict[moduleID].InputCloth > districtDic[districtID].rStuffCloth ||
-            DataManager.mProduceResourceDict[moduleID].InputTwine > districtDic[districtID].rStuffTwine ||
-            DataManager.mProduceResourceDict[moduleID].InputBone > districtDic[districtID].rStuffBone ||
-            DataManager.mProduceResourceDict[moduleID].InputWind > districtDic[districtID].rStuffWind ||
-            DataManager.mProduceResourceDict[moduleID].InputFire > districtDic[districtID].rStuffFire ||
-            DataManager.mProduceResourceDict[moduleID].InputWater > districtDic[districtID].rStuffWater ||
-            DataManager.mProduceResourceDict[moduleID].InputGround > districtDic[districtID].rStuffGround ||
-            DataManager.mProduceResourceDict[moduleID].InputLight > districtDic[districtID].rStuffLight ||
-            DataManager.mProduceResourceDict[moduleID].InputDark > districtDic[districtID].rStuffDark)
+        if (DataManager.mProduceResourceDict[moduleID].InputWood > forceDic[0].rStuffWood ||
+            DataManager.mProduceResourceDict[moduleID].InputStone > forceDic[0].rStuffStone ||
+            DataManager.mProduceResourceDict[moduleID].InputMetal > forceDic[0].rStuffMetal ||
+            DataManager.mProduceResourceDict[moduleID].InputLeather > forceDic[0].rStuffLeather ||
+            DataManager.mProduceResourceDict[moduleID].InputCloth > forceDic[0].rStuffCloth ||
+            DataManager.mProduceResourceDict[moduleID].InputTwine > forceDic[0].rStuffTwine ||
+            DataManager.mProduceResourceDict[moduleID].InputBone > forceDic[0].rStuffBone ||
+            DataManager.mProduceResourceDict[moduleID].InputWind > forceDic[0].rStuffWind ||
+            DataManager.mProduceResourceDict[moduleID].InputFire > forceDic[0].rStuffFire ||
+            DataManager.mProduceResourceDict[moduleID].InputWater > forceDic[0].rStuffWater ||
+            DataManager.mProduceResourceDict[moduleID].InputGround > forceDic[0].rStuffGround ||
+            DataManager.mProduceResourceDict[moduleID].InputLight > forceDic[0].rStuffLight ||
+            DataManager.mProduceResourceDict[moduleID].InputDark > forceDic[0].rStuffDark)
         {
             MessagePanel.Instance.AddMessage("原材料不足，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
@@ -1560,44 +1561,44 @@ public class GameControl : MonoBehaviour
         {
             switch (stuffType[i])
             {
-                case StuffType.Cereal: districtDic[districtID].rFoodCereal += value[i]; break;
-                case StuffType.Vegetable: districtDic[districtID].rFoodVegetable += value[i]; break;
-                case StuffType.Fruit: districtDic[districtID].rFoodFruit += value[i]; break;
-                case StuffType.Meat: districtDic[districtID].rFoodMeat += value[i]; break;
-                case StuffType.Fish: districtDic[districtID].rFoodFish += value[i]; break;
-                case StuffType.Beer: districtDic[districtID].rFoodBeer += value[i]; break;
-                case StuffType.Wine: districtDic[districtID].rFoodWine += value[i]; break;
-                case StuffType.Wood: districtDic[districtID].rStuffWood += value[i]; break;
-                case StuffType.Stone: districtDic[districtID].rStuffStone += value[i]; break;
-                case StuffType.Metal: districtDic[districtID].rStuffMetal += value[i]; break;
-                case StuffType.Leather: districtDic[districtID].rStuffLeather += value[i]; break;
-                case StuffType.Cloth: districtDic[districtID].rStuffCloth += value[i]; break;
-                case StuffType.Twine: districtDic[districtID].rStuffTwine += value[i]; break;
-                case StuffType.Bone: districtDic[districtID].rStuffBone += value[i]; break;
-                case StuffType.Wind: districtDic[districtID].rStuffWind += value[i]; break;
-                case StuffType.Fire: districtDic[districtID].rStuffFire += value[i]; break;
-                case StuffType.Water: districtDic[districtID].rStuffWater += value[i]; break;
-                case StuffType.Ground: districtDic[districtID].rStuffGround += value[i]; break;
-                case StuffType.Light: districtDic[districtID].rStuffLight += value[i]; break;
-                case StuffType.Dark: districtDic[districtID].rStuffDark += value[i]; break;
+                case StuffType.Cereal: forceDic[0].rFoodCereal += value[i]; break;
+                case StuffType.Vegetable: forceDic[0].rFoodVegetable += value[i]; break;
+                case StuffType.Fruit: forceDic[0].rFoodFruit += value[i]; break;
+                case StuffType.Meat: forceDic[0].rFoodMeat += value[i]; break;
+                case StuffType.Fish: forceDic[0].rFoodFish += value[i]; break;
+                case StuffType.Beer: forceDic[0].rFoodBeer += value[i]; break;
+                case StuffType.Wine: forceDic[0].rFoodWine += value[i]; break;
+                case StuffType.Wood: forceDic[0].rStuffWood += value[i]; break;
+                case StuffType.Stone: forceDic[0].rStuffStone += value[i]; break;
+                case StuffType.Metal: forceDic[0].rStuffMetal += value[i]; break;
+                case StuffType.Leather: forceDic[0].rStuffLeather += value[i]; break;
+                case StuffType.Cloth: forceDic[0].rStuffCloth += value[i]; break;
+                case StuffType.Twine: forceDic[0].rStuffTwine += value[i]; break;
+                case StuffType.Bone: forceDic[0].rStuffBone += value[i]; break;
+                case StuffType.Wind: forceDic[0].rStuffWind += value[i]; break;
+                case StuffType.Fire: forceDic[0].rStuffFire += value[i]; break;
+                case StuffType.Water: forceDic[0].rStuffWater += value[i]; break;
+                case StuffType.Ground: forceDic[0].rStuffGround += value[i]; break;
+                case StuffType.Light: forceDic[0].rStuffLight += value[i]; break;
+                case StuffType.Dark: forceDic[0].rStuffDark += value[i]; break;
             }
         }
 
 
 
-        districtDic[districtID].rStuffWood -= DataManager.mProduceResourceDict[moduleID].InputWood;
-        districtDic[districtID].rStuffStone -= DataManager.mProduceResourceDict[moduleID].InputStone;
-        districtDic[districtID].rStuffMetal -= DataManager.mProduceResourceDict[moduleID].InputMetal;
-        districtDic[districtID].rStuffLeather -= DataManager.mProduceResourceDict[moduleID].InputLeather;
-        districtDic[districtID].rStuffCloth -= DataManager.mProduceResourceDict[moduleID].InputCloth;
-        districtDic[districtID].rStuffTwine -= DataManager.mProduceResourceDict[moduleID].InputTwine;
-        districtDic[districtID].rStuffBone -= DataManager.mProduceResourceDict[moduleID].InputBone;
-        districtDic[districtID].rStuffWind -= DataManager.mProduceResourceDict[moduleID].InputWind;
-        districtDic[districtID].rStuffFire -= DataManager.mProduceResourceDict[moduleID].InputFire;
-        districtDic[districtID].rStuffWater -= DataManager.mProduceResourceDict[moduleID].InputWater;
-        districtDic[districtID].rStuffGround -= DataManager.mProduceResourceDict[moduleID].InputGround;
-        districtDic[districtID].rStuffLight -= DataManager.mProduceResourceDict[moduleID].InputLight;
-        districtDic[districtID].rStuffDark -= DataManager.mProduceResourceDict[moduleID].InputDark;
+        forceDic[0].rStuffWood -= DataManager.mProduceResourceDict[moduleID].InputWood;
+        forceDic[0].rStuffStone -= DataManager.mProduceResourceDict[moduleID].InputStone;
+        forceDic[0].rStuffMetal -= DataManager.mProduceResourceDict[moduleID].InputMetal;
+        forceDic[0].rStuffLeather -= DataManager.mProduceResourceDict[moduleID].InputLeather;
+        forceDic[0].rStuffCloth -= DataManager.mProduceResourceDict[moduleID].InputCloth;
+        forceDic[0].rStuffTwine -= DataManager.mProduceResourceDict[moduleID].InputTwine;
+        forceDic[0].rStuffBone -= DataManager.mProduceResourceDict[moduleID].InputBone;
+        forceDic[0].rStuffWind -= DataManager.mProduceResourceDict[moduleID].InputWind;
+        forceDic[0].rStuffFire -= DataManager.mProduceResourceDict[moduleID].InputFire;
+        forceDic[0].rStuffWater -= DataManager.mProduceResourceDict[moduleID].InputWater;
+        forceDic[0].rStuffGround -= DataManager.mProduceResourceDict[moduleID].InputGround;
+        forceDic[0].rStuffLight -= DataManager.mProduceResourceDict[moduleID].InputLight;
+        forceDic[0].rStuffDark -= DataManager.mProduceResourceDict[moduleID].InputDark;
 
         if (DistrictMainPanel.Instance.isShow)
         {
@@ -1612,11 +1613,12 @@ public class GameControl : MonoBehaviour
         {
             DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
             DistrictMapPanel.Instance.UpdateBaselineResourcesText(districtID);
-            if (DistrictMapPanel.Instance.IsShowResourcesBlock)
-            {
-                DistrictMapPanel.Instance.UpdateResourcesBlock(districtID);
-            }
+            //if (DistrictMapPanel.Instance.IsShowResourcesBlock)
+            //{
+            //    DistrictMapPanel.Instance.UpdateResourcesBlock(districtID);
+            //}
         }
+        PlayMainPanel.Instance.UpdateResources();
         return true;
     }
 
@@ -1817,91 +1819,91 @@ public class GameControl : MonoBehaviour
             switch (DataManager.mTechnologyDict[technologyID].NeedStuff[i])
             {
                 case StuffType.Wood:
-                    if (districtDic[districtID].rStuffWood < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffWood < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Stone:
-                    if (districtDic[districtID].rStuffStone < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffStone < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Metal:
-                    if (districtDic[districtID].rStuffMetal < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffMetal < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Leather:
-                    if (districtDic[districtID].rStuffLeather < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffLeather < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Cloth:
-                    if (districtDic[districtID].rStuffCloth < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffCloth < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Twine:
-                    if (districtDic[districtID].rStuffTwine < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffTwine < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Bone:
-                    if (districtDic[districtID].rStuffBone < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffBone < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Wind:
-                    if (districtDic[districtID].rStuffWind < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffWind < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Fire:
-                    if (districtDic[districtID].rStuffFire < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffFire < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Water:
-                    if (districtDic[districtID].rStuffWater < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffWater < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Ground:
-                    if (districtDic[districtID].rStuffGround < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffGround < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Light:
-                    if (districtDic[districtID].rStuffLight < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffLight < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
                     }
                     break;
                 case StuffType.Dark:
-                    if (districtDic[districtID].rStuffDark < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
+                    if (forceDic[0].rStuffDark < DataManager.mTechnologyDict[technologyID].NeedStuffValue[i])
                     {
                         TechnologyPanel.Instance.UpdateInfo(technologyID);
                         return;
@@ -1924,43 +1926,43 @@ public class GameControl : MonoBehaviour
             switch (DataManager.mTechnologyDict[technologyID].NeedStuff[i])
             {
                 case StuffType.Wood:
-                    districtDic[districtID].rStuffWood -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffWood -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Stone:
-                    districtDic[districtID].rStuffStone -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffStone -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Metal:
-                    districtDic[districtID].rStuffMetal -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffMetal -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Leather:
-                    districtDic[districtID].rStuffLeather -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffLeather -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Cloth:
-                    districtDic[districtID].rStuffCloth -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffCloth -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Twine:
-                    districtDic[districtID].rStuffTwine -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffTwine -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Bone:
-                    districtDic[districtID].rStuffBone -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffBone -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Wind:
-                    districtDic[districtID].rStuffWind -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffWind -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Fire:
-                    districtDic[districtID].rStuffFire -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffFire -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Water:
-                    districtDic[districtID].rStuffWater -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffWater -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Ground:
-                    districtDic[districtID].rStuffGround -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffGround -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Light:
-                    districtDic[districtID].rStuffLight -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffLight -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
                 case StuffType.Dark:
-                    districtDic[districtID].rStuffDark -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
+                    forceDic[0].rStuffDark -= DataManager.mTechnologyDict[technologyID].NeedStuffValue[i];
                     break;
 
             }
@@ -1969,6 +1971,8 @@ public class GameControl : MonoBehaviour
         int needTime = DataManager.mTechnologyDict[technologyID].NeedTime * 240;
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.TechnologyResearch, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID }, new List<int> { technologyID } }));
 
+        PlayMainPanel.Instance.UpdateResources();
+        PlayMainPanel.Instance.UpdateGold();
     }
     public void TechnologyResearchDone(int technologyID)
     {
@@ -2092,6 +2096,7 @@ public class GameControl : MonoBehaviour
 
         HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
         ItemListAndInfoPanel.Instance.OnHide();
+        PlayMainPanel.Instance.UpdateButtonItemNum();
     }
 
     public void HeroEquipUnSet(int heroID, EquipPart equipPart)
@@ -2157,6 +2162,7 @@ public class GameControl : MonoBehaviour
         {
             ItemListAndInfoPanel.Instance.UpdateAllInfoToEquip(equipPart);
         }
+        PlayMainPanel.Instance.UpdateButtonItemNum();
     }
 
     public void HeroSkillSet(int heroID, byte index, int skillID)
@@ -2168,6 +2174,8 @@ public class GameControl : MonoBehaviour
                 skillDic[heroDic[heroID].skill[index]].heroID = -1;
             }
             heroDic[heroID].skill[index] = skillID;
+
+            PlayMainPanel.Instance.UpdateButtonSkillNum();
         }
         else
         {
@@ -2190,6 +2198,7 @@ public class GameControl : MonoBehaviour
 
         HeroPanel.Instance.UpdateSkill(heroDic[heroID], index);
         SkillListAndInfoPanel.Instance.OnHide();
+        
     }
     #endregion
 
@@ -2230,6 +2239,7 @@ public class GameControl : MonoBehaviour
         {
             DistrictMapPanel.Instance.UpdateButtonItemNum(districtID);
         }
+        PlayMainPanel.Instance.UpdateButtonItemNum();
     }
 
     public void ItemToCollection(int itemID)
@@ -2262,6 +2272,7 @@ public class GameControl : MonoBehaviour
         {
             DistrictMapPanel.Instance.UpdateButtonItemNum(districtID);
         }
+        PlayMainPanel.Instance.UpdateButtonItemNum();
     }
 
     public void ItemToGoodsAll(short districtID)
@@ -2299,9 +2310,9 @@ public class GameControl : MonoBehaviour
             ItemListAndInfoPanel.Instance.OnShow(districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
         }
         DistrictMapPanel.Instance.UpdateBaselineResourcesText(districtID);
-        if (DistrictMapPanel.Instance.IsShowResourcesBlock)
+        if (PlayMainPanel.Instance.IsShowResourcesBlock)
         {
-            DistrictMapPanel.Instance.UpdateResourcesBlock(districtID);
+            PlayMainPanel.Instance.UpdateResourcesBlock();
         }
         if (DistrictMapPanel.Instance.isShow)
         {
@@ -2339,9 +2350,9 @@ public class GameControl : MonoBehaviour
             ItemListAndInfoPanel.Instance.OnShow(itemDic[itemID].districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
         }
         DistrictMapPanel.Instance.UpdateBaselineResourcesText(itemDic[itemID].districtID);
-        if (DistrictMapPanel.Instance.IsShowResourcesBlock)
+        if (PlayMainPanel.Instance.IsShowResourcesBlock)
         {
-            DistrictMapPanel.Instance.UpdateResourcesBlock(itemDic[itemID].districtID);
+            PlayMainPanel.Instance.UpdateResourcesBlock();
         }
         if (DistrictMapPanel.Instance.isShow)
         {
@@ -2370,6 +2381,7 @@ public class GameControl : MonoBehaviour
         {
             DistrictMapPanel.Instance.UpdateButtonScrollNum(districtID);
         }
+        PlayMainPanel.Instance.UpdateButtonSkillNum();
     }
 
     public void SkillToCollection(int skillID)
@@ -2387,6 +2399,7 @@ public class GameControl : MonoBehaviour
         {
             DistrictMapPanel.Instance.UpdateButtonScrollNum(districtID);
         }
+        PlayMainPanel.Instance.UpdateButtonSkillNum();
     }
 
     public void SkillToGoodsAll(short districtID)
@@ -2434,6 +2447,38 @@ public class GameControl : MonoBehaviour
     }
     #endregion
 
+    #region 【方法】直接出售
+    public void ItemSales(int itemID)
+    {
+        if (!itemDic.ContainsKey(itemID))
+        {
+            MessagePanel.Instance.AddMessage("无效的物品，请重新选择");
+            return;
+        }
+
+        gold += itemDic[itemID].cost / 2;
+
+        itemDic.Remove(itemID);
+        PlayMainPanel.Instance.UpdateGold();
+        PlayMainPanel.Instance.UpdateButtonItemNum();
+        ItemListAndInfoPanel.Instance.OnShow(-1, 64, -88);
+    }
+    public void Skillales(int skillID)
+    {
+        if (!skillDic.ContainsKey(skillID))
+        {
+            MessagePanel.Instance.AddMessage("无效的物品，请重新选择");
+            return;
+        }
+        gold += skillDic[skillID].cost / 2;
+
+        skillDic.Remove(skillID);
+        PlayMainPanel.Instance.UpdateGold();
+        PlayMainPanel.Instance.UpdateButtonSkillNum();
+        SkillListAndInfoPanel.Instance.OnShow(-1,null,-1,0, 64, -88);
+    }
+    #endregion
+
     #region 【方法】市集出售
 
     public void CreateSalesRecord(int year, int month)
@@ -2472,8 +2517,8 @@ public class GameControl : MonoBehaviour
 
     public void CustomerCome(short districtID)
     {
-        string name = "";
-        string pic = "";
+        string name;
+        string pic;
         int sexCode = Random.Range(0, 2);
         int heroType = Random.Range(0, DataManager.mHeroDict.Count);
         if (sexCode == 0)
@@ -2847,16 +2892,16 @@ public class GameControl : MonoBehaviour
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
         {
             DistrictMapPanel.Instance.UpdateBaselineResourcesText(districtID);
-            if (DistrictMapPanel.Instance.IsShowResourcesBlock)
-            {
-                DistrictMapPanel.Instance.UpdateResourcesBlock(districtID);
-            }
+           
         }
         if (MarketPanel.Instance.isShow && nowCheckingDistrictID == districtID)
         {
             MarketPanel.Instance.UpdateAllInfo(districtID, MarketPanel.Instance.itemTypeBig, MarketPanel.Instance.itemTypeSmall);
         }
-
+        if (PlayMainPanel.Instance.IsShowResourcesBlock)
+        {
+            PlayMainPanel.Instance.UpdateResourcesBlock();
+        }
 
         if ((buyItemList.Count + buySkillList.Count) == 0)
         {
@@ -5847,15 +5892,15 @@ public class GameControl : MonoBehaviour
         return probability;
     }
 
-    public int GetDistrictFoodAll(int districtID)
+    public int GetForceFoodAll(int forceID)
     {
-        return districtDic[districtID].rFoodCereal + districtDic[districtID].rFoodVegetable + districtDic[districtID].rFoodFruit + districtDic[districtID].rFoodMeat + districtDic[districtID].rFoodFish + districtDic[districtID].rFoodBeer + districtDic[districtID].rFoodWine;
+        return forceDic[forceID].rFoodCereal + forceDic[forceID].rFoodVegetable + forceDic[forceID].rFoodFruit + forceDic[forceID].rFoodMeat + forceDic[forceID].rFoodFish + forceDic[forceID].rFoodBeer + forceDic[forceID].rFoodWine;
     }
 
-    public int GetDistrictStuffAll(int districtID)
+    public int GetForceStuffAll(int forceID)
     {
-        return districtDic[districtID].rStuffWood + districtDic[districtID].rStuffStone + districtDic[districtID].rStuffMetal + districtDic[districtID].rStuffLeather + districtDic[districtID].rStuffCloth + districtDic[districtID].rStuffTwine + districtDic[districtID].rStuffBone +
-            districtDic[districtID].rStuffWind + districtDic[districtID].rStuffFire + districtDic[districtID].rStuffWater + districtDic[districtID].rStuffGround + districtDic[districtID].rStuffLight + districtDic[districtID].rStuffDark;
+        return forceDic[forceID].rStuffWood + forceDic[forceID].rStuffStone + forceDic[forceID].rStuffMetal + forceDic[forceID].rStuffLeather + forceDic[forceID].rStuffCloth + forceDic[forceID].rStuffTwine + forceDic[forceID].rStuffBone +
+            forceDic[forceID].rStuffWind + forceDic[forceID].rStuffFire + forceDic[forceID].rStuffWater + forceDic[forceID].rStuffGround + forceDic[forceID].rStuffLight + forceDic[forceID].rStuffDark;
     }
 
     public int GetDistrictProductAll(int districtID)

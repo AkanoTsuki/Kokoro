@@ -114,10 +114,7 @@ public class BuildingPanel : BasePanel
         {
             BuildPanel.Instance.OnHide();
         }
-        if (DistrictMapPanel.Instance.IsShowResourcesBlock)
-        {
-            DistrictMapPanel.Instance.HideResourcesBlock();
-        }
+ 
 
     }
 
@@ -926,9 +923,9 @@ public class BuildingPanel : BasePanel
         upgradeBlock_desText.text = des;
 
         bool canDo = true;
-        if (bp.NeedWood > gc.districtDic[gc.nowCheckingDistrictID].rStuffWood) { canDo = false; }
-        if (bp.NeedStone > gc.districtDic[gc.nowCheckingDistrictID].rStuffStone) { canDo = false; }
-        if (bp.NeedMetal > gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal) { canDo = false; }
+        if (bp.NeedWood > gc.forceDic[0].rStuffWood) { canDo = false; }
+        if (bp.NeedStone > gc.forceDic[0].rStuffStone) { canDo = false; }
+        if (bp.NeedMetal > gc.forceDic[0].rStuffMetal) { canDo = false; }
         if (bp.NeedGold > gc.gold) { canDo = false; }
      
     
@@ -976,9 +973,9 @@ public class BuildingPanel : BasePanel
     {
         switch (type)
         {
-            case "wood": return "<color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffWood ? "#FF5B5B>" : "white>") + "木材" + value + "</color>";
-            case "stone": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffStone ? "#FF5B5B>" : "white>") + "石料" + value + "</color>";
-            case "metal": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal ? "#FF5B5B>" : "white>") + "金属" + value + "</color>";
+            case "wood": return "<color=" + (value > gc.forceDic[0].rStuffWood ? "#FF5B5B>" : "white>") + "木材" + value + "</color>";
+            case "stone": return " <color=" + (value > gc.forceDic[0].rStuffStone ? "#FF5B5B>" : "white>") + "石料" + value + "</color>";
+            case "metal": return " <color=" + (value > gc.forceDic[0].rStuffMetal ? "#FF5B5B>" : "white>") + "金属" + value + "</color>";
             case "gold": return " <color=" + (value > gc.gold ? "#FF5B5B>" : "white>") + "金币" + value + "</color>";
             default: return "未定义类型";
         }

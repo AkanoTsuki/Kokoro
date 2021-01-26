@@ -43,31 +43,47 @@ public class ItemListAndInfoPanel : BasePanel
     public void OnShow(short districtID, int x, int y, byte col)//地区库房查询
     {
         nowEquipPart = EquipPart.None;
-        titleText.text = "鉴定仓库["+ gc.districtDic[districtID].name+"-"+gc.districtDic[districtID].baseName+"]";
+        if (districtID != -1)
+        {
+            titleText.text = "鉴定仓库[" + gc.districtDic[districtID].name + "-" + gc.districtDic[districtID].baseName + "]";
+            funcBtn[3].GetComponent<RectTransform>().localScale = Vector2.one;
+            funcBtn[3].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
+            funcBtn[3].transform.GetChild(0).GetComponent<Text>().text = "<<全部收藏";
+            funcBtn[3].onClick.RemoveAllListeners();
+            funcBtn[3].onClick.AddListener(delegate () { gc.ItemToCollectionAll(districtID); });
 
-        funcBtn[3].GetComponent<RectTransform>().localScale = Vector2.one;
-        funcBtn[3].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
-        funcBtn[3].transform.GetChild(0).GetComponent<Text>().text = "<<全部收藏";
-        funcBtn[3].onClick.RemoveAllListeners();
-        funcBtn[3].onClick.AddListener(delegate () { gc.ItemToCollectionAll(districtID); });
+            funcBtn[2].GetComponent<RectTransform>().localScale = Vector2.one;
+            funcBtn[2].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
+            funcBtn[2].transform.GetChild(0).GetComponent<Text>().text = "<<收藏";
+            funcBtn[2].onClick.RemoveAllListeners();
+            funcBtn[2].onClick.AddListener(delegate () { gc.ItemToCollection(nowItemID); });
 
-        funcBtn[2].GetComponent<RectTransform>().localScale = Vector2.one;
-        funcBtn[2].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
-        funcBtn[2].transform.GetChild(0).GetComponent<Text>().text = "<<收藏";
-        funcBtn[2].onClick.RemoveAllListeners();
-        funcBtn[2].onClick.AddListener(delegate () { gc.ItemToCollection(nowItemID); });
+            funcBtn[1].GetComponent<RectTransform>().localScale = Vector2.one;
+            funcBtn[1].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+            funcBtn[1].transform.GetChild(0).GetComponent<Text>().text = "放售>>";
+            funcBtn[1].onClick.RemoveAllListeners();
+            funcBtn[1].onClick.AddListener(delegate () { gc.ItemToGoods(nowItemID); });
 
-        funcBtn[1].GetComponent<RectTransform>().localScale = Vector2.one;
-        funcBtn[1].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
-        funcBtn[1].transform.GetChild(0).GetComponent<Text>().text = "放售>>";
-        funcBtn[1].onClick.RemoveAllListeners();
-        funcBtn[1].onClick.AddListener(delegate () { gc.ItemToGoods(nowItemID); });
+            funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
+            funcBtn[0].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+            funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "全部放售>>";
+            funcBtn[0].onClick.RemoveAllListeners();
+            funcBtn[0].onClick.AddListener(delegate () { gc.ItemToGoodsAll(districtID); });
+        }
+        else
+        {
+            titleText.text = "收藏仓库";
 
-        funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
-        funcBtn[0].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
-        funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "全部放售>>";
-        funcBtn[0].onClick.RemoveAllListeners();
-        funcBtn[0].onClick.AddListener(delegate () { gc.ItemToGoodsAll(districtID); });
+            funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
+            funcBtn[0].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+            funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "半价出售>>";
+            funcBtn[0].onClick.RemoveAllListeners();
+            funcBtn[0].onClick.AddListener(delegate () { gc.ItemSales(nowItemID); });
+
+            HideFuncBtn(3);
+        }
+
+        
 
         closeBtn.GetComponent<RectTransform>().localScale = Vector3.one;
 

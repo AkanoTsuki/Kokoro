@@ -52,10 +52,7 @@ public class BuildPanel : BasePanel
         {
             BuildingPanel.Instance.OnHide();
         }
-        if (DistrictMapPanel.Instance.IsShowResourcesBlock)
-        {
-            DistrictMapPanel.Instance.HideResourcesBlock();
-        }
+
         isShow = true;
     }
 
@@ -145,9 +142,9 @@ public class BuildPanel : BasePanel
 
             short bpID = temp[i].ID;
             if (
-                temp[i].NeedWood <= gc.districtDic[gc.nowCheckingDistrictID].rStuffWood &&
-                temp[i].NeedStone <= gc.districtDic[gc.nowCheckingDistrictID].rStuffStone &&
-                temp[i].NeedMetal <= gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal &&
+                temp[i].NeedWood <= gc.forceDic[0].rStuffWood &&
+                temp[i].NeedStone <= gc.forceDic[0].rStuffStone &&
+                temp[i].NeedMetal <= gc.forceDic[0].rStuffMetal &&
                 temp[i].NeedGold <= gc.gold 
                )
             {
@@ -182,9 +179,9 @@ public class BuildPanel : BasePanel
             switch (type)
             {
                
-                case "NeedWood": return "<color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffWood ? "#FF5B5B>" : "white>") + "木材" + value + "</color>";
-                case "NeedStone": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffStone ? "#FF5B5B>" : "white>") + "石料" + value + "</color>";
-                case "NeedMetal": return " <color=" + (value > gc.districtDic[gc.nowCheckingDistrictID].rStuffMetal ? "#FF5B5B>" : "white>") + "金属" + value + "</color>";
+                case "NeedWood": return "<color=" + (value > gc.forceDic[0].rStuffWood ? "#FF5B5B>" : "white>") + "木材" + value + "</color>";
+                case "NeedStone": return " <color=" + (value > gc.forceDic[0].rStuffStone ? "#FF5B5B>" : "white>") + "石料" + value + "</color>";
+                case "NeedMetal": return " <color=" + (value > gc.forceDic[0].rStuffMetal ? "#FF5B5B>" : "white>") + "金属" + value + "</color>";
               
 
                 case "gold": return " <color=" + (value > gc.gold ? "#FF5B5B>" : "white>") + "金币" + value + "</color>";

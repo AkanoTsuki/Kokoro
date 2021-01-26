@@ -10,6 +10,7 @@ public class DistrictMapPanel : BasePanel
   
     public static DistrictMapPanel Instance;
 
+    public Image forceImage;
     public Text nameText;
     public Text levelText;
     public Text peopleText;
@@ -39,11 +40,13 @@ public class DistrictMapPanel : BasePanel
     public Button right_transferBtn;
     public Button right_adventureSendBtn;
 
-    public Button bottom_baseline_resourcesBtn;
-    public Text bottom_baseline_resourcesFoodText;
-    public Text bottom_baseline_resourcesStuffText;
-    public Text bottom_baseline_resourcesProductText;
-    public Text bottom_baseline_resourcesSignText;
+    // public Button bottom_baseline_resourcesBtn;
+    public Text bottom_baseline_productWeaponText;
+    public Text bottom_baseline_productArmorText;
+    public Text bottom_baseline_productJewelryText;
+    public Text bottom_baseline_productSkillRollText;
+    public Text bottom_baseline_productLimitText;
+  //  public Text bottom_baseline_resourcesSignText;
 
     public Text bottom_baseline_elementWindText;
     public Text bottom_baseline_elementFireText;
@@ -52,33 +55,33 @@ public class DistrictMapPanel : BasePanel
     public Text bottom_baseline_elementLightText;
     public Text bottom_baseline_elementDarkText;
 
-    public RectTransform bottom_resourcesBlockRt;
-    public Text bottom_resources_foodCerealText;
-    public Text bottom_resources_foodVegetableText;
-    public Text bottom_resources_foodFruitText;
-    public Text bottom_resources_foodMeatText;
-    public Text bottom_resources_foodFishText;
-    public Text bottom_resources_foodBeerText;
-    public Text bottom_resources_foodWineText;
+    //public RectTransform bottom_resourcesBlockRt;
+    //public Text bottom_resources_foodCerealText;
+    //public Text bottom_resources_foodVegetableText;
+    //public Text bottom_resources_foodFruitText;
+    //public Text bottom_resources_foodMeatText;
+    //public Text bottom_resources_foodFishText;
+    //public Text bottom_resources_foodBeerText;
+    //public Text bottom_resources_foodWineText;
 
-    public Text bottom_resources_stuffWoodText;
-    public Text bottom_resources_stuffStoneText;
-    public Text bottom_resources_stuffMetalText;
-    public Text bottom_resources_stuffLeatherText;
-    public Text bottom_resources_stuffClothText;
-    public Text bottom_resources_stuffTwineText;
-    public Text bottom_resources_stuffBoneText;
-    public Text bottom_resources_stuffWindText;
-    public Text bottom_resources_stuffFireText;
-    public Text bottom_resources_stuffWaterText;
-    public Text bottom_resources_stuffGroundText;
-    public Text bottom_resources_stuffLightText;
-    public Text bottom_resources_stuffDarkText;
+    //public Text bottom_resources_stuffWoodText;
+    //public Text bottom_resources_stuffStoneText;
+    //public Text bottom_resources_stuffMetalText;
+    //public Text bottom_resources_stuffLeatherText;
+    //public Text bottom_resources_stuffClothText;
+    //public Text bottom_resources_stuffTwineText;
+    //public Text bottom_resources_stuffBoneText;
+    //public Text bottom_resources_stuffWindText;
+    //public Text bottom_resources_stuffFireText;
+    //public Text bottom_resources_stuffWaterText;
+    //public Text bottom_resources_stuffGroundText;
+    //public Text bottom_resources_stuffLightText;
+    //public Text bottom_resources_stuffDarkText;
 
-    public Text bottom_resources_productWeaponText;
-    public Text bottom_resources_productArmorText;
-    public Text bottom_resources_productJewelryText;
-    public Text bottom_resources_productSkillRollText;
+    //public Text bottom_resources_productWeaponText;
+    //public Text bottom_resources_productArmorText;
+    //public Text bottom_resources_productJewelryText;
+    //public Text bottom_resources_productSkillRollText;
 
 
 
@@ -162,7 +165,7 @@ public class DistrictMapPanel : BasePanel
 
     public short nowDistrict=-1;
 
-    public bool IsShowResourcesBlock = false;
+    //public bool IsShowResourcesBlock = false;
 
     //对象池
     List<GameObject> buildingGoPool = new List<GameObject>();
@@ -193,13 +196,13 @@ public class DistrictMapPanel : BasePanel
         right_adventureSendBtn.onClick.AddListener(delegate () { gci.OpenAdventureSend(); });
 
 
-        bottom_baseline_resourcesBtn.onClick.AddListener(delegate () {
-            if (IsShowResourcesBlock)
-            {
-                HideResourcesBlock();
-            }
-            else { ShowResourcesBlock(gc.nowCheckingDistrictID); }
-        });
+        //bottom_baseline_resourcesBtn.onClick.AddListener(delegate () {
+        //    if (IsShowResourcesBlock)
+        //    {
+        //        HideResourcesBlock();
+        //    }
+        //    else { ShowResourcesBlock(gc.nowCheckingDistrictID); }
+        //});
 
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
 
@@ -268,7 +271,7 @@ public class DistrictMapPanel : BasePanel
         UpdateAllBuilding(gc.nowCheckingDistrictID);
         HideTip();
 
-        HideResourcesBlock();
+        //HideResourcesBlock();
         HideCustomerInfo();
 
         UpdateBaselineResourcesText(gc.nowCheckingDistrictID);
@@ -302,13 +305,13 @@ public class DistrictMapPanel : BasePanel
         {
             BuildingPanel.Instance.OnHide();
         }
-        if (IsShowResourcesBlock)
-        {
-            HideResourcesBlock();
-        }
+        //if (IsShowResourcesBlock)
+        //{
+        //    HideResourcesBlock();
+        //}
 
         SetAnchoredPosition(0, 5000);
-        PlayMainPanel.Instance.top_districtBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+        //PlayMainPanel.Instance.top_districtBtn.GetComponent<RectTransform>().localScale = Vector2.one;
         isShow = false;
 
         CancelInvoke("UpdateBar");
@@ -336,6 +339,7 @@ public class DistrictMapPanel : BasePanel
 
     public void UpdateBasicInfo()
     {
+        forceImage.overrideSprite = Resources.Load("Image/Other/icon_flag_" + gc.forceDic[gc.districtDic[gc.nowCheckingDistrictID].force].flagIndex + "_a", typeof(Sprite)) as Sprite;
         nameText.text = gc.districtDic[gc.nowCheckingDistrictID].name + "·" + gc.districtDic[gc.nowCheckingDistrictID].baseName;
         levelText.text = gc.districtDic[gc.nowCheckingDistrictID].level.ToString();
         peopleText.text = "居民 " + gc.districtDic[gc.nowCheckingDistrictID].people+"/" + gc.districtDic[gc.nowCheckingDistrictID].peopleLimit;
@@ -671,15 +675,20 @@ public class DistrictMapPanel : BasePanel
     {
         if (gc.districtDic[districtID].force == 0)
         {
-            bottom_baseline_resourcesFoodText.text = gc.GetDistrictFoodAll(districtID) + "/" + gc.districtDic[districtID].rFoodLimit;
-            bottom_baseline_resourcesStuffText.text = gc.GetDistrictStuffAll(districtID) + "/" + gc.districtDic[districtID].rStuffLimit;
-            bottom_baseline_resourcesProductText.text = gc.GetDistrictProductAll(districtID) + "<color=#92FF9D>[" + gc.GetDistrictProductGoodsAll(districtID) + "]</color>/" + gc.districtDic[districtID].rProductLimit;
+         
+            bottom_baseline_productWeaponText.text = gc.districtDic[districtID].rProductWeapon + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodWeapon + "]</color>";
+            bottom_baseline_productArmorText.text = gc.districtDic[districtID].rProductArmor + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodArmor + "]</color>";
+            bottom_baseline_productJewelryText.text = gc.districtDic[districtID].rProductJewelry + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodJewelry + "]</color>";
+            bottom_baseline_productSkillRollText.text = gc.districtDic[districtID].rProductScroll + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodScroll + "]</color>";
+            bottom_baseline_productLimitText.text = gc.GetDistrictProductAll(districtID) + "/" + gc.districtDic[districtID].rProductLimit;
         }
         else
         {
-            bottom_baseline_resourcesFoodText.text = "-";
-            bottom_baseline_resourcesStuffText.text = "-";
-            bottom_baseline_resourcesProductText.text = "-";
+            bottom_baseline_productWeaponText.text = "-";
+            bottom_baseline_productArmorText.text = "-";
+            bottom_baseline_productJewelryText.text = "-";
+            bottom_baseline_productSkillRollText.text = "-";
+            bottom_baseline_productLimitText.text = "-";
         }
     }
     public void UpdateBaselineElementText(short districtID)
@@ -692,66 +701,66 @@ public class DistrictMapPanel : BasePanel
         bottom_baseline_elementDarkText.text = "暗 " + gc.districtDic[districtID].eDark;
     }
 
-    public void UpdateResourcesBlock(short districtID)
-    {
-        bottom_resources_foodCerealText.text = gc.districtDic[districtID].rFoodCereal.ToString();
-        bottom_resources_foodVegetableText.text = gc.districtDic[districtID].rFoodVegetable.ToString();
-        bottom_resources_foodFruitText.text = gc.districtDic[districtID].rFoodFruit.ToString();
-        bottom_resources_foodMeatText.text = gc.districtDic[districtID].rFoodMeat.ToString();
-        bottom_resources_foodFishText.text = gc.districtDic[districtID].rFoodFish.ToString();
-        bottom_resources_foodBeerText.text = gc.districtDic[districtID].rFoodBeer.ToString();
-        bottom_resources_foodWineText.text = gc.districtDic[districtID].rFoodWine.ToString();
+    //public void UpdateResourcesBlock(short districtID)
+    //{
+    //    bottom_resources_foodCerealText.text = gc.districtDic[districtID].rFoodCereal.ToString();
+    //    bottom_resources_foodVegetableText.text = gc.districtDic[districtID].rFoodVegetable.ToString();
+    //    bottom_resources_foodFruitText.text = gc.districtDic[districtID].rFoodFruit.ToString();
+    //    bottom_resources_foodMeatText.text = gc.districtDic[districtID].rFoodMeat.ToString();
+    //    bottom_resources_foodFishText.text = gc.districtDic[districtID].rFoodFish.ToString();
+    //    bottom_resources_foodBeerText.text = gc.districtDic[districtID].rFoodBeer.ToString();
+    //    bottom_resources_foodWineText.text = gc.districtDic[districtID].rFoodWine.ToString();
    
 
-        bottom_resources_stuffWoodText.text = gc.districtDic[districtID].rStuffWood.ToString();
-        bottom_resources_stuffStoneText.text = gc.districtDic[districtID].rStuffStone.ToString();
-        bottom_resources_stuffMetalText.text = gc.districtDic[districtID].rStuffMetal.ToString();
-        bottom_resources_stuffLeatherText.text = gc.districtDic[districtID].rStuffLeather.ToString();
-        bottom_resources_stuffClothText.text = gc.districtDic[districtID].rStuffCloth.ToString();
-        bottom_resources_stuffTwineText.text = gc.districtDic[districtID].rStuffTwine.ToString();
-        bottom_resources_stuffBoneText.text = gc.districtDic[districtID].rStuffBone.ToString();
-        bottom_resources_stuffWindText.text = gc.districtDic[districtID].rStuffWind.ToString();
-        bottom_resources_stuffFireText.text = gc.districtDic[districtID].rStuffFire.ToString();
-        bottom_resources_stuffWaterText.text = gc.districtDic[districtID].rStuffWater.ToString();
-        bottom_resources_stuffGroundText.text = gc.districtDic[districtID].rStuffGround.ToString();
-        bottom_resources_stuffLightText.text = gc.districtDic[districtID].rStuffLight.ToString();
-        bottom_resources_stuffDarkText.text = gc.districtDic[districtID].rStuffDark.ToString();
+    //    bottom_resources_stuffWoodText.text = gc.districtDic[districtID].rStuffWood.ToString();
+    //    bottom_resources_stuffStoneText.text = gc.districtDic[districtID].rStuffStone.ToString();
+    //    bottom_resources_stuffMetalText.text = gc.districtDic[districtID].rStuffMetal.ToString();
+    //    bottom_resources_stuffLeatherText.text = gc.districtDic[districtID].rStuffLeather.ToString();
+    //    bottom_resources_stuffClothText.text = gc.districtDic[districtID].rStuffCloth.ToString();
+    //    bottom_resources_stuffTwineText.text = gc.districtDic[districtID].rStuffTwine.ToString();
+    //    bottom_resources_stuffBoneText.text = gc.districtDic[districtID].rStuffBone.ToString();
+    //    bottom_resources_stuffWindText.text = gc.districtDic[districtID].rStuffWind.ToString();
+    //    bottom_resources_stuffFireText.text = gc.districtDic[districtID].rStuffFire.ToString();
+    //    bottom_resources_stuffWaterText.text = gc.districtDic[districtID].rStuffWater.ToString();
+    //    bottom_resources_stuffGroundText.text = gc.districtDic[districtID].rStuffGround.ToString();
+    //    bottom_resources_stuffLightText.text = gc.districtDic[districtID].rStuffLight.ToString();
+    //    bottom_resources_stuffDarkText.text = gc.districtDic[districtID].rStuffDark.ToString();
 
 
-        bottom_resources_productWeaponText.text = gc.districtDic[districtID].rProductWeapon+ "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodWeapon + "]</color>";
-        bottom_resources_productArmorText.text = gc.districtDic[districtID].rProductArmor + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodArmor + "]</color>";
-        bottom_resources_productJewelryText.text = gc.districtDic[districtID].rProductJewelry + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodJewelry + "]</color>";
-        bottom_resources_productSkillRollText.text = gc.districtDic[districtID].rProductScroll + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodScroll + "]</color>";
+    //    bottom_resources_productWeaponText.text = gc.districtDic[districtID].rProductWeapon+ "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodWeapon + "]</color>";
+    //    bottom_resources_productArmorText.text = gc.districtDic[districtID].rProductArmor + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodArmor + "]</color>";
+    //    bottom_resources_productJewelryText.text = gc.districtDic[districtID].rProductJewelry + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodJewelry + "]</color>";
+    //    bottom_resources_productSkillRollText.text = gc.districtDic[districtID].rProductScroll + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodScroll + "]</color>";
 
-    }
-    public void ShowResourcesBlock(short districtID)
-    {
-        if (gc.districtDic[districtID].force != 0)
-        {
-            return;
-        }
+    //}
+    //public void ShowResourcesBlock(short districtID)
+    //{
+    //    if (gc.districtDic[districtID].force != 0)
+    //    {
+    //        return;
+    //    }
 
 
-        if (BuildPanel.Instance.isShow)
-        {
-            BuildPanel.Instance.OnHide();
-        }
-        if (BuildingPanel.Instance.isShow)
-        {
-            BuildingPanel.Instance.OnHide();
-        }
+    //    if (BuildPanel.Instance.isShow)
+    //    {
+    //        BuildPanel.Instance.OnHide();
+    //    }
+    //    if (BuildingPanel.Instance.isShow)
+    //    {
+    //        BuildingPanel.Instance.OnHide();
+    //    }
 
-        UpdateResourcesBlock(districtID);
-        bottom_baseline_resourcesSignText.text = "▲";
-        bottom_resourcesBlockRt.localScale = Vector2.one;
-        IsShowResourcesBlock = true;
-    }
-    public void HideResourcesBlock()
-    {
-        bottom_baseline_resourcesSignText.text = "▼";
-        bottom_resourcesBlockRt.localScale = Vector2.zero;
-        IsShowResourcesBlock = false;
-    }
+    //    UpdateResourcesBlock(districtID);
+    //    bottom_baseline_resourcesSignText.text = "▲";
+    //    bottom_resourcesBlockRt.localScale = Vector2.one;
+    //    IsShowResourcesBlock = true;
+    //}
+    //public void HideResourcesBlock()
+    //{
+    //    bottom_baseline_resourcesSignText.text = "▼";
+    //    bottom_resourcesBlockRt.localScale = Vector2.zero;
+    //    IsShowResourcesBlock = false;
+    //}
 
 
     //访客部分

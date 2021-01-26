@@ -77,7 +77,7 @@ public class DistrictMainPanel : BasePanel
 
     public void UpdateOutputInfo(DistrictObject districtObject)
     {
-        outputDesText.text = "食物 " + (districtObject.rFoodCereal + districtObject.rFoodVegetable + districtObject.rFoodFruit + districtObject.rFoodMeat + districtObject.rFoodFish) + "/" + districtObject.rFoodLimit + " <color=#76ee00>[+50]</color>" +
+        outputDesText.text = /*"食物 " + (districtObject.rFoodCereal + districtObject.rFoodVegetable + districtObject.rFoodFruit + districtObject.rFoodMeat + districtObject.rFoodFish) + "/" + districtObject.rFoodLimit + " <color=#76ee00>[+50]</color>" +
                         "\n ·谷物 " + districtObject.rFoodCereal + " <color=#76ee00>[+50]</color>" +
                         "\n ·蔬菜 " + districtObject.rFoodVegetable + " <color=#76ee00>[+50]</color>" +
                         "\n ·水果 " + districtObject.rFoodFruit + " <color=#76ee00>[+50]</color>" +
@@ -92,7 +92,7 @@ public class DistrictMainPanel : BasePanel
                         "\n ·麻绳 " + districtObject.rStuffTwine + " <color=#76ee00>[+50]</color>" +
                         "\n ·皮革 " + districtObject.rStuffLeather + " <color=#76ee00>[+50]</color>" +
                         "\n ·骨块 " + districtObject.rStuffBone + " <color=#76ee00>[+50]</color>" +
-                        "\n ·特殊 0 <color=#76ee00>[+0]</color>\n" +
+                        "\n ·特殊 0 <color=#76ee00>[+0]</color>\n" +*/
 
                         "\n 装备 " + (districtObject.rProductWeapon + districtObject.rProductArmor + districtObject.rProductJewelry) + "/" + districtObject.rProductLimit +
                         "\n ·武器 <color=#ffffff> " + districtObject.rProductWeapon + " </color>" +
