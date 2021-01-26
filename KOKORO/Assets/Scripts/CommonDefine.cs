@@ -2731,11 +2731,12 @@ public class ForceObject
     private int RStuffDark;
     private int RFoodLimit;//库存上限
     private int RStuffLimit;
+    private int Gold;
     public ForceObject(byte id, byte flagIndex,string name, string leader, byte parentID, List<byte> childrenID, List<short> districtID, Dictionary<byte, short> relation,
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, int rFoodBeer, int rFoodWine,
         int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
         int rStuffWind, int rStuffFire, int rStuffWater, int rStuffGround, int rStuffLight, int rStuffDark,
-        int rFoodLimit, int rStuffLimit)
+        int rFoodLimit, int rStuffLimit, int gold)
     {
         this.ID = id;
         this.FlagIndex = flagIndex;
@@ -2767,6 +2768,7 @@ public class ForceObject
         this.RStuffDark = rStuffDark;
         this.RFoodLimit = rFoodLimit;
         this.RStuffLimit = rStuffLimit;
+        this.Gold = gold;
     }
     public byte id { get { return ID; } }
     public byte flagIndex { get { return FlagIndex; } }
@@ -2798,6 +2800,7 @@ public class ForceObject
     public int rStuffDark { get { return RStuffDark; } set { RStuffDark = value; } }
     public int rFoodLimit { get { return RFoodLimit; } set { RFoodLimit = value; } }
     public int rStuffLimit { get { return RStuffLimit; } set { RStuffLimit = value; } }
+    public int gold { get { return Gold; } set { Gold = value; } }
 }
 
 public class ExecuteEventObject

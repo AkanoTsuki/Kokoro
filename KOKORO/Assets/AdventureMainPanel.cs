@@ -125,7 +125,7 @@ public class AdventureMainPanel : BasePanel
         {
             adventureTeamBlock.titleText.text += "(近卫队)";
         }
-        adventureTeamBlock.dungeon_progressNowFlagRt.transform.GetComponent<Image>().sprite = Resources.Load("Image/Other/icon_flag_" + gc.forceFlag + "_b", typeof(Sprite)) as Sprite;
+        adventureTeamBlock.dungeon_progressNowFlagRt.transform.GetComponent<Image>().sprite = Resources.Load("Image/Other/icon_flag_" + gc.forceDic[0].flagIndex + "_b", typeof(Sprite)) as Sprite;
 
         adventureTeamBlock.retreatBtn.onClick.RemoveAllListeners();
         adventureTeamBlock.retreatBtn.onClick.AddListener(delegate ()

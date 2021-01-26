@@ -333,7 +333,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                 go.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(delegate ()
                 {
 
-                    AdventureMainPanel.Instance.OnShow(60, -88);
+                    AdventureMainPanel.Instance.OnShow(76, -104);
                 });
            
 
@@ -370,7 +370,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                     go.transform.GetChild(5).GetComponent<Button>().onClick.RemoveAllListeners();
                     go.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(delegate ()
                     {
-                        AdventureTeamPanel.Instance.OnShow(teamID, 60, -88);
+                        AdventureTeamPanel.Instance.OnShow(teamID, 76, -104);
                     });
 
                     go.transform.GetChild(6).localScale = Vector2.zero;
@@ -393,7 +393,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                     go.transform.GetChild(5).GetComponent<Button>().onClick.RemoveAllListeners();
                     go.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(delegate ()
                     {
-                        AdventureTeamPanel.Instance.OnShow(teamID, 60, -88);
+                        AdventureTeamPanel.Instance.OnShow(teamID, 76, -104);
                     });
 
                     go.transform.GetChild(6).localScale = Vector2.zero;
@@ -517,7 +517,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
         if (heroID.Count > 0)
         {
             go.transform.GetChild(0).localScale = Vector2.one;
-            go.transform.GetChild(0).GetComponent<Image>().overrideSprite = Resources.Load("Image/Other/icon_flag_" + gc.forceFlag + "_b", typeof(Sprite)) as Sprite;
+            go.transform.GetChild(0).GetComponent<Image>().overrideSprite = Resources.Load("Image/Other/icon_flag_" + gc.forceDic[0].flagIndex + "_b", typeof(Sprite)) as Sprite;
         }
         else
         {

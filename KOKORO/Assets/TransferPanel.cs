@@ -80,7 +80,7 @@ public class TransferPanel : BasePanel
         }
 
       
-        SetAnchoredPosition(64, -88);
+        SetAnchoredPosition(76, -104);
         isShow = true;
 
     }

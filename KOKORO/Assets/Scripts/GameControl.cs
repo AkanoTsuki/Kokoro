@@ -19,7 +19,7 @@ public class GameControl : MonoBehaviour
     public int timeMonth = 1;
     public int timeSeason = 1;
     public int timeYear = 1;
-    public int gold = 0;
+    //public int gold = 0;
     public short nowCheckingDistrictID = 0;
     public int standardTime = 0;//时间戳，基准时间单位：1/10小时（例如 1天为240单位 ）
     public List<ExecuteEventObject> executeEventList = new List<ExecuteEventObject>();
@@ -33,7 +33,7 @@ public class GameControl : MonoBehaviour
     public int forceIndex = 0;
     public bool[] buildingUnlock = new bool[78];
     public int logIndex = 0;
-    public byte forceFlag = 0;
+    //public byte forceFlag = 0;
 
     public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
     public Dictionary<int, HeroObject> heroDic = new Dictionary<int, HeroObject>();
@@ -50,6 +50,7 @@ public class GameControl : MonoBehaviour
     public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
     public Dictionary<string, CustomerRecordObject> customerRecordDic = new Dictionary<string, CustomerRecordObject>();
     public Dictionary<int, TechnologyObject> technologyDic = new Dictionary<int, TechnologyObject>();
+    public List<int> technologyResearchingList = new List<int>();
     public Dictionary<int, TravellerObject> travellerDic = new Dictionary<int, TravellerObject>();
     public Dictionary<int, ForceObject> forceDic = new Dictionary<int, ForceObject>();
     /// <summary>
@@ -66,7 +67,7 @@ public class GameControl : MonoBehaviour
         public int timeMonth = 1;
         public int timeSeason = 1;
         public int timeYear = 1;
-        public int gold = 0;
+        //public int gold = 0;
         public short nowCheckingDistrictID = 0;
         public int standardTime = 0;
         public List<ExecuteEventObject> executeEventList = new List<ExecuteEventObject>();
@@ -80,7 +81,7 @@ public class GameControl : MonoBehaviour
         public int forceIndex = 0;
         public bool[] buildingUnlock = new bool[78];
         public int logIndex = 0;
-        public byte forceFlag = 0;
+        //public byte forceFlag = 0;
         public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
         public Dictionary<int, HeroObject> heroDic = new Dictionary<int, HeroObject>();
         public DistrictObject[] districtDic = new DistrictObject[11];
@@ -96,6 +97,7 @@ public class GameControl : MonoBehaviour
         public Dictionary<int, CustomerObject> customerDic = new Dictionary<int, CustomerObject>();
         public Dictionary<string, CustomerRecordObject> customerRecordDic = new Dictionary<string, CustomerRecordObject>();
         public Dictionary<int, TechnologyObject> technologyDic = new Dictionary<int, TechnologyObject>();
+        public List<int> technologyResearchingList = new List<int> ();
         public Dictionary<int, TravellerObject> travellerDic = new Dictionary<int, TravellerObject>();
         public Dictionary<int, ForceObject> forceDic = new Dictionary<int, ForceObject>();
     }
@@ -120,7 +122,7 @@ public class GameControl : MonoBehaviour
         t.timeMonth = this.timeMonth;
         t.timeSeason = this.timeSeason;
         t.timeYear = this.timeYear;
-        t.gold = this.gold;
+       // t.gold = this.gold;
         t.nowCheckingDistrictID = this.nowCheckingDistrictID;
         t.standardTime = this.standardTime;
         t.executeEventList = this.executeEventList;
@@ -134,7 +136,7 @@ public class GameControl : MonoBehaviour
         t.forceIndex = this.forceIndex;
         t.buildingUnlock = this.buildingUnlock;
         t.logIndex = this.logIndex;
-        t.forceFlag = this.forceFlag;
+       // t.forceFlag = this.forceFlag;
         t.itemDic = this.itemDic;
         t.heroDic = this.heroDic;
         t.districtDic = this.districtDic;
@@ -150,6 +152,7 @@ public class GameControl : MonoBehaviour
         t.customerDic = this.customerDic;
         t.customerRecordDic = this.customerRecordDic;
         t.technologyDic = this.technologyDic;
+        t.technologyResearchingList = this.technologyResearchingList;
         t.travellerDic = this.travellerDic;
         t.forceDic = this.forceDic;
         //保存数据
@@ -180,7 +183,7 @@ public class GameControl : MonoBehaviour
             this.timeMonth = t1.timeMonth;
             this.timeSeason = t1.timeSeason;
             this.timeYear = t1.timeYear;
-            this.gold = t1.gold;
+           // this.gold = t1.gold;
             this.nowCheckingDistrictID = t1.nowCheckingDistrictID;
             this.standardTime = t1.standardTime;
             this.executeEventList = t1.executeEventList;
@@ -194,7 +197,7 @@ public class GameControl : MonoBehaviour
             this.forceIndex = t1.forceIndex;
             this.buildingUnlock = t1.buildingUnlock;
             this.logIndex = t1.logIndex;
-            this.forceFlag = t1.forceFlag;
+           // this.forceFlag = t1.forceFlag;
             this.itemDic = t1.itemDic;
             this.heroDic = t1.heroDic;
             this.districtDic = t1.districtDic;
@@ -210,6 +213,7 @@ public class GameControl : MonoBehaviour
             this.customerDic = t1.customerDic;
             this.customerRecordDic = t1.customerRecordDic;
             this.technologyDic = t1.technologyDic;
+            this.technologyResearchingList = t1.technologyResearchingList;
             this.travellerDic = t1.travellerDic;
             this.forceDic = t1.forceDic;
         }
@@ -837,7 +841,7 @@ public class GameControl : MonoBehaviour
             BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
             return;
         }
-        if (DataManager.mBuildingDict[BuildingPrototypeID].NeedGold > gold)
+        if (DataManager.mBuildingDict[BuildingPrototypeID].NeedGold > forceDic[0].gold)
         {
             BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
             return;
@@ -856,7 +860,7 @@ public class GameControl : MonoBehaviour
         forceDic[0].rStuffWood -= DataManager.mBuildingDict[buildingId].NeedWood;
         forceDic[0].rStuffStone -= DataManager.mBuildingDict[buildingId].NeedStone;
         forceDic[0].rStuffMetal -= DataManager.mBuildingDict[buildingId].NeedMetal;
-        gold -= DataManager.mBuildingDict[buildingId].NeedGold;
+        forceDic[0].gold -= DataManager.mBuildingDict[buildingId].NeedGold;
 
         districtDic[nowCheckingDistrictID].buildingList.Add(buildingIndex);
 
@@ -898,7 +902,7 @@ public class GameControl : MonoBehaviour
         forceDic[0].rStuffWood -= DataManager.mBuildingDict[newPrototypeID].NeedWood;
         forceDic[0].rStuffStone -= DataManager.mBuildingDict[newPrototypeID].NeedStone;
         forceDic[0].rStuffMetal -= DataManager.mBuildingDict[newPrototypeID].NeedMetal;
-        gold -= DataManager.mBuildingDict[newPrototypeID].NeedGold;
+        forceDic[0].gold -= DataManager.mBuildingDict[newPrototypeID].NeedGold;
 
 
 
@@ -1914,7 +1918,7 @@ public class GameControl : MonoBehaviour
         }
         if (DataManager.mTechnologyDict[technologyID].NeedGold != 0)
         {
-            if (gold < DataManager.mTechnologyDict[technologyID].NeedGold)
+            if (forceDic[0].gold < DataManager.mTechnologyDict[technologyID].NeedGold)
             {
                 TechnologyPanel.Instance.UpdateInfo(technologyID);
                 return;
@@ -1967,17 +1971,21 @@ public class GameControl : MonoBehaviour
 
             }
         }
-        gold -= DataManager.mTechnologyDict[technologyID].NeedGold;
+        forceDic[0].gold -= DataManager.mTechnologyDict[technologyID].NeedGold;
+        technologyDic[technologyID].stage = TechnologyStage.Research;
+
         int needTime = DataManager.mTechnologyDict[technologyID].NeedTime * 240;
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.TechnologyResearch, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID }, new List<int> { technologyID } }));
 
+        technologyResearchingList.Add(technologyID);
         PlayMainPanel.Instance.UpdateResources();
         PlayMainPanel.Instance.UpdateGold();
     }
     public void TechnologyResearchDone(int technologyID)
     {
+        technologyResearchingList.Remove(technologyID);
         technologyDic[technologyID].stage = TechnologyStage.Done;
-
+       
         for (int i = 0; i < DataManager.mTechnologyDict[technologyID].ChildrenID.Count; i++)
         {
             if (technologyDic[DataManager.mTechnologyDict[technologyID].ChildrenID[i]].stage == TechnologyStage.Close)
@@ -2456,7 +2464,7 @@ public class GameControl : MonoBehaviour
             return;
         }
 
-        gold += itemDic[itemID].cost / 2;
+        forceDic[0].gold += itemDic[itemID].cost / 2;
 
         itemDic.Remove(itemID);
         PlayMainPanel.Instance.UpdateGold();
@@ -2470,12 +2478,12 @@ public class GameControl : MonoBehaviour
             MessagePanel.Instance.AddMessage("无效的物品，请重新选择");
             return;
         }
-        gold += skillDic[skillID].cost / 2;
+        forceDic[0].gold += skillDic[skillID].cost / 2;
 
         skillDic.Remove(skillID);
         PlayMainPanel.Instance.UpdateGold();
         PlayMainPanel.Instance.UpdateButtonSkillNum();
-        SkillListAndInfoPanel.Instance.OnShow(-1,null,-1,0, 64, -88);
+        SkillListAndInfoPanel.Instance.OnShow(-1,null, 76, -104);
     }
     #endregion
 
@@ -2887,7 +2895,7 @@ public class GameControl : MonoBehaviour
             }
             skillDic.Remove(buySkillList[i]);
         }
-        gold += spend;
+        forceDic[0].gold += spend;
         PlayMainPanel.Instance.UpdateGold();
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
         {
@@ -3464,7 +3472,7 @@ public class GameControl : MonoBehaviour
             HeroGetExp(adventureTeamList[teamID].heroIDList[i], (int)(adventureTeamList[teamID].getExp / 3f * (1f + heroDic[adventureTeamList[teamID].heroIDList[i]].expGet / 100f)));
         }
 
-        gold += adventureTeamList[teamID].getGold;
+        forceDic[0].gold += adventureTeamList[teamID].getGold;
         PlayMainPanel.Instance.UpdateGold();
 
         adventureTeamList[teamID].state = AdventureState.NotSend;

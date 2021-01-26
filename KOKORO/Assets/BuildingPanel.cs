@@ -607,7 +607,7 @@ public class BuildingPanel : BasePanel
                 setManager_btnList[i].gameObject.GetComponent<Image>().overrideSprite = Resources.Load("Image/Other/to_up", typeof(Sprite)) as Sprite;
                 setManager_btnList[i].onClick.RemoveAllListeners();
                 setManager_btnList[i].onClick.AddListener(delegate () {
-                    HeroSelectPanel.Instance.OnShow("指派管理者", buildingObject.districtID, buildingObject.id, 1,64,-88);
+                    HeroSelectPanel.Instance.OnShow("指派管理者", buildingObject.districtID, buildingObject.id, 1, 76, -104);
                 });
             }
             else
@@ -926,7 +926,7 @@ public class BuildingPanel : BasePanel
         if (bp.NeedWood > gc.forceDic[0].rStuffWood) { canDo = false; }
         if (bp.NeedStone > gc.forceDic[0].rStuffStone) { canDo = false; }
         if (bp.NeedMetal > gc.forceDic[0].rStuffMetal) { canDo = false; }
-        if (bp.NeedGold > gc.gold) { canDo = false; }
+        if (bp.NeedGold > gc.forceDic[0].gold) { canDo = false; }
      
     
 
@@ -976,7 +976,7 @@ public class BuildingPanel : BasePanel
             case "wood": return "<color=" + (value > gc.forceDic[0].rStuffWood ? "#FF5B5B>" : "white>") + "木材" + value + "</color>";
             case "stone": return " <color=" + (value > gc.forceDic[0].rStuffStone ? "#FF5B5B>" : "white>") + "石料" + value + "</color>";
             case "metal": return " <color=" + (value > gc.forceDic[0].rStuffMetal ? "#FF5B5B>" : "white>") + "金属" + value + "</color>";
-            case "gold": return " <color=" + (value > gc.gold ? "#FF5B5B>" : "white>") + "金币" + value + "</color>";
+            case "gold": return " <color=" + (value > gc.forceDic[0].gold ? "#FF5B5B>" : "white>") + "金币" + value + "</color>";
             default: return "未定义类型";
         }
     }

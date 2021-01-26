@@ -105,7 +105,7 @@ public class AdventureSendPanel : BasePanel
             UpdateFromNow(districtOrDungeonID);
         }
 
-        SetAnchoredPosition(60, -88);
+        SetAnchoredPosition(76, -104);
         isShow = true;
     }
 

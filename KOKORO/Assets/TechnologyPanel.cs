@@ -30,6 +30,9 @@ public class TechnologyPanel : BasePanel
     public int nowCheckingTechnology = -1;
     public int nowSelectDistrict = -1;
 
+    public List<int> TechnologyResearchingList =  new List<int> { };
+
+
     void Awake()
     {
         Instance = this;
@@ -48,15 +51,27 @@ public class TechnologyPanel : BasePanel
     {
         UpdateAllInfo();
         HideSelectBuildingBlock();
-        SetAnchoredPosition(64, -88);
+        InvokeRepeating("UpdateProgress", 1f, 1f);
+
+        SetAnchoredPosition(76, -104);
         isShow = true;
 
     }
 
     public override void OnHide()
     {
+        CancelInvoke("UpdateProgress");
+
         SetAnchoredPosition(0, 5000);
         isShow = false;
+    }
+
+    public void UpdateProgress()
+    {
+        for (int i = 0; i < gc.technologyResearchingList.Count; i++)
+        {
+            UpdateTechnologySingle(null,gc.technologyResearchingList[i]);
+        }
     }
 
     public void UpdateAllInfo()
@@ -87,66 +102,102 @@ public class TechnologyPanel : BasePanel
                 }
             }
         }
+        if (type == "done")
+        {
+            for (int i = list_doneGo.transform.childCount-1; i >= 0; i--)
+            {
+                list_doneGo.transform.GetChild(i).GetComponent<RectTransform>().localScale = Vector2.zero;
+                technologyGoPool.Add(list_doneGo.transform.GetChild(i).gameObject);
+                list_doneGo.transform.GetChild(i).SetParent(list_doneGo.transform.parent);
+              
+            }
+
+        }
+        else if (type == "none")
+        {
+            for (int i = list_noneGo.transform.childCount-1; i >= 0; i--)
+            {
+                list_noneGo.transform.GetChild(i).GetComponent<RectTransform>().localScale = Vector2.zero;
+                technologyGoPool.Add(list_noneGo.transform.GetChild(i).gameObject);
+                list_noneGo.transform.GetChild(i).SetParent(list_noneGo.transform.parent);
+               
+            }
+        }
+
 
         GameObject go;
         for (int i = 0; i < technologyObjects.Count; i++)
         {
             int technologyID = technologyObjects[i].id;
-            if (i < technologyGoPool.Count)
+            if (technologyGoPool.Count>0)
             {
-                go = technologyGoPool[i];
-                technologyGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+                go = technologyGoPool[technologyGoPool.Count-1];
+                go.transform.GetComponent<RectTransform>().localScale = Vector2.one;
+                technologyGoPool.RemoveAt(technologyGoPool.Count - 1);
             }
             else
             {
                 go = Instantiate(Resources.Load("Prefab/UILabel/Label_Technology")) as GameObject;
-                if (type == "done")
-                {
-                    go.transform.SetParent(list_doneGo.transform);
-                }
-                else if (type == "none")
-                {
-                    go.transform.SetParent(list_noneGo.transform);
-                }
-                    technologyGoPool.Add(go);
+               
+                    //technologyGoPool.Add(go);
             }
+
+            if (type == "done")
+            {
+                go.transform.SetParent(list_doneGo.transform);
+            }
+            else if (type == "none")
+            {
+                go.transform.SetParent(list_noneGo.transform);
+            }
+
+            go.name = technologyID.ToString();
+
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f, i * -44f);
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mTechnologyDict[technologyObjects[i].id].Pic);
-            string str ="";
-            switch (DataManager.mTechnologyDict[technologyID].Type)
-            {
-                case "Work": str += "<color=#F8961B>[生产类]</color> " + DataManager.mTechnologyDict[technologyObjects[i].id].Name + "\n"; break;
-                case "Fight": str += "<color=#FF533B>[战斗类]</color>" + DataManager.mTechnologyDict[technologyObjects[i].id].Name + "\n"; break;
-            }
-            if (gc.technologyDic[technologyID].stage == TechnologyStage.Open)
-            {
-                str += "<i>可研究</i>";
-            }
-            else if (gc.technologyDic[technologyID].stage == TechnologyStage.Research)
-            {
-                int needTime = 0;
-                int nowTime = 0;
-                for (int j = 0; j < gc.executeEventList.Count; j++)
-                {
-                    if (gc.executeEventList[j].type == ExecuteEventType.TechnologyResearch && gc.executeEventList[j].value[1][0] == technologyID)
-                    {
-                        needTime = gc.executeEventList[j].endTime - gc.executeEventList[j].startTime;
-                        nowTime = gc.standardTime - gc.executeEventList[j].startTime;
-                        break;
-                    }
-                }
+            
+            //string str ="";
+            //switch (DataManager.mTechnologyDict[technologyID].Type)
+            //{
+            //    case "Work": str += "<color=#F8961B>[生产类]</color> " + DataManager.mTechnologyDict[technologyObjects[i].id].Name + "\n"; break;
+            //    case "Fight": str += "<color=#FF533B>[战斗类]</color> " + DataManager.mTechnologyDict[technologyObjects[i].id].Name + "\n"; break;
+            //}
+            //if (gc.technologyDic[technologyID].stage == TechnologyStage.Open)
+            //{
+            //    str += "<i>可研究</i>";
+            //}
+            //else if (gc.technologyDic[technologyID].stage == TechnologyStage.Research)
+            //{
+            //    // Debug.Log("gc.executeEventList.Count=" + gc.executeEventList.Count);
+            //    int needTime = 0;
+            //    int nowTime = 0;
+            //    for (int j = 0; j < gc.executeEventList.Count; j++)
+            //    {
+            //        if (gc.executeEventList[j].type == ExecuteEventType.TechnologyResearch && gc.executeEventList[j].value[1][0] == technologyID)
+            //        {
+            //            needTime = gc.executeEventList[j].endTime - gc.executeEventList[j].startTime;
+            //            nowTime = gc.standardTime - gc.executeEventList[j].startTime;
+            //            break;
+            //        }
+            //    }
 
-                str += "<i>研究中("+System.Math.Round(((float)nowTime/ needTime)*100,2) + "%)</i>";
-            }
-            go.transform.GetChild(1).GetComponent<Text>().text =str;
+            //    str += "<i>研究中(" + System.Math.Round(((float)nowTime / needTime) * 100, 2) + "%)</i>";
+            //}
+            //else if (gc.technologyDic[technologyID].stage == TechnologyStage.Done)
+            //{
+            //    str += "<i>已研究</i>";
+            //}
+            // go.transform.GetChild(1).GetComponent<Text>().text =str;
+
+            UpdateTechnologySingle(go, technologyID);
 
             go.GetComponent<Button>().onClick.RemoveAllListeners();
             go.GetComponent<Button>().onClick.AddListener(delegate () { UpdateInfo(technologyID); });
         }
-        for (int i = technologyObjects.Count; i < technologyGoPool.Count; i++)
-        {
-            technologyGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
-        }
+        //for (int i = technologyObjects.Count; i < technologyGoPool.Count; i++)
+        //{
+        //    technologyGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+        //}
 
         if (type == "done")
         {
@@ -158,7 +209,57 @@ public class TechnologyPanel : BasePanel
         }
     }
 
-   public void UpdateInfo(int technologyID)
+    void UpdateTechnologySingle(GameObject go, int technologyID)
+    {
+     
+
+        string str = "";
+        string strType = "";
+        switch (DataManager.mTechnologyDict[technologyID].Type)
+        {
+            case "Work": str += "<color=#F8961B>[生产类]</color> " + DataManager.mTechnologyDict[technologyID].Name + "\n"; break;
+            case "Fight": str += "<color=#FF533B>[战斗类]</color> " + DataManager.mTechnologyDict[technologyID].Name + "\n"; break;
+        }
+
+        if (gc.technologyDic[technologyID].stage == TechnologyStage.Open)
+        {
+            str += "<color=#697266><i>可研究</i></color>";
+            strType = "None";
+        }
+        else if (gc.technologyDic[technologyID].stage == TechnologyStage.Research)
+        {
+            // Debug.Log("gc.executeEventList.Count=" + gc.executeEventList.Count);
+            int needTime = 0;
+            int nowTime = 0;
+            for (int j = 0; j < gc.executeEventList.Count; j++)
+            {
+                if (gc.executeEventList[j].type == ExecuteEventType.TechnologyResearch && gc.executeEventList[j].value[1][0] == technologyID)
+                {
+                    needTime = gc.executeEventList[j].endTime - gc.executeEventList[j].startTime;
+                    nowTime = gc.standardTime - gc.executeEventList[j].startTime;
+                    break;
+                }
+            }
+            int okChar = (int)(((float)nowTime / needTime) * 20);
+            int notChar = 20 - okChar;
+
+            str += "<color=#80FF5B><i>研究中</i> " + gc.OutputSignStr("I", okChar) + "</color><color=#697266>" + gc.OutputSignStr("I", notChar) + "</color> " + System.Math.Round(((float)nowTime / needTime) * 100, 0) + "% ";
+            strType = "None";
+        }
+        else if (gc.technologyDic[technologyID].stage == TechnologyStage.Done)
+        {
+            str += "<color=#3AFF00><i>已研究</i></color>";
+            strType = "Done";
+        }
+        if (go == null)
+        {
+            go = GameObject.Find("Canvas/TechnologyPanel/List/ScrollView" + strType + "/Viewport/Content/" + technologyID);
+        }
+        
+        go.transform.GetChild(1).GetComponent<Text>().text = str;
+    }
+
+    public void UpdateInfo(int technologyID)
     {
         nowCheckingTechnology = technologyID;
 
@@ -522,13 +623,13 @@ public class TechnologyPanel : BasePanel
         }
         if (DataManager.mTechnologyDict[technologyID].NeedGold != 0)
         {
-            if (gc.gold >= DataManager.mTechnologyDict[technologyID].NeedGold)
+            if (gc.forceDic[0].gold >= DataManager.mTechnologyDict[technologyID].NeedGold)
             {
-                str += "金币*" + DataManager.mTechnologyDict[technologyID].NeedGold + "(" + gc.gold + ") ";
+                str += "金币*" + DataManager.mTechnologyDict[technologyID].NeedGold + "(" + gc.forceDic[0].gold + ") ";
             }
             else
             {
-                str += "<color=red>金币*" + DataManager.mTechnologyDict[technologyID].NeedGold + "(" + gc.gold + ")</color> ";
+                str += "<color=red>金币*" + DataManager.mTechnologyDict[technologyID].NeedGold + "(" + gc.forceDic[0].gold + ")</color> ";
             }
         }
 

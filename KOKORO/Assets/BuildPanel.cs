@@ -145,7 +145,7 @@ public class BuildPanel : BasePanel
                 temp[i].NeedWood <= gc.forceDic[0].rStuffWood &&
                 temp[i].NeedStone <= gc.forceDic[0].rStuffStone &&
                 temp[i].NeedMetal <= gc.forceDic[0].rStuffMetal &&
-                temp[i].NeedGold <= gc.gold 
+                temp[i].NeedGold <= gc.forceDic[0].gold 
                )
             {
                 go.transform.GetChild(4).GetComponent<Button>().interactable = true;
@@ -184,7 +184,7 @@ public class BuildPanel : BasePanel
                 case "NeedMetal": return " <color=" + (value > gc.forceDic[0].rStuffMetal ? "#FF5B5B>" : "white>") + "金属" + value + "</color>";
               
 
-                case "gold": return " <color=" + (value > gc.gold ? "#FF5B5B>" : "white>") + "金币" + value + "</color>";
+                case "gold": return " <color=" + (value > gc.forceDic[0].gold ? "#FF5B5B>" : "white>") + "金币" + value + "</color>";
                 default: return "未定义类型";
             }
         }

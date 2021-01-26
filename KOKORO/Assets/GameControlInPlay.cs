@@ -229,6 +229,7 @@ public class GameControlInPlay : MonoBehaviour
                         int technologyID = gc.executeEventList[0].value[1][0];
 
                         gc.TechnologyResearchDone(technologyID);
+                        gc.executeEventList.RemoveAt(0);
                         break;
                     default: break;
                 }
@@ -319,7 +320,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            DistrictMainPanel.Instance.OnShow(gc.districtDic[gc.nowCheckingDistrictID], 64, -88);
+            DistrictMainPanel.Instance.OnShow(gc.districtDic[gc.nowCheckingDistrictID], 76, -104);
         }     
     }
 
@@ -345,7 +346,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            HeroSelectPanel.Instance.OnShow("", gc.nowCheckingDistrictID,-1,1, 64, -88);
+            HeroSelectPanel.Instance.OnShow("", gc.nowCheckingDistrictID,-1,1, 76, -104);
         }
     }
 
@@ -358,7 +359,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            ItemListAndInfoPanel.Instance.OnShow(gc.nowCheckingDistrictID, 64, -88,1);
+            ItemListAndInfoPanel.Instance.OnShow(gc.nowCheckingDistrictID, 76, -104, 1);
         }
     }
 
@@ -371,7 +372,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            SkillListAndInfoPanel.Instance.OnShow(gc.nowCheckingDistrictID, null,64, -88);
+            SkillListAndInfoPanel.Instance.OnShow(gc.nowCheckingDistrictID, null, 76, -104);
         }
     }
 
@@ -383,7 +384,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            AdventureMainPanel.Instance.OnShow( 64, -88);
+            AdventureMainPanel.Instance.OnShow(76, -104);
         }
     }
 
@@ -395,7 +396,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            MarketPanel.Instance.OnShow(gc.nowCheckingDistrictID, ItemTypeBig.None, ItemTypeSmall.None, 64, -88);
+            MarketPanel.Instance.OnShow(gc.nowCheckingDistrictID, ItemTypeBig.None, ItemTypeSmall.None, 76, -104);
         }
     }
 
@@ -443,7 +444,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            ItemListAndInfoPanel.Instance.OnShow(-1,64,-88,2);
+            ItemListAndInfoPanel.Instance.OnShow(-1, 76, -104, 2);
         }
     }
 
@@ -455,7 +456,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            SkillListAndInfoPanel.Instance.OnShow(-1,null, 64, -88);
+            SkillListAndInfoPanel.Instance.OnShow(-1,null, 76, -104);
         }
     }
 

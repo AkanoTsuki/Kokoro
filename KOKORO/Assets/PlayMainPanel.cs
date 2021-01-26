@@ -161,6 +161,7 @@ public class PlayMainPanel : BasePanel
 
         UpdateButtonItemNum();
         UpdateButtonSkillNum();
+        UpdateButtonHeroNum();
 
         HideResourcesBlock();
         //UpdateTopDistrict();
@@ -170,13 +171,13 @@ public class PlayMainPanel : BasePanel
 
     public void UpdateKingdomInfo()
     {
-        top_flagImage.overrideSprite = Resources.Load("Image/Other/icon_flag_"+gc.forceFlag+"_a", typeof(Sprite)) as Sprite;
+        top_flagImage.overrideSprite = Resources.Load("Image/Other/icon_flag_"+gc.forceDic[0].flagIndex+"_a", typeof(Sprite)) as Sprite;
         top_nameText.text = "克克洛地区";
       
     }
     public void UpdateGold()
     {
-        top_goldText.text = gc.gold.ToString();
+        top_goldText.text = gc.forceDic[0].gold.ToString();
     }
     public void UpdateResources()
     {
@@ -485,7 +486,7 @@ public class PlayMainPanel : BasePanel
             bottom_adventure_detailBtn[index].onClick.AddListener(delegate ()
             {
                 /*详情*/
-                AdventureTeamPanel.Instance.OnShow(teamID, 60, -88);
+                AdventureTeamPanel.Instance.OnShow(teamID, 76, -104);
             });
         }
       
@@ -608,5 +609,11 @@ public class PlayMainPanel : BasePanel
             left_inventoryScrollNumRt.sizeDelta = Vector2.zero;
         }
 
+    }
+
+    public void UpdateButtonHeroNum()
+    {
+        left_heroNumText.text = gc.heroDic.Count.ToString();
+        left_heroNumRt.sizeDelta = new Vector2(left_heroNumText.preferredWidth + 8f, 20f);
     }
 }
