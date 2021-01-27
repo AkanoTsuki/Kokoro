@@ -40,19 +40,29 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.SupplyAndDemand);
         UIManager.Instance.InitPanel(UIPanelType.Technology);
         UIManager.Instance.InitPanel(UIPanelType.Transfer);
+        UIManager.Instance.InitPanel(UIPanelType.Diplomacy);
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
-            if (gc.adventureTeamList[i].action == AdventureAction.Fight)
+            if (gc.adventureTeamList[i].state == AdventureState.Doing)
             {
-                
-                gc.AdventureEventHappen(i);
+                if (gc.adventureTeamList[i].action == AdventureAction.Fight)
+                {
+                    //gc.executeEventList.RemoveAt(0);
+                    //gc.AdventureEventHappen(i);
+                    StartCoroutine(gc.AdventureFight(i));
+                }
+                else
+                {
+                    gc.adventureTeamList[i].action = AdventureAction.Walk;
+                }
             }
+               
         }
         Time.timeScale = gc.timeFlowSpeed;
         PlayMainPanel.Instance.UpdateTimeButtonState();
         InvokeRepeating("TimeFlow", 0, 0.05f );
         InvokeRepeating("SupplyAndDemandChangeRegular", 10f, 10f );
-        // InvokeRepeating("CustomerCome", 3f, 3f);
+        InvokeRepeating("CustomerCome", 3f, 3f);
         InvokeRepeating("TravellerCome", 3f, 3f);
         InvokeRepeating("AdventureTravellerCome", 10f, 10f);
     }
@@ -283,7 +293,7 @@ public class GameControlInPlay : MonoBehaviour
     {
         for (short i = 0; i < DataManager.mDistrictDict.Count; i++)
         {
-            if (gc.districtDic[i].isOpen)
+            if (gc.districtDic[i].force==0|| gc.districtDic[i].id==gc.nowCheckingDistrictID)
             {
                 if (gc.timeHour >= 6 && gc.timeHour < 18)
                 {
@@ -457,6 +467,18 @@ public class GameControlInPlay : MonoBehaviour
         else
         {
             SkillListAndInfoPanel.Instance.OnShow(-1,null, 76, -104);
+        }
+    }
+
+    public void OpenDiplomacy()
+    {
+        if (DiplomacyPanel.Instance.isShow)
+        {
+            DiplomacyPanel.Instance.OnHide();
+        }
+        else
+        {
+            DiplomacyPanel.Instance.OnShow();
         }
     }
 

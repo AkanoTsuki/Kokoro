@@ -25,7 +25,8 @@ public enum UIPanelType
     DistrictMap,
     Technology,
     Transfer,
-    AdventureSend
+    AdventureSend,
+    Diplomacy
 
 
 }

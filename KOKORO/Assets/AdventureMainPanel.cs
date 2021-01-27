@@ -37,17 +37,17 @@ public class AdventureMainPanel : BasePanel
     {
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
 
-        for (byte i = 0; i < gc.adventureTeamList.Count; i++)
-        {
-            if (gc.adventureTeamList[i].state == AdventureState.Doing)
-            {
-                if (gc.adventureTeamList[i].action != AdventureAction.Fight)
-                {
-                    gc.adventureTeamList[i].action = AdventureAction.Walk;
-                }
-            }
+        //for (byte i = 0; i < gc.adventureTeamList.Count; i++)
+        //{
+        //    if (gc.adventureTeamList[i].state == AdventureState.Doing)
+        //    {
+        //        if (gc.adventureTeamList[i].action != AdventureAction.Fight)
+        //        {
+        //            gc.adventureTeamList[i].action = AdventureAction.Walk;
+        //        }
+        //    }
        
-        }
+        //}
     }
 
     void Update()

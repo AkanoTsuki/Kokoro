@@ -121,6 +121,8 @@ public class PlayMainPanel : BasePanel
         left_inventoryScrollBtn.onClick.AddListener(delegate () { gci.OpenInventorySkill(); });
 
         left_technologyBtn.onClick.AddListener(delegate () { gci.OpenTechnology(); });
+        left_diplomacyBtn.onClick.AddListener(delegate () { gci.OpenDiplomacy(); });
+
         left_heroBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
         left_adventureBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
 

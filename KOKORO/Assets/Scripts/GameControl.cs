@@ -273,7 +273,7 @@ public class GameControl : MonoBehaviour
         //Debug.Log("2heroDic.Count=" + heroDic.Count);
     }
 
-    #region 【通用方法】生成英雄、道具、技能,英雄改名
+    #region 【通用方法】生成英雄、道具、技能,英雄升级,英雄改名
     public void HeroChangeName(int heroID, string newName)
     {
         heroDic[heroID].name = newName;
@@ -300,7 +300,7 @@ public class GameControl : MonoBehaviour
             name = DataManager.mNameWoman[Random.Range(0, DataManager.mNameWoman.Length)];
             pic = DataManager.mHeroDict[heroTypeID].PicWoman[Random.Range(0, DataManager.mHeroDict[heroTypeID].PicWoman.Count)];
         }
-        float groupRate = Random.Range(DataManager.mHeroDict[heroTypeID].GroupRate - 0.2f, DataManager.mHeroDict[heroTypeID].GroupRate + 0.2f);
+        float groupRate = Random.Range(DataManager.mHeroDict[heroTypeID].GroupRate - 0.1f, DataManager.mHeroDict[heroTypeID].GroupRate + 0.1f);
 
         int hp = SetAttr(Attribute.Hp, heroTypeID);
         int mp = SetAttr(Attribute.Mp, heroTypeID);
@@ -2110,6 +2110,11 @@ public class GameControl : MonoBehaviour
     public void HeroEquipUnSet(int heroID, EquipPart equipPart)
     {
         // Debug.Log("HeroEquipUnSet() heroID=" + heroID + " equipPart=" + equipPart+ " heroDic[heroID].equipWeapon="+ heroDic[heroID].equipWeapon);
+        if (forceDic[0].rProductNow >= forceDic[0].rProductLimit)
+        {
+            MessagePanel.Instance.AddMessage("收藏库已满");
+            return;
+        }
 
         switch (equipPart)
         {
@@ -2164,7 +2169,7 @@ public class GameControl : MonoBehaviour
                 itemDic[heroDic[heroID].equipFinger2].heroPart = EquipPart.None;
                 heroDic[heroID].equipFinger2 = -1; break;
         }
-
+        forceDic[0].rProductNow++;
         HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
         if (ItemListAndInfoPanel.Instance.isShow)
         {
@@ -2177,12 +2182,18 @@ public class GameControl : MonoBehaviour
     {
         if (skillID == -1)
         {
+            if (forceDic[0].rProductNow >= forceDic[0].rProductLimit)
+            {
+                MessagePanel.Instance.AddMessage("收藏库已满");
+                return;
+            }
+
             if (heroDic[heroID].skill[index] != -1)
             {
                 skillDic[heroDic[heroID].skill[index]].heroID = -1;
             }
             heroDic[heroID].skill[index] = skillID;
-
+            forceDic[0].rProductNow++;
             PlayMainPanel.Instance.UpdateButtonSkillNum();
         }
         else
@@ -2213,30 +2224,44 @@ public class GameControl : MonoBehaviour
     #region 【方法】鉴定库转收藏/放售
     public void ItemToCollectionAll(short districtID)
     {
+        int freeCount = forceDic[0].rProductLimit - forceDic[0].rProductNow;
         foreach (KeyValuePair<int, ItemObject> kvp in itemDic)
         {
-            if (kvp.Value.districtID == districtID)
+            if (freeCount > 0)
             {
 
 
-                if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Weapon)
+                if (kvp.Value.districtID == districtID)
                 {
-                    districtDic[districtID].rProductWeapon--;
-                }
-                else if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Subhand)
-                {
-                    districtDic[districtID].rProductWeapon--;
-                }
-                else if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Armor)
-                {
-                    districtDic[districtID].rProductArmor--;
-                }
-                else if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Jewelry)
-                {
-                    districtDic[districtID].rProductJewelry--;
-                }
 
-                itemDic[kvp.Key].districtID = -1;
+
+                    if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Weapon)
+                    {
+                        districtDic[districtID].rProductWeapon--;
+                    }
+                    else if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Subhand)
+                    {
+                        districtDic[districtID].rProductWeapon--;
+                    }
+                    else if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Armor)
+                    {
+                        districtDic[districtID].rProductArmor--;
+                    }
+                    else if (DataManager.mItemDict[kvp.Value.prototypeID].TypeBig == ItemTypeBig.Jewelry)
+                    {
+                        districtDic[districtID].rProductJewelry--;
+                    }
+
+                    itemDic[kvp.Key].districtID = -1;
+                   
+                    forceDic[0].rProductNow++;
+                    freeCount--;
+                }
+            }
+            else
+            {
+                MessagePanel.Instance.AddMessage("收藏库已满");
+                break;
             }
         }
         if (ItemListAndInfoPanel.Instance.isShow)
@@ -2252,6 +2277,12 @@ public class GameControl : MonoBehaviour
 
     public void ItemToCollection(int itemID)
     {
+        if (forceDic[0].rProductNow >= forceDic[0].rProductLimit)
+        {
+            MessagePanel.Instance.AddMessage("收藏库已满");
+            return;
+        }
+
         short districtID = itemDic[itemID].districtID;
 
         if (DataManager.mItemDict[itemDic[itemID].prototypeID].TypeBig == ItemTypeBig.Weapon)
@@ -2272,6 +2303,7 @@ public class GameControl : MonoBehaviour
         }
 
         itemDic[itemID].districtID = -1;
+        forceDic[0].rProductNow++;
         if (ItemListAndInfoPanel.Instance.isShow)
         {
             ItemListAndInfoPanel.Instance.OnShow(districtID, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)ItemListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y, 1);
@@ -2370,15 +2402,27 @@ public class GameControl : MonoBehaviour
 
     public void SkillToCollectionAll(short districtID)
     {
+        int freeCount = forceDic[0].rProductLimit - forceDic[0].rProductNow;
+
         foreach (KeyValuePair<int, SkillObject> kvp in skillDic)
         {
-            if (kvp.Value.districtID == districtID)
+            if (freeCount > 0)
             {
+                if (kvp.Value.districtID == districtID)
+                {
 
 
-                districtDic[districtID].rProductScroll--;
+                    districtDic[districtID].rProductScroll--;
 
-                skillDic[kvp.Key].districtID = -1;
+                    skillDic[kvp.Key].districtID = -1;
+                    forceDic[0].rProductNow++;
+                    freeCount--;
+                }
+            }
+            else
+            {
+                MessagePanel.Instance.AddMessage("收藏库已满");
+                break;
             }
         }
         if (SkillListAndInfoPanel.Instance.isShow)
@@ -2394,11 +2438,18 @@ public class GameControl : MonoBehaviour
 
     public void SkillToCollection(int skillID)
     {
+        if (forceDic[0].rProductNow >= forceDic[0].rProductLimit)
+        {
+            MessagePanel.Instance.AddMessage("收藏库已满");
+            return;
+        }
+
         short districtID = skillDic[skillID].districtID;
 
         districtDic[skillDic[skillID].districtID].rProductScroll--;
 
         skillDic[skillID].districtID = -1;
+        forceDic[0].rProductNow++;
         if (SkillListAndInfoPanel.Instance.isShow)
         {
             SkillListAndInfoPanel.Instance.OnShow(districtID, null, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.x, (int)SkillListAndInfoPanel.Instance.transform.GetComponent<RectTransform>().anchoredPosition.y);
@@ -3363,6 +3414,12 @@ public class GameControl : MonoBehaviour
         adventureTeamList[teamID].getCloth = 0;
         adventureTeamList[teamID].getTwine = 0;
         adventureTeamList[teamID].getBone = 0;
+        adventureTeamList[teamID].getWind = 0;
+        adventureTeamList[teamID].getFire = 0;
+        adventureTeamList[teamID].getWater = 0;
+        adventureTeamList[teamID].getGround = 0;
+        adventureTeamList[teamID].getLight = 0;
+        adventureTeamList[teamID].getDark = 0;
         adventureTeamList[teamID].getItemList.Clear();
         adventureTeamList[teamID].killNum = 0;
         adventureTeamList[teamID].log.Clear();//?
@@ -3464,16 +3521,200 @@ public class GameControl : MonoBehaviour
 
     public void AdventureTakeGets(byte teamID)
     {
-        //未确定资源加到什么库房，首都库房？
 
         for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
         {
-            //heroDic[adventureTeamList[teamID].heroIDList[i]].exp += (int)(adventureTeamList[teamID].getExp / 3f * (1f + heroDic[adventureTeamList[teamID].heroIDList[i]].expGet / 100f));
             HeroGetExp(adventureTeamList[teamID].heroIDList[i], (int)(adventureTeamList[teamID].getExp / 3f * (1f + heroDic[adventureTeamList[teamID].heroIDList[i]].expGet / 100f)));
         }
 
         forceDic[0].gold += adventureTeamList[teamID].getGold;
+
+        int freeCount = forceDic[0].rFoodLimit - GetForceFoodAll(0);
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getCereal > 0)
+            {
+                forceDic[0].rFoodCereal += System.Math.Min(freeCount, adventureTeamList[teamID].getCereal);
+                freeCount = forceDic[0].rFoodLimit - GetForceFoodAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getVegetable > 0)
+            {
+                forceDic[0].rFoodVegetable += System.Math.Min(freeCount, adventureTeamList[teamID].getVegetable);
+                freeCount = forceDic[0].rFoodLimit - GetForceFoodAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getFruit > 0)
+            {
+                forceDic[0].rFoodFruit += System.Math.Min(freeCount, adventureTeamList[teamID].getFruit);
+                freeCount = forceDic[0].rFoodLimit - GetForceFoodAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getMeat > 0)
+            {
+                forceDic[0].rFoodMeat += System.Math.Min(freeCount, adventureTeamList[teamID].getMeat);
+                freeCount = forceDic[0].rFoodLimit - GetForceFoodAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getFish > 0)
+            {
+                forceDic[0].rFoodFish += System.Math.Min(freeCount, adventureTeamList[teamID].getFish);
+                freeCount = forceDic[0].rFoodLimit - GetForceFoodAll(0);
+            }
+        }
+        if (freeCount <= 0)
+        {
+            MessagePanel.Instance.AddMessage("食品库房已满");
+        }
+
+        freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getWood > 0)
+            {
+                forceDic[0].rStuffWood += System.Math.Min(freeCount, adventureTeamList[teamID].getWood);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getMetal > 0)
+            {
+                forceDic[0].rStuffMetal += System.Math.Min(freeCount, adventureTeamList[teamID].getMetal);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getStone > 0)
+            {
+                forceDic[0].rStuffStone += System.Math.Min(freeCount, adventureTeamList[teamID].getStone);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getLeather > 0)
+            {
+                forceDic[0].rStuffLeather += System.Math.Min(freeCount, adventureTeamList[teamID].getLeather);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getCloth > 0)
+            {
+                forceDic[0].rStuffCloth += System.Math.Min(freeCount, adventureTeamList[teamID].getCloth);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getTwine > 0)
+            {
+                forceDic[0].rStuffTwine += System.Math.Min(freeCount, adventureTeamList[teamID].getTwine);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getBone > 0)
+            {
+                forceDic[0].rStuffBone += System.Math.Min(freeCount, adventureTeamList[teamID].getBone);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getWind > 0)
+            {
+                forceDic[0].rStuffWind += System.Math.Min(freeCount, adventureTeamList[teamID].getWind);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getFire > 0)
+            {
+                forceDic[0].rStuffFire += System.Math.Min(freeCount, adventureTeamList[teamID].getFire);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getWater > 0)
+            {
+                forceDic[0].rStuffWater += System.Math.Min(freeCount, adventureTeamList[teamID].getWater);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getGround > 0)
+            {
+                forceDic[0].rStuffGround += System.Math.Min(freeCount, adventureTeamList[teamID].getGround);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getLight > 0)
+            {
+                forceDic[0].rStuffLight += System.Math.Min(freeCount, adventureTeamList[teamID].getLight);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount > 0)
+        {
+            if (adventureTeamList[teamID].getDark > 0)
+            {
+                forceDic[0].rStuffDark += System.Math.Min(freeCount, adventureTeamList[teamID].getDark);
+                freeCount = forceDic[0].rStuffLimit - GetForceStuffAll(0);
+            }
+        }
+        if (freeCount <= 0)
+        {
+            MessagePanel.Instance.AddMessage("材料库房已满");
+        }
+
+        Debug.Log("forceDic[0].rProductNow=" + forceDic[0].rProductNow + " forceDic[0].rProductLimit=" + forceDic[0].rProductLimit);
+
+        for (int i = 0; i < adventureTeamList[teamID].getItemList.Count; i++)
+        {
+            if (forceDic[0].rProductNow < forceDic[0].rProductLimit)
+            {
+                itemDic.Add(itemIndex, GenerateItemByRandom(adventureTeamList[teamID].getItemList[i], null, null));
+                itemIndex++;
+                forceDic[0].rProductNow++;
+            }
+            else
+            {
+                MessagePanel.Instance.AddMessage("收藏库房已满");
+                break;
+            }
+        }
+
+
         PlayMainPanel.Instance.UpdateGold();
+        PlayMainPanel.Instance.UpdateResources();
+    
+
+        if (PlayMainPanel.Instance.IsShowResourcesBlock)
+        {
+            PlayMainPanel.Instance.UpdateResourcesBlock();
+        }
+        if (adventureTeamList[teamID].getItemList.Count > 0)
+        {
+            PlayMainPanel.Instance.UpdateButtonItemNum();
+        }
 
         adventureTeamList[teamID].state = AdventureState.NotSend;
         adventureTeamList[teamID].action = AdventureAction.None;
@@ -3894,7 +4135,7 @@ public class GameControl : MonoBehaviour
 
     }
 
-    IEnumerator AdventureFight(byte teamID)
+    public  IEnumerator AdventureFight(byte teamID)
     {
 
 
@@ -3904,6 +4145,7 @@ public class GameControl : MonoBehaviour
 
         List<FightMenberObject> fightMenberObjects = new List<FightMenberObject>();
 
+        Debug.Log("fightMenberObjects.Count=" + fightMenberObjects.Count );
 
         if (adventureTeamList[teamID].action == AdventureAction.Fight)//继续之前的战斗
         {
@@ -4140,14 +4382,17 @@ public class GameControl : MonoBehaviour
                 AreaMapPanel.Instance.UpdateDungeonInfoBlock(AreaMapPanel.Instance.dungeonInfoBlockID);
             }
         }
+
+        Debug.Log("fightMenberObjects.Count="+fightMenberObjects.Count);
         AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);
 
         AdventureMainPanel.Instance.UpdateSceneEnemy(teamID);
-        //AdventureMainPanel.Instance.HideSceneRoleHpMp(teamID);
+        AdventureMainPanel.Instance.HideSceneRoleHpMp(teamID);
         AdventureMainPanel.Instance.UpdateSceneRoleHpMp(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.HideSceneRoleBuff(teamID);
         AdventureMainPanel.Instance.UpdateSceneRoleBuff(teamID, fightMenberObjects);
+        AdventureMainPanel.Instance.HideElementPoint(teamID);
         AdventureMainPanel.Instance.UpdateElementPoint(teamID);
 
         if (AdventureTeamPanel.Instance.isShow && AdventureTeamPanel.Instance.nowTeam == teamID)
@@ -5127,7 +5372,7 @@ public class GameControl : MonoBehaviour
                 AdventureTeamEnd(teamID, AdventureState.Retreat);
             }
         }
-
+        fightMenberObjectSS[teamID].Clear();
 
 
         AdventureMainPanel.Instance.UpdateTeamHero(teamID);

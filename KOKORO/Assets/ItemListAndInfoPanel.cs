@@ -226,14 +226,7 @@ public class ItemListAndInfoPanel : BasePanel
         }
     
         itemListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(425f, 4 + (itemObjects.Count / columns) * 22f));
-        if (districtID != -1)
-        {
-            numText.text = itemObjects.Count + "/" + gc.districtDic[districtID].rProductLimit;
-        }
-        else
-        {
-            numText.text = itemObjects.Count.ToString();
-        }
+        numText.text = itemObjects.Count.ToString();
     }
 
     public void UpdateListToEquip(EquipPart equipPart, byte columns)

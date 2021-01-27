@@ -285,14 +285,7 @@ public class SkillListAndInfoPanel : BasePanel
         }
 
         list_skillListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(455f, Mathf.Max(400f, 4 + (skillObjects.Count / 2) * 22f));
-        if (districtID != -1)
-        {
-            numText.text = skillObjects.Count + "/" + gc.districtDic[districtID].rScrollLimit;
-        }
-        else
-        {
-            numText.text = skillObjects.Count.ToString();
-        }
+        numText.text = skillObjects.Count.ToString();
 
     }
 

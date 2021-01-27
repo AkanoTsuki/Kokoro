@@ -90,13 +90,13 @@ public class GameControlInNewGame : MonoBehaviour
     public void ConfirmAndStart()
     {
         //districtNum=1
-        gc.forceDic.Add(0, new ForceObject(0, temp_flag, StartChoosePanel.Instance.leaderNameIf.text+ "管理地", StartChoosePanel.Instance.leaderNameIf.text, 1, new List<byte> { }, new List<short> { 1 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 3500, 0,0,0,0,0,0, 5000, 5000, 5000, 5000, 5000, 5000, 5000,0,0,0,0,0,0,50000,50000,20000));
-        gc.forceDic.Add(1, new ForceObject(1, (byte)(temp_flag == 1 ? 0 : 1), "格兰蒂斯公国领", "大公·洛兰特二世", 1, new List<byte> { }, new List<short> { 0, 8, 9 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,100000));
-        gc.forceDic.Add(2, new ForceObject(2, (byte)(temp_flag == 2 ? 0 : 2), "纳德森管理地", "村长·纳德森", 1, new List<byte> { }, new List<short> { 2 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20000));
-        gc.forceDic.Add(3, new ForceObject(3, (byte)(temp_flag == 3 ? 0 : 3), "安尔加伯爵领", "伯爵·安尔加", 1, new List<byte> { }, new List<short> { 5, 6 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20000));
-        gc.forceDic.Add(4, new ForceObject(4, (byte)(temp_flag == 4 ? 0 : 4), "阿伦德尔伯爵领", "伯爵·阿伦德尔", 1, new List<byte> { }, new List<short> { 7 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20000));
-        gc.forceDic.Add(5, new ForceObject(5, (byte)(temp_flag == 5 ? 0 : 5), "朱利奥伯爵领", "伯爵·朱利奥", 1, new List<byte> { }, new List<short> { 3, 4 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20000));
-        gc.forceDic.Add(6, new ForceObject(6, (byte)(temp_flag == 6 ? 0 : 6), "北境领地", "骑士·特雷西亚", 1, new List<byte> { }, new List<short> { 10 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20000));
+        gc.forceDic.Add(0, new ForceObject(0, temp_flag, StartChoosePanel.Instance.leaderNameIf.text+ "封地", StartChoosePanel.Instance.leaderNameIf.text, 3, new List<byte> { }, new List<short> { 1 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 3500, 0,0,0,0,0,0, 5000, 5000, 5000, 5000, 5000, 5000, 5000,0,0,0,0,0,0,50000,50000,200, 0, 20000));
+        gc.forceDic.Add(1, new ForceObject(1, (byte)(temp_flag == 1 ? 0 : 1), "格兰蒂斯公国", "大公·洛兰特二世", 1, new List<byte> { }, new List<short> { 0, 8, 9 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0, 100000));
+        gc.forceDic.Add(2, new ForceObject(2, (byte)(temp_flag == 2 ? 0 : 2), "纳德森管理地", "村长·纳德森", 1, new List<byte> { }, new List<short> { 2 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0, 20000));
+        gc.forceDic.Add(3, new ForceObject(3, (byte)(temp_flag == 3 ? 0 : 3), "安尔加封地", "伯爵·安尔加", 1, new List<byte> { 0}, new List<short> { 5, 6 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0, 20000));
+        gc.forceDic.Add(4, new ForceObject(4, (byte)(temp_flag == 4 ? 0 : 4), "阿伦德尔封地", "伯爵·阿伦德尔", 1, new List<byte> { }, new List<short> { 7 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0, 20000));
+        gc.forceDic.Add(5, new ForceObject(5, (byte)(temp_flag == 5 ? 0 : 5), "朱利奥封地", "伯爵·朱利奥", 1, new List<byte> { }, new List<short> { 3, 4 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0, 20000));
+        gc.forceDic.Add(6, new ForceObject(6, (byte)(temp_flag == 6 ? 0 : 6), "北境", "骑士·特雷西亚", 1, new List<byte> { }, new List<short> { 10 }, new Dictionary<byte, short> { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 } }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0, 20000));
 
 
 
@@ -115,7 +115,7 @@ public class GameControlInNewGame : MonoBehaviour
 
             gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "", DataManager.mDistrictDict[i].Des, true, force, DataManager.mDistrictDict[i].InitLevel, 10, 20, 0,
              new List<int> { }, temp_districtID == i ? new List<int> { 0, 1, 2, 3, 4, 5 } : new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
-            0, 0, 0, 0, 0, 0, 0, 0, 50, 50);
+            0, 0, 0, 0, 0, 0, 0, 0,  50);
 
             gc.districtGridDic.Add(new Dictionary<string, DistrictGridObject>());
         }

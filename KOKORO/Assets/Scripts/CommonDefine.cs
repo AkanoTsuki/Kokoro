@@ -1199,7 +1199,7 @@ public class DistrictObject
     //private int RFoodLimit;//库存上限
     //private int RStuffLimit;
     private int RProductLimit;
-    private int RScrollLimit;
+
     public DistrictObject(short id, string name, string baseName, string des, bool isOpen, short force, byte level, short people, short peopleLimit, short worker, 
          List<int> buildingList, List<int> heroList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
@@ -1207,7 +1207,7 @@ public class DistrictObject
         //int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
         //int rStuffWind, int rStuffFire, int rStuffWater, int rStuffGround, int rStuffLight, int rStuffDark,
         int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll, int rProductGoodWeapon, int rProductGoodArmor, int rProductGoodJewelry, int rProductGoodScroll,
-         int rProductLimit, int rScrollLimit)
+         int rProductLimit)
     {
         this.ID = id;
         this.Name = name;
@@ -1258,7 +1258,7 @@ public class DistrictObject
         //this.RFoodLimit = rFoodLimit;
         //this.RStuffLimit = rStuffLimit;
         this.RProductLimit = rProductLimit;//库存上限
-        this.RScrollLimit = rScrollLimit;
+
     }
     public short id { get { return ID; } }
     public string name { get { return Name; }  }
@@ -1309,7 +1309,7 @@ public class DistrictObject
     //public int rFoodLimit { get { return RFoodLimit; } set { RFoodLimit = value; } }
     //public int rStuffLimit { get { return RStuffLimit; } set { RStuffLimit = value; } }
     public int rProductLimit { get { return RProductLimit; } set { RProductLimit = value; } }
-    public int rScrollLimit { get { return RScrollLimit; } set { RScrollLimit = value; } }
+
 }
 
 public class DistrictGridObject
@@ -2705,7 +2705,7 @@ public class ForceObject
     private byte FlagIndex;
     private string Name;
     private string Leader;
-    private byte ParentID;
+    private short ParentID;
     private List<byte> ChildrenID;
     private List<short> DistrictID;
     private Dictionary<byte, short> Relation;
@@ -2731,12 +2731,14 @@ public class ForceObject
     private int RStuffDark;
     private int RFoodLimit;//库存上限
     private int RStuffLimit;
+    private int RProductLimit;//包括装备，卷轴，还有以后的物品道具
+    private int RProductNow;
     private int Gold;
-    public ForceObject(byte id, byte flagIndex,string name, string leader, byte parentID, List<byte> childrenID, List<short> districtID, Dictionary<byte, short> relation,
+    public ForceObject(byte id, byte flagIndex,string name, string leader, short parentID, List<byte> childrenID, List<short> districtID, Dictionary<byte, short> relation,
         int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, int rFoodBeer, int rFoodWine,
         int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
         int rStuffWind, int rStuffFire, int rStuffWater, int rStuffGround, int rStuffLight, int rStuffDark,
-        int rFoodLimit, int rStuffLimit, int gold)
+        int rFoodLimit, int rStuffLimit, int rProductLimit, int rProductNow, int gold)
     {
         this.ID = id;
         this.FlagIndex = flagIndex;
@@ -2768,13 +2770,15 @@ public class ForceObject
         this.RStuffDark = rStuffDark;
         this.RFoodLimit = rFoodLimit;
         this.RStuffLimit = rStuffLimit;
+        this.RProductLimit = rProductLimit;
+        this.RProductNow = rProductNow;
         this.Gold = gold;
     }
     public byte id { get { return ID; } }
     public byte flagIndex { get { return FlagIndex; } }
     public string name { get { return Name; } set { Name = value; } }
     public string leader { get { return Leader; } set { Leader = value; } }
-    public byte parentID { get { return ParentID; } set { ParentID = value; } }
+    public short parentID { get { return ParentID; } set { ParentID = value; } }
     public List<byte> childrenID { get { return ChildrenID; } set { ChildrenID = value; } }
     public List<short> districtID { get { return DistrictID; } set { DistrictID = value; } }
     public Dictionary<byte, short> relation { get { return Relation; } set { Relation = value; } }
@@ -2800,6 +2804,8 @@ public class ForceObject
     public int rStuffDark { get { return RStuffDark; } set { RStuffDark = value; } }
     public int rFoodLimit { get { return RFoodLimit; } set { RFoodLimit = value; } }
     public int rStuffLimit { get { return RStuffLimit; } set { RStuffLimit = value; } }
+    public int rProductLimit { get { return RProductLimit; } set { RProductLimit = value; } }
+    public int rProductNow { get { return RProductNow; } set { RProductNow = value; } }
     public int gold { get { return Gold; } set { Gold = value; } }
 }
 
