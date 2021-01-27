@@ -189,7 +189,7 @@ public class DistrictMapPanel : BasePanel
         left_inventoryMainBtn.onClick.AddListener(delegate () { gci.OpenItemListAndInfo(); });
         left_inventoryScrollBtn.onClick.AddListener(delegate () { gci.OpenSkillListAndInfo(); });
         left_buildBtn.onClick.AddListener(delegate () { gci.OpenBuild(); });
-        left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
+        left_heroMainBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(gc.nowCheckingDistrictID); });
         left_marketBtn.onClick.AddListener(delegate () { gci.OpenMarket(); });
 
         right_transferBtn.onClick.AddListener(delegate () { gci.OpenTransfer("To"); });

@@ -1682,11 +1682,11 @@ public class GameControl : MonoBehaviour
         int customerID;
         if (buildingDic[buildingID].customerList.Count > 0)
         {
-            Debug.Log("buildingDic[buildingID].customerList.Count=" + buildingDic[buildingID].customerList.Count);
+            //Debug.Log("buildingDic[buildingID].customerList.Count=" + buildingDic[buildingID].customerList.Count);
 
             for (int i = 1; i < buildingDic[buildingID].customerList.Count; i++)
             {
-                Debug.Log("i=" + i + " customerID=" + buildingDic[buildingID].customerList[i]);
+                //Debug.Log("i=" + i + " customerID=" + buildingDic[buildingID].customerList[i]);
                 customerID = buildingDic[buildingID].customerList[i];
                 if (customerDic[customerID].stage == CustomerStage.Wait)
                 {
@@ -2737,8 +2737,8 @@ public class GameControl : MonoBehaviour
 
     public void CustomerGone(int customerID)
     {
-        Debug.Log("customerID=" + customerID);
-        Debug.Log("satisfaction=" + customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]);
+       // Debug.Log("customerID=" + customerID);
+       // Debug.Log("satisfaction=" + customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]);
         float nowAllSat = (float)(customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID] * customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID] + customerDic[customerID].satisfaction);
 
 

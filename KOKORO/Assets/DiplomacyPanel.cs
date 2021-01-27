@@ -96,8 +96,32 @@ public class DiplomacyPanel : BasePanel
             go.transform.GetChild(7).GetChild(2).GetChild(0).GetComponent<Text>().text = gc.GetForceStuffAll(itemObjects[i].id).ToString();
             go.transform.GetChild(7).GetChild(3).GetChild(0).GetComponent<Text>().text = "未知";
 
-            go.transform.GetChild(8).GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Empty");
-            go.transform.GetChild(8).GetChild(1).GetComponent<Text>().text = "对你没什么特别看法";
+            if (itemObjects[i].relation[0] < -50)
+            {
+                go.transform.GetChild(8).GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon_talk_exclamation_1");
+                go.transform.GetChild(8).GetChild(1).GetComponent<Text>().text = "对你十分愤怒";
+            }
+            else if (itemObjects[i].relation[0] >= -50 && itemObjects[i].relation[0] < 0)
+            {
+                go.transform.GetChild(8).GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon_talk_sad_1");
+                go.transform.GetChild(8).GetChild(1).GetComponent<Text>().text = "有点讨厌你";
+            }
+            else if (itemObjects[i].relation[0] >= 0 && itemObjects[i].relation[0] < 50)
+            {
+                go.transform.GetChild(8).GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Empty");
+                go.transform.GetChild(8).GetChild(1).GetComponent<Text>().text = "对你没什么特别看法";
+            }
+            else if (itemObjects[i].relation[0] >= 50 && itemObjects[i].relation[0] < 100)
+            {
+                go.transform.GetChild(8).GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon_talk_happy_1");
+                go.transform.GetChild(8).GetChild(1).GetComponent<Text>().text = "认为你值得交流";
+            }
+            else
+            {
+                go.transform.GetChild(8).GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon_talk_love_1");
+                go.transform.GetChild(8).GetChild(1).GetComponent<Text>().text = "觉得你是很好的朋友";
+            }
+  
 
 
         }
@@ -105,6 +129,6 @@ public class DiplomacyPanel : BasePanel
         {
             forceGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
-        forceListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(623f, Mathf.Max(350f, 2 + (itemObjects.Count / 2) * 174f));
+        forceListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(623f, Mathf.Max(523f, 2 + (itemObjects.Count / 2) * 174f));
     }
 }

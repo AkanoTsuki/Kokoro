@@ -694,7 +694,7 @@ public class AdventureMainPanel : BasePanel
             for (int i = gc.adventureTeamList[teamID].enemyIDList.Count; i < 3; i++)
             {
                 adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
-
+                Debug.Log("问题语句 i="+ i+ "  adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite="+ adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite);
             }
         }
         else if (gc.adventureTeamList[teamID].action == AdventureAction.GetSomething)

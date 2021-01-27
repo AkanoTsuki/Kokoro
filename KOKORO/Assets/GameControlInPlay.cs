@@ -19,14 +19,15 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.Building);
         UIManager.Instance.InitPanel(UIPanelType.Hero);
         UIManager.Instance.InitPanel(UIPanelType.Build);
+        UIManager.Instance.InitPanel(UIPanelType.Message);
+        MessagePanel.Instance.OnShow(-2, 2);
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
         PlayMainPanel.Instance.OnShow();
         UIManager.Instance.InitPanel(UIPanelType.DistrictMap);
         DistrictMapPanel.Instance.nowDistrict = -1;
         DistrictMapPanel.Instance.OnShow();
         DistrictMapPanel.Instance.OnHide();
-        UIManager.Instance.InitPanel(UIPanelType.Message);
-        MessagePanel.Instance.OnShow(0, 26);
+      
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
         UIManager.Instance.InitPanel(UIPanelType.SkillListAndInfo);
         UIManager.Instance.InitPanel(UIPanelType.AdventureMain);
@@ -348,7 +349,7 @@ public class GameControlInPlay : MonoBehaviour
 
     
 
-    public void OpenHeroSelect()
+    public void OpenHeroSelect(short districtID)
     {
         if (HeroSelectPanel.Instance.isShow)
         {
@@ -356,7 +357,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            HeroSelectPanel.Instance.OnShow("", gc.nowCheckingDistrictID,-1,1, 76, -104);
+            HeroSelectPanel.Instance.OnShow("", districtID, -1,1, 76, -104);
         }
     }
 

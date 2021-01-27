@@ -30640,7 +30640,7 @@
       "Name": "西赫克森林",
       "Level": 5,
       "ScenePic": [
-        "Forest_02"
+        "River_01"
       ],
       "Des": "怪物很少的平原，适合采集",
       "BigMapX": 1059,
@@ -30760,7 +30760,7 @@
       "Name": "龙喉洞窟",
       "Level": 10,
       "ScenePic": [
-        "Desert_01"
+        "Cave_02"
       ],
       "Des": "介绍",
       "BigMapX": 1404,
@@ -30880,7 +30880,7 @@
       "Name": "斯黑萨火山",
       "Level": 10,
       "ScenePic": [
-        "River_02"
+        "Volcano_01"
       ],
       "Des": "介绍",
       "BigMapX": 1054,
@@ -31057,7 +31057,7 @@
       "Name": "特拉桑草原",
       "Level": 10,
       "ScenePic": [
-        "Desert_02"
+        "Forest_02"
       ],
       "Des": "介绍",
       "BigMapX": 1037,
@@ -31181,7 +31181,7 @@
       "Name": "兰尔茨河谷",
       "Level": 10,
       "ScenePic": [
-        "Snow_01"
+        "River_02"
       ],
       "Des": "介绍",
       "BigMapX": 1423,
@@ -31299,7 +31299,7 @@
       "Name": "格兰蒂斯草原",
       "Level": 10,
       "ScenePic": [
-        "River_02"
+        "Forest_02"
       ],
       "Des": "介绍",
       "BigMapX": 1077,
@@ -31358,7 +31358,7 @@
       "Name": "影子丛林",
       "Level": 10,
       "ScenePic": [
-        "Forest_01"
+        "Dungeon_01"
       ],
       "Des": "介绍",
       "BigMapX": 801,
@@ -31476,7 +31476,7 @@
       "Name": "普德拉洞窟",
       "Level": 10,
       "ScenePic": [
-        "Hill_02"
+        "Cave_01"
       ],
       "Des": "介绍",
       "BigMapX": 446,
@@ -31535,7 +31535,7 @@
       "Name": "霍加马山谷",
       "Level": 10,
       "ScenePic": [
-        "Hill_01"
+        "Hill_02"
       ],
       "Des": "介绍",
       "BigMapX": 309,
@@ -31653,7 +31653,7 @@
       "Name": "铸魔洞窟",
       "Level": 10,
       "ScenePic": [
-        "Hill_01"
+        "Cave_03"
       ],
       "Des": "介绍",
       "BigMapX": 787,
@@ -31889,7 +31889,7 @@
       "Name": "鄂尼约洞穴",
       "Level": 10,
       "ScenePic": [
-        "Desert_02"
+        "Dungeon_01"
       ],
       "Des": "介绍",
       "BigMapX": 1882,
@@ -31948,7 +31948,7 @@
       "Name": "帕拉然草原",
       "Level": 10,
       "ScenePic": [
-        "Forest_03"
+        "Forest_02"
       ],
       "Des": "介绍",
       "BigMapX": 1296,
@@ -32243,7 +32243,7 @@
       "Name": "纽因纳雪原",
       "Level": 10,
       "ScenePic": [
-        "Snow_01"
+        "Snow_02"
       ],
       "Des": "介绍",
       "BigMapX": 181,
@@ -32302,7 +32302,7 @@
       "Name": "塔德山",
       "Level": 10,
       "ScenePic": [
-        "Hill_01"
+        "Snow_01"
       ],
       "Des": "介绍",
       "BigMapX": 792,

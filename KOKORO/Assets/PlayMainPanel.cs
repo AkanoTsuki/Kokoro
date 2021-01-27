@@ -95,10 +95,10 @@ public class PlayMainPanel : BasePanel
 
     public Button bottom_baseline_messageBtn;
     public Text bottom_baseline_messageSignText;
-    public Button bottom_baseline_openAllBtn;
-    public Text bottom_baseline_openAllSignText;
-    public Button bottom_baseline_hideAllBtn;
-    public Text bottom_baseline_hideAllSignText;
+    //public Button bottom_baseline_openAllBtn;
+    //public Text bottom_baseline_openAllSignText;
+    //public Button bottom_baseline_hideAllBtn;
+    //public Text bottom_baseline_hideAllSignText;
 
 
     public List<byte> adventureTeamIDList = new List<byte>();
@@ -123,7 +123,7 @@ public class PlayMainPanel : BasePanel
         left_technologyBtn.onClick.AddListener(delegate () { gci.OpenTechnology(); });
         left_diplomacyBtn.onClick.AddListener(delegate () { gci.OpenDiplomacy(); });
 
-        left_heroBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(); });
+        left_heroBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(-1); });
         left_adventureBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
 
 
@@ -504,7 +504,7 @@ public class PlayMainPanel : BasePanel
     {
         // UpdateStatusBlock(districtID);
        bottom_baseline_messageSignText.text = "消息框 ▼ ";
-        MessagePanel.Instance.OnShow(0,26);
+        MessagePanel.Instance.OnShow(-2, 2);
         IsShowMessageBlock = true;
     }
     public void HideMessageBlock()
