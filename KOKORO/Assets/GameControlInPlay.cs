@@ -25,9 +25,10 @@ public class GameControlInPlay : MonoBehaviour
         PlayMainPanel.Instance.OnShow();
         UIManager.Instance.InitPanel(UIPanelType.DistrictMap);
         DistrictMapPanel.Instance.nowDistrict = -1;
-        DistrictMapPanel.Instance.OnShow();
         DistrictMapPanel.Instance.InitCustomer();
-        DistrictMapPanel.Instance.OnHide();
+        //DistrictMapPanel.Instance.OnShow();
+
+        //DistrictMapPanel.Instance.OnHide();
       
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
         UIManager.Instance.InitPanel(UIPanelType.SkillListAndInfo);

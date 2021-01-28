@@ -20,21 +20,18 @@ public class AnimatiorControlByNPC : MonoBehaviour, IPointerEnterHandler, IPoint
 
     Sprite[] needFrames = new Sprite[3];
 
+    public bool isShow = false;
     bool isPlay = false;
   //  bool isLoop = false;
     bool isNeedStop = false;
     public string charaName = "chara1_1";
     public int customerID = -1;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()
     {
-        if (isPlay)
+        if (isPlay&& isShow)
         {
             time += Time.deltaTime;
        

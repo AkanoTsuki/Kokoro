@@ -2704,11 +2704,10 @@ public class GameControl : MonoBehaviour
         customerDic.Add(customerIndex, new CustomerObject(customerIndex, name, (short)heroType, pic, gold, districtID, shopType, -1, bucketList, CustomerStage.Come, 0, 50));
         CustomerChooseShop(customerIndex);
 
-        if (DistrictMapPanel.Instance.nowDistrict == districtID)
-        {
-            DistrictMapPanel.Instance.UpdateSingleCustomer(customerIndex);
+       
+            DistrictMapPanel.Instance.SetCustomer(customerIndex);
            
-        }
+       
         DistrictMapPanel.Instance.UpdateCustomerByStage(customerIndex);
         // DistrictMapPanel.Instance.CustomerCome(customerIndex);
 
@@ -3718,8 +3717,14 @@ public class GameControl : MonoBehaviour
             PlayMainPanel.Instance.UpdateButtonItemNum();
         }
 
+       
         adventureTeamList[teamID].state = AdventureState.NotSend;
         adventureTeamList[teamID].action = AdventureAction.None;
+
+        if (AreaMapPanel.Instance.dungeonInfoBlockID == adventureTeamList[teamID].dungeonID)
+        {
+            AreaMapPanel.Instance.UpdateDungeonInfoBlock(AreaMapPanel.Instance.dungeonInfoBlockID);
+        }
 
         AdventureMainPanel.Instance.UpdateTeam(teamID);
     }

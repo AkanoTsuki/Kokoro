@@ -396,22 +396,27 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                         AdventureTeamPanel.Instance.OnShow(teamID, 76, -104);
                     });
 
-                    go.transform.GetChild(6).localScale = Vector2.zero;
-
-                    go.transform.GetChild(7).localScale = Vector2.one;
-                    go.transform.GetChild(7).GetComponent<Button>().onClick.RemoveAllListeners();
-                    go.transform.GetChild(7).GetComponent<Button>().onClick.AddListener(delegate ()
+                    go.transform.GetChild(6).localScale = Vector2.one;
+                    go.transform.GetChild(6).GetComponent<Button>().onClick.RemoveAllListeners();
+                    go.transform.GetChild(6).GetComponent<Button>().onClick.AddListener(delegate ()
                     {
-
-                        gc.AdventureTeamStart(teamID);
+                        gc.AdventureTakeGets(teamID);
                     });
-                    go.transform.GetChild(8).localScale = Vector2.one;
-                    go.transform.GetChild(8).GetComponent<Button>().onClick.RemoveAllListeners();
-                    go.transform.GetChild(8).GetComponent<Button>().onClick.AddListener(delegate ()
-                    {
 
-                        gc.AdventureTeamBack(teamID);
-                    });
+                    go.transform.GetChild(7).localScale = Vector2.zero;
+                    //go.transform.GetChild(7).GetComponent<Button>().onClick.RemoveAllListeners();
+                    //go.transform.GetChild(7).GetComponent<Button>().onClick.AddListener(delegate ()
+                    //{
+
+                    //    gc.AdventureTeamStart(teamID);
+                    //});
+                    go.transform.GetChild(8).localScale = Vector2.zero;
+                    //go.transform.GetChild(8).GetComponent<Button>().onClick.RemoveAllListeners();
+                    //go.transform.GetChild(8).GetComponent<Button>().onClick.AddListener(delegate ()
+                    //{
+
+                    //    gc.AdventureTeamBack(teamID);
+                    //});
 
                     float rate = (float)gc.adventureTeamList[teamID].nowDay / DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].PartNum;
 

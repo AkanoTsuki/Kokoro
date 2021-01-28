@@ -233,6 +233,7 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.startBtn.transform.GetChild(0).GetComponent<Text>().text = "出发";
+            adventureTeamBlock.startBtn.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon_advSend", typeof(Sprite)) as Sprite;
             adventureTeamBlock.startBtn.onClick.RemoveAllListeners();
             adventureTeamBlock.startBtn.onClick.AddListener(delegate ()
             {
@@ -303,6 +304,7 @@ public class AdventureMainPanel : BasePanel
             
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.startBtn.transform.GetChild(0).GetComponent<Text>().text = "战利品";
+            adventureTeamBlock.startBtn.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon009", typeof(Sprite)) as Sprite;
             adventureTeamBlock.startBtn.onClick.RemoveAllListeners();
             adventureTeamBlock.startBtn.onClick.AddListener(delegate ()
             {
@@ -334,6 +336,7 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.startBtn.transform.GetChild(0).GetComponent<Text>().text = "结算";
+            adventureTeamBlock.startBtn.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon009", typeof(Sprite)) as Sprite;
             adventureTeamBlock.startBtn.onClick.RemoveAllListeners();
             adventureTeamBlock.startBtn.onClick.AddListener(delegate ()
             {
@@ -367,6 +370,7 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.startBtn.transform.GetChild(0).GetComponent<Text>().text = "结算";
+            adventureTeamBlock.startBtn.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon009", typeof(Sprite)) as Sprite;
             adventureTeamBlock.startBtn.onClick.RemoveAllListeners();
             adventureTeamBlock.startBtn.onClick.AddListener(delegate ()
             {
@@ -398,6 +402,7 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.startBtn.transform.GetChild(0).GetComponent<Text>().text = "结算";
+            adventureTeamBlock.startBtn.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon009", typeof(Sprite)) as Sprite;
             adventureTeamBlock.startBtn.onClick.RemoveAllListeners();
             adventureTeamBlock.startBtn.onClick.AddListener(delegate ()
             {
