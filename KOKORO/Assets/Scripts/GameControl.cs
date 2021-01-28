@@ -2595,7 +2595,7 @@ public class GameControl : MonoBehaviour
         ShopType shopType = ShopType.None;
         ItemTypeBig wantBuyTypeBig = ItemTypeBig.None;
         ItemTypeSmall wantBuyTypeSmall = DataManager.mHeroDict[heroType].WantBuy[Random.Range(0, DataManager.mHeroDict[heroType].WantBuy.Count)];
-        bool hesitate = true;
+        bool hesitate = true;//在犹豫中
         byte thinkTime = 3;
         short pdz = -10;
         while (hesitate && thinkTime > 0)
@@ -2704,7 +2704,11 @@ public class GameControl : MonoBehaviour
         customerDic.Add(customerIndex, new CustomerObject(customerIndex, name, (short)heroType, pic, gold, districtID, shopType, -1, bucketList, CustomerStage.Come, 0, 50));
         CustomerChooseShop(customerIndex);
 
-        DistrictMapPanel.Instance.UpdateSingleCustomer(customerIndex);
+        if (DistrictMapPanel.Instance.nowDistrict == districtID)
+        {
+            DistrictMapPanel.Instance.UpdateSingleCustomer(customerIndex);
+           
+        }
         DistrictMapPanel.Instance.UpdateCustomerByStage(customerIndex);
         // DistrictMapPanel.Instance.CustomerCome(customerIndex);
 
@@ -2730,15 +2734,12 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    //public void CustomerLeaveShop(int customerID)
-    //{       
-    //    buildingDic[customerDic[customerID].buildingID].customerList.Remove(customerID);       
-    //}
 
     public void CustomerGone(int customerID)
     {
-       // Debug.Log("customerID=" + customerID);
-       // Debug.Log("satisfaction=" + customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]);
+        Debug.Log("customerID=" + customerID);
+        Debug.Log("customerDic[customerID].districtID=" + customerDic[customerID].districtID);
+        // Debug.Log("satisfaction=" + customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]);
         float nowAllSat = (float)(customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID] * customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID] + customerDic[customerID].satisfaction);
 
 
@@ -2919,7 +2920,7 @@ public class GameControl : MonoBehaviour
         for (int i = 0; i < buySkillList.Count; i++)
         {
             customerDic[customerID].satisfaction += 5;
-            Debug.Log("出售了" + skillDic[buySkillList[i]].name);
+            //Debug.Log("出售了" + skillDic[buySkillList[i]].name);
             districtDic[skillDic[buySkillList[i]].districtID].rProductScroll--;
             districtDic[skillDic[buySkillList[i]].districtID].rProductGoodScroll--;
             switch (DataManager.mItemDict[itemDic[buyItemList[i]].prototypeID].TypeSmall)
@@ -2965,7 +2966,7 @@ public class GameControl : MonoBehaviour
         if ((buyItemList.Count + buySkillList.Count) == 0)
         {
             customerDic[customerID].satisfaction -= 20;
-            Debug.Log(customerDic[customerID].name + "啥都没买回去了");
+            //Debug.Log(customerDic[customerID].name + "啥都没买回去了");
             switch (customerDic[customerID].bucketList.typeSmall)
             {
                 case ItemTypeSmall.Sword: supplyAndDemand.weaponSwordValue[districtID] += (short)Random.Range(0, 2); break;
@@ -3171,6 +3172,8 @@ public class GameControl : MonoBehaviour
 
         //StartCoroutine(DistrictMapPanel.Instance.CustomerGoToBuilding(customerID, str));
     }
+    
+    
     public void SupplyAndDemandChangeRegular(short districtID)
     {
 
@@ -3214,7 +3217,6 @@ public class GameControl : MonoBehaviour
 
     void SupplyAndDemandChange(short districtID, ItemTypeSmall itemTypeSmall, int value)
     {
-
         switch (itemTypeSmall)
         {
             case ItemTypeSmall.Sword: supplyAndDemand.weaponSwordValue[districtID] = System.Math.Min((short)100, System.Math.Max((short)-100, supplyAndDemand.weaponSwordValue[districtID] += (short)value)); break;

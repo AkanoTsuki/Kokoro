@@ -26,6 +26,7 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.DistrictMap);
         DistrictMapPanel.Instance.nowDistrict = -1;
         DistrictMapPanel.Instance.OnShow();
+        DistrictMapPanel.Instance.InitCustomer();
         DistrictMapPanel.Instance.OnHide();
       
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
@@ -152,7 +153,7 @@ public class GameControlInPlay : MonoBehaviour
         gc.standardTime++;
         if(gc.executeEventList.Count>0)
         {
-            if (gc.standardTime == gc.executeEventList[0].endTime)
+            if (gc.standardTime >= gc.executeEventList[0].endTime)
             {
                 short districtID;
                  int buildingID, itemId;
