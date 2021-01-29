@@ -97,6 +97,10 @@ public class BuildingPanel : BasePanel
                 UpdateForge(buildingObject);break;
             case "Resource":
                 UpdateResource(buildingObject); break;
+            case "House":
+                UpdateHouse(buildingObject); break;
+            case "Municipal":
+                UpdateMunicipal(buildingObject); break;
             default:break;
         }
         SetAnchoredPosition(0, -432);
@@ -149,7 +153,27 @@ public class BuildingPanel : BasePanel
         UpdateTotalSetButton(buildingObject);
     }
 
+    public void UpdateHouse(BuildingObject buildingObject)
+    {
+        UpdateBasicPart(buildingObject);
+        HideOutputInfoPart();
+        HideSetManagerPart();
+        HideSetWorkerPart();
+        HideHistoryInfoPart();
+        HideSetForgePart();
 
+        UpdateTotalSetButton(buildingObject);
+    }
+    public void UpdateMunicipal(BuildingObject buildingObject)
+    {
+        HideOutputInfoPart();
+        HideSetManagerPart();
+        HideSetWorkerPart();
+        HideHistoryInfoPart();
+        HideSetForgePart();
+
+        UpdateTotalSetButton(buildingObject);
+    }
     //
     public void UpdateTotalSetButton(BuildingObject buildingObject)
     {
@@ -318,6 +342,41 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
                 }
 
+                break;
+            case "House":
+                //拆除
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "拆除";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
+                    buttonIndex++;
+                }
+
+
+                for (int i = buttonIndex; i < 6; i++)
+                {
+                    totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
+                }
+
+                break;
+            case "Municipal":
+                //拆除
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "拆除";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
+                    buttonIndex++;
+                }
+
+
+                for (int i = buttonIndex; i < 6; i++)
+                {
+                    totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
+                }
 
                 break;
         }
@@ -386,6 +445,7 @@ public class BuildingPanel : BasePanel
                     subTitleIndex++;
                 }
                 break;
+
         }
         for (int i = subTitleIndex; i < titleSubRt.Count; i++)
         {
@@ -398,7 +458,7 @@ public class BuildingPanel : BasePanel
 
     public void UpdateOutputInfoPart(BuildingObject buildingObject)
     {
-       // outputInfoRt.anchoredPosition = new Vector2(16f, -144f);
+        outputInfoRt.anchoredPosition = new Vector2(274f, -92f);
         switch (buildingObject.panelType)
         {
             case "Forge":
@@ -539,9 +599,14 @@ public class BuildingPanel : BasePanel
        
     }
 
+    public void HideOutputInfoPart()
+    {
+        outputInfoRt.anchoredPosition = new Vector2(0, 5000f);
+    }
+
     public void UpdateSetManagerPart(BuildingObject buildingObject)
     {
-        //setManagerRt.anchoredPosition = new Vector2(16f, -320f);
+        setManagerRt.anchoredPosition = new Vector2(12f, -92f);
         for (int i = 0; i < buildingObject.heroList.Count; i++)
         {
             setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
@@ -620,10 +685,14 @@ public class BuildingPanel : BasePanel
         }
     }
 
+    public void HideSetManagerPart()
+    {
+        setManagerRt.anchoredPosition = new Vector2(0, 5000f);
+    }
 
     public void UpdateSetWorkerPart(BuildingObject buildingObject)
     {
-       // setWorkerRt.anchoredPosition = new Vector2(16f, -426f);
+        setWorkerRt.anchoredPosition = new Vector2(12f, -200f);
         int feed = gc.districtDic[gc.nowCheckingDistrictID].people - gc.districtDic[gc.nowCheckingDistrictID].worker;
         setWorker_desText.text = "空闲:" + feed + "\n 人数 " + buildingObject.workerNow + "/" + buildingObject.worker;
         if (buildingObject.workerNow > 0)
@@ -644,9 +713,14 @@ public class BuildingPanel : BasePanel
         }
     }
 
+    public void HideSetWorkerPart()
+    {
+        setWorkerRt.anchoredPosition = new Vector2(0, 5000f);
+    }
+
     public void UpdateHistoryInfoPart(BuildingObject buildingObject )
     {
-        //infoHistoryRt.anchoredPosition = new Vector2(278f, -84f);
+        infoHistoryRt.anchoredPosition = new Vector2(798f, -12f);
         //infoHistoryRt.sizeDelta = new Vector2(256f, height );
         string str = "";
         //List<LogObject> temp = new List<LogObject> { };
@@ -658,6 +732,11 @@ public class BuildingPanel : BasePanel
             }
         }
         infoHistory_contentText.text = str;
+    }
+
+    public void HideHistoryInfoPart()
+    {
+        infoHistoryRt.anchoredPosition = new Vector2(0, 5000f);
     }
 
     public void UpdateSetForgePart(BuildingObject buildingObject)

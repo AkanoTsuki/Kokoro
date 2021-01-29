@@ -1139,6 +1139,69 @@ public class GameControl : MonoBehaviour
 
     public void CreateProduceItemEvent(int buildingID)
     {
+        short districtID = buildingDic[buildingID].districtID;
+        if (GetDistrictProductAll(districtID) >= districtDic[districtID].rProductLimit)
+        {
+            buildingDic[buildingID].isOpen = false;
+            MessagePanel.Instance.AddMessage("制品库房已满，生产停止");
+            if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+            {
+                BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+            }
+            if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+            {
+                DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+            }
+      
+            return ;
+        }
+
+        int moduleID = buildingDic[buildingID].produceEquipNow;
+
+        if (DataManager.mProduceEquipDict[moduleID].InputWood > forceDic[0].rStuffWood ||
+            DataManager.mProduceEquipDict[moduleID].InputStone > forceDic[0].rStuffStone ||
+            DataManager.mProduceEquipDict[moduleID].InputMetal > forceDic[0].rStuffMetal ||
+            DataManager.mProduceEquipDict[moduleID].InputLeather > forceDic[0].rStuffLeather ||
+            DataManager.mProduceEquipDict[moduleID].InputCloth > forceDic[0].rStuffCloth ||
+            DataManager.mProduceEquipDict[moduleID].InputTwine > forceDic[0].rStuffTwine ||
+            DataManager.mProduceEquipDict[moduleID].InputBone > forceDic[0].rStuffBone ||
+            DataManager.mProduceEquipDict[moduleID].InputWind > forceDic[0].rStuffWind ||
+            DataManager.mProduceEquipDict[moduleID].InputFire > forceDic[0].rStuffFire ||
+            DataManager.mProduceEquipDict[moduleID].InputWater > forceDic[0].rStuffWater ||
+            DataManager.mProduceEquipDict[moduleID].InputGround > forceDic[0].rStuffGround ||
+            DataManager.mProduceEquipDict[moduleID].InputLight > forceDic[0].rStuffLight ||
+            DataManager.mProduceEquipDict[moduleID].InputDark > forceDic[0].rStuffDark)
+        {
+            buildingDic[buildingID].isOpen = false;
+            MessagePanel.Instance.AddMessage("原材料不足，生产停止");
+            if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+            {
+                BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+            }
+            if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+            {
+                DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+            }
+            return ;
+        }
+
+        forceDic[0].rStuffWood -= DataManager.mProduceEquipDict[moduleID].InputWood;
+        forceDic[0].rStuffStone -= DataManager.mProduceEquipDict[moduleID].InputStone;
+        forceDic[0].rStuffMetal -= DataManager.mProduceEquipDict[moduleID].InputMetal;
+        forceDic[0].rStuffLeather -= DataManager.mProduceEquipDict[moduleID].InputLeather;
+        forceDic[0].rStuffCloth -= DataManager.mProduceEquipDict[moduleID].InputCloth;
+        forceDic[0].rStuffTwine -= DataManager.mProduceEquipDict[moduleID].InputTwine;
+        forceDic[0].rStuffBone -= DataManager.mProduceEquipDict[moduleID].InputBone;
+        forceDic[0].rStuffWind -= DataManager.mProduceEquipDict[moduleID].InputWind;
+        forceDic[0].rStuffFire -= DataManager.mProduceEquipDict[moduleID].InputFire;
+        forceDic[0].rStuffWater -= DataManager.mProduceEquipDict[moduleID].InputWater;
+        forceDic[0].rStuffGround -= DataManager.mProduceEquipDict[moduleID].InputGround;
+        forceDic[0].rStuffLight -= DataManager.mProduceEquipDict[moduleID].InputLight;
+        forceDic[0].rStuffDark -= DataManager.mProduceEquipDict[moduleID].InputDark;
 
         int needLabor = DataManager.mProduceEquipDict[buildingDic[buildingID].produceEquipNow].NeedLabor;
         int nowLabor = 20 + buildingDic[buildingID].workerNow * 20;
@@ -1180,6 +1243,11 @@ public class GameControl : MonoBehaviour
         int needTime = (int)(24 * ((float)needLabor / (float)nowLabor));
 
         StartProduceItem(buildingDic[buildingID].districtID, buildingID, needTime, buildingDic[buildingID].produceEquipNow);
+        PlayMainPanel.Instance.UpdateResources();
+        if (PlayMainPanel.Instance.IsShowResourcesBlock)
+        {
+            PlayMainPanel.Instance.UpdateResourcesBlock();
+        }
     }
 
     public void CreateProduceResourceEvent(int buildingID)
@@ -1280,54 +1348,56 @@ public class GameControl : MonoBehaviour
         buildingDic[buildingID].isOpen = false;
     }
 
-    public bool DistrictItemOrSkillAdd(short districtID, int buildingID)
+    public void DistrictItemOrSkillAdd(short districtID, int buildingID)
     {
 
-        if (GetDistrictProductAll(districtID) >= districtDic[districtID].rProductLimit)
-        {
-            MessagePanel.Instance.AddMessage("制品库房已满，生产停止");
-            if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
-            {
-                BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
-                BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
-            }
-            if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
-            {
-                DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
-            }
-            return false;
-        }
+        //if (GetDistrictProductAll(districtID) >= districtDic[districtID].rProductLimit)
+        //{
+        //    MessagePanel.Instance.AddMessage("制品库房已满，生产停止");
+        //    if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        //    {
+        //        BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+        //        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+        //        BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+        //    }
+        //    if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+        //    {
+        //        DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+        //    }
+        //    return false;
+        //}
         int moduleID = buildingDic[buildingID].produceEquipNow;
 
-        if (DataManager.mProduceEquipDict[moduleID].InputWood > forceDic[0].rStuffWood ||
-            DataManager.mProduceEquipDict[moduleID].InputStone > forceDic[0].rStuffStone ||
-            DataManager.mProduceEquipDict[moduleID].InputMetal > forceDic[0].rStuffMetal ||
-            DataManager.mProduceEquipDict[moduleID].InputLeather > forceDic[0].rStuffLeather ||
-            DataManager.mProduceEquipDict[moduleID].InputCloth > forceDic[0].rStuffCloth ||
-            DataManager.mProduceEquipDict[moduleID].InputTwine > forceDic[0].rStuffTwine ||
-            DataManager.mProduceEquipDict[moduleID].InputBone > forceDic[0].rStuffBone ||
-            DataManager.mProduceEquipDict[moduleID].InputWind > forceDic[0].rStuffWind ||
-            DataManager.mProduceEquipDict[moduleID].InputFire > forceDic[0].rStuffFire ||
-            DataManager.mProduceEquipDict[moduleID].InputWater > forceDic[0].rStuffWater ||
-            DataManager.mProduceEquipDict[moduleID].InputGround > forceDic[0].rStuffGround ||
-            DataManager.mProduceEquipDict[moduleID].InputLight > forceDic[0].rStuffLight ||
-            DataManager.mProduceEquipDict[moduleID].InputDark > forceDic[0].rStuffDark)
-        {
-            MessagePanel.Instance.AddMessage("原材料不足，生产停止");
-            if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
-            {
-                BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
-                BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
-            }
-            if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
-            {
-                DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
-            }
-            return false;
-        }
+        //if (DataManager.mProduceEquipDict[moduleID].InputWood > forceDic[0].rStuffWood ||
+        //    DataManager.mProduceEquipDict[moduleID].InputStone > forceDic[0].rStuffStone ||
+        //    DataManager.mProduceEquipDict[moduleID].InputMetal > forceDic[0].rStuffMetal ||
+        //    DataManager.mProduceEquipDict[moduleID].InputLeather > forceDic[0].rStuffLeather ||
+        //    DataManager.mProduceEquipDict[moduleID].InputCloth > forceDic[0].rStuffCloth ||
+        //    DataManager.mProduceEquipDict[moduleID].InputTwine > forceDic[0].rStuffTwine ||
+        //    DataManager.mProduceEquipDict[moduleID].InputBone > forceDic[0].rStuffBone ||
+        //    DataManager.mProduceEquipDict[moduleID].InputWind > forceDic[0].rStuffWind ||
+        //    DataManager.mProduceEquipDict[moduleID].InputFire > forceDic[0].rStuffFire ||
+        //    DataManager.mProduceEquipDict[moduleID].InputWater > forceDic[0].rStuffWater ||
+        //    DataManager.mProduceEquipDict[moduleID].InputGround > forceDic[0].rStuffGround ||
+        //    DataManager.mProduceEquipDict[moduleID].InputLight > forceDic[0].rStuffLight ||
+        //    DataManager.mProduceEquipDict[moduleID].InputDark > forceDic[0].rStuffDark)
+        //{
+        //    MessagePanel.Instance.AddMessage("原材料不足，生产停止");
+        //    if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        //    {
+        //        BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+        //        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+        //        BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+        //    }
+        //    if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+        //    {
+        //        DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+        //    }
+        //    return false;
+        //}
 
+
+     
 
 
         //计算依据模板，确定道具原型ID
@@ -1445,19 +1515,19 @@ public class GameControl : MonoBehaviour
 
 
 
-        forceDic[0].rStuffWood -= DataManager.mProduceEquipDict[moduleID].InputWood;
-        forceDic[0].rStuffStone -= DataManager.mProduceEquipDict[moduleID].InputStone;
-        forceDic[0].rStuffMetal -= DataManager.mProduceEquipDict[moduleID].InputMetal;
-        forceDic[0].rStuffLeather -= DataManager.mProduceEquipDict[moduleID].InputLeather;
-        forceDic[0].rStuffCloth -= DataManager.mProduceEquipDict[moduleID].InputCloth;
-        forceDic[0].rStuffTwine -= DataManager.mProduceEquipDict[moduleID].InputTwine;
-        forceDic[0].rStuffBone -= DataManager.mProduceEquipDict[moduleID].InputBone;
-        forceDic[0].rStuffWind -= DataManager.mProduceEquipDict[moduleID].InputWind;
-        forceDic[0].rStuffFire -= DataManager.mProduceEquipDict[moduleID].InputFire;
-        forceDic[0].rStuffWater -= DataManager.mProduceEquipDict[moduleID].InputWater;
-        forceDic[0].rStuffGround -= DataManager.mProduceEquipDict[moduleID].InputGround;
-        forceDic[0].rStuffLight -= DataManager.mProduceEquipDict[moduleID].InputLight;
-        forceDic[0].rStuffDark -= DataManager.mProduceEquipDict[moduleID].InputDark;
+        //forceDic[0].rStuffWood -= DataManager.mProduceEquipDict[moduleID].InputWood;
+        //forceDic[0].rStuffStone -= DataManager.mProduceEquipDict[moduleID].InputStone;
+        //forceDic[0].rStuffMetal -= DataManager.mProduceEquipDict[moduleID].InputMetal;
+        //forceDic[0].rStuffLeather -= DataManager.mProduceEquipDict[moduleID].InputLeather;
+        //forceDic[0].rStuffCloth -= DataManager.mProduceEquipDict[moduleID].InputCloth;
+        //forceDic[0].rStuffTwine -= DataManager.mProduceEquipDict[moduleID].InputTwine;
+        //forceDic[0].rStuffBone -= DataManager.mProduceEquipDict[moduleID].InputBone;
+        //forceDic[0].rStuffWind -= DataManager.mProduceEquipDict[moduleID].InputWind;
+        //forceDic[0].rStuffFire -= DataManager.mProduceEquipDict[moduleID].InputFire;
+        //forceDic[0].rStuffWater -= DataManager.mProduceEquipDict[moduleID].InputWater;
+        //forceDic[0].rStuffGround -= DataManager.mProduceEquipDict[moduleID].InputGround;
+        //forceDic[0].rStuffLight -= DataManager.mProduceEquipDict[moduleID].InputLight;
+        //forceDic[0].rStuffDark -= DataManager.mProduceEquipDict[moduleID].InputDark;
 
 
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
@@ -1471,13 +1541,9 @@ public class GameControl : MonoBehaviour
          
 
         }
-        PlayMainPanel.Instance.UpdateResources();
-        if (PlayMainPanel.Instance.IsShowResourcesBlock)
-        {
-            PlayMainPanel.Instance.UpdateResourcesBlock();
-        }
+       
         CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemOrSkillID });
-        return true;
+        //return true;
         // itemDic.Add(GenerateItemByRandom(, districtDic[districtID],));
     }
 

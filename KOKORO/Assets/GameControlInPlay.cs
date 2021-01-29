@@ -194,17 +194,20 @@ public class GameControlInPlay : MonoBehaviour
                          districtID = (short)gc.executeEventList[0].value[0][0];
                          buildingID = gc.executeEventList[0].value[1][0];
                          itemId = gc.executeEventList[0].value[2][0];
-                         isSuccess = gc.DistrictItemOrSkillAdd(districtID, buildingID);
+                        // isSuccess = gc.DistrictItemOrSkillAdd(districtID, buildingID);
                         //Debug.Log(isSuccess);
+                     
+                        gc.DistrictItemOrSkillAdd(districtID, buildingID);
                         gc.executeEventList.RemoveAt(0);
-                        if (isSuccess)
-                        {                         
-                            gc.CreateProduceItemEvent(buildingID);
-                        }
-                        else//制作失败，停止继续生产
-                        {
-                            gc.buildingDic[buildingID].isOpen = false;
-                        }
+                        gc.CreateProduceItemEvent(buildingID);
+                        //if (isSuccess)
+                        //{                         
+                        //    gc.CreateProduceItemEvent(buildingID);
+                        //}
+                        //else//制作失败，停止继续生产
+                        //{
+                        //    gc.buildingDic[buildingID].isOpen = false;
+                        //}
                         break;
                     case ExecuteEventType.Build:
                         districtID = (short)gc.executeEventList[0].value[0][0];
