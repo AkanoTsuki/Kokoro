@@ -63,20 +63,26 @@ public class AdventureMainPanel : BasePanel
     }
 
 
-    public  void OnShow(int x ,int y)
+    public void OnShow(byte teamID,int x ,int y)
     {
-        UpdateAllInfo();
+        UpdateAllInfo(teamID);
         SetAnchoredPosition(x, y);
         isShow = true;
     }
 
+
     public override void OnHide()
     {
+        if (AdventureTeamPanel.Instance.isShow)
+        {
+            AdventureTeamPanel.Instance.OnHide();
+        }
+
         SetAnchoredPosition(0, 5000);
         isShow = false;
     }
 
-    public void UpdateAllInfo()
+    public void UpdateAllInfo(byte teamID)
     {
         GameObject go;
 
@@ -93,10 +99,17 @@ public class AdventureMainPanel : BasePanel
                 go.transform.SetParent(teamListGo.transform);
                 adventureTeamGo.Add(go);
             }
-
-            go.GetComponent<RectTransform>().anchoredPosition = new Vector3(i * 404f, 0f, 0f);
-            UpdateTeam(i);
-            HideGets(i);
+            if (i == teamID)
+            {
+                go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 0f);
+                UpdateTeam(i);
+                HideGets(i);
+            }
+            else
+            {
+                go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 5000f);
+                UpdateTeam(i);
+            }
             if (i < adventureTeamBlocks.Count)
             {
                 adventureTeamBlocks[i] = go.GetComponent<AdventureTeamBlock>();
@@ -105,6 +118,8 @@ public class AdventureMainPanel : BasePanel
             {
                 adventureTeamBlocks.Add(go.GetComponent<AdventureTeamBlock>());
             }
+
+
         }
         for (int i = gc.adventureTeamList.Count; i < adventureTeamGo.Count; i++)
         {
@@ -148,7 +163,7 @@ public class AdventureMainPanel : BasePanel
         adventureTeamBlock.detailBtn.onClick.AddListener(delegate ()
         {
             /*详情*/
-            AdventureTeamPanel.Instance.OnShow(teamID, (int)GetComponent<RectTransform>().anchoredPosition.x, (int)GetComponent<RectTransform>().anchoredPosition.y);
+            AdventureTeamPanel.Instance.OnShow(teamID, (int)(GetComponent<RectTransform>().anchoredPosition.x+GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)GetComponent<RectTransform>().anchoredPosition.y);
         });
 
 
@@ -433,7 +448,7 @@ public class AdventureMainPanel : BasePanel
 
             adventureTeamBlock.hero_picImage[j].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[heroID].pic + "/Pic", typeof(Sprite)) as Sprite;
             adventureTeamBlock.hero_nameText[j].text = gc.heroDic[heroID].name + "\nLv." + gc.heroDic[heroID].level;
-            adventureTeamBlock.hero_hpmpText[j].text = "<color=#76ee00>体力 " + gc.adventureTeamList[teamID].heroHpList[j] + "/" + gc.GetHeroAttr(Attribute.Hp, heroID) + "</color>\n<color=#428DFD>魔力 " + gc.adventureTeamList[teamID].heroMpList[j] + "/" + gc.GetHeroAttr(Attribute.Mp, heroID) + "</color>";
+            adventureTeamBlock.hero_hpmpText[j].text = "<color=#" + (gc.adventureTeamList[teamID].heroHpList[j] == 0 ? "FF684F>体力 " : "76ee00>体力 " )+ gc.adventureTeamList[teamID].heroHpList[j] + "/" + gc.GetHeroAttr(Attribute.Hp, heroID) + "</color>\n<color=#428DFD>魔力 " + gc.adventureTeamList[teamID].heroMpList[j] + "/" + gc.GetHeroAttr(Attribute.Mp, heroID) + "</color>";
 
             //if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
             //{
@@ -487,7 +502,7 @@ public class AdventureMainPanel : BasePanel
         if (fightMenberObject.side == 0)
         {
             AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
-            adventureTeamBlock.hero_hpmpText[fightMenberObject.sideIndex].text = "<color=#76ee00>体力 " + fightMenberObject.hpNow + "/" + fightMenberObject.hp + "</color>\n<color=#428DFD>魔力 " + fightMenberObject.mpNow + "/" + fightMenberObject.mp + "</color>";
+            adventureTeamBlock.hero_hpmpText[fightMenberObject.sideIndex].text = "<color=#"+ (fightMenberObject.hpNow == 0 ? "FF684F>体力 " : "76ee00>体力 ") + fightMenberObject.hpNow + "/" + fightMenberObject.hp + "</color>\n<color=#428DFD>魔力 " + fightMenberObject.mpNow + "/" + fightMenberObject.mp + "</color>";
         }
     }
 
@@ -634,23 +649,23 @@ public class AdventureMainPanel : BasePanel
             rollCount[teamID] = 0f;
         }
 
-        if (adventureTeamBlocks[teamID].dungeon_bgListGo.GetComponent<RectTransform>().anchoredPosition.x <= -384f)
+        if (adventureTeamBlocks[teamID].dungeon_bgListGo.GetComponent<RectTransform>().anchoredPosition.x <= -512f)
         {
             
 
             adventureTeamBlocks[teamID].dungeon_progressText.text = ((float)gc.adventureTeamList[teamID].nowDay / DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].PartNum * 100) + "%";
             adventureTeamBlocks[teamID].dungeon_bgListGo.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             adventureTeamBlocks[teamID].dungeon_sceneBgRt[1].anchoredPosition = Vector2.zero;
-            adventureTeamBlocks[teamID].dungeon_sceneBgRt[2].anchoredPosition = new Vector2(384f, 0);
-            adventureTeamBlocks[teamID].dungeon_sceneBgRt[0].anchoredPosition = new Vector2(768f, 0);
+            adventureTeamBlocks[teamID].dungeon_sceneBgRt[2].anchoredPosition = new Vector2(512f, 0);
+            adventureTeamBlocks[teamID].dungeon_sceneBgRt[0].anchoredPosition = new Vector2(1024f, 0);
             RectTransform temp = adventureTeamBlocks[teamID].dungeon_sceneBgRt[0];
             adventureTeamBlocks[teamID].dungeon_sceneBgRt.RemoveAt(0);
             adventureTeamBlocks[teamID].dungeon_sceneBgRt.Add(temp);
 
             adventureTeamBlocks[teamID].dungeon_fgListGo.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             adventureTeamBlocks[teamID].dungeon_sceneFgRt[1].anchoredPosition = Vector2.zero;
-            adventureTeamBlocks[teamID].dungeon_sceneFgRt[2].anchoredPosition = new Vector2(384f, 0);
-            adventureTeamBlocks[teamID].dungeon_sceneFgRt[0].anchoredPosition = new Vector2(768f, 0);
+            adventureTeamBlocks[teamID].dungeon_sceneFgRt[2].anchoredPosition = new Vector2(512f, 0);
+            adventureTeamBlocks[teamID].dungeon_sceneFgRt[0].anchoredPosition = new Vector2(1024f, 0);
              temp = adventureTeamBlocks[teamID].dungeon_sceneFgRt[0];
             adventureTeamBlocks[teamID].dungeon_sceneFgRt.RemoveAt(0);
             adventureTeamBlocks[teamID].dungeon_sceneFgRt.Add(temp);
@@ -666,8 +681,8 @@ public class AdventureMainPanel : BasePanel
         {
             float rate = (float)gc.adventureTeamList[teamID].nowDay / DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID].PartNum;
             adventureTeamBlock.dungeon_progressText.text = (int)(rate * 100) + "%";
-            adventureTeamBlock.dungeon_progressNowBarRt.sizeDelta = new Vector2(rate*384, 4f);
-            adventureTeamBlock.dungeon_progressNowFlagRt.anchoredPosition = new Vector2(rate*384+5, -1f);
+            adventureTeamBlock.dungeon_progressNowBarRt.sizeDelta = new Vector2(rate*512, 4f);
+            adventureTeamBlock.dungeon_progressNowFlagRt.anchoredPosition = new Vector2(rate*512+5, -1f);
         }
         else
         {
@@ -696,10 +711,11 @@ public class AdventureMainPanel : BasePanel
                 adventureTeamBlock.dungeon_side1Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.WalkLeft);
 
             }
-            for (int i = gc.adventureTeamList[teamID].enemyIDList.Count; i < 3; i++)
+            for (int i = gc.adventureTeamList[teamID].enemyIDList.Count; i < 6; i++)
             {
+                adventureTeamBlock.dungeon_side1Go[i].GetComponent<AnimatiorControl>().Stop();
                 adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
-                Debug.Log("问题语句 i="+ i+ "  adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite="+ adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite);
+                Debug.Log("修复的问题语句待观察 i="+ i+ "  adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite="+ adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite);
             }
         }
         else if (gc.adventureTeamList[teamID].action == AdventureAction.GetSomething)
@@ -824,6 +840,11 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.dungeon_side0HpRt[i].sizeDelta = Vector2.zero;
             adventureTeamBlock.dungeon_side0MpRt[i].sizeDelta = Vector2.zero;
 
+            adventureTeamBlock.dungeon_side1HpRt[i].sizeDelta = Vector2.zero;
+            adventureTeamBlock.dungeon_side1MpRt[i].sizeDelta = Vector2.zero;
+        }
+        for (byte i = 3; i < 6; i++)
+        {
             adventureTeamBlock.dungeon_side1HpRt[i].sizeDelta = Vector2.zero;
             adventureTeamBlock.dungeon_side1MpRt[i].sizeDelta = Vector2.zero;
         }
@@ -978,7 +999,10 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.dungeon_side0BuffsGo[i].GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.dungeon_side1BuffsGo[i].GetComponent<RectTransform>().localScale = Vector2.one;
         }
-
+        for (byte i = 3; i < 6; i++)
+        {
+            adventureTeamBlock.dungeon_side1BuffsGo[i].GetComponent<RectTransform>().localScale = Vector2.one;
+        }
     }
     //隐藏场景全部人物(包括敌人)BUFF
     public void HideSceneRoleBuff(byte teamID)
@@ -991,7 +1015,13 @@ public class AdventureMainPanel : BasePanel
                 adventureTeamBlock.dungeon_side0BuffsGo[i].transform.GetChild(j).GetComponent<Image>().overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                 adventureTeamBlock.dungeon_side1BuffsGo[i].transform.GetChild(j).GetComponent<Image>().overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
             }
-  
+        }
+        for (byte i = 3; i < 6; i++)
+        {
+            for (byte j = 0; j < 7; j++)
+            {
+                adventureTeamBlock.dungeon_side1BuffsGo[i].transform.GetChild(j).GetComponent<Image>().overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+            }
         }
     }
 
@@ -1012,65 +1042,79 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
             adventureTeamBlock.dungeon_side1Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
             adventureTeamBlock.dungeon_side1Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+            adventureTeamBlock.dungeon_side1Go[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+            adventureTeamBlock.dungeon_side1Go[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+            adventureTeamBlock.dungeon_side1Go[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.NotSend||
             gc.adventureTeamList[teamID].state == AdventureState.Done||
             gc.adventureTeamList[teamID].state == AdventureState.Retreat||
             gc.adventureTeamList[teamID].state == AdventureState.Fail)
         {
-            adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(39, 40);
-            adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 40);
-            adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-39, 40);
+            adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(39, 45);
+            adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 45);
+            adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-39, 45);
 
             adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
             adventureTeamBlock.dungeon_side1Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
             adventureTeamBlock.dungeon_side1Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+            adventureTeamBlock.dungeon_side1Go[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+            adventureTeamBlock.dungeon_side1Go[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+            adventureTeamBlock.dungeon_side1Go[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.Doing)
         {
             if (gc.adventureTeamList[teamID].action == AdventureAction.Walk)
             {
-                adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(39, 40);
-                adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 40);
-                adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-39, 40);
+                adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(39, 45);
+                adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 45);
+                adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-39, 45);
 
                 adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
                 adventureTeamBlock.dungeon_side1Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
                 adventureTeamBlock.dungeon_side1Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+                adventureTeamBlock.dungeon_side1Go[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+                adventureTeamBlock.dungeon_side1Go[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+                adventureTeamBlock.dungeon_side1Go[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
             }
             else if (gc.adventureTeamList[teamID].action == AdventureAction.Fight)
             {
-                adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(-90 , 40);
+                adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(-90 , 45);
                 adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(-60,15);
-                adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-60, 65 );
+                adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-60, 75 );
 
-                adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(90, 40);
+                adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(90, 45);
                 adventureTeamBlock.dungeon_side1Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(60, 15);
-                adventureTeamBlock.dungeon_side1Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(60, 65);
+                adventureTeamBlock.dungeon_side1Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(60, 75);
+                adventureTeamBlock.dungeon_side1Go[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(140, 45);
+                adventureTeamBlock.dungeon_side1Go[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(110, 15);
+                adventureTeamBlock.dungeon_side1Go[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(110, 75);
             }
             else if (gc.adventureTeamList[teamID].action == AdventureAction.GetSomething)
             {
-                adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(39,40);
-                adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 40);
-                adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-39, 40);
+                adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(39,45);
+                adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 45);
+                adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-39, 45);
 
-                adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(78, 40);
+                adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(78, 45);
                 adventureTeamBlock.dungeon_side1Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
                 adventureTeamBlock.dungeon_side1Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
-
-                
+                adventureTeamBlock.dungeon_side1Go[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+                adventureTeamBlock.dungeon_side1Go[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+                adventureTeamBlock.dungeon_side1Go[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
             }
             else if (gc.adventureTeamList[teamID].action == AdventureAction.SpringHp|| gc.adventureTeamList[teamID].action == AdventureAction.SpringMp)
             {
-                adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(39, 40);
-                adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 40);
-                adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-39, 40);
+                adventureTeamBlock.dungeon_side0Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(39, 45);
+                adventureTeamBlock.dungeon_side0Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 45);
+                adventureTeamBlock.dungeon_side0Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-39, 45);
 
-                adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(12, 55);
+                adventureTeamBlock.dungeon_side1Go[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(12, 60);
                 adventureTeamBlock.dungeon_side1Go[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
                 adventureTeamBlock.dungeon_side1Go[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
-
-
+                adventureTeamBlock.dungeon_side1Go[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+                adventureTeamBlock.dungeon_side1Go[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+                adventureTeamBlock.dungeon_side1Go[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
             }
         }
 

@@ -43,6 +43,46 @@ public class SkillListAndInfoPanel : BasePanel
     public Text tipText;
     public List<Button> funcBtn;
 
+    public RectTransform batchRt;
+    public Text batch_titleText;
+    public Button batch_rankAllBtn;
+    public List<Button> batch_rankBtn;
+    public RectTransform batch_rankAllRt;
+    public List<RectTransform> batch_rankRt;
+
+    public Button batch_typeAllBtn;
+    public Button batch_typeNoneBtn;
+    public Button batch_typeWindIBtn;
+    public Button batch_typeFireIBtn;
+    public Button batch_typeWaterIBtn;
+    public Button batch_typeGroundIBtn;
+    public Button batch_typeLightIBtn;
+    public Button batch_typeDarkIBtn;
+    public Button batch_typeWindIIBtn;
+    public Button batch_typeFireIIBtn;
+    public Button batch_typeWaterIIBtn;
+    public Button batch_typeGroundIIBtn;
+    public Button batch_typeLightIIBtn;
+    public Button batch_typeDarkIIBtn;
+
+    public RectTransform batch_typeAllRt;
+    public RectTransform batch_typeNoneRt;
+    public RectTransform batch_typeWindIRt;
+    public RectTransform batch_typeFireIRt;
+    public RectTransform batch_typeWaterIRt;
+    public RectTransform batch_typeGroundIRt;
+    public RectTransform batch_typeLightIRt;
+    public RectTransform batch_typeDarkIRt;
+    public RectTransform batch_typeWindIIRt;
+    public RectTransform batch_typeFireIIRt;
+    public RectTransform batch_typeWaterIIRt;
+    public RectTransform batch_typeGroundIIRt;
+    public RectTransform batch_typeLightIIRt;
+    public RectTransform batch_typeDarkIIRt;
+
+    public Button batch_cancelBtn;
+    public Button batch_confirmBtn;
+
     public Button closeBtn;
 
     List<GameObject> skillGo = new List<GameObject>();
@@ -76,6 +116,30 @@ public class SkillListAndInfoPanel : BasePanel
         list_filterNaturalBtn.onClick.AddListener(delegate () { UpdateAllInfo(nowDistrictID, new List<int> { 4,3 }, nowHeroID, nowHeroSkillIndex); });
         list_filterSpaceBtn.onClick.AddListener(delegate () { UpdateAllInfo(nowDistrictID, new List<int> { 5,1 }, nowHeroID, nowHeroSkillIndex); });
         list_filterDeathBtn.onClick.AddListener(delegate () { UpdateAllInfo(nowDistrictID, new List<int> { 6,2 }, nowHeroID, nowHeroSkillIndex); });
+
+        batch_rankAllBtn.onClick.AddListener(delegate () { gc.SkillPanelSetRankAll(); });
+        batch_rankBtn[0].onClick.AddListener(delegate () { gc.SkillPanelSetRank(1); });
+        batch_rankBtn[1].onClick.AddListener(delegate () { gc.SkillPanelSetRank(2); });
+        batch_rankBtn[2].onClick.AddListener(delegate () { gc.SkillPanelSetRank(3); });
+        batch_rankBtn[3].onClick.AddListener(delegate () { gc.SkillPanelSetRank(4); });
+
+        batch_typeAllBtn.onClick.AddListener(delegate () { gc.SkillPanelSetTypeAll(); });
+        batch_typeNoneBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollNone); });
+        batch_typeWindIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollWindI); });
+        batch_typeFireIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollFireI); });
+        batch_typeWaterIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollWaterI); });
+        batch_typeGroundIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollGroundI); });
+        batch_typeLightIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollLightI); });
+        batch_typeDarkIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollDarkI); });
+        batch_typeWindIIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollWindII); });
+        batch_typeFireIIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollFireII); });
+        batch_typeWaterIIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollWaterII); });
+        batch_typeGroundIIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollGroundII); });
+        batch_typeLightIIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollLightII); });
+        batch_typeDarkIIBtn.onClick.AddListener(delegate () { gc.SkillPanelSetType(ItemTypeSmall.ScrollDarkII); });
+
+        batch_cancelBtn.onClick.AddListener(delegate () { HideBatch(); });
+
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
 
     }
@@ -92,6 +156,7 @@ public class SkillListAndInfoPanel : BasePanel
         HideFuncBtn(3);
 
         UpdateAllInfo(districtID, element, heroID, heroSkillIndex);
+        HideBatch();
         SetAnchoredPosition(x, y);
         transform.SetAsLastSibling();
         nowDistrictID = districtID;
@@ -137,14 +202,19 @@ public class SkillListAndInfoPanel : BasePanel
             titleText.text = "收藏仓库";
             funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
             funcBtn[0].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
-            funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "半价出售>>";
+            funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "出售>>";
             funcBtn[0].onClick.RemoveAllListeners();
-            funcBtn[0].onClick.AddListener(delegate () { gc.Skillales(nowSkillID); });
+            funcBtn[0].onClick.AddListener(delegate () { gc.SkillSales(nowSkillID); });
 
-            HideFuncBtn(3);
+            funcBtn[1].GetComponent<RectTransform>().localScale = Vector2.one;
+            funcBtn[1].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+            funcBtn[1].transform.GetChild(0).GetComponent<Text>().text = "批量出售>>";
+            funcBtn[1].onClick.RemoveAllListeners();
+            funcBtn[1].onClick.AddListener(delegate () { ShowBatch("sale"); });
+            HideFuncBtn(2);
         }
         UpdateAllInfo(districtID, null, -1, 0);
-
+        HideBatch();
         SetAnchoredPosition(x, y);
         transform.SetAsLastSibling();
         nowDistrictID = districtID;
@@ -272,7 +342,7 @@ public class SkillListAndInfoPanel : BasePanel
 
             int row = i == 0 ? 0 : (i % 2);
             int col = i == 0 ? 0 : (i / 2);
-            go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 224f, -4 + col * -22f, 0f);
+            go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + row * 224f, -4 + col * -22f);
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/SkillPic/" +DataManager.mSkillDict[ skillObjects[i].prototypeID].Pic);
             go.transform.GetChild(1).GetComponent<Text>().text = skillObjects[i].name + "之卷";
@@ -456,5 +526,181 @@ public class SkillListAndInfoPanel : BasePanel
         info_picImage.sprite = Resources.Load<Sprite>("Image/Empty");
         info_nameText.text = "";
         info_desText.text = "";
+    }
+
+    public void ShowBatch(string type)
+    {
+        batchRt.localScale = Vector2.one;
+
+        if (type == "sale")
+        {
+            batch_titleText.text = "批量操作（半价出售）";
+            batch_confirmBtn.onClick.RemoveAllListeners();
+            batch_confirmBtn.onClick.AddListener(delegate () { gc.SkillSalesBatch(); });
+        }
+        UpdateBatchRank();
+        UpdateBatchType();
+    }
+
+    public void UpdateBatchRank()
+    {
+        if (gc.skillPanel_rankSelected.Count == 4)
+        {
+            batch_rankAllRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_rankAllRt.localScale = Vector2.zero;
+        }
+
+        for (byte i = 1; i < 5; i++)
+        {
+            if (gc.skillPanel_rankSelected.Contains(i))
+            {
+                batch_rankRt[i - 1].localScale = Vector2.one;
+            }
+            else
+            {
+                batch_rankRt[i - 1].localScale = Vector2.zero;
+            }
+        }
+
+    }
+
+    public void UpdateBatchType()
+    {
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollNone) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWindI) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollFireI) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWaterI) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollGroundI) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollLightI) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollDarkI) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWindII) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollFireII) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWaterII) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollGroundII) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollLightII) &&
+     gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollDarkII) )
+        {
+            batch_typeAllRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeAllRt.localScale = Vector2.zero;
+        }
+
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollNone))
+        {
+            batch_typeNoneRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeNoneRt.localScale = Vector2.zero;
+        }
+
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWindI))
+        {
+            batch_typeWindIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeWindIRt.localScale = Vector2.zero;
+        }
+
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollFireI))
+        {
+            batch_typeFireIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeFireIRt.localScale = Vector2.zero;
+        }
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWaterI))
+        {
+            batch_typeWaterIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeWaterIRt.localScale = Vector2.zero;
+        }
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollGroundI))
+        {
+            batch_typeGroundIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeGroundIRt.localScale = Vector2.zero;
+        }
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollLightI))
+        {
+            batch_typeLightIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeLightIRt.localScale = Vector2.zero;
+        }
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollDarkI))
+        {
+            batch_typeDarkIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeDarkIRt.localScale = Vector2.zero;
+        }
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWindII))
+        {
+            batch_typeWindIIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeWindIIRt.localScale = Vector2.zero;
+        }
+
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollFireII))
+        {
+            batch_typeFireIIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeFireIIRt.localScale = Vector2.zero;
+        }
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWaterII))
+        {
+            batch_typeWaterIIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeWaterIIRt.localScale = Vector2.zero;
+        }
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollGroundII))
+        {
+            batch_typeGroundIIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeGroundIIRt.localScale = Vector2.zero;
+        }
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollLightII))
+        {
+            batch_typeLightIIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeLightIIRt.localScale = Vector2.zero;
+        }
+        if (gc.skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollDarkII))
+        {
+            batch_typeDarkIIRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_typeDarkIIRt.localScale = Vector2.zero;
+        }
+    }
+
+    public void HideBatch()
+    {
+        batchRt.localScale = Vector2.zero;
     }
 }

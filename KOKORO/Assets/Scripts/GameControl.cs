@@ -32,8 +32,15 @@ public class GameControl : MonoBehaviour
     public int travellerIndex = 0;
     public int forceIndex = 0;
     public bool[] buildingUnlock = new bool[78];
+    public Dictionary<StuffType, bool> forgeAddUnlock = new Dictionary<StuffType, bool>();
     public int logIndex = 0;
     //public byte forceFlag = 0;
+
+    public List<byte> itemPanel_rankSelected = new List<byte>();
+    public List<byte> itemPanel_levelSelected = new List<byte>();
+    public List<ItemTypeSmall> itemPanel_typeSelected = new List<ItemTypeSmall>();
+    public List<byte> skillPanel_rankSelected = new List<byte>();
+    public List<ItemTypeSmall> skillPanel_typeSelected = new List<ItemTypeSmall>();
 
     public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
     public Dictionary<int, HeroObject> heroDic = new Dictionary<int, HeroObject>();
@@ -80,8 +87,16 @@ public class GameControl : MonoBehaviour
         public int travellerIndex = 0;
         public int forceIndex = 0;
         public bool[] buildingUnlock = new bool[78];
+        public Dictionary<StuffType, bool> forgeAddUnlock = new Dictionary<StuffType, bool>();
         public int logIndex = 0;
         //public byte forceFlag = 0;
+
+        public List<byte> itemPanel_rankSelected = new List<byte>();
+        public List<byte> itemPanel_levelSelected = new List<byte>();
+        public List<ItemTypeSmall> itemPanel_typeSelected = new List<ItemTypeSmall>();
+        public List<byte> skillPanel_rankSelected = new List<byte>();
+        public List<ItemTypeSmall> skillPanel_typeSelected = new List<ItemTypeSmall>();
+
         public Dictionary<int, ItemObject> itemDic = new Dictionary<int, ItemObject>();
         public Dictionary<int, HeroObject> heroDic = new Dictionary<int, HeroObject>();
         public DistrictObject[] districtDic = new DistrictObject[11];
@@ -135,8 +150,15 @@ public class GameControl : MonoBehaviour
         t.travellerIndex = this.travellerIndex;
         t.forceIndex = this.forceIndex;
         t.buildingUnlock = this.buildingUnlock;
+        t.forgeAddUnlock = this.forgeAddUnlock;
         t.logIndex = this.logIndex;
-       // t.forceFlag = this.forceFlag;
+        // t.forceFlag = this.forceFlag;
+        t.itemPanel_rankSelected = this.itemPanel_rankSelected;
+        t.itemPanel_levelSelected = this.itemPanel_levelSelected;
+        t.itemPanel_typeSelected = this.itemPanel_typeSelected;
+        t.skillPanel_rankSelected = this.skillPanel_rankSelected;
+        t.skillPanel_typeSelected = this.skillPanel_typeSelected;
+
         t.itemDic = this.itemDic;
         t.heroDic = this.heroDic;
         t.districtDic = this.districtDic;
@@ -196,8 +218,15 @@ public class GameControl : MonoBehaviour
             this.travellerIndex = t1.travellerIndex;
             this.forceIndex = t1.forceIndex;
             this.buildingUnlock = t1.buildingUnlock;
+            this.forgeAddUnlock = t1.forgeAddUnlock;
             this.logIndex = t1.logIndex;
-           // this.forceFlag = t1.forceFlag;
+            // this.forceFlag = t1.forceFlag;
+            this.itemPanel_rankSelected = t1.itemPanel_rankSelected;
+            this.itemPanel_levelSelected = t1.itemPanel_levelSelected;
+            this.itemPanel_typeSelected = t1.itemPanel_typeSelected;
+            this.skillPanel_rankSelected = t1.skillPanel_rankSelected;
+            this.skillPanel_typeSelected = t1.skillPanel_typeSelected;
+
             this.itemDic = t1.itemDic;
             this.heroDic = t1.heroDic;
             this.districtDic = t1.districtDic;
@@ -471,7 +500,7 @@ public class GameControl : MonoBehaviour
     }
 
 
-    public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject, List<int> heroObjectIDList)
+    public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject,int buildingID, List<int> heroObjectIDList)
     {
         //随机提升等级，每个等级提升基础数据5%，上限5
         byte upLevel = 0;
@@ -603,6 +632,8 @@ public class GameControl : MonoBehaviour
             if (DataManager.mLemmaDict[lemmaID].ItemGet.Count != 0) { attrList.Add(new ItemAttribute(Attribute.ItemGet, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].ItemGet[rank] * upRate))); }
 
         }
+
+        //TODO:依据建筑附加材料生成属性
 
 
 
@@ -867,7 +898,7 @@ public class GameControl : MonoBehaviour
         buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, posX, posY, layer, posX > 64 ? AnimStatus.WalkLeft : AnimStatus.WalkRight, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false, false, grid, new List<int> { }, new List<int> { },
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,
-            -1, 0, new List<StuffType> { }));
+            -1, 0, new List<StuffType> { StuffType.None, StuffType.None, StuffType.None },0));
 
 
         int needTime = DataManager.mBuildingDict[BuildingPrototypeID].BuildTime * 10;
@@ -1140,6 +1171,27 @@ public class GameControl : MonoBehaviour
     public void CreateProduceItemEvent(int buildingID)
     {
         short districtID = buildingDic[buildingID].districtID;
+
+        if (buildingDic[buildingID].forgeNum == 0)
+        {
+            buildingDic[buildingID].isOpen = false;
+            MessagePanel.Instance.AddMessage("已完成指定生产数量，生产停止");
+            if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+            {
+                BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+            }
+            if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+            {
+                DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+            }
+            return;
+        }
+
+    
+
+        
         if (GetDistrictProductAll(districtID) >= districtDic[districtID].rProductLimit)
         {
             buildingDic[buildingID].isOpen = false;
@@ -1189,6 +1241,47 @@ public class GameControl : MonoBehaviour
             return ;
         }
 
+        bool addOK = true;
+        for (int i = 0; i < 3; i++)
+        {
+            if (buildingDic[buildingID].forgeAddStuff[i] != StuffType.None)
+            {
+                switch (buildingDic[buildingID].forgeAddStuff[i])
+                {
+                    case StuffType.Wood: if (forceDic[0].rStuffWood < (DataManager.mProduceEquipDict[moduleID].InputWood+ GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break; 
+                    case StuffType.Stone: if (forceDic[0].rStuffStone < (DataManager.mProduceEquipDict[moduleID].InputStone + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Metal: if (forceDic[0].rStuffMetal < (DataManager.mProduceEquipDict[moduleID].InputMetal + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Leather: if (forceDic[0].rStuffLeather < (DataManager.mProduceEquipDict[moduleID].InputLeather + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Cloth: if (forceDic[0].rStuffCloth < (DataManager.mProduceEquipDict[moduleID].InputCloth + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Twine: if (forceDic[0].rStuffTwine < (DataManager.mProduceEquipDict[moduleID].InputTwine + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Bone: if (forceDic[0].rStuffBone < (DataManager.mProduceEquipDict[moduleID].InputBone + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Wind: if (forceDic[0].rStuffWind < (DataManager.mProduceEquipDict[moduleID].InputWind + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Fire: if (forceDic[0].rStuffFire < (DataManager.mProduceEquipDict[moduleID].InputFire + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Water: if (forceDic[0].rStuffWater < (DataManager.mProduceEquipDict[moduleID].InputWater + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Ground: if (forceDic[0].rStuffGround < (DataManager.mProduceEquipDict[moduleID].InputGround + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Light: if (forceDic[0].rStuffLight < (DataManager.mProduceEquipDict[moduleID].InputLight + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Dark: if (forceDic[0].rStuffDark < (DataManager.mProduceEquipDict[moduleID].InputDark + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                }
+                if (addOK == false)
+                {
+                    buildingDic[buildingID].isOpen = false;
+                    MessagePanel.Instance.AddMessage("附加材料不足，生产停止");
+                    if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+                    {
+                        BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+                        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                        BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+                    }
+                    if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+                    {
+                        DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+                    }
+                    return;
+                }
+            }
+        }
+
+
         forceDic[0].rStuffWood -= DataManager.mProduceEquipDict[moduleID].InputWood;
         forceDic[0].rStuffStone -= DataManager.mProduceEquipDict[moduleID].InputStone;
         forceDic[0].rStuffMetal -= DataManager.mProduceEquipDict[moduleID].InputMetal;
@@ -1202,6 +1295,31 @@ public class GameControl : MonoBehaviour
         forceDic[0].rStuffGround -= DataManager.mProduceEquipDict[moduleID].InputGround;
         forceDic[0].rStuffLight -= DataManager.mProduceEquipDict[moduleID].InputLight;
         forceDic[0].rStuffDark -= DataManager.mProduceEquipDict[moduleID].InputDark;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (buildingDic[buildingID].forgeAddStuff[i] != StuffType.None)
+            {
+                switch (buildingDic[buildingID].forgeAddStuff[i])
+                {
+                    case StuffType.Wood: forceDic[0].rStuffWood -= 10;  break;
+                    case StuffType.Stone: forceDic[0].rStuffStone -= 10; break;
+                    case StuffType.Metal: forceDic[0].rStuffMetal -= 10; break;
+                    case StuffType.Leather: forceDic[0].rStuffLeather -= 10; break;
+                    case StuffType.Cloth: forceDic[0].rStuffCloth -= 10; break;
+                    case StuffType.Twine: forceDic[0].rStuffTwine -= 10; break;
+                    case StuffType.Bone: forceDic[0].rStuffBone -= 10; break;
+                    case StuffType.Wind: forceDic[0].rStuffWind -= 10; break;
+                    case StuffType.Fire: forceDic[0].rStuffFire -= 10; break;
+                    case StuffType.Water: forceDic[0].rStuffWater -= 10; break;
+                    case StuffType.Ground: forceDic[0].rStuffGround -= 10; break;
+                    case StuffType.Light: forceDic[0].rStuffLight -= 10; break;
+                    case StuffType.Dark: forceDic[0].rStuffDark -= 10; break;
+                }
+            }
+
+        }
+
 
         int needLabor = DataManager.mProduceEquipDict[buildingDic[buildingID].produceEquipNow].NeedLabor;
         int nowLabor = 20 + buildingDic[buildingID].workerNow * 20;
@@ -1248,6 +1366,19 @@ public class GameControl : MonoBehaviour
         {
             PlayMainPanel.Instance.UpdateResourcesBlock();
         }
+    }
+
+    int GetForgeTypeCount(StuffType stuffType, List<StuffType> stuffTypes)
+    {
+        int count = 0;
+        for (int i = 0; i < stuffTypes.Count; i++)
+        {
+            if (stuffTypes[i] == stuffType)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void CreateProduceResourceEvent(int buildingID)
@@ -1350,7 +1481,7 @@ public class GameControl : MonoBehaviour
 
     public void DistrictItemOrSkillAdd(short districtID, int buildingID)
     {
-
+        buildingDic[buildingID].forgeNum--;
         //if (GetDistrictProductAll(districtID) >= districtDic[districtID].rProductLimit)
         //{
         //    MessagePanel.Instance.AddMessage("制品库房已满，生产停止");
@@ -1437,7 +1568,7 @@ public class GameControl : MonoBehaviour
             case ItemTypeSmall.HandL:
             case ItemTypeSmall.BackL:
             case ItemTypeSmall.FootL:
-                itemDic.Add(itemIndex, GenerateItemByRandom(itemOrSkillID, districtDic[districtID], buildingDic[buildingID].heroList));
+                itemDic.Add(itemIndex, GenerateItemByRandom(itemOrSkillID, districtDic[districtID], buildingID,buildingDic[buildingID].heroList));
                 itemIndex++;
                 switch (DataManager.mItemDict[itemOrSkillID].TypeBig)
                 {
@@ -1529,6 +1660,7 @@ public class GameControl : MonoBehaviour
         //forceDic[0].rStuffLight -= DataManager.mProduceEquipDict[moduleID].InputLight;
         //forceDic[0].rStuffDark -= DataManager.mProduceEquipDict[moduleID].InputDark;
 
+        CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemOrSkillID });
 
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
         {
@@ -1542,7 +1674,7 @@ public class GameControl : MonoBehaviour
 
         }
        
-        CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemOrSkillID });
+        
         //return true;
         // itemDic.Add(GenerateItemByRandom(, districtDic[districtID],));
     }
@@ -1715,8 +1847,35 @@ public class GameControl : MonoBehaviour
 
     public void ChangeProduceEquipAddStuff(int buildingID, int addIndex, StuffType newStuff)
     {
-        //  buildingDic[buildingID].forgeAddStuff
+        buildingDic[buildingID].forgeAddStuff[addIndex] = newStuff;
+        BuildingPanel.Instance.HideSetForgeAddBlock();
+        BuildingPanel.Instance.UpdateSetForgePart(buildingDic[buildingID]);
     }
+    public void SetProduceEquipNum(int buildingID, short num)
+    {
+        buildingDic[buildingID].forgeNum = num;
+
+        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+    }
+    public void ChangeProduceEquipNum(int buildingID, short num)
+    {
+        if (buildingDic[buildingID].forgeNum == -1)
+        {
+            buildingDic[buildingID].forgeNum = 0;
+        }
+
+            buildingDic[buildingID].forgeNum += num;
+        if (buildingDic[buildingID].forgeNum < 0)
+        {
+            buildingDic[buildingID].forgeNum = 0;
+        }
+        if (buildingDic[buildingID].forgeNum > 100)
+        {
+            buildingDic[buildingID].forgeNum = 100;
+        }
+        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+    }
+
 
     public void CreateBuildingSaleEvent(int buildingID)
     {
@@ -2078,6 +2237,12 @@ public class GameControl : MonoBehaviour
     #region 【方法】英雄装备/卸下，技能配置
     public void HeroEquipSet(int heroID, EquipPart equipPart, int itemID)
     {
+        if (itemID == -1)
+        {
+            MessagePanel.Instance.AddMessage("未选择物品");
+            return;
+        }
+
         // Debug.Log("HeroEquipSet() heroID=" + heroID + " equipPart=" + equipPart + " itemID="+ itemID+ " heroDic[heroID].equipWeapon=" + heroDic[heroID].equipWeapon);
         if (itemDic[itemID].heroID != -1)
         {
@@ -2242,6 +2407,7 @@ public class GameControl : MonoBehaviour
             ItemListAndInfoPanel.Instance.UpdateAllInfoToEquip(equipPart);
         }
         PlayMainPanel.Instance.UpdateButtonItemNum();
+        PlayMainPanel.Instance.UpdateInventoryNum();
     }
 
     public void HeroSkillSet(int heroID, byte index, int skillID)
@@ -2261,6 +2427,7 @@ public class GameControl : MonoBehaviour
             heroDic[heroID].skill[index] = skillID;
             forceDic[0].rProductNow++;
             PlayMainPanel.Instance.UpdateButtonSkillNum();
+            PlayMainPanel.Instance.UpdateInventoryNum();
         }
         else
         {
@@ -2339,6 +2506,7 @@ public class GameControl : MonoBehaviour
             DistrictMapPanel.Instance.UpdateButtonItemNum(districtID);
         }
         PlayMainPanel.Instance.UpdateButtonItemNum();
+        PlayMainPanel.Instance.UpdateInventoryNum();
     }
 
     public void ItemToCollection(int itemID)
@@ -2379,6 +2547,7 @@ public class GameControl : MonoBehaviour
             DistrictMapPanel.Instance.UpdateButtonItemNum(districtID);
         }
         PlayMainPanel.Instance.UpdateButtonItemNum();
+        PlayMainPanel.Instance.UpdateInventoryNum();
     }
 
     public void ItemToGoodsAll(short districtID)
@@ -2500,6 +2669,7 @@ public class GameControl : MonoBehaviour
             DistrictMapPanel.Instance.UpdateButtonScrollNum(districtID);
         }
         PlayMainPanel.Instance.UpdateButtonSkillNum();
+        PlayMainPanel.Instance.UpdateInventoryNum();
     }
 
     public void SkillToCollection(int skillID)
@@ -2525,6 +2695,7 @@ public class GameControl : MonoBehaviour
             DistrictMapPanel.Instance.UpdateButtonScrollNum(districtID);
         }
         PlayMainPanel.Instance.UpdateButtonSkillNum();
+        PlayMainPanel.Instance.UpdateInventoryNum();
     }
 
     public void SkillToGoodsAll(short districtID)
@@ -2586,9 +2757,306 @@ public class GameControl : MonoBehaviour
         itemDic.Remove(itemID);
         PlayMainPanel.Instance.UpdateGold();
         PlayMainPanel.Instance.UpdateButtonItemNum();
-        ItemListAndInfoPanel.Instance.OnShow(-1, 64, -88);
+        PlayMainPanel.Instance.UpdateInventoryNum();
+        ItemListAndInfoPanel.Instance.OnShow(-1, 76, -104,2);
     }
-    public void Skillales(int skillID)
+    
+    public void ItemSalesBatch()
+    {
+  
+        int gold = 0;
+        List<int> itemObjects = new List<int>();
+        foreach (KeyValuePair<int, ItemObject> kvp in itemDic)
+        {
+            if (kvp.Value.districtID == -1 && itemPanel_rankSelected.Contains(kvp.Value.rank) && itemPanel_levelSelected.Contains(kvp.Value.level) && itemPanel_typeSelected.Contains(DataManager.mItemDict[kvp.Value.prototypeID].TypeSmall))
+            {
+                gold += itemDic[kvp.Key].cost / 2;
+
+                itemObjects.Add(kvp.Key);
+                
+ 
+            }
+        }
+        for (int i = 0; i < itemObjects.Count; i++)
+        {
+            itemDic.Remove(itemObjects[i]);
+        }
+
+        forceDic[0].gold += gold;
+        MessagePanel.Instance.AddMessage("出售了符合要求的"+ itemObjects.Count + "件装备,共获得金币"+ gold);
+        PlayMainPanel.Instance.UpdateGold();
+        PlayMainPanel.Instance.UpdateButtonItemNum();
+        PlayMainPanel.Instance.UpdateInventoryNum();
+        //ItemListAndInfoPanel.Instance.HideBatch();
+        ItemListAndInfoPanel.Instance.OnShow(-1, 76, -104, 2);
+    }
+
+
+
+
+    public void ItemPanelSetRank(byte rank)
+    {
+        if (itemPanel_rankSelected.Contains(rank))
+        {
+            itemPanel_rankSelected.Remove(rank);
+        }
+        else
+        {
+            itemPanel_rankSelected.Add(rank);
+        }
+        ItemListAndInfoPanel.Instance.UpdateBatchRank();
+    }
+
+    public void ItemPanelSetRankAll()
+    {
+        if (itemPanel_rankSelected.Count == 10)
+        {
+            itemPanel_rankSelected.Clear();
+        }
+        else
+        {
+            itemPanel_rankSelected = new List<byte> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        }
+        ItemListAndInfoPanel.Instance.UpdateBatchRank();
+    }
+
+
+    public void ItemPanelSetLevel(byte level)
+    {
+        if (itemPanel_levelSelected.Contains(level))
+        {
+            itemPanel_levelSelected.Remove(level);
+        }
+        else
+        {
+            itemPanel_levelSelected.Add(level);
+        }
+        ItemListAndInfoPanel.Instance.UpdateBatchLevel();
+    }
+    public void ItemPanelSetLevelAll()
+    {
+        if (itemPanel_levelSelected.Count == 11)
+        {
+            itemPanel_levelSelected.Clear();
+        }
+        else
+        {
+            itemPanel_levelSelected = new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        }
+        ItemListAndInfoPanel.Instance.UpdateBatchLevel();
+    }
+
+    public void ItemPanelSetType(ItemTypeSmall type)
+    {
+        if (itemPanel_typeSelected.Contains(type))
+        {
+            itemPanel_typeSelected.Remove(type);
+        }
+        else
+        {
+            itemPanel_typeSelected.Add(type);
+        }
+
+        if (type == ItemTypeSmall.Sword ||
+            type == ItemTypeSmall.Axe ||
+            type == ItemTypeSmall.Spear ||
+            type == ItemTypeSmall.Hammer ||
+            type == ItemTypeSmall.Bow ||
+            type == ItemTypeSmall.Staff)
+        {
+            ItemListAndInfoPanel.Instance.UpdateBatchWeapon();
+        }
+        else if (type == ItemTypeSmall.HeadH ||
+           type == ItemTypeSmall.BodyH ||
+           type == ItemTypeSmall.HandH ||
+           type == ItemTypeSmall.BackH ||
+           type == ItemTypeSmall.FootH ||
+           type == ItemTypeSmall.HeadL ||
+           type == ItemTypeSmall.BodyL ||
+           type == ItemTypeSmall.HandL ||
+           type == ItemTypeSmall.BackL ||
+           type == ItemTypeSmall.FootL )
+        {
+            ItemListAndInfoPanel.Instance.UpdateBatchArmor();
+        }
+        else if (type == ItemTypeSmall.Shield ||
+        type == ItemTypeSmall.Dorlach)
+        {
+            ItemListAndInfoPanel.Instance.UpdateBatchSubhand();
+        }
+        else if (type == ItemTypeSmall.Neck ||
+        type == ItemTypeSmall.Finger)
+        {
+            ItemListAndInfoPanel.Instance.UpdateBatchJewelry();
+        }
+    }
+
+    public void ItemPanelSetTypeWeaponAll()
+    {
+        if (itemPanel_typeSelected.Contains(ItemTypeSmall.Sword) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.Axe) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.Spear) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.Hammer) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.Bow) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.Staff))
+        {
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Sword);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Axe);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Spear);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Hammer);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Bow);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Staff);
+        }
+        else
+        {
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Sword))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Sword);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Axe))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Axe);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Spear))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Spear);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Hammer))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Hammer);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Bow))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Bow);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Staff))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Staff);
+            }
+        }
+
+        ItemListAndInfoPanel.Instance.UpdateBatchWeapon();
+    }
+
+    public void ItemPanelSetTypeArmorAll()
+    {
+        if (itemPanel_typeSelected.Contains(ItemTypeSmall.HeadH) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.BodyH) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.HandH) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.BackH) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.FootH) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.HeadL) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.BodyL) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.HandL) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.BackL) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.FootL))
+        {
+            itemPanel_typeSelected.Remove(ItemTypeSmall.HeadH);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.BodyH);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.HandH);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.BackH);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.FootH);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.HeadL);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.BodyL);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.HandL);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.BackL);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.FootL);
+        }
+        else
+        {
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.HeadH))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.HeadH);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.BodyH))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.BodyH);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.HandH))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.HandH);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.BackH))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.BackH);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.FootH))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.FootH);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.HeadL))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.HeadL);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.BodyL))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.BodyL);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.HandL))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.HandL);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.BackL))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.BackL);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.FootL))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.FootL);
+            }
+        }
+
+        ItemListAndInfoPanel.Instance.UpdateBatchArmor();
+    }
+
+    public void ItemPanelSetTypeSubhandAll()
+    {
+        if (itemPanel_typeSelected.Contains(ItemTypeSmall.Shield) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.Dorlach))
+        {
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Shield);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Dorlach);
+        }
+        else
+        {
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Shield))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Shield);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Dorlach))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Dorlach);
+            }
+
+        }
+        ItemListAndInfoPanel.Instance.UpdateBatchSubhand();
+    }
+
+    public void ItemPanelSetTypeJewelryAll()
+    {
+        if (itemPanel_typeSelected.Contains(ItemTypeSmall.Neck) &&
+            itemPanel_typeSelected.Contains(ItemTypeSmall.Finger))
+        {
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Neck);
+            itemPanel_typeSelected.Remove(ItemTypeSmall.Finger);
+        }
+        else
+        {
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Neck))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Neck);
+            }
+            if (!itemPanel_typeSelected.Contains(ItemTypeSmall.Finger))
+            {
+                itemPanel_typeSelected.Add(ItemTypeSmall.Finger);
+            }
+        }
+
+        ItemListAndInfoPanel.Instance.UpdateBatchJewelry();
+    }
+
+
+    public void SkillSales(int skillID)
     {
         if (!skillDic.ContainsKey(skillID))
         {
@@ -2600,8 +3068,168 @@ public class GameControl : MonoBehaviour
         skillDic.Remove(skillID);
         PlayMainPanel.Instance.UpdateGold();
         PlayMainPanel.Instance.UpdateButtonSkillNum();
-        SkillListAndInfoPanel.Instance.OnShow(-1,null, 76, -104);
+        PlayMainPanel.Instance.UpdateInventoryNum();
+        SkillListAndInfoPanel.Instance.OnShow(-1, null, 76, -104);
     }
+
+    public void SkillSalesBatch()
+    {
+
+        int gold = 0;
+        List<int> itemObjects = new List<int>();
+        foreach (KeyValuePair<int, SkillObject> kvp in skillDic)
+        {
+            if (kvp.Value.districtID == -1 && skillPanel_rankSelected.Contains(DataManager.mSkillDict[kvp.Value.prototypeID].Rank) && skillPanel_typeSelected.Contains(DataManager.mSkillDict[kvp.Value.prototypeID].TypeSmall))
+            {
+                gold += skillDic[kvp.Key].cost / 2;
+
+                itemObjects.Add(kvp.Key);
+
+
+            }
+        }
+        for (int i = 0; i < itemObjects.Count; i++)
+        {
+            skillDic.Remove(itemObjects[i]);
+        }
+
+        forceDic[0].gold += gold;
+        MessagePanel.Instance.AddMessage("出售了符合要求的" + itemObjects.Count + "件卷轴,共获得金币" + gold);
+        PlayMainPanel.Instance.UpdateGold();
+        PlayMainPanel.Instance.UpdateButtonSkillNum();
+        PlayMainPanel.Instance.UpdateInventoryNum();
+        //ItemListAndInfoPanel.Instance.HideBatch();
+        SkillListAndInfoPanel.Instance.OnShow(-1, null, 76, -104);
+    }
+
+    public void SkillPanelSetRank(byte rank)
+    {
+        if (skillPanel_rankSelected.Contains(rank))
+        {
+            skillPanel_rankSelected.Remove(rank);
+        }
+        else
+        {
+            skillPanel_rankSelected.Add(rank);
+        }
+        SkillListAndInfoPanel.Instance.UpdateBatchRank();
+    }
+
+    public void SkillPanelSetRankAll()
+    {
+        if (skillPanel_rankSelected.Count == 4)
+        {
+            skillPanel_rankSelected.Clear();
+        }
+        else
+        {
+            skillPanel_rankSelected = new List<byte> { 1, 2, 3, 4 };
+        }
+        SkillListAndInfoPanel.Instance.UpdateBatchRank();
+    }
+
+    public void SkillPanelSetType(ItemTypeSmall type)
+    {
+        if (skillPanel_typeSelected.Contains(type))
+        {
+            skillPanel_typeSelected.Remove(type);
+        }
+        else
+        {
+            skillPanel_typeSelected.Add(type);
+        }
+
+        SkillListAndInfoPanel.Instance.UpdateBatchType();
+    }
+    public void SkillPanelSetTypeAll()
+    {
+        if (skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollNone) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWindI) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollFireI) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWaterI) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollGroundI) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollLightI) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollDarkI) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWindII) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollFireII) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWaterII) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollGroundII) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollLightII) &&
+            skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollDarkII))
+        {
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollNone);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollWindI);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollFireI);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollWaterI);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollGroundI);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollLightI);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollDarkI);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollWindII);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollFireII);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollWaterII);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollGroundII);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollLightII);
+            skillPanel_typeSelected.Remove(ItemTypeSmall.ScrollDarkII);
+        }
+        else
+        {
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollNone))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollNone);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWindI))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollWindI);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollFireI))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollFireI);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWaterI))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollWaterI);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollGroundI))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollGroundI);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollLightI))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollLightI);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollDarkI))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollDarkI);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWindII))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollWindII);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollFireII))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollFireII);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollWaterII))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollWaterII);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollGroundII))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollGroundII);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollLightII))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollLightII);
+            }
+            if (!skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollDarkII))
+            {
+                skillPanel_typeSelected.Add(ItemTypeSmall.ScrollDarkII);
+            }
+        }
+
+        SkillListAndInfoPanel.Instance.UpdateBatchType();
+    }
+
     #endregion
 
     #region 【方法】市集出售
@@ -2630,9 +3258,9 @@ public class GameControl : MonoBehaviour
 
     public void CreateCustomerRecord(int year, int month)
     {
-        customerRecordDic.Add(year + "/" + month, new CustomerRecordObject(new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
-            new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 },
-            new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0 }));
+        customerRecordDic.Add(year + "/" + month, new CustomerRecordObject(new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }));
 
         if (customerRecordDic.Count > 12)
         {
@@ -3518,7 +4146,13 @@ public class GameControl : MonoBehaviour
         {
             AreaMapPanel.Instance.UpdateDungeonInfoBlock(AreaMapPanel.Instance.dungeonInfoBlockID);
         }
-
+        if (AdventureTeamPanel.Instance.isShow && AdventureTeamPanel.Instance.nowTeam == teamID)
+        {
+            // AdventureTeamPanel.Instance.UpdateHero(teamID);
+            AdventureTeamPanel.Instance.UpdatePart(teamID);
+            AdventureTeamPanel.Instance.UpdateLast(teamID);
+            AdventureTeamPanel.Instance.UpdateNow(teamID);
+        }
 
         CreateAdventureEvent(teamID);
     }
@@ -3577,7 +4211,7 @@ public class GameControl : MonoBehaviour
         }
         if (AdventureTeamPanel.Instance.isShow && AdventureTeamPanel.Instance.nowTeam == teamID)
         {
-            AdventureTeamPanel.Instance.UpdateHero(teamID);
+           // AdventureTeamPanel.Instance.UpdateHero(teamID);
             AdventureTeamPanel.Instance.UpdatePart(teamID);
             AdventureTeamPanel.Instance.UpdateLast(teamID);
             AdventureTeamPanel.Instance.UpdateNow(teamID);
@@ -3758,7 +4392,7 @@ public class GameControl : MonoBehaviour
         {
             if (forceDic[0].rProductNow < forceDic[0].rProductLimit)
             {
-                itemDic.Add(itemIndex, GenerateItemByRandom(adventureTeamList[teamID].getItemList[i], null, null));
+                itemDic.Add(itemIndex, GenerateItemByRandom(adventureTeamList[teamID].getItemList[i], null,-1, null));
                 itemIndex++;
                 forceDic[0].rProductNow++;
             }
@@ -3822,7 +4456,7 @@ public class GameControl : MonoBehaviour
 
         if (AdventureTeamPanel.Instance.isShow && AdventureTeamPanel.Instance.nowTeam == teamID)
         {
-            AdventureTeamPanel.Instance.UpdateHero(teamID);
+            //AdventureTeamPanel.Instance.UpdateHero(teamID);
             AdventureTeamPanel.Instance.UpdatePart(teamID);
             AdventureTeamPanel.Instance.UpdateLast(teamID);
             AdventureTeamPanel.Instance.UpdateNow(teamID);
@@ -4306,7 +4940,7 @@ public class GameControl : MonoBehaviour
             List<int> enemyIDList = new List<int> { };
             List<int> enemyLevelList = new List<int> { };
             List<float> enemyRankList = new List<float> { };
-            int enemyNum = Random.Range(1, 4);
+            int enemyNum = Random.Range(1, 7);
             for (int i = 0; i < enemyNum; i++)
             {
                 int probabilityCount = DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].MonsterID.Count;
@@ -4340,7 +4974,7 @@ public class GameControl : MonoBehaviour
                 }
             }
 
-            List<int> enemyIDTempList = new List<int> { };//用作记录同类怪物数
+            //List<int> enemyIDTempList = new List<int> { };//用作记录同类怪物数
             for (byte i = 0; i < enemyIDList.Count; i++)
             {
                 int monsterID = enemyIDList[i];
@@ -4350,7 +4984,7 @@ public class GameControl : MonoBehaviour
                 int objectID = monsterID;//对于敌方，原型
                 byte side = 1;
 
-                byte sameNameCount = 0;
+                //byte sameNameCount = 0;
 
                 string name = DataManager.mMonsterDict[monsterID].Name;
                 if (enemyRankList[i] == 2f)
@@ -4362,28 +4996,28 @@ public class GameControl : MonoBehaviour
                     name += "精英";
                 }
 
-                string NameModifyStr = "";
-                for (int j = 0; j < enemyIDTempList.Count; j++)
-                {
-                    // Debug.Log("enemyRankList[i]=" + enemyRankList[i] + " enemyRankList[j]=" + enemyRankList[j]);
-                    if (enemyIDTempList[j] == monsterID && enemyRankList[i] == enemyRankList[j])
-                    {
-                        sameNameCount++;
-                    }
-                }
+                //string NameModifyStr = "";
+                //for (int j = 0; j < enemyIDTempList.Count; j++)
+                //{
+                //    // Debug.Log("enemyRankList[i]=" + enemyRankList[i] + " enemyRankList[j]=" + enemyRankList[j]);
+                //    if (enemyIDTempList[j] == monsterID && enemyRankList[i] == enemyRankList[j])
+                //    {
+                //        sameNameCount++;
+                //    }
+                //}
 
-                if (sameNameCount == 1)
-                {
-                    fightMenberObjects[heroCount].name += "A";
-                    NameModifyStr = "B";
+                //if (sameNameCount == 1)
+                //{
+                //    fightMenberObjects[heroCount].name += "A";
+                //    NameModifyStr = "B";
 
-                }
-                else if (sameNameCount == 2)
-                {
-                    NameModifyStr = "C";
-                }
+                //}
+                //else if (sameNameCount == 2)
+                //{
+                //    NameModifyStr = "C";
+                //}
 
-                name += NameModifyStr;
+                //name += NameModifyStr;
 
                 float levelModify = level * DataManager.mMonsterDict[monsterID].GroupRate;
 
@@ -4431,7 +5065,7 @@ public class GameControl : MonoBehaviour
                                                           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, ItemTypeSmall.None,
                                                           actionBar, skillIndex, hpNow, mpNow, buff));
 
-                enemyIDTempList.Add(monsterID);
+                //enemyIDTempList.Add(monsterID);
             }
             string monsterNameList = "";
             for (int i = 0; i < fightMenberObjects.Count; i++)
@@ -4441,7 +5075,7 @@ public class GameControl : MonoBehaviour
                     monsterNameList += fightMenberObjects[i].name + "(Lv." + fightMenberObjects[i].level + ") ";
                 }
             }
-            Debug.Log("fightMenberObjects.Count=" + fightMenberObjects.Count + " ,enemyIDTempList.Count=" + enemyIDTempList.Count + " ,adventureTeamList[teamID].enemyIDList.Count=" + adventureTeamList[teamID].enemyIDList.Count);
+            Debug.Log("fightMenberObjects.Count=" + fightMenberObjects.Count  + " ,adventureTeamList[teamID].enemyIDList.Count=" + adventureTeamList[teamID].enemyIDList.Count);
             Debug.Log("遭遇了" + monsterNameList + ",开始战斗！");
             adventureTeamList[teamID].action = AdventureAction.Fight;
             adventureTeamList[teamID].fightRound = 1;

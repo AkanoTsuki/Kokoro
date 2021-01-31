@@ -32,10 +32,11 @@ public class GameControlInPlay : MonoBehaviour
       
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
         UIManager.Instance.InitPanel(UIPanelType.SkillListAndInfo);
-        UIManager.Instance.InitPanel(UIPanelType.AdventureMain);
-        AdventureMainPanel.Instance.OnShow(64, 5000);
-        AdventureMainPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.AdventureTeam);
+        UIManager.Instance.InitPanel(UIPanelType.AdventureMain);
+        AdventureMainPanel.Instance.OnShow(0,0, 5000);
+        AdventureMainPanel.Instance.OnHide();
+       
         UIManager.Instance.InitPanel(UIPanelType.AdventureSend);
         UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
@@ -400,7 +401,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            AdventureMainPanel.Instance.OnShow(76, -104);
+            AdventureMainPanel.Instance.OnShow(0,76, -104);
         }
     }
 

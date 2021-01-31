@@ -188,6 +188,20 @@ public class GameControlInNewGame : MonoBehaviour
         gc.buildingUnlock[65]= true;
         gc.buildingUnlock[73] = true;
 
+        gc.forgeAddUnlock.Add(StuffType.Wood, true);
+        gc.forgeAddUnlock.Add(StuffType.Stone, true);
+        gc.forgeAddUnlock.Add(StuffType.Metal, true);
+        gc.forgeAddUnlock.Add(StuffType.Leather, true);
+        gc.forgeAddUnlock.Add(StuffType.Cloth, true);
+        gc.forgeAddUnlock.Add(StuffType.Twine, true);
+        gc.forgeAddUnlock.Add(StuffType.Bone, true);
+        gc.forgeAddUnlock.Add(StuffType.Wind, true);
+        gc.forgeAddUnlock.Add(StuffType.Fire, true);
+        gc.forgeAddUnlock.Add(StuffType.Water, true);
+        gc.forgeAddUnlock.Add(StuffType.Ground, true);
+        gc.forgeAddUnlock.Add(StuffType.Light, true);
+        gc.forgeAddUnlock.Add(StuffType.Dark, true);
+
         gc.supplyAndDemand = new SupplyAndDemandObject(new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
              new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
              new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, new List<short> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },

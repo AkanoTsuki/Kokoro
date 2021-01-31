@@ -30,7 +30,7 @@ public class MomentText : MonoBehaviour
     {
         GetComponent<Text>().text  = content;
         GetComponent<RectTransform>().anchoredPosition = location;
-        targetY = location.y + 30f;
+        targetY = location.y + 50f;
 
         //Debug.Log("GetComponent<RectTransform>().anchoredPosition=" + GetComponent<RectTransform>().anchoredPosition);
         isPlay = true;

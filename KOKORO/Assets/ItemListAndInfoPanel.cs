@@ -22,12 +22,88 @@ public class ItemListAndInfoPanel : BasePanel
     public Text tipText;
     public List<Button> funcBtn;
 
+    public RectTransform batchRt;
+    public Text batch_titleText;
+
+    public Button batch_rankAllBtn;
+    public List<Button> batch_rankBtn;
+    public Button batch_levelAllBtn;
+    public List<Button> batch_levelBtn;
+
+    public RectTransform batch_rankAllRt;
+    public List<RectTransform> batch_rankRt;
+    public RectTransform batch_levelAllRt;
+    public List<RectTransform> batch_levelRt;
+
+    public Button batch_equipWeaponAllBtn;
+    public Button batch_equipWeaponSwordBtn;
+    public Button batch_equipWeaponAxeBtn;
+    public Button batch_equipWeaponSpearBtn;
+    public Button batch_equipWeaponHammerBtn;
+    public Button batch_equipWeaponBowBtn;
+    public Button batch_equipWeaponStaffBtn;
+
+    public Button batch_equipArmorAllBtn;
+    public Button batch_equipArmorHeadHBtn;
+    public Button batch_equipArmorBodyHBtn;
+    public Button batch_equipArmorHandHBtn;
+    public Button batch_equipArmorBackHBtn;
+    public Button batch_equipArmorFootHBtn;
+    public Button batch_equipArmorHeadLBtn;
+    public Button batch_equipArmorBodyLBtn;
+    public Button batch_equipArmorHandLBtn;
+    public Button batch_equipArmorBackLBtn;
+    public Button batch_equipArmorFootLBtn;
+
+    public Button batch_equipSubhandAllBtn;
+    public Button batch_equipSubhandShieldBtn;
+    public Button batch_equipSubhandDorlachBtn;
+
+    public Button batch_equipJewelryAllBtn;
+    public Button batch_equipJewelryNeckBtn;
+    public Button batch_equipJewelryFingerBtn;
+
+    public RectTransform batch_equipWeaponAllRt;
+    public RectTransform batch_equipWeaponSwordRt;
+    public RectTransform batch_equipWeaponAxeRt;
+    public RectTransform batch_equipWeaponSpearRt;
+    public RectTransform batch_equipWeaponHammerRt;
+    public RectTransform batch_equipWeaponBowRt;
+    public RectTransform batch_equipWeaponStaffRt;
+
+    public RectTransform batch_equipArmorAllRt;
+    public RectTransform batch_equipArmorHeadHRt;
+    public RectTransform batch_equipArmorBodyHRt;
+    public RectTransform batch_equipArmorHandHRt;
+    public RectTransform batch_equipArmorBackHRt;
+    public RectTransform batch_equipArmorFootHRt;
+    public RectTransform batch_equipArmorHeadLRt;
+    public RectTransform batch_equipArmorBodyLRt;
+    public RectTransform batch_equipArmorHandLRt;
+    public RectTransform batch_equipArmorBackLRt;
+    public RectTransform batch_equipArmorFootLRt;
+
+    public RectTransform batch_equipSubhandAllRt;
+    public RectTransform batch_equipSubhandShieldRt;
+    public RectTransform batch_equipSubhandDorlachRt;
+
+    public RectTransform batch_equipJewelryAllRt;
+    public RectTransform batch_equipJewelryNeckRt;
+    public RectTransform batch_equipJewelryFingerRt;
+
+    public Button batch_cancelBtn;
+    public Button batch_confirmBtn;
+
     public Button closeBtn;
+
+
+
 
     List<GameObject> itemGo=new List<GameObject>();
 
     public int nowItemID = -1;
     public EquipPart nowEquipPart = EquipPart.None;
+
 
     void Awake()
     {
@@ -37,6 +113,61 @@ public class ItemListAndInfoPanel : BasePanel
 
     void Start()
     {
+        batch_rankAllBtn.onClick.AddListener(delegate () { gc.ItemPanelSetRankAll(); });
+        batch_rankBtn[0].onClick.AddListener(delegate () { gc.ItemPanelSetRank(1); });
+        batch_rankBtn[1].onClick.AddListener(delegate () { gc.ItemPanelSetRank(2); });
+        batch_rankBtn[2].onClick.AddListener(delegate () { gc.ItemPanelSetRank(3); });
+        batch_rankBtn[3].onClick.AddListener(delegate () { gc.ItemPanelSetRank(4); });
+        batch_rankBtn[4].onClick.AddListener(delegate () { gc.ItemPanelSetRank(5); });
+        batch_rankBtn[5].onClick.AddListener(delegate () { gc.ItemPanelSetRank(6); });
+        batch_rankBtn[6].onClick.AddListener(delegate () { gc.ItemPanelSetRank(7); });
+        batch_rankBtn[7].onClick.AddListener(delegate () { gc.ItemPanelSetRank(8); });
+        batch_rankBtn[8].onClick.AddListener(delegate () { gc.ItemPanelSetRank(9); });
+        batch_rankBtn[9].onClick.AddListener(delegate () { gc.ItemPanelSetRank(0); });
+
+        batch_levelAllBtn.onClick.AddListener(delegate () { gc.ItemPanelSetLevelAll(); });
+        batch_levelBtn[0].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(0); });
+        batch_levelBtn[1].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(1); });
+        batch_levelBtn[2].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(2); });
+        batch_levelBtn[3].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(3); });
+        batch_levelBtn[4].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(4); });
+        batch_levelBtn[5].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(5); });
+        batch_levelBtn[6].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(6); });
+        batch_levelBtn[7].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(7); });
+        batch_levelBtn[8].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(8); });
+        batch_levelBtn[9].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(9); });
+        batch_levelBtn[10].onClick.AddListener(delegate () { gc.ItemPanelSetLevel(10); });
+
+        batch_equipWeaponAllBtn.onClick.AddListener(delegate () { gc.ItemPanelSetTypeWeaponAll(); });
+        batch_equipWeaponSwordBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Sword); });
+        batch_equipWeaponAxeBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Axe); });
+        batch_equipWeaponSpearBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Spear); });
+        batch_equipWeaponHammerBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Hammer); });
+        batch_equipWeaponBowBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Bow); });
+        batch_equipWeaponStaffBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Staff); });
+
+        batch_equipArmorAllBtn.onClick.AddListener(delegate () { gc.ItemPanelSetTypeArmorAll(); });
+        batch_equipArmorHeadHBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.HeadH); });
+        batch_equipArmorBodyHBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.BodyH); });
+        batch_equipArmorHandHBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.HandH); });
+        batch_equipArmorBackHBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.BackH); });
+        batch_equipArmorFootHBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.FootH); });
+        batch_equipArmorHeadLBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.HeadL); });
+        batch_equipArmorBodyLBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.BodyL); });
+        batch_equipArmorHandLBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.HandL); });
+        batch_equipArmorBackLBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.BackL); });
+        batch_equipArmorFootLBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.FootL); });
+
+        batch_equipSubhandAllBtn.onClick.AddListener(delegate () { gc.ItemPanelSetTypeSubhandAll(); });
+        batch_equipSubhandShieldBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Shield); });
+        batch_equipSubhandDorlachBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Dorlach); });
+
+        batch_equipJewelryAllBtn.onClick.AddListener(delegate () { gc.ItemPanelSetTypeJewelryAll(); });
+        batch_equipJewelryNeckBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Neck); });
+        batch_equipJewelryFingerBtn.onClick.AddListener(delegate () { gc.ItemPanelSetType(ItemTypeSmall.Finger); });
+
+        batch_cancelBtn.onClick.AddListener(delegate () { HideBatch(); });
+
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
        
     }
@@ -76,11 +207,16 @@ public class ItemListAndInfoPanel : BasePanel
 
             funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
             funcBtn[0].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
-            funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "半价出售>>";
+            funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "出售>>";
             funcBtn[0].onClick.RemoveAllListeners();
             funcBtn[0].onClick.AddListener(delegate () { gc.ItemSales(nowItemID); });
 
-            HideFuncBtn(3);
+            funcBtn[1].GetComponent<RectTransform>().localScale = Vector2.one;
+            funcBtn[1].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+            funcBtn[1].transform.GetChild(0).GetComponent<Text>().text = "批量出售>>";
+            funcBtn[1].onClick.RemoveAllListeners();
+            funcBtn[1].onClick.AddListener(delegate () { ShowBatch("sale"); });
+            HideFuncBtn(2);
         }
 
         
@@ -90,8 +226,8 @@ public class ItemListAndInfoPanel : BasePanel
         UpdateAllInfo(districtID, col);
 
 
-   
-       
+
+        HideBatch();
         SetAnchoredPosition(x, y);
         transform.SetAsLastSibling();
         isShow = true;
@@ -107,8 +243,18 @@ public class ItemListAndInfoPanel : BasePanel
         HideFuncBtn(4);
         closeBtn.GetComponent<RectTransform>().localScale = Vector3.zero;
 
-        UpdateInfo(gc.itemDic[itemID]);
+        //Debug.Log("itemID=" + itemID);
+        if (itemID == -1)
+        {
+            UpdateInfo(null);
 
+        }
+        else
+        {
+            UpdateInfo(gc.itemDic[itemID]);
+        }
+
+        HideBatch();
         SetAnchoredPosition(x, y);
         transform.SetAsLastSibling();
         isShow = true;
@@ -132,8 +278,8 @@ public class ItemListAndInfoPanel : BasePanel
 
         UpdateAllInfoToEquip(equipPart);
 
-       
 
+        HideBatch();
         SetAnchoredPosition(x, y);
         transform.SetAsLastSibling();
         isShow = true;
@@ -480,7 +626,7 @@ public class ItemListAndInfoPanel : BasePanel
         }
 
         strBasic = strBasicFirst + strBasic+ "\n<color=#53C2FF>" + strLemma+"</color>";
-        str += "\n" + strBasic + "──────────────\n" + itemObject.des + "\n价值 "+ itemObject.cost;
+        str += "\n" + strBasic + "──────────────\n[#"+ itemObject .objectID+ "]" + itemObject.des + "\n价值 "+ itemObject.cost;
 
         info_desText.text = str;
     }
@@ -562,4 +708,299 @@ public class ItemListAndInfoPanel : BasePanel
         return str;
     }
 
+
+    public void ShowBatch(string type)
+    {
+        batchRt.localScale = Vector2.one;
+
+        if (type == "sale")
+        {
+            batch_titleText.text = "批量操作（半价出售）";
+            batch_confirmBtn.onClick.RemoveAllListeners();
+            batch_confirmBtn.onClick.AddListener(delegate () { gc.ItemSalesBatch(); });
+        }
+        UpdateBatchRank();
+        UpdateBatchLevel();
+        UpdateBatchWeapon();
+        UpdateBatchArmor();
+        UpdateBatchSubhand();
+        UpdateBatchJewelry();
+    }
+
+    public void UpdateBatchRank()
+    {
+        if (gc.itemPanel_rankSelected.Count == 10)
+        {
+            batch_rankAllRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_rankAllRt.localScale = Vector2.zero;
+        }
+
+        for (byte i = 1; i < 11; i++)
+        {
+            if (gc.itemPanel_rankSelected.Contains(i))
+            {
+                batch_rankRt[i - 1].localScale = Vector2.one;
+            }
+            else
+            {
+                batch_rankRt[i - 1].localScale = Vector2.zero;
+            }
+        }
+
+    }
+
+    public void UpdateBatchLevel()
+    {
+        if (gc.itemPanel_levelSelected.Count == 11)
+        {
+            batch_levelAllRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_levelAllRt.localScale = Vector2.zero;
+        }
+        for (byte i = 0; i < 11; i++)
+        {
+            if (gc.itemPanel_levelSelected.Contains(i))
+            {
+                batch_levelRt[i].localScale = Vector2.one;
+            }
+            else
+            {
+                batch_levelRt[i].localScale = Vector2.zero;
+            }
+        }
+
+    }
+
+    public void UpdateBatchWeapon()
+    {
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Sword) &&
+    gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Axe) &&
+    gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Spear) &&
+    gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Hammer) &&
+    gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Bow) &&
+    gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Staff))
+        {
+            batch_equipWeaponAllRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipWeaponAllRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Sword))
+        {
+            batch_equipWeaponSwordRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipWeaponSwordRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Axe))
+        {
+            batch_equipWeaponAxeRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipWeaponAxeRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Spear))
+        {
+            batch_equipWeaponSpearRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipWeaponSpearRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Hammer))
+        {
+            batch_equipWeaponHammerRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipWeaponHammerRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Bow))
+        {
+            batch_equipWeaponBowRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipWeaponBowRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Staff))
+        {
+            batch_equipWeaponStaffRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipWeaponStaffRt.localScale = Vector2.zero;
+        }
+    }
+    public void UpdateBatchArmor()
+    {
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.HeadH) &&
+  gc.itemPanel_typeSelected.Contains(ItemTypeSmall.BodyH) &&
+  gc.itemPanel_typeSelected.Contains(ItemTypeSmall.HandH) &&
+  gc.itemPanel_typeSelected.Contains(ItemTypeSmall.BackH) &&
+  gc.itemPanel_typeSelected.Contains(ItemTypeSmall.FootH) &&
+  gc.itemPanel_typeSelected.Contains(ItemTypeSmall.HeadL) &&
+  gc.itemPanel_typeSelected.Contains(ItemTypeSmall.BodyL) &&
+  gc.itemPanel_typeSelected.Contains(ItemTypeSmall.HandL) &&
+  gc.itemPanel_typeSelected.Contains(ItemTypeSmall.BackL) &&
+  gc.itemPanel_typeSelected.Contains(ItemTypeSmall.FootL))
+        {
+            batch_equipArmorAllRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorAllRt.localScale = Vector2.zero;
+        }
+
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.HeadH))
+        {
+            batch_equipArmorHeadHRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorHeadHRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.BodyH))
+        {
+            batch_equipArmorBodyHRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorBodyHRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.HandH))
+        {
+            batch_equipArmorHandHRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorHandHRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.BackH))
+        {
+            batch_equipArmorBackHRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorBackHRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.FootH))
+        {
+            batch_equipArmorFootHRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorFootHRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.HeadL))
+        {
+            batch_equipArmorHeadLRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorHeadLRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.BodyL))
+        {
+            batch_equipArmorBodyLRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorBodyLRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.HandL))
+        {
+            batch_equipArmorHandLRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorHandLRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.BackL))
+        {
+            batch_equipArmorBackLRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorBackLRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.FootL))
+        {
+            batch_equipArmorFootLRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipArmorFootLRt.localScale = Vector2.zero;
+        }
+
+    }
+    public void UpdateBatchSubhand()
+    {
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Shield) &&
+   gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Dorlach))
+        {
+            batch_equipSubhandAllRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipSubhandAllRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Shield))
+        {
+            batch_equipSubhandShieldRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipSubhandShieldRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Dorlach))
+        {
+            batch_equipSubhandDorlachRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipSubhandDorlachRt.localScale = Vector2.zero;
+        }
+    }
+    public void UpdateBatchJewelry()
+    {
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Neck) &&
+     gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Finger))
+        {
+            batch_equipJewelryAllRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipJewelryAllRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Neck))
+        {
+            batch_equipJewelryNeckRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipJewelryNeckRt.localScale = Vector2.zero;
+        }
+        if (gc.itemPanel_typeSelected.Contains(ItemTypeSmall.Finger))
+        {
+            batch_equipJewelryFingerRt.localScale = Vector2.one;
+        }
+        else
+        {
+            batch_equipJewelryFingerRt.localScale = Vector2.zero;
+        }
+    }
+
+    public void HideBatch()
+    {
+        batchRt.localScale = Vector2.zero;
+    }
 }

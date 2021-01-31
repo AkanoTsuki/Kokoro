@@ -15,11 +15,11 @@ public class AdventureTeamPanel : BasePanel
 
     public Text titleText;
 
-    public Text dungeon_desText;
+   // public Text dungeon_desText;
 
-    public List<Image> hero_picImage;
-    public List<Text> hero_nameText;
-    public List<Text> hero_hpmpText;
+    //public List<Image> hero_picImage;
+    //public List<Text> hero_nameText;
+    //public List<Text> hero_hpmpText;
 
     public Text part_baseText;
     public Image part_baseBgImage;
@@ -73,10 +73,10 @@ public class AdventureTeamPanel : BasePanel
 
     public void UpdateAllInfo(byte teamID)
     {
-        titleText.text = "冒险 - 详情[第"+(teamID+1) + "探险队]";
+        //titleText.text = "冒险 - 详情[第"+(teamID+1) + "探险队]";
 
-        UpdateDungeon(teamID);
-        UpdateHero(teamID);
+        //UpdateDungeon(teamID);
+        //UpdateHero(teamID);
         part_baseText.text = gc.OutputDateStr(gc.adventureTeamList[teamID].standardTimeStart, "Y年M月D日") + "探险队" + gc.adventureTeamList[teamID].heroIDList.Count + "人启程";
         part_baseBgImage.overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[0] + "_B", typeof(Sprite)) as Sprite; 
         part_baseFgImage.overrideSprite = Resources.Load("Image/AdventureBG/ABG_" + gc.adventureTeamList[teamID].scenePicList[0] + "_F", typeof(Sprite)) as Sprite;
@@ -95,33 +95,33 @@ public class AdventureTeamPanel : BasePanel
 
 
 
-    public void UpdateDungeon(byte teamID)
-    {
-        DungeonPrototype dungeonPrototype = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID];
-        string str = "";
-        for (int i = 0; i < dungeonPrototype.MonsterID.Count; i++)
-        {
-            str += DataManager.mMonsterDict[dungeonPrototype.MonsterID[i]].Name +"(Lv."+ dungeonPrototype .MonsterLevelMin[i]+ "-"+ dungeonPrototype.MonsterLevelMax[i] + ")\n";
-        }
-        dungeon_desText.text= dungeonPrototype.Name+
-            "\n地图等级 " + dungeonPrototype.Level + "\n旅程 " + (dungeonPrototype.PartNum * 100) + "M\n" + dungeonPrototype.Des + "\n出现怪物:\n" + str;
-    }
-    public void UpdateHero(byte teamID)
-    {
-        for (byte i = 0; i < gc.adventureTeamList[teamID].heroIDList.Count; i++)
-        {
-            hero_picImage[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].pic+"/Pic", typeof(Sprite)) as Sprite;
-            hero_nameText[i].text = gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].name+"\nLv."+ gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].level+ "<color=#" + DataManager.mHeroDict[gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].prototypeID].Color + ">" + DataManager.mHeroDict[gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].prototypeID].Name +
-            "</color>";
-            hero_hpmpText[i].text="<color=#76ee00>体力 " + gc.adventureTeamList[teamID].heroHpList[i]+"/"+gc.GetHeroAttr( Attribute.Hp, gc.adventureTeamList[teamID].heroIDList[i]) + "</color>\n<color=#47B1FF>魔力 " + gc.adventureTeamList[teamID].heroMpList[i] + "/" + gc.GetHeroAttr(Attribute.Mp, gc.adventureTeamList[teamID].heroIDList[i]) + "</color>";
-        }
-        for (int i = gc.adventureTeamList[teamID].heroIDList.Count; i < 3; i++)
-        {
-            hero_picImage[i].overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
-            hero_nameText[i].text = "";
-            hero_hpmpText[i].text = "";
-        }
-    }
+    //public void UpdateDungeon(byte teamID)
+    //{
+    //    DungeonPrototype dungeonPrototype = DataManager.mDungeonDict[gc.adventureTeamList[teamID].dungeonID];
+    //    string str = "";
+    //    for (int i = 0; i < dungeonPrototype.MonsterID.Count; i++)
+    //    {
+    //        str += DataManager.mMonsterDict[dungeonPrototype.MonsterID[i]].Name +"(Lv."+ dungeonPrototype .MonsterLevelMin[i]+ "-"+ dungeonPrototype.MonsterLevelMax[i] + ")\n";
+    //    }
+    //    dungeon_desText.text= dungeonPrototype.Name+
+    //        "\n地图等级 " + dungeonPrototype.Level + "\n旅程 " + (dungeonPrototype.PartNum * 100) + "M\n" + dungeonPrototype.Des + "\n出现怪物:\n" + str;
+    //}
+    //public void UpdateHero(byte teamID)
+    //{
+    //    for (byte i = 0; i < gc.adventureTeamList[teamID].heroIDList.Count; i++)
+    //    {
+    //        hero_picImage[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].pic+"/Pic", typeof(Sprite)) as Sprite;
+    //        hero_nameText[i].text = gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].name+"\nLv."+ gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].level+ "<color=#" + DataManager.mHeroDict[gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].prototypeID].Color + ">" + DataManager.mHeroDict[gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].prototypeID].Name +
+    //        "</color>";
+    //        hero_hpmpText[i].text="<color=#76ee00>体力 " + gc.adventureTeamList[teamID].heroHpList[i]+"/"+gc.GetHeroAttr( Attribute.Hp, gc.adventureTeamList[teamID].heroIDList[i]) + "</color>\n<color=#47B1FF>魔力 " + gc.adventureTeamList[teamID].heroMpList[i] + "/" + gc.GetHeroAttr(Attribute.Mp, gc.adventureTeamList[teamID].heroIDList[i]) + "</color>";
+    //    }
+    //    for (int i = gc.adventureTeamList[teamID].heroIDList.Count; i < 3; i++)
+    //    {
+    //        hero_picImage[i].overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+    //        hero_nameText[i].text = "";
+    //        hero_hpmpText[i].text = "";
+    //    }
+    //}
 
     public void UpdatePart(byte teamID)
     {

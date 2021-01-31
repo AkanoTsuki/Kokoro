@@ -55,6 +55,10 @@ public class PlayMainPanel : BasePanel
     public Text top_resourcesBlock_stuffLightText;
     public Text top_resourcesBlock_stuffDarkText;
 
+    public Text left_inventoryNumText;
+    public RectTransform left_inventoryNumBgRt;
+    public RectTransform left_inventoryNumBarRt;
+
     public Button left_inventoryEquipBtn;
     public RectTransform left_inventoryEquipNumRt;
     public Text left_inventoryEquipNumText;
@@ -155,6 +159,7 @@ public class PlayMainPanel : BasePanel
     {
         SetAnchoredPosition(0, 0);
 
+        UpdateInventoryNum();
         UpdateKingdomInfo();
         UpdateGold();
         UpdateResources();
@@ -169,6 +174,14 @@ public class PlayMainPanel : BasePanel
         //UpdateTopDistrict();
         UpdateAdventurePageText();
         UpdateAdventureAll();
+    }
+
+
+    public void UpdateInventoryNum()
+    {
+        left_inventoryNumText.text=gc.forceDic[0].rProductNow +"/" + gc.forceDic[0].rProductLimit;
+        left_inventoryNumBgRt.sizeDelta = new Vector2(gc.forceDic[0].rProductLimit,16f);
+        left_inventoryNumBarRt.sizeDelta = new Vector2((float)gc.forceDic[0].rProductNow / gc.forceDic[0].rProductLimit * gc.forceDic[0].rProductLimit, 16f);
     }
 
     public void UpdateKingdomInfo()
