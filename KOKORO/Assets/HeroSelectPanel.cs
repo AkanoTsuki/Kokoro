@@ -71,17 +71,21 @@ public class HeroSelectPanel : BasePanel
             case "":
                 foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
                 {
-                    if (districtID != -1)
+                    if (kvp.Value.force == 0)
                     {
-                        if (gc.districtDic[districtID].heroList.Contains(kvp.Key))
+                        if (districtID != -1)
+                        {
+                            if (gc.districtDic[districtID].heroList.Contains(kvp.Key))
+                            {
+                                temp.Add(kvp.Value);
+                            }
+                        }
+                        else
                         {
                             temp.Add(kvp.Value);
                         }
                     }
-                    else
-                    {
-                        temp.Add(kvp.Value);
-                    }
+            
                 }
                 numText.text = temp.Count + "人";
                 for (int i = 0; i < temp.Count; i++)
@@ -130,7 +134,7 @@ public class HeroSelectPanel : BasePanel
             case "指派管理者":
                 foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
                 {
-                    if (gc.districtDic[districtID].heroList.Contains(kvp.Key)&& kvp.Value.workerInBuilding==-1)
+                    if (gc.districtDic[districtID].heroList.Contains(kvp.Key)&& kvp.Value.workerInBuilding==-1 && kvp.Value.force==0)
                     {
                         temp.Add(kvp.Value);
                     }

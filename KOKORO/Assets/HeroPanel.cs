@@ -247,6 +247,13 @@ public class HeroPanel : BasePanel
         nameText.text = heroObject.name;
         picImage.overrideSprite = Resources.Load("Image/RolePic/" + heroObject.pic + "/Pic", typeof(Sprite)) as Sprite; ;
         sexImage.overrideSprite = Resources.Load("Image/Other/sex_" + (heroObject.sex==0?"man":"woman" ), typeof(Sprite)) as Sprite; ;
+        string str = "";
+        for (int i = 0; i < heroObject.characteristic.Count; i++)
+        {
+            str += " <color=#F3CE59>[" + DataManager.mCharacteristicDict[heroObject.characteristic[i]].Name+ "]</color>";
+        }
+        
+        
         infoText.text = "Lv." + heroObject.level+"<color=#"+ DataManager.mHeroDict[heroObject.prototypeID].Color+ ">"+ DataManager.mHeroDict[heroObject.prototypeID].Name +
             "</color>[升级经验值<color=#FFFFFF>" + ((int)System.Math.Pow(1.05f, heroObject.level)*200-heroObject .exp)+
             "</color>][成长率<color=#7DF3AE>" + System.Math.Round( heroObject.groupRate,3)+ "</color>]" +
@@ -256,7 +263,7 @@ public class HeroPanel : BasePanel
             (heroObject.adventureInTeam!=-1?(" <color=#FF9167>已编入第" + (heroObject.adventureInTeam+1) + "探险队</color>") :"")
              ):""
             )+
-            "\n"+DataManager.mHeroDict[ heroObject.prototypeID].Des;
+            "\n"+DataManager.mHeroDict[ heroObject.prototypeID].Des+ str;
     }
 
     public void ShowChangeName()

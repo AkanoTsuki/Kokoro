@@ -309,13 +309,13 @@ public class GameControl : MonoBehaviour
         HeroPanel.Instance.UpdateBasicInfo(heroDic[heroID]);
     }
 
-    public void CreateHero(short pid, short districtID)
+    public void CreateHero(short pid, short districtID, short force)
     {
-        heroDic.Add(heroIndex, GenerateHeroByRandom(heroIndex, pid, (byte)Random.Range(0, 2), districtID));
+        heroDic.Add(heroIndex, GenerateHeroByRandom(heroIndex, pid, (byte)Random.Range(0, 2), districtID,force));
         heroIndex++;
     }
 
-    public HeroObject GenerateHeroByRandom(int heroID, short heroTypeID, byte sexCode, short districtID)
+    public HeroObject GenerateHeroByRandom(int heroID, short heroTypeID, byte sexCode, short districtID, short force)
     {
         string name;
         string pic;
@@ -379,12 +379,24 @@ public class GameControl : MonoBehaviour
         byte workMakeScroll = (byte)SetAttr(Attribute.WorkMakeScroll, heroTypeID);
         byte workSundry = (byte)SetAttr(Attribute.WorkSundry, heroTypeID);
 
+        List<short> characteristicList = new List<short>();
+        for (int i = 0; i < 2; i++)
+        {
+            int ran = Random.Range(0, 100);
+            if (ran < DataManager.mCharacteristicDict.Count && (!characteristicList.Contains((short)ran)))
+            {
+                characteristicList.Add((short)ran);
+            }
+        }
+
+        
+
         return new HeroObject(heroID, name, heroTypeID, 1, 0, sexCode, pic, groupRate, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
             (short)hp, (short)mp, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workMakeScroll, workSundry,
-          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, -1, -1, districtID,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<short, HeroSkill>(), new List<string> { });
+          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, -1, -1, districtID, force,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<short, HeroSkill>(), characteristicList, new List<string> { });
 
     }
 
@@ -2753,6 +2765,7 @@ public class GameControl : MonoBehaviour
         }
 
         forceDic[0].gold += itemDic[itemID].cost / 2;
+        forceDic[0].rProductNow--;
 
         itemDic.Remove(itemID);
         PlayMainPanel.Instance.UpdateGold();
@@ -2782,11 +2795,19 @@ public class GameControl : MonoBehaviour
             itemDic.Remove(itemObjects[i]);
         }
 
-        forceDic[0].gold += gold;
-        MessagePanel.Instance.AddMessage("出售了符合要求的"+ itemObjects.Count + "件装备,共获得金币"+ gold);
-        PlayMainPanel.Instance.UpdateGold();
-        PlayMainPanel.Instance.UpdateButtonItemNum();
-        PlayMainPanel.Instance.UpdateInventoryNum();
+        if (itemObjects.Count > 0)
+        {
+            forceDic[0].gold += gold;
+            forceDic[0].rProductNow -= itemObjects.Count;
+            MessagePanel.Instance.AddMessage("出售了符合要求的" + itemObjects.Count + "件装备,共获得金币" + gold);
+            PlayMainPanel.Instance.UpdateGold();
+            PlayMainPanel.Instance.UpdateButtonItemNum();
+            PlayMainPanel.Instance.UpdateInventoryNum();
+        }
+        else
+        {
+            MessagePanel.Instance.AddMessage("没有符合要求的装备");
+        }
         //ItemListAndInfoPanel.Instance.HideBatch();
         ItemListAndInfoPanel.Instance.OnShow(-1, 76, -104, 2);
     }
@@ -3064,7 +3085,7 @@ public class GameControl : MonoBehaviour
             return;
         }
         forceDic[0].gold += skillDic[skillID].cost / 2;
-
+        forceDic[0].rProductNow --;
         skillDic.Remove(skillID);
         PlayMainPanel.Instance.UpdateGold();
         PlayMainPanel.Instance.UpdateButtonSkillNum();
@@ -3093,11 +3114,19 @@ public class GameControl : MonoBehaviour
             skillDic.Remove(itemObjects[i]);
         }
 
-        forceDic[0].gold += gold;
-        MessagePanel.Instance.AddMessage("出售了符合要求的" + itemObjects.Count + "件卷轴,共获得金币" + gold);
-        PlayMainPanel.Instance.UpdateGold();
-        PlayMainPanel.Instance.UpdateButtonSkillNum();
-        PlayMainPanel.Instance.UpdateInventoryNum();
+        if (itemObjects.Count > 0)
+        {
+            forceDic[0].gold += gold;
+            forceDic[0].rProductNow -= itemObjects.Count;
+            MessagePanel.Instance.AddMessage("出售了符合要求的" + itemObjects.Count + "件卷轴,共获得金币" + gold);
+            PlayMainPanel.Instance.UpdateGold();
+            PlayMainPanel.Instance.UpdateButtonSkillNum();
+            PlayMainPanel.Instance.UpdateInventoryNum();
+        }
+        else
+        {
+            MessagePanel.Instance.AddMessage("没有符合要求的卷轴");
+        }
         //ItemListAndInfoPanel.Instance.HideBatch();
         SkillListAndInfoPanel.Instance.OnShow(-1, null, 76, -104);
     }

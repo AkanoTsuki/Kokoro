@@ -37,17 +37,12 @@ public class TransferPanel : BasePanel
 
 
     void Start()
-    {
-      
+    {    
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 
     public void OnShow(string type, short districtID)
     {
-       
-
-        
-
         if (type == "To")
         {
 
@@ -103,7 +98,7 @@ public class TransferPanel : BasePanel
 
         foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
         {
-            if (kvp.Value.inDistrict == districtID)
+            if (kvp.Value.inDistrict == districtID&& kvp.Value.force==0)
             {
                 heroObjects.Add(kvp.Value);
             }

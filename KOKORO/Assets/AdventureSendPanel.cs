@@ -159,7 +159,7 @@ public class AdventureSendPanel : BasePanel
 
         foreach (KeyValuePair<int, HeroObject> kvp in gc.heroDic)
         {
-            if (kvp.Value.inDistrict == districtID && kvp.Value.adventureInTeam == -1)
+            if (kvp.Value.inDistrict == districtID && kvp.Value.adventureInTeam == -1 && kvp.Value.force == 0)
             {
                 heroObjects.Add(kvp.Value);
             }

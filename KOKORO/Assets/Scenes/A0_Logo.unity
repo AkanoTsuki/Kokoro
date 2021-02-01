@@ -1224,6 +1224,11 @@ MonoBehaviour:
   forceIndex: 0
   buildingUnlock: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   logIndex: 0
+  itemPanel_rankSelected: 
+  itemPanel_levelSelected: 
+  itemPanel_typeSelected: 
+  skillPanel_rankSelected: 
+  skillPanel_typeSelected: 
   technologyResearchingList: 
 --- !u!114 &559004349
 MonoBehaviour:
@@ -4187,7 +4192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.4076797, b: 0.3066038, a: 1}
+  m_Color: {r: 0.9528302, g: 0.8073271, b: 0.3460751, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:

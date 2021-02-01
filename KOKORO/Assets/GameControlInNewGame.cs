@@ -63,7 +63,7 @@ public class GameControlInNewGame : MonoBehaviour
     public void SetLeaderHeroType(short typeID)
     {
         temp_leaderHeroType = typeID;
-        temp_Leader= gc.GenerateHeroByRandom(0, typeID, temp_leaderHeroSex,1);
+        temp_Leader= gc.GenerateHeroByRandom(0, typeID, temp_leaderHeroSex,1,0);
         StartChoosePanel.Instance.UpdateLeaderInfo(typeID);
         HeroPanel.Instance.OnShow(temp_Leader, false,  374, -32);
     }
@@ -80,7 +80,7 @@ public class GameControlInNewGame : MonoBehaviour
     public void RollMenber(int index)
     {
         int ran = Random.Range(0, 6);
-        temp_HeroList[index]=gc.GenerateHeroByRandom(index+1, (short)ran,(byte)Random.Range(0, 2),1);
+        temp_HeroList[index]=gc.GenerateHeroByRandom(index+1, (short)ran,(byte)Random.Range(0, 2),1,0);
 
         StartChoosePanel.Instance.UpdateMenberInfo(index);
         HeroPanel.Instance.UpdateAllInfo(temp_HeroList[index]);

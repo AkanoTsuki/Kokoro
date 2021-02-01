@@ -76,8 +76,11 @@ public class GameControlInPlay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-           gc.skillDic.Add(gc.skillIndex , gc.GenerateSkillByRandom((short)Random.Range(0,DataManager.mSkillDict.Count),1));
+            gc.skillDic.Add(gc.skillIndex, gc.GenerateSkillByRandom((short)Random.Range(0, DataManager.mSkillDict.Count), -1));
             gc.skillIndex++;
+            gc.forceDic[0].rProductNow++;
+            PlayMainPanel.Instance.UpdateButtonSkillNum();
+            PlayMainPanel.Instance.UpdateInventoryNum();
         }
         if (Input.GetKeyDown(KeyCode.E))
         {

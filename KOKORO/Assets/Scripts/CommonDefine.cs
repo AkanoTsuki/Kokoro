@@ -848,7 +848,7 @@ public class HeroObject
     private int WorkerInBuilding;
     private short AdventureInTeam;
     private short InDistrict;
-
+    private short Force;
     private int CountMakeWeapon;
     private int CountMakeArmor;
     private int CountMakeJewelry;
@@ -865,6 +865,7 @@ public class HeroObject
     private int CountUseDark;
     private int CountUseNone;
     private Dictionary<short,HeroSkill> SkillInfo;
+    private List<short> Characteristic;
     private List<string> Log;
     public HeroObject(int id, string name, short prototypeID, short level, int exp,byte sex,string pic, float groupRate,
         float hp, float mp, float hpRenew, float mpRenew,
@@ -879,9 +880,9 @@ public class HeroObject
         byte workMakeWeapon, byte workMakeArmor, byte workMakeJewelry, byte workMakeScroll,
         byte workSundry,
         int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<int> skill,
-        int workerInBuilding, short adventureInTeam, short inDistrict,
+        int workerInBuilding, short adventureInTeam, short inDistrict, short force,
         int countMakeWeapon, int countMakeArmor, int countMakeJewelry, int countMakeScroll, int countKill, int countDeath, int countAdventure, int countAdventureDone,
-        int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone, Dictionary<short, HeroSkill> skillInfo, List<string> log
+        int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone, Dictionary<short, HeroSkill> skillInfo, List<short> characteristic, List<string> log
         )
     {
         this.ID = id;
@@ -965,6 +966,7 @@ public class HeroObject
         this.WorkerInBuilding = workerInBuilding;
         this.AdventureInTeam = adventureInTeam;
         this.InDistrict = inDistrict;
+        this.Force = force;
         this.CountMakeWeapon = countMakeWeapon;
         this.CountMakeArmor = countMakeArmor;
         this.CountMakeJewelry = countMakeJewelry;
@@ -981,6 +983,7 @@ public class HeroObject
         this.CountUseDark = countUseDark;
         this.CountUseNone = countUseNone;
         this.SkillInfo = skillInfo;
+        this.Characteristic = characteristic;
         this.Log = log;
     }
     public int id { get { return ID; } }
@@ -1065,7 +1068,7 @@ public class HeroObject
     public int workerInBuilding { get { return WorkerInBuilding; } set { WorkerInBuilding = value; } }
     public short adventureInTeam { get { return AdventureInTeam; } set { AdventureInTeam = value; } }
     public short inDistrict { get { return InDistrict; } set { InDistrict = value; } }
-
+    public short force { get { return Force; } set { Force = value; } }
     public int countMakeWeapon { get { return CountMakeWeapon; } set { CountMakeWeapon = value; } }
     public int countMakeArmor { get { return CountMakeArmor; } set { CountMakeArmor = value; } }
     public int countMakeJewelry { get { return CountMakeJewelry; } set { CountMakeJewelry = value; } }
@@ -1082,6 +1085,7 @@ public class HeroObject
     public int countUseDark { get { return CountUseDark; } set { CountUseDark = value; } }
     public int countUseNone { get { return CountUseNone; } set { CountUseNone = value; } }
     public Dictionary<short, HeroSkill> skillInfo  { get { return SkillInfo; } set { SkillInfo = value; } }
+    public List<short> characteristic { get { return Characteristic; } set { Characteristic = value; } }
     public List<string> log { get { return Log; } set { Log = value; } }
 }
 
@@ -1115,6 +1119,16 @@ public class CreateHeroRank
     public int[] value1 { get { return Value1; } }
     public int[] value2 { get { return Value2; } }
     public byte[,] probability { get { return Probability; } }
+}
+
+[System.Serializable]
+public class CharacteristicPrototype
+{
+    public short ID;
+    public string Name;
+    public string Type;
+    public string Des;
+
 }
 
 [System.Serializable]
