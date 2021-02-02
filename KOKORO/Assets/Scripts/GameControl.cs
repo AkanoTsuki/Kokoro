@@ -910,7 +910,7 @@ public class GameControl : MonoBehaviour
         buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, posX, posY, layer, posX > 64 ? AnimStatus.WalkLeft : AnimStatus.WalkRight, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false, false, grid, new List<int> { }, new List<int> { },
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,
-            -1, 0, new List<StuffType> { StuffType.None, StuffType.None, StuffType.None },0));
+            new List<BuildingTaskObject> { },-1, 0));
 
 
         int needTime = DataManager.mBuildingDict[BuildingPrototypeID].BuildTime * 10;
@@ -1129,13 +1129,50 @@ public class GameControl : MonoBehaviour
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
         {
             BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-            BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+            if(BuildingPanel.Instance.IsShowOutputInfoPart)
+            {
+                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+            }
+           
         }
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == buildingDic[buildingID].districtID)
         {
             DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
         }
     }
+
+    public void AddProduceItemTask(int buildingID, List<StuffType> addStuff,short num)
+    {
+
+
+        if (buildingDic[buildingID].taskList.Count >= 3)
+        {
+            MessagePanel.Instance.AddMessage("任务队列已满，添加失败");
+            return;
+        }
+        short itemID=-1;
+        foreach (KeyValuePair<int, ProduceEquipPrototype> kvp in DataManager.mProduceEquipDict)
+        {
+            if (kvp.Value.MakePlace.Contains((byte)buildingDic[buildingID].prototypeID) && kvp.Value.OptionValue == BuildingPanel.Instance.setForgeType && kvp.Value.Level == (BuildingPanel.Instance.setForgeLevel + 1))
+            {
+                itemID = kvp.Value.ID;
+
+                break;
+            }
+        }
+
+
+        buildingDic[buildingID].taskList.Add(new BuildingTaskObject(itemID, addStuff, num));
+
+        BuildingPanel.Instance.UpdateOutputInfoPartTask(buildingDic[buildingID]);
+    }
+    public void DeleteProduceItemTask(int buildingID, byte index)
+    {
+        buildingDic[buildingID].taskList.RemoveAt(index);
+
+        BuildingPanel.Instance.UpdateOutputInfoPartTask(buildingDic[buildingID]);
+    }
+
 
     void StartProduceItem(int districtID, int buildingID, int needTime, short produceEquipNow)
     {
@@ -1171,7 +1208,11 @@ public class GameControl : MonoBehaviour
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
         {
             BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-            BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+            if (BuildingPanel.Instance.IsShowOutputInfoPart)
+            {
+                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+            }
+               
         }
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == buildingDic[buildingID].districtID)
         {
@@ -1183,15 +1224,17 @@ public class GameControl : MonoBehaviour
     public void CreateProduceItemEvent(int buildingID)
     {
         short districtID = buildingDic[buildingID].districtID;
-
-        if (buildingDic[buildingID].forgeNum == 0)
+        if (buildingDic[buildingID].taskList.Count == 0)
         {
             buildingDic[buildingID].isOpen = false;
-            MessagePanel.Instance.AddMessage("已完成指定生产数量，生产停止");
+            MessagePanel.Instance.AddMessage("全部生产任务都完成了，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
                 BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                if (BuildingPanel.Instance.IsShowOutputInfoPart)
+                {
+                    BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                }
                 BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
             }
             if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
@@ -1200,6 +1243,24 @@ public class GameControl : MonoBehaviour
             }
             return;
         }
+
+
+        //if (buildingDic[buildingID].forgeNum == 0)
+        //{
+        //    buildingDic[buildingID].isOpen = false;
+        //    MessagePanel.Instance.AddMessage("已完成指定生产数量，生产停止");
+        //    if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        //    {
+        //        BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+        //        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+        //        BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
+        //    }
+        //    if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
+        //    {
+        //        DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+        //    }
+        //    return;
+        //}
 
     
 
@@ -1211,7 +1272,10 @@ public class GameControl : MonoBehaviour
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
                 BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                if (BuildingPanel.Instance.IsShowOutputInfoPart)
+                {
+                    BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                }
                 BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
             }
             if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
@@ -1222,7 +1286,8 @@ public class GameControl : MonoBehaviour
             return ;
         }
 
-        int moduleID = buildingDic[buildingID].produceEquipNow;
+       // int moduleID = buildingDic[buildingID].produceEquipNow;
+        int moduleID = buildingDic[buildingID].taskList[0].produceEquipNow;
 
         if (DataManager.mProduceEquipDict[moduleID].InputWood > forceDic[0].rStuffWood ||
             DataManager.mProduceEquipDict[moduleID].InputStone > forceDic[0].rStuffStone ||
@@ -1243,7 +1308,10 @@ public class GameControl : MonoBehaviour
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
                 BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                if (BuildingPanel.Instance.IsShowOutputInfoPart)
+                {
+                    BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                }
                 BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
             }
             if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
@@ -1256,23 +1324,23 @@ public class GameControl : MonoBehaviour
         bool addOK = true;
         for (int i = 0; i < 3; i++)
         {
-            if (buildingDic[buildingID].forgeAddStuff[i] != StuffType.None)
+            if (buildingDic[buildingID].taskList[0].forgeAddStuff[i] != StuffType.None)
             {
-                switch (buildingDic[buildingID].forgeAddStuff[i])
+                switch (buildingDic[buildingID].taskList[0].forgeAddStuff[i])
                 {
-                    case StuffType.Wood: if (forceDic[0].rStuffWood < (DataManager.mProduceEquipDict[moduleID].InputWood+ GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break; 
-                    case StuffType.Stone: if (forceDic[0].rStuffStone < (DataManager.mProduceEquipDict[moduleID].InputStone + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Metal: if (forceDic[0].rStuffMetal < (DataManager.mProduceEquipDict[moduleID].InputMetal + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Leather: if (forceDic[0].rStuffLeather < (DataManager.mProduceEquipDict[moduleID].InputLeather + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Cloth: if (forceDic[0].rStuffCloth < (DataManager.mProduceEquipDict[moduleID].InputCloth + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Twine: if (forceDic[0].rStuffTwine < (DataManager.mProduceEquipDict[moduleID].InputTwine + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Bone: if (forceDic[0].rStuffBone < (DataManager.mProduceEquipDict[moduleID].InputBone + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Wind: if (forceDic[0].rStuffWind < (DataManager.mProduceEquipDict[moduleID].InputWind + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Fire: if (forceDic[0].rStuffFire < (DataManager.mProduceEquipDict[moduleID].InputFire + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Water: if (forceDic[0].rStuffWater < (DataManager.mProduceEquipDict[moduleID].InputWater + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Ground: if (forceDic[0].rStuffGround < (DataManager.mProduceEquipDict[moduleID].InputGround + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Light: if (forceDic[0].rStuffLight < (DataManager.mProduceEquipDict[moduleID].InputLight + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
-                    case StuffType.Dark: if (forceDic[0].rStuffDark < (DataManager.mProduceEquipDict[moduleID].InputDark + GetForgeTypeCount(buildingDic[buildingID].forgeAddStuff[i], buildingDic[buildingID].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Wood: if (forceDic[0].rStuffWood < (DataManager.mProduceEquipDict[moduleID].InputWood+ GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break; 
+                    case StuffType.Stone: if (forceDic[0].rStuffStone < (DataManager.mProduceEquipDict[moduleID].InputStone + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Metal: if (forceDic[0].rStuffMetal < (DataManager.mProduceEquipDict[moduleID].InputMetal + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Leather: if (forceDic[0].rStuffLeather < (DataManager.mProduceEquipDict[moduleID].InputLeather + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Cloth: if (forceDic[0].rStuffCloth < (DataManager.mProduceEquipDict[moduleID].InputCloth + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Twine: if (forceDic[0].rStuffTwine < (DataManager.mProduceEquipDict[moduleID].InputTwine + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Bone: if (forceDic[0].rStuffBone < (DataManager.mProduceEquipDict[moduleID].InputBone + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Wind: if (forceDic[0].rStuffWind < (DataManager.mProduceEquipDict[moduleID].InputWind + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Fire: if (forceDic[0].rStuffFire < (DataManager.mProduceEquipDict[moduleID].InputFire + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Water: if (forceDic[0].rStuffWater < (DataManager.mProduceEquipDict[moduleID].InputWater + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Ground: if (forceDic[0].rStuffGround < (DataManager.mProduceEquipDict[moduleID].InputGround + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Light: if (forceDic[0].rStuffLight < (DataManager.mProduceEquipDict[moduleID].InputLight + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
+                    case StuffType.Dark: if (forceDic[0].rStuffDark < (DataManager.mProduceEquipDict[moduleID].InputDark + GetForgeTypeCount(buildingDic[buildingID].taskList[0].forgeAddStuff[i], buildingDic[buildingID].taskList[0].forgeAddStuff) * 10)) { addOK = false; } break;
                 }
                 if (addOK == false)
                 {
@@ -1281,7 +1349,10 @@ public class GameControl : MonoBehaviour
                     if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
                     {
                         BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-                        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                        if (BuildingPanel.Instance.IsShowOutputInfoPart)
+                        {
+                            BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                        }
                         BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
                     }
                     if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
@@ -1310,9 +1381,9 @@ public class GameControl : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            if (buildingDic[buildingID].forgeAddStuff[i] != StuffType.None)
+            if (buildingDic[buildingID].taskList[0].forgeAddStuff[i] != StuffType.None)
             {
-                switch (buildingDic[buildingID].forgeAddStuff[i])
+                switch (buildingDic[buildingID].taskList[0].forgeAddStuff[i])
                 {
                     case StuffType.Wood: forceDic[0].rStuffWood -= 10;  break;
                     case StuffType.Stone: forceDic[0].rStuffStone -= 10; break;
@@ -1371,6 +1442,16 @@ public class GameControl : MonoBehaviour
         }
 
         int needTime = (int)(24 * ((float)needLabor / (float)nowLabor));
+
+        //if (buildingDic[buildingID].taskList[0].num != -1)
+        //{
+        //    buildingDic[buildingID].taskList[0].num--;
+        //    if (buildingDic[buildingID].taskList[0].num == 0)
+        //    {
+        //        buildingDic[buildingID].taskList.RemoveAt(0);
+        //    }
+        //}
+        
 
         StartProduceItem(buildingDic[buildingID].districtID, buildingID, needTime, buildingDic[buildingID].produceEquipNow);
         PlayMainPanel.Instance.UpdateResources();
@@ -1493,7 +1574,15 @@ public class GameControl : MonoBehaviour
 
     public void DistrictItemOrSkillAdd(short districtID, int buildingID)
     {
-        buildingDic[buildingID].forgeNum--;
+        //buildingDic[buildingID].forgeNum--;
+        if (buildingDic[buildingID].taskList[0].num != -1)
+        {
+            buildingDic[buildingID].taskList[0].num--;
+            if (buildingDic[buildingID].taskList[0].num == 0)
+            {
+                buildingDic[buildingID].taskList.RemoveAt(0);
+            }
+        }
         //if (GetDistrictProductAll(districtID) >= districtDic[districtID].rProductLimit)
         //{
         //    MessagePanel.Instance.AddMessage("制品库房已满，生产停止");
@@ -1712,7 +1801,10 @@ public class GameControl : MonoBehaviour
                         MessagePanel.Instance.AddMessage("食物库房已满，生产停止");
                         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
                         {
-                            BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                            if (BuildingPanel.Instance.IsShowOutputInfoPart)
+                            {
+                                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                            }
                             BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
                         }
                         return false;
@@ -1736,7 +1828,10 @@ public class GameControl : MonoBehaviour
                         MessagePanel.Instance.AddMessage("材料库房已满，生产停止");
                         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
                         {
-                            BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                            if (BuildingPanel.Instance.IsShowOutputInfoPart)
+                            {
+                                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                            }
                             BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
                         }
                         return false;
@@ -1765,7 +1860,10 @@ public class GameControl : MonoBehaviour
             MessagePanel.Instance.AddMessage("原材料不足，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
-                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                if (BuildingPanel.Instance.IsShowOutputInfoPart)
+                {
+                    BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                }
                 BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
             }
             return false;
@@ -1852,40 +1950,43 @@ public class GameControl : MonoBehaviour
         }
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
         {
-            BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+            if (BuildingPanel.Instance.IsShowOutputInfoPart)
+            {
+                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+            }
         }
 
     }
 
     public void ChangeProduceEquipAddStuff(int buildingID, int addIndex, StuffType newStuff)
     {
-        buildingDic[buildingID].forgeAddStuff[addIndex] = newStuff;
+        BuildingPanel.Instance.forgeAddStuff[addIndex] = newStuff;
         BuildingPanel.Instance.HideSetForgeAddBlock();
         BuildingPanel.Instance.UpdateSetForgePart(buildingDic[buildingID]);
     }
     public void SetProduceEquipNum(int buildingID, short num)
     {
-        buildingDic[buildingID].forgeNum = num;
+        BuildingPanel.Instance.setForgePartNum  = num;
 
-        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+        BuildingPanel.Instance.UpdateSetForgePartNum();
     }
     public void ChangeProduceEquipNum(int buildingID, short num)
     {
-        if (buildingDic[buildingID].forgeNum == -1)
+        if (BuildingPanel.Instance.setForgePartNum == -1)
         {
-            buildingDic[buildingID].forgeNum = 0;
+            BuildingPanel.Instance.setForgePartNum = 0;
         }
 
-            buildingDic[buildingID].forgeNum += num;
-        if (buildingDic[buildingID].forgeNum < 0)
+        BuildingPanel.Instance.setForgePartNum += num;
+        if (BuildingPanel.Instance.setForgePartNum < 0)
         {
-            buildingDic[buildingID].forgeNum = 0;
+            BuildingPanel.Instance.setForgePartNum = 0;
         }
-        if (buildingDic[buildingID].forgeNum > 100)
+        if (BuildingPanel.Instance.setForgePartNum > 100)
         {
-            buildingDic[buildingID].forgeNum = 100;
+            BuildingPanel.Instance.setForgePartNum = 100;
         }
-        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+        BuildingPanel.Instance.UpdateSetForgePartNum();
     }
 
 

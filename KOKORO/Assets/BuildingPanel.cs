@@ -23,6 +23,12 @@ public class BuildingPanel : BasePanel
     public RectTransform outputInfoRt;
     public List<Image> outputInfo_iconImage;
     public Text outputInfo_desText;
+    public RectTransform outputInfo_taskRt;
+    public List<RectTransform> outputInfo_taskRtList;
+    public List<Image> outputInfo_taskImageList;
+    public List<Text> outputInfo_taskTextList;
+    public List<RectTransform> outputInfo_taskAddRtList;
+    public List<Button> outputInfo_taskDeleteBtnList;
 
     public RectTransform setManagerRt;
     public List<Image> setManager_imageList;
@@ -54,6 +60,7 @@ public class BuildingPanel : BasePanel
     public Button setForge_numAdd1;
     public Button setForge_numAdd10;
     public Button setForge_numSetInfinite;
+    public Text setForge_numText;
     public Button setForge_updateBtn;
 
     public List<Button> totalSet_btnList;
@@ -80,6 +87,17 @@ public class BuildingPanel : BasePanel
     List<GameObject> forgeGoPool = new List<GameObject>();
 
     public int nowCheckingBuildingID = -1;
+
+    public bool IsShowOutputInfoPart = false;
+    public bool IsShowOutputInfoPartTask = false;
+    public bool IsShowSetManagerPart = false;
+    public bool IsShowSetWorkerPart = false;
+    public bool IsShowHistoryInfoPart = false;
+    public bool IsShowSetForgePart = false;
+
+    public List<StuffType> forgeAddStuff = new List<StuffType> { StuffType.None, StuffType.None, StuffType.None};
+    public short setForgePartNum = -1;
+
     void Awake()
     {
         Instance = this;
@@ -88,9 +106,15 @@ public class BuildingPanel : BasePanel
 
     void Start()
     {
+        forgeAddStuff = new List<StuffType> { StuffType.None, StuffType.None, StuffType.None };
+
+        outputInfo_taskDeleteBtnList[0].onClick.AddListener(delegate () { gc.DeleteProduceItemTask(nowCheckingBuildingID,0); });
+        outputInfo_taskDeleteBtnList[1].onClick.AddListener(delegate () { gc.DeleteProduceItemTask(nowCheckingBuildingID, 1); });
+        outputInfo_taskDeleteBtnList[2].onClick.AddListener(delegate () { gc.DeleteProduceItemTask(nowCheckingBuildingID, 2); });
+
         upgradeBlock_cancelBtn.onClick.AddListener(delegate () { HideUpgradeBlock(); });
         pullDownBlock_cancelBtn.onClick.AddListener(delegate () { HidePullDownBlock(); });
-        closeBtn.onClick.AddListener(delegate () { OnHide(); });
+     
         
         setForge_typeDd.onValueChanged.AddListener(delegate  { setForgeType = setForge_typeDd.value; UpdateSetForgeOutputInput(nowCheckingBuildingID, setForgeType, setForgeLevel); });
         setForge_levelDd.onValueChanged.AddListener(delegate { setForgeLevel = setForge_levelDd.value; UpdateSetForgeOutputInput(nowCheckingBuildingID, setForgeType, setForgeLevel); });
@@ -105,24 +129,34 @@ public class BuildingPanel : BasePanel
         setForge_numAdd10.onClick.AddListener(delegate () { gc.ChangeProduceEquipNum(nowCheckingBuildingID, 10); });
         setForge_numSetInfinite.onClick.AddListener(delegate () { gc.SetProduceEquipNum(nowCheckingBuildingID, -1); });
 
+        closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 
     public void OnShow(BuildingObject buildingObject)
     {
         nowCheckingBuildingID = buildingObject.id;
-        switch (buildingObject.panelType)
-        {
-            case "Forge":
-                UpdateForge(buildingObject);break;
-            case "Resource":
-                UpdateResource(buildingObject); break;
-            case "House":
-                UpdateHouse(buildingObject); break;
-            case "Municipal":
-                UpdateMunicipal(buildingObject); break;
-            default:break;
-        }
-        SetAnchoredPosition(0, -432);
+
+        UpdateBasicPart(buildingObject);
+
+        HideOutputInfoPart();
+        HideSetManagerPart();
+        HideSetWorkerPart();
+        ShowHistoryInfoPart(buildingObject,752,-12);
+        HideSetForgePart();
+        UpdateTotalSetButton(buildingObject);
+        //switch (buildingObject.panelType)
+        //{
+        //    case "Forge":
+        //        UpdateForge(buildingObject);break;
+        //    case "Resource":
+        //        UpdateResource(buildingObject); break;
+        //    case "House":
+        //        UpdateHouse(buildingObject); break;
+        //    case "Municipal":
+        //        UpdateMunicipal(buildingObject); break;
+        //    default:break;
+        //}
+        SetAnchoredPosition(0, -436);
         isShow = true;
         
         setWorker_minusBtn.onClick.RemoveAllListeners();
@@ -137,8 +171,6 @@ public class BuildingPanel : BasePanel
         {
             BuildPanel.Instance.OnHide();
         }
- 
-
     }
 
     public override void OnHide()
@@ -148,51 +180,6 @@ public class BuildingPanel : BasePanel
         nowCheckingBuildingID = -1;
     }
 
-    //制作设施模板配置
-    public void UpdateForge(BuildingObject buildingObject)
-    {
-        UpdateBasicPart(buildingObject);
-        UpdateOutputInfoPart(buildingObject);
-        UpdateSetManagerPart(buildingObject);
-        UpdateSetWorkerPart(buildingObject);
-        UpdateHistoryInfoPart(buildingObject);
-        UpdateSetForgePart(buildingObject);
-        UpdateTotalSetButton(buildingObject);
-    }
-    //基础资源设施模板配置
-    public void UpdateResource(BuildingObject buildingObject)
-    {
-        UpdateBasicPart(buildingObject);
-        UpdateOutputInfoPart(buildingObject);
-        UpdateSetManagerPart(buildingObject);
-        UpdateSetWorkerPart(buildingObject);
-        UpdateHistoryInfoPart(buildingObject);
-        HideSetForgePart();
-
-        UpdateTotalSetButton(buildingObject);
-    }
-
-    public void UpdateHouse(BuildingObject buildingObject)
-    {
-        UpdateBasicPart(buildingObject);
-        HideOutputInfoPart();
-        HideSetManagerPart();
-        HideSetWorkerPart();
-        HideHistoryInfoPart();
-        HideSetForgePart();
-
-        UpdateTotalSetButton(buildingObject);
-    }
-    public void UpdateMunicipal(BuildingObject buildingObject)
-    {
-        HideOutputInfoPart();
-        HideSetManagerPart();
-        HideSetWorkerPart();
-        HideHistoryInfoPart();
-        HideSetForgePart();
-
-        UpdateTotalSetButton(buildingObject);
-    }
     //
     public void UpdateTotalSetButton(BuildingObject buildingObject)
     {
@@ -263,7 +250,7 @@ public class BuildingPanel : BasePanel
                 }
 
 
-                for (int i = buttonIndex; i < 6; i++)
+                for (int i = buttonIndex; i < 7; i++)
                 {
                     totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
                 }
@@ -309,6 +296,40 @@ public class BuildingPanel : BasePanel
                     }
                     buttonIndex++;
                 }
+                //下单
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "下单";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                        ShowOutputInfoPart(buildingObject, 6, -92);
+                        ShowOutputInfoPartTask(buildingObject);
+                        ShowSetForgePart(buildingObject, 752, -12);
+                        HideSetManagerPart();
+                        HideSetWorkerPart();
+                        HideHistoryInfoPart();
+                    });
+                    buttonIndex++;
+                }
+
+                //人事
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "人事";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                        HideOutputInfoPart();
+                        HideOutputInfoPartTask();
+                        HideSetForgePart();
+                        ShowSetManagerPart(buildingObject, 6, -92);
+                        ShowSetWorkerPart(buildingObject, 6, -200);
+                        HideHistoryInfoPart();
+                    });
+                    buttonIndex++;
+                }
+
                 //销售/关闭
                 if (buildingObject.buildProgress == 1)
                 {
@@ -354,9 +375,24 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
                     buttonIndex++;
                 }
+                //日志
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "日志";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                        HideOutputInfoPart();
+                        HideOutputInfoPartTask();
+                        HideSetForgePart();
+                        HideSetManagerPart();
+                        HideSetWorkerPart();
+                        ShowHistoryInfoPart(buildingObject, 752, -12);
+                    });
+                    buttonIndex++;
+                }
 
-
-                for (int i = buttonIndex; i < 6; i++)
+                for (int i = buttonIndex; i < 7; i++)
                 {
                     totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
                 }
@@ -374,7 +410,7 @@ public class BuildingPanel : BasePanel
                 }
 
 
-                for (int i = buttonIndex; i < 6; i++)
+                for (int i = buttonIndex; i < 7; i++)
                 {
                     totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
                 }
@@ -392,7 +428,7 @@ public class BuildingPanel : BasePanel
                 }
 
 
-                for (int i = buttonIndex; i < 6; i++)
+                for (int i = buttonIndex; i < 7; i++)
                 {
                     totalSet_btnList[i].GetComponent<RectTransform>().localScale = Vector3.zero;
                 }
@@ -402,9 +438,7 @@ public class BuildingPanel : BasePanel
     }
 
 
-
-
-    //各栏目更新
+    //基础信息面板
     public void UpdateBasicPart(BuildingObject buildingObject)
     {
         int subTitleIndex = 0;
@@ -475,20 +509,27 @@ public class BuildingPanel : BasePanel
                 desText.text =  "[维护费 " + buildingObject.expense+"金币/月]\n"+ buildingObject.des;
     }
 
-    public void UpdateOutputInfoPart(BuildingObject buildingObject)
+    //产出面板
+    public void ShowOutputInfoPart(BuildingObject buildingObject,int x,int y)
     {
-        outputInfoRt.anchoredPosition = new Vector2(274f, -92f);
+        UpdateOutputInfoPart(buildingObject);
+        outputInfoRt.anchoredPosition = new Vector2(x, y);
+        IsShowOutputInfoPart = true;
+    }
+
+    public void UpdateOutputInfoPart(BuildingObject buildingObject)
+    {     
         switch (buildingObject.panelType)
         {
             case "Forge":
-                if (buildingObject.produceEquipNow != -1)
+                if (buildingObject.taskList.Count > 0)
                 {
-                    outputInfo_desText.text = "生产目标:" + "工艺" + DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level + "的" + gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Type)+
-                        "\n生产数量:"+( buildingObject.forgeNum==-1?"无限制": buildingObject.forgeNum.ToString());
+                    outputInfo_desText.text = "生产目标:" + "工艺" + DataManager.mProduceEquipDict[buildingObject.taskList[0].produceEquipNow].Level + "的" + gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[buildingObject.taskList[0].produceEquipNow].Type)+
+                        "\n生产数量:"+(buildingObject.taskList[0].num ==-1?"无限制": buildingObject.taskList[0].num.ToString());
                 }
                 else
                 {
-                    outputInfo_desText.text = "生产目标:<color=#FF4500>未设置</color>" + "\n生产数量:" + (buildingObject.forgeNum == -1 ? "无限制" : (buildingObject.forgeNum == 0? "<color=#FF4500>0</color>" : buildingObject.forgeNum.ToString()));
+                    outputInfo_desText.text = "生产目标:<color=#FF4500>未设置</color>" ;
                 }
 
                 if (buildingObject.isOpen)
@@ -622,11 +663,68 @@ public class BuildingPanel : BasePanel
     public void HideOutputInfoPart()
     {
         outputInfoRt.anchoredPosition = new Vector2(0, 5000f);
+        IsShowOutputInfoPart = false;
     }
 
+    public void ShowOutputInfoPartTask(BuildingObject buildingObject)
+    {
+        UpdateOutputInfoPartTask(buildingObject);
+        outputInfo_taskRt.localScale = Vector2.one;
+        IsShowOutputInfoPartTask = true;
+    }
+
+    public void UpdateOutputInfoPartTask(BuildingObject buildingObject)
+    {   
+        for (int i = 0; i < buildingObject.taskList.Count; i++)
+        {
+            outputInfo_taskRtList[i].localScale = Vector2.one;
+            outputInfo_taskImageList[i].sprite= Resources.Load("Image/ItemPic/" + DataManager.mProduceEquipDict[buildingObject.taskList[i].produceEquipNow].OutputPic, typeof(Sprite)) as Sprite;            
+            outputInfo_taskTextList[i].text = gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[buildingObject.taskList[i].produceEquipNow].Type) + "["+(buildingObject.taskList[i].num==-1?"∞":( "x"+buildingObject.taskList[i].num)) + "]";
+           
+            //Debug.Log(" buildingObject.taskList[i].forgeAddStuff.Count=" + buildingObject.taskList[i].forgeAddStuff.Count);
+            for (int j = 0; j < 3; j++)
+            {
+                
+                switch (buildingObject.taskList[i].forgeAddStuff[j])
+                {
+                    case StuffType.Wood: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon959"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Stone: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon858"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Metal: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon961"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Leather: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon956"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Cloth: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon426"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Twine: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon397"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Bone: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon892"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Wind: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon920"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Fire: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon921"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Water: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon922"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Ground: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon927"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Light: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon925"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.Dark: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon924"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text = "x10"; break;
+                    case StuffType.None: outputInfo_taskAddRtList[i].GetChild(j).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Empty"); outputInfo_taskAddRtList[i].GetChild(j).GetChild(0).GetComponent<Text>().text =""; break;
+                }
+            }
+        }
+        for (int i = buildingObject.taskList.Count; i < outputInfo_taskRtList.Count; i++)
+        {
+            outputInfo_taskRtList[i].localScale = Vector2.zero;
+        }
+    }
+
+    public void HideOutputInfoPartTask()
+    {
+        outputInfo_taskRt.localScale = Vector2.zero;
+        IsShowOutputInfoPartTask = false;
+    }
+    //管理员面板
+    public void ShowSetManagerPart(BuildingObject buildingObject, int x, int y)
+    {
+        Debug.Log("ShowSetManagerPart()");
+        UpdateSetManagerPart(buildingObject);
+        setManagerRt.anchoredPosition = new Vector2(x, y);
+        IsShowSetManagerPart = true;
+    }
     public void UpdateSetManagerPart(BuildingObject buildingObject)
     {
-        setManagerRt.anchoredPosition = new Vector2(12f, -92f);
         for (int i = 0; i < buildingObject.heroList.Count; i++)
         {
             setManager_imageList[i].overrideSprite = Resources.Load("Image/RolePic/" + gc.heroDic[buildingObject.heroList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
@@ -708,11 +806,19 @@ public class BuildingPanel : BasePanel
     public void HideSetManagerPart()
     {
         setManagerRt.anchoredPosition = new Vector2(0, 5000f);
+        IsShowSetManagerPart = false;
     }
 
+    //员工面板
+    public void ShowSetWorkerPart(BuildingObject buildingObject, int x, int y)
+    {
+        UpdateSetWorkerPart(buildingObject);
+        setWorkerRt.anchoredPosition = new Vector2(x, y);
+        IsShowSetWorkerPart = true;
+    }
     public void UpdateSetWorkerPart(BuildingObject buildingObject)
     {
-        setWorkerRt.anchoredPosition = new Vector2(12f, -200f);
+
         int feed = gc.districtDic[gc.nowCheckingDistrictID].people - gc.districtDic[gc.nowCheckingDistrictID].worker;
         setWorker_desText.text = "空闲:" + feed + "\n 人数 " + buildingObject.workerNow + "/" + buildingObject.worker;
         if (buildingObject.workerNow > 0)
@@ -736,6 +842,15 @@ public class BuildingPanel : BasePanel
     public void HideSetWorkerPart()
     {
         setWorkerRt.anchoredPosition = new Vector2(0, 5000f);
+        IsShowSetWorkerPart = false;
+    }
+
+    //日志面板
+    public void ShowHistoryInfoPart(BuildingObject buildingObject, int x, int y)
+    {
+        UpdateHistoryInfoPart(buildingObject);
+        infoHistoryRt.anchoredPosition = new Vector2(x, y);
+        IsShowHistoryInfoPart = true;
     }
 
     public void UpdateHistoryInfoPart(BuildingObject buildingObject )
@@ -757,14 +872,21 @@ public class BuildingPanel : BasePanel
     public void HideHistoryInfoPart()
     {
         infoHistoryRt.anchoredPosition = new Vector2(0, 5000f);
+        IsShowHistoryInfoPart = false;
+    }
+
+    //下单面板
+    public void ShowSetForgePart(BuildingObject buildingObject,int x,int y)
+    {
+        UpdateSetForgePart(buildingObject);
+        SetForgeRt.anchoredPosition = new Vector2(x, y);
+        IsShowSetForgePart = true;
     }
 
     public void UpdateSetForgePart(BuildingObject buildingObject)
     {
-        //  SetForgeRt.anchoredPosition = new Vector2(278f, -212f);
-        SetForgeRt.localScale = Vector2.one;
         HideSetForgeAddBlock();
-
+        UpdateSetForgePartNum();
         switch (buildingObject.prototypeID)
         {
             case 32:
@@ -816,9 +938,9 @@ public class BuildingPanel : BasePanel
         setForge_typeDd.RefreshShownValue();
         // Debug.Log(buildingObject.produceEquipNow);
         // Debug.Log(DataManager.mProduceEquipDict[buildingObject.produceEquipNow].OptionValue);
-        if (buildingObject.produceEquipNow != -1)
+        if (buildingObject.taskList.Count>0)
         {
-            setForge_typeDd.value = DataManager.mProduceEquipDict[buildingObject.produceEquipNow].OptionValue;
+            setForge_typeDd.value = DataManager.mProduceEquipDict[buildingObject.taskList[buildingObject.taskList.Count-1].produceEquipNow].OptionValue;
         }
         else
         {
@@ -832,9 +954,9 @@ public class BuildingPanel : BasePanel
             setForge_levelDd.AddOptions(new List<string> { (i + 1) + "级" });
         }
         setForge_levelDd.RefreshShownValue();
-        if (buildingObject.produceEquipNow != -1)
+        if (buildingObject.taskList.Count > 0)
         {
-            setForge_levelDd.value = DataManager.mProduceEquipDict[buildingObject.produceEquipNow].Level - 1;
+            setForge_levelDd.value = DataManager.mProduceEquipDict[buildingObject.taskList[buildingObject.taskList.Count - 1].produceEquipNow].Level - 1;
         }
         else
         {
@@ -843,70 +965,62 @@ public class BuildingPanel : BasePanel
         UpdateSetForgeOutputInput(buildingObject.id, setForge_typeDd.value, setForge_levelDd.value);
 
         // setForgeLevel = setForge_levelDd.value;
-
-        for (int i = 0; i < buildingObject.forgeAddStuff.Count; i++)
-        {
-            //setForge_imageList
-            setForge_btnList[i].interactable = true;
-
-            switch (buildingObject.forgeAddStuff[i])
+       
+            for (int i = 0; i < forgeAddStuff.Count; i++)
             {
-                case StuffType.Wood:setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon959");setForge_textList[i].text = "木材*10";break;
-                case StuffType.Stone: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon858"); setForge_textList[i].text = "石料*10"; break;
-                case StuffType.Metal: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon961"); setForge_textList[i].text = "金属*10"; break;
-                case StuffType.Leather: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon956"); setForge_textList[i].text = "皮革*10"; break;
-                case StuffType.Cloth: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon426"); setForge_textList[i].text = "布料*10"; break;
-                case StuffType.Twine: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon397"); setForge_textList[i].text = "麻绳*10"; break;
-                case StuffType.Bone: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon892"); setForge_textList[i].text = "骨块*10"; break;
-                case StuffType.Wind: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon920"); setForge_textList[i].text = "风粉尘*10"; break;
-                case StuffType.Fire: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon921"); setForge_textList[i].text = "火粉尘*10"; break;
-                case StuffType.Water: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon922"); setForge_textList[i].text = "水粉尘*10"; break;
-                case StuffType.Ground: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon927"); setForge_textList[i].text = "地粉尘*10"; break;
-                case StuffType.Light: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon925"); setForge_textList[i].text = "光粉尘*10"; break;
-                case StuffType.Dark: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon924"); setForge_textList[i].text = "暗粉尘*10"; break;
-                case StuffType.None: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Empty"); setForge_textList[i].text = "<点击设置>"; break;
+                //setForge_imageList
+                setForge_btnList[i].interactable = true;
+
+                switch (forgeAddStuff[i])
+                {
+                    case StuffType.Wood: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon959"); setForge_textList[i].text = "木材*10"; break;
+                    case StuffType.Stone: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon858"); setForge_textList[i].text = "石料*10"; break;
+                    case StuffType.Metal: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon961"); setForge_textList[i].text = "金属*10"; break;
+                    case StuffType.Leather: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon956"); setForge_textList[i].text = "皮革*10"; break;
+                    case StuffType.Cloth: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon426"); setForge_textList[i].text = "布料*10"; break;
+                    case StuffType.Twine: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon397"); setForge_textList[i].text = "麻绳*10"; break;
+                    case StuffType.Bone: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon892"); setForge_textList[i].text = "骨块*10"; break;
+                    case StuffType.Wind: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon920"); setForge_textList[i].text = "风粉尘*10"; break;
+                    case StuffType.Fire: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon921"); setForge_textList[i].text = "火粉尘*10"; break;
+                    case StuffType.Water: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon922"); setForge_textList[i].text = "水粉尘*10"; break;
+                    case StuffType.Ground: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon927"); setForge_textList[i].text = "地粉尘*10"; break;
+                    case StuffType.Light: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon925"); setForge_textList[i].text = "光粉尘*10"; break;
+                    case StuffType.Dark: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon924"); setForge_textList[i].text = "暗粉尘*10"; break;
+                    case StuffType.None: setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Empty"); setForge_textList[i].text = "<点击设置>"; break;
+                }
+
             }
+        
+   
+           
 
-        }
-        //for (int i = 0; i < setForge_btnList.Count; i++)
+
+
+        //if (buildingObject.produceEquipNow != -1)
         //{
-        //    setForge_imageList[i].sprite = Resources.Load<Sprite>("Image/Empty");
-        //    if (i == buildingObject.forgeAddStuff.Count)
-        //    {
-        //        setForge_btnList[i].interactable = true;
-        //        setForge_textList[i].text = "<点击设置>";
-
-        //    }
-        //    else
-        //    {
-        //        setForge_btnList[i].interactable = false;
-        //        setForge_textList[i].text = "";
-        //    }
+        //    setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "提交";
         //}
-
-
-        if (buildingObject.produceEquipNow != -1)
-        {
-            setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "更新";
-        }
-        else
-        {
-            setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "设置";
-        }
+        //else
+        //{
+        //    setForge_updateBtn.transform.GetChild(0).GetComponent<Text>().text = "设置";
+        //}
         setForge_updateBtn.onClick.RemoveAllListeners();
         setForge_updateBtn.onClick.AddListener(delegate () {
-            gc.ChangeProduceEquipNow(buildingObject.id);
+            gc.AddProduceItemTask(buildingObject.id, forgeAddStuff, setForgePartNum);
+            //gc.ChangeProduceEquipNow(buildingObject.id);
         });
 
     }
 
     void ShowSetForgeAddBlock(int index)
     {
+        Debug.Log("ShowSetForgeAddBlock() forgeAddStuff.Count=" + forgeAddStuff.Count);
+
         setForge_addBlockRt.localScale = Vector2.one;
 
         setForge_addUnsetBtn.onClick.RemoveAllListeners();
 
-        if (gc.buildingDic[nowCheckingBuildingID].forgeAddStuff[index] == StuffType.None)
+        if (forgeAddStuff[index] == StuffType.None)
         {
             setForge_addUnsetSelectedRt.localScale = Vector2.one;
             setForge_addUnsetBtn.onClick.AddListener(delegate () {
@@ -961,7 +1075,7 @@ public class BuildingPanel : BasePanel
                     case StuffType.Dark: go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/icon924"); go.transform.GetChild(2).GetComponent<Text>().text = "暗粉尘*10"; break;
                 }
                 go.transform.GetComponent<Button>().onClick.RemoveAllListeners();
-                if (gc.buildingDic[nowCheckingBuildingID].forgeAddStuff[index] == kvp.Key)
+                if (forgeAddStuff[index] == kvp.Key)
                 {
                     go.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector2.one;
                     go.transform.GetComponent<Button>().onClick.AddListener(delegate () {
@@ -1083,9 +1197,14 @@ public class BuildingPanel : BasePanel
 
     public void HideSetForgePart()
     {
-        SetForgeRt.localScale= Vector2.zero;
+        SetForgeRt.anchoredPosition = new Vector2(0, 5000);
+        IsShowSetForgePart = true;
     }
-
+    public void UpdateSetForgePartNum()
+    {
+        setForge_numText.text = setForgePartNum.ToString();
+    }
+    
 
 
 

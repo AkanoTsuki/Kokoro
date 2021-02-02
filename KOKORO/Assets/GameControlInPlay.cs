@@ -118,7 +118,10 @@ public class GameControlInPlay : MonoBehaviour
             {
                 if (gc.buildingDic[BuildingPanel.Instance.nowCheckingBuildingID].isOpen)
                 {
-                    BuildingPanel.Instance.UpdateOutputInfoPart(gc.buildingDic[BuildingPanel.Instance.nowCheckingBuildingID]);
+                    if (BuildingPanel.Instance.IsShowOutputInfoPart)
+                    {
+                        BuildingPanel.Instance.UpdateOutputInfoPart(gc.buildingDic[BuildingPanel.Instance.nowCheckingBuildingID]);
+                    }
                 }
             }
             if (DistrictMapPanel.Instance.isShow)

@@ -1421,13 +1421,14 @@ public class BuildingObject
     private byte ELight;
     private byte EDark;
     private short ProduceEquipNow;//当前生产的装备模板原型ID 如果是资源类则对应资源生产关系表
+    private List<BuildingTaskObject> TaskList;
     private byte BuildProgress;//0建设中 1已完成 2升级中
-    private List<StuffType> ForgeAddStuff;
-    private short ForgeNum;//生产数量 -1为不限制
+   // private List<StuffType> ForgeAddStuff;
+  //  private short ForgeNum;//生产数量 -1为不限制
     public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, AnimStatus doorInLine, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, bool isSale, List<string> gridList, List<int> heroList, List<int> customerList,
          short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
-        short produceEquipNow, byte buildProgress, List<StuffType> forgeAddStuff,short forgeNum)
+        List<BuildingTaskObject> taskList,short produceEquipNow, byte buildProgress)
     {
         this.ID = id;
         this.PrototypeID = prototypeID;
@@ -1459,9 +1460,10 @@ public class BuildingObject
         this.ELight = eLight;
         this.EDark = eDark;
         this.ProduceEquipNow = produceEquipNow;
+        this.TaskList = taskList;
         this.BuildProgress = buildProgress;
-        this.ForgeAddStuff = forgeAddStuff;
-        this.ForgeNum = forgeNum;
+       // this.ForgeAddStuff = forgeAddStuff;
+       // this.ForgeNum = forgeNum;
     }
     public int id{ get { return ID; } }
     public short prototypeID { get { return PrototypeID; } set { PrototypeID = value; } }
@@ -1493,11 +1495,29 @@ public class BuildingObject
     public byte eLight { get { return ELight; } set { ELight = value; } }
     public byte eDark { get { return EDark; } set { EDark = value; } }
     public short produceEquipNow { get { return ProduceEquipNow; } set { ProduceEquipNow = value; } }
+    public List<BuildingTaskObject> taskList { get { return TaskList; } set { TaskList = value; } }
     public byte buildProgress { get { return BuildProgress; } set { BuildProgress = value; } }
-    public List<StuffType> forgeAddStuff { get { return ForgeAddStuff; } set { ForgeAddStuff = value; } }
-    public short forgeNum { get { return ForgeNum; } set { ForgeNum = value; } }
+   // public List<StuffType> forgeAddStuff { get { return ForgeAddStuff; } set { ForgeAddStuff = value; } }
+
+    //public short forgeNum { get { return ForgeNum; } set { ForgeNum = value; } }
 }
 
+public class BuildingTaskObject
+{
+    private short ProduceEquipNow;
+    private List<StuffType> ForgeAddStuff;
+    private short Num;
+    public BuildingTaskObject(short produceEquipNow, List<StuffType> forgeAddStuff,short num)
+    {
+        this.ProduceEquipNow = produceEquipNow;
+        this.ForgeAddStuff = forgeAddStuff;
+        this.Num = num;
+    }
+    public short produceEquipNow { get { return ProduceEquipNow; } }
+    public List<StuffType> forgeAddStuff { get { return ForgeAddStuff; } set { ForgeAddStuff = value; } }
+    public short num { get { return Num; } set { Num = value; } }
+
+}
 
 //地牢原型
 [System.Serializable]
