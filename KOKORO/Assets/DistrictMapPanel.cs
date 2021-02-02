@@ -343,7 +343,7 @@ public class DistrictMapPanel : BasePanel
     public void UpdateBasicInfo()
     {
         forceImage.overrideSprite = Resources.Load("Image/Other/icon_flag_" + gc.forceDic[gc.districtDic[gc.nowCheckingDistrictID].force].flagIndex + "_a", typeof(Sprite)) as Sprite;
-        nameText.text = gc.districtDic[gc.nowCheckingDistrictID].name + "·" + gc.districtDic[gc.nowCheckingDistrictID].baseName;
+        nameText.text = gc.districtDic[gc.nowCheckingDistrictID].name ;
         levelText.text = gc.districtDic[gc.nowCheckingDistrictID].level.ToString();
         peopleText.text = "居民 " + gc.districtDic[gc.nowCheckingDistrictID].people+"/" + gc.districtDic[gc.nowCheckingDistrictID].peopleLimit;
         buildingText.text ="设施 "+ gc.districtDic[gc.nowCheckingDistrictID].buildingList.Count; 
@@ -602,7 +602,7 @@ public class DistrictMapPanel : BasePanel
                     statusTf.GetComponent<RectTransform>().localScale = Vector2.one;
                     if (gc.buildingDic[buildingID].isOpen)
                     {
-                        statusSubTf.GetComponent<Text>().text = "<color=#D583EC>" + gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[gc.buildingDic[buildingID].produceEquipNow].Type) + "(" + DataManager.mProduceEquipDict[gc.buildingDic[buildingID].produceEquipNow].Level + ")制作中</color>";
+                        statusSubTf.GetComponent<Text>().text = "<color=#D583EC>" + gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[gc.buildingDic[buildingID].taskList[0].produceEquipNow].Type) + "(" + DataManager.mProduceEquipDict[gc.buildingDic[buildingID].taskList[0].produceEquipNow].Level + ")制作中</color>";
                         statusBarTf.GetComponent<RectTransform>().localScale = Vector2.one;
                         statusBarImageDic[buildingID].color = colorMake;
                     }
@@ -823,7 +823,7 @@ public class DistrictMapPanel : BasePanel
         {
             go.transform.localScale = new Vector2(1f, 1.25f);
             go.transform.GetComponent<AnimatiorControlByNPC>().isShow = true;
-            Debug.Log("  go.transform.localScale=" + go.transform.localScale);
+            //Debug.Log("  go.transform.localScale=" + go.transform.localScale);
         }
         else
         {
@@ -915,7 +915,7 @@ public class DistrictMapPanel : BasePanel
 
     public void UpdateCustomerByStage(int customerID)
     {
-        Debug.Log("[" + customerID + ":" + gc.customerDic[customerID].name + "]" + gc.customerDic[customerID].stage + "[" + DataManager.mDistrictDict[gc.customerDic[customerID].districtID].Name + "]");
+       // Debug.Log("[" + customerID + ":" + gc.customerDic[customerID].name + "]" + gc.customerDic[customerID].stage + "[" + DataManager.mDistrictDict[gc.customerDic[customerID].districtID].Name + "]");
 
         switch (gc.customerDic[customerID].stage)
         {

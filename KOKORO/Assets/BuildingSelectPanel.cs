@@ -190,7 +190,7 @@ public class BuildingSelectPanel : BasePanel
                     case "Forge":
                         if (temp[i].isOpen)
                         {
-                            go.transform.GetChild(2).GetComponent<Text>().text = "<color=#D583EC>" + gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[temp[i].produceEquipNow].Type) + "(" + DataManager.mProduceEquipDict[temp[i].produceEquipNow].Level + ")制作中</color>";
+                            go.transform.GetChild(2).GetComponent<Text>().text = "<color=#D583EC>" + gc.OutputItemTypeSmallStr(DataManager.mProduceEquipDict[temp[i].taskList[0].produceEquipNow].Type) + "(" + DataManager.mProduceEquipDict[temp[i].taskList[0].produceEquipNow].Level + ")制作中</color>";
 
                         }
                         else
