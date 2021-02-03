@@ -444,7 +444,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
         {
             teamGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
-        dungeonInfoBlockRt.sizeDelta = new Vector2(214f, gc.dungeonList[id].teamList.Count * 59f + 154f);
+        dungeonInfoBlockRt.sizeDelta = new Vector2(214f, gc.dungeonList[id].teamList.Count * 59f + 162f);
 
         dungeonInfoBlock_sendBtn.onClick.RemoveAllListeners();
         dungeonInfoBlock_sendBtn.onClick.AddListener(delegate ()

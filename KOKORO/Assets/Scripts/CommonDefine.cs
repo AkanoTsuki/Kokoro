@@ -1349,7 +1349,7 @@ public class BuildingPrototype : ISerializationCallbackReceiver
     public short ID;
     public string Name;
     public string MainPic;
-   // public string MapPic;
+    public string BgPic;
     public byte SizeX;
     public byte SizeY;
     public byte SizeYBase;

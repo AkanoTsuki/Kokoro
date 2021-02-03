@@ -160,17 +160,17 @@ public class BuildingPanel : BasePanel
         UpdateTotalSetButton(buildingObject);
         totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
         //int roleCount
+        //Debug.Log("DataManager.mBuildingDict[buildingObject.id].BgPic="+ DataManager.mBuildingDict[buildingObject.prototypeID].BgPic);
+        bgImage.sprite = Resources.Load("Image/DistrictBG/"+DataManager.mBuildingDict[buildingObject.prototypeID].BgPic, typeof(Sprite)) as Sprite;
+        int roleIndex = 0;
         switch (buildingObject.panelType)
         {
             case "Forge":
-                bgImage.sprite = Resources.Load("Image/DistrictBG/DBG_WeaponShop", typeof(Sprite)) as Sprite;
+             
                 bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
-                bgRoleImageList[0].sprite = Resources.Load("Image/chara3_7/Pic", typeof(Sprite)) as Sprite;
-
-                for (int i = 1; i < bgRoleImageList.Count; i++)
-                {
-                    bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
-                }
+                bgRoleImageList[0].sprite = Resources.Load("Image/RolePic/chara3_7/Pic", typeof(Sprite)) as Sprite;
+                roleIndex++;
+              
                 break;
             case "Resource":
                break;
@@ -179,6 +179,10 @@ public class BuildingPanel : BasePanel
             case "Municipal":
                  break;
             default: break;
+        }
+        for (int i = roleIndex; i < bgRoleImageList.Count; i++)
+        {
+            bgRoleImageList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
         }
         SetAnchoredPosition(0, -436);
         isShow = true;
@@ -219,7 +223,7 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
                     if (buildingObject.isOpen)
                     {
-                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "停产";
+                        totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "停产";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             gc.StopProduceResource(buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
@@ -228,7 +232,7 @@ public class BuildingPanel : BasePanel
                     }
                     else
                     {
-                        totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "生产";
+                        totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "生产";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
                             if (buildingObject.workerNow != 0&& buildingObject.produceEquipNow!=-1)
                             {
@@ -256,7 +260,7 @@ public class BuildingPanel : BasePanel
                 //人事
                 if (buildingObject.buildProgress == 1)
                 {
-                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-36, -32);
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-140, -32);
                     totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon240", typeof(Sprite)) as Sprite;
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
                     totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "人事";
@@ -267,26 +271,11 @@ public class BuildingPanel : BasePanel
                         ShowSetManagerPart(buildingObject, 796, -12);
                         ShowSetWorkerPart(buildingObject, 796, -120);
                         HideHistoryInfoPart();
+                        totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     });
                     buttonIndex++;
                 }
-                //日志
-                //if (buildingObject.buildProgress == 1)
-                //{
-                //    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(192, -32);
-                //    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon876", typeof(Sprite)) as Sprite;
-                //    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
-                //    totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "日志";
-                //    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
-                //        HideOutputInfoPart();
-                //        HideOutputInfoPartTask();
-                //        HideSetForgePart();
-                //        HideSetManagerPart();
-                //        HideSetWorkerPart();
-                //        ShowHistoryInfoPart(buildingObject, 796, -12);
-                //    });
-                //    buttonIndex++;
-                //}
+
                 //升级
                 if (buildingObject.upgradeTo != -1 && buildingObject.buildProgress == 1)
                 {
@@ -321,7 +310,6 @@ public class BuildingPanel : BasePanel
                 //开工停工
                 if (buildingObject.buildProgress == 1)
                 {
-                    //totalSet_btnList[buttonIndex].GetComponent<RectTransform>().localScale = Vector3.one;
                     totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-192,-32);
                     totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon940", typeof(Sprite)) as Sprite;
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
@@ -480,7 +468,7 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(192, -32);
                     totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon396", typeof(Sprite)) as Sprite;
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
-                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "拆除";
+                    totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "拆除";
                     totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
                     buttonIndex++;
                 }
@@ -499,7 +487,7 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(192, -32);
                     totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon396", typeof(Sprite)) as Sprite;
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
-                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Text>().text = "拆除";
+                    totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "拆除";
                     totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
                     buttonIndex++;
                 }

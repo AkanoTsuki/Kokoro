@@ -1083,6 +1083,7 @@ public class GameControl : MonoBehaviour
         PlayMainPanel.Instance.UpdateResources();
 
         StopProduceResource(buildingID);
+        districtDic[nowCheckingDistrictID].buildingList.Remove(buildingID);
         buildingDic.Remove(buildingID);
 
     }
@@ -3491,6 +3492,7 @@ public class GameControl : MonoBehaviour
         for (int i = 0; i < districtDic[customerDic[customerID].districtID].buildingList.Count; i++)
         {
             int buildingID = districtDic[customerDic[customerID].districtID].buildingList[i];
+            Debug.Log("buildingID=" + buildingID + " customerID=" + customerID);
             if (DataManager.mBuildingDict[buildingDic[buildingID].prototypeID].ShopType == customerDic[customerID].shopType)
             {
                 if (buildingDic[buildingID].isSale)
