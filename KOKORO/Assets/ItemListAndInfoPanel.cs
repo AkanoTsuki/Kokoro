@@ -229,6 +229,7 @@ public class ItemListAndInfoPanel : BasePanel
 
         HideBatch();
         SetAnchoredPosition(x, y);
+        gameObject.SetActive(true);
         transform.SetAsLastSibling();
         isShow = true;
     }
@@ -256,6 +257,7 @@ public class ItemListAndInfoPanel : BasePanel
 
         HideBatch();
         SetAnchoredPosition(x, y);
+        gameObject.SetActive(true);
         transform.SetAsLastSibling();
         isShow = true;
     }
@@ -281,6 +283,7 @@ public class ItemListAndInfoPanel : BasePanel
 
         HideBatch();
         SetAnchoredPosition(x, y);
+        gameObject.SetActive(true);
         transform.SetAsLastSibling();
         isShow = true;
     }
@@ -288,7 +291,8 @@ public class ItemListAndInfoPanel : BasePanel
 
     public override void OnHide()
     {
-        SetAnchoredPosition(0, 5000);
+       
+        gameObject.SetActive(false);
         nowItemID = -1;
         isShow = false;
     }

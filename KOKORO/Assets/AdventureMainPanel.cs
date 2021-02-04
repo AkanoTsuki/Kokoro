@@ -36,23 +36,10 @@ public class AdventureMainPanel : BasePanel
     void Start()
     {
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
-
-        //for (byte i = 0; i < gc.adventureTeamList.Count; i++)
-        //{
-        //    if (gc.adventureTeamList[i].state == AdventureState.Doing)
-        //    {
-        //        if (gc.adventureTeamList[i].action != AdventureAction.Fight)
-        //        {
-        //            gc.adventureTeamList[i].action = AdventureAction.Walk;
-        //        }
-        //    }
-       
-        //}
     }
 
     void Update()
     {
-
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
             if (gc.adventureTeamList[i].action ==  AdventureAction.Walk)
@@ -63,10 +50,10 @@ public class AdventureMainPanel : BasePanel
     }
 
 
-    public void OnShow(byte teamID,int x ,int y)
+    public void OnShow(byte teamID)
     {
         UpdateAllInfo(teamID);
-        SetAnchoredPosition(x, y);
+        gameObject.SetActive(true);
         isShow = true;
     }
 
@@ -78,7 +65,7 @@ public class AdventureMainPanel : BasePanel
             AdventureTeamPanel.Instance.OnHide();
         }
 
-        SetAnchoredPosition(0, 5000);
+        gameObject.SetActive(false);
         isShow = false;
     }
 
@@ -99,15 +86,17 @@ public class AdventureMainPanel : BasePanel
                 go.transform.SetParent(teamListGo.transform);
                 adventureTeamGo.Add(go);
             }
+
+            go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 0f);
             if (i == teamID)
-            {
-                go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 0f);
+            {               
+                go.SetActive(true);
                 UpdateTeam(i);
                 HideGets(i);
             }
             else
             {
-                go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 5000f);
+                go.SetActive(false);
                 UpdateTeam(i);
             }
             if (i < adventureTeamBlocks.Count)

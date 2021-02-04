@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class TransferPanel : BasePanel
 {
     public static TransferPanel Instance;
-
     GameControl gc;
 
+    //UI组件
     public RectTransform listRt;
     public RectTransform arrowRt;
     public RectTransform nowRt;
@@ -23,9 +23,11 @@ public class TransferPanel : BasePanel
     public Button doBtn;
     public Button closeBtn;
 
+    //对象池
     List<GameObject> heroGoPool = new List<GameObject>();
     List<GameObject> districtGoPool = new List<GameObject>();
 
+    //临时变量
     public List<int> selectedHeroID = new List<int>();
     public short selectedDistrict = -1;
 
@@ -34,7 +36,6 @@ public class TransferPanel : BasePanel
         Instance = this;
         gc = GameObject.Find("GameManager").GetComponent<GameControl>();
     }
-
 
     void Start()
     {    
@@ -45,7 +46,6 @@ public class TransferPanel : BasePanel
     {
         if (type == "To")
         {
-
             selectedDistrict = -1;
             doBtn.onClick.RemoveAllListeners();
             doBtn.onClick.AddListener(delegate () { gc.Transfer(districtID, selectedDistrict, selectedHeroID); });
@@ -60,7 +60,6 @@ public class TransferPanel : BasePanel
         }
         else if (type == "From")
         {
-            //selectedHeroID.Clear();
             selectedDistrict = -1;
             doBtn.onClick.RemoveAllListeners();
             doBtn.onClick.AddListener(delegate () { gc.Transfer( selectedDistrict, districtID, selectedHeroID); });
@@ -74,15 +73,14 @@ public class TransferPanel : BasePanel
             nowRt.anchoredPosition = new Vector2(556f, -26f);
         }
 
-      
-        SetAnchoredPosition(76, -104);
+        gameObject.SetActive(true);
         isShow = true;
-
     }
 
     public override void OnHide()
     {
-        SetAnchoredPosition(0, 5000);
+        //SetAnchoredPosition(0, 5000);
+        gameObject.SetActive(false);
         isShow = false;
     }
 
@@ -107,8 +105,6 @@ public class TransferPanel : BasePanel
         GameObject go;
         for (int i = 0; i < heroObjects.Count; i++)
         {
-          
-
             if (i < heroGoPool.Count)
             {
                 go = heroGoPool[i];
@@ -178,8 +174,7 @@ public class TransferPanel : BasePanel
     public void UpdateHeroListSingle(int heroID)
     {
         GameObject go = GameObject.Find("Canvas/TransferPanel/HeroList/ScrollView/Viewport/Content/Hero_" + heroID);
-       
-        
+
         string str = "Lv." + gc.heroDic[heroID].level + "<color=#" + DataManager.mHeroDict[gc.heroDic[heroID].prototypeID].Color + ">" + DataManager.mHeroDict[gc.heroDic[heroID].prototypeID].Name + "</color>";
         if (gc.heroDic[heroID].workerInBuilding != -1)
         {
@@ -307,8 +302,8 @@ public class TransferPanel : BasePanel
     {
         GameObject go = GameObject.Find("Canvas/TransferPanel/DistrictList/ScrollView/Viewport/Content/District_" + districtID);
 
-        Debug.Log("districtID="+ districtID+ " selectedDistrict=" + selectedDistrict);
-        Debug.Log(" go.name=" + go.name);
+        //Debug.Log("districtID="+ districtID+ " selectedDistrict=" + selectedDistrict);
+        //Debug.Log(" go.name=" + go.name);
         if (selectedDistrict == districtID)
         {
             go.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector2.one;

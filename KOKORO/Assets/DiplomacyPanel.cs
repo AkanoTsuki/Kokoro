@@ -27,13 +27,14 @@ public class DiplomacyPanel : BasePanel
     public override void OnShow()
     {
         UpdateList();
-        SetAnchoredPosition(76, -104);
+
+        gameObject.SetActive(true);
         isShow = true;
     }
 
     public override void OnHide()
     {
-        SetAnchoredPosition(0, 5000);
+        gameObject.SetActive(false);
         isShow = false;
     }
 

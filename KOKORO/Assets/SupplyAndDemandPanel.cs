@@ -161,12 +161,14 @@ public class SupplyAndDemandPanel : BasePanel
 
         UpdateAllInfo(districtID);
         SetAnchoredPosition(x, y);
+        gameObject.SetActive(true);
         transform.SetAsLastSibling();
         isShow = true;
     }
     public override void OnHide()
     {
-        SetAnchoredPosition(0, 5000);
+        //SetAnchoredPosition(0, 5000);
+        gameObject.SetActive(false);
         isShow = false;
     }
     public void UpdateAllInfo(short districtID)

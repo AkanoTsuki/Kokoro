@@ -55,36 +55,6 @@ public class DistrictMapPanel : BasePanel
     public Text bottom_baseline_elementLightText;
     public Text bottom_baseline_elementDarkText;
 
-    //public RectTransform bottom_resourcesBlockRt;
-    //public Text bottom_resources_foodCerealText;
-    //public Text bottom_resources_foodVegetableText;
-    //public Text bottom_resources_foodFruitText;
-    //public Text bottom_resources_foodMeatText;
-    //public Text bottom_resources_foodFishText;
-    //public Text bottom_resources_foodBeerText;
-    //public Text bottom_resources_foodWineText;
-
-    //public Text bottom_resources_stuffWoodText;
-    //public Text bottom_resources_stuffStoneText;
-    //public Text bottom_resources_stuffMetalText;
-    //public Text bottom_resources_stuffLeatherText;
-    //public Text bottom_resources_stuffClothText;
-    //public Text bottom_resources_stuffTwineText;
-    //public Text bottom_resources_stuffBoneText;
-    //public Text bottom_resources_stuffWindText;
-    //public Text bottom_resources_stuffFireText;
-    //public Text bottom_resources_stuffWaterText;
-    //public Text bottom_resources_stuffGroundText;
-    //public Text bottom_resources_stuffLightText;
-    //public Text bottom_resources_stuffDarkText;
-
-    //public Text bottom_resources_productWeaponText;
-    //public Text bottom_resources_productArmorText;
-    //public Text bottom_resources_productJewelryText;
-    //public Text bottom_resources_productSkillRollText;
-
-
-
 
 
     public Button closeBtn;
@@ -291,7 +261,7 @@ public class DistrictMapPanel : BasePanel
 
 
         InvokeRepeating("UpdateBar", 0, 0.2f);
-
+        //gameObject.SetActive(true);
         isShow = true;
     }
     public override void OnHide()
@@ -314,6 +284,7 @@ public class DistrictMapPanel : BasePanel
         //}
 
         SetAnchoredPosition(0, 5000);
+        //gameObject.SetActive(false);
         //PlayMainPanel.Instance.top_districtBtn.GetComponent<RectTransform>().localScale = Vector2.one;
         isShow = false;
 
@@ -710,10 +681,8 @@ public class DistrictMapPanel : BasePanel
     {
         List<CustomerObject> temp = new List<CustomerObject> { };
         foreach (KeyValuePair<int, CustomerObject> kvp in gc.customerDic)
-        {
-          
+        {         
             temp.Add(kvp.Value);
-
         }
 
         for (int i = 0; i < temp.Count; i++)
@@ -726,51 +695,25 @@ public class DistrictMapPanel : BasePanel
     //设置访客GO显示/隐藏 通过缩放
     public void UpdateAllCustomer(int districtID)
     {
-        //customerGoPool.Clear();
-        //Debug.Log(" customerGoAllPool.Count=" + customerGoAllPool.Count);
-        //for (int i = 0; i < customerGoAllPool.Count; i++)
-        //{
-        //    customerGoAllPool[i].transform.DOKill();
-        //    customerGoAllPool[i].transform.GetComponent<AnimatiorControlByNPC>().Stop();
-        //    customerGoAllPool[i].transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,5000);
-        //    customerGoPool.Add(customerGoAllPool[i]);
-        //}
-
-      //  List<CustomerObject> temp = new List<CustomerObject> { };
         foreach (KeyValuePair<int, CustomerObject> kvp in gc.customerDic)
         {
             if (kvp.Value.districtID == districtID)
             {
                 customerGoDic[kvp.Key].transform.localScale = new Vector2(1f,1.25f);
                 customerGoDic[kvp.Key].GetComponent<AnimatiorControlByNPC>().isShow = true;
-                // temp.Add(kvp.Value);
-                // Debug.Log("districtID="+ districtID+" "+ kvp.Value.id+":" + kvp.Value.name+"需要被展示");
             }
             else
             {
                 customerGoDic[kvp.Key].transform.localScale = Vector2.zero;
                 customerGoDic[kvp.Key].GetComponent<AnimatiorControlByNPC>().isShow = false;
-                // Debug.Log("districtID=" + districtID + " " + kvp.Value.id + ":" + kvp.Value.name + "需要隐藏");
             }
         }
 
-    
-
-        //for (int i = 0; i < temp.Count; i++)
-        //{
-        //    SetCustomer(temp[i].id, true);
-        //    //UpdateCustomerByStage(temp[i].id);
-        //}
-        //for (int i = temp.Count; i < customerGoPool.Count; i++)
-        //{
-        //    customerGoPool[i].transform.GetComponent<Image>().color = Color.clear;
-        //    customerGoPool[i].transform.GetComponent<AnimatiorControlByNPC>().Stop();
-        //}
     }
 
 
 
-    //创建访客实例 isNew 用作进入游戏第一次打开本面板，
+    //创建访客实例 
     public void SetCustomer(int customerID)
     {
         GameObject go;
@@ -842,7 +785,10 @@ public class DistrictMapPanel : BasePanel
         //Debug.Log("gc.customerDic[customerID].stage=" + gc.customerDic[customerID].stage);
         //Debug.Log("gc.customerDic[customerID].buildingID=" + gc.customerDic[customerID].buildingID);
       //  Debug.Log("gc.customerDic[customerID].buildingID=" + gc.customerDic[customerID].);
-        GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
+
+       // GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
+        GameObject go = customerGoDic[customerID];
+
         int buildingID = gc.customerDic[customerID].buildingID;
         int waitIndex;
         int ranY;
@@ -1126,6 +1072,7 @@ public class DistrictMapPanel : BasePanel
     {
         yield return new WaitForSeconds(delay);
         GameObject cgo= GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
+       // GameObject cgo = customerGoPool[customerID];
         if (cgo != null)
         {
             if (talkContent != "")

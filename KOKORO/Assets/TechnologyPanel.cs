@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class TechnologyPanel : BasePanel
 {
     public static TechnologyPanel Instance;
-
     GameControl gc;
 
+    //UI组件
     public GameObject list_doneGo;
     public GameObject list_noneGo;
     public Image info_picImage;
@@ -24,9 +24,11 @@ public class TechnologyPanel : BasePanel
     public Button doBtn;
     public Button closeBtn;
 
-
+    //对象池
     List<GameObject> technologyGoPool = new List<GameObject>();
     List<GameObject> districtGoPool = new List<GameObject>();
+
+    //临时变量
     public int nowCheckingTechnology = -1;
     public int nowSelectDistrict = -1;
 
@@ -43,7 +45,6 @@ public class TechnologyPanel : BasePanel
     {
         selectBuildingBlockCloseBtn.onClick.AddListener(delegate () { HideSelectBuildingBlock(); });
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
-
     }
 
 
@@ -53,7 +54,8 @@ public class TechnologyPanel : BasePanel
         HideSelectBuildingBlock();
         InvokeRepeating("UpdateProgress", 1f, 1f);
 
-        SetAnchoredPosition(76, -104);
+        //SetAnchoredPosition(76, -104);
+        gameObject.SetActive(true);
         isShow = true;
 
     }
@@ -62,7 +64,8 @@ public class TechnologyPanel : BasePanel
     {
         CancelInvoke("UpdateProgress");
 
-        SetAnchoredPosition(0, 5000);
+        //SetAnchoredPosition(0, 5000);
+        gameObject.SetActive(false);
         isShow = false;
     }
 
@@ -155,49 +158,12 @@ public class TechnologyPanel : BasePanel
 
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f, i * -44f);
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mTechnologyDict[technologyObjects[i].id].Pic);
-            
-            //string str ="";
-            //switch (DataManager.mTechnologyDict[technologyID].Type)
-            //{
-            //    case "Work": str += "<color=#F8961B>[生产类]</color> " + DataManager.mTechnologyDict[technologyObjects[i].id].Name + "\n"; break;
-            //    case "Fight": str += "<color=#FF533B>[战斗类]</color> " + DataManager.mTechnologyDict[technologyObjects[i].id].Name + "\n"; break;
-            //}
-            //if (gc.technologyDic[technologyID].stage == TechnologyStage.Open)
-            //{
-            //    str += "<i>可研究</i>";
-            //}
-            //else if (gc.technologyDic[technologyID].stage == TechnologyStage.Research)
-            //{
-            //    // Debug.Log("gc.executeEventList.Count=" + gc.executeEventList.Count);
-            //    int needTime = 0;
-            //    int nowTime = 0;
-            //    for (int j = 0; j < gc.executeEventList.Count; j++)
-            //    {
-            //        if (gc.executeEventList[j].type == ExecuteEventType.TechnologyResearch && gc.executeEventList[j].value[1][0] == technologyID)
-            //        {
-            //            needTime = gc.executeEventList[j].endTime - gc.executeEventList[j].startTime;
-            //            nowTime = gc.standardTime - gc.executeEventList[j].startTime;
-            //            break;
-            //        }
-            //    }
-
-            //    str += "<i>研究中(" + System.Math.Round(((float)nowTime / needTime) * 100, 2) + "%)</i>";
-            //}
-            //else if (gc.technologyDic[technologyID].stage == TechnologyStage.Done)
-            //{
-            //    str += "<i>已研究</i>";
-            //}
-            // go.transform.GetChild(1).GetComponent<Text>().text =str;
 
             UpdateTechnologySingle(go, technologyID);
 
             go.GetComponent<Button>().onClick.RemoveAllListeners();
             go.GetComponent<Button>().onClick.AddListener(delegate () { UpdateInfo(technologyID); });
         }
-        //for (int i = technologyObjects.Count; i < technologyGoPool.Count; i++)
-        //{
-        //    technologyGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
-        //}
 
         if (type == "done")
         {
@@ -211,8 +177,6 @@ public class TechnologyPanel : BasePanel
 
     void UpdateTechnologySingle(GameObject go, int technologyID)
     {
-     
-
         string str = "";
         string strType = "";
         switch (DataManager.mTechnologyDict[technologyID].Type)
@@ -288,8 +252,6 @@ public class TechnologyPanel : BasePanel
             {
                 str += DataManager.mBuildingDict[DataManager.mTechnologyDict[technologyID].NeedBuilding[i]].Name+" ";
             }
-
-             
         }
 
         if (DataManager.mTechnologyDict[technologyID].NeedStuff.Count != 0 || DataManager.mTechnologyDict[technologyID].NeedGold != 0)
@@ -316,8 +278,6 @@ public class TechnologyPanel : BasePanel
                     case StuffType.Light: strStuff += " 光粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i]; break;
                     case StuffType.Dark: strStuff += " 暗粉尘*" + DataManager.mTechnologyDict[technologyID].NeedStuffValue[i]; break;
                 }
-
-
             }
             if (DataManager.mTechnologyDict[technologyID].NeedGold != 0)
             {
@@ -390,7 +350,7 @@ public class TechnologyPanel : BasePanel
             int row = i == 0 ? 0 : (i % 4);
             int col = i == 0 ? 0 : (i / 4);
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2( row * 80f,  col * -50f);
-             districtID = districtObjects[i].id;
+            districtID = districtObjects[i].id;
 
             go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/AreaPic/"+DataManager.mDistrictDict[districtID].Pic);
             go.transform.GetChild(0).GetComponent<Text>().text = gc.districtDic[districtID].name;
@@ -416,19 +376,12 @@ public class TechnologyPanel : BasePanel
             selectBuildingBlockDesText.text = OutputTechnologyNeedStr(nowSelectDistrict, technologyID);
             selectBuildingBlockConfirmBtn.onClick.RemoveAllListeners();
             selectBuildingBlockConfirmBtn.onClick.AddListener(delegate () { gc.CreateTechnologyResearchEvent(nowSelectDistrict, technologyID); HideSelectBuildingBlock(); });
-
         }
         else
         {
             selectBuildingBlockDesText.text = "无可研究的地区";
             selectBuildingBlockConfirmBtn.onClick.RemoveAllListeners();
-
         }
-
-
-
-
-
     }
 
     string OutputTechnologyNeedStr(int districtID, int technologyID)
@@ -465,7 +418,6 @@ public class TechnologyPanel : BasePanel
             {
                 if (DataManager.mTechnologyDict[technologyID].NeedBuilding.Contains(kvp.Value.prototypeID) && kvp.Value.districtID == districtID)
                 {
-
                     ok = true;
                 }
             }

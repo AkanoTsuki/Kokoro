@@ -17,8 +17,14 @@ public class GameControlInPlay : MonoBehaviour
         AreaMapPanel.Instance.OnShow(-288, 818);
         UIManager.Instance.InitPanel(UIPanelType.DistrictMain);
         UIManager.Instance.InitPanel(UIPanelType.Building);
+        BuildingPanel.Instance.SetAnchoredPosition(0, -436);
+        BuildingPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.Hero);
+        HeroPanel.Instance.OnHide();
+
         UIManager.Instance.InitPanel(UIPanelType.Build);
+        BuildPanel.Instance.SetAnchoredPosition(0, -432);
+        BuildPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.Message);
         MessagePanel.Instance.OnShow(-2, 2);
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
@@ -26,25 +32,46 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.DistrictMap);
         DistrictMapPanel.Instance.nowDistrict = -1;
         DistrictMapPanel.Instance.InitCustomer();
-        //DistrictMapPanel.Instance.OnShow();
-
         //DistrictMapPanel.Instance.OnHide();
-      
+        //DistrictMapPanel.Instance.OnHide();
+
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
+        ItemListAndInfoPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.SkillListAndInfo);
+        SkillListAndInfoPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.AdventureTeam);
+        AdventureTeamPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.AdventureMain);
-        AdventureMainPanel.Instance.OnShow(0,0, 5000);
+        AdventureMainPanel.Instance.OnShow(0);
+        AdventureMainPanel.Instance.SetAnchoredPosition(76, -104);
         AdventureMainPanel.Instance.OnHide();
        
         UIManager.Instance.InitPanel(UIPanelType.AdventureSend);
-        UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
+        AdventureSendPanel.Instance.SetAnchoredPosition(76, -104);
+        AdventureSendPanel.Instance.OnHide();
+
+        //UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
+        HeroSelectPanel.Instance.OnHide();
+
         UIManager.Instance.InitPanel(UIPanelType.Market);
+        MarketPanel.Instance.OnHide();
+
         UIManager.Instance.InitPanel(UIPanelType.SupplyAndDemand);
+        SupplyAndDemandPanel.Instance.OnHide();
+
         UIManager.Instance.InitPanel(UIPanelType.Technology);
+        TechnologyPanel.Instance.SetAnchoredPosition(76, -104);
+        TechnologyPanel.Instance.OnHide();
+
         UIManager.Instance.InitPanel(UIPanelType.Transfer);
+        TransferPanel.Instance.SetAnchoredPosition(76, -104);
+        TransferPanel.Instance.OnHide();
+
         UIManager.Instance.InitPanel(UIPanelType.Diplomacy);
+        DiplomacyPanel.Instance.SetAnchoredPosition(76, -104);
+        DiplomacyPanel.Instance.OnHide();
+
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
             if (gc.adventureTeamList[i].state == AdventureState.Doing)
@@ -355,7 +382,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            BuildPanel.Instance.OnShow(0, -432);
+            BuildPanel.Instance.OnShow();
         }  
     }
 
@@ -407,7 +434,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            AdventureMainPanel.Instance.OnShow(0,76, -104);
+            AdventureMainPanel.Instance.OnShow(0);
         }
     }
 

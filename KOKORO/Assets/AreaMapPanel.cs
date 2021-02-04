@@ -333,7 +333,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
                 go.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(delegate ()
                 {
 
-                    AdventureMainPanel.Instance.OnShow(teamID,76, -104);
+                    AdventureMainPanel.Instance.OnShow(teamID);
                 });
            
 

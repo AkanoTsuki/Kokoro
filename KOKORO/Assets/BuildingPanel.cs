@@ -200,7 +200,8 @@ public class BuildingPanel : BasePanel
      
       
     
-        SetAnchoredPosition(0, -436);
+        //SetAnchoredPosition(0, -436);
+        gameObject.SetActive(true);
         isShow = true;
         
        
@@ -217,7 +218,7 @@ public class BuildingPanel : BasePanel
 
     public override void OnHide()
     {
-        SetAnchoredPosition(0, 5000);
+        gameObject.SetActive(false);
         isShow = false;
         nowCheckingBuildingID = -1;
     }

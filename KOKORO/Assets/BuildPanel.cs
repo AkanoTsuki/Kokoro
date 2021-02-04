@@ -42,23 +42,23 @@ public class BuildPanel : BasePanel
     }
 
 
-    public void OnShow( int x, int y)
+    public override void OnShow( )
     {
         UpdateAllInfo("All");
         UpdateFilterButtonText();
-        SetAnchoredPosition(x, y);
+        
 
         if (BuildingPanel.Instance.isShow)
         {
             BuildingPanel.Instance.OnHide();
         }
-
+        gameObject.SetActive(true);
         isShow = true;
     }
 
     public override void OnHide()
     {
-        SetAnchoredPosition(0, 5000);
+        gameObject.SetActive(false);
         isShow = false;
     }
 

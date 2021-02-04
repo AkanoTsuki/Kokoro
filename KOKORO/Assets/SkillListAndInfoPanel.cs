@@ -157,11 +157,15 @@ public class SkillListAndInfoPanel : BasePanel
 
         UpdateAllInfo(districtID, element, heroID, heroSkillIndex);
         HideBatch();
-        SetAnchoredPosition(x, y);
-        transform.SetAsLastSibling();
+
         nowDistrictID = districtID;
         nowHeroID = heroID;
         nowHeroSkillIndex = heroSkillIndex;
+
+        SetAnchoredPosition(x, y);
+        gameObject.SetActive(true);
+        transform.SetAsLastSibling();
+
         isShow = true;
     }
 
@@ -216,6 +220,7 @@ public class SkillListAndInfoPanel : BasePanel
         UpdateAllInfo(districtID, null, -1, 0);
         HideBatch();
         SetAnchoredPosition(x, y);
+        gameObject.SetActive(true);
         transform.SetAsLastSibling();
         nowDistrictID = districtID;
         isShow = true;
@@ -225,7 +230,8 @@ public class SkillListAndInfoPanel : BasePanel
 
     public override void OnHide()
     {
-        SetAnchoredPosition(0, 5000);
+        
+        gameObject.SetActive(false);
         nowSkillID = -1;
         isShow = false;
     }
