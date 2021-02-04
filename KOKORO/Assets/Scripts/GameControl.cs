@@ -850,6 +850,10 @@ public class GameControl : MonoBehaviour
             DistrictMapPanel.Instance.UpdateBaselineElementText(nowCheckingDistrictID);
         }
 
+        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingId)
+        {
+            BuildingPanel.Instance.OnShow(buildingDic[buildingId]);
+        }
 
         MessagePanel.Instance.AddMessage(districtDic[buildingDic[buildingId].districtID].name + "的" + buildingDic[buildingId].name + "升级完成");
 
@@ -985,7 +989,11 @@ public class GameControl : MonoBehaviour
 
         int needTime = DataManager.mBuildingDict[newPrototypeID].BuildTime * 10;
 
-        StopProduceResource(buildingID);
+        if (buildingDic[buildingID].isOpen && buildingDic[buildingID].panelType == "Resource")
+        {
+            StopProduceResource(buildingID);
+        }
+   
         StartBuildingUpgrade(nowCheckingDistrictID, buildingID, needTime);
 
 
@@ -1081,8 +1089,10 @@ public class GameControl : MonoBehaviour
             }
         }
         PlayMainPanel.Instance.UpdateResources();
-
-        StopProduceResource(buildingID);
+        if (buildingDic[buildingID].isOpen && buildingDic[buildingID].panelType == "Resource")
+        {
+            StopProduceResource(buildingID);
+        }
         districtDic[nowCheckingDistrictID].buildingList.Remove(buildingID);
         buildingDic.Remove(buildingID);
 
@@ -3492,7 +3502,7 @@ public class GameControl : MonoBehaviour
         for (int i = 0; i < districtDic[customerDic[customerID].districtID].buildingList.Count; i++)
         {
             int buildingID = districtDic[customerDic[customerID].districtID].buildingList[i];
-            Debug.Log("buildingID=" + buildingID + " customerID=" + customerID);
+            //Debug.Log("buildingID=" + buildingID + " customerID=" + customerID);
             if (DataManager.mBuildingDict[buildingDic[buildingID].prototypeID].ShopType == customerDic[customerID].shopType)
             {
                 if (buildingDic[buildingID].isSale)

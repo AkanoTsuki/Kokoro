@@ -143,15 +143,50 @@ public class BuildingPanel : BasePanel
         setForge_numAdd10.onClick.AddListener(delegate () { gc.ChangeProduceEquipNum(nowCheckingBuildingID, 10); });
         setForge_numSetInfinite.onClick.AddListener(delegate () { gc.SetProduceEquipNum(nowCheckingBuildingID, -1); });
 
+        //setWorker_minusBtn.onClick.RemoveAllListeners();
+        setWorker_minusBtn.onClick.AddListener(delegate () { gc.BuildingWorkerMinus(nowCheckingBuildingID); });
+        //setWorker_addBtn.onClick.RemoveAllListeners();
+        setWorker_addBtn.onClick.AddListener(delegate () { gc.BuildingWorkerAdd(nowCheckingBuildingID); });
+
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
     }
 
     public void OnShow(BuildingObject buildingObject)
     {
         nowCheckingBuildingID = buildingObject.id;
+        int roleIndex = 0;
+        if (buildingObject.buildProgress == 1)
+        {
+            bgImage.sprite = Resources.Load("Image/DistrictBG/" + DataManager.mBuildingDict[buildingObject.prototypeID].BgPic, typeof(Sprite)) as Sprite;
+            switch (buildingObject.panelType)
+            {
+                case "Forge":
+
+                    bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
+                    bgRoleImageList[0].sprite = Resources.Load("Image/RolePic/chara3_7/Pic", typeof(Sprite)) as Sprite;
+                    roleIndex++;
+
+                    break;
+                case "Resource":
+                    break;
+                case "House":
+                    break;
+                case "Municipal":
+                    break;
+                default: break;
+            }
+        }
+        else
+        {
+            bgImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+        }
+
+        for (int i = roleIndex; i < bgRoleImageList.Count; i++)
+        {
+            bgRoleImageList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+        }
 
         UpdateBasicPart(buildingObject);
-
         HideOutputInfoPart();
         HideSetManagerPart();
         HideSetWorkerPart();
@@ -161,36 +196,15 @@ public class BuildingPanel : BasePanel
         totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
         //int roleCount
         //Debug.Log("DataManager.mBuildingDict[buildingObject.id].BgPic="+ DataManager.mBuildingDict[buildingObject.prototypeID].BgPic);
-        bgImage.sprite = Resources.Load("Image/DistrictBG/"+DataManager.mBuildingDict[buildingObject.prototypeID].BgPic, typeof(Sprite)) as Sprite;
-        int roleIndex = 0;
-        switch (buildingObject.panelType)
-        {
-            case "Forge":
-             
-                bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
-                bgRoleImageList[0].sprite = Resources.Load("Image/RolePic/chara3_7/Pic", typeof(Sprite)) as Sprite;
-                roleIndex++;
-              
-                break;
-            case "Resource":
-               break;
-            case "House":
-                break;
-            case "Municipal":
-                 break;
-            default: break;
-        }
-        for (int i = roleIndex; i < bgRoleImageList.Count; i++)
-        {
-            bgRoleImageList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
-        }
+       
+     
+      
+    
         SetAnchoredPosition(0, -436);
         isShow = true;
         
-        setWorker_minusBtn.onClick.RemoveAllListeners();
-        setWorker_minusBtn.onClick.AddListener(delegate () { gc.BuildingWorkerMinus(buildingObject.id); });
-        setWorker_addBtn.onClick.RemoveAllListeners();
-        setWorker_addBtn.onClick.AddListener(delegate () { gc.BuildingWorkerAdd(buildingObject.id); });
+       
+
 
         HideUpgradeBlock();
         HidePullDownBlock();
