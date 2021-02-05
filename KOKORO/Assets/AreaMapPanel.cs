@@ -106,12 +106,6 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     void Update()
     {
         // DragRangeLimit();
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            // CreateTraveller(0, 1,new List<int> { });
-
-        }
     }
 
     public void OnShow( int x, int y)
@@ -140,6 +134,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
         districtInfoBlockID = id;
         districtInfoBlockRt.anchoredPosition = new Vector2(x, y);
+        districtInfoBlockRt.gameObject.SetActive(true);
 
         districtInfoBlock_nameText.text = gc.districtDic[id].name;
 
@@ -245,7 +240,8 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public void HideDistrictInfoBlock()
     {
         districtInfoBlockID = -1;
-        districtInfoBlockRt.anchoredPosition = new Vector2(0, 5000);
+        //districtInfoBlockRt.anchoredPosition = new Vector2(0, 5000);
+        districtInfoBlockRt.gameObject.SetActive(false);
     }
 
     public void ShowDungeonInfoBlock(int id, int x, int y)
@@ -262,6 +258,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
         }
 
         dungeonInfoBlockRt.anchoredPosition = new Vector2(x, y);
+        dungeonInfoBlockRt.gameObject.SetActive(true);
         UpdateDungeonInfoBlock(id);
     }
 
@@ -456,7 +453,8 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public void HideDungeonInfoBlock()
     {
         dungeonInfoBlockID = -1;
-        dungeonInfoBlockRt.anchoredPosition = new Vector2(0, 5000);
+        //dungeonInfoBlockRt.anchoredPosition = new Vector2(0, 5000);
+        dungeonInfoBlockRt.gameObject.SetActive(false);
     }
 
     public void ShowTravellerInfoBlock(int id, int x, int y)

@@ -240,7 +240,7 @@ public class BuildingPanel : BasePanel
                     {
                         totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "停产";
                         totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
-                            gc.StopProduceResource(buildingObject.id);
+                            gc.StopProduceResource("Stop",buildingObject.id);
                             UpdateTotalSetButton(buildingObject);
 
                         });

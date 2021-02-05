@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class ItemListAndInfoPanel : BasePanel
 {
     public static ItemListAndInfoPanel Instance;
-
     GameControl gc;
 
+    //UI组件
     public RectTransform goRt;
     public Text titleText;
 
@@ -96,14 +96,13 @@ public class ItemListAndInfoPanel : BasePanel
 
     public Button closeBtn;
 
+    //对象池
+    List<GameObject> itemGoPool=new List<GameObject>();
 
-
-
-    List<GameObject> itemGo=new List<GameObject>();
-
+    //临时变量
     public int nowItemID = -1;
     public EquipPart nowEquipPart = EquipPart.None;
-
+    public short nowDistrictID = -1;
 
     void Awake()
     {
@@ -173,10 +172,11 @@ public class ItemListAndInfoPanel : BasePanel
     }
     public void OnShow(short districtID, int x, int y, byte col)//地区库房查询
     {
+        nowDistrictID = districtID;
         nowEquipPart = EquipPart.None;
         if (districtID != -1)
         {
-            titleText.text = "鉴定仓库[" + gc.districtDic[districtID].name + "-" + gc.districtDic[districtID].baseName + "]";
+            titleText.text = "鉴定仓库[" + gc.districtDic[districtID].name + "]";
             funcBtn[3].GetComponent<RectTransform>().localScale = Vector2.one;
             funcBtn[3].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
             funcBtn[3].transform.GetChild(0).GetComponent<Text>().text = "<<全部收藏";
@@ -294,6 +294,7 @@ public class ItemListAndInfoPanel : BasePanel
        
         gameObject.SetActive(false);
         nowItemID = -1;
+        nowDistrictID = -1;
         isShow = false;
     }
 
@@ -349,30 +350,30 @@ public class ItemListAndInfoPanel : BasePanel
         GameObject go;
         for (int i = 0; i < itemObjects.Count; i++)
         {
-            if (i < itemGo.Count)
+            if (i < itemGoPool.Count)
             {
-                go = itemGo[i];
-                itemGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+                go = itemGoPool[i];
+                itemGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
             }
             else
             {
                 go = Instantiate(Resources.Load("Prefab/UILabel/Label_Item")) as GameObject;
                 go.transform.SetParent(itemListGo.transform);
-                itemGo.Add(go);
+                itemGoPool.Add(go);
             }
             
             int row = i == 0 ? 0 : (i % columns);
             int col = i == 0 ? 0 : (i / columns);
-            go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 224f, -4 + col * -22f, 0f);
+            go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + row * 224f, -4 + col * -22f);
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObjects[i].pic);
             go.transform.GetChild(1).GetComponent<Text>().text = "<color=#"+ gc.OutputItemRankColorString(itemObjects[i].rank) + ">"+itemObjects[i].name+"</color>";
             go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.Item;
             go.transform.GetComponent<InteractiveLabel>().index = itemObjects[i].objectID;
         }
-        for (int i = itemObjects.Count; i < itemGo.Count; i++)
+        for (int i = itemObjects.Count; i < itemGoPool.Count; i++)
         {
-            itemGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+            itemGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
     
         itemListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(425f, 4 + (itemObjects.Count / columns) * 22f));
@@ -474,21 +475,21 @@ public class ItemListAndInfoPanel : BasePanel
         GameObject go;
         for (int i = 0; i < itemObjects.Count; i++)
         {
-            if (i < itemGo.Count)
+            if (i < itemGoPool.Count)
             {
-                go = itemGo[i];
-                itemGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+                go = itemGoPool[i];
+                itemGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
             }
             else
             {
                 go = Instantiate(Resources.Load("Prefab/UILabel/Label_Item")) as GameObject;
                 go.transform.SetParent(itemListGo.transform);
-                itemGo.Add(go);
+                itemGoPool.Add(go);
             }
 
             int row = i == 0 ? 0 : (i % columns);
             int col = i == 0 ? 0 : (i / columns);
-            go.GetComponent<RectTransform>().anchoredPosition = new Vector3(4f + row * 224f, -4 + col * -22f, 0f);
+            go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + row * 224f, -4 + col * -22f);
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObjects[i].pic);
             go.transform.GetChild(1).GetComponent<Text>().text = "<color=#" + gc.OutputItemRankColorString(itemObjects[i].rank) + ">" + itemObjects[i].name + "</color>";
@@ -502,9 +503,9 @@ public class ItemListAndInfoPanel : BasePanel
                 HeroPanel.Instance.UpdateFightInfo(gc.heroDic[HeroPanel.Instance.nowSelectedHeroID], ItemListAndInfoPanel.Instance.nowEquipPart, gc.itemDic[itemObjects[index].objectID], 1);
             });
         }
-        for (int i = itemObjects.Count; i < itemGo.Count; i++)
+        for (int i = itemObjects.Count; i < itemGoPool.Count; i++)
         {
-            itemGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+            itemGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
 
         itemListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(157f, Mathf.Max(425f, 4 + (itemObjects.Count / columns) * 22f));

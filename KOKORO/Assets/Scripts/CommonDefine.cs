@@ -1183,26 +1183,7 @@ public class DistrictObject
     private short EGround;
     private short ELight;
     private short EDark;
-    //private int RFoodCereal;
-    //private int RFoodVegetable;
-    //private int RFoodFruit;
-    //private int RFoodMeat;
-    //private int RFoodFish;
-    //private int RFoodBeer;
-    //private int RFoodWine;
-    //private int RStuffWood;
-    //private int RStuffMetal;
-    //private int RStuffStone;
-    //private int RStuffLeather;
-    //private int RStuffTwine;
-    //private int RStuffCloth;
-    //private int RStuffBone;
-    //private int RStuffWind;
-    //private int RStuffFire;
-    //private int RStuffWater;
-    //private int RStuffGround;
-    //private int RStuffLight;
-    //private int RStuffDark;
+
     private int RProductWeapon;//现有库存
     private int RProductArmor;
     private int RProductJewelry;
@@ -1211,16 +1192,12 @@ public class DistrictObject
     private int RProductGoodArmor;
     private int RProductGoodJewelry;
     private int RProductGoodScroll;
-    //private int RFoodLimit;//库存上限
-    //private int RStuffLimit;
+
     private int RProductLimit;
 
     public DistrictObject(short id, string name, string baseName, string des, bool isOpen, short force, byte level, short people, short peopleLimit, short worker, 
          List<int> buildingList, List<int> heroList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
-        //int rFoodCereal, int rFoodVegetable, int rFoodFruit, int rFoodMeat, int rFoodFish, int rFoodBeer, int rFoodWine,
-        //int rStuffWood, int rStuffMetal, int rStuffStone, int rStuffLeather, int rStuffTwine, int rStuffCloth, int rStuffBone,
-        //int rStuffWind, int rStuffFire, int rStuffWater, int rStuffGround, int rStuffLight, int rStuffDark,
         int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll, int rProductGoodWeapon, int rProductGoodArmor, int rProductGoodJewelry, int rProductGoodScroll,
          int rProductLimit)
     {
@@ -1242,26 +1219,6 @@ public class DistrictObject
         this.EGround = eGround;
         this.ELight = eLight;
         this.EDark = eDark;
-        //this.RFoodCereal = rFoodCereal;
-        //this.RFoodVegetable = rFoodVegetable;
-        //this.RFoodFruit = rFoodFruit;
-        //this.RFoodMeat = rFoodMeat;
-        //this.RFoodFish = rFoodFish;
-        //this.RFoodBeer = rFoodBeer;
-        //this.RFoodWine = rFoodWine;
-        //this.RStuffWood = rStuffWood;
-        //this.RStuffMetal = rStuffMetal;
-        //this.RStuffStone = rStuffStone;
-        //this.RStuffLeather = rStuffLeather;
-        //this.RStuffTwine = rStuffTwine;
-        //this.RStuffCloth = rStuffCloth;
-        //this.RStuffBone = rStuffBone;
-        //this.RStuffWind = rStuffWind;
-        //this.RStuffFire = rStuffFire;
-        //this.RStuffWater = rStuffWater;
-        //this.RStuffGround = rStuffGround;
-        //this.RStuffLight = rStuffLight;
-        //this.RStuffDark = rStuffDark;
         this.RProductWeapon = rProductWeapon;
         this.RProductArmor = rProductArmor;
         this.RProductJewelry = rProductJewelry;
@@ -1270,8 +1227,6 @@ public class DistrictObject
         this.RProductGoodArmor = rProductGoodArmor;
         this.RProductGoodJewelry = rProductGoodJewelry;
         this.RProductGoodScroll = rProductGoodScroll;
-        //this.RFoodLimit = rFoodLimit;
-        //this.RStuffLimit = rStuffLimit;
         this.RProductLimit = rProductLimit;//库存上限
 
     }
@@ -1293,26 +1248,6 @@ public class DistrictObject
     public short eGround { get { return EGround; } set { EGround = value; } }
     public short eLight { get { return ELight; } set { ELight = value; } }
     public short eDark { get { return EDark; } set { EDark = value; } }
-    //public int rFoodCereal { get { return RFoodCereal; } set { RFoodCereal = value; } }
-    //public int rFoodVegetable { get { return RFoodVegetable; } set { RFoodVegetable = value; } }
-    //public int rFoodFruit { get { return RFoodFruit; } set { RFoodFruit = value; } }
-    //public int rFoodMeat { get { return RFoodMeat; } set { RFoodMeat = value; } }
-    //public int rFoodFish { get { return RFoodFish; } set { RFoodFish = value; } }
-    //public int rFoodBeer { get { return RFoodBeer; } set { RFoodBeer = value; } }
-    //public int rFoodWine { get { return RFoodWine; } set { RFoodWine = value; } }
-    //public int rStuffWood { get { return RStuffWood; } set { RStuffWood = value; } }
-    //public int rStuffMetal { get { return RStuffMetal; } set { RStuffMetal = value; } }
-    //public int rStuffStone { get { return RStuffStone; } set { RStuffStone = value; } }
-    //public int rStuffLeather { get { return RStuffLeather; } set { RStuffLeather = value; } }
-    //public int rStuffTwine { get { return RStuffTwine; } set { RStuffTwine = value; } }
-    //public int rStuffCloth { get { return RStuffCloth; } set { RStuffCloth = value; } }
-    //public int rStuffBone { get { return RStuffBone; } set { RStuffBone = value; } }
-    //public int rStuffWind { get { return RStuffWind; } set { RStuffWind = value; } }
-    //public int rStuffFire { get { return RStuffFire; } set { RStuffFire = value; } }
-    //public int rStuffWater { get { return RStuffWater; } set { RStuffWater = value; } }
-    //public int rStuffGround { get { return RStuffGround; } set { RStuffGround = value; } }
-    //public int rStuffLight { get { return RStuffLight; } set { RStuffLight = value; } }
-    //public int rStuffDark { get { return RStuffDark; } set { RStuffDark = value; } }
     public int rProductWeapon { get { return RProductWeapon; } set { RProductWeapon = value; } }
     public int rProductArmor { get { return RProductArmor; } set { RProductArmor = value; } }
     public int rProductJewelry { get { return RProductJewelry; } set { RProductJewelry = value; } }
@@ -1321,8 +1256,6 @@ public class DistrictObject
     public int rProductGoodArmor { get { return RProductGoodArmor; } set { RProductGoodArmor = value; } }
     public int rProductGoodJewelry { get { return RProductGoodJewelry; } set { RProductGoodJewelry = value; } }
     public int rProductGoodScroll { get { return RProductGoodScroll; } set { RProductGoodScroll = value; } }
-    //public int rFoodLimit { get { return RFoodLimit; } set { RFoodLimit = value; } }
-    //public int rStuffLimit { get { return RStuffLimit; } set { RStuffLimit = value; } }
     public int rProductLimit { get { return RProductLimit; } set { RProductLimit = value; } }
 
 }
@@ -2849,6 +2782,7 @@ public class ForceObject
 
 public class ExecuteEventObject
 {
+    private int ID;
     private ExecuteEventType Type;
     private int StartTime;
     private int EndTime;
@@ -2860,6 +2794,7 @@ public class ExecuteEventObject
         this.EndTime = endTime;
         this.Value = value;
     }
+    public int id { get { return ID; } set { ID = value; } }
     public ExecuteEventType type { get { return Type; } }
     public int startTime { get { return StartTime; } }
     public int endTime { get { return EndTime; } }

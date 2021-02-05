@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class SkillListAndInfoPanel : BasePanel
 {
     public static SkillListAndInfoPanel Instance;
-
     GameControl gc;
 
+    //UI组件
     public Text titleText;
     public Text numText;
     public RectTransform list_nowRt;
@@ -85,8 +85,11 @@ public class SkillListAndInfoPanel : BasePanel
 
     public Button closeBtn;
 
-    List<GameObject> skillGo = new List<GameObject>();
+    //对象池
+    List<GameObject> skillGoPool = new List<GameObject>();
 
+
+    //临时变量
     public int nowSkillID = -1;
     public short nowDistrictID = -1;
     public int nowHeroID = -1;
@@ -173,7 +176,7 @@ public class SkillListAndInfoPanel : BasePanel
     {
         if (districtID != -1)
         {
-            titleText.text = "鉴定仓库[" + gc.districtDic[districtID].name + "-" + gc.districtDic[districtID].baseName + "]";
+            titleText.text = "鉴定仓库[" + gc.districtDic[districtID].name + "]";
 
             funcBtn[3].GetComponent<RectTransform>().localScale = Vector2.one;
             funcBtn[3].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
@@ -233,6 +236,7 @@ public class SkillListAndInfoPanel : BasePanel
         
         gameObject.SetActive(false);
         nowSkillID = -1;
+        nowDistrictID = -1;
         isShow = false;
     }
 
@@ -262,10 +266,7 @@ public class SkillListAndInfoPanel : BasePanel
     //element==null 查全部
     public void UpdateList(short districtID, List<int> element,int heroID,short heroSkillIndex)
     {
-        Debug.Log("UpdateList() element=" + element+ "heroID=" + heroID + "heroSkillIndex=" + heroSkillIndex );
-        
-
-
+        //Debug.Log("UpdateList() element=" + element+ "heroID=" + heroID + "heroSkillIndex=" + heroSkillIndex );
 
         if (heroID != -1)
         {
@@ -334,16 +335,16 @@ public class SkillListAndInfoPanel : BasePanel
         GameObject go;
         for (int i = 0; i < skillObjects.Count; i++)
         {
-            if (i < skillGo.Count)
+            if (i < skillGoPool.Count)
             {
-                go = skillGo[i];
-                skillGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+                go = skillGoPool[i];
+                skillGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.one;
             }
             else
             {
                 go = Instantiate(Resources.Load("Prefab/UILabel/Label_Item")) as GameObject;
                 go.transform.SetParent(list_skillListGo.transform);
-                skillGo.Add(go);
+                skillGoPool.Add(go);
             }
 
             int row = i == 0 ? 0 : (i % 2);
@@ -355,9 +356,9 @@ public class SkillListAndInfoPanel : BasePanel
             go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.Skill;
             go.transform.GetComponent<InteractiveLabel>().index = skillObjects[i].id;
         }
-        for (int i = skillObjects.Count; i < skillGo.Count; i++)
+        for (int i = skillObjects.Count; i < skillGoPool.Count; i++)
         {
-            skillGo[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+            skillGoPool[i].transform.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
 
         list_skillListGo.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(455f, Mathf.Max(400f, 4 + (skillObjects.Count / 2) * 22f));

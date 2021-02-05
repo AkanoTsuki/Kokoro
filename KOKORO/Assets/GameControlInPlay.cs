@@ -27,13 +27,11 @@ public class GameControlInPlay : MonoBehaviour
         BuildPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.Message);
         MessagePanel.Instance.OnShow(-2, 2);
-        UIManager.Instance.InitPanel(UIPanelType.PlayMain);
-        PlayMainPanel.Instance.OnShow();
+
         UIManager.Instance.InitPanel(UIPanelType.DistrictMap);
         DistrictMapPanel.Instance.nowDistrict = -1;
         DistrictMapPanel.Instance.InitCustomer();
-        //DistrictMapPanel.Instance.OnHide();
-        //DistrictMapPanel.Instance.OnHide();
+        DistrictMapPanel.Instance.OnHide();
 
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
         ItemListAndInfoPanel.Instance.OnHide();
@@ -71,6 +69,9 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.Diplomacy);
         DiplomacyPanel.Instance.SetAnchoredPosition(76, -104);
         DiplomacyPanel.Instance.OnHide();
+
+        UIManager.Instance.InitPanel(UIPanelType.PlayMain);
+        PlayMainPanel.Instance.OnShow();
 
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
@@ -119,7 +120,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            gc.CustomerCome(gc.nowCheckingDistrictID);
+            gc.CreateCustomer(gc.nowCheckingDistrictID);
         
         }
         if (Input.GetKeyDown(KeyCode.T))
@@ -191,7 +192,7 @@ public class GameControlInPlay : MonoBehaviour
             if (gc.standardTime >= gc.executeEventList[0].endTime)
             {
                 short districtID;
-                 int buildingID, itemId;
+                int buildingID;
                 bool isSuccess;
                 switch (gc.executeEventList[0].type)
                 {
@@ -199,11 +200,6 @@ public class GameControlInPlay : MonoBehaviour
                         //Debug.Log("  gc.standardTime=" + gc.standardTime + "   资源生产" + (StuffType)gc.executeEventList[0].value[2]+"*"+ gc.executeEventList[0].value[3]);
                          districtID = (short)gc.executeEventList[0].value[0][0];
                          buildingID = gc.executeEventList[0].value[1][0];
-                        //if (gc.buildingDic[buildingID].produceEquipNow == -1)
-                        //{
-                        //    MessagePanel.Instance.AddMessage("接到停工命令，生产停止");
-                        //    break;
-                        //}
                         List<StuffType> stuffTypes = new List<StuffType>();
                         List<int> values = new List<int>();
                         for (int i = 0; i < gc.executeEventList[0].value[2].Count; i++)
@@ -213,6 +209,7 @@ public class GameControlInPlay : MonoBehaviour
                         }
 
                          isSuccess = gc.DistrictResourceAdd(districtID, buildingID, stuffTypes, values);
+                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
                         gc.executeEventList.RemoveAt(0);
                         if (isSuccess)
                         {
@@ -227,33 +224,25 @@ public class GameControlInPlay : MonoBehaviour
                        // Debug.Log("  gc.standardTime=" + gc.standardTime + "   制作模板" + gc.executeEventList[0].value[2]);
                          districtID = (short)gc.executeEventList[0].value[0][0];
                          buildingID = gc.executeEventList[0].value[1][0];
-                         itemId = gc.executeEventList[0].value[2][0];
-                        // isSuccess = gc.DistrictItemOrSkillAdd(districtID, buildingID);
-                        //Debug.Log(isSuccess);
-                     
+
                         gc.DistrictItemOrSkillAdd(districtID, buildingID);
+                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
                         gc.executeEventList.RemoveAt(0);
                         gc.CreateProduceItemEvent(buildingID);
-                        //if (isSuccess)
-                        //{                         
-                        //    gc.CreateProduceItemEvent(buildingID);
-                        //}
-                        //else//制作失败，停止继续生产
-                        //{
-                        //    gc.buildingDic[buildingID].isOpen = false;
-                        //}
+
                         break;
                     case ExecuteEventType.Build:
-                        districtID = (short)gc.executeEventList[0].value[0][0];
+
                         buildingID = gc.executeEventList[0].value[1][0];
                         gc.BuildDone((short)buildingID);
+                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
                         gc.executeEventList.RemoveAt(0);
 
                         break;
                     case ExecuteEventType.BuildingUpgrade:
-                        districtID = (short)gc.executeEventList[0].value[0][0];
                         buildingID = gc.executeEventList[0].value[1][0];
                         gc.BuildingUpgradeDone((short)buildingID);
+                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
                         gc.executeEventList.RemoveAt(0);
 
                         break;
@@ -261,6 +250,7 @@ public class GameControlInPlay : MonoBehaviour
                         byte teamID = (byte)gc.executeEventList[0].value[0][0];
 
                         /*事件*/
+                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
                         gc.executeEventList.RemoveAt(0);
                         gc.AdventureEventHappen(teamID);
                      
@@ -271,6 +261,7 @@ public class GameControlInPlay : MonoBehaviour
                         buildingID = gc.executeEventList[0].value[1][0];
 
                         gc.BuildingSale(buildingID);
+                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
                         gc.executeEventList.RemoveAt(0);
                         gc.CreateBuildingSaleEvent(buildingID);
                         break;
@@ -279,6 +270,7 @@ public class GameControlInPlay : MonoBehaviour
                         int technologyID = gc.executeEventList[0].value[1][0];
 
                         gc.TechnologyResearchDone(technologyID);
+                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
                         gc.executeEventList.RemoveAt(0);
                         break;
                     default: break;
@@ -339,7 +331,7 @@ public class GameControlInPlay : MonoBehaviour
                 {
                     if (Random.Range(0, 5) > 0)
                     {
-                        gc.CustomerCome(i);
+                        gc.CreateCustomer(i);
                     }
                  
                 }
@@ -402,7 +394,6 @@ public class GameControlInPlay : MonoBehaviour
 
     public void OpenItemListAndInfo()
     {
-        Debug.Log("gc.nowCheckingDistrictID=" + gc.nowCheckingDistrictID + " gc.itemDic.Coun=" + gc.itemDic.Count);
         if (ItemListAndInfoPanel.Instance.isShow)
         {
             ItemListAndInfoPanel.Instance.OnHide();
@@ -415,7 +406,6 @@ public class GameControlInPlay : MonoBehaviour
 
     public void OpenSkillListAndInfo()
     {
-        Debug.Log("gc.nowCheckingDistrictID=" + gc.nowCheckingDistrictID + " gc.itemDic.Coun=" + gc.itemDic.Count);
         if (SkillListAndInfoPanel.Instance.isShow)
         {
             SkillListAndInfoPanel.Instance.OnHide();

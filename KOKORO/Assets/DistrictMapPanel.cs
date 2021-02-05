@@ -5,11 +5,11 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class DistrictMapPanel : BasePanel
 {
+    public static DistrictMapPanel Instance;
     GameControl gc;
     GameControlInPlay gci;
   
-    public static DistrictMapPanel Instance;
-
+    //UI组件
     public Image forceImage;
     public Text nameText;
     public Text levelText;
@@ -40,13 +40,11 @@ public class DistrictMapPanel : BasePanel
     public Button right_transferBtn;
     public Button right_adventureSendBtn;
 
-    // public Button bottom_baseline_resourcesBtn;
     public Text bottom_baseline_productWeaponText;
     public Text bottom_baseline_productArmorText;
     public Text bottom_baseline_productJewelryText;
     public Text bottom_baseline_productSkillRollText;
     public Text bottom_baseline_productLimitText;
-  //  public Text bottom_baseline_resourcesSignText;
 
     public Text bottom_baseline_elementWindText;
     public Text bottom_baseline_elementFireText;
@@ -55,18 +53,14 @@ public class DistrictMapPanel : BasePanel
     public Text bottom_baseline_elementLightText;
     public Text bottom_baseline_elementDarkText;
 
-
-
     public Button closeBtn;
 
 
     //配置
-    float roleWidth = 24f;//人物宽度
     float roleHeight = 54f;//人物高度
     Color colorRes = new Color(255/ 255f,189/ 255f,88/ 255f, 1f);
     Color colorMake = new Color(221/ 255f,90/ 255f,246/ 255f, 1f);
     Color colorBuild = new Color(0/ 255f,98/ 255f,251/ 255f, 1f);
-
     List<Color> colorHourBg = new List<Color> { new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),//0
         new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
         new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
@@ -115,6 +109,7 @@ public class DistrictMapPanel : BasePanel
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f),
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f),
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f)};
+    
     //运行变量组
     GameObject wantBuidingGo;
     int wantBuidingSizeX;
@@ -135,15 +130,13 @@ public class DistrictMapPanel : BasePanel
 
     public short nowDistrict=-1;
 
-    //public bool IsShowResourcesBlock = false;
+
 
     //对象池
     List<GameObject> buildingGoPool = new List<GameObject>();
-    List<GameObject> customerGoPool = new List<GameObject>();//用作保存空闲的go
-                                                             // List<GameObject> customerGoAllPool = new List<GameObject>();//用作保存全部的go
-    Dictionary<int, GameObject> customerGoDic = new Dictionary<int, GameObject>();
-
-
+    public List<GameObject> customerGoPool = new List<GameObject>();//空闲
+    Dictionary<int, GameObject> buildingGoDic = new Dictionary<int, GameObject>();//在用
+    public Dictionary<int, GameObject> customerGoDic = new Dictionary<int, GameObject>();//在用
     Dictionary<int, Image> statusBarImageDic = new Dictionary<int, Image>();
 
     void Awake()
@@ -151,7 +144,7 @@ public class DistrictMapPanel : BasePanel
         Instance = this;
         gc = GameObject.Find("GameManager").GetComponent<GameControl>();
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
@@ -168,21 +161,9 @@ public class DistrictMapPanel : BasePanel
         right_transferBtn.onClick.AddListener(delegate () { gci.OpenTransfer("To"); });
         right_adventureSendBtn.onClick.AddListener(delegate () { gci.OpenAdventureSend(); });
 
-
-        //bottom_baseline_resourcesBtn.onClick.AddListener(delegate () {
-        //    if (IsShowResourcesBlock)
-        //    {
-        //        HideResourcesBlock();
-        //    }
-        //    else { ShowResourcesBlock(gc.nowCheckingDistrictID); }
-        //});
-
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
-
-        //InitCustomer();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isChoose)
@@ -244,7 +225,6 @@ public class DistrictMapPanel : BasePanel
         UpdateAllBuilding(gc.nowCheckingDistrictID);
         HideTip();
 
-        //HideResourcesBlock();
         HideCustomerInfo();
 
         UpdateBaselineResourcesText(gc.nowCheckingDistrictID);
@@ -261,7 +241,8 @@ public class DistrictMapPanel : BasePanel
 
 
         InvokeRepeating("UpdateBar", 0, 0.2f);
-        //gameObject.SetActive(true);
+        //gameObject.GetComponent<CanvasRenderer> ()..enabled = true;
+        gameObject.SetActive(true);
         isShow = true;
     }
     public override void OnHide()
@@ -278,14 +259,11 @@ public class DistrictMapPanel : BasePanel
         {
             BuildingPanel.Instance.OnHide();
         }
-        //if (IsShowResourcesBlock)
-        //{
-        //    HideResourcesBlock();
-        //}
+
 
         SetAnchoredPosition(0, 5000);
-        //gameObject.SetActive(false);
-        //PlayMainPanel.Instance.top_districtBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+        gameObject.SetActive(false);
+        //gameObject.GetComponent<Renderer>().enabled = false;
         isShow = false;
 
         CancelInvoke("UpdateBar");
@@ -307,7 +285,6 @@ public class DistrictMapPanel : BasePanel
             left_marketBtn.transform.localScale = Vector2.zero;
             left_buildBtn.transform.localScale = Vector2.zero;
         }
-
     }
 
 
@@ -356,7 +333,7 @@ public class DistrictMapPanel : BasePanel
         isChoose = false;
     }
 
-    public bool CheckCanBuild()
+    bool CheckCanBuild()
     {
         x.Clear();
         y.Clear();
@@ -417,7 +394,7 @@ public class DistrictMapPanel : BasePanel
         Destroy(wantBuidingGo);
     }
 
-    public void UpdateAllBuilding(int districtID)
+    void UpdateAllBuilding(int districtID)
     {
         List<BuildingObject> temp = new List<BuildingObject> { };
         foreach (KeyValuePair<int, BuildingObject> kvp in gc.buildingDic)
@@ -427,7 +404,7 @@ public class DistrictMapPanel : BasePanel
                 temp.Add(kvp.Value);
             }
         }
-
+        buildingGoDic.Clear();
         for (int i = 0; i < temp.Count; i++)
         {
             SetBuilding(temp[i].id,false,i);
@@ -442,11 +419,10 @@ public class DistrictMapPanel : BasePanel
 
     public void UpdateSingleBuilding( int buildingID)
     {
-        GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
+        //GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
+        GameObject go = buildingGoDic[buildingID];
         UpdateBuildingGo(go, buildingID);
     }
-
-
 
     void SetBuilding(int buildingID, bool isNew, int index)
     {
@@ -463,6 +439,7 @@ public class DistrictMapPanel : BasePanel
             {
                 go = buildingGoPool[index];
                 buildingGoPool[index].transform.GetComponent<RectTransform>().localScale = Vector2.one;
+                
             }
             else
             {
@@ -470,31 +447,28 @@ public class DistrictMapPanel : BasePanel
                 buildingGoPool.Add(go);
             }
         }
+        buildingGoDic.Add(buildingID, go); 
         UpdateBuildingGo(go, buildingID);
     }
-
-    
+  
     public void DeleteBuilding(int buildingID)
     {
-        GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
+       // GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.buildingDic[buildingID].layer + "/" + buildingID);
+        GameObject go = buildingGoDic[buildingID];
+
         go.transform.GetComponent<RectTransform>().localScale = Vector2.zero;
+
+        buildingGoDic.Remove(buildingID);
         if (statusBarImageDic.ContainsKey(buildingID))
         {
             statusBarImageDic.Remove(buildingID);
         }
-    }
-    public void DeleteCustomer(int customerID)
-    {
-        GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/" + customerID);
-        go.transform.GetComponent<RectTransform>().localScale = Vector2.zero;
     }
 
     void UpdateBuildingGo(GameObject go,int buildingID)
     {
         go.name = buildingID.ToString();
         go.transform.SetParent(layer[gc.buildingDic[buildingID].layer].transform);
-
-     
 
         go.GetComponent<RectTransform>().sizeDelta = new Vector2(DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeX * 16f, DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeY * 16f);
 
@@ -526,11 +500,10 @@ public class DistrictMapPanel : BasePanel
             statusSubTf.GetComponent<Text>().text = "建筑中";
             statusBarTf.GetComponent<RectTransform>().localScale = Vector2.one;
             statusBarImageDic[buildingID].color = colorBuild;
-
-
         }
         else if (gc.buildingDic[buildingID].buildProgress == 2)
         {
+
             go.GetComponent<Image>().color = Color.clear;
             baseTf.GetComponent<Image>().color = Color.white;
             baseTf.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/BuildNow/BuildNow_" + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeX + "x" + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase);
@@ -567,7 +540,6 @@ public class DistrictMapPanel : BasePanel
                         statusSubTf.GetComponent<Text>().text = "<color=#FF4500></color>";
                         statusBarTf.GetComponent<RectTransform>().localScale = Vector2.zero;
                     }
-
                     break;
                 case "Forge":
                     statusTf.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -598,7 +570,6 @@ public class DistrictMapPanel : BasePanel
 
     void UpdateBar()
     {
-
         for (int i = 0; i < gc.executeEventList.Count; i++)
         {
             if (gc.executeEventList[i].type == ExecuteEventType.Build)
@@ -634,12 +605,12 @@ public class DistrictMapPanel : BasePanel
 
     }
 
-
     void ShowTip(string str)
     {
         tipRt.localScale = Vector2.one;
         tipText.text = str;
     }
+
     void HideTip()
     {
         tipRt.localScale = Vector2.zero;
@@ -648,8 +619,7 @@ public class DistrictMapPanel : BasePanel
     public void UpdateBaselineResourcesText(short districtID)
     {
         if (gc.districtDic[districtID].force == 0)
-        {
-         
+        {        
             bottom_baseline_productWeaponText.text = gc.districtDic[districtID].rProductWeapon + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodWeapon + "]</color>";
             bottom_baseline_productArmorText.text = gc.districtDic[districtID].rProductArmor + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodArmor + "]</color>";
             bottom_baseline_productJewelryText.text = gc.districtDic[districtID].rProductJewelry + "<color=#92FF9D>[在售 " + gc.districtDic[districtID].rProductGoodJewelry + "]</color>";
@@ -675,8 +645,6 @@ public class DistrictMapPanel : BasePanel
         bottom_baseline_elementDarkText.text = "暗 " + gc.districtDic[districtID].eDark;
     }
 
-
-
     public void InitCustomer()
     {
         List<CustomerObject> temp = new List<CustomerObject> { };
@@ -688,7 +656,7 @@ public class DistrictMapPanel : BasePanel
         for (int i = 0; i < temp.Count; i++)
         {
             SetCustomer(temp[i].id);
-            UpdateCustomerByStage(temp[i].id);
+            gc.UpdateCustomerByStage(temp[i].id);
         }
     }
 
@@ -708,9 +676,7 @@ public class DistrictMapPanel : BasePanel
                 customerGoDic[kvp.Key].GetComponent<AnimatiorControlByNPC>().isShow = false;
             }
         }
-
     }
-
 
 
     //创建访客实例 
@@ -718,22 +684,16 @@ public class DistrictMapPanel : BasePanel
     {
         GameObject go;
 
-
-            if (customerGoPool.Count>0)
-            {
-                go = customerGoPool[0];
-                //go.GetComponent<Image>().color = Color.white;
-           
-                customerGoPool.RemoveAt(0);
-            }
-            else
-            {
-                go = Instantiate(Resources.Load("Prefab/UIBlock/Block_DisCustomer")) as GameObject;
-               // customerGoAllPool.Add(go);
-            }
+        if (customerGoPool.Count > 0)
+        {
+            go = customerGoPool[0];
+            customerGoPool.RemoveAt(0);
+        }
+        else
+        {
+            go = Instantiate(Resources.Load("Prefab/UIBlock/Block_DisCustomer")) as GameObject;
+        }
         customerGoDic.Add(customerID, go);
-
-       
 
         go.name = "Customer_" + customerID;
         go.GetComponent<AnimatiorControlByNPC>().customerID = customerID;
@@ -766,7 +726,6 @@ public class DistrictMapPanel : BasePanel
         {
             go.transform.localScale = new Vector2(1f, 1.25f);
             go.transform.GetComponent<AnimatiorControlByNPC>().isShow = true;
-            //Debug.Log("  go.transform.localScale=" + go.transform.localScale);
         }
         else
         {
@@ -835,244 +794,229 @@ public class DistrictMapPanel : BasePanel
         }
         go.GetComponent<RectTransform>().anchoredPosition = startPos;
     }
-    public void UpdateCustomerByStageUI(int customerID)
-    {
-        // GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
-        GameObject go = customerGoDic[customerID];
-        switch (gc.customerDic[customerID].stage)
-        {
-            case CustomerStage.Come:
-                StartCoroutine(CustomerComeUI(customerID, go));
-                break;
-            case CustomerStage.Observe:
-                StartCoroutine(CustomerObserveUI(customerID, go));
-                break;
-            case CustomerStage.Wait:
-                StartCoroutine(CustomerWaitUI(customerID, go));
-                break;
-            case CustomerStage.IntoShop:
-                StartCoroutine(CustomerIntoShopUI(customerID, go));
-                break;
-            case CustomerStage.Gone:
-                StartCoroutine(CustomerGoneUI(customerID, go));
-                break;
-        }
-    }
+    //public void UpdateCustomerByStageUI(int customerID)
+    //{
+    //    // GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
+    //    GameObject go = customerGoDic[customerID];
+    //    switch (gc.customerDic[customerID].stage)
+    //    {
+    //        case CustomerStage.Come:
+    //            StartCoroutine(CustomerComeUI(customerID, go));
+    //            break;
+    //        case CustomerStage.Observe:
+    //            StartCoroutine(CustomerObserveUI(customerID, go));
+    //            break;
+    //        case CustomerStage.Wait:
+    //            StartCoroutine(CustomerWaitUI(customerID, go));
+    //            break;
+    //        case CustomerStage.IntoShop:
+    //            StartCoroutine(CustomerIntoShopUI(customerID, go));
+    //            break;
+    //        case CustomerStage.Gone:
+    //            StartCoroutine(CustomerGoneUI(customerID, go));
+    //            break;
+    //    }
+    //}
 
-    public void UpdateCustomerByStage(int customerID)
-    {
-       // Debug.Log("[" + customerID + ":" + gc.customerDic[customerID].name + "]" + gc.customerDic[customerID].stage + "[" + DataManager.mDistrictDict[gc.customerDic[customerID].districtID].Name + "]");
+    //public void UpdateCustomerByStage(int customerID)
+    //{
+    //   // Debug.Log("[" + customerID + ":" + gc.customerDic[customerID].name + "]" + gc.customerDic[customerID].stage + "[" + DataManager.mDistrictDict[gc.customerDic[customerID].districtID].Name + "]");
 
-        switch (gc.customerDic[customerID].stage)
-        {
-            case CustomerStage.Come:
-                StartCoroutine(CustomerCome(customerID));
-                break;
-            case CustomerStage.Observe:
-                StartCoroutine(CustomerObserve(customerID));
-                break;
-            case CustomerStage.Wait:
-                StartCoroutine(CustomerWait(customerID));
-                break;
-            case CustomerStage.IntoShop:
-                StartCoroutine(CustomerIntoShop(customerID));
-                break;
-            case CustomerStage.Gone:
-                StartCoroutine(CustomerGone(customerID));
-                break;
-        }
-    }
+    //    switch (gc.customerDic[customerID].stage)
+    //    {
+    //        case CustomerStage.Come:
+    //            StartCoroutine(CustomerCome(customerID));
+    //            break;
+    //        case CustomerStage.Observe:
+    //            StartCoroutine(CustomerObserve(customerID));
+    //            break;
+    //        case CustomerStage.Wait:
+    //            StartCoroutine(CustomerWait(customerID));
+    //            break;
+    //        case CustomerStage.IntoShop:
+    //            StartCoroutine(CustomerIntoShop(customerID));
+    //            break;
+    //        case CustomerStage.Gone:
+    //            StartCoroutine(CustomerGone(customerID));
+    //            break;
+    //    }
+    //}
 
 
 
-    IEnumerator CustomerComeUI(int customerID, GameObject go)
-    {
+    //IEnumerator CustomerComeUI(int customerID, GameObject go)
+    //{
     
-        Vector2 startPos=go.transform.localPosition;
-        Vector2 targetPos;
+    //    Vector2 startPos=go.transform.localPosition;
+    //    Vector2 targetPos;
 
-        if (gc.customerDic[customerID].buildingID!=-1)
-        {
-            int buildingID = gc.customerDic[customerID].buildingID;
+    //    if (gc.customerDic[customerID].buildingID!=-1)
+    //    {
+    //        int buildingID = gc.customerDic[customerID].buildingID;
 
-            targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + gc.buildingDic[buildingID].customerList.Count) * -1 : gc.buildingDic[buildingID].customerList.Count)) * 16f, gc.customerDic[customerID].layer * -16f + roleHeight);
+    //        targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + gc.buildingDic[buildingID].customerList.Count) * -1 : gc.buildingDic[buildingID].customerList.Count)) * 16f, gc.customerDic[customerID].layer * -16f + roleHeight);
 
+    //        go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+    //        go.transform.DOLocalMove(targetPos, 5f);
 
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
-            go.transform.DOLocalMove(targetPos, 5f);
+    //        yield return new WaitForSeconds(5f);
+    //        go.transform.DOComplete();
 
-            yield return new WaitForSeconds(5f);
-            go.transform.DOComplete();
+    //        go.GetComponent<AnimatiorControlByNPC>().SetAnim(gc.buildingDic[buildingID].doorInLine);
+    //        go.GetComponent<AnimatiorControlByNPC>().Stop();
 
-
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim(gc.buildingDic[buildingID].doorInLine);
-            go.GetComponent<AnimatiorControlByNPC>().Stop();
-            //gc.customerDic[customerID].stage = CustomerStage.Wait;
-            //UpdateCustomerByStage(customerID);
-
-        }
-        else
-        {
-            targetPos = new Vector2(Random.Range(54, 74) * 16f, gc.customerDic[customerID].layer  * -16f + roleHeight);
+    //    }
+    //    else
+    //    {
+    //        targetPos = new Vector2(Random.Range(54, 74) * 16f, gc.customerDic[customerID].layer  * -16f + roleHeight);
        
-            go.GetComponent<RectTransform>().anchoredPosition = startPos;
+    //        go.GetComponent<RectTransform>().anchoredPosition = startPos;
 
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
-            go.transform.DOLocalMove(targetPos, 5f);
+    //        go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+    //        go.transform.DOLocalMove(targetPos, 5f);
 
-            yield return new WaitForSeconds(5f);
-            go.transform.DOComplete();
+    //        yield return new WaitForSeconds(5f);
+    //        go.transform.DOComplete();
+    //    }
+    //}
 
-            //gc.customerDic[customerID].stage = CustomerStage.Observe;
-            //UpdateCustomerByStage(customerID);
-        }
-       // Debug.Log("startPos=" + startPos);
-       // Debug.Log("targetPos=" + targetPos);
-    }
+    //IEnumerator CustomerCome(int customerID)
+    //{
+    //    UpdateCustomerByStageUI(customerID);
 
-    IEnumerator CustomerCome(int customerID)
-    {
-        UpdateCustomerByStageUI(customerID);
+    //    if (gc.customerDic[customerID].buildingID != -1)
+    //    {            
+    //        yield return new WaitForSeconds(5f);
+    //        gc.customerDic[customerID].stage = CustomerStage.Wait;
+    //        UpdateCustomerByStage(customerID);
+    //    }
+    //    else
+    //    {
+    //        yield return new WaitForSeconds(5f);
+    //        gc.customerDic[customerID].stage = CustomerStage.Observe;
+    //        UpdateCustomerByStage(customerID);
+    //    }
+    //}
 
-        if (gc.customerDic[customerID].buildingID != -1)
-        {
-            
-            yield return new WaitForSeconds(5f);
-            gc.customerDic[customerID].stage = CustomerStage.Wait;
-            UpdateCustomerByStage(customerID);
-        }
-        else
-        {
-            yield return new WaitForSeconds(5f);
-            gc.customerDic[customerID].stage = CustomerStage.Observe;
-            UpdateCustomerByStage(customerID);
-        }
-    }
+    //IEnumerator CustomerWaitUI(int customerID, GameObject go)
+    //{
+    //    go.transform.DOComplete();
+    //    int buildingID = gc.customerDic[customerID].buildingID;
+    //    int waitIndex= gc.buildingDic[buildingID].customerList.IndexOf(customerID);
+    //    Vector2 startPos = go.transform.localPosition;
+    //    Vector2 targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + waitIndex) * -1 : waitIndex)) * 16f, gc.customerDic[customerID].layer * -16f + roleHeight);
 
-    IEnumerator CustomerWaitUI(int customerID, GameObject go)
-    {
-        go.transform.DOComplete();
-        int buildingID = gc.customerDic[customerID].buildingID;
-        int waitIndex= gc.buildingDic[buildingID].customerList.IndexOf(customerID);
-        Vector2 startPos = go.transform.localPosition;
-        Vector2 targetPos = new Vector2((gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition + (gc.buildingDic[buildingID].positionY < 64 ? (1 + waitIndex) * -1 : waitIndex)) * 16f, gc.customerDic[customerID].layer * -16f + roleHeight);
+    //    go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x> targetPos.x)? AnimStatus.WalkLeft: AnimStatus.WalkRight);
+    //    go.GetComponent<AnimatiorControlByNPC>().Play();
+    //    go.transform.DOLocalMove(targetPos, 1f);
+    //    yield return new WaitForSeconds(1f);
+    //    go.transform.DOComplete();
+    //    go.GetComponent<AnimatiorControlByNPC>().Stop();
+    //}
 
-        go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x> targetPos.x)? AnimStatus.WalkLeft: AnimStatus.WalkRight);
-        go.GetComponent<AnimatiorControlByNPC>().Play();
-        go.transform.DOLocalMove(targetPos, 1f);
-        yield return new WaitForSeconds(1f);
-        go.transform.DOComplete();
-        go.GetComponent<AnimatiorControlByNPC>().Stop();
-    }
+    //IEnumerator CustomerWait(int customerID)
+    //{
+    //    UpdateCustomerByStageUI(customerID);
+    //    yield return new WaitForSeconds(1f);
+    //}
 
-    IEnumerator CustomerWait(int customerID)
-    {
-        UpdateCustomerByStageUI(customerID);
+    //IEnumerator CustomerObserveUI(int customerID,GameObject go)
+    //{
+    //    gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].backNum[gc.customerDic[customerID].districtID]++;
 
-        yield return new WaitForSeconds(1f);
-    }
-
-    IEnumerator CustomerObserveUI(int customerID,GameObject go)
-    {
-        gc.customerRecordDic[gc.timeYear + "/" + gc.timeMonth].backNum[gc.customerDic[customerID].districtID]++;
-
-        go.transform.DOComplete();
-        go.GetComponent<AnimatiorControlByNPC>().Stop();
+    //    go.transform.DOComplete();
+    //    go.GetComponent<AnimatiorControlByNPC>().Stop();
       
 
-        yield return new WaitForSeconds(2.0f);
+    //    yield return new WaitForSeconds(2.0f);
 
-        string str = "";
-        switch (gc.customerDic[customerID].shopType)
-        {
-            case ShopType.WeaponAndSubhand: str = "这里没有武器店吗？"; break;
-            case ShopType.Armor: str = "这里没有防具店吗？"; break;
-            case ShopType.Jewelry: str = "这里没有饰品店吗？"; break;
-            case ShopType.Scroll: str = "这里没有卷轴店吗？"; break;
-        }
-        StartCoroutine(CustomerTalk(customerID, gc.OutputRandomStr(new List<string> { "没有合适的店啊", "icon_talk_sad", "白来一趟了", "好荒凉啊", str }), 0f));
-        yield return new WaitForSeconds(0.5f);
+    //    string str = "";
+    //    switch (gc.customerDic[customerID].shopType)
+    //    {
+    //        case ShopType.WeaponAndSubhand: str = "这里没有武器店吗？"; break;
+    //        case ShopType.Armor: str = "这里没有防具店吗？"; break;
+    //        case ShopType.Jewelry: str = "这里没有饰品店吗？"; break;
+    //        case ShopType.Scroll: str = "这里没有卷轴店吗？"; break;
+    //    }
+    //    StartCoroutine(CustomerTalk(customerID, gc.OutputRandomStr(new List<string> { "没有合适的店啊", "icon_talk_sad", "白来一趟了", "好荒凉啊", str }), 0f));
+    //    yield return new WaitForSeconds(0.5f);
+    //}
 
-        //gc.customerDic[customerID].stage = CustomerStage.Gone;
-       // UpdateCustomerByStage(customerID);
-    }
+    //IEnumerator CustomerObserve(int customerID)
+    //{
+    //    UpdateCustomerByStageUI(customerID);
+    //    yield return new WaitForSeconds(2.5f);
 
-    IEnumerator CustomerObserve(int customerID)
-    {
-        UpdateCustomerByStageUI(customerID);
-        yield return new WaitForSeconds(2.5f);
+    //    gc.customerDic[customerID].stage = CustomerStage.Gone;
+    //    UpdateCustomerByStage(customerID);
+    //}
 
-        gc.customerDic[customerID].stage = CustomerStage.Gone;
-        UpdateCustomerByStage(customerID);
-    }
+    //IEnumerator CustomerIntoShopUI(int customerID, GameObject go)
+    //{
+    //    go.transform.DOComplete();
+    //    int buildingID = gc.customerDic[customerID].buildingID;
+    //    float doorPosX = (gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition)*16f;
 
-    IEnumerator CustomerIntoShopUI(int customerID, GameObject go)
-    {
-        go.transform.DOComplete();
-        int buildingID = gc.customerDic[customerID].buildingID;
-        float doorPosX = (gc.buildingDic[buildingID].positionX + DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].DoorPosition)*16f;
+    //    if (go.transform.localPosition.x > doorPosX)
+    //    {
+    //        go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkLeft);
+    //        go.transform.DOLocalMove(go.transform.localPosition + Vector3.left * (go.transform.localPosition.x - doorPosX), 1f);
+    //    }
+    //    else
+    //    {
+    //        go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkRight);
+    //        go.transform.DOLocalMove(go.transform.localPosition + Vector3.right * (doorPosX-go.transform.localPosition.x  -8f), 1f);
+    //    }
+    //    yield return new WaitForSeconds(1f);
 
-        if (go.transform.localPosition.x > doorPosX)
-        {
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkLeft);
-            go.transform.DOLocalMove(go.transform.localPosition + Vector3.left * (go.transform.localPosition.x - doorPosX), 1f);
-        }
-        else
-        {
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkRight);
-            go.transform.DOLocalMove(go.transform.localPosition + Vector3.right * (doorPosX-go.transform.localPosition.x  -8f), 1f);
-        }
-        yield return new WaitForSeconds(1f);
+    //    go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkUp);
+    //    go.transform.DOLocalMove(go.transform.localPosition + Vector3.up * 10f, 1f);
+    //    yield return new WaitForSeconds(1f);
+    //    go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkDown);
+    //    go.transform.DOLocalMove(go.transform.localPosition + Vector3.down * 10f, 1f);
 
-        go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkUp);
-        go.transform.DOLocalMove(go.transform.localPosition + Vector3.up * 10f, 1f);
-        yield return new WaitForSeconds(1f);
-        go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkDown);
-        go.transform.DOLocalMove(go.transform.localPosition + Vector3.down * 10f, 1f);
+    //    yield return new WaitForSeconds(1f);
+    //}
 
-        yield return new WaitForSeconds(1f);
-       // gc.customerDic[customerID].stage = CustomerStage.Gone;
-      //  UpdateCustomerByStage(customerID);
-    }
+    //IEnumerator CustomerIntoShop(int customerID)
+    //{
+    //    UpdateCustomerByStageUI(customerID);
+    //    yield return new WaitForSeconds(3f);
+    //    gc.customerDic[customerID].stage = CustomerStage.Gone;
+    //    UpdateCustomerByStage(customerID);
+    //}
 
-    IEnumerator CustomerIntoShop(int customerID)
-    {
-        UpdateCustomerByStageUI(customerID);
-        yield return new WaitForSeconds(3f);
-        gc.customerDic[customerID].stage = CustomerStage.Gone;
-        UpdateCustomerByStage(customerID);
-    }
+    //IEnumerator CustomerGoneUI(int customerID, GameObject go)
+    //{
+    //    go.transform.DOComplete();
+    //    int ran = Random.Range(0, 2);
 
+    //    go.GetComponent<AnimatiorControlByNPC>().SetAnim(ran==0?AnimStatus.WalkLeft: AnimStatus.WalkRight);
+    //    go.transform.DOLocalMove(new Vector2(ran == 0?0: 2008, go.transform.localPosition.y), 10f);
+    //    yield return new WaitForSeconds(10f);
+    //    go.transform.DOComplete();
+    //    go.GetComponent<AnimatiorControlByNPC>().Stop();
+    //    customerGoPool.Add(go);
+    //    customerGoDic.Remove(customerID);
+    //}
 
-    IEnumerator CustomerGoneUI(int customerID, GameObject go)
-    {
-        go.transform.DOComplete();
-        int ran = Random.Range(0, 2);
-
-        go.GetComponent<AnimatiorControlByNPC>().SetAnim(ran==0?AnimStatus.WalkLeft: AnimStatus.WalkRight);
-        go.transform.DOLocalMove(new Vector2(ran == 0?0: 2008, go.transform.localPosition.y), 10f);
-        yield return new WaitForSeconds(10f);
-        go.transform.DOComplete();
-        go.GetComponent<AnimatiorControlByNPC>().Stop();
-        //go.GetComponent<Image>().color = Color.clear;
-        customerGoPool.Add(go);
-        customerGoDic.Remove(customerID);
-       // gc.CustomerGone(customerID);
-
-    }
-
-    IEnumerator CustomerGone(int customerID)
-    {
-        UpdateCustomerByStageUI(customerID);
-        yield return new WaitForSeconds(10f);
-        gc.CustomerGone(customerID);
-    }
+    //IEnumerator CustomerGone(int customerID)
+    //{
+    //    UpdateCustomerByStageUI(customerID);
+    //    yield return new WaitForSeconds(10f);
+    //    gc.DeleteCustomer(customerID);
+    //}
 
     public IEnumerator CustomerTalk(int customerID,string talkContent,float delay)
     {
         yield return new WaitForSeconds(delay);
-        GameObject cgo= GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
-       // GameObject cgo = customerGoPool[customerID];
+       // GameObject cgo= GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
+        GameObject cgo = null;
+        if (customerGoDic.ContainsKey(customerID))
+        {
+            cgo = customerGoDic[customerID];
+        }
+
         if (cgo != null)
         {
             if (talkContent != "")
@@ -1094,91 +1038,89 @@ public class DistrictMapPanel : BasePanel
         customerInfoRt.anchoredPosition = pos + Vector2.up * 50f;
         customerInfo_nameText.text = gc.customerDic[customerID].name;
         string str = "";
-       
-            if (gc.customerDic[customerID].shopType == ShopType.WeaponAndSubhand
-            || gc.customerDic[customerID].shopType == ShopType.Armor
-            || gc.customerDic[customerID].shopType == ShopType.Jewelry)
+
+        if (gc.customerDic[customerID].shopType == ShopType.WeaponAndSubhand
+        || gc.customerDic[customerID].shopType == ShopType.Armor
+        || gc.customerDic[customerID].shopType == ShopType.Jewelry)
+        {
+            if (gc.customerDic[customerID].bucketList.prototypeID != -1)
             {
-                if (gc.customerDic[customerID].bucketList.prototypeID != -1)
+                str += "[" + DataManager.mItemDict[gc.customerDic[customerID].bucketList.prototypeID].Name + "]";
+            }
+            else
+            {
+                if (gc.customerDic[customerID].bucketList.typeSmall != ItemTypeSmall.None)
                 {
-                    str += "[" + DataManager.mItemDict[gc.customerDic[customerID].bucketList.prototypeID].Name + "]";
+                    switch (gc.customerDic[customerID].bucketList.typeSmall)
+                    {
+                        case ItemTypeSmall.Sword: str += "[剑类武器]"; break;
+                        case ItemTypeSmall.Axe: str += "[斧镰类武器]"; break;
+                        case ItemTypeSmall.Spear: str += "[枪矛类武器]"; break;
+                        case ItemTypeSmall.Hammer: str += "[锤棍类武器]"; break;
+                        case ItemTypeSmall.Bow: str += "[弓类武器]"; break;
+                        case ItemTypeSmall.Staff: str += "[杖类武器]"; break;
+                        case ItemTypeSmall.Shield: str += "[盾]"; break;
+                        case ItemTypeSmall.Dorlach: str += "[箭袋]"; break;
+                        case ItemTypeSmall.HeadH: str += "[重型头部防具]"; break;
+                        case ItemTypeSmall.BodyH: str += "[重型身体防具]"; break;
+                        case ItemTypeSmall.HandH: str += "[重型手部防具]"; break;
+                        case ItemTypeSmall.BackH: str += "[重型背部防具]"; break;
+                        case ItemTypeSmall.FootH: str += "[重型腿部防具]"; break;
+                        case ItemTypeSmall.HeadL: str += "[轻型头部防具]"; break;
+                        case ItemTypeSmall.BodyL: str += "[轻型身体防具]"; break;
+                        case ItemTypeSmall.HandL: str += "[轻型手部防具]"; break;
+                        case ItemTypeSmall.BackL: str += "[轻型背部防具]"; break;
+                        case ItemTypeSmall.FootL: str += "[轻型腿部防具]"; break;
+                        case ItemTypeSmall.Neck: str += "[项链]"; break;
+                        case ItemTypeSmall.Finger: str += "[指环]"; break;
+                    }
                 }
                 else
                 {
-                    if (gc.customerDic[customerID].bucketList.typeSmall != ItemTypeSmall.None)
+                    switch (gc.customerDic[customerID].bucketList.typeBig)
                     {
-                        switch (gc.customerDic[customerID].bucketList.typeSmall)
-                        {
-                            case ItemTypeSmall.Sword: str += "[剑类武器]"; break;
-                            case ItemTypeSmall.Axe: str += "[斧镰类武器]"; break;
-                            case ItemTypeSmall.Spear: str += "[枪矛类武器]"; break;
-                            case ItemTypeSmall.Hammer: str += "[锤棍类武器]"; break;
-                            case ItemTypeSmall.Bow: str += "[弓类武器]"; break;
-                            case ItemTypeSmall.Staff: str += "[杖类武器]"; break;
-                            case ItemTypeSmall.Shield: str += "[盾]"; break;
-                            case ItemTypeSmall.Dorlach: str += "[箭袋]"; break;
-                            case ItemTypeSmall.HeadH: str += "[重型头部防具]"; break;
-                            case ItemTypeSmall.BodyH: str += "[重型身体防具]"; break;
-                            case ItemTypeSmall.HandH: str += "[重型手部防具]"; break;
-                            case ItemTypeSmall.BackH: str += "[重型背部防具]"; break;
-                            case ItemTypeSmall.FootH: str += "[重型腿部防具]"; break;
-                            case ItemTypeSmall.HeadL: str += "[轻型头部防具]"; break;
-                            case ItemTypeSmall.BodyL: str += "[轻型身体防具]"; break;
-                            case ItemTypeSmall.HandL: str += "[轻型手部防具]"; break;
-                            case ItemTypeSmall.BackL: str += "[轻型背部防具]"; break;
-                            case ItemTypeSmall.FootL: str += "[轻型腿部防具]"; break;
-                            case ItemTypeSmall.Neck: str += "[项链]"; break;
-                            case ItemTypeSmall.Finger: str += "[指环]"; break;
-                        }
-                    }
-                    else
-                    {
-                        switch (gc.customerDic[customerID].bucketList.typeBig)
-                        {
-                            case  ItemTypeBig.Weapon: str += "[武器]"; break;
-                            case ItemTypeBig.Subhand: str += "[副手]"; break;
-                            case ItemTypeBig.Armor: str += "[防具]"; break;
-                            case ItemTypeBig.Jewelry: str += "[饰品]"; break;
-                        }
+                        case ItemTypeBig.Weapon: str += "[武器]"; break;
+                        case ItemTypeBig.Subhand: str += "[副手]"; break;
+                        case ItemTypeBig.Armor: str += "[防具]"; break;
+                        case ItemTypeBig.Jewelry: str += "[饰品]"; break;
                     }
                 }
             }
-            else if(gc.customerDic[customerID].shopType == ShopType.Scroll)
+        }
+        else if (gc.customerDic[customerID].shopType == ShopType.Scroll)
+        {
+            if (gc.customerDic[customerID].bucketList.prototypeID != -1)
             {
-                if (gc.customerDic[customerID].bucketList.prototypeID != -1)
+                str += "[" + DataManager.mSkillDict[gc.customerDic[customerID].bucketList.prototypeID].Name + "卷轴]";
+            }
+            else
+            {
+                if (gc.customerDic[customerID].bucketList.typeSmall != ItemTypeSmall.None)
                 {
-                    str += "[" + DataManager.mSkillDict[gc.customerDic[customerID].bucketList.prototypeID].Name + "卷轴]";
+                    switch (gc.customerDic[customerID].bucketList.typeSmall)
+                    {
+                        case ItemTypeSmall.ScrollWindI: str += "[风系卷轴]"; break;
+                        case ItemTypeSmall.ScrollFireI: str += "[火系卷轴]"; break;
+                        case ItemTypeSmall.ScrollWaterI: str += "[水系卷轴]"; break;
+                        case ItemTypeSmall.ScrollGroundI: str += "[地系卷轴]"; break;
+                        case ItemTypeSmall.ScrollLightI: str += "[光系卷轴]"; break;
+                        case ItemTypeSmall.ScrollDarkI: str += "[暗系卷轴]"; break;
+                        case ItemTypeSmall.ScrollNone: str += "[无元素卷轴]"; break;
+                        case ItemTypeSmall.ScrollWindII: str += "[雷系卷轴]"; break;
+                        case ItemTypeSmall.ScrollFireII: str += "[爆炸系卷轴]"; break;
+                        case ItemTypeSmall.ScrollWaterII: str += "[冰系卷轴]"; break;
+                        case ItemTypeSmall.ScrollGroundII: str += "[自然系卷轴]"; break;
+                        case ItemTypeSmall.ScrollLightII: str += "[时空系卷轴]"; break;
+                        case ItemTypeSmall.ScrollDarkII: str += "[死亡系卷轴]"; break;
+                    }
                 }
                 else
                 {
-                    if (gc.customerDic[customerID].bucketList.typeSmall != ItemTypeSmall.None)
-                    {
-                        switch (gc.customerDic[customerID].bucketList.typeSmall)
-                        {
-                            case ItemTypeSmall.ScrollWindI: str += "[风系卷轴]"; break;
-                            case ItemTypeSmall.ScrollFireI: str += "[火系卷轴]"; break;
-                            case ItemTypeSmall.ScrollWaterI: str += "[水系卷轴]"; break;
-                            case ItemTypeSmall.ScrollGroundI: str += "[地系卷轴]"; break;
-                            case ItemTypeSmall.ScrollLightI: str += "[光系卷轴]"; break;
-                            case ItemTypeSmall.ScrollDarkI: str += "[暗系卷轴]"; break;
-                            case ItemTypeSmall.ScrollNone: str += "[无元素卷轴]"; break;
-                            case ItemTypeSmall.ScrollWindII: str += "[雷系卷轴]"; break;
-                            case ItemTypeSmall.ScrollFireII: str += "[爆炸系卷轴]"; break;
-                            case ItemTypeSmall.ScrollWaterII: str += "[冰系卷轴]"; break;
-                            case ItemTypeSmall.ScrollGroundII: str += "[自然系卷轴]"; break;
-                            case ItemTypeSmall.ScrollLightII: str += "[时空系卷轴]"; break;
-                            case ItemTypeSmall.ScrollDarkII: str += "[死亡系卷轴]"; break;
-                        }
-                    }
-                    else
-                    {
-                        str += "[卷轴]";
-                    }
+                    str += "[卷轴]";
                 }
             }
-               
-        
- 
+        }
+
         customerInfo_desText.text = "<color=#" + DataManager.mHeroDict[gc.customerDic[customerID].heroType].Color + ">" + DataManager.mHeroDict[gc.customerDic[customerID].heroType].Name + "</color>想要"+ str;
 
        // Debug.Log(gc.customerDic[customerID].gold.ToString());
@@ -1258,9 +1200,4 @@ public class DistrictMapPanel : BasePanel
         
     }
 
-
-    //GameObject go = Instantiate(Resources.Load("Prefab/Moment/Moment_Talk")) as GameObject;
-    //go.transform.SetParent(customerGo.transform);
-
-    //go.GetComponent<MomentTalk>().Show(str, 0, new Vector2(0,40f));
 }

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using DG.Tweening;
 
 public class GameControl : MonoBehaviour
 {
 
 
     //no save
+    float roleHeight = 54f;//人物高度
     public const float spacing = 4f;
 
     //save data
@@ -23,7 +25,8 @@ public class GameControl : MonoBehaviour
     public short nowCheckingDistrictID = 0;
     public int standardTime = 0;//时间戳，基准时间单位：1/10小时（例如 1天为240单位 ）
     public List<ExecuteEventObject> executeEventList = new List<ExecuteEventObject>();
-    public int nextExecuteEventEndTime = 0;
+    public Dictionary<int, ExecuteEventObject> executeEventDic = new Dictionary<int, ExecuteEventObject>();
+    public int eventIndex = 0;
     public int heroIndex = 0;
     public int itemIndex = 0;
     public int skillIndex = 0;
@@ -78,7 +81,8 @@ public class GameControl : MonoBehaviour
         public short nowCheckingDistrictID = 0;
         public int standardTime = 0;
         public List<ExecuteEventObject> executeEventList = new List<ExecuteEventObject>();
-        public int nextExecuteEventEndTime = 0;
+        public Dictionary<int, ExecuteEventObject> executeEventDic = new Dictionary<int, ExecuteEventObject>();
+        public int eventIndex = 0;
         public int heroIndex = 0;
         public int itemIndex = 0;
         public int skillIndex = 0;
@@ -141,7 +145,8 @@ public class GameControl : MonoBehaviour
         t.nowCheckingDistrictID = this.nowCheckingDistrictID;
         t.standardTime = this.standardTime;
         t.executeEventList = this.executeEventList;
-        t.nextExecuteEventEndTime = this.nextExecuteEventEndTime;
+        t.executeEventDic = this.executeEventDic;
+        t.eventIndex = this.eventIndex;
         t.heroIndex = this.heroIndex;
         t.itemIndex = this.itemIndex;
         t.skillIndex = this.skillIndex;
@@ -209,7 +214,8 @@ public class GameControl : MonoBehaviour
             this.nowCheckingDistrictID = t1.nowCheckingDistrictID;
             this.standardTime = t1.standardTime;
             this.executeEventList = t1.executeEventList;
-            this.nextExecuteEventEndTime = t1.nextExecuteEventEndTime;
+            this.executeEventDic = t1.executeEventDic;
+            this.eventIndex = t1.eventIndex;
             this.heroIndex = t1.heroIndex;
             this.itemIndex = t1.itemIndex;
             this.skillIndex = t1.skillIndex;
@@ -991,7 +997,7 @@ public class GameControl : MonoBehaviour
 
         if (buildingDic[buildingID].isOpen && buildingDic[buildingID].panelType == "Resource")
         {
-            StopProduceResource(buildingID);
+            StopProduceResource("Upgrade",buildingID);
         }
    
         StartBuildingUpgrade(nowCheckingDistrictID, buildingID, needTime);
@@ -1004,6 +1010,7 @@ public class GameControl : MonoBehaviour
             if (DistrictMapPanel.Instance.isShow)
             {
                 DistrictMapPanel.Instance.UpdateBaselineResourcesText(nowCheckingDistrictID);
+                DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
             }
 
             if (buildingDic[buildingID].panelType == "House")
@@ -1039,6 +1046,7 @@ public class GameControl : MonoBehaviour
 
         districtDic[nowCheckingDistrictID].peopleLimit -= DataManager.mBuildingDict[prototypeID].People;
 
+        districtDic[nowCheckingDistrictID].worker -= buildingDic[buildingID].workerNow;
         if (prototypeID == 47)
         {
             forceDic[0].rFoodLimit -= 1000;
@@ -1091,7 +1099,7 @@ public class GameControl : MonoBehaviour
         PlayMainPanel.Instance.UpdateResources();
         if (buildingDic[buildingID].isOpen && buildingDic[buildingID].panelType == "Resource")
         {
-            StopProduceResource(buildingID);
+            StopProduceResource("PullDown", buildingID);
         }
         districtDic[nowCheckingDistrictID].buildingList.Remove(buildingID);
         buildingDic.Remove(buildingID);
@@ -1121,7 +1129,7 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    public void StopProduceResource(int buildingID)
+    public void StopProduceResource(string type,int buildingID)
     {
         List<int> tempList = new List<int>();
         for (int i = 0; i < executeEventList.Count; i++)
@@ -1133,22 +1141,35 @@ public class GameControl : MonoBehaviour
         }
         for (int i = tempList.Count - 1; i >= 0; i--)
         {
+            executeEventDic.Remove(executeEventList[tempList[i]].id);
             executeEventList.RemoveAt(tempList[i]);
+            
         }
-        buildingDic[buildingID].isOpen = false;
-        MessagePanel.Instance.AddMessage("接到停工命令，生产停止");
-        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        if (type == "Stop")
         {
-            BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-            if(BuildingPanel.Instance.IsShowOutputInfoPart)
+            buildingDic[buildingID].isOpen = false;
+            MessagePanel.Instance.AddMessage("接到停工命令，生产停止");
+            if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
-                BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+                if (BuildingPanel.Instance.IsShowOutputInfoPart)
+                {
+                    BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
+                }
+
             }
-           
+            if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == buildingDic[buildingID].districtID)
+            {
+                DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+            }
         }
-        if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == buildingDic[buildingID].districtID)
+        else if (type == "Upgrade")
         {
-            DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
+            MessagePanel.Instance.AddMessage("建筑升级中，生产停止");
+        }
+        else if (type == "PullDown")
+        {
+            MessagePanel.Instance.AddMessage("建筑拆除，生产停止");
         }
     }
 
@@ -1215,6 +1236,7 @@ public class GameControl : MonoBehaviour
         }
         for (int i = tempList.Count - 1; i >= 0; i--)
         {
+            executeEventDic.Remove(executeEventList[tempList[i]].id);
             executeEventList.RemoveAt(tempList[i]);
         }
         buildingDic[buildingID].isOpen = false;
@@ -1258,27 +1280,6 @@ public class GameControl : MonoBehaviour
             return;
         }
 
-
-        //if (buildingDic[buildingID].forgeNum == 0)
-        //{
-        //    buildingDic[buildingID].isOpen = false;
-        //    MessagePanel.Instance.AddMessage("已完成指定生产数量，生产停止");
-        //    if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
-        //    {
-        //        BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
-        //        BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
-        //        BuildingPanel.Instance.UpdateTotalSetButton(buildingDic[buildingID]);
-        //    }
-        //    if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
-        //    {
-        //        DistrictMapPanel.Instance.UpdateSingleBuilding(buildingID);
-        //    }
-        //    return;
-        //}
-
-    
-
-        
         if (GetDistrictProductAll(districtID) >= districtDic[districtID].rProductLimit)
         {
             buildingDic[buildingID].isOpen = false;
@@ -1660,7 +1661,7 @@ public class GameControl : MonoBehaviour
 
                     }
                 }
-                if (ItemListAndInfoPanel.Instance.isShow)
+                if (ItemListAndInfoPanel.Instance.isShow&& ItemListAndInfoPanel.Instance.nowDistrictID == districtID)
                 {
                     ItemListAndInfoPanel.Instance.UpdateList(districtID, 1);
                 }
@@ -1691,7 +1692,7 @@ public class GameControl : MonoBehaviour
                 {
                     heroDic[buildingDic[buildingID].heroList[i]].countMakeScroll++;
                 }
-                if (SkillListAndInfoPanel.Instance.isShow)
+                if (SkillListAndInfoPanel.Instance.isShow && SkillListAndInfoPanel.Instance.nowDistrictID == districtID)
                 {
                     SkillListAndInfoPanel.Instance.UpdateList(districtID, null, -1, 0);
                 }
@@ -1703,21 +1704,6 @@ public class GameControl : MonoBehaviour
         }
 
 
-
-
-        //forceDic[0].rStuffWood -= DataManager.mProduceEquipDict[moduleID].InputWood;
-        //forceDic[0].rStuffStone -= DataManager.mProduceEquipDict[moduleID].InputStone;
-        //forceDic[0].rStuffMetal -= DataManager.mProduceEquipDict[moduleID].InputMetal;
-        //forceDic[0].rStuffLeather -= DataManager.mProduceEquipDict[moduleID].InputLeather;
-        //forceDic[0].rStuffCloth -= DataManager.mProduceEquipDict[moduleID].InputCloth;
-        //forceDic[0].rStuffTwine -= DataManager.mProduceEquipDict[moduleID].InputTwine;
-        //forceDic[0].rStuffBone -= DataManager.mProduceEquipDict[moduleID].InputBone;
-        //forceDic[0].rStuffWind -= DataManager.mProduceEquipDict[moduleID].InputWind;
-        //forceDic[0].rStuffFire -= DataManager.mProduceEquipDict[moduleID].InputFire;
-        //forceDic[0].rStuffWater -= DataManager.mProduceEquipDict[moduleID].InputWater;
-        //forceDic[0].rStuffGround -= DataManager.mProduceEquipDict[moduleID].InputGround;
-        //forceDic[0].rStuffLight -= DataManager.mProduceEquipDict[moduleID].InputLight;
-        //forceDic[0].rStuffDark -= DataManager.mProduceEquipDict[moduleID].InputDark;
 
         CreateLog(LogType.ProduceDone, "", new List<int> { districtID, buildingID, itemOrSkillID });
 
@@ -1968,6 +1954,7 @@ public class GameControl : MonoBehaviour
         }
         for (int i = tempList.Count - 1; i >= 0; i--)
         {
+            executeEventDic.Remove(executeEventList[tempList[i]].id);
             executeEventList.RemoveAt(tempList[i]);
         }
     }
@@ -1985,7 +1972,7 @@ public class GameControl : MonoBehaviour
                 customerID = buildingDic[buildingID].customerList[i];
                 if (customerDic[customerID].stage == CustomerStage.Wait)
                 {
-                    DistrictMapPanel.Instance.UpdateCustomerByStage(buildingDic[buildingID].customerList[i]);
+                    UpdateCustomerByStage(buildingDic[buildingID].customerList[i]);
                 }
 
             }
@@ -1997,7 +1984,7 @@ public class GameControl : MonoBehaviour
                 buildingDic[customerDic[customerID].buildingID].customerList.Remove(customerID);
                 customerDic[customerID].stage = CustomerStage.IntoShop;
 
-                DistrictMapPanel.Instance.UpdateCustomerByStage(customerID);
+                UpdateCustomerByStage(customerID);
             }
 
         }
@@ -2019,7 +2006,7 @@ public class GameControl : MonoBehaviour
             {
                 customerDic[buildingDic[buildingID].customerList[i]].stage = CustomerStage.Observe;
             }
-            DistrictMapPanel.Instance.UpdateCustomerByStage(buildingDic[buildingID].customerList[i]);
+            UpdateCustomerByStage(buildingDic[buildingID].customerList[i]);
         }
         buildingDic[buildingID].customerList.Clear();
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
@@ -3319,7 +3306,7 @@ public class GameControl : MonoBehaviour
 
     #endregion
 
-    #region 【方法】市集出售
+    #region 【方法】市集出售，顾客访客
 
     public void CreateSalesRecord(int year, int month)
     {
@@ -3355,7 +3342,7 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    public void CustomerCome(short districtID)
+    public void CreateCustomer(short districtID)
     {
         string name;
         string pic;
@@ -3489,7 +3476,7 @@ public class GameControl : MonoBehaviour
             DistrictMapPanel.Instance.SetCustomer(customerIndex);
            
        
-        DistrictMapPanel.Instance.UpdateCustomerByStage(customerIndex);
+        UpdateCustomerByStage(customerIndex);
         // DistrictMapPanel.Instance.CustomerCome(customerIndex);
 
         customerIndex++;
@@ -3515,8 +3502,7 @@ public class GameControl : MonoBehaviour
         }
     }
 
-
-    public void CustomerGone(int customerID)
+    public void DeleteCustomer(int customerID)
     {
         Debug.Log("customerID=" + customerID);
         Debug.Log("customerDic[customerID].districtID=" + customerDic[customerID].districtID);
@@ -3953,8 +3939,223 @@ public class GameControl : MonoBehaviour
 
         //StartCoroutine(DistrictMapPanel.Instance.CustomerGoToBuilding(customerID, str));
     }
-    
-    
+
+    //迁移的部分
+    public void UpdateCustomerByStageUI(int customerID)
+    {
+        // GameObject go = GameObject.Find("Canvas/DistrictMapPanel/Parts/Viewport/Content/" + gc.customerDic[customerID].layer + "/Customer_" + customerID);
+        GameObject go =DistrictMapPanel.Instance.customerGoDic[customerID];
+        switch (customerDic[customerID].stage)
+        {
+            case CustomerStage.Come:
+                StartCoroutine(CustomerComeUI(customerID, go));
+                break;
+            case CustomerStage.Observe:
+                StartCoroutine(CustomerObserveUI(customerID, go));
+                break;
+            case CustomerStage.Wait:
+                StartCoroutine(CustomerWaitUI(customerID, go));
+                break;
+            case CustomerStage.IntoShop:
+                StartCoroutine(CustomerIntoShopUI(customerID, go));
+                break;
+            case CustomerStage.Gone:
+                StartCoroutine(CustomerGoneUI(customerID, go));
+                break;
+        }
+    }
+
+    public void UpdateCustomerByStage(int customerID)
+    {
+        // Debug.Log("[" + customerID + ":" + gc.customerDic[customerID].name + "]" + gc.customerDic[customerID].stage + "[" + DataManager.mDistrictDict[gc.customerDic[customerID].districtID].Name + "]");
+
+        switch (customerDic[customerID].stage)
+        {
+            case CustomerStage.Come:
+                StartCoroutine(CustomerCome(customerID));
+                break;
+            case CustomerStage.Observe:
+                StartCoroutine(CustomerObserve(customerID));
+                break;
+            case CustomerStage.Wait:
+                StartCoroutine(CustomerWait(customerID));
+                break;
+            case CustomerStage.IntoShop:
+                StartCoroutine(CustomerIntoShop(customerID));
+                break;
+            case CustomerStage.Gone:
+                StartCoroutine(CustomerGone(customerID));
+                break;
+        }
+    }
+
+    IEnumerator CustomerComeUI(int customerID, GameObject go)
+    {
+
+        Vector2 startPos = go.transform.localPosition;
+        Vector2 targetPos;
+
+        if (customerDic[customerID].buildingID != -1)
+        {
+            int buildingID = customerDic[customerID].buildingID;
+
+            targetPos = new Vector2((buildingDic[buildingID].positionX + DataManager.mBuildingDict[buildingDic[buildingID].prototypeID].DoorPosition + (buildingDic[buildingID].positionY < 64 ? (1 + buildingDic[buildingID].customerList.Count) * -1 : buildingDic[buildingID].customerList.Count)) * 16f, customerDic[customerID].layer * -16f + roleHeight);
+
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+            go.transform.DOLocalMove(targetPos, 5f);
+
+            yield return new WaitForSeconds(5f);
+            go.transform.DOComplete();
+
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim(buildingDic[buildingID].doorInLine);
+            go.GetComponent<AnimatiorControlByNPC>().Stop();
+
+        }
+        else
+        {
+            targetPos = new Vector2(Random.Range(54, 74) * 16f, customerDic[customerID].layer * -16f + roleHeight);
+
+            go.GetComponent<RectTransform>().anchoredPosition = startPos;
+
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+            go.transform.DOLocalMove(targetPos, 5f);
+
+            yield return new WaitForSeconds(5f);
+            go.transform.DOComplete();
+        }
+    }
+
+    IEnumerator CustomerCome(int customerID)
+    {
+        UpdateCustomerByStageUI(customerID);
+
+        if (customerDic[customerID].buildingID != -1)
+        {
+            yield return new WaitForSeconds(5f);
+            customerDic[customerID].stage = CustomerStage.Wait;
+            UpdateCustomerByStage(customerID);
+        }
+        else
+        {
+            yield return new WaitForSeconds(5f);
+            customerDic[customerID].stage = CustomerStage.Observe;
+            UpdateCustomerByStage(customerID);
+        }
+    }
+
+    IEnumerator CustomerWaitUI(int customerID, GameObject go)
+    {
+        go.transform.DOComplete();
+        int buildingID =customerDic[customerID].buildingID;
+        int waitIndex = buildingDic[buildingID].customerList.IndexOf(customerID);
+        Vector2 startPos = go.transform.localPosition;
+        Vector2 targetPos = new Vector2((buildingDic[buildingID].positionX + DataManager.mBuildingDict[buildingDic[buildingID].prototypeID].DoorPosition + (buildingDic[buildingID].positionY < 64 ? (1 + waitIndex) * -1 : waitIndex)) * 16f, customerDic[customerID].layer * -16f + roleHeight);
+
+        go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+        go.GetComponent<AnimatiorControlByNPC>().Play();
+        go.transform.DOLocalMove(targetPos, 1f);
+        yield return new WaitForSeconds(1f);
+        go.transform.DOComplete();
+        go.GetComponent<AnimatiorControlByNPC>().Stop();
+    }
+
+    IEnumerator CustomerWait(int customerID)
+    {
+        UpdateCustomerByStageUI(customerID);
+        yield return new WaitForSeconds(1f);
+    }
+
+    IEnumerator CustomerObserveUI(int customerID, GameObject go)
+    {
+        customerRecordDic[timeYear + "/" + timeMonth].backNum[customerDic[customerID].districtID]++;
+
+        go.transform.DOComplete();
+        go.GetComponent<AnimatiorControlByNPC>().Stop();
+
+
+        yield return new WaitForSeconds(2.0f);
+
+        string str = "";
+        switch (customerDic[customerID].shopType)
+        {
+            case ShopType.WeaponAndSubhand: str = "这里没有武器店吗？"; break;
+            case ShopType.Armor: str = "这里没有防具店吗？"; break;
+            case ShopType.Jewelry: str = "这里没有饰品店吗？"; break;
+            case ShopType.Scroll: str = "这里没有卷轴店吗？"; break;
+        }
+        StartCoroutine(DistrictMapPanel.Instance.CustomerTalk(customerID, OutputRandomStr(new List<string> { "没有合适的店啊", "icon_talk_sad", "白来一趟了", "好荒凉啊", str }), 0f));
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    IEnumerator CustomerObserve(int customerID)
+    {
+        UpdateCustomerByStageUI(customerID);
+        yield return new WaitForSeconds(2.5f);
+
+        customerDic[customerID].stage = CustomerStage.Gone;
+        UpdateCustomerByStage(customerID);
+    }
+
+    IEnumerator CustomerIntoShopUI(int customerID, GameObject go)
+    {
+        go.transform.DOComplete();
+        int buildingID = customerDic[customerID].buildingID;
+        float doorPosX = (buildingDic[buildingID].positionX + DataManager.mBuildingDict[buildingDic[buildingID].prototypeID].DoorPosition) * 16f;
+
+        if (go.transform.localPosition.x > doorPosX)
+        {
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkLeft);
+            go.transform.DOLocalMove(go.transform.localPosition + Vector3.left * (go.transform.localPosition.x - doorPosX), 1f);
+        }
+        else
+        {
+            go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkRight);
+            go.transform.DOLocalMove(go.transform.localPosition + Vector3.right * (doorPosX - go.transform.localPosition.x - 8f), 1f);
+        }
+        yield return new WaitForSeconds(1f);
+
+        go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkUp);
+        go.transform.DOLocalMove(go.transform.localPosition + Vector3.up * 10f, 1f);
+        yield return new WaitForSeconds(1f);
+        go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkDown);
+        go.transform.DOLocalMove(go.transform.localPosition + Vector3.down * 10f, 1f);
+
+        yield return new WaitForSeconds(1f);
+    }
+
+    IEnumerator CustomerIntoShop(int customerID)
+    {
+        UpdateCustomerByStageUI(customerID);
+        yield return new WaitForSeconds(3f);
+        customerDic[customerID].stage = CustomerStage.Gone;
+        UpdateCustomerByStage(customerID);
+    }
+
+    IEnumerator CustomerGoneUI(int customerID, GameObject go)
+    {
+        go.transform.DOComplete();
+        int ran = Random.Range(0, 2);
+
+        go.GetComponent<AnimatiorControlByNPC>().SetAnim(ran == 0 ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+        go.transform.DOLocalMove(new Vector2(ran == 0 ? 0 : 2008, go.transform.localPosition.y), 10f);
+        yield return new WaitForSeconds(10f);
+        go.transform.DOComplete();
+        go.GetComponent<AnimatiorControlByNPC>().Stop();
+        DistrictMapPanel.Instance.customerGoPool.Add(go);
+        DistrictMapPanel.Instance.customerGoDic.Remove(customerID);
+    }
+
+    IEnumerator CustomerGone(int customerID)
+    {
+        UpdateCustomerByStageUI(customerID);
+        yield return new WaitForSeconds(10f);
+        DeleteCustomer(customerID);
+    }
+
+
+
+
+
     public void SupplyAndDemandChangeRegular(short districtID)
     {
 
@@ -4257,6 +4458,7 @@ public class GameControl : MonoBehaviour
         }
         for (int i = tempList.Count - 1; i >= 0; i--)
         {
+            executeEventDic.Remove(executeEventList[tempList[i]].id);
             executeEventList.RemoveAt(tempList[i]);
         }
 
@@ -6613,7 +6815,10 @@ public class GameControl : MonoBehaviour
                 return;
             }
         }
+        executeEventObject.id = eventIndex;
+        eventIndex++;
         executeEventList.Add(executeEventObject);
+        executeEventDic.Add(executeEventObject.id ,executeEventObject);
     }
     #endregion
 
@@ -7278,7 +7483,7 @@ public class GameControl : MonoBehaviour
         t += 240;
         int year = 0, month = 0, day = 0, hour = 0, st = 0;
 
-        if (t >= 86400) //天,
+        if (t >= 86400) 
         {
             year = System.Convert.ToInt16(t / 86400);
             month = System.Convert.ToInt16((t % 86400) / 7200);
@@ -7286,14 +7491,14 @@ public class GameControl : MonoBehaviour
             hour = System.Convert.ToInt16((t % 86400 % 7200 % 240) / 10);
             st = System.Convert.ToInt16(t % 86400 % 7200 % 240 % 10);
         }
-        else if (t >= 7200)//时,
+        else if (t >= 7200)
         {
             month = System.Convert.ToInt16(t / 7200);
             day = System.Convert.ToInt16((t % 7200) / 240);
             hour = System.Convert.ToInt16((t % 7200 % 240) / 10);
             st = System.Convert.ToInt16(t % 7200 % 240 % 10);
         }
-        else if (t >= 240)//分
+        else if (t >= 240)
         {
             day = System.Convert.ToInt16(t / 240);
             hour = System.Convert.ToInt16((t % 240) / 10);
