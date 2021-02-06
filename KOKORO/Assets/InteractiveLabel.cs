@@ -39,14 +39,14 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             
         }
-        else if (labelType == LabelType.DungeonInAdventure)
-        {
-            btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(delegate ()
-            {
-                AdventureMainPanel.Instance.nowSelectDungeonID= (short)index;
-            });
-        }
+        //else if (labelType == LabelType.DungeonInAdventure)
+        //{
+        //    btn.onClick.RemoveAllListeners();
+        //    btn.onClick.AddListener(delegate ()
+        //    {
+        //        AdventureMainPanel.Instance.nowSelectDungeonID= (short)index;
+        //    });
+        //}
         else if (labelType == LabelType.Skill)
         {
             btn.onClick.RemoveAllListeners();

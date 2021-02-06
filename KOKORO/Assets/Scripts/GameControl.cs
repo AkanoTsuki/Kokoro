@@ -604,7 +604,7 @@ public class GameControl : MonoBehaviour
             name = DataManager.mLemmaDict[lemmaID].Name + "的 " + name;
 
             // Debug.Log("lemmaID=" + lemmaID+ " rank="+ rank);
-
+            
 
             if (DataManager.mLemmaDict[lemmaID].Hp.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Hp, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].Hp[rank] * upRate))); }
             if (DataManager.mLemmaDict[lemmaID].Mp.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Mp, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].Mp[rank] * upRate))); }
@@ -815,7 +815,10 @@ public class GameControl : MonoBehaviour
             DistrictMapPanel.Instance.UpdateBasicInfo();
             DistrictMapPanel.Instance.UpdateBaselineElementText(nowCheckingDistrictID);
         }
-
+        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingId)
+        {
+            BuildingPanel.Instance.OnShow(buildingDic[buildingId]);
+        }
         PlayMainPanel.Instance.UpdateResources();
 
         MessagePanel.Instance.AddMessage(districtDic[buildingDic[buildingId].districtID].name + "的" + buildingDic[buildingId].name + "建筑完成");
@@ -869,6 +872,7 @@ public class GameControl : MonoBehaviour
     {
         //value0:地区实例ID value1:建筑实例ID 
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.Build, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID }, new List<int> { buildingID } }));
+       
     }
     void StartBuildingUpgrade(int districtID, int buildingID, int needTime)
     {
@@ -877,7 +881,7 @@ public class GameControl : MonoBehaviour
     }
     public void CreateBuildEvent(short BuildingPrototypeID, short posX, short posY, byte layer, List<int> xList, List<int> yList)
     {
-        Debug.Log("CreateBuildEvent() BuildingPrototypeID=" + BuildingPrototypeID);
+        //Debug.Log("CreateBuildEvent() BuildingPrototypeID=" + BuildingPrototypeID);
         //再次判断是应对面板打开的时候，相关数据已经产生变化
         if (DataManager.mBuildingDict[BuildingPrototypeID].NeedWood > forceDic[0].rStuffWood)
         {
@@ -1074,21 +1078,23 @@ public class GameControl : MonoBehaviour
 
         MessagePanel.Instance.AddMessage(districtDic[buildingDic[buildingID].districtID].name + "的" + buildingDic[buildingID].name + "已拆除");
 
-        if (buildingDic[buildingID].districtID == nowCheckingDistrictID)
+        short buildingDistrictID = buildingDic[buildingID].districtID;
+        if (buildingDic[buildingID].isOpen && buildingDic[buildingID].panelType == "Resource")
         {
+            StopProduceResource("PullDown", buildingID);
+        }
+        districtDic[nowCheckingDistrictID].buildingList.Remove(buildingID);
+        buildingDic.Remove(buildingID);
 
-
+        if (buildingDistrictID == nowCheckingDistrictID)
+        {
             if (prototypeID == 47 || prototypeID == 48 || prototypeID == 49)
             {
                 if (DistrictMapPanel.Instance.isShow)
                 {
                     DistrictMapPanel.Instance.UpdateBaselineResourcesText(nowCheckingDistrictID);
                 }
-
             }
-
-
-
 
             if (DistrictMapPanel.Instance.isShow)
             {
@@ -1097,13 +1103,6 @@ public class GameControl : MonoBehaviour
             }
         }
         PlayMainPanel.Instance.UpdateResources();
-        if (buildingDic[buildingID].isOpen && buildingDic[buildingID].panelType == "Resource")
-        {
-            StopProduceResource("PullDown", buildingID);
-        }
-        districtDic[nowCheckingDistrictID].buildingList.Remove(buildingID);
-        buildingDic.Remove(buildingID);
-
     }
     #endregion
 
@@ -1141,9 +1140,8 @@ public class GameControl : MonoBehaviour
         }
         for (int i = tempList.Count - 1; i >= 0; i--)
         {
-            executeEventDic.Remove(executeEventList[tempList[i]].id);
-            executeEventList.RemoveAt(tempList[i]);
-            
+            ExecuteEventDelete(tempList[i]);
+
         }
         if (type == "Stop")
         {
@@ -1236,8 +1234,7 @@ public class GameControl : MonoBehaviour
         }
         for (int i = tempList.Count - 1; i >= 0; i--)
         {
-            executeEventDic.Remove(executeEventList[tempList[i]].id);
-            executeEventList.RemoveAt(tempList[i]);
+            ExecuteEventDelete(tempList[i]);
         }
         buildingDic[buildingID].isOpen = false;
         MessagePanel.Instance.AddMessage("接到停工命令或订单取消，生产停止");
@@ -1954,8 +1951,7 @@ public class GameControl : MonoBehaviour
         }
         for (int i = tempList.Count - 1; i >= 0; i--)
         {
-            executeEventDic.Remove(executeEventList[tempList[i]].id);
-            executeEventList.RemoveAt(tempList[i]);
+            ExecuteEventDelete(tempList[i]);
         }
     }
 
@@ -2052,6 +2048,7 @@ public class GameControl : MonoBehaviour
         buildingDic[buildingID].workerNow--;
         districtDic[buildingDic[buildingID].districtID].worker--;
         BuildingPanel.Instance.UpdateSetWorkerPart(buildingDic[buildingID]);
+        DistrictMapPanel.Instance.UpdateBasicInfo();
     }
 
     public void BuildingWorkerAdd(int buildingID)
@@ -2067,6 +2064,7 @@ public class GameControl : MonoBehaviour
         buildingDic[buildingID].workerNow++;
         districtDic[buildingDic[buildingID].districtID].worker++;
         BuildingPanel.Instance.UpdateSetWorkerPart(buildingDic[buildingID]);
+        DistrictMapPanel.Instance.UpdateBasicInfo();
     }
     #endregion
 
@@ -2262,6 +2260,7 @@ public class GameControl : MonoBehaviour
         technologyResearchingList.Add(technologyID);
         PlayMainPanel.Instance.UpdateResources();
         PlayMainPanel.Instance.UpdateGold();
+        TechnologyPanel.Instance.UpdateInfo(technologyID);
     }
     public void TechnologyResearchDone(int technologyID)
     {
@@ -2393,6 +2392,8 @@ public class GameControl : MonoBehaviour
         HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
         ItemListAndInfoPanel.Instance.OnHide();
         PlayMainPanel.Instance.UpdateButtonItemNum();
+
+        AudioControl.Instance.PlaySound("system_equip");
     }
 
     public void HeroEquipUnSet(int heroID, EquipPart equipPart)
@@ -2465,6 +2466,8 @@ public class GameControl : MonoBehaviour
         }
         PlayMainPanel.Instance.UpdateButtonItemNum();
         PlayMainPanel.Instance.UpdateInventoryNum();
+
+        AudioControl.Instance.PlaySound("system_equip");
     }
 
     public void HeroSkillSet(int heroID, byte index, int skillID)
@@ -2507,7 +2510,7 @@ public class GameControl : MonoBehaviour
 
         HeroPanel.Instance.UpdateSkill(heroDic[heroID], index);
         SkillListAndInfoPanel.Instance.OnHide();
-        
+        AudioControl.Instance.PlaySound("system_equip");
     }
     #endregion
 
@@ -4458,8 +4461,7 @@ public class GameControl : MonoBehaviour
         }
         for (int i = tempList.Count - 1; i >= 0; i--)
         {
-            executeEventDic.Remove(executeEventList[tempList[i]].id);
-            executeEventList.RemoveAt(tempList[i]);
+            ExecuteEventDelete(tempList[i]);
         }
 
 
@@ -6811,7 +6813,16 @@ public class GameControl : MonoBehaviour
         {
             if (executeEventObject.endTime < executeEventList[i].endTime)
             {
+               
+                executeEventObject.id = eventIndex;
+                eventIndex++;
                 executeEventList.Insert(i, executeEventObject);
+                executeEventDic.Add(executeEventObject.id, executeEventObject);
+
+                if (executeEventObject.type == ExecuteEventType.Build || executeEventObject.type == ExecuteEventType.BuildingUpgrade || executeEventObject.type == ExecuteEventType.TechnologyResearch)
+                {
+                    ProgressPanel.Instance.AddSingle(executeEventObject.id);
+                }
                 return;
             }
         }
@@ -6819,7 +6830,22 @@ public class GameControl : MonoBehaviour
         eventIndex++;
         executeEventList.Add(executeEventObject);
         executeEventDic.Add(executeEventObject.id ,executeEventObject);
+
+        if (executeEventObject.type == ExecuteEventType.Build || executeEventObject.type == ExecuteEventType.BuildingUpgrade || executeEventObject.type == ExecuteEventType.TechnologyResearch)
+        {
+            ProgressPanel.Instance.AddSingle(executeEventObject.id);
+        }
     }
+    public void ExecuteEventDelete(int index)
+    {
+        if (executeEventList[index].type == ExecuteEventType.Build || executeEventList[index].type == ExecuteEventType.BuildingUpgrade || executeEventList[index].type == ExecuteEventType.TechnologyResearch)
+        {
+            StartCoroutine( ProgressPanel.Instance.DeleteSingle(executeEventList[index].id));
+        }
+        executeEventDic.Remove(executeEventList[index].id);
+        executeEventList.RemoveAt(index);
+    }
+
     #endregion
 
     #region 【方法】大地图旅人、移动
@@ -6932,6 +6958,10 @@ public class GameControl : MonoBehaviour
         {
             DistrictMapPanel.Instance.OnHide();
         }
+        if (AdventureMainPanel.Instance.isShow && AdventureMainPanel.Instance.nowCheckingTeamID == teamID)
+        {
+            AdventureMainPanel.Instance.UpdateTeam(teamID);
+        }
     }
 
     public void AdventureBack(byte teamID)
@@ -6960,6 +6990,10 @@ public class GameControl : MonoBehaviour
         PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
         AreaMapPanel.Instance.UpdateDungeonInfoBlock(adventureTeamList[teamID].dungeonID);
 
+        if (AdventureMainPanel.Instance.isShow && AdventureMainPanel.Instance.nowCheckingTeamID == teamID)
+        {
+            AdventureMainPanel.Instance.UpdateTeam(teamID);
+        }
     }
 
     public void TransferDone(int travellerID)
@@ -6984,6 +7018,10 @@ public class GameControl : MonoBehaviour
         {
             AreaMapPanel.Instance.UpdateDungeonInfoBlock(AreaMapPanel.Instance.dungeonInfoBlockID);
         }
+        if (AdventureMainPanel.Instance.isShow && AdventureMainPanel.Instance.nowCheckingTeamID == travellerDic[travellerID].team)
+        {
+            AdventureMainPanel.Instance.UpdateTeam((byte)travellerDic[travellerID].team);
+        }
     }
 
     public void AdventureBackDone(int travellerID)
@@ -6993,6 +7031,7 @@ public class GameControl : MonoBehaviour
 
         adventureTeamList[travellerDic[travellerID].team].districtID = -1;
         adventureTeamList[travellerDic[travellerID].team].dungeonID = -1;
+        adventureTeamList[travellerDic[travellerID].team].heroIDList.Clear();
         Debug.Log("AdventureBackDone() travellerDic[travellerID].heroList.Count=" + travellerDic[travellerID].heroList.Count);
         for (int i = 0; i < travellerDic[travellerID].heroList.Count; i++)
         {
@@ -7007,6 +7046,11 @@ public class GameControl : MonoBehaviour
         //{
         //    AreaMapPanel.Instance.ShowDistrictInfoBlock(AreaMapPanel.Instance.districtInfoBlockID, (int)AreaMapPanel.Instance.districtInfoBlockRt.anchoredPosition.x, (int)AreaMapPanel.Instance.districtInfoBlockRt.anchoredPosition.y);
         //}
+        if (AdventureMainPanel.Instance.isShow && AdventureMainPanel.Instance.nowCheckingTeamID == travellerDic[travellerID].team)
+        {
+            Debug.Log("AdventureBackDone() team="+ travellerDic[travellerID].team);
+            AdventureMainPanel.Instance.UpdateTeam((byte)travellerDic[travellerID].team);
+        }
     }
 
     public void CreateTravellerByRandom()

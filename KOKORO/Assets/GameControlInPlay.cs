@@ -72,6 +72,10 @@ public class GameControlInPlay : MonoBehaviour
 
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
         PlayMainPanel.Instance.OnShow();
+        UIManager.Instance.InitPanel(UIPanelType.Progress);
+        ProgressPanel.Instance.SetAnchoredPosition(-8, -104);
+        ProgressPanel.Instance.OnShow();
+        
 
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
@@ -97,6 +101,8 @@ public class GameControlInPlay : MonoBehaviour
         InvokeRepeating("CustomerCome", 3f, 3f);
         InvokeRepeating("TravellerCome", 3f, 3f);
         InvokeRepeating("AdventureTravellerCome", 10f, 10f);
+
+      
     }
 
     // Update is called once per frame
@@ -209,8 +215,8 @@ public class GameControlInPlay : MonoBehaviour
                         }
 
                          isSuccess = gc.DistrictResourceAdd(districtID, buildingID, stuffTypes, values);
-                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
-                        gc.executeEventList.RemoveAt(0);
+
+                        gc.ExecuteEventDelete(0);
                         if (isSuccess)
                         {
                             gc.CreateProduceResourceEvent(buildingID);
@@ -226,8 +232,7 @@ public class GameControlInPlay : MonoBehaviour
                          buildingID = gc.executeEventList[0].value[1][0];
 
                         gc.DistrictItemOrSkillAdd(districtID, buildingID);
-                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
-                        gc.executeEventList.RemoveAt(0);
+                        gc.ExecuteEventDelete(0);
                         gc.CreateProduceItemEvent(buildingID);
 
                         break;
@@ -235,23 +240,20 @@ public class GameControlInPlay : MonoBehaviour
 
                         buildingID = gc.executeEventList[0].value[1][0];
                         gc.BuildDone((short)buildingID);
-                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
-                        gc.executeEventList.RemoveAt(0);
+                        gc.ExecuteEventDelete(0);
 
                         break;
                     case ExecuteEventType.BuildingUpgrade:
                         buildingID = gc.executeEventList[0].value[1][0];
                         gc.BuildingUpgradeDone((short)buildingID);
-                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
-                        gc.executeEventList.RemoveAt(0);
+                        gc.ExecuteEventDelete(0);
 
                         break;
                     case ExecuteEventType.Adventure:
                         byte teamID = (byte)gc.executeEventList[0].value[0][0];
 
                         /*事件*/
-                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
-                        gc.executeEventList.RemoveAt(0);
+                        gc.ExecuteEventDelete(0);
                         gc.AdventureEventHappen(teamID);
                      
 
@@ -261,8 +263,7 @@ public class GameControlInPlay : MonoBehaviour
                         buildingID = gc.executeEventList[0].value[1][0];
 
                         gc.BuildingSale(buildingID);
-                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
-                        gc.executeEventList.RemoveAt(0);
+                        gc.ExecuteEventDelete(0);
                         gc.CreateBuildingSaleEvent(buildingID);
                         break;
                     case ExecuteEventType.TechnologyResearch:
@@ -270,8 +271,7 @@ public class GameControlInPlay : MonoBehaviour
                         int technologyID = gc.executeEventList[0].value[1][0];
 
                         gc.TechnologyResearchDone(technologyID);
-                        gc.executeEventDic.Remove(gc.executeEventList[0].id);
-                        gc.executeEventList.RemoveAt(0);
+                        gc.ExecuteEventDelete(0);
                         break;
                     default: break;
                 }
@@ -390,6 +390,8 @@ public class GameControlInPlay : MonoBehaviour
         {
             HeroSelectPanel.Instance.OnShow("", districtID, -1,1, 76, -104);
         }
+
+    
     }
 
     public void OpenItemListAndInfo()

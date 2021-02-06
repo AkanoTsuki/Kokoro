@@ -121,13 +121,13 @@ public class PlayMainPanel : BasePanel
     {
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInPlay>();
 
-        left_inventoryEquipBtn.onClick.AddListener(delegate () { gci.OpenInventoryEquip(); });
-        left_inventoryScrollBtn.onClick.AddListener(delegate () { gci.OpenInventorySkill(); });
+        left_inventoryEquipBtn.onClick.AddListener(delegate () { gci.OpenInventoryEquip(); AudioControl.Instance.PlaySound("system_button"); });
+        left_inventoryScrollBtn.onClick.AddListener(delegate () { gci.OpenInventorySkill(); AudioControl.Instance.PlaySound("system_button"); });
 
-        left_technologyBtn.onClick.AddListener(delegate () { gci.OpenTechnology(); });
-        left_diplomacyBtn.onClick.AddListener(delegate () { gci.OpenDiplomacy(); });
+        left_technologyBtn.onClick.AddListener(delegate () { gci.OpenTechnology(); AudioControl.Instance.PlaySound("system_button"); });
+        left_diplomacyBtn.onClick.AddListener(delegate () { gci.OpenDiplomacy(); AudioControl.Instance.PlaySound("system_button"); });
 
-        left_heroBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(-1); });
+        left_heroBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(-1); AudioControl.Instance.PlaySound("system_button"); });
         left_adventureBtn.onClick.AddListener(delegate () { gci.OpenAdventureMain(); });
 
 
@@ -410,12 +410,12 @@ public class PlayMainPanel : BasePanel
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.Sending)
         {
-            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_B", typeof(Sprite)) as Sprite;
+            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_OnTheWay", typeof(Sprite)) as Sprite;
             bottom_adventure_desText[index].text = "前往目的地中";
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.Backing)
         {
-            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_Home_B", typeof(Sprite)) as Sprite;
+            bottom_adventure_mapImage[index].overrideSprite = Resources.Load("Image/AdventureBG/ABG_OnTheWay", typeof(Sprite)) as Sprite;
             bottom_adventure_desText[index].text = "返回中";
         }
         else if (gc.adventureTeamList[teamID].state == AdventureState.NotSend)
@@ -487,10 +487,7 @@ public class PlayMainPanel : BasePanel
         }
 
 
-        if (gc.adventureTeamList[teamID].state == AdventureState.Free||
-            gc.adventureTeamList[teamID].state == AdventureState.Sending ||
-            gc.adventureTeamList[teamID].state == AdventureState.Backing ||
-            gc.adventureTeamList[teamID].state == AdventureState.NotSend)
+        if (gc.adventureTeamList[teamID].state == AdventureState.Free)
         {
             bottom_adventure_detailBtn[index].GetComponent<RectTransform>().localScale = Vector2.zero;
         }
@@ -501,7 +498,9 @@ public class PlayMainPanel : BasePanel
             bottom_adventure_detailBtn[index].onClick.AddListener(delegate ()
             {
                 /*详情*/
-                AdventureTeamPanel.Instance.OnShow(teamID, 76, -104);
+                //AdventureTeamPanel.Instance.OnShow(teamID, 76, -104);
+
+                AdventureMainPanel.Instance.OnShow(teamID);
             });
         }
       

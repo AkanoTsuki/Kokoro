@@ -80,7 +80,7 @@ public enum LabelType
     EquipmentLook,
     EquipmentSet,
     ItemToSet,
-    DungeonInAdventure,
+    //DungeonInAdventure,
     AdventureTeam,
     AdventurePart,
     Skill,
@@ -1138,8 +1138,9 @@ public class DistrictPrototype
     public string Name;
     public string Des;
     public string Pic;
-   // public short BigMapX;
-   // public short BigMapY;
+    public string Music;
+    // public short BigMapX;
+    // public short BigMapY;
     public short EWind;
     public short EFire;
     public short EWater;

@@ -20,6 +20,8 @@ public class AdventureTeamBlock : MonoBehaviour
     public List<RectTransform> dungeon_sceneBgRt;
     public List<RectTransform> dungeon_sceneFgRt;
 
+    public RectTransform dungeon_campRt;
+
     public List<GameObject> dungeon_side0Go;
     public List<GameObject> dungeon_side1Go;
     public List<RectTransform> dungeon_side0HpRt;

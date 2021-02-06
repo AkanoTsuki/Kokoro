@@ -26,7 +26,7 @@ public enum UIPanelType
     Technology,
     Transfer,
     AdventureSend,
-    Diplomacy
-
+    Diplomacy,
+    Progress
 
 }

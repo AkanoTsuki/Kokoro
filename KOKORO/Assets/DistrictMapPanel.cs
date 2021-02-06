@@ -8,12 +8,14 @@ public class DistrictMapPanel : BasePanel
     public static DistrictMapPanel Instance;
     GameControl gc;
     GameControlInPlay gci;
-  
+
     //UI组件
     public Image forceImage;
     public Text nameText;
     public Text levelText;
     public Text peopleText;
+    public Text peopleWorkerText;
+    public Text peopleFreeText;
     public Text buildingText;
 
     public Image skyBgImage;
@@ -58,9 +60,9 @@ public class DistrictMapPanel : BasePanel
 
     //配置
     float roleHeight = 54f;//人物高度
-    Color colorRes = new Color(255/ 255f,189/ 255f,88/ 255f, 1f);
-    Color colorMake = new Color(221/ 255f,90/ 255f,246/ 255f, 1f);
-    Color colorBuild = new Color(0/ 255f,98/ 255f,251/ 255f, 1f);
+    Color colorRes = new Color(255 / 255f, 189 / 255f, 88 / 255f, 1f);
+    Color colorMake = new Color(221 / 255f, 90 / 255f, 246 / 255f, 1f);
+    Color colorBuild = new Color(0 / 255f, 98 / 255f, 251 / 255f, 1f);
     List<Color> colorHourBg = new List<Color> { new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),//0
         new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
         new Color(100 / 255f, 102 / 255f, 128 / 255f, 1f),
@@ -88,7 +90,7 @@ public class DistrictMapPanel : BasePanel
     List<Color> colorHourFg = new List<Color> { new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) ,//0
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) ,
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) ,
-        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) , 
+        new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) ,
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f) ,
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 50 / 255f),
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 50 / 255f),//6
@@ -109,7 +111,7 @@ public class DistrictMapPanel : BasePanel
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f),
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f),
         new Color(12 / 255f, 18 / 255f, 48 / 255f, 120 / 255f)};
-    
+
     //运行变量组
     GameObject wantBuidingGo;
     int wantBuidingSizeX;
@@ -128,8 +130,9 @@ public class DistrictMapPanel : BasePanel
     List<int> x = new List<int>();
     List<int> y = new List<int>();
 
-    public short nowDistrict=-1;
+    public short nowDistrict = -1;
 
+    Vector3 ClickBuildingPos ;
 
 
     //对象池
@@ -170,18 +173,18 @@ public class DistrictMapPanel : BasePanel
         {
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(contentRt, Input.mousePosition, canvas.worldCamera, out wantBuidingPos))
             {
-                wantBuidingPos = new Vector2(((int)wantBuidingPos.x / 16) * 16f- wantBuidingSizeX * 16f, ((int)wantBuidingPos.y / 16) * 16f+ wantBuidingSizeY * 16f);
+                wantBuidingPos = new Vector2(((int)wantBuidingPos.x / 16) * 16f - wantBuidingSizeX * 16f, ((int)wantBuidingPos.y / 16) * 16f + wantBuidingSizeY * 16f);
                 wantBuidingGo.GetComponent<RectTransform>().anchoredPosition = wantBuidingPos;
 
                 if (wantBuidingPos != wantBuidingPos_Temp)
                 {
                     if (wantBuidingPos.y != wantBuidingPos_Temp.y)
                     {
-                         layerIndex = ((int)wantBuidingPos.y / 16) * -1 + wantBuidingSizeY-1;
+                        layerIndex = ((int)wantBuidingPos.y / 16) * -1 + wantBuidingSizeY - 1;
                         if (layerIndex >= 0 && layerIndex < 19)
                         {
                             wantBuidingGo.transform.SetParent(layer[layerIndex].transform);
-                        }    
+                        }
                     }
                     if (CheckCanBuild())
                     {
@@ -210,7 +213,7 @@ public class DistrictMapPanel : BasePanel
         }
 
     }
-  
+
 
     public override void OnShow()
     {
@@ -232,7 +235,7 @@ public class DistrictMapPanel : BasePanel
         ChangeSkyColor();
 
         if (gc.districtDic[gc.nowCheckingDistrictID].force == 0)
-        {    
+        {
             UpdateButtonItemNum(gc.nowCheckingDistrictID);
             UpdateButtonScrollNum(gc.nowCheckingDistrictID);
         }
@@ -244,6 +247,11 @@ public class DistrictMapPanel : BasePanel
         //gameObject.GetComponent<CanvasRenderer> ()..enabled = true;
         gameObject.SetActive(true);
         isShow = true;
+
+        if (DataManager.mDistrictDict[gc.nowCheckingDistrictID].Music!="")
+        {
+            AudioControl.Instance.PlayMusic(DataManager.mDistrictDict[gc.nowCheckingDistrictID].Music);
+        }
     }
     public override void OnHide()
     {
@@ -267,7 +275,13 @@ public class DistrictMapPanel : BasePanel
         isShow = false;
 
         CancelInvoke("UpdateBar");
+        if (DataManager.mDistrictDict[gc.nowCheckingDistrictID].Music != "")
+        {
+            AudioControl.Instance.StopMusic();
+        }
     }
+
+ 
 
     void SetFunctionButton(bool isOwn)
     {
@@ -294,6 +308,9 @@ public class DistrictMapPanel : BasePanel
         nameText.text = gc.districtDic[gc.nowCheckingDistrictID].name ;
         levelText.text = gc.districtDic[gc.nowCheckingDistrictID].level.ToString();
         peopleText.text = "居民 " + gc.districtDic[gc.nowCheckingDistrictID].people+"/" + gc.districtDic[gc.nowCheckingDistrictID].peopleLimit;
+        peopleWorkerText.text = gc.districtDic[gc.nowCheckingDistrictID].worker.ToString();
+        peopleFreeText.text = (gc.districtDic[gc.nowCheckingDistrictID].people-gc.districtDic[gc.nowCheckingDistrictID].worker).ToString();
+
         buildingText.text ="设施 "+ gc.districtDic[gc.nowCheckingDistrictID].buildingList.Count; 
     }
 
@@ -331,6 +348,7 @@ public class DistrictMapPanel : BasePanel
         HideTip();
         Destroy(wantBuidingGo);
         isChoose = false;
+
     }
 
     bool CheckCanBuild()
@@ -388,6 +406,8 @@ public class DistrictMapPanel : BasePanel
     {
 
         isChoose = false;
+        ClickBuildingPos = Input.mousePosition;
+
         HideTip();
         gc.CreateBuildEvent(wantBuidingPID, (short)wantBuidingPosX, (short)wantBuidingPosY, (byte)layerIndex,x,y);
         SetBuilding(gc.buildingIndex-1,true,-1);
@@ -565,7 +585,13 @@ public class DistrictMapPanel : BasePanel
         }
 
         go.transform.GetComponent<Button>().onClick.RemoveAllListeners();
-        go.transform.GetComponent<Button>().onClick.AddListener(delegate () { BuildingPanel.Instance.OnShow(gc.buildingDic[buildingID]); });
+        go.transform.GetComponent<Button>().onClick.AddListener(delegate () {
+            if (ClickBuildingPos != Input.mousePosition)
+            {
+                BuildingPanel.Instance.OnShow(gc.buildingDic[buildingID]);
+            }
+
+        });
     }
 
     void UpdateBar()
