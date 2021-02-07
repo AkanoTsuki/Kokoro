@@ -126,6 +126,7 @@ public class BuildingPanel : BasePanel
             HideSetForgePart();
             HideSetManagerPart();
             HideSetWorkerPart();
+            HideRecruitPart();
             ShowHistoryInfoPart(gc.buildingDic[nowCheckingBuildingID], 796, -12);
             totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
         });
@@ -229,10 +230,13 @@ public class BuildingPanel : BasePanel
                 case "Inn":
                     Debug.Log("gc.districtDic[buildingObject.districtID].recruitList.Count=" + gc.districtDic[buildingObject.districtID].recruitList.Count);
                     bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(139, -88);
-                    bgRoleImageList[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(339, -180);
-                    bgRoleImageList[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(487, -139);
-                    bgRoleImageList[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(57, -115);
-                    bgRoleImageList[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
+                    bgRoleImageList[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(57, -115);
+                    bgRoleImageList[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
+                    bgRoleImageList[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(487, -139);
+                    bgRoleImageList[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(339, -180);
+      
+                  
+                  
                     for (int i = 0; i < gc.districtDic[buildingObject.districtID].recruitList.Count; i++)
                     {
                         bgRoleImageList[i].sprite= Resources.Load("Image/RolePic/" + gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
@@ -553,7 +557,7 @@ public class BuildingPanel : BasePanel
                 if (buildingObject.buildProgress == 1)
                 {
                     totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-140, -32);
-                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon240", typeof(Sprite)) as Sprite;
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon234", typeof(Sprite)) as Sprite;
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
                     totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "休息";
                     totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
@@ -573,7 +577,7 @@ public class BuildingPanel : BasePanel
                 if (buildingObject.buildProgress == 1)
                 {
                     totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-88, -32);
-                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon240", typeof(Sprite)) as Sprite;
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon_talk_happy_1", typeof(Sprite)) as Sprite;
                     totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
                     totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "招募";
                     totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
@@ -1384,28 +1388,70 @@ public class BuildingPanel : BasePanel
     {
         for (int i = 0; i < gc.districtDic[buildingObject.districtID].recruitList.Count; i++)
         {
-            short prototypeID = gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].prototypeID;
-            int mj = (int)((DataManager.mHeroDict[prototypeID].Hit + DataManager.mHeroDict[prototypeID].Dod + DataManager.mHeroDict[prototypeID].CriD + DataManager.mHeroDict[prototypeID].CriR+ DataManager.mHeroDict[prototypeID].Spd + 5) / (3 * 5f) * 10);
-            int zh = (int)((DataManager.mHeroDict[prototypeID].Mp + DataManager.mHeroDict[prototypeID].MAtkMin + DataManager.mHeroDict[prototypeID].MAtkMax + DataManager.mHeroDict[prototypeID].MDef + 4) / (3 * 4f) * 10);
+            int heroID = gc.districtDic[buildingObject.districtID].recruitList[i];
+            short prototypeID = gc.heroDic[heroID].prototypeID;
 
-            int ql = (int)((DataManager.mHeroDict[prototypeID].WorkPlanting + DataManager.mHeroDict[prototypeID].WorkFeeding + DataManager.mHeroDict[prototypeID].WorkFishing + DataManager.mHeroDict[prototypeID].WorkHunting + DataManager.mHeroDict[prototypeID].WorkMining + DataManager.mHeroDict[prototypeID].WorkQuarrying + DataManager.mHeroDict[prototypeID].WorkFelling + DataManager.mHeroDict[prototypeID].WorkBuild + 8) / (3 * 8f) * 10);
-            int ys = (int)((DataManager.mHeroDict[prototypeID].WindDam + DataManager.mHeroDict[prototypeID].FireDam + DataManager.mHeroDict[prototypeID].WaterDam + DataManager.mHeroDict[prototypeID].GroundDam + DataManager.mHeroDict[prototypeID].LightDam + DataManager.mHeroDict[prototypeID].DarkDam+
-                DataManager.mHeroDict[prototypeID].WindRes + DataManager.mHeroDict[prototypeID].FireRes + DataManager.mHeroDict[prototypeID].WaterRes + DataManager.mHeroDict[prototypeID].GroundRes + DataManager.mHeroDict[prototypeID].LightRes + DataManager.mHeroDict[prototypeID].DarkRes + 12) / (3 * 12f) * 10);
-            int sy = (int)((DataManager.mHeroDict[prototypeID].WorkMakeWeapon + DataManager.mHeroDict[prototypeID].WorkMakeArmor + DataManager.mHeroDict[prototypeID].WorkMakeJewelry + DataManager.mHeroDict[prototypeID].WorkMakeScroll + 4) / (3 * 4f) * 10);
-            int yq = (int)((DataManager.mHeroDict[prototypeID].Hp + DataManager.mHeroDict[prototypeID].AtkMin + DataManager.mHeroDict[prototypeID].AtkMax + DataManager.mHeroDict[prototypeID].Def + 4) / (3 * 4f) * 10);
+
+            float Hp = gc.heroDic[heroID].baseHp != 40 ? (float)(gc.heroDic[heroID].baseHp - 40) / (150 - 40) : 0;
+            float Mp = gc.heroDic[heroID].baseMp != 40 ? (float)(gc.heroDic[heroID].baseMp - 40) / (150 - 40) : 0;
+            float AtkMax = gc.heroDic[heroID].baseAtkMax != 3 ? (float)(gc.heroDic[heroID].baseAtkMax - 3) / (15 - 3) : 0;
+            float MAtkMax = gc.heroDic[heroID].baseMAtkMax != 3 ? (float)(gc.heroDic[heroID].baseMAtkMax - 3) / (15 - 3) : 0;
+            float Def = gc.heroDic[heroID].baseDef != 1 ? (float)(gc.heroDic[heroID].baseDef - 1) / (10 - 1) : 0;
+            float MDef = gc.heroDic[heroID].baseMDef != 1 ? (float)(gc.heroDic[heroID].baseMDef - 1) / (10 - 1) : 0;
+            float Hit = gc.heroDic[heroID].baseHit != 9 ? (float)(gc.heroDic[heroID].baseHit - 9) / (20 - 9) : 0;
+            float Dod = gc.heroDic[heroID].baseDod != 9 ? (float)(gc.heroDic[heroID].baseDod - 9) / (20 - 9) : 0;
+            float CriR = gc.heroDic[heroID].baseCriR != 9 ? (float)(gc.heroDic[heroID].baseCriR - 9) / (20 - 9) : 0;
+
+            float WorkPlanting = gc.heroDic[heroID].workPlanting != 10 ? (float)(gc.heroDic[heroID].workPlanting - 10) / (150 - 10) : 0;
+            float WorkFeeding = gc.heroDic[heroID].workFeeding != 10 ? (float)(gc.heroDic[heroID].workFeeding - 10) / (150 - 10) : 0;
+            float WorkFishing = gc.heroDic[heroID].workFishing != 10 ? (float)(gc.heroDic[heroID].workFishing - 10) / (150 - 10) : 0;
+            float WorkHunting = gc.heroDic[heroID].workHunting != 10 ? (float)(gc.heroDic[heroID].workHunting - 10) / (150 - 10) : 0;
+            float WorkMining = gc.heroDic[heroID].workMining != 10 ? (float)(gc.heroDic[heroID].workMining - 10) / (150 - 10) : 0;
+            float WorkQuarrying = gc.heroDic[heroID].workQuarrying != 10 ? (float)(gc.heroDic[heroID].workQuarrying - 10) / (150 - 10) : 0;
+            float WorkFelling = gc.heroDic[heroID].workFelling != 10 ? (float)(gc.heroDic[heroID].workFelling - 10) / (150 - 10) : 0;
+            float WorkBuild = gc.heroDic[heroID].workBuild != 10 ? (float)(gc.heroDic[heroID].workBuild - 10) / (150 - 10) : 0;
+
+            float WorkMakeWeapon = gc.heroDic[heroID].workMakeWeapon != 10 ? (float)(gc.heroDic[heroID].workMakeWeapon - 10) / (150 - 10) : 0;
+            float WorkMakeArmor = gc.heroDic[heroID].workMakeArmor != 10 ? (float)(gc.heroDic[heroID].workMakeArmor - 10) / (150 - 10) : 0;
+            float WorkMakeJewelry = gc.heroDic[heroID].workMakeJewelry != 10 ? (float)(gc.heroDic[heroID].workMakeJewelry - 10) / (150 - 10) : 0;
+            float WorkMakeScroll = gc.heroDic[heroID].workMakeScroll != 10 ? (float)(gc.heroDic[heroID].workMakeScroll - 10) / (150 - 10) : 0;
+
+            float WindDam = gc.heroDic[heroID].windDam != 0 ? (float)(gc.heroDic[heroID].windDam - 0) / (20 - 0) : 0;
+            float FireDam = gc.heroDic[heroID].fireDam != 0 ? (float)(gc.heroDic[heroID].fireDam - 0) / (20 - 0) : 0;
+            float WaterDam = gc.heroDic[heroID].waterDam != 0 ? (float)(gc.heroDic[heroID].waterDam - 0) / (20 - 0) : 0;
+            float GroundDam = gc.heroDic[heroID].groundDam != 0 ? (float)(gc.heroDic[heroID].groundDam - 0) / (20 - 0) : 0;
+            float LightDam = gc.heroDic[heroID].lightDam != 0 ? (float)(gc.heroDic[heroID].lightDam - 0) / (20 - 0) : 0;
+            float DarkDam = gc.heroDic[heroID].darkDam != 0 ? (float)(gc.heroDic[heroID].darkDam - 0) / (20 - 0) : 0;
+
+            float WindRes = gc.heroDic[heroID].windRes != 0 ? (float)(gc.heroDic[heroID].windRes - 0) / (20 - 0) : 0;
+            float FireRes = gc.heroDic[heroID].fireRes != 0 ? (float)(gc.heroDic[heroID].fireRes - 0) / (20 - 0) : 0;
+            float WaterRes = gc.heroDic[heroID].waterRes != 0 ? (float)(gc.heroDic[heroID].waterRes - 0) / (20 - 0) : 0;
+            float GroundRes = gc.heroDic[heroID].groundRes != 0 ? (float)(gc.heroDic[heroID].groundRes - 0) / (20 - 0) : 0;
+            float LightRes = gc.heroDic[heroID].lightRes != 0 ? (float)(gc.heroDic[heroID].lightRes - 0) / (20 - 0) : 0;
+            float DarkRes = gc.heroDic[heroID].darkRes != 0 ? (float)(gc.heroDic[heroID].darkRes - 0) / (20 - 0) : 0;
+
+            int mj = (int)(((Hit + Dod + CriR + 0.1f) / 3f) * 50f);
+            int zh = (int)(((Mp + MAtkMax + MDef + 0.1f) / 3f) * 50f);
+            int ql = (int)(((WorkPlanting + WorkFeeding + WorkFishing + WorkHunting + WorkMining + WorkQuarrying + WorkFelling + WorkBuild + 0.1f) / 8f) * 50f);
+            int ys = (int)(((WindDam + FireDam + WaterDam + GroundDam + LightDam + DarkDam + WindRes + FireRes + WaterRes + GroundRes + LightRes + DarkRes + 0.1f) / 12f) * 50f);
+            int sy = (int)(((WorkMakeWeapon + WorkMakeArmor + WorkMakeJewelry + WorkMakeScroll + 0.1f) / 4f) * 50f);
+            int yq = (int)(((Hp + AtkMax + Def + 0.1f) / 3f) * 50f);
+
+            Debug.Log("i="+i +" " + mj + " " + zh + " " + sy + " " + ys + " " + ql + " " + yq);
 
             recruit_heroRtList[i].localScale = Vector2.one;
             recruit_picImageList[i].overrideSprite = Resources.Load("Image/RolePic/"  +gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic + "/Pic", typeof(Sprite)) as Sprite; 
             recruit_nameTextList[i].text = gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].name+"\n<color=#" + DataManager.mHeroDict[prototypeID].Color + ">" + DataManager.mHeroDict[prototypeID].Name +"</color>";
-            recruit_growTextList[i].text = "成长 "+gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].groupRate;
-            
-            
-            
+            recruit_growTextList[i].text = "成长 "+System.Math.Round( gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].groupRate,3);
+
+
+            int index = i;
             recruit_radarList[i].dataList = new List<int> { mj, zh, sy , ys, ql, yq };
             recruit_radarList[i].UpdateRadarVisualData();
             recruit_heroRtList[i].GetComponent<Button>().onClick.RemoveAllListeners();
             recruit_heroRtList[i].GetComponent<Button>().onClick.AddListener(delegate () {
-                HeroPanel.Instance.OnShow(buildingObject.id, gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]], 100, -90);
+              
+                HeroPanel.Instance.OnShow(buildingObject.id, gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[index]], 100, -90);
             });
         }
         for (int i = gc.districtDic[buildingObject.districtID].recruitList.Count; i < 5; i++)
@@ -1416,7 +1462,12 @@ public class BuildingPanel : BasePanel
 
     public void HideRecruitPart()
     {
-        recruitGo.SetActive(false);
+        for (int i = 0; i < 5; i++)
+        {
+            recruit_radarList[i].Clear();
+        }
+
+            recruitGo.SetActive(false);
         IsShowRecruitPart = false;
     }
 

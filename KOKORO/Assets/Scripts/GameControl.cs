@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using DG.Tweening;
-
+using System.Linq;
 public class GameControl : MonoBehaviour
 {
 
@@ -352,18 +352,19 @@ public class GameControl : MonoBehaviour
         short criR = (short)SetAttr(Attribute.CriR, heroTypeID);
         short criD = 200;
         short spd = 80;
-        short windDam = 0;
-        short fireDam = 0;
-        short waterDam = 0;
-        short groundDam = 0;
-        short lightDam = 0;
-        short darkDam = 0;
-        short windRes = 0;
-        short fireRes = 0;
-        short waterRes = 0;
-        short groundRes = 0;
-        short lightRes = 0;
-        short darkRes = 0;
+        short windDam = (short)SetAttr(Attribute.WindDam, heroTypeID);
+        short fireDam = (short)SetAttr(Attribute.FireDam, heroTypeID);
+        short waterDam = (short)SetAttr(Attribute.WaterDam, heroTypeID);
+        short groundDam = (short)SetAttr(Attribute.GroundDam, heroTypeID);
+        short lightDam = (short)SetAttr(Attribute.LightDam, heroTypeID);
+        short darkDam = (short)SetAttr(Attribute.DarkDam, heroTypeID);
+        short windRes = (short)SetAttr(Attribute.WindRes, heroTypeID);
+        short fireRes = (short)SetAttr(Attribute.FireRes, heroTypeID);
+        short waterRes = (short)SetAttr(Attribute.WaterRes, heroTypeID);
+        short groundRes = (short)SetAttr(Attribute.GroundRes, heroTypeID);
+        short lightRes = (short)SetAttr(Attribute.LightRes, heroTypeID);
+        short darkRes = (short)SetAttr(Attribute.DarkRes, heroTypeID);
+
         short dizzyRes = 0;
         short confusionRes = 0;
         short poisonRes = 0;
@@ -440,6 +441,21 @@ public class GameControl : MonoBehaviour
             case Attribute.WorkMakeJewelry: rank = DataManager.mHeroDict[heroTypeID].WorkMakeJewelry; break;
             case Attribute.WorkMakeScroll: rank = DataManager.mHeroDict[heroTypeID].WorkMakeScroll; break;
             case Attribute.WorkSundry: rank = DataManager.mHeroDict[heroTypeID].WorkSundry; break;
+
+            case Attribute.WindDam: rank = DataManager.mHeroDict[heroTypeID].WindDam; break;
+            case Attribute.FireDam: rank = DataManager.mHeroDict[heroTypeID].FireDam; break;
+            case Attribute.WaterDam: rank = DataManager.mHeroDict[heroTypeID].WaterDam; break;
+            case Attribute.GroundDam: rank = DataManager.mHeroDict[heroTypeID].GroundDam; break;
+            case Attribute.LightDam: rank = DataManager.mHeroDict[heroTypeID].LightDam; break;
+            case Attribute.DarkDam: rank = DataManager.mHeroDict[heroTypeID].DarkDam; break;
+
+            case Attribute.WindRes: rank = DataManager.mHeroDict[heroTypeID].WindRes; break;
+            case Attribute.FireRes: rank = DataManager.mHeroDict[heroTypeID].FireRes; break;
+            case Attribute.WaterRes: rank = DataManager.mHeroDict[heroTypeID].WaterRes; break;
+            case Attribute.GroundRes: rank = DataManager.mHeroDict[heroTypeID].GroundRes; break;
+            case Attribute.LightRes: rank = DataManager.mHeroDict[heroTypeID].LightRes; break;
+            case Attribute.DarkRes: rank = DataManager.mHeroDict[heroTypeID].DarkRes; break;
+
             default:
                 rank = 999; break;
         }
@@ -540,6 +556,7 @@ public class GameControl : MonoBehaviour
             }
         }
 
+        PlayMainPanel.Instance.UpdateButtonHeroNum();
         HeroPanel.Instance.OnHide();
     }
 
@@ -7183,6 +7200,13 @@ public class GameControl : MonoBehaviour
     #endregion
 
     #region 【辅助方法集】获取值
+
+    public int GetHeroNum(short forceID)
+    {
+        return heroDic.Count(p => p.Value.force == forceID);
+
+    }
+
     public bool IsHit(short hit, short dod)
     {
         int hitRate = System.Math.Max((int)((float)hit / (hit + dod) * 100), 90);

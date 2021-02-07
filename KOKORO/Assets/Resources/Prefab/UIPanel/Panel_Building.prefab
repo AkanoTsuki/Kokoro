@@ -11902,7 +11902,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: 8d1c1b2f611b9694dbfb5841cd6abefc, type: 2}
   _tex: {fileID: 0}
   dataList: 000000000000000000000000000000000000000000000000
-  radarSize: 10
+  radarSize: 1
 --- !u!1 &2473670967681688271
 GameObject:
   m_ObjectHideFlags: 0
@@ -16632,7 +16632,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: 8d1c1b2f611b9694dbfb5841cd6abefc, type: 2}
   _tex: {fileID: 0}
   dataList: 000000000000000000000000000000000000000000000000
-  radarSize: 10
+  radarSize: 1
 --- !u!1 &5819365790883104746
 GameObject:
   m_ObjectHideFlags: 0
@@ -18051,7 +18051,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: 8d1c1b2f611b9694dbfb5841cd6abefc, type: 2}
   _tex: {fileID: 0}
   dataList: 000000000000000000000000000000000000000000000000
-  radarSize: 10
+  radarSize: 1
 --- !u!1 &6871284340568162636
 GameObject:
   m_ObjectHideFlags: 0
@@ -18878,7 +18878,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: 8d1c1b2f611b9694dbfb5841cd6abefc, type: 2}
   _tex: {fileID: 0}
   dataList: 000000000000000000000000000000000000000000000000
-  radarSize: 10
+  radarSize: 1
 --- !u!1 &7413324794482483036
 GameObject:
   m_ObjectHideFlags: 0
@@ -20949,7 +20949,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: 8d1c1b2f611b9694dbfb5841cd6abefc, type: 2}
   _tex: {fileID: 0}
   dataList: 000000000000000000000000000000000000000000000000
-  radarSize: 10
+  radarSize: 1
 --- !u!1 &8950729558060947219
 GameObject:
   m_ObjectHideFlags: 0

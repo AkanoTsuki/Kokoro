@@ -10,18 +10,19 @@ public class Radar : MonoBehaviour
     public List<int> dataList = new List<int>(10);//每个点的数据
     [SerializeField] private float radarSize = 10f;//雷达图的长度
 
+
+    private void Awake()
+    {
+        _render = GetComponent<CanvasRenderer>();
+        Debug.Log(_render);
+    }
     // Start is called before the first frame update
     void Start()
     {
-        _render = GetComponent<CanvasRenderer>();
-        UpdateRadarVisualData();
+
+       // UpdateRadarVisualData();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     /// <summary>
     /// 生成雷达图
@@ -87,4 +88,8 @@ public class Radar : MonoBehaviour
         _render.SetMaterial(mat, _tex);
     }
 
+    public void Clear()
+    {
+        _render.Clear();
+    }
 }

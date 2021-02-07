@@ -627,7 +627,8 @@ public class PlayMainPanel : BasePanel
 
     public void UpdateButtonHeroNum()
     {
-        left_heroNumText.text = gc.heroDic.Count.ToString();
+
+        left_heroNumText.text = gc.GetHeroNum(0).ToString();
         left_heroNumRt.sizeDelta = new Vector2(left_heroNumText.preferredWidth + 8f, 20f);
     }
 }

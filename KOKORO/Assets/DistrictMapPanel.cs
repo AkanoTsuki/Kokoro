@@ -578,6 +578,9 @@ public class DistrictMapPanel : BasePanel
                 case "Municipal":
                     statusTf.GetComponent<RectTransform>().localScale = Vector2.zero;
                     break;
+                case "Inn":
+                    statusTf.GetComponent<RectTransform>().localScale = Vector2.zero;
+                    break;
                 case "Military":
                     statusTf.GetComponent<RectTransform>().localScale = Vector2.zero;
                     break;

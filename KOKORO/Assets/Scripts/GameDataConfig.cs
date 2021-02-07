@@ -62,12 +62,26 @@ public class DataManager
         cCreateHeroRankDict.Add(Attribute.AtkMax, new CreateHeroRank(new int[] { 13, 11, 8, 5, 3 }, new int[] { 15, 13, 11, 8, 5 }, new byte[,] { { 5, 15, 25, 30, 25 }, { 10, 20, 25, 25, 20 }, { 15, 25, 35, 15, 10 } }));
         cCreateHeroRankDict.Add(Attribute.MAtkMax, new CreateHeroRank(new int[] { 13, 11, 8, 5, 3 }, new int[] { 15, 13, 11, 8, 5 }, new byte[,] { { 5, 15, 25, 30, 25 }, { 10, 20, 25, 25, 20 }, { 15, 25, 35, 15, 10 } }));
 
-        cCreateHeroRankDict.Add(Attribute.Def, new CreateHeroRank(new int[] { 8, 6, 4, 2, 0 }, new int[] { 10, 8, 6, 4, 2 }, new byte[,] { { 5, 15, 25, 30, 25 }, { 10, 20, 25, 25, 20 }, { 15, 25, 35, 15, 10 } }));
-        cCreateHeroRankDict.Add(Attribute.MDef, new CreateHeroRank(new int[] { 8, 6, 4, 2, 0 }, new int[] { 10, 8, 6, 4, 2 }, new byte[,] { { 5, 15, 25, 30, 25 }, { 10, 20, 25, 25, 20 }, { 15, 25, 35, 15, 10 } }));
+        cCreateHeroRankDict.Add(Attribute.Def, new CreateHeroRank(new int[] { 8, 6, 4, 2, 1 }, new int[] { 10, 8, 6, 4, 2 }, new byte[,] { { 5, 15, 25, 30, 25 }, { 10, 20, 25, 25, 20 }, { 15, 25, 35, 15, 10 } }));
+        cCreateHeroRankDict.Add(Attribute.MDef, new CreateHeroRank(new int[] { 8, 6, 4, 2, 1 }, new int[] { 10, 8, 6, 4, 2 }, new byte[,] { { 5, 15, 25, 30, 25 }, { 10, 20, 25, 25, 20 }, { 15, 25, 35, 15, 10 } }));
 
         cCreateHeroRankDict.Add(Attribute.Hit, new CreateHeroRank(new int[] { 17, 15, 13, 11, 9 }, new int[] { 20, 17, 15, 13, 11 }, new byte[,] { { 5, 15, 25, 30, 25 }, { 10, 20, 25, 25, 20 }, { 15, 25, 35, 15, 10 } }));
         cCreateHeroRankDict.Add(Attribute.Dod, new CreateHeroRank(new int[] { 17, 15, 13, 11, 9 }, new int[] { 20, 17, 15, 13, 11 }, new byte[,] { { 5, 15, 25, 30, 25 }, { 10, 20, 25, 25, 20 }, { 15, 25, 35, 15, 10 } }));
         cCreateHeroRankDict.Add(Attribute.CriR, new CreateHeroRank(new int[] { 17, 15, 13, 11, 9 }, new int[] { 20, 17, 15, 13, 11 }, new byte[,] { { 5, 15, 25, 30, 25 }, { 10, 20, 25, 25, 20 }, { 15, 25, 35, 15, 10 } }));
+
+        cCreateHeroRankDict.Add(Attribute.WindDam, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.FireDam, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.WaterDam, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.GroundDam, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.LightDam, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.DarkDam, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+
+        cCreateHeroRankDict.Add(Attribute.WindRes, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.FireRes, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.WaterRes, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.GroundRes, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.LightRes, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
+        cCreateHeroRankDict.Add(Attribute.DarkRes, new CreateHeroRank(new int[] { 15, 10, 5, 1, 0 }, new int[] { 20, 15, 10, 5, 0 }, new byte[,] { { 0, 0, 0, 0, 100 }, { 0, 0, 30, 50, 20 }, { 20, 20, 30, 30, 0 } }));
 
 
         cCreateHeroRankDict.Add(Attribute.WorkPlanting, new CreateHeroRank(new int[] { 150, 120, 90, 70, 50,30,20,10 }, new int[] { 150, 120, 90, 70, 50, 30, 20, 10 }, new byte[,] { { 0, 0, 1, 5, 10,20,40,24 }, { 0, 0, 1, 5, 10, 20, 40, 24 }, { 0, 0, 1, 5, 10, 20, 40, 24 } }));

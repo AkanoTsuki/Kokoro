@@ -126,8 +126,13 @@ public class GameControlInPlay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            gc.CreateCustomer(gc.nowCheckingDistrictID);
-        
+            //gc.CreateCustomer(gc.nowCheckingDistrictID);
+            gc.districtDic[1].recruitList.Clear();
+            gc.CreateRecruiter(1);
+            gc.CreateRecruiter(1);
+            gc.CreateRecruiter(1);
+            gc.CreateRecruiter(1);
+            gc.CreateRecruiter(1);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
