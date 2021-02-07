@@ -66,6 +66,14 @@ public class BuildingPanel : BasePanel
     public Text setForge_numText;
     public Button setForge_updateBtn;
 
+
+    public GameObject recruitGo;
+    public List<RectTransform> recruit_heroRtList;
+    public List<Image> recruit_picImageList;
+    public List<Text> recruit_nameTextList;
+    public List<Text> recruit_growTextList;
+    public List<Radar> recruit_radarList;
+
     public List<Button> totalSet_btnList;
     public Button totalSet_backBtn;
 
@@ -98,7 +106,7 @@ public class BuildingPanel : BasePanel
     public bool IsShowSetWorkerPart = false;
     public bool IsShowHistoryInfoPart = false;
     public bool IsShowSetForgePart = false;
-
+    public bool IsShowRecruitPart = false;
     public List<StuffType> forgeAddStuff = new List<StuffType> { StuffType.None, StuffType.None, StuffType.None};
     public short setForgePartNum = -1;
 
@@ -154,37 +162,7 @@ public class BuildingPanel : BasePanel
     public void OnShow(BuildingObject buildingObject)
     {
         nowCheckingBuildingID = buildingObject.id;
-        int roleIndex = 0;
-        if (buildingObject.buildProgress == 1)
-        {
-            bgImage.sprite = Resources.Load("Image/DistrictBG/" + DataManager.mBuildingDict[buildingObject.prototypeID].BgPic, typeof(Sprite)) as Sprite;
-            switch (buildingObject.panelType)
-            {
-                case "Forge":
-
-                    bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
-                    bgRoleImageList[0].sprite = Resources.Load("Image/RolePic/chara3_7/Pic", typeof(Sprite)) as Sprite;
-                    roleIndex++;
-
-                    break;
-                case "Resource":
-                    break;
-                case "House":
-                    break;
-                case "Municipal":
-                    break;
-                default: break;
-            }
-        }
-        else
-        {
-            bgImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
-        }
-
-        for (int i = roleIndex; i < bgRoleImageList.Count; i++)
-        {
-            bgRoleImageList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
-        }
+        
 
         UpdateBasicPart(buildingObject);
         HideOutputInfoPart();
@@ -192,7 +170,9 @@ public class BuildingPanel : BasePanel
         HideSetWorkerPart();
         ShowHistoryInfoPart(buildingObject,796,-12);
         HideSetForgePart();
+        HideRecruitPart();
         UpdateTotalSetButton(buildingObject);
+        UpdateSceneRolePic(buildingObject);
         totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
         //int roleCount
         //Debug.Log("DataManager.mBuildingDict[buildingObject.id].BgPic="+ DataManager.mBuildingDict[buildingObject.prototypeID].BgPic);
@@ -224,6 +204,56 @@ public class BuildingPanel : BasePanel
     }
 
     //
+    public void UpdateSceneRolePic(BuildingObject buildingObject)
+    {
+        Debug.Log("buildingObject.panelType=" + buildingObject.panelType);
+        int roleIndex = 0;
+        if (buildingObject.buildProgress == 1)
+        {
+            bgImage.sprite = Resources.Load("Image/DistrictBG/" + DataManager.mBuildingDict[buildingObject.prototypeID].BgPic, typeof(Sprite)) as Sprite;
+            switch (buildingObject.panelType)
+            {
+                case "Forge":
+
+                    bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
+                    bgRoleImageList[0].sprite = Resources.Load("Image/RolePic/chara3_7/Pic", typeof(Sprite)) as Sprite;
+                    roleIndex++;
+
+                    break;
+                case "Resource":
+                    break;
+                case "House":
+                    break;
+                case "Municipal":
+                    break;
+                case "Inn":
+                    Debug.Log("gc.districtDic[buildingObject.districtID].recruitList.Count=" + gc.districtDic[buildingObject.districtID].recruitList.Count);
+                    bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(139, -88);
+                    bgRoleImageList[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(339, -180);
+                    bgRoleImageList[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(487, -139);
+                    bgRoleImageList[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(57, -115);
+                    bgRoleImageList[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
+                    for (int i = 0; i < gc.districtDic[buildingObject.districtID].recruitList.Count; i++)
+                    {
+                        bgRoleImageList[i].sprite= Resources.Load("Image/RolePic/" + gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
+                        roleIndex++;
+                    }
+
+                        break;
+                default: break;
+            }
+        }
+        else
+        {
+            bgImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+        }
+
+        for (int i = roleIndex; i < bgRoleImageList.Count; i++)
+        {
+            bgRoleImageList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+        }
+    }
+
     public void UpdateTotalSetButton(BuildingObject buildingObject)
     {
         byte buttonIndex = 0;
@@ -286,6 +316,7 @@ public class BuildingPanel : BasePanel
                         ShowSetManagerPart(buildingObject, 796, -12);
                         ShowSetWorkerPart(buildingObject, 796, -120);
                         HideHistoryInfoPart();
+                        HideRecruitPart();
                         totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     });
                     buttonIndex++;
@@ -314,11 +345,6 @@ public class BuildingPanel : BasePanel
                     buttonIndex++;
                 }
 
-
-                for (int i = buttonIndex; i < 7; i++)
-                {
-                    totalSet_btnList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
-                }
 
                 break;
             case "Forge":
@@ -404,6 +430,7 @@ public class BuildingPanel : BasePanel
                         HideSetManagerPart();
                         HideSetWorkerPart();
                         HideHistoryInfoPart();
+                        HideRecruitPart();
                         totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     });
                     buttonIndex++;
@@ -423,6 +450,7 @@ public class BuildingPanel : BasePanel
                         ShowSetManagerPart(buildingObject, 796, -12);
                         ShowSetWorkerPart(buildingObject, 796, -120);
                         HideHistoryInfoPart();
+                        HideRecruitPart();
                         totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     });
                     buttonIndex++;
@@ -468,12 +496,7 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
                     buttonIndex++;
                 }
-              
-
-                for (int i = buttonIndex; i < 7; i++)
-                {
-                    totalSet_btnList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
-                }
+  
 
                 break;
             case "House":
@@ -486,12 +509,6 @@ public class BuildingPanel : BasePanel
                     totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "拆除";
                     totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
                     buttonIndex++;
-                }
-
-
-                for (int i = buttonIndex; i < 7; i++)
-                {
-                    totalSet_btnList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
                 }
 
                 break;
@@ -508,13 +525,91 @@ public class BuildingPanel : BasePanel
                 }
 
 
-                for (int i = buttonIndex; i < 7; i++)
+                break;
+            case "Inn":
+
+                //人事
+                if (buildingObject.buildProgress == 1)
                 {
-                    totalSet_btnList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-192, -32);
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon240", typeof(Sprite)) as Sprite;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "人事";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                        HideOutputInfoPart();
+                        HideOutputInfoPartTask();
+                        HideSetForgePart();
+                        ShowSetManagerPart(buildingObject, 796, -12);
+                        ShowSetWorkerPart(buildingObject, 796, -120);
+                        HideHistoryInfoPart();
+                        HideRecruitPart();
+                        totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                    });
+                    buttonIndex++;
                 }
+
+
+                //休息
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-140, -32);
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon240", typeof(Sprite)) as Sprite;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "休息";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                        HideOutputInfoPart();
+                        HideOutputInfoPartTask();
+                        HideSetForgePart();
+                        HideSetManagerPart();
+                        HideSetWorkerPart();
+                        HideHistoryInfoPart();
+                        HideRecruitPart();
+                        totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                    });
+                    buttonIndex++;
+                }
+
+                //招募
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-88, -32);
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon240", typeof(Sprite)) as Sprite;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "招募";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () {
+                        HideOutputInfoPart();
+                        HideOutputInfoPartTask();
+                        HideSetForgePart();
+                        HideSetManagerPart();
+                        HideSetWorkerPart();
+                        HideHistoryInfoPart(); 
+                        ShowRecruitPart(buildingObject);
+                        totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+                    });
+                    buttonIndex++;
+                }
+
+                //拆除
+                if (buildingObject.buildProgress == 1)
+                {
+                    totalSet_btnList[buttonIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(192, -32);
+                    totalSet_btnList[buttonIndex].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load("Image/Other/icon396", typeof(Sprite)) as Sprite;
+                    totalSet_btnList[buttonIndex].onClick.RemoveAllListeners();
+                    totalSet_btnList[buttonIndex].transform.GetChild(1).GetComponent<Text>().text = "拆除";
+                    totalSet_btnList[buttonIndex].onClick.AddListener(delegate () { ShowPullDownBlock(buildingObject.id); });
+                    buttonIndex++;
+                }
+
+
+                
 
                 break;
         }
+        for (int i = buttonIndex; i < 7; i++)
+        {
+            totalSet_btnList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+        }
+
     }
 
 
@@ -1276,9 +1371,54 @@ public class BuildingPanel : BasePanel
     {
         setForge_numText.text = (setForgePartNum==-1?"∞": setForgePartNum.ToString());
     }
-    
 
+    //招募面板
+    public void ShowRecruitPart(BuildingObject buildingObject)
+    {
+        recruitGo.SetActive(true);
+        UpdateRecruitPart(buildingObject);
+        IsShowRecruitPart = true;
+    }
 
+    public void UpdateRecruitPart(BuildingObject buildingObject)
+    {
+        for (int i = 0; i < gc.districtDic[buildingObject.districtID].recruitList.Count; i++)
+        {
+            short prototypeID = gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].prototypeID;
+            int mj = (int)((DataManager.mHeroDict[prototypeID].Hit + DataManager.mHeroDict[prototypeID].Dod + DataManager.mHeroDict[prototypeID].CriD + DataManager.mHeroDict[prototypeID].CriR+ DataManager.mHeroDict[prototypeID].Spd + 5) / (3 * 5f) * 10);
+            int zh = (int)((DataManager.mHeroDict[prototypeID].Mp + DataManager.mHeroDict[prototypeID].MAtkMin + DataManager.mHeroDict[prototypeID].MAtkMax + DataManager.mHeroDict[prototypeID].MDef + 4) / (3 * 4f) * 10);
+
+            int ql = (int)((DataManager.mHeroDict[prototypeID].WorkPlanting + DataManager.mHeroDict[prototypeID].WorkFeeding + DataManager.mHeroDict[prototypeID].WorkFishing + DataManager.mHeroDict[prototypeID].WorkHunting + DataManager.mHeroDict[prototypeID].WorkMining + DataManager.mHeroDict[prototypeID].WorkQuarrying + DataManager.mHeroDict[prototypeID].WorkFelling + DataManager.mHeroDict[prototypeID].WorkBuild + 8) / (3 * 8f) * 10);
+            int ys = (int)((DataManager.mHeroDict[prototypeID].WindDam + DataManager.mHeroDict[prototypeID].FireDam + DataManager.mHeroDict[prototypeID].WaterDam + DataManager.mHeroDict[prototypeID].GroundDam + DataManager.mHeroDict[prototypeID].LightDam + DataManager.mHeroDict[prototypeID].DarkDam+
+                DataManager.mHeroDict[prototypeID].WindRes + DataManager.mHeroDict[prototypeID].FireRes + DataManager.mHeroDict[prototypeID].WaterRes + DataManager.mHeroDict[prototypeID].GroundRes + DataManager.mHeroDict[prototypeID].LightRes + DataManager.mHeroDict[prototypeID].DarkRes + 12) / (3 * 12f) * 10);
+            int sy = (int)((DataManager.mHeroDict[prototypeID].WorkMakeWeapon + DataManager.mHeroDict[prototypeID].WorkMakeArmor + DataManager.mHeroDict[prototypeID].WorkMakeJewelry + DataManager.mHeroDict[prototypeID].WorkMakeScroll + 4) / (3 * 4f) * 10);
+            int yq = (int)((DataManager.mHeroDict[prototypeID].Hp + DataManager.mHeroDict[prototypeID].AtkMin + DataManager.mHeroDict[prototypeID].AtkMax + DataManager.mHeroDict[prototypeID].Def + 4) / (3 * 4f) * 10);
+
+            recruit_heroRtList[i].localScale = Vector2.one;
+            recruit_picImageList[i].overrideSprite = Resources.Load("Image/RolePic/"  +gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic + "/Pic", typeof(Sprite)) as Sprite; 
+            recruit_nameTextList[i].text = gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].name+"\n<color=#" + DataManager.mHeroDict[prototypeID].Color + ">" + DataManager.mHeroDict[prototypeID].Name +"</color>";
+            recruit_growTextList[i].text = "成长 "+gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].groupRate;
+            
+            
+            
+            recruit_radarList[i].dataList = new List<int> { mj, zh, sy , ys, ql, yq };
+            recruit_radarList[i].UpdateRadarVisualData();
+            recruit_heroRtList[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            recruit_heroRtList[i].GetComponent<Button>().onClick.AddListener(delegate () {
+                HeroPanel.Instance.OnShow(buildingObject.id, gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]], 100, -90);
+            });
+        }
+        for (int i = gc.districtDic[buildingObject.districtID].recruitList.Count; i < 5; i++)
+        {
+            recruit_heroRtList[i].localScale = Vector2.zero;
+        }
+    }
+
+    public void HideRecruitPart()
+    {
+        recruitGo.SetActive(false);
+        IsShowRecruitPart = false;
+    }
 
     //block
     void ShowUpgradeBlock(int buildingID)

@@ -102,7 +102,7 @@ public class GameControlInPlay : MonoBehaviour
         InvokeRepeating("TravellerCome", 3f, 3f);
         InvokeRepeating("AdventureTravellerCome", 10f, 10f);
 
-      
+        gc.CreateRecruiter(1); gc.CreateRecruiter(1); gc.CreateRecruiter(1);
     }
 
     // Update is called once per frame

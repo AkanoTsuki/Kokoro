@@ -78,7 +78,9 @@ public class BuildPanel : BasePanel
                     case "House": houseCount++; break;
                     case "Resource": resourceCount++; break;
                     case "Forge": forgeCount++; break;
-                    case "Municipal": municipalCount++; break;
+                    case "Municipal":
+                    case "Inn":
+                        municipalCount++; break;
                     case "Military": militaryCount++; break;
                 }
 
@@ -113,10 +115,21 @@ public class BuildPanel : BasePanel
                 }
                 else
                 {
-                    if (DataManager.mBuildingDict[kvp.Key].PanelType == typePanel)
+                    if (typePanel == "Municipal")
                     {
-                        temp.Add(DataManager.mBuildingDict[kvp.Key]);
+                        if (DataManager.mBuildingDict[kvp.Key].PanelType == typePanel|| DataManager.mBuildingDict[kvp.Key].PanelType =="Inn")
+                        {
+                            temp.Add(DataManager.mBuildingDict[kvp.Key]);
+                        }
                     }
+                    else
+                    {
+                        if (DataManager.mBuildingDict[kvp.Key].PanelType == typePanel)
+                        {
+                            temp.Add(DataManager.mBuildingDict[kvp.Key]);
+                        }
+                    }
+                  
                 }
              
             }

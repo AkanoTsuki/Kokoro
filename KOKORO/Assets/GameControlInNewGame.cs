@@ -114,7 +114,7 @@ public class GameControlInNewGame : MonoBehaviour
             }
 
             gc.districtDic[i] = new DistrictObject((short)i, DataManager.mDistrictDict[i].Name, "", DataManager.mDistrictDict[i].Des, true, force, DataManager.mDistrictDict[i].InitLevel, 10, 20, 0,
-             new List<int> { }, temp_districtID == i ? new List<int> { 0, 1, 2, 3, 4, 5 } : new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
+             new List<int> { }, temp_districtID == i ? new List<int> { 0, 1, 2, 3, 4, 5 } : new List<int> { }, new List<int> { }, DataManager.mDistrictDict[i].EWind, DataManager.mDistrictDict[i].EFire, DataManager.mDistrictDict[i].EWater, DataManager.mDistrictDict[i].EGround, DataManager.mDistrictDict[i].ELight, DataManager.mDistrictDict[i].EDark,
             0, 0, 0, 0, 0, 0, 0, 0,  50);
 
             gc.districtGridDic.Add(new Dictionary<string, DistrictGridObject>());

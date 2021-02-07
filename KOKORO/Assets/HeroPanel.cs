@@ -90,6 +90,9 @@ public class HeroPanel : BasePanel
 
     public Button skillBtn;
     public Button dataAndHistoryBtn;
+
+    public Button recruitBtn;
+
     public Button closeBtn;
 
     public int nowSelectedHeroID = -1;
@@ -128,7 +131,7 @@ public class HeroPanel : BasePanel
                 ShowDataAndHistoryPage(gc.heroDic[nowSelectedHeroID]);
             }
         });
-        totalSet_equipBtn.onClick.AddListener(delegate () { nowEquipState = !nowEquipState; UpdateButtonStatus(); });
+        totalSet_equipBtn.onClick.AddListener(delegate () { nowEquipState = !nowEquipState; UpdateEquipButtonStatus(); });
         //totalSet_skillBtn.onClick.AddListener(delegate () { nowSkillState = !nowSkillState; UpdateButtonStatus(); });
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
         title_changeNameBtn.onClick.AddListener(delegate () { ShowChangeName(); });
@@ -141,7 +144,23 @@ public class HeroPanel : BasePanel
         UpdateAllInfo( heroObject);
         nowEquipState = equipState;
         //nowSkillState = skillState;
-        UpdateButtonStatus();
+        SetTotalButton(-1,heroObject.id, false);
+        UpdateEquipButtonStatus();
+        SetAnchoredPosition(x, y);
+        gameObject.SetActive(true);
+        transform.SetAsLastSibling();
+
+        isShow = true;
+    }
+
+    public void OnShow(int buildingID, HeroObject heroObject,  int x, int y)
+    {
+
+        UpdateAllInfo(heroObject);
+        nowEquipState = false;
+        //nowSkillState = skillState;
+        SetTotalButton(buildingID, heroObject.id,  true);
+        UpdateEquipButtonStatus();
         SetAnchoredPosition(x, y);
         gameObject.SetActive(true);
         transform.SetAsLastSibling();
@@ -155,7 +174,29 @@ public class HeroPanel : BasePanel
         isShow = false;
     }
 
-    public void UpdateButtonStatus()
+    void SetTotalButton(int buildingID, int heroID, bool isRecruit)
+    {
+        if (isRecruit)
+        {
+            skillBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+            dataAndHistoryBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+            recruitBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+            recruitBtn.onClick.RemoveAllListeners();
+            recruitBtn.onClick.AddListener(delegate () {
+                /*招募*/
+                gc.HeroRecruit(buildingID, heroID,0);
+            });
+        }
+        else
+        {
+            skillBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+            dataAndHistoryBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+            recruitBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+    }
+
+
+    public void UpdateEquipButtonStatus()
     {
         if (nowEquipState==false)
         {

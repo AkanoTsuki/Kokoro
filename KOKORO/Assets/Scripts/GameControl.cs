@@ -308,7 +308,7 @@ public class GameControl : MonoBehaviour
         //Debug.Log("2heroDic.Count=" + heroDic.Count);
     }
 
-    #region 【通用方法】生成英雄、道具、技能,英雄升级,英雄改名
+    #region 【通用方法】生成英雄、道具、技能,英雄升级,英雄改名,招募，解雇
     public void HeroChangeName(int heroID, string newName)
     {
         heroDic[heroID].name = newName;
@@ -517,6 +517,31 @@ public class GameControl : MonoBehaviour
 
     }
 
+    public void HeroRecruit(int buildingID,int heroID,short forceID)
+    {
+        short oldForceID = heroDic[heroID].force;
+
+        heroDic[heroID].force = forceID;
+
+        districtDic[buildingDic[buildingID].districtID].recruitList.Remove(heroID);
+
+        if (oldForceID == 0)
+        {
+            MessagePanel.Instance.AddMessage("解雇了"+ heroDic[heroID].name);
+
+        }
+        else if(forceID == 0)
+        {
+            MessagePanel.Instance.AddMessage("招募了" + heroDic[heroID].name);
+            if (BuildingPanel.Instance.isShow&& BuildingPanel.Instance.IsShowRecruitPart && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+            {
+                BuildingPanel.Instance.UpdateSceneRolePic(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateRecruitPart(buildingDic[buildingID]);
+            }
+        }
+
+        HeroPanel.Instance.OnHide();
+    }
 
     public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject,int buildingID, List<int> heroObjectIDList)
     {
@@ -766,6 +791,8 @@ public class GameControl : MonoBehaviour
         return new SkillObject(skillIndex, DataManager.mSkillDict[skillID].Name, skillID, 0, 0, 0, 0, 0, 5000, -2, false, -1, 0);
     }
 
+
+
     #endregion
 
     #region 【方法】建筑物建设
@@ -921,7 +948,7 @@ public class GameControl : MonoBehaviour
 
         districtDic[nowCheckingDistrictID].buildingList.Add(buildingIndex);
 
-        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, posX, posY, layer, posX > 64 ? AnimStatus.WalkLeft : AnimStatus.WalkRight, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false, false, grid, new List<int> { }, new List<int> { },
+        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, posX, posY, layer, posX > 64 ? AnimStatus.WalkLeft : AnimStatus.WalkRight, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false, false, grid, new List<int> { }, new List<int> { }, 
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,
             new List<BuildingTaskObject> { },-1, 0));
@@ -4241,6 +4268,19 @@ public class GameControl : MonoBehaviour
 
         }
 
+    }
+    #endregion
+
+    #region 【方法】英雄访客
+    public void CreateRecruiter(short districtID)
+    {
+        if (districtDic[districtID].recruitList.Count < 5)
+        {
+            int heroID = heroIndex;
+            CreateHero((short)Random.Range(0, DataManager.mHeroDict.Count), districtID, -1);
+            districtDic[districtID].recruitList.Add(heroID);
+        }
+  
     }
     #endregion
 

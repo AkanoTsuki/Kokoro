@@ -30342,7 +30342,7 @@
       "SizeYBase": 4,
       "DoorPosition": 0,
       "BuildPic": "BuildNow_7x4",
-      "PanelType": "Municipal",
+      "PanelType": "Inn",
       "ShopTypeStr": "None",
       "Des": "",
       "UpgradeTo": -1,

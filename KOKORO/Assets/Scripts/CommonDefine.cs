@@ -1178,6 +1178,7 @@ public class DistrictObject
 
     private List<int> BuildingList;
     private List<int> HeroList;
+    private List<int> RecruitList;
     private short EWind;
     private short EFire;
     private short EWater;
@@ -1197,7 +1198,7 @@ public class DistrictObject
     private int RProductLimit;
 
     public DistrictObject(short id, string name, string baseName, string des, bool isOpen, short force, byte level, short people, short peopleLimit, short worker, 
-         List<int> buildingList, List<int> heroList,
+         List<int> buildingList, List<int> heroList, List<int> recruitList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll, int rProductGoodWeapon, int rProductGoodArmor, int rProductGoodJewelry, int rProductGoodScroll,
          int rProductLimit)
@@ -1214,6 +1215,7 @@ public class DistrictObject
         this.Worker = worker;
         this.BuildingList = buildingList;
         this.HeroList = heroList;
+        this.RecruitList = recruitList;
         this.EWind = eWind;
         this.EFire = eFire;
         this.EWater = eWater;
@@ -1243,6 +1245,7 @@ public class DistrictObject
     public short worker { get { return Worker; } set { Worker = value; } }
     public List<int> buildingList { get { return BuildingList; } set { BuildingList = value; } }
     public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
+    public List<int> recruitList { get { return RecruitList; } set { RecruitList = value; } }
     public short eWind { get { return EWind; } set { EWind = value; } }
     public short eFire { get { return EFire; } set { EFire = value; } }
     public short eWater { get { return EWater; } set { EWater = value; } }
@@ -1345,6 +1348,7 @@ public class BuildingObject
     private List<string> GridList;//占用格子ID
     private List<int> HeroList;
     private List<int> CustomerList;
+
     private short People;//提供人口
     private short Worker;//工人上限
     private short WorkerNow;
@@ -1359,7 +1363,8 @@ public class BuildingObject
     private byte BuildProgress;//0建设中 1已完成 2升级中
    // private List<StuffType> ForgeAddStuff;
   //  private short ForgeNum;//生产数量 -1为不限制
-    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, AnimStatus doorInLine, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, bool isSale, List<string> gridList, List<int> heroList, List<int> customerList,
+    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, AnimStatus doorInLine, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, bool isSale, List<string> gridList,
+        List<int> heroList, List<int> customerList, 
          short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
         List<BuildingTaskObject> taskList,short produceEquipNow, byte buildProgress)
@@ -1384,6 +1389,7 @@ public class BuildingObject
         this.GridList = gridList;
         this.HeroList = heroList;
         this.CustomerList = customerList;
+  
         this.People = people;
         this.Worker = worker;
         this.WorkerNow = workerNow;
@@ -1419,6 +1425,7 @@ public class BuildingObject
     public List<string> gridList { get { return GridList; } set { GridList = value; } }
     public List<int> heroList { get { return HeroList; } set { HeroList = value; } }
     public List<int> customerList { get { return CustomerList; } set { CustomerList = value; } }
+
     public short people { get { return People; } set { People = value; } }
     public short worker { get { return Worker; } set { Worker = value; } }
     public short workerNow { get { return WorkerNow; } set { WorkerNow = value; } }
