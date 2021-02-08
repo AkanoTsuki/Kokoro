@@ -693,6 +693,7 @@ public class BuildingPanel : BasePanel
     {
         UpdateOutputInfoPart(buildingObject);
         outputInfoRt.anchoredPosition = new Vector2(x, y);
+        outputInfoRt.gameObject.SetActive(true);
         IsShowOutputInfoPart = true;
     }
 
@@ -841,7 +842,7 @@ public class BuildingPanel : BasePanel
 
     public void HideOutputInfoPart()
     {
-        outputInfoRt.anchoredPosition = new Vector2(0, 5000f);
+        outputInfoRt.gameObject.SetActive(false);
         IsShowOutputInfoPart = false;
     }
 
@@ -897,9 +898,9 @@ public class BuildingPanel : BasePanel
     //管理员面板
     public void ShowSetManagerPart(BuildingObject buildingObject, int x, int y)
     {
-        Debug.Log("ShowSetManagerPart()");
         UpdateSetManagerPart(buildingObject);
         setManagerRt.anchoredPosition = new Vector2(x, y);
+        setManagerRt.gameObject.SetActive(true);
         IsShowSetManagerPart = true;
     }
     public void UpdateSetManagerPart(BuildingObject buildingObject)
@@ -984,7 +985,7 @@ public class BuildingPanel : BasePanel
 
     public void HideSetManagerPart()
     {
-        setManagerRt.anchoredPosition = new Vector2(0, 5000f);
+        setManagerRt.gameObject.SetActive(false);
         IsShowSetManagerPart = false;
     }
 
@@ -993,6 +994,7 @@ public class BuildingPanel : BasePanel
     {
         UpdateSetWorkerPart(buildingObject);
         setWorkerRt.anchoredPosition = new Vector2(x, y);
+        setWorkerRt.gameObject.SetActive(true);
         IsShowSetWorkerPart = true;
     }
     public void UpdateSetWorkerPart(BuildingObject buildingObject)
@@ -1020,7 +1022,7 @@ public class BuildingPanel : BasePanel
 
     public void HideSetWorkerPart()
     {
-        setWorkerRt.anchoredPosition = new Vector2(0, 5000f);
+        setWorkerRt.gameObject.SetActive(false);
         IsShowSetWorkerPart = false;
     }
 
@@ -1029,6 +1031,7 @@ public class BuildingPanel : BasePanel
     {
         UpdateHistoryInfoPart(buildingObject);
         infoHistoryRt.anchoredPosition = new Vector2(x, y);
+        infoHistoryRt.gameObject.SetActive(true);
         IsShowHistoryInfoPart = true;
     }
 
@@ -1048,7 +1051,7 @@ public class BuildingPanel : BasePanel
 
     public void HideHistoryInfoPart()
     {
-        infoHistoryRt.anchoredPosition = new Vector2(0, 5000f);
+        infoHistoryRt.gameObject.SetActive(false);
         IsShowHistoryInfoPart = false;
     }
 
@@ -1057,6 +1060,7 @@ public class BuildingPanel : BasePanel
     {
         UpdateSetForgePart(buildingObject);
         SetForgeRt.anchoredPosition = new Vector2(x, y);
+        SetForgeRt.gameObject.SetActive(true);
         IsShowSetForgePart = true;
     }
 
@@ -1368,8 +1372,8 @@ public class BuildingPanel : BasePanel
 
     public void HideSetForgePart()
     {
-        SetForgeRt.anchoredPosition = new Vector2(0, 5000);
-        IsShowSetForgePart = true;
+        SetForgeRt.gameObject.SetActive(false);
+        IsShowSetForgePart = false;
     }
     public void UpdateSetForgePartNum()
     {

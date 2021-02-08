@@ -44,7 +44,7 @@ public class BuildPanel : BasePanel
 
     public override void OnShow( )
     {
-        UpdateAllInfo("All");
+        UpdateAllInfo(nowTypePanel);
         UpdateFilterButtonText();
         
 

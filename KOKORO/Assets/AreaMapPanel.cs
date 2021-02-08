@@ -105,7 +105,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
     void Update()
     {
-        // DragRangeLimit();
+         //DragRangeLimit();
     }
 
     public void OnShow( int x, int y)
@@ -759,6 +759,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnDrag(PointerEventData eventData)
     {
         SetDraggedPosition(eventData);
+        Debug.Log(rt.position);
     }
 
     /// <summary>

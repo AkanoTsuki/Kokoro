@@ -70,12 +70,13 @@ public class GameControlInPlay : MonoBehaviour
         DiplomacyPanel.Instance.SetAnchoredPosition(76, -104);
         DiplomacyPanel.Instance.OnHide();
 
-        UIManager.Instance.InitPanel(UIPanelType.PlayMain);
-        PlayMainPanel.Instance.OnShow();
+       
         UIManager.Instance.InitPanel(UIPanelType.Progress);
         ProgressPanel.Instance.SetAnchoredPosition(-8, -104);
         ProgressPanel.Instance.OnShow();
-        
+
+        UIManager.Instance.InitPanel(UIPanelType.PlayMain);
+        PlayMainPanel.Instance.OnShow();
 
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
@@ -96,6 +97,9 @@ public class GameControlInPlay : MonoBehaviour
         }
         Time.timeScale = gc.timeFlowSpeed;
         PlayMainPanel.Instance.UpdateTimeButtonState();
+
+        gc.SetVolumeMusic(gc.volumeMusic);
+        gc.SetVolumeSound(gc.volumeSound);
         InvokeRepeating("TimeFlow", 0, 0.05f );
         InvokeRepeating("SupplyAndDemandChangeRegular", 10f, 10f );
         InvokeRepeating("CustomerCome", 3f, 3f);
@@ -103,6 +107,8 @@ public class GameControlInPlay : MonoBehaviour
         InvokeRepeating("AdventureTravellerCome", 10f, 10f);
 
         gc.CreateRecruiter(1); gc.CreateRecruiter(1); gc.CreateRecruiter(1);
+
+
     }
 
     // Update is called once per frame

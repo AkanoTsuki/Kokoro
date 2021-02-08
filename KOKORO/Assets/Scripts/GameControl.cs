@@ -13,6 +13,8 @@ public class GameControl : MonoBehaviour
     public const float spacing = 4f;
 
     //save data
+    public byte volumeMusic = 1;
+    public byte volumeSound = 1;
     public byte timeFlowSpeed = 1;//0,1,2
     public int timeS = 0;
     public int timeHour = 0;
@@ -69,6 +71,8 @@ public class GameControl : MonoBehaviour
     [System.Serializable]
     public class DataSave
     {
+        public byte volumeMusic = 1;
+        public byte volumeSound = 1;
         public byte timeFlowSpeed = 1;
         public int timeS = 0;
         public int timeHour = 0;
@@ -133,6 +137,8 @@ public class GameControl : MonoBehaviour
         string filename = dirpath + "/GameData.sav";
         DataSave t = new DataSave();
 
+        t.volumeMusic = this.volumeMusic;
+        t.volumeSound = this.volumeSound;
         t.timeFlowSpeed = this.timeFlowSpeed;
         t.timeS = this.timeS;
         t.timeHour = this.timeHour;
@@ -202,6 +208,8 @@ public class GameControl : MonoBehaviour
             print("文件存在." + filename);
             DataSave t1 = (DataSave)IOHelper.GetData(filename, typeof(DataSave));
 
+            this.volumeMusic = t1.volumeMusic;
+            this.volumeSound = t1.volumeSound;
             this.timeFlowSpeed = t1.timeFlowSpeed;
             this.timeS = t1.timeS;
             this.timeHour = t1.timeHour;
@@ -2904,9 +2912,6 @@ public class GameControl : MonoBehaviour
         ItemListAndInfoPanel.Instance.OnShow(-1, 76, -104, 2);
     }
 
-
-
-
     public void ItemPanelSetRank(byte rank)
     {
         if (itemPanel_rankSelected.Contains(rank))
@@ -2933,7 +2938,6 @@ public class GameControl : MonoBehaviour
         ItemListAndInfoPanel.Instance.UpdateBatchRank();
     }
 
-
     public void ItemPanelSetLevel(byte level)
     {
         if (itemPanel_levelSelected.Contains(level))
@@ -2946,6 +2950,7 @@ public class GameControl : MonoBehaviour
         }
         ItemListAndInfoPanel.Instance.UpdateBatchLevel();
     }
+    
     public void ItemPanelSetLevelAll()
     {
         if (itemPanel_levelSelected.Count == 11)
@@ -3262,6 +3267,7 @@ public class GameControl : MonoBehaviour
 
         SkillListAndInfoPanel.Instance.UpdateBatchType();
     }
+    
     public void SkillPanelSetTypeAll()
     {
         if (skillPanel_typeSelected.Contains(ItemTypeSmall.ScrollNone) &&
@@ -4348,9 +4354,6 @@ public class GameControl : MonoBehaviour
 
     }
 
-
-
-    //TODO
     //从据点向地牢派出
     public void AdventureTeamSend(short districtID, short dungeonID, byte teamID, List<int> heroIDList)
     {
@@ -6462,7 +6465,13 @@ public class GameControl : MonoBehaviour
                 AdventureMainPanel.Instance.ShowTalk(teamID, actionMenber.side, actionMenber.sideIndex, "绝技 <color=#698BFF>" + sp.Name + "</color>");
             }
 
+            AudioControl.Instance.PlaySound(sp.Sound);
+
             AdventureDungeonElementChange(teamID, sp.Element, (byte)(sp.Rank * 10));
+        }
+        else
+        {
+            AudioControl.Instance.PlaySound("挥剑");
         }
 
         AdventureMainPanel.Instance.SetAnim(teamID, actionMenber.side, actionMenber.sideIndex, sp != null ? sp.ActionAnim : AnimStatus.Attack);
@@ -7199,6 +7208,20 @@ public class GameControl : MonoBehaviour
     }
     #endregion
 
+    #region 【方法】系统设置
+    public void SetVolumeMusic(byte value)
+    {
+        volumeMusic = value;
+        AudioControl.Instance.MusicPlayer.volume = volumeMusic==0?0:( volumeMusic /5f);
+    }
+    public void SetVolumeSound(byte value)
+    {
+        volumeSound = value;
+        AudioControl.Instance.SoundPlayer.volume = volumeSound == 0 ? 0 : (volumeSound / 5f);
+    }
+
+    #endregion
+
     #region 【辅助方法集】获取值
 
     public int GetHeroNum(short forceID)
@@ -7782,6 +7805,7 @@ public class GameControl : MonoBehaviour
     }
     #endregion
 
+  
 
     public static List<T> GetRandomList<T>(List<T> inputList)
     {

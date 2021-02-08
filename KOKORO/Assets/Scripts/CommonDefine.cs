@@ -465,6 +465,7 @@ public class SkillPrototype: ISerializationCallbackReceiver
     public string Name;
     public string Pic;
     public string Effect;
+    public string Sound;
     public byte Rank;
     public AnimStatus ActionAnim;
     public string ActionAnimStr;

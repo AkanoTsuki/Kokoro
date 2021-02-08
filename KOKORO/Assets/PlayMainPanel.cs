@@ -55,6 +55,11 @@ public class PlayMainPanel : BasePanel
     public Text top_resourcesBlock_stuffLightText;
     public Text top_resourcesBlock_stuffDarkText;
 
+    public GameObject top_setBlockGo;
+    public Slider top_setBlock_volumeMusicSlider;
+    public Slider top_setBlock_volumeSoundSlider;
+    public Button top_setBlock_closeBtn;
+
     public Text left_inventoryNumText;
     public RectTransform left_inventoryNumBgRt;
     public RectTransform left_inventoryNumBarRt;
@@ -89,20 +94,10 @@ public class PlayMainPanel : BasePanel
     public List<Text> bottom_adventure_desText;
     public List<Text> bottom_adventure_logText;
     public List<Transform> bottom_adventure_herosTf;
-    //public List<List<RectTransform>> bottom_adventure_heroRt;
-    //public List<List<Image>> bottom_adventure_hero_picImage;
-    //public List<List<Text>> bottom_adventure_hero_levelText;
-    //public List<List<RectTransform>> bottom_adventure_hero_hpRt;
-    //public List<List<RectTransform>> bottom_adventure_hero_mpRt;
-
 
 
     public Button bottom_baseline_messageBtn;
     public Text bottom_baseline_messageSignText;
-    //public Button bottom_baseline_openAllBtn;
-    //public Text bottom_baseline_openAllSignText;
-    //public Button bottom_baseline_hideAllBtn;
-    //public Text bottom_baseline_hideAllSignText;
 
 
     public List<byte> adventureTeamIDList = new List<byte>();
@@ -110,6 +105,8 @@ public class PlayMainPanel : BasePanel
 
     public bool IsShowMessageBlock = false;
     public bool IsShowResourcesBlock = false;
+    public bool IsShowSetBlock = false;
+
     bool Leftis0 = true;
     void Awake()
     {
@@ -135,6 +132,9 @@ public class PlayMainPanel : BasePanel
         //top_districtBtn.onClick.AddListener(delegate () { ShowDistrictMap(); });
 
         top_saveBtn.onClick.AddListener(delegate () { gci.GameSave(); });
+        top_setBtn.onClick.AddListener(delegate () { ShowSetBlock(); });
+        top_setBlock_closeBtn.onClick.AddListener(delegate () { HideSetBlock(); });
+
         top_pauseBtn.onClick.AddListener(delegate () { gci.TimePause(); });
         top_playBtn.onClick.AddListener(delegate () { gci.TimePlay(); });
         top_fastBtn.onClick.AddListener(delegate () { gci.TimeFast(); });
@@ -148,6 +148,14 @@ public class PlayMainPanel : BasePanel
             else { ShowResourcesBlock(); }
         });
 
+        top_setBlock_volumeMusicSlider.onValueChanged.AddListener((value) =>
+        {
+            gc.SetVolumeMusic((byte)value);
+        });
+        top_setBlock_volumeSoundSlider.onValueChanged.AddListener((value) =>
+        {
+            gc.SetVolumeSound((byte)value);
+        });
 
 
         bottom_adventureLastBtn.onClick.AddListener(delegate () { AdventureStartIndexToLast(); });
@@ -171,6 +179,7 @@ public class PlayMainPanel : BasePanel
         UpdateButtonHeroNum();
 
         HideResourcesBlock();
+        HideSetBlock();
         //UpdateTopDistrict();
         UpdateAdventurePageText();
         UpdateAdventureAll();
@@ -576,6 +585,20 @@ public class PlayMainPanel : BasePanel
         top_resourcesSignText.text = "▼";
         top_resourcesBlockRt.localScale = Vector2.zero;
         IsShowResourcesBlock = false;
+    }
+
+    public void ShowSetBlock()
+    {
+        top_setBlock_volumeMusicSlider.value = gc.volumeMusic;
+        top_setBlock_volumeSoundSlider.value = gc.volumeSound;
+        top_setBlockGo.SetActive(true);
+        IsShowSetBlock = true;
+    }
+
+    public void HideSetBlock()
+    {
+        top_setBlockGo.SetActive(false);
+        IsShowSetBlock = false;
     }
 
     public void UpdateButtonItemNum()
