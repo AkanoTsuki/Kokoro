@@ -5196,7 +5196,10 @@ public class GameControl : MonoBehaviour
 
     public  IEnumerator AdventureFight(byte teamID)
     {
-
+        if (AdventureMainPanel.Instance.isShow && AdventureMainPanel.Instance.nowCheckingTeamID== teamID)
+        {
+            AudioControl.Instance.PlayMusic("08Thebattle");
+        }
 
         const int RoundLimit = 200;
         int CheckFightOverResult = -1;
@@ -5489,6 +5492,11 @@ public class GameControl : MonoBehaviour
             //行动成员行动
             for (int i = 0; i < actionMenber.Count; i++)
             {
+                if (CheckFightOver(fightMenberObjects) != -1)
+                {
+                    break;
+                }
+
 
                 //行动前执行BUFF效果（同时减掉回合数）
                 bool canAction = true;
@@ -5536,6 +5544,7 @@ public class GameControl : MonoBehaviour
                     }
 
                 }
+
 
                 if (actionMenber[i].hpNow > 0 && canAction)
                 {
@@ -6139,6 +6148,7 @@ public class GameControl : MonoBehaviour
                                     }
                                 }
 
+                             
 
                             }
                             else//技能概率未触发，普通攻击
@@ -6167,7 +6177,7 @@ public class GameControl : MonoBehaviour
                                         Miss(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0]);
                                     }
                                 }
-
+                               
                             }
 
                         }
@@ -6199,7 +6209,7 @@ public class GameControl : MonoBehaviour
                                     Miss(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0]);
                                 }
                             }
-
+                           
                         }
 
                     }
@@ -6231,7 +6241,7 @@ public class GameControl : MonoBehaviour
                             }
 
                         }
-
+                        
 
                     }
 
@@ -6242,7 +6252,13 @@ public class GameControl : MonoBehaviour
                     {
                         actionMenber[i].skillIndex = 0;
                     }
+
+                    if (CheckFightOver(fightMenberObjects) != -1)
+                    {
+                        break;
+                    }
                 }
+
                 yield return new WaitForSeconds(1f);//单个行动角色行动完后等1s
                 //移除失效的buff
                 for (int j = actionMenber[i].buff.Count - 1; j >= 0; j--)
@@ -6335,8 +6351,9 @@ public class GameControl : MonoBehaviour
             CheckFightOverResult = 1;
         }
 
+        Debug.Log("战斗结束1");
         yield return new WaitForSeconds(1.5f);
-
+        Debug.Log("战斗结束2");
 
         string log = "行进过程中遇到了敌人:";
 
@@ -6435,6 +6452,12 @@ public class GameControl : MonoBehaviour
 
 
         AdventureMainPanel.Instance.UpdateTeamHero(teamID);
+
+        if (AdventureMainPanel.Instance.isShow && AdventureMainPanel.Instance.nowCheckingTeamID == teamID)
+        {
+            AudioControl.Instance.PlayMusic(AudioControl.Instance.nowMusic);
+        }
+
     }
 
     void Miss(byte teamID, int round, FightMenberObject actionMenber, FightMenberObject targetMenber)
@@ -6471,7 +6494,8 @@ public class GameControl : MonoBehaviour
         }
         else
         {
-            AudioControl.Instance.PlaySound("挥剑");
+            AudioControl.Instance.PlaySound("attack_weapon_7");
+           
         }
 
         AdventureMainPanel.Instance.SetAnim(teamID, actionMenber.side, actionMenber.sideIndex, sp != null ? sp.ActionAnim : AnimStatus.Attack);
@@ -6595,7 +6619,8 @@ public class GameControl : MonoBehaviour
         {
             effectName = "sword_1";
         }
-
+        AudioControl.Instance.PlaySound("damage01");
+        Debug.Log("damage01");
         List<int> damageList = new List<int> { };
         int damageTotal = 0;
         string damageTotalStr = "";

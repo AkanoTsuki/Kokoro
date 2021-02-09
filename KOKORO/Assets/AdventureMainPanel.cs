@@ -61,6 +61,12 @@ public class AdventureMainPanel : BasePanel
         gameObject.SetActive(true);
         nowCheckingTeamID = teamID;
         isShow = true;
+
+        if (gc.adventureTeamList[teamID].action == AdventureAction.Fight)
+        {
+            AudioControl.Instance.StopMusic();
+            AudioControl.Instance.PlayMusic("08Thebattle");
+        }
     }
 
 
@@ -72,6 +78,17 @@ public class AdventureMainPanel : BasePanel
         }
 
         gameObject.SetActive(false);
+
+        if (nowCheckingTeamID != -1)
+        {
+            if (gc.adventureTeamList[nowCheckingTeamID].action == AdventureAction.Fight)
+            {
+                AudioControl.Instance.StopMusic();
+                AudioControl.Instance.PlayMusic(AudioControl.Instance.nowMusic);
+            }
+        }
+    
+
         nowCheckingTeamID = -1;
         isShow = false;
     }
@@ -1309,7 +1326,7 @@ public class AdventureMainPanel : BasePanel
     //设置场景人物/敌人动画
     public void SetAnim(byte teamID,byte side,byte index, AnimStatus animStatus)
     {
-        //Debug.Log("SetAnim() teamID=" + teamID + " side=" + side + " index=" + index + " animStatus=" + animStatus);
+        Debug.Log("SetAnim() teamID=" + teamID + " side=" + side + " index=" + index + " animStatus=" + animStatus);
 
         if (side == 0)
         {

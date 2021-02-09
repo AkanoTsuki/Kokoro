@@ -251,6 +251,7 @@ public class DistrictMapPanel : BasePanel
         if (DataManager.mDistrictDict[gc.nowCheckingDistrictID].Music!="")
         {
             AudioControl.Instance.PlayMusic(DataManager.mDistrictDict[gc.nowCheckingDistrictID].Music);
+            AudioControl.Instance.nowMusic = DataManager.mDistrictDict[gc.nowCheckingDistrictID].Music;
         }
     }
     public override void OnHide()
@@ -275,10 +276,10 @@ public class DistrictMapPanel : BasePanel
         isShow = false;
 
         CancelInvoke("UpdateBar");
-        if (DataManager.mDistrictDict[gc.nowCheckingDistrictID].Music != "")
-        {
-            AudioControl.Instance.StopMusic();
-        }
+        //if (DataManager.mDistrictDict[gc.nowCheckingDistrictID].Music != "")
+        //{
+        //    AudioControl.Instance.StopMusic();
+        //}
     }
 
  

@@ -11,6 +11,8 @@ public class AudioControl : MonoBehaviour
     public AudioSource MusicPlayer;
     //音效播放器
     public AudioSource SoundPlayer;
+
+    public string nowMusic = "";
     void Start()
     {
         Instance = this;
@@ -33,6 +35,7 @@ public class AudioControl : MonoBehaviour
             AudioClip clip = Resources.Load<AudioClip>("Audio/Music/" + name);
             MusicPlayer.clip = clip;
             MusicPlayer.Play();
+
         }
         else
         {
@@ -42,9 +45,10 @@ public class AudioControl : MonoBehaviour
                 AudioClip clip = Resources.Load<AudioClip>("Audio/Music/" + name);
                 MusicPlayer.clip = clip;
                 MusicPlayer.Play();
+
             }
         }
-        Debug.Log("MusicPlayer.clip.name=" + MusicPlayer.clip.name);
+        //Debug.Log("MusicPlayer.clip.name=" + MusicPlayer.clip.name);
     }
 
     public void StopMusic()

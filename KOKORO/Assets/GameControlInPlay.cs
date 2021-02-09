@@ -102,7 +102,7 @@ public class GameControlInPlay : MonoBehaviour
         gc.SetVolumeSound(gc.volumeSound);
         InvokeRepeating("TimeFlow", 0, 0.05f );
         InvokeRepeating("SupplyAndDemandChangeRegular", 10f, 10f );
-        InvokeRepeating("CustomerCome", 3f, 3f);
+        //InvokeRepeating("CustomerCome", 3f, 3f);
         InvokeRepeating("TravellerCome", 3f, 3f);
         InvokeRepeating("AdventureTravellerCome", 10f, 10f);
 
