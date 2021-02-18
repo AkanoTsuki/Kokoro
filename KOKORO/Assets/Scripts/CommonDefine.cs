@@ -654,13 +654,14 @@ public class TravellerObject
     private float X;
     private float Y;
     private List<int> HeroList;
+    private short StartDistrictOrDungeonID;
     private short EndDistrictOrDungeonID;
     private string EndType;
     private short Team;
     private short Force;//先作效果展示，无实际应用
     private string PersonType;
     private int PersonNum;
-    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y, List<int> heroList, short endDistrictOrDungeonID,string endType, short team, short force, string personType, int personNum)
+    public TravellerObject(string pic, List<int> pathPointList, int nowPointIndex, float x, float y, List<int> heroList, short startDistrictOrDungeonID, short endDistrictOrDungeonID,string endType, short team, short force, string personType, int personNum)
     {
         this.Pic = pic;
         this.PathPointList = pathPointList;
@@ -668,6 +669,7 @@ public class TravellerObject
         this.X = x;
         this.Y = y;
         this.HeroList = heroList;
+        this.StartDistrictOrDungeonID = startDistrictOrDungeonID;
         this.EndDistrictOrDungeonID = endDistrictOrDungeonID;
         this.EndType = endType;
         this.Team = team;
@@ -681,6 +683,7 @@ public class TravellerObject
     public float x { get { return X; } set { X = value; } }
     public float y { get { return Y; } set { Y = value; } }
     public List<int> heroList { get { return HeroList; }  }
+    public short startDistrictOrDungeonID { get { return StartDistrictOrDungeonID; } }
     public short endDistrictOrDungeonID { get { return EndDistrictOrDungeonID; } }
     public string endType { get { return EndType; } }
     public short team { get { return Team; } }
@@ -1142,6 +1145,11 @@ public class DistrictPrototype
     public string Music;
     // public short BigMapX;
     // public short BigMapY;
+    public string ScenePic;
+    public string SceneBgPic;
+    public List<string> SceneBorderUpPic;
+    public List<string> SceneBorderMidPic;
+    public List<string> SceneBorderDownPic;
     public short EWind;
     public short EFire;
     public short EWater;
@@ -1198,11 +1206,34 @@ public class DistrictObject
 
     private int RProductLimit;
 
+    private short Hp;//耐久上限
+    private short HpNow;//当前耐久
+    private short Def;//坚固
+    private short Satisfaction;//满意
+    private short Security;//安全
+    private short Prosperous;//繁荣
+
+    private byte RationCereal;//配给率%
+    private byte RationVegetable;
+    private byte RationFruit;
+    private byte RationMeat;
+    private byte RationFish;
+    private byte RationBeer;
+    private byte RationWine;
+
+    private byte TaxPass;//过路税
+    private byte TaxGoods;//商品税
+    private byte TaxPeople;//居民税
+
+    private List<DistrictFiscal> Fiscals;
+
     public DistrictObject(short id, string name, string baseName, string des, bool isOpen, short force, byte level, short people, short peopleLimit, short worker, 
          List<int> buildingList, List<int> heroList, List<int> recruitList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll, int rProductGoodWeapon, int rProductGoodArmor, int rProductGoodJewelry, int rProductGoodScroll,
-         int rProductLimit)
+         int rProductLimit,
+         short hp, short hpNow, short def, short satisfaction, short security, short prosperous,
+         byte rationCereal, byte rationVegetable, byte rationFruit, byte rationMeat, byte rationFish, byte rationBeer, byte rationWine, byte taxPass, byte taxGoods, byte taxPeople, List<DistrictFiscal> fiscals)
     {
         this.ID = id;
         this.Name = name;
@@ -1232,7 +1263,23 @@ public class DistrictObject
         this.RProductGoodJewelry = rProductGoodJewelry;
         this.RProductGoodScroll = rProductGoodScroll;
         this.RProductLimit = rProductLimit;//库存上限
-
+        this.Hp = hp;
+        this.HpNow = hpNow;
+        this.Def = def;
+        this.Satisfaction = satisfaction;
+        this.Security = security;
+        this.Prosperous = prosperous;
+        this.RationCereal = rationCereal;
+        this.RationVegetable = rationVegetable;
+        this.RationFruit = rationFruit;
+        this.RationMeat = rationMeat;
+        this.RationFish = rationFish;
+        this.RationBeer = rationBeer;
+        this.RationWine = rationWine;
+        this.TaxPass = taxPass;
+        this.TaxGoods = taxGoods;
+        this.TaxPeople = taxPeople;
+        this.Fiscals = fiscals;
     }
     public short id { get { return ID; } }
     public string name { get { return Name; }  }
@@ -1263,6 +1310,52 @@ public class DistrictObject
     public int rProductGoodScroll { get { return RProductGoodScroll; } set { RProductGoodScroll = value; } }
     public int rProductLimit { get { return RProductLimit; } set { RProductLimit = value; } }
 
+    public short hp { get { return Hp; } set { Hp = value; } }
+    public short hpNow { get { return HpNow; } set { HpNow = value; } }
+    public short def { get { return Def; } set { Def = value; } }
+    public short satisfaction { get { return Satisfaction; } set { Satisfaction = value; } }
+    public short security { get { return Security; } set { Security = value; } }
+    public short prosperous { get { return Prosperous; } set { Prosperous = value; } }
+    public byte rationCereal { get { return RationCereal; } set { RationCereal = value; } }
+    public byte rationVegetable { get { return RationVegetable; } set { RationVegetable = value; } }
+    public byte rationFruit { get { return RationFruit; } set { RationFruit = value; } }
+    public byte rationMeat { get { return RationMeat; } set { RationMeat = value; } }
+    public byte rationFish { get { return RationFish; } set { RationFish = value; } }
+    public byte rationBeer { get { return RationBeer; } set { RationBeer = value; } }
+    public byte rationWine { get { return RationWine; } set { RationWine = value; } }
+    public byte taxPass { get { return TaxPass; } set { TaxPass = value; } }
+    public byte taxGoods { get { return TaxGoods; } set { TaxGoods = value; } }
+    public byte taxPeople { get { return TaxPeople; } set { TaxPeople = value; } }
+
+    public List<DistrictFiscal> fiscals { get { return Fiscals; } set { Fiscals = value; } }
+}
+
+public class DistrictFiscal
+{
+    private int IncomeTaxPass;//过路税
+    private int IncomeTaxGoods;//商品税
+    private int IncomeTaxPeople;//居民税
+    private int IncomeLogistics;//后勤
+    private int IncomeOther;
+    private int ExpendMaintenance;
+    private int ExpendOther;
+    public DistrictFiscal(int incomeTaxPass, int incomeTaxGoods, int incomeTaxPeople, int incomeLogistics, int incomeOther, int expendMaintenance, int expendOther)
+    {
+        this.IncomeTaxPass = incomeTaxPass;
+        this.IncomeTaxGoods = incomeTaxGoods;
+        this.IncomeTaxPeople = incomeTaxPeople;
+        this.IncomeLogistics = incomeLogistics;
+        this.IncomeOther = incomeOther;
+        this.ExpendMaintenance = expendMaintenance;
+        this.ExpendOther = expendOther;
+    }
+    public int incomeTaxPass { get { return IncomeTaxPass; } set { IncomeTaxPass = value; } }
+    public int incomeTaxGoods { get { return IncomeTaxGoods; } set { IncomeTaxGoods = value; } }
+    public int incomeTaxPeople { get { return IncomeTaxPeople; } set { IncomeTaxPeople = value; } }
+    public int incomeLogistics { get { return IncomeLogistics; } set { IncomeLogistics = value; } }
+    public int incomeOther { get { return IncomeOther; } set { IncomeOther = value; } }
+    public int expendMaintenance { get { return ExpendMaintenance; } set { ExpendMaintenance = value; } }
+    public int expendOther { get { return ExpendOther; } set { ExpendOther = value; } }
 }
 
 public class DistrictGridObject

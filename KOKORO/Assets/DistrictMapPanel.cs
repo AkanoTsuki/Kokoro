@@ -21,6 +21,12 @@ public class DistrictMapPanel : BasePanel
     public Image skyBgImage;
     public Image skyFgImage;
 
+    public Image sceneImage;
+    public Image sceneBgImage;
+    public List<Image> sceneBorderUpImage;
+    public List<Image> sceneBorderMidImage;
+    public List<Image> sceneBorderDownImage;
+
     public RectTransform tipRt;
     public Text tipText;
     public RectTransform customerInfoRt;
@@ -59,7 +65,7 @@ public class DistrictMapPanel : BasePanel
 
 
     //配置
-    float roleHeight = 54f;//人物高度
+    //float roleHeight = 54f;//人物高度
     Color colorRes = new Color(255 / 255f, 189 / 255f, 88 / 255f, 1f);
     Color colorMake = new Color(221 / 255f, 90 / 255f, 246 / 255f, 1f);
     Color colorBuild = new Color(0 / 255f, 98 / 255f, 251 / 255f, 1f);
@@ -221,6 +227,7 @@ public class DistrictMapPanel : BasePanel
         {
             nowDistrict = gc.nowCheckingDistrictID;
             UpdateAllCustomer(nowDistrict);
+            UpdateScene(nowDistrict);
         }
 
         SetAnchoredPosition(0, -90);
@@ -245,7 +252,9 @@ public class DistrictMapPanel : BasePanel
 
         InvokeRepeating("UpdateBar", 0, 0.2f);
         //gameObject.GetComponent<CanvasRenderer> ()..enabled = true;
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        Instance.enabled = true;
         isShow = true;
 
         if (DataManager.mDistrictDict[gc.nowCheckingDistrictID].Music!="")
@@ -268,10 +277,14 @@ public class DistrictMapPanel : BasePanel
         {
             BuildingPanel.Instance.OnHide();
         }
+        if (DistrictMainPanel.Instance.isShow)
+        {
+            DistrictMainPanel.Instance.OnHide();
+        }
 
-
-        SetAnchoredPosition(0, 5000);
-        gameObject.SetActive(false);
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
+        Instance.enabled = false;
         //gameObject.GetComponent<Renderer>().enabled = false;
         isShow = false;
 
@@ -413,6 +426,38 @@ public class DistrictMapPanel : BasePanel
         gc.CreateBuildEvent(wantBuidingPID, (short)wantBuidingPosX, (short)wantBuidingPosY, (byte)layerIndex,x,y);
         SetBuilding(gc.buildingIndex-1,true,-1);
         Destroy(wantBuidingGo);
+    }
+
+
+    void UpdateScene(int districtID)
+    {
+        sceneImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/" +DataManager.mDistrictDict[districtID].ScenePic);
+        sceneBgImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/" + DataManager.mDistrictDict[districtID].SceneBgPic);
+
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (gc.districtDic[districtID].level > (i+1))
+            {
+                sceneBorderUpImage[i].sprite = Resources.Load<Sprite>("Image/DistrictBG/Empty");
+                sceneBorderMidImage[i].sprite = Resources.Load<Sprite>("Image/DistrictBG/Empty");
+                sceneBorderDownImage[i].sprite = Resources.Load<Sprite>("Image/DistrictBG/Empty");
+            }
+            else
+            {
+                sceneBorderUpImage[i].sprite = Resources.Load<Sprite>("Image/DistrictBG/" + DataManager.mDistrictDict[districtID].SceneBorderUpPic[i]);
+                sceneBorderMidImage[i].sprite = Resources.Load<Sprite>("Image/DistrictBG/" + DataManager.mDistrictDict[districtID].SceneBorderMidPic[i]);
+                sceneBorderDownImage[i].sprite = Resources.Load<Sprite>("Image/DistrictBG/" + DataManager.mDistrictDict[districtID].SceneBorderDownPic[i]);
+            }
+        }
+
+        for (int i = 4; i < 6; i++)
+        {
+            sceneBorderUpImage[i].sprite = Resources.Load<Sprite>("Image/DistrictBG/" + DataManager.mDistrictDict[districtID].SceneBorderUpPic[i]);
+            sceneBorderMidImage[i].sprite = Resources.Load<Sprite>("Image/DistrictBG/" + DataManager.mDistrictDict[districtID].SceneBorderMidPic[i]);
+            sceneBorderDownImage[i].sprite = Resources.Load<Sprite>("Image/DistrictBG/" + DataManager.mDistrictDict[districtID].SceneBorderDownPic[i]);
+        }
+
     }
 
     void UpdateAllBuilding(int districtID)
@@ -718,6 +763,7 @@ public class DistrictMapPanel : BasePanel
         {
             go = customerGoPool[0];
             customerGoPool.RemoveAt(0);
+            go.GetComponent<AnimatiorControlByNPC>().enabled = true;
         }
         else
         {

@@ -177,12 +177,13 @@ public class BuildingPanel : BasePanel
         totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
         //int roleCount
         //Debug.Log("DataManager.mBuildingDict[buildingObject.id].BgPic="+ DataManager.mBuildingDict[buildingObject.prototypeID].BgPic);
-       
-     
-      
-    
+
+
+
+
         //SetAnchoredPosition(0, -436);
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         isShow = true;
         
        
@@ -195,11 +196,17 @@ public class BuildingPanel : BasePanel
         {
             BuildPanel.Instance.OnHide();
         }
+        if (DistrictMainPanel.Instance.isShow)
+        {
+            DistrictMainPanel.Instance.OnHide();
+        }
+
     }
 
     public override void OnHide()
     {
-        gameObject.SetActive(false);
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         isShow = false;
         nowCheckingBuildingID = -1;
     }

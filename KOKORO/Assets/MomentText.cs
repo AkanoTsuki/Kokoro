@@ -8,7 +8,7 @@ public class MomentText : MonoBehaviour
     bool isPlay = false;
     float targetY = 0f;
 
-
+    public List<GameObject> pool;
     // Update is called once per frame
     void Update()
     {
@@ -20,7 +20,7 @@ public class MomentText : MonoBehaviour
                
                 isPlay = false;
                 GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
-                AdventureMainPanel.Instance.numPool.Add(gameObject);
+                pool.Add(gameObject);
             }
         }
      

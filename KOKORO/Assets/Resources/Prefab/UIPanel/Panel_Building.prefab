@@ -2326,6 +2326,7 @@ GameObject:
   - component: {fileID: 962050918480598074}
   - component: {fileID: 962050918480598212}
   - component: {fileID: 4004372709871544451}
+  - component: {fileID: 1664672254725086718}
   m_Layer: 5
   m_Name: Panel_Building
   m_TagString: Untagged
@@ -2591,6 +2592,18 @@ MonoBehaviour:
   IsShowRecruitPart: 0
   forgeAddStuff: 
   setForgePartNum: -1
+--- !u!225 &1664672254725086718
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962050918480598072}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &962050918482893097
 GameObject:
   m_ObjectHideFlags: 0

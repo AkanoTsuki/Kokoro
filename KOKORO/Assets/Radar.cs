@@ -14,7 +14,7 @@ public class Radar : MonoBehaviour
     private void Awake()
     {
         _render = GetComponent<CanvasRenderer>();
-        Debug.Log(_render);
+        //Debug.Log(_render);
     }
     // Start is called before the first frame update
     void Start()

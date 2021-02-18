@@ -105,13 +105,15 @@ public class AdventureSendPanel : BasePanel
             UpdateFromNow(districtOrDungeonID);
         }
 
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         isShow = true;
     }
 
     public override void OnHide()
     {
-        gameObject.SetActive(false);
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         isShow = false;
     }
 

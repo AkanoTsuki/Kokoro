@@ -55,7 +55,8 @@ public class TechnologyPanel : BasePanel
         InvokeRepeating("UpdateProgress", 1f, 1f);
 
         //SetAnchoredPosition(76, -104);
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         isShow = true;
 
     }
@@ -64,8 +65,8 @@ public class TechnologyPanel : BasePanel
     {
         CancelInvoke("UpdateProgress");
 
-        //SetAnchoredPosition(0, 5000);
-        gameObject.SetActive(false);
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         isShow = false;
     }
 

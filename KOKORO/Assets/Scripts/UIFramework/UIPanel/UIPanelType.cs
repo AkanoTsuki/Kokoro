@@ -17,7 +17,6 @@ public enum UIPanelType
     Message,
     AreaMap,
     PlayMain,
-    BuildingSelect,
     HeroSelect,
     SkillListAndInfo,
     Market,
@@ -27,6 +26,7 @@ public enum UIPanelType
     Transfer,
     AdventureSend,
     Diplomacy,
-    Progress
+    Progress,
+    SystemSet
 
 }

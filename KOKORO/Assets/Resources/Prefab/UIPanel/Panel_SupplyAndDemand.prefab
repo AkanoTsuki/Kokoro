@@ -10565,6 +10565,7 @@ GameObject:
   - component: {fileID: 3996421129006264359}
   - component: {fileID: 3996421129006264356}
   - component: {fileID: 3996421129006264377}
+  - component: {fileID: -7012613757496492259}
   m_Layer: 5
   m_Name: Panel_SupplyAndDemand
   m_TagString: Untagged
@@ -10760,6 +10761,18 @@ MonoBehaviour:
   scrollDarkIIValueImage: {fileID: 3996421129494569811}
   scrollDarkIIValueText: {fileID: 3996421129876790318}
   closeBtn: {fileID: 3996421129508774520}
+--- !u!225 &-7012613757496492259
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996421129006264354}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3996421129006271814
 GameObject:
   m_ObjectHideFlags: 0

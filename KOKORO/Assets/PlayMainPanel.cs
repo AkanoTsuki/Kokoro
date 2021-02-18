@@ -55,10 +55,10 @@ public class PlayMainPanel : BasePanel
     public Text top_resourcesBlock_stuffLightText;
     public Text top_resourcesBlock_stuffDarkText;
 
-    public GameObject top_setBlockGo;
-    public Slider top_setBlock_volumeMusicSlider;
-    public Slider top_setBlock_volumeSoundSlider;
-    public Button top_setBlock_closeBtn;
+    //public GameObject top_setBlockGo;
+    //public Slider top_setBlock_volumeMusicSlider;
+    //public Slider top_setBlock_volumeSoundSlider;
+    //public Button top_setBlock_closeBtn;
 
     public Text left_inventoryNumText;
     public RectTransform left_inventoryNumBgRt;
@@ -96,14 +96,14 @@ public class PlayMainPanel : BasePanel
     public List<Transform> bottom_adventure_herosTf;
 
 
-    public Button bottom_baseline_messageBtn;
-    public Text bottom_baseline_messageSignText;
+    //public Button bottom_baseline_messageBtn;
+   // public Text bottom_baseline_messageSignText;
 
 
     public List<byte> adventureTeamIDList = new List<byte>();
     byte adventureStartIndex = 0;
 
-    public bool IsShowMessageBlock = false;
+   // public bool IsShowMessageBlock = false;
     public bool IsShowResourcesBlock = false;
     public bool IsShowSetBlock = false;
 
@@ -132,8 +132,8 @@ public class PlayMainPanel : BasePanel
         //top_districtBtn.onClick.AddListener(delegate () { ShowDistrictMap(); });
 
         top_saveBtn.onClick.AddListener(delegate () { gci.GameSave(); });
-        top_setBtn.onClick.AddListener(delegate () { ShowSetBlock(); });
-        top_setBlock_closeBtn.onClick.AddListener(delegate () { HideSetBlock(); });
+        top_setBtn.onClick.AddListener(delegate () { SystemSetPanel.Instance.OnShow() ; });
+        //top_setBlock_closeBtn.onClick.AddListener(delegate () { HideSetBlock(); });
 
         top_pauseBtn.onClick.AddListener(delegate () { gci.TimePause(); });
         top_playBtn.onClick.AddListener(delegate () { gci.TimePlay(); });
@@ -148,19 +148,19 @@ public class PlayMainPanel : BasePanel
             else { ShowResourcesBlock(); }
         });
 
-        top_setBlock_volumeMusicSlider.onValueChanged.AddListener((value) =>
-        {
-            gc.SetVolumeMusic((byte)value);
-        });
-        top_setBlock_volumeSoundSlider.onValueChanged.AddListener((value) =>
-        {
-            gc.SetVolumeSound((byte)value);
-        });
+        //top_setBlock_volumeMusicSlider.onValueChanged.AddListener((value) =>
+        //{
+        //    gc.SetVolumeMusic((byte)value);
+        //});
+        //top_setBlock_volumeSoundSlider.onValueChanged.AddListener((value) =>
+        //{
+        //    gc.SetVolumeSound((byte)value);
+        //});
 
 
         bottom_adventureLastBtn.onClick.AddListener(delegate () { AdventureStartIndexToLast(); });
         bottom_adventureNextBtn.onClick.AddListener(delegate () { AdventureStartIndexToNext(); });
-        bottom_baseline_messageBtn.onClick.AddListener(delegate () { if (IsShowMessageBlock) { HideMessageBlock(); } else { ShowMessageBlock(); } });
+       // bottom_baseline_messageBtn.onClick.AddListener(delegate () { if (IsShowMessageBlock) { HideMessageBlock(); } else { ShowMessageBlock(); } });
     }
 
     public override void OnShow()
@@ -179,7 +179,7 @@ public class PlayMainPanel : BasePanel
         UpdateButtonHeroNum();
 
         HideResourcesBlock();
-        HideSetBlock();
+        //HideSetBlock();
         //UpdateTopDistrict();
         UpdateAdventurePageText();
         UpdateAdventureAll();
@@ -521,20 +521,20 @@ public class PlayMainPanel : BasePanel
         bottom_adventureRt[index].localScale = Vector2.zero;
     }
 
-    public void ShowMessageBlock()
-    {
-        // UpdateStatusBlock(districtID);
-       bottom_baseline_messageSignText.text = "消息框 ▼ ";
-        MessagePanel.Instance.OnShow(-2, 2);
-        IsShowMessageBlock = true;
-    }
-    public void HideMessageBlock()
-    {
-        // UpdateStatusBlock(districtID);
-        bottom_baseline_messageSignText.text = "消息框 ▲ ";
-        MessagePanel.Instance.OnHide();
-        IsShowMessageBlock = false;
-    }
+    //public void ShowMessageBlock()
+    //{
+    //    // UpdateStatusBlock(districtID);
+    //   bottom_baseline_messageSignText.text = "消息框 ▼ ";
+    //    MessagePanel.Instance.OnShow(-2, 2);
+    //    IsShowMessageBlock = true;
+    //}
+    //public void HideMessageBlock()
+    //{
+    //    // UpdateStatusBlock(districtID);
+    //    bottom_baseline_messageSignText.text = "消息框 ▲ ";
+    //    MessagePanel.Instance.OnHide();
+    //    IsShowMessageBlock = false;
+    //}
 
     public void UpdateResourcesBlock()
     {
@@ -587,19 +587,7 @@ public class PlayMainPanel : BasePanel
         IsShowResourcesBlock = false;
     }
 
-    public void ShowSetBlock()
-    {
-        top_setBlock_volumeMusicSlider.value = gc.volumeMusic;
-        top_setBlock_volumeSoundSlider.value = gc.volumeSound;
-        top_setBlockGo.SetActive(true);
-        IsShowSetBlock = true;
-    }
-
-    public void HideSetBlock()
-    {
-        top_setBlockGo.SetActive(false);
-        IsShowSetBlock = false;
-    }
+  
 
     public void UpdateButtonItemNum()
     {

@@ -41,6 +41,8 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public List<GameObject> dungeonGo;
     public List<GameObject> dungeonHeroListGo;
 
+    public GameObject numGo;
+
     Vector3 offset;
     RectTransform rt;
     //Vector3 pos;
@@ -56,6 +58,8 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public List<GameObject> districtPoint;
     public List<GameObject> dungeonPoint;
 
+    //对象池
+    public List<GameObject> numPool = new List<GameObject>();
     public List<GameObject> travellerGoPool = new List<GameObject>();
     public List<GameObject> teamGoPool = new List<GameObject>();
 
@@ -105,6 +109,18 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
     void Update()
     {
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (districtInfoBlockID != -1)
+            {
+                HideDistrictInfoBlock();
+            }
+            if (dungeonInfoBlockID != -1)
+            {
+                HideDungeonInfoBlock();
+            }
+        }
          //DragRangeLimit();
     }
 
@@ -508,6 +524,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
             go = travellerGoPool[0];
             go.transform.localScale = Vector2.one;
             travellerGoPool.RemoveAt(0);
+            go.GetComponent<AnimatiorControlByTraveller>().enabled = true;
         }
         else
         {
@@ -612,21 +629,21 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
                 go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/RolePic/" + gc.heroDic[gc.districtDic[districtID].heroList[i]].pic + "/Pic");
 
-                if (gc.heroDic[gc.districtDic[districtID].heroList[i]].adventureInTeam != -1)
-                {
-                    if (gc.adventureTeamList[gc.heroDic[gc.districtDic[districtID].heroList[i]].adventureInTeam].state == AdventureState.Doing)
-                    {
-                        go.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
-                    }
-                    else
-                    {
-                        go.transform.GetChild(0).GetComponent<Image>().color = Color.white;
-                    }
-                }
-                else
-                {
-                    go.transform.GetChild(0).GetComponent<Image>().color = Color.white;
-                }
+                //if (gc.heroDic[gc.districtDic[districtID].heroList[i]].adventureInTeam != -1)
+                //{
+                //    if (gc.adventureTeamList[gc.heroDic[gc.districtDic[districtID].heroList[i]].adventureInTeam].state == AdventureState.Doing)
+                //    {
+                //        go.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
+                //    }
+                //    else
+                //    {
+                //        go.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                //    }
+                //}
+                //else
+                //{
+                //    go.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                //}
             }
 
             districtHeroListGo[districtID].transform.GetComponent<RectTransform>().sizeDelta = new Vector2(6f + gc.districtDic[districtID].heroList.Count * 26f, 36f);
@@ -637,6 +654,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
         }
     }
+
 
 
     public void UpdateDungeonAll()
@@ -716,13 +734,30 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
         }
     }
 
-    //    GameObject go;
+    //显示收入数字
+    public void ShowNumText(short districtID, string content)
+    {
+        GameObject go;
+        if (numPool.Count > 0)
+        {
+            go = numPool[0];
+            numPool.RemoveAt(0);
+        }
+        else
+        {
+            go = Instantiate(Resources.Load("Prefab/Moment/Moment_Text")) as GameObject;
+            go.transform.SetParent(numGo.transform);
+            go.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
+            go.GetComponent<RectTransform>().anchorMax= new Vector2(0, 1);
+            go.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
+            go.GetComponent<MomentText>().pool = numPool;
+        }
 
-    //    go = Instantiate(Resources.Load("Prefab/UILabel/Label_MapGrid")) as GameObject;
-    //    go.transform.SetParent(buildingGo.transform);
-    //    go.GetComponent<RectTransform>().anchoredPosition = new Vector3(gridX * 16f, gridY * -16f, 0f);
-    //   // go.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/" + str + gc.buildingDic[buildingID].mapPic);
-    //    go.name = gridX +","+ gridY;
+        go.GetComponent<RectTransform>().anchoredPosition = districtGo[districtID].GetComponent<RectTransform>().anchoredPosition;
+
+
+        go.GetComponent<MomentText>().Play(content, districtGo[districtID].GetComponent<RectTransform>().anchoredPosition);
+    }
 
 
     /// <summary>
@@ -759,7 +794,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnDrag(PointerEventData eventData)
     {
         SetDraggedPosition(eventData);
-        Debug.Log(rt.position);
+        //Debug.Log(rt.position);
     }
 
     /// <summary>

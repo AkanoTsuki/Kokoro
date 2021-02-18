@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 public class MessagePanel : BasePanel
 {
     public static MessagePanel Instance;
@@ -10,7 +11,14 @@ public class MessagePanel : BasePanel
     GameControlInPlay gci;
     public GameObject messageListGo;
     public Scrollbar messageSb;
+
+    public Button modeBtn;
+    public Text modeText;
+    //public Button openOrCloseBtn;
+    //public Text openOrCloseText;
+
     int count = 0;
+    int mode = 86;
 
     void Awake()
     {
@@ -19,17 +27,52 @@ public class MessagePanel : BasePanel
         gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInPlay>();
     }
 
-    public void OnShow(int x,int y)
+    void Start()
     {
-
-        SetAnchoredPosition(x, y);
-
+        mode = 86;
+        modeText.text = "详细";
+        modeBtn.onClick.AddListener(delegate () {
+            if (mode==86)
+            {
+                SetMode(300);
+                modeText.text = "隐藏";
+            }
+            else if (mode == 300)
+            {
+                SetMode(0);
+                modeText.text = "显示";
+            }
+            else if (mode == 0)
+            {
+                SetMode(86);
+                modeText.text = "详细";
+            }
+        });
     }
 
-    public override void OnHide()
+    //public void OnShow(int y)
+    //{
+    //   // GetComponent<RectTransform>().DOLocalMoveY(y, 2f);
+    //    //SetAnchoredPosition(x, y);
+
+    //    //openOrCloseText.text = "隐藏";
+    //    //isShow = true;
+    //}
+
+    //public override void OnHide()
+    //{
+    //    //SetAnchoredPosition(0, 5000);
+
+    //    openOrCloseText.text = "显示";
+    //    isShow = false;
+    //}
+
+    void SetMode(int mode)
     {
-        SetAnchoredPosition(0, 5000);
+        GetComponent<RectTransform>().DOSizeDelta(new Vector2(500, mode),1f);
+        this.mode = mode;
     }
+
 
     public void UpdateAllInfo(GameControl gc)
     {
@@ -82,4 +125,7 @@ public class MessagePanel : BasePanel
         count++;
         messageSb.value = 1f;
     }
+
+
+
 }

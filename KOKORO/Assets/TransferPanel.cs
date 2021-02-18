@@ -73,14 +73,15 @@ public class TransferPanel : BasePanel
             nowRt.anchoredPosition = new Vector2(556f, -26f);
         }
 
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         isShow = true;
     }
 
     public override void OnHide()
     {
-        //SetAnchoredPosition(0, 5000);
-        gameObject.SetActive(false);
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         isShow = false;
     }
 

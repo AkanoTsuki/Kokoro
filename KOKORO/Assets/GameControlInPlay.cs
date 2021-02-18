@@ -7,6 +7,7 @@ public class GameControlInPlay : MonoBehaviour
     GameControl gc;
 
     public List<LogObject> needShowMessageList = new List<LogObject> { };
+    public byte tempTimeSpeed = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,17 +17,18 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.AreaMap);
         AreaMapPanel.Instance.OnShow(-288, 818);
         UIManager.Instance.InitPanel(UIPanelType.DistrictMain);
+        DistrictMainPanel.Instance.SetAnchoredPosition(0, -436);
+        DistrictMainPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.Building);
         BuildingPanel.Instance.SetAnchoredPosition(0, -436);
         BuildingPanel.Instance.OnHide();
-        UIManager.Instance.InitPanel(UIPanelType.Hero);
-        HeroPanel.Instance.OnHide();
+  
 
         UIManager.Instance.InitPanel(UIPanelType.Build);
         BuildPanel.Instance.SetAnchoredPosition(0, -432);
         BuildPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.Message);
-        MessagePanel.Instance.OnShow(-2, 2);
+        MessagePanel.Instance.SetAnchoredPosition(-2, 2);
 
         UIManager.Instance.InitPanel(UIPanelType.DistrictMap);
         DistrictMapPanel.Instance.nowDistrict = -1;
@@ -48,9 +50,13 @@ public class GameControlInPlay : MonoBehaviour
         AdventureSendPanel.Instance.SetAnchoredPosition(76, -104);
         AdventureSendPanel.Instance.OnHide();
 
-        //UIManager.Instance.InitPanel(UIPanelType.BuildingSelect);
+        UIManager.Instance.InitPanel(UIPanelType.Hero);
+        HeroPanel.Instance.OnHide();
+
         UIManager.Instance.InitPanel(UIPanelType.HeroSelect);
         HeroSelectPanel.Instance.OnHide();
+
+
 
         UIManager.Instance.InitPanel(UIPanelType.Market);
         MarketPanel.Instance.OnHide();
@@ -78,14 +84,17 @@ public class GameControlInPlay : MonoBehaviour
         UIManager.Instance.InitPanel(UIPanelType.PlayMain);
         PlayMainPanel.Instance.OnShow();
 
+        UIManager.Instance.InitPanel(UIPanelType.SystemSet);
+        SystemSetPanel.Instance.SetAnchoredPosition(0, 0);
+        SystemSetPanel.Instance.OnHide();
+
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
             if (gc.adventureTeamList[i].state == AdventureState.Doing)
             {
                 if (gc.adventureTeamList[i].action == AdventureAction.Fight)
                 {
-                    //gc.executeEventList.RemoveAt(0);
-                    //gc.AdventureEventHappen(i);
+
                     StartCoroutine(gc.AdventureFight(i));
                 }
                 else
@@ -96,13 +105,14 @@ public class GameControlInPlay : MonoBehaviour
                
         }
         Time.timeScale = gc.timeFlowSpeed;
+        tempTimeSpeed = gc.timeFlowSpeed;
         PlayMainPanel.Instance.UpdateTimeButtonState();
 
         gc.SetVolumeMusic(gc.volumeMusic);
         gc.SetVolumeSound(gc.volumeSound);
         InvokeRepeating("TimeFlow", 0, 0.05f );
         InvokeRepeating("SupplyAndDemandChangeRegular", 10f, 10f );
-        //InvokeRepeating("CustomerCome", 3f, 3f);
+        InvokeRepeating("CustomerCome", 3f, 3f);
         InvokeRepeating("TravellerCome", 3f, 3f);
         InvokeRepeating("AdventureTravellerCome", 10f, 10f);
 
@@ -190,6 +200,8 @@ public class GameControlInPlay : MonoBehaviour
                 PlayMainPanel.Instance.UpdateYearSeason(); 
                 gc.CreateSalesRecord(gc.timeYear, gc.timeMonth);
                 gc.CreateCustomerRecord(gc.timeYear, gc.timeMonth);
+                gc.DistrictBuildingExpenseAll();
+                gc.DistrictCreateFiscalAll();
             }
 
             gc.timeHour = 0;
@@ -197,6 +209,8 @@ public class GameControlInPlay : MonoBehaviour
             if (gc.timeWeek > 7) 
             { 
                 gc.timeWeek = 1;
+
+                gc.DistrictGetTaxPeopleAll();
             } 
         }
        
@@ -373,7 +387,7 @@ public class GameControlInPlay : MonoBehaviour
         }
         else
         {
-            DistrictMainPanel.Instance.OnShow(gc.districtDic[gc.nowCheckingDistrictID], 76, -104);
+            DistrictMainPanel.Instance.OnShow(gc.districtDic[gc.nowCheckingDistrictID]);
         }     
     }
 

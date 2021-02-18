@@ -5847,6 +5847,7 @@ GameObject:
   - component: {fileID: 6974894313075897889}
   - component: {fileID: 6974894313075897890}
   - component: {fileID: 6974894313075897895}
+  - component: {fileID: -2827819018624582195}
   m_Layer: 5
   m_Name: Panel_Market
   m_TagString: Untagged
@@ -5993,6 +5994,18 @@ MonoBehaviour:
   closeBtn: {fileID: 6974894313700484604}
   itemTypeBig: 0
   itemTypeSmall: 0
+--- !u!225 &-2827819018624582195
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974894313075897900}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6974894313081151977
 GameObject:
   m_ObjectHideFlags: 0

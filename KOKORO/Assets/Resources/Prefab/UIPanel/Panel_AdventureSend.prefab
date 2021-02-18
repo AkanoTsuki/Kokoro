@@ -6531,6 +6531,7 @@ GameObject:
   - component: {fileID: 9081122875981087092}
   - component: {fileID: 9081122875981087093}
   - component: {fileID: 9081122875981087097}
+  - component: {fileID: -1170999067673444461}
   m_Layer: 5
   m_Name: Panel_AdventureSend
   m_TagString: Untagged
@@ -6669,6 +6670,18 @@ MonoBehaviour:
   selectedDistrict: -1
   selectedDungeon: -1
   selectedTeam: -1
+--- !u!225 &-1170999067673444461
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081122875981087095}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &9081122876030272396
 GameObject:
   m_ObjectHideFlags: 0

@@ -161,14 +161,15 @@ public class SupplyAndDemandPanel : BasePanel
 
         UpdateAllInfo(districtID);
         SetAnchoredPosition(x, y);
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         transform.SetAsLastSibling();
         isShow = true;
     }
     public override void OnHide()
     {
-        //SetAnchoredPosition(0, 5000);
-        gameObject.SetActive(false);
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         isShow = false;
     }
     public void UpdateAllInfo(short districtID)

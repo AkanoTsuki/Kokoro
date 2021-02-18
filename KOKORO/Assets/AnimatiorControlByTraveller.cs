@@ -73,6 +73,7 @@ public class AnimatiorControlByTraveller : MonoBehaviour, IPointerEnterHandler, 
     public void Stop()
     {
         isPlay = false;
+        enabled = false;
     }
 
 
@@ -217,7 +218,7 @@ public class AnimatiorControlByTraveller : MonoBehaviour, IPointerEnterHandler, 
                 gameObject.transform.localScale = Vector2.zero;
                 AreaMapPanel.Instance.travellerGoPool.Add(gameObject);
 
-                if (gc.travellerDic[travellerID].heroList.Count>0)
+                if (gc.travellerDic[travellerID].heroList.Count > 0)//玩家的
                 {
                     if (gc.travellerDic[travellerID].endType == "District")
                     {
@@ -229,7 +230,7 @@ public class AnimatiorControlByTraveller : MonoBehaviour, IPointerEnterHandler, 
                         {
                             gc.AdventureBackDone(travellerID);
                         }
-                   
+
 
                     }
                     else if (gc.travellerDic[travellerID].endType == "Dungeon")
@@ -238,6 +239,19 @@ public class AnimatiorControlByTraveller : MonoBehaviour, IPointerEnterHandler, 
 
                     }
                 }
+                else//非玩家的
+                {
+                    if (gc.travellerDic[travellerID].endType == "District")
+                    {
+                        gc.DistrictGetTaxPass(gc.travellerDic[travellerID].endDistrictOrDungeonID, gc.travellerDic[travellerID].personNum);
+                    }
+                    else if (gc.travellerDic[travellerID].endType == "Dungeon")
+                    {
+                        gc.DistrictGetLogistics(gc.travellerDic[travellerID].startDistrictOrDungeonID, gc.travellerDic[travellerID].personNum);
+
+                    }
+                }
+
                 gc.travellerDic.Remove(travellerID);
             }
             else

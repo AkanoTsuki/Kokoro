@@ -28,13 +28,15 @@ public class DiplomacyPanel : BasePanel
     {
         UpdateList();
 
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         isShow = true;
     }
 
     public override void OnHide()
     {
-        gameObject.SetActive(false);
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         isShow = false;
     }
 

@@ -999,6 +999,7 @@ GameObject:
   - component: {fileID: 468633796127487013}
   - component: {fileID: 468633796127487012}
   - component: {fileID: 3904790966979405418}
+  - component: {fileID: 6312762305477357617}
   m_Layer: 5
   m_Name: Panel_HeroSelect
   m_TagString: Untagged
@@ -1103,6 +1104,18 @@ MonoBehaviour:
   doBtn: {fileID: 468633796110134719}
   closeBtn: {fileID: 468633796585493838}
   nowSelectedHeroID: -1
+--- !u!225 &6312762305477357617
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468633796127487009}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &468633796321196540
 GameObject:
   m_ObjectHideFlags: 0

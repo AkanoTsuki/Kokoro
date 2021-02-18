@@ -2117,6 +2117,7 @@ GameObject:
   - component: {fileID: 7363085684425848640}
   - component: {fileID: 7363085684425848641}
   - component: {fileID: 7363085684425848643}
+  - component: {fileID: -8362649588852200788}
   m_Layer: 5
   m_Name: Panel_AdventureTeam
   m_TagString: Untagged
@@ -2213,6 +2214,18 @@ MonoBehaviour:
   partListGo: {fileID: 7363085684045289041}
   closeBtn: {fileID: 7363085683815815592}
   nowTeam: 0
+--- !u!225 &-8362649588852200788
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7363085684425848655}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7363085684736296575
 GameObject:
   m_ObjectHideFlags: 0

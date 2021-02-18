@@ -10288,6 +10288,7 @@ GameObject:
   - component: {fileID: 6216849960573331300}
   - component: {fileID: 6216849960573331301}
   - component: {fileID: 4632263886075106786}
+  - component: {fileID: 5103423192103483898}
   m_Layer: 5
   m_Name: Panel_SkillListAndInfo
   m_TagString: Untagged
@@ -10469,6 +10470,18 @@ MonoBehaviour:
   nowDistrictID: -1
   nowHeroID: -1
   nowHeroSkillIndex: -1
+--- !u!225 &5103423192103483898
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6216849960573331303}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6216849960578344348
 GameObject:
   m_ObjectHideFlags: 0

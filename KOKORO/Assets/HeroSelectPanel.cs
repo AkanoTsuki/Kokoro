@@ -37,7 +37,8 @@ public class HeroSelectPanel : BasePanel
 
         UpdateAllInfo(type, districtID, buildingID, columns);
         SetAnchoredPosition(x, y);
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         isShow = true;
 
     }
@@ -45,7 +46,13 @@ public class HeroSelectPanel : BasePanel
     public override void OnHide()
     {
         //SetAnchoredPosition(0, 5000);
-        gameObject.SetActive(false);
+        if (HeroPanel.Instance.isShow)
+        {
+            HeroPanel.Instance.OnHide();
+        }
+
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         isShow = false;
     }
     public void UpdateDesInfo()

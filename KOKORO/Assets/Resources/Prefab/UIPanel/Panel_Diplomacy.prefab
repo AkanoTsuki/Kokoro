@@ -593,6 +593,7 @@ GameObject:
   - component: {fileID: 2418879463120213640}
   - component: {fileID: 2418879463120213641}
   - component: {fileID: 7940439879684910317}
+  - component: {fileID: 2677974068006185204}
   m_Layer: 5
   m_Name: Panel_Diplomacy
   m_TagString: Untagged
@@ -689,6 +690,18 @@ MonoBehaviour:
   isShow: 0
   forceListGo: {fileID: 2418879462972270825}
   closeBtn: {fileID: 2418879461786583697}
+--- !u!225 &2677974068006185204
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418879463120213643}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2418879463127716976
 GameObject:
   m_ObjectHideFlags: 0

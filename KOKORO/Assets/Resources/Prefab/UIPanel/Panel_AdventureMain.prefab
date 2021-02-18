@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 1562694158207019200}
   - component: {fileID: 1562694158207019201}
   - component: {fileID: 1562694158207019207}
+  - component: {fileID: 5348678106398372107}
   m_Layer: 5
   m_Name: Panel_AdventureMain
   m_TagString: Untagged
@@ -345,7 +346,19 @@ MonoBehaviour:
   effectPool: []
   numPool: []
   talkPool: []
-  nowSelectDungeonID: -1
+  nowCheckingTeamID: -1
+--- !u!225 &5348678106398372107
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562694158207019203}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1562694158678499604
 GameObject:
   m_ObjectHideFlags: 0

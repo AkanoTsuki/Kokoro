@@ -166,7 +166,8 @@ public class SkillListAndInfoPanel : BasePanel
         nowHeroSkillIndex = heroSkillIndex;
 
         SetAnchoredPosition(x, y);
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         transform.SetAsLastSibling();
 
         isShow = true;
@@ -223,7 +224,8 @@ public class SkillListAndInfoPanel : BasePanel
         UpdateAllInfo(districtID, null, -1, 0);
         HideBatch();
         SetAnchoredPosition(x, y);
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         transform.SetAsLastSibling();
         nowDistrictID = districtID;
         isShow = true;
@@ -233,8 +235,9 @@ public class SkillListAndInfoPanel : BasePanel
 
     public override void OnHide()
     {
-        
-        gameObject.SetActive(false);
+
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         nowSkillID = -1;
         nowDistrictID = -1;
         isShow = false;

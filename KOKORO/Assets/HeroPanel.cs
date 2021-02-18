@@ -27,6 +27,8 @@ public class HeroPanel : BasePanel
     public Text infoFight_des2Text;
     public Text infoWork_desText;
 
+    public RectTransform equipRt;
+
     public Text equip_titleText;
     public Button equip_weaponBtn;
     public Button equip_subhandBtn;
@@ -72,7 +74,9 @@ public class HeroPanel : BasePanel
     public Button equip_finger1UnSetBtn;
     public Button equip_finger2UnSetBtn;
 
-   // public Text skill_titleText;
+    public RectTransform skillRt;
+
+    // public Text skill_titleText;
     public List<Button> skill_Btn;
     public List<Image> skill_Image;
     public List<Text> skill_Text;
@@ -147,12 +151,18 @@ public class HeroPanel : BasePanel
         SetTotalButton(-1,heroObject.id, false);
         UpdateEquipButtonStatus();
         SetAnchoredPosition(x, y);
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         transform.SetAsLastSibling();
+
+        equipRt.localScale = Vector2.one;
+        skillRt.localScale = Vector2.one;
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(559f,520f);
 
         isShow = true;
     }
 
+    //征募用
     public void OnShow(int buildingID, HeroObject heroObject,  int x, int y)
     {
 
@@ -162,15 +172,21 @@ public class HeroPanel : BasePanel
         SetTotalButton(buildingID, heroObject.id,  true);
         UpdateEquipButtonStatus();
         SetAnchoredPosition(x, y);
-        gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         transform.SetAsLastSibling();
+
+        equipRt.localScale = Vector2.zero;
+        skillRt.localScale = Vector2.zero;
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(307f, 520f);
 
         isShow = true;
     }
 
     public override void OnHide()
     {
-        gameObject.SetActive(false);
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         isShow = false;
     }
 
@@ -180,6 +196,7 @@ public class HeroPanel : BasePanel
         {
             skillBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             dataAndHistoryBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
+            totalSet_equipBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             recruitBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             recruitBtn.onClick.RemoveAllListeners();
             recruitBtn.onClick.AddListener(delegate () {
@@ -191,6 +208,7 @@ public class HeroPanel : BasePanel
         {
             skillBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             dataAndHistoryBtn.GetComponent<RectTransform>().localScale = Vector2.one;
+            totalSet_equipBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             recruitBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
     }

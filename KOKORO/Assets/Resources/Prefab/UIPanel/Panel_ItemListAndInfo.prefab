@@ -3851,6 +3851,7 @@ GameObject:
   - component: {fileID: 1285088644889889341}
   - component: {fileID: 1285088644889889340}
   - component: {fileID: 7002038170165974043}
+  - component: {fileID: 3175511748988430971}
   m_Layer: 5
   m_Name: Panel_ItemListAndInfo
   m_TagString: Untagged
@@ -4069,6 +4070,19 @@ MonoBehaviour:
   closeBtn: {fileID: 1285088643489160740}
   nowItemID: -1
   nowEquipPart: 0
+  nowDistrictID: -1
+--- !u!225 &3175511748988430971
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285088644889889342}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1285088645149375226
 GameObject:
   m_ObjectHideFlags: 0

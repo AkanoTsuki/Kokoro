@@ -52,13 +52,19 @@ public class BuildPanel : BasePanel
         {
             BuildingPanel.Instance.OnHide();
         }
-        gameObject.SetActive(true);
+        if (DistrictMainPanel.Instance.isShow)
+        {
+            DistrictMainPanel.Instance.OnHide();
+        }
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         isShow = true;
     }
 
     public override void OnHide()
     {
-        gameObject.SetActive(false);
+        GetComponent<CanvasGroup>().alpha = 0f;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         isShow = false;
     }
 
