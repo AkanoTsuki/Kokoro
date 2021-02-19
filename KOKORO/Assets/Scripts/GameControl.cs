@@ -309,13 +309,6 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        //Debug.Log("1heroDic.Count=" + heroDic.Count);
-        //CreateHero(1);
-        //Debug.Log("2heroDic.Count=" + heroDic.Count);
-    }
-
     #region 【通用方法】生成英雄、道具、技能,英雄升级,英雄改名,招募，解雇
     public void HeroChangeName(int heroID, string newName)
     {
@@ -4543,6 +4536,13 @@ public class GameControl : MonoBehaviour
     #endregion
 
     #region 【方法】冒险
+    void AdventureTeamLogAdd(byte teamID, string str)
+    {
+        adventureTeamList[teamID].log.Add(str);
+        AdventureMainPanel.Instance.UpdateLogContent(teamID);
+    }
+
+
     public void AdventureTeamSetDungeon(byte teamID, short dungeonID)
     {
 
@@ -4777,20 +4777,20 @@ public class GameControl : MonoBehaviour
             {
                 heroDic[adventureTeamList[teamID].heroIDList[i]].countAdventureDone++;
             }
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "探险队完成任务回来了");
+            AdventureTeamLogAdd(teamID, "探险队完成任务回来了");
             MessagePanel.Instance.AddMessage("第" + (teamID + 1) + "探险队完成任务回来了");
         }
         else if (adventureState == AdventureState.Fail)
         {
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "探险队全灭");
+            AdventureTeamLogAdd(teamID, "探险队全灭");
             MessagePanel.Instance.AddMessage("第" + (teamID + 1) + "探险队全灭");
         }
         else if (adventureState == AdventureState.Retreat)
         {
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "探险队撤退回来了");
+            AdventureTeamLogAdd(teamID, "探险队撤退回来了");
             MessagePanel.Instance.AddMessage("第" + (teamID + 1) + "探险队撤退回来了");
         }
-        AdventureMainPanel.Instance.TeamLogAdd(teamID, "本次探险于" + OutputDateStr(adventureTeamList[teamID].standardTimeStart, "Y年M月D日") + "出发," + OutputDateStr(standardTime, "Y年M月D日") + "返回,耗时" + OutputUseDateStr(adventureTeamList[teamID].standardTimeStart, standardTime) + "天");
+        AdventureTeamLogAdd(teamID, "本次探险于" + OutputDateStr(adventureTeamList[teamID].standardTimeStart, "Y年M月D日") + "出发," + OutputDateStr(standardTime, "Y年M月D日") + "返回,耗时" + OutputUseDateStr(adventureTeamList[teamID].standardTimeStart, standardTime) + "天");
         PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
         if (AreaMapPanel.Instance.dungeonInfoBlockID == adventureTeamList[teamID].dungeonID)
         {
@@ -5290,7 +5290,7 @@ public class GameControl : MonoBehaviour
 
                 break;
         }
-        AdventureMainPanel.Instance.TeamLogAdd(teamID, log);
+        AdventureTeamLogAdd(teamID, log);
 
 
         yield return new WaitForSeconds(1f);
@@ -5360,7 +5360,7 @@ public class GameControl : MonoBehaviour
                     {
                         adventureTeamList[teamID].heroHpList[i] = 1;
                     }
-                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[触发陷阱]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>损失10%体力");
+                    AdventureTeamLogAdd(teamID, "[触发陷阱]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>损失10%体力");
                     AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "weapon_2", 1f);
                     AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#F86A43>-" + (int)(GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
                 }
@@ -5374,7 +5374,7 @@ public class GameControl : MonoBehaviour
                     {
                         adventureTeamList[teamID].heroMpList[i] = 1;
                     }
-                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[触发陷阱]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>损失10%魔力");
+                    AdventureTeamLogAdd(teamID, "[触发陷阱]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>损失10%魔力");
                     AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "weapon_2", 1f);
                     AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#D76FFA>-" + (int)(GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
                 }
@@ -5388,7 +5388,7 @@ public class GameControl : MonoBehaviour
                     {
                         adventureTeamList[teamID].heroHpList[i] = GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]);
                     }
-                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[生命之泉]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>恢复10%体力");
+                    AdventureTeamLogAdd(teamID, "[生命之泉]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>恢复10%体力");
                     AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "impact_6", 1f);
                     AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#6EFB6F>+" + (int)(GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
                 }
@@ -5402,7 +5402,7 @@ public class GameControl : MonoBehaviour
                     {
                         adventureTeamList[teamID].heroMpList[i] = GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]);
                     }
-                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[智慧之泉]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>恢复10%魔力");
+                    AdventureTeamLogAdd(teamID, "[智慧之泉]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>恢复10%魔力");
                     AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "impact_5", 1f);
                     AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#6FAAFA>+" + (int)(GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
                 }
@@ -5674,7 +5674,7 @@ public class GameControl : MonoBehaviour
 
 
 
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "遭遇了" + monsterNameList + ",开始战斗！");
+            AdventureTeamLogAdd(teamID, "遭遇了" + monsterNameList + ",开始战斗！");
             PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
             if (AreaMapPanel.Instance.dungeonInfoBlockID == adventureTeamList[teamID].dungeonID)
             {
@@ -5755,12 +5755,12 @@ public class GameControl : MonoBehaviour
                             break;
                         case FightBuffType.Poison://每回合5%伤害
                             //造成伤害
-                            AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber[i]) + "受到" + (int)(actionMenber[i].hp * 0.05f) + "点中毒伤害");
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber[i]) + "受到" + (int)(actionMenber[i].hp * 0.05f) + "点中毒伤害");
                             actionMenber[i].hpNow -= (int)(actionMenber[i].hp * 0.05f);
                             if (actionMenber[i].hpNow < 0)
                             {
                                 actionMenber[i].hpNow = 0;
-                                AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber[i]) + "被打倒了！");
+                                AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber[i]) + "被打倒了！");
                             }
 
                             break;
@@ -5976,11 +5976,11 @@ public class GameControl : MonoBehaviour
                                                         targetMenber[j].buff.Add(new FightBuff(FightBuffType.Dizzy, 0, (byte)sp.DizzyValue));
                                                     }
 
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "眩晕了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "眩晕了");
                                                 }
                                                 else
                                                 {
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "眩晕效果未生效");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "眩晕效果未生效");
                                                 }
                                             }
                                             if (sp.Confusion != 0)
@@ -6004,11 +6004,11 @@ public class GameControl : MonoBehaviour
                                                         targetMenber[j].buff.Add(new FightBuff(FightBuffType.Confusion, 0, (byte)sp.DizzyValue));
                                                     }
 
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "混乱了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "混乱了");
                                                 }
                                                 else
                                                 {
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "混乱效果未生效");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "混乱效果未生效");
                                                 }
                                             }
                                             if (sp.Sleep != 0)
@@ -6032,11 +6032,11 @@ public class GameControl : MonoBehaviour
                                                         targetMenber[j].buff.Add(new FightBuff(FightBuffType.Sleep, 0, (byte)sp.SleepValue));
                                                     }
 
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "睡眠了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "睡眠了");
                                                 }
                                                 else
                                                 {
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "睡眠效果未生效");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "睡眠效果未生效");
                                                 }
                                             }
                                             if (sp.Poison != 0)
@@ -6060,11 +6060,11 @@ public class GameControl : MonoBehaviour
                                                         targetMenber[j].buff.Add(new FightBuff(FightBuffType.Poison, 0, (byte)sp.PoisonValue));
                                                     }
 
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "中毒了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "中毒了");
                                                 }
                                                 else
                                                 {
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "中毒效果未生效");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "中毒效果未生效");
                                                 }
                                             }
                                             AdventureMainPanel.Instance.UpdateSceneRoleBuffSingle(teamID, targetMenber[j]);
@@ -6115,7 +6115,7 @@ public class GameControl : MonoBehaviour
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpAtk, (byte)(sp.UpAtk * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].atkMin += (short)(targetMenber[j].atkMin * (sp.UpAtk * (1f + skillLevelUp) / 100f));
                                                     targetMenber[j].atkMax += (short)(targetMenber[j].atkMax * (sp.UpAtk * (1f + skillLevelUp) / 100f));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理攻击提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理攻击提升了");
                                                 }
                                             }
                                             if (sp.UpMAtk != 0)
@@ -6130,7 +6130,7 @@ public class GameControl : MonoBehaviour
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMAtk, (byte)(sp.UpMAtk * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].mAtkMin += (short)(targetMenber[j].mAtkMin * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
                                                     targetMenber[j].mAtkMax += (short)(targetMenber[j].mAtkMax * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法攻击提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法攻击提升了");
                                                 }
                                             }
                                             if (sp.UpDef != 0)
@@ -6144,7 +6144,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDef, (byte)(sp.UpDef * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].def += (short)(targetMenber[j].def * (sp.UpDef * (1f + skillLevelUp) / 100f));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理防御提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理防御提升了");
                                                 }
                                             }
                                             if (sp.UpMDef != 0)
@@ -6158,7 +6158,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMDef, (byte)(sp.UpMDef * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].mDef += (short)(targetMenber[j].mDef * (sp.UpMDef * (1f + skillLevelUp) / 100f));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法防御提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法防御提升了");
                                                 }
                                             }
                                             if (sp.UpHit != 0)
@@ -6172,7 +6172,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpHit, (byte)(sp.UpHit * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].hit += (short)(targetMenber[j].hit * (sp.UpHit * (1f + skillLevelUp) / 100f));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "命中提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "命中提升了");
                                                 }
                                             }
                                             if (sp.UpDod != 0)
@@ -6186,7 +6186,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDod, (byte)(sp.UpDod * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].dod += (short)(targetMenber[j].dod * (sp.UpDod * (1f + skillLevelUp) / 100f));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "闪避提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "闪避提升了");
                                                 }
                                             }
                                             if (sp.UpCriD != 0)
@@ -6200,7 +6200,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpCriD, (byte)(sp.UpCriD * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].criD += (short)(targetMenber[j].criD * (sp.UpCriD * (1f + skillLevelUp) / 100f));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暴击伤害提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暴击伤害提升了");
                                                 }
                                             }
 
@@ -6215,7 +6215,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindDam, (byte)(sp.UpWindDam * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].windDam += (short)(sp.UpWindDam * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系伤害提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系伤害提升了");
                                                 }
                                             }
                                             if (sp.UpFireDam != 0)
@@ -6229,7 +6229,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireDam, (byte)(sp.UpFireDam * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].fireDam += (short)(sp.UpFireDam * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系伤害提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系伤害提升了");
                                                 }
                                             }
                                             if (sp.UpWaterDam != 0)
@@ -6243,7 +6243,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterDam, (byte)(sp.UpWaterDam * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].waterDam += (short)(sp.UpWaterDam * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系伤害提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系伤害提升了");
                                                 }
                                             }
                                             if (sp.UpGroundDam != 0)
@@ -6257,7 +6257,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundDam, (byte)(sp.UpGroundDam * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].groundDam += (short)(sp.UpGroundDam * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系伤害提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系伤害提升了");
                                                 }
                                             }
                                             if (sp.UpLightDam != 0)
@@ -6271,7 +6271,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightDam, (byte)(sp.UpLightDam * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].lightDam += (short)(sp.UpLightDam * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系伤害提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系伤害提升了");
                                                 }
                                             }
                                             if (sp.UpDarkDam != 0)
@@ -6285,7 +6285,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkDam, (byte)(sp.UpDarkDam * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].darkDam += (short)(sp.UpDarkDam * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系伤害提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系伤害提升了");
                                                 }
                                             }
 
@@ -6300,7 +6300,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindRes, (byte)(sp.UpWindRes * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].windRes += (short)(sp.UpWindRes * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系抗性提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系抗性提升了");
                                                 }
                                             }
                                             if (sp.UpFireRes != 0)
@@ -6314,7 +6314,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireRes, (byte)(sp.UpFireRes * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].fireRes += (short)(sp.UpFireRes * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系抗性提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系抗性提升了");
                                                 }
                                             }
                                             if (sp.UpWaterRes != 0)
@@ -6328,7 +6328,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterRes, (byte)(sp.UpWaterRes * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].waterRes += (short)(sp.UpWaterRes * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系抗性提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系抗性提升了");
                                                 }
                                             }
                                             if (sp.UpGroundRes != 0)
@@ -6342,7 +6342,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundRes, (byte)(sp.UpGroundRes * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].groundRes += (short)(sp.UpGroundRes * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系抗性提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系抗性提升了");
                                                 }
                                             }
                                             if (sp.UpLightRes != 0)
@@ -6356,7 +6356,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightRes, (byte)(sp.UpLightRes * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].lightRes += (short)(sp.UpLightRes * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系抗性提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系抗性提升了");
                                                 }
                                             }
                                             if (sp.UpDarkRes != 0)
@@ -6370,7 +6370,7 @@ public class GameControl : MonoBehaviour
                                                 {
                                                     targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkRes, (byte)(sp.UpDarkRes * (1f + skillLevelUp)), 2));
                                                     targetMenber[j].darkRes += (short)(sp.UpDarkRes * (1f + skillLevelUp));
-                                                    AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系抗性提升了");
+                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系抗性提升了");
                                                 }
                                             }
 
@@ -6385,7 +6385,7 @@ public class GameControl : MonoBehaviour
                                             {
                                                 short gold = (short)(DataManager.mMonsterDict[targetMenber[j].objectID].GoldDrop * (so.gold / 100f));
                                                 adventureTeamList[teamID].getGold += gold;
-                                                AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber[i]) + "从" + OutputNameWithColor(targetMenber[j]) + "夺得" + gold + "金币");
+                                                AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber[i]) + "从" + OutputNameWithColor(targetMenber[j]) + "夺得" + gold + "金币");
                                             }
                                         }
                                     }
@@ -6590,7 +6590,7 @@ public class GameControl : MonoBehaviour
         }
         if (adventureTeamList[teamID].fightRound > RoundLimit)
         {
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "超过" + RoundLimit + "回合");
+            AdventureTeamLogAdd(teamID, "超过" + RoundLimit + "回合");
             CheckFightOverResult = 1;
         }
 
@@ -6644,7 +6644,7 @@ public class GameControl : MonoBehaviour
 
             }
 
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "战斗胜利！获得[经验值" + getExp + "][金币" + getGold + "] " + getStr);
+            AdventureTeamLogAdd(teamID, "战斗胜利！获得[经验值" + getExp + "][金币" + getGold + "] " + getStr);
 
 
             //Debug.Log("adventureTeamList[teamID]" + adventureTeamList[teamID].state + " adventureTeamList[teamID].action=" + adventureTeamList[teamID].action);
@@ -6664,7 +6664,7 @@ public class GameControl : MonoBehaviour
         }
         else if (CheckFightOverResult == 1)
         {
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "被击败了！");
+            AdventureTeamLogAdd(teamID, "被击败了！");
 
             for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
             {
@@ -6679,7 +6679,7 @@ public class GameControl : MonoBehaviour
         {
             if (adventureTeamList[teamID].state == AdventureState.Retreat)
             {
-                AdventureMainPanel.Instance.TeamLogAdd(teamID, "撤出战斗！");
+                AdventureTeamLogAdd(teamID, "撤出战斗！");
 
                 for (int i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
                 {
@@ -6706,7 +6706,7 @@ public class GameControl : MonoBehaviour
     void Miss(byte teamID, int round, FightMenberObject actionMenber, FightMenberObject targetMenber)
     {
         AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "闪避");
-        AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber) + "避开了" + OutputNameWithColor(actionMenber) + "的攻击");
+        AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber) + "避开了" + OutputNameWithColor(actionMenber) + "的攻击");
     }
 
     IEnumerator Attack(byte teamID, FightMenberObject actionMenber, SkillPrototype sp)
@@ -6846,7 +6846,7 @@ public class GameControl : MonoBehaviour
 
         AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, targetMenber);
         AdventureMainPanel.Instance.UpdateHeroHpMpSingle(teamID, targetMenber);
-        AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + round + "]" + (sp != null ? OutputNameWithColor(actionMenber) + "用<color=#4FA3C1>" + sp.Name + "</color>" : "") + "恢复" + OutputNameWithColor(targetMenber) + "<color=#86E3C9>" + cureTotalStr + "</color>点" + (attribute == Attribute.Hp ? "体力" : "魔力"));
+        AdventureTeamLogAdd(teamID, "[回合" + round + "]" + (sp != null ? OutputNameWithColor(actionMenber) + "用<color=#4FA3C1>" + sp.Name + "</color>" : "") + "恢复" + OutputNameWithColor(targetMenber) + "<color=#86E3C9>" + cureTotalStr + "</color>点" + (attribute == Attribute.Hp ? "体力" : "魔力"));
 
     }
 
@@ -6952,12 +6952,12 @@ public class GameControl : MonoBehaviour
         }
         AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, targetMenber);
         AdventureMainPanel.Instance.UpdateHeroHpMpSingle(teamID, targetMenber);
-        AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + round + "]" + OutputNameWithColor(actionMenber) + (sp != null ? "用<color=#4FA3C1>" + sp.Name + "</color>" : "普通攻击") + "对" + OutputNameWithColor(targetMenber) + "造成<color=#EC838F>" + damageTotalStr + "</color>点伤害");
+        AdventureTeamLogAdd(teamID, "[回合" + round + "]" + OutputNameWithColor(actionMenber) + (sp != null ? "用<color=#4FA3C1>" + sp.Name + "</color>" : "普通攻击") + "对" + OutputNameWithColor(targetMenber) + "造成<color=#EC838F>" + damageTotalStr + "</color>点伤害");
 
         if (targetMenber.hpNow == 0)
         {
             AdventureMainPanel.Instance.SetAnim(teamID, targetMenber.side, targetMenber.sideIndex, AnimStatus.Death);
-            AdventureMainPanel.Instance.TeamLogAdd(teamID, "[回合" + round + "]" + OutputNameWithColor(targetMenber) + "被打倒了！");
+            AdventureTeamLogAdd(teamID, "[回合" + round + "]" + OutputNameWithColor(targetMenber) + "被打倒了！");
 
             if (targetMenber.side == 0)
             {
