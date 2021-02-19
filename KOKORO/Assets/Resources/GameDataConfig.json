@@ -12891,31 +12891,31 @@
       "Des": "位于克克洛地区中部的大城市，整个公国的中枢",
       "Pic": "city_1",
       "Music": "04TheCapital1",
-      "ScenePic": "sg_seaside",
+      "ScenePic": "sg_grass",
       "SceneBgPic": "Empty",
       "SceneBorderUpPic": [
-        "bb_forest_3",
-        "bb_forest_2",
-        "bb_forest_0",
-        "bb_forest_4",
-        "bb_forest_2",
-        "bb_forest_3"
+        "bb_grass_3",
+        "bb_grass_2",
+        "bb_grass_0",
+        "bb_grass_4",
+        "bb_grass_2",
+        "bb_grass_3"
       ],
       "SceneBorderMidPic": [
-        "bb_forest_0",
-        "bb_forest_3",
-        "bb_forest_0",
-        "bb_forest_3",
-        "bb_forest_4",
-        "bb_forest_3"
+        "bb_grass_0",
+        "bb_grass_3",
+        "bb_forest_2",
+        "bb_grass_3",
+        "bb_grass_4",
+        "bb_grass_3"
       ],
       "SceneBorderDownPic": [
-        "bb_forest_0",
-        "bb_forest_2",
-        "bb_forest_0",
-        "bb_forest_2",
+        "bb_grass_0",
+        "bb_grass_2",
+        "bb_grass_0",
+        "bb_grass_2",
         "bb_forest_4",
-        "bb_forest_3"
+        "bb_grass_3"
       ],
       "InitLevel": 2,
       "MaxLevel": 5,
@@ -13088,7 +13088,7 @@
       "Pic": "city_1",
       "Music": "",
       "ScenePic": "sg_dirt",
-      "SceneBgPic": "Empty",
+      "SceneBgPic": "sb_hill",
       "SceneBorderUpPic": [
         "bb_hill_2",
         "bb_hill_3",
@@ -13136,8 +13136,8 @@
       "Des": "位于南部热带丛林东侧河原上的小镇",
       "Pic": "town_2",
       "Music": "02Happyvilla",
-      "ScenePic": "sg_forest",
-      "SceneBgPic": "sb_forest",
+      "ScenePic": "sg_river",
+      "SceneBgPic": "Empty",
       "SceneBorderUpPic": [
         "bb_forest_3",
         "bb_forest_2",
@@ -13184,8 +13184,8 @@
       "Des": "位于南部热带丛林南侧的小镇，不少前往布利森林的冒险者都选择这里做后勤点",
       "Pic": "town_1",
       "Music": "",
-      "ScenePic": "sg_seaside",
-      "SceneBgPic": "Empty",
+      "ScenePic": "sg_forest",
+      "SceneBgPic": "sb_hill",
       "SceneBorderUpPic": [
         "bb_forest_3",
         "bb_forest_2",
@@ -13232,8 +13232,8 @@
       "Des": "东北部平原地区的小镇，土地肥沃，农业十分发达，北部就是大片的原始森林",
       "Pic": "town_2",
       "Music": "",
-      "ScenePic": "sg_seaside",
-      "SceneBgPic": "Empty",
+      "ScenePic": "sg_forest",
+      "SceneBgPic": "sb_forest",
       "SceneBorderUpPic": [
         "bb_forest_3",
         "bb_forest_2",
@@ -13283,31 +13283,31 @@
       "Des": "特拉桑草原上的村子，是很多新人踏上冒险者旅程的起点",
       "Pic": "village_2",
       "Music": "12HappyVillage1",
-      "ScenePic": "sg_seaside",
+      "ScenePic": "sg_grass",
       "SceneBgPic": "Empty",
       "SceneBorderUpPic": [
-        "bb_forest_3",
-        "bb_forest_2",
-        "bb_forest_0",
-        "bb_forest_4",
-        "bb_forest_2",
-        "bb_forest_3"
+        "bb_grass_3",
+        "bb_grass_2",
+        "bb_grass_0",
+        "bb_grass_4",
+        "bb_grass_2",
+        "bb_grass_3"
       ],
       "SceneBorderMidPic": [
-        "bb_forest_3",
-        "bb_forest_2",
-        "bb_forest_0",
-        "bb_forest_4",
-        "bb_forest_2",
-        "bb_forest_3"
+        "bb_grass_4",
+        "bb_grass_3",
+        "bb_grass_2",
+        "bb_grass_2",
+        "bb_grass_3",
+        "bb_grass_2"
       ],
       "SceneBorderDownPic": [
-        "bb_forest_3",
-        "bb_forest_2",
-        "bb_forest_0",
-        "bb_forest_4",
-        "bb_forest_2",
-        "bb_forest_3"
+        "bb_grass_3",
+        "bb_grass_2",
+        "bb_grass_0",
+        "bb_grass_4",
+        "bb_grass_2",
+        "bb_grass_3"
       ],
       "InitLevel": 1,
       "MaxLevel": 3,
@@ -13331,23 +13331,23 @@
       "Des": "位于帕拉然河南岸，以英雄王“布罗德”命名的村子，这里流传着很多冒险者的传奇故事",
       "Pic": "village_2",
       "Music": "",
-      "ScenePic": "sg_seaside",
+      "ScenePic": "sg_river",
       "SceneBgPic": "Empty",
       "SceneBorderUpPic": [
-        "bb_forest_3",
+        "bb_grass_3",
         "bb_forest_2",
-        "bb_forest_0",
+        "bb_grass_0",
         "bb_forest_4",
-        "bb_forest_2",
+        "bb_grass_2",
         "bb_forest_3"
       ],
       "SceneBorderMidPic": [
         "bb_forest_3",
-        "bb_forest_2",
+        "bb_grass_2",
         "bb_forest_0",
-        "bb_forest_4",
+        "bb_grass_4",
         "bb_forest_2",
-        "bb_forest_3"
+        "bb_grass_3"
       ],
       "SceneBorderDownPic": [
         "bb_forest_3",
