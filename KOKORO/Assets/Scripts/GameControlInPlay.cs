@@ -203,6 +203,7 @@ public class GameControlInPlay : MonoBehaviour
                 gc.CreateCustomerRecord(gc.timeYear, gc.timeMonth);
                 gc.DistrictBuildingExpenseAll();
                 gc.DistrictCreateFiscalAll();
+                gc.PayHeroSalary();
             }
 
             gc.timeHour = 0;
@@ -212,6 +213,7 @@ public class GameControlInPlay : MonoBehaviour
                 gc.timeWeek = 1;
 
                 gc.DistrictGetTaxPeopleAll();
+                gc.DistrictPeopleFoodExpenseAll();
             } 
         }
        

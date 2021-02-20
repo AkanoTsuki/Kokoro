@@ -12,8 +12,10 @@ public class DistrictMainPanel : BasePanel
     public Text desText;
     public Text contentText;
     public Image hpImage;
+    public Text prosperousText;
 
     public Text peopleText;
+    public Text satisfactionText;
 
     public Text fiscal0Text;
     public Text fiscal1Text;

@@ -309,7 +309,7 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    #region 【通用方法】生成英雄、道具、技能,英雄升级,英雄改名,招募，解雇
+    #region 【通用方法】生成英雄、道具、技能,英雄升级,英雄改名,招募，解雇,发工资
     public void HeroChangeName(int heroID, string newName)
     {
         heroDic[heroID].name = newName;
@@ -397,9 +397,9 @@ public class GameControl : MonoBehaviour
             }
         }
 
-        
+        short salary = (short)(Random.Range(50, 150) * groupRate);
 
-        return new HeroObject(heroID, name, heroTypeID, 1, 0, sexCode, pic, groupRate, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
+        return new HeroObject(heroID, name, heroTypeID, 1, 0, sexCode, pic, salary,groupRate, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
             (short)hp, (short)mp, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workMakeScroll, workSundry,
@@ -536,6 +536,13 @@ public class GameControl : MonoBehaviour
 
     public void HeroRecruit(int buildingID,int heroID,short forceID)
     {
+        if (heroDic[heroID].salary > forceDic[forceID].gold)
+        {
+            MessagePanel.Instance.AddMessage("金币不足，无法招募/解雇。（需要："+ heroDic[heroID].salary +" 当前：" + forceDic[forceID].gold + "）");
+            return;
+        }
+
+
         short oldForceID = heroDic[heroID].force;
 
         heroDic[heroID].force = forceID;
@@ -563,6 +570,35 @@ public class GameControl : MonoBehaviour
         PlayMainPanel.Instance.UpdateButtonHeroNum();
         HeroPanel.Instance.OnHide();
     }
+
+    //结算英雄工资（全部势力）
+    public void PayHeroSalary()
+    {
+        int count = 0;
+        int salary;
+        foreach (KeyValuePair<int, HeroObject> kvp in heroDic)
+        {
+            if (kvp.Value.force != -1)
+            {
+                salary = kvp.Value.salary;
+                if (forceDic[kvp.Value.force].gold < salary)
+                {
+                    salary = forceDic[kvp.Value.force].gold;
+                }
+                forceDic[kvp.Value.force].gold -= salary;
+
+                if (kvp.Value.force == 0)
+                {
+                    count += salary;
+                }
+                
+            }
+        }
+
+        PlayMainPanel.Instance.UpdateGold();
+        MessagePanel.Instance.AddMessage("支付部属英雄的薪金合计" + count + "金币");
+    }
+
 
     public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject,int buildingID, List<int> heroObjectIDList)
     {
@@ -2403,9 +2439,13 @@ public class GameControl : MonoBehaviour
 
         forceDic[districtDic[districtID].force].gold += count;
 
+        DistrictSetSatisfactionByPeopleTax(districtID, (30 - districtDic[districtID].taxPeople) / 10);
+        DistrictSetSatisfaction(districtID);
+
         if (districtDic[districtID].force == 0)
         {
             PlayMainPanel.Instance.UpdateGold();
+            MessagePanel.Instance.AddMessage(districtDic[districtID].name + "收取了居民税" + count + "金币");
         }
         if (DistrictMainPanel.Instance.isShow && districtID == nowCheckingDistrictID)
         {
@@ -2417,24 +2457,18 @@ public class GameControl : MonoBehaviour
     //通行税 每次 人口*地区等级*税率
     public void DistrictGetTaxPass(short districtID,int num)
     {
-  
-
-
         int count = (int)(10 * districtDic[districtID].level * num* districtDic[districtID].taxPass / 100f);
         districtDic[districtID].fiscals[1].incomeTaxPass += count;
 
-
-        //Debug.Log("name=" + districtDic[districtID].name);
-        //Debug.Log("districtDic[districtID].level=" + districtDic[districtID].level);
-        //Debug.Log("num=" + num);
-        //Debug.Log("districtDic[districtID].taxPass=" + districtDic[districtID].taxPass);
-        //Debug.Log("count=" + count);
         forceDic[districtDic[districtID].force].gold += count;
-    
+
+        DistrictSetProsperousByPassTax(districtID, (30 - districtDic[districtID].taxPass) / 10);
+        DistrictSetProsperous(districtID);
 
         if (districtDic[districtID].force == 0)
         {
             PlayMainPanel.Instance.UpdateGold();
+
         }
         if (DistrictMainPanel.Instance.isShow && districtID == nowCheckingDistrictID)
         {
@@ -2444,7 +2478,7 @@ public class GameControl : MonoBehaviour
         AreaMapPanel.Instance.ShowNumText(districtID, "<color=#F8B666><b>金币+" + count + "</b></color>");
     }
 
-    //后勤服务收入
+    //后勤服务收入 每次
     public void DistrictGetLogistics(short districtID, int num)
     {
         int count = (int)(10 * districtDic[districtID].level * num);
@@ -2494,15 +2528,225 @@ public class GameControl : MonoBehaviour
         if (districtDic[districtID].force == 0)
         {
             PlayMainPanel.Instance.UpdateGold();
+            MessagePanel.Instance.AddMessage(districtDic[districtID].name +"的建筑物维护花费了"+ count + "金币");
+
         }
         if (DistrictMainPanel.Instance.isShow && districtID == nowCheckingDistrictID)
         {
             DistrictMainPanel.Instance.UpdateFiscal1Info(districtDic[districtID]);
         }
         AreaMapPanel.Instance.ShowNumText(districtID, "<color=#F86F67><b>金币-" + count + "</b></color>");
+
+    }
+
+    //结算居民食物补给 每周
+    public void DistrictPeopleFoodExpenseAll()
+    {
+        for (short i = 0; i < districtDic.Length; i++)
+        {
+            DistrictPeopleFoodExpense(i);
+        }
+    }
+
+    public void DistrictPeopleFoodExpense(short districtID)
+    {
+        int spendCereal = (int)(Random.Range(10, 13) * districtDic[districtID].people * districtDic[districtID].rationCereal / 100f);
+        if (spendCereal > forceDic[districtDic[districtID].force].rFoodCereal)
+        {
+            spendCereal = forceDic[districtDic[districtID].force].rFoodCereal;
+            DistrictSetSatisfactionByFood(districtID, -10);
+        }
+        forceDic[districtDic[districtID].force].rFoodCereal -= spendCereal;
+        switch (districtDic[districtID].rationCereal)
+        {
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-12, -9)); break;
+            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-6, -4)); break;
+            case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(4, 5)); break;
+            case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(8, 10)); break;
+        }
+
+
+        int spendVegetable = (int)(Random.Range(8, 10) * districtDic[districtID].people * districtDic[districtID].rationVegetable / 100f);
+        if (spendVegetable > forceDic[districtDic[districtID].force].rFoodVegetable)
+        {
+            spendVegetable = forceDic[districtDic[districtID].force].rFoodVegetable;
+            DistrictSetSatisfactionByFood(districtID, -10);
+        }
+        forceDic[districtDic[districtID].force].rFoodVegetable -= spendVegetable;
+        switch (districtDic[districtID].rationVegetable)
+        {
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-12, -9)); break;
+            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-6, -4)); break;
+            case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(4, 5)); break;
+            case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(8, 10)); break;
+        }
+
+        int spendMeat = (int)(Random.Range(5, 7) * districtDic[districtID].people * districtDic[districtID].rationMeat / 100f);
+        if (spendMeat > forceDic[districtDic[districtID].force].rFoodMeat)
+        {
+            spendMeat = forceDic[districtDic[districtID].force].rFoodMeat;
+            DistrictSetSatisfactionByFood(districtID, -10);
+        }
+        forceDic[districtDic[districtID].force].rFoodMeat -= spendMeat;
+        switch (districtDic[districtID].rationMeat)
+        {
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-10, -8)); break;
+            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-5, -3)); break;
+            case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(4, 6)); break;
+            case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(8, 11)); break;
+        }
+
+        int spendFish = (int)(Random.Range(5, 7) * districtDic[districtID].people * districtDic[districtID].rationFish / 100f);
+        if (spendFish > forceDic[districtDic[districtID].force].rFoodFish)
+        {
+            spendFish = forceDic[districtDic[districtID].force].rFoodFish;
+            DistrictSetSatisfactionByFood(districtID, -10);
+        }
+        forceDic[districtDic[districtID].force].rFoodFish -= spendFish;
+        switch (districtDic[districtID].rationFish)
+        {
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-8, -6)); break;
+            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-4, -2)); break;
+            case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(3, 5)); break;
+            case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(7, 9)); break;
+        }
+
+        int spendFruit = (int)(Random.Range(5, 7) * districtDic[districtID].people * districtDic[districtID].rationFruit / 100f);
+        if (spendFruit > forceDic[districtDic[districtID].force].rFoodFruit)
+        {
+            spendFruit = forceDic[districtDic[districtID].force].rFoodFruit;
+            DistrictSetSatisfactionByFood(districtID, -10);
+        }
+        forceDic[districtDic[districtID].force].rFoodFruit -= spendFruit;
+        switch (districtDic[districtID].rationFruit)
+        {
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-8, -6)); break;
+            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-4, -2)); break;
+            case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(3, 5)); break;
+            case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(7, 9)); break;
+        }
+
+        int spendBeer = (int)(Random.Range(4, 6) * districtDic[districtID].people * districtDic[districtID].rationBeer / 100f);
+        if (spendBeer > forceDic[districtDic[districtID].force].rFoodBeer)
+        {
+            spendBeer = forceDic[districtDic[districtID].force].rFoodBeer;
+            DistrictSetSatisfactionByFood(districtID, -5);
+        }
+        forceDic[districtDic[districtID].force].rFoodBeer -= spendBeer;
+        switch (districtDic[districtID].rationBeer)
+        {
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-8, -6)); break;
+            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-4, -2)); break;
+            case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(3, 5)); break;
+            case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(7, 9)); break;
+        }
+
+        int spendWine = (int)(Random.Range(3, 5) * districtDic[districtID].people * districtDic[districtID].rationWine / 100f);
+        if (spendWine > forceDic[districtDic[districtID].force].rFoodWine)
+        {
+            spendWine = forceDic[districtDic[districtID].force].rFoodWine;
+            DistrictSetSatisfactionByFood(districtID, -1);
+        }
+        forceDic[districtDic[districtID].force].rFoodWine -= spendWine;
+        switch (districtDic[districtID].rationWine)
+        {
+            case 0: DistrictSetSatisfactionByFood(districtID, -2); break;
+            case 50: DistrictSetSatisfactionByFood(districtID, -1); break;
+            case 150: DistrictSetSatisfactionByFood(districtID, 1); break;
+            case 200: DistrictSetSatisfactionByFood(districtID, 2); break;
+        }
+
+        DistrictSetSatisfaction(districtID);
+
+        if (districtDic[districtID].force == 0)
+        {
+            PlayMainPanel.Instance.UpdateResources();
+            if (PlayMainPanel.Instance.IsShowResourcesBlock)
+            {
+                PlayMainPanel.Instance.UpdateResourcesBlock();
+            }
+
+            MessagePanel.Instance.AddMessage(districtDic[districtID].name+"的居民领取了食物补给 谷物*"+ spendCereal+ "蔬菜*"+spendVegetable + "肉类*" + spendMeat + "鱼类*" + spendFish + "水果*" + spendFruit + "啤酒*" + spendBeer + "红酒*" + spendWine);
+        }
+
+       
     }
 
     #endregion
+
+    //居民满意度
+    public void DistrictSetSatisfaction(short districtID)
+    {
+        districtDic[districtID].satisfaction =(short)(( districtDic[districtID].satisfactionByFood +
+            districtDic[districtID].satisfactionByLive +
+            districtDic[districtID].satisfactionByPeopleTax +
+             districtDic[districtID].satisfactionByWork +
+              districtDic[districtID].satisfactionByEvent)* (1f+(float)districtDic[districtID].hpNow / districtDic[districtID].hp*0.1f));
+        
+        districtDic[districtID].satisfaction = (short)Mathf.Clamp(districtDic[districtID].satisfaction, 0, 1000);
+
+        if (DistrictMainPanel.Instance.isShow && districtID == nowCheckingDistrictID)
+        {
+            DistrictMainPanel.Instance.UpdatePeopleInfo(districtDic[districtID]);
+        }
+    }
+
+    public void DistrictSetSatisfactionByFood(short districtID, int value)
+    {
+        districtDic[districtID].satisfactionByFood += (short)value;
+        districtDic[districtID].satisfactionByFood = (short)Mathf.Clamp(districtDic[districtID].satisfactionByFood, -300, 200);
+    }
+    public void DistrictSetSatisfactionByLive(short districtID, int value)
+    {
+        districtDic[districtID].satisfactionByLive += (short)value;
+        districtDic[districtID].satisfactionByLive = (short)Mathf.Clamp(districtDic[districtID].satisfactionByLive, 0, 150);
+    }
+    public void DistrictSetSatisfactionByPeopleTax(short districtID, int value)
+    {
+        districtDic[districtID].satisfactionByPeopleTax += (short)value;
+        districtDic[districtID].satisfactionByPeopleTax = (short)Mathf.Clamp(districtDic[districtID].satisfactionByPeopleTax, 0, 150);
+    }
+    public void DistrictSetSatisfactionByWork(short districtID, int value)
+    {
+        districtDic[districtID].satisfactionByWork += (short)value;
+        districtDic[districtID].satisfactionByWork = (short)Mathf.Clamp(districtDic[districtID].satisfactionByWork, 0, 150);
+    }
+    public void DistrictSetSatisfactionByEvent(short districtID, int value)
+    {
+        districtDic[districtID].satisfactionByEvent += (short)value;
+        districtDic[districtID].satisfactionByEvent = (short)Mathf.Clamp(districtDic[districtID].satisfactionByEvent, -1000, 1000);
+    }
+
+
+    //经济繁荣度
+    public void DistrictSetProsperous(short districtID)
+    {
+        districtDic[districtID].prosperous= (short)((districtDic[districtID].prosperousByGoodsTax +
+              districtDic[districtID].prosperousByPassTax+
+              districtDic[districtID].level*50+
+              districtDic[districtID].worker+
+              districtDic[districtID].buildingList.Count*2
+              ) * 
+              (1f + (float)districtDic[districtID].hpNow / districtDic[districtID].hp * 0.1f)
+              );
+
+        if (DistrictMainPanel.Instance.isShow && districtID == nowCheckingDistrictID)
+        {
+            DistrictMainPanel.Instance.UpdateBasicInfo(districtDic[districtID]);
+        }
+    }
+
+    public void DistrictSetProsperousByGoodsTax(short districtID, int value)
+    {
+        districtDic[districtID].prosperousByGoodsTax += (short)value;
+        districtDic[districtID].prosperousByGoodsTax = (short)Mathf.Clamp(districtDic[districtID].prosperousByGoodsTax, 0, 150);
+    }
+    public void DistrictSetProsperousByPassTax(short districtID, int value)
+    {
+        districtDic[districtID].prosperousByPassTax += (short)value;
+        districtDic[districtID].prosperousByPassTax = (short)Mathf.Clamp(districtDic[districtID].prosperousByPassTax, 0, 150);
+    }
+
 
     #region 【方法】英雄装备/卸下，技能配置
     public void HeroEquipSet(int heroID, EquipPart equipPart, int itemID)
@@ -3994,8 +4238,16 @@ public class GameControl : MonoBehaviour
             }
             skillDic.Remove(buySkillList[i]);
         }
-        forceDic[0].gold += spend;
-        PlayMainPanel.Instance.UpdateGold();
+
+        DistrictSetProsperousByGoodsTax(districtID, (20 - districtDic[districtID].taxGoods) / 10);
+        DistrictSetProsperous(districtID);
+
+        forceDic[districtDic[districtID].force].gold += (int)(spend * (1f + districtDic[districtID].taxGoods / 100f));
+        if (districtDic[districtID].force == 0)
+        {
+            PlayMainPanel.Instance.UpdateGold();
+        }
+
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
         {
             DistrictMapPanel.Instance.UpdateBaselineResourcesText(districtID);

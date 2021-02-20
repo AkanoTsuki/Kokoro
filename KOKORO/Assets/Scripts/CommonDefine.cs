@@ -779,6 +779,7 @@ public class HeroObject
     private int Exp;
     private byte Sex;
     private string Pic;
+    private short Salary;//薪金/月
     private float GroupRate;
     private float Hp;
     private float Mp;
@@ -871,7 +872,7 @@ public class HeroObject
     private Dictionary<short,HeroSkill> SkillInfo;
     private List<short> Characteristic;
     private List<string> Log;
-    public HeroObject(int id, string name, short prototypeID, short level, int exp,byte sex,string pic, float groupRate,
+    public HeroObject(int id, string name, short prototypeID, short level, int exp,byte sex,string pic, short salary, float groupRate,
         float hp, float mp, float hpRenew, float mpRenew,
         float atkMin, float atkMax, float mAtkMin, float mAtkMax, float def, float mDef,
         float hit, float dod, float criR, float criD, short spd,
@@ -896,6 +897,7 @@ public class HeroObject
         this.Exp = exp;
         this.Sex = sex;
         this.Pic = pic;
+        this.Salary = salary;
         this.GroupRate = groupRate;
         this.Hp = hp;
         this.Mp = mp;
@@ -997,6 +999,7 @@ public class HeroObject
     public int exp { get { return Exp; } set { Exp = value; } }
     public byte sex { get { return Sex; } set { Sex = value; } }
     public string pic { get { return Pic; } set { Pic = value; } }
+    public short salary { get { return Salary; } set { Salary = value; } }
     public float groupRate { get { return GroupRate; } set { GroupRate = value; } }
     public float hp { get { return Hp; } set { Hp = value; } }
     public float mp { get { return Mp; } set { Mp = value; } }
@@ -1210,8 +1213,16 @@ public class DistrictObject
     private short HpNow;//当前耐久
     private short Def;//坚固
     private short Satisfaction;//满意
+    private short SatisfactionByFood;
+    private short SatisfactionByLive;
+    private short SatisfactionByPeopleTax;
+    private short SatisfactionByWork;
+    private short SatisfactionByEvent;
     private short Security;//安全
     private short Prosperous;//繁荣
+    private short ProsperousByGoodsTax;
+    private short ProsperousByPassTax;
+    private short ProsperousByEvent;
 
     private byte RationCereal;//配给率%
     private byte RationVegetable;
@@ -1232,7 +1243,10 @@ public class DistrictObject
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll, int rProductGoodWeapon, int rProductGoodArmor, int rProductGoodJewelry, int rProductGoodScroll,
          int rProductLimit,
-         short hp, short hpNow, short def, short satisfaction, short security, short prosperous,
+         short hp, short hpNow, short def, 
+         short satisfaction, short satisfactionByFood, short satisfactionByLive, short satisfactionByPeopleTax, short satisfactionByWork, short satisfactionByEvent,
+         short security, 
+         short prosperous, short prosperousByGoodsTax, short prosperousByPassTax, short prosperousByEvent,
          byte rationCereal, byte rationVegetable, byte rationFruit, byte rationMeat, byte rationFish, byte rationBeer, byte rationWine, byte taxPass, byte taxGoods, byte taxPeople, List<DistrictFiscal> fiscals)
     {
         this.ID = id;
@@ -1267,8 +1281,16 @@ public class DistrictObject
         this.HpNow = hpNow;
         this.Def = def;
         this.Satisfaction = satisfaction;
+        this.SatisfactionByFood = satisfactionByFood; 
+        this.SatisfactionByLive = satisfactionByLive;
+        this.SatisfactionByPeopleTax = satisfactionByPeopleTax; 
+        this.SatisfactionByWork = satisfactionByWork; 
+        this.SatisfactionByEvent = satisfactionByEvent;
         this.Security = security;
         this.Prosperous = prosperous;
+        this.ProsperousByGoodsTax = prosperousByGoodsTax; 
+        this.ProsperousByPassTax = prosperousByPassTax; 
+        this.ProsperousByEvent = prosperousByEvent;
         this.RationCereal = rationCereal;
         this.RationVegetable = rationVegetable;
         this.RationFruit = rationFruit;
@@ -1314,8 +1336,16 @@ public class DistrictObject
     public short hpNow { get { return HpNow; } set { HpNow = value; } }
     public short def { get { return Def; } set { Def = value; } }
     public short satisfaction { get { return Satisfaction; } set { Satisfaction = value; } }
+    public short satisfactionByFood { get { return SatisfactionByFood; } set { SatisfactionByFood = value; } }
+    public short satisfactionByLive { get { return SatisfactionByLive; } set { SatisfactionByLive = value; } }
+    public short satisfactionByPeopleTax { get { return SatisfactionByPeopleTax; } set { SatisfactionByPeopleTax = value; } }
+    public short satisfactionByWork { get { return SatisfactionByWork; } set { SatisfactionByWork = value; } }
+    public short satisfactionByEvent { get { return SatisfactionByEvent; } set { SatisfactionByEvent = value; } }
     public short security { get { return Security; } set { Security = value; } }
     public short prosperous { get { return Prosperous; } set { Prosperous = value; } }
+    public short prosperousByGoodsTax { get { return ProsperousByGoodsTax; } set { ProsperousByGoodsTax = value; } }
+    public short prosperousByPassTax { get { return ProsperousByPassTax; } set { ProsperousByPassTax = value; } }
+    public short prosperousByEvent { get { return ProsperousByEvent; } set { ProsperousByEvent = value; } }
     public byte rationCereal { get { return RationCereal; } set { RationCereal = value; } }
     public byte rationVegetable { get { return RationVegetable; } set { RationVegetable = value; } }
     public byte rationFruit { get { return RationFruit; } set { RationFruit = value; } }
