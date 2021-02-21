@@ -5,14 +5,23 @@ using System.Text;
 using System.IO;
 
 public class DataManager
-{ 
+{
+    [System.Serializable]
+    public class NewGameInitArray
+    {
+        public List<DevelopInitBuilding> DevelopBuilding;
+        public List<DevelopInitGrid> DevelopGrid;
+        public List<DevelopInitDistrict> DevelopDistrict;
+    }
+    public static Dictionary<int, DevelopInitBuilding> dBuildingDict = new Dictionary<int, DevelopInitBuilding>();
+    public static Dictionary<string, DevelopInitGrid> dGridDict = new Dictionary<string, DevelopInitGrid>();
+    public static Dictionary<int, DevelopInitDistrict> dDistrictDict = new Dictionary<int, DevelopInitDistrict>();
+
 
     [System.Serializable]
     public class TestArray
-    {
-        
+    {       
         public List<HeroPrototype> Hero;
-        //public List<HeroPrototype> Hero;
         public List<ItemPrototype> Item;
         public List<SkillPrototype> Skill;
         public List<DistrictPrototype> District;
@@ -107,7 +116,7 @@ public class DataManager
         TestArray jsonObject = JsonUtility.FromJson<TestArray>(jsonTest);
         if (jsonObject == null)
         {
-            Debug.LogError("ExampleData data null");
+            Debug.LogError("GameDataConfig data null");
         }
 
 
@@ -165,6 +174,27 @@ public class DataManager
     {
         mItemDict.Clear();
     }
+
+    public static void NewGameInit()
+    {
+        string jsonTest = ((TextAsset)Resources.Load("GameDataConfigNewGame")).text;
+        NewGameInitArray jsonObject = JsonUtility.FromJson<NewGameInitArray>(jsonTest);
+        if (jsonObject == null)
+        {
+            Debug.LogError("GameDataConfigNewGame data null");
+        }
+
+
+        if (jsonObject.DevelopBuilding == null) { Debug.LogError("DevelopBuilding data null"); }
+        foreach (DevelopInitBuilding item in jsonObject.DevelopBuilding) { dBuildingDict[item.ID] = item; }
+
+        if (jsonObject.DevelopGrid == null) { Debug.LogError("DevelopGrid data null"); }
+        foreach (DevelopInitGrid item in jsonObject.DevelopGrid) { dGridDict[item.ID] = item; }
+
+        if (jsonObject.DevelopDistrict == null) { Debug.LogError("DevelopDistrict data null"); }
+        foreach (DevelopInitDistrict item in jsonObject.DevelopDistrict) { dDistrictDict[item.ID] = item; }
+    }
+
 }
 
 public class GameDataConfig : MonoBehaviour

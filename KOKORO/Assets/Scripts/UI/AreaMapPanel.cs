@@ -186,6 +186,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
             }
             else
             {
+                //TODO：开发配置阶段 ，有没有英雄派驻都可以访问 原值0 ，临时-1
                 if (gc.districtDic[id].heroList.Count > 0)
                 {
                     districtInfoBlock_ManagerBtn.GetComponent<RectTransform>().localScale = Vector2.one;

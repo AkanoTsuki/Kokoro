@@ -159,8 +159,23 @@ public class GameControlInPlay : MonoBehaviour
             }
 
         }
-    }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            DEVELOPSaveAllBuilding();
 
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            gc.forceDic[0].gold += 50000;
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            gc.forceDic[0].rStuffWood += 10000;
+            gc.forceDic[0].rStuffStone += 5000;
+            gc.forceDic[0].rStuffMetal += 5000;
+        }
+    }
+   
     public void TimeFlow()
     {
         
@@ -553,5 +568,102 @@ public class GameControlInPlay : MonoBehaviour
     {
         gc.Save();
         MessagePanel.Instance.AddMessage("游戏已保存");
+    }
+
+    //开发阶段方法：全部城镇现有建筑存储，作为游戏开始初始化配置数据
+    public void DEVELOPSaveAllBuilding()
+    {
+        int count1 = 0;
+        int count2 = 0;
+
+        string str1 = "\"DevelopGrid\": [";
+
+        string str2 = "\"DevelopBuilding\": [";
+
+
+
+        foreach (KeyValuePair<int, BuildingObject> kvp in gc.buildingDic)
+        {
+            string strgrid = "";
+
+            for (int i = 0; i < kvp.Value.gridList.Count; i++)
+            {
+                strgrid += "\""+ kvp.Value.gridList[i] + "\",";
+
+                str1 += "{" +
+                "\"ID\":\"" + kvp.Value.gridList[i] + "\"," +
+                    "\"DistrictID\":" + kvp.Value.districtID + "," +
+                       "\"BuildingID\":" + kvp.Value.id + "" +
+                "},";
+                count1++;
+            }
+            strgrid = strgrid.Substring(0, strgrid.Length - 1);
+            
+
+            str2 += "{" +
+                   "\"ID\":" + kvp.Value.id + "," +
+                    "\"DistrictID\":" + kvp.Value.districtID + "," +
+                    "\"PrototypeID\":" + kvp.Value.prototypeID + "," +
+                     "\"PositionX\":" + kvp.Value.positionX + "," +
+                      "\"PositionY\":" + kvp.Value.positionY + "," +
+                       "\"Layer\":" + kvp.Value.layer + "," +
+                          "\"GridList\":[" + strgrid + "]" +
+                   "},";
+            count2++;
+        }
+
+        str1 = str1.Substring(0, str1.Length - 1);
+        str1 += " ]";
+
+        Debug.Log("涉及格子数："+count1);
+        Debug.Log(str1);
+
+
+        str2 = str2.Substring(0, str2.Length - 1);
+        str2 += " ]";
+
+        Debug.Log("涉及建筑数：" + count2);
+        Debug.Log(str2);
+
+        string str3 = "\"DevelopDistrict\": [";
+
+        for (int i = 0; i < gc.districtDic.Length; i++)
+        {
+            string strbuilding = "";
+            for (int j = 0; j < gc.districtDic[i].buildingList.Count; j++)
+            {
+                strbuilding += gc.districtDic[i].buildingList[j]+",";
+            }
+
+            if (strbuilding != "")
+            {
+                strbuilding = strbuilding.Substring(0, strbuilding.Length - 1);
+            }
+       
+
+
+
+            str3 += "{" +
+            "\"ID\":" + i + "," +
+             "\"PeopleLimit\":" + gc.districtDic[i].peopleLimit + "," +
+                        "\"BuildingList\":[" + strbuilding + "]," +
+             "\"EWind\":" + gc.districtDic[i].eWind + "," +
+              "\"EFire\":" + gc.districtDic[i].eFire + "," +
+               "\"EWater\":" + gc.districtDic[i].eWater + "," +
+                "\"EGround\":" + gc.districtDic[i].eGround + "," +
+                   "\"ELight\":" + gc.districtDic[i].eLight + "," +
+                       "\"EDark\":" + gc.districtDic[i].eDark + "," +
+     "\"RProductLimit\":" + gc.districtDic[i].rProductLimit + "" +
+            "},";
+        }
+
+        str3 = str3.Substring(0, str3.Length - 1);
+        str3 += " ]";
+
+
+        Debug.Log(str3);
+
+
+        Debug.Log("{"+ str1+","+ str2+ "," + str3 +"}");
     }
 }

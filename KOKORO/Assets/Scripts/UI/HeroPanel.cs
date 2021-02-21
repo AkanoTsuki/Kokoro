@@ -305,7 +305,7 @@ public class HeroPanel : BasePanel
             "</color>[升级经验值<color=#FFFFFF>" + ((int)System.Math.Pow(1.05f, heroObject.level)*200-heroObject .exp)+
             "</color>][成长率<color=#7DF3AE>" + System.Math.Round( heroObject.groupRate,3)+ "</color>]" +
             (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex==3?
-            ("\n薪金 <color=#FFFFFF>150</color>金币/月" +
+            ("\n薪金 <color=#FFFFFF>"+ heroObject.salary+ "</color>金币/月" +
             ( heroObject.workerInBuilding!=-1?(" <color=#66D5FF>在" + DataManager.mDistrictDict[gc.buildingDic[heroObject.workerInBuilding].districtID].Name+"的"+  gc.buildingDic[heroObject.workerInBuilding].name + "工作</color>") :"")+
             (heroObject.adventureInTeam!=-1?(" <color=#FF9167>已编入第" + (heroObject.adventureInTeam+1) + "探险队</color>") :"")
              ):""

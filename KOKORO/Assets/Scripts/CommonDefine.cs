@@ -1162,6 +1162,7 @@ public class DistrictPrototype
     public List<short> DungeonList;
     public byte InitLevel;
     public byte MaxLevel;
+    public byte InitWallLevel;
 }
 
 [System.Serializable]
@@ -1184,6 +1185,7 @@ public class DistrictObject
     private bool IsOpen;
     private short Force;
     private byte Level;
+    private byte WallLevel;//0-无 1-木墙 2-石墙
     private short People;//当前人口
     private short PeopleLimit;//人口上限
     private short Worker;//正在工作
@@ -1238,7 +1240,7 @@ public class DistrictObject
 
     private List<DistrictFiscal> Fiscals;
 
-    public DistrictObject(short id, string name, string baseName, string des, bool isOpen, short force, byte level, short people, short peopleLimit, short worker, 
+    public DistrictObject(short id, string name, string baseName, string des, bool isOpen, short force, byte level, byte wallLevel, short people, short peopleLimit, short worker, 
          List<int> buildingList, List<int> heroList, List<int> recruitList,
         short eWind, short eFire, short eWater, short eGround, short eLight, short eDark,
         int rProductWeapon, int rProductArmor, int rProductJewelry, int rProductScroll, int rProductGoodWeapon, int rProductGoodArmor, int rProductGoodJewelry, int rProductGoodScroll,
@@ -1256,6 +1258,7 @@ public class DistrictObject
         this.IsOpen = isOpen;
         this.Force = force;
         this.Level = level;
+        this.WallLevel = wallLevel;
         this.People = people;
         this.PeopleLimit = peopleLimit;
         this.Worker = worker;
@@ -1310,6 +1313,7 @@ public class DistrictObject
     public bool isOpen { get { return IsOpen; } set { IsOpen = value; } }
     public short force { get { return Force; } set { Force = value; } }
     public byte level { get { return Level; } set { Level = value; } }
+    public byte wallLevel { get { return WallLevel; } set { WallLevel = value; } }
     public short people { get { return People; } set { People = value; } }
     public short peopleLimit { get { return PeopleLimit; } set { PeopleLimit = value; } }
     public short worker { get { return Worker; } set { Worker = value; } }
@@ -2934,3 +2938,37 @@ public class ExecuteEventObject
 
 }
 
+[System.Serializable]
+public class DevelopInitBuilding
+{
+    public int ID;
+    public short DistrictID;
+    public short PrototypeID;
+    public short PositionX;
+    public short PositionY;
+    public byte Layer;
+    public List<string> GridList;
+}
+
+[System.Serializable]
+public class DevelopInitGrid
+{
+    public string ID;
+    public short DistrictID;
+    public int BuildingID;
+}
+
+[System.Serializable]
+public class DevelopInitDistrict
+{
+    public short ID;
+    public short PeopleLimit;
+    public List<int> BuildingList;
+    public short EWind;
+    public short EFire;
+    public short EWater;
+    public short EGround;
+    public short ELight;
+    public short EDark;
+    public int RProductLimit;
+}

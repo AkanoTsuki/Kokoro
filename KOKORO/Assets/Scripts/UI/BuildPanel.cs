@@ -118,6 +118,7 @@ public class BuildPanel : BasePanel
         List <BuildingPrototype> temp = new List<BuildingPrototype> { };
         foreach (KeyValuePair<int, BuildingPrototype> kvp in DataManager.mBuildingDict)
         {
+            //TODO:开发配置阶段，任何级别的建筑都可以造
             if (DataManager.mBuildingDict[kvp.Key].Level == 1&&gc.buildingUnlock[kvp.Key])
             {
                 if (typePanel == "All")

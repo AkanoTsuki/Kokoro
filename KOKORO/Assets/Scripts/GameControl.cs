@@ -565,7 +565,11 @@ public class GameControl : MonoBehaviour
             }
 
             AreaMapPanel.Instance.UpdateDistrictSingle(buildingDic[buildingID].districtID);
+
+            PlayMainPanel.Instance.UpdateGold();
         }
+       
+
 
         PlayMainPanel.Instance.UpdateButtonHeroNum();
         HeroPanel.Instance.OnHide();
@@ -2445,7 +2449,7 @@ public class GameControl : MonoBehaviour
         if (districtDic[districtID].force == 0)
         {
             PlayMainPanel.Instance.UpdateGold();
-            MessagePanel.Instance.AddMessage(districtDic[districtID].name + "收取了居民税" + count + "金币");
+            MessagePanel.Instance.AddMessage("<color=#F3DE60>" + districtDic[districtID].name + "</color>收取了居民税" + count + "金币");
         }
         if (DistrictMainPanel.Instance.isShow && districtID == nowCheckingDistrictID)
         {
@@ -2528,7 +2532,7 @@ public class GameControl : MonoBehaviour
         if (districtDic[districtID].force == 0)
         {
             PlayMainPanel.Instance.UpdateGold();
-            MessagePanel.Instance.AddMessage(districtDic[districtID].name +"的建筑物维护花费了"+ count + "金币");
+            MessagePanel.Instance.AddMessage("<color=#F3DE60>" + districtDic[districtID].name + "</color>的建筑物维护花费了" + count + "金币");
 
         }
         if (DistrictMainPanel.Instance.isShow && districtID == nowCheckingDistrictID)
@@ -2559,7 +2563,7 @@ public class GameControl : MonoBehaviour
         forceDic[districtDic[districtID].force].rFoodCereal -= spendCereal;
         switch (districtDic[districtID].rationCereal)
         {
-            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-12, -9)); break;
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-11, -9)); break;
             case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-6, -4)); break;
             case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(4, 5)); break;
             case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(8, 10)); break;
@@ -2570,12 +2574,12 @@ public class GameControl : MonoBehaviour
         if (spendVegetable > forceDic[districtDic[districtID].force].rFoodVegetable)
         {
             spendVegetable = forceDic[districtDic[districtID].force].rFoodVegetable;
-            DistrictSetSatisfactionByFood(districtID, -10);
+            DistrictSetSatisfactionByFood(districtID, -5);
         }
         forceDic[districtDic[districtID].force].rFoodVegetable -= spendVegetable;
         switch (districtDic[districtID].rationVegetable)
         {
-            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-12, -9)); break;
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-11, -9)); break;
             case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-6, -4)); break;
             case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(4, 5)); break;
             case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(8, 10)); break;
@@ -2585,12 +2589,12 @@ public class GameControl : MonoBehaviour
         if (spendMeat > forceDic[districtDic[districtID].force].rFoodMeat)
         {
             spendMeat = forceDic[districtDic[districtID].force].rFoodMeat;
-            DistrictSetSatisfactionByFood(districtID, -10);
+            DistrictSetSatisfactionByFood(districtID, -5);
         }
         forceDic[districtDic[districtID].force].rFoodMeat -= spendMeat;
         switch (districtDic[districtID].rationMeat)
         {
-            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-10, -8)); break;
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-8, -6)); break;
             case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-5, -3)); break;
             case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(4, 6)); break;
             case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(8, 11)); break;
@@ -2600,13 +2604,13 @@ public class GameControl : MonoBehaviour
         if (spendFish > forceDic[districtDic[districtID].force].rFoodFish)
         {
             spendFish = forceDic[districtDic[districtID].force].rFoodFish;
-            DistrictSetSatisfactionByFood(districtID, -10);
+            DistrictSetSatisfactionByFood(districtID, -5);
         }
         forceDic[districtDic[districtID].force].rFoodFish -= spendFish;
         switch (districtDic[districtID].rationFish)
         {
-            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-8, -6)); break;
-            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-4, -2)); break;
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-5, -3)); break;
+            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-3, -2)); break;
             case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(3, 5)); break;
             case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(7, 9)); break;
         }
@@ -2615,7 +2619,7 @@ public class GameControl : MonoBehaviour
         if (spendFruit > forceDic[districtDic[districtID].force].rFoodFruit)
         {
             spendFruit = forceDic[districtDic[districtID].force].rFoodFruit;
-            DistrictSetSatisfactionByFood(districtID, -10);
+            DistrictSetSatisfactionByFood(districtID, -5);
         }
         forceDic[districtDic[districtID].force].rFoodFruit -= spendFruit;
         switch (districtDic[districtID].rationFruit)
@@ -2630,13 +2634,13 @@ public class GameControl : MonoBehaviour
         if (spendBeer > forceDic[districtDic[districtID].force].rFoodBeer)
         {
             spendBeer = forceDic[districtDic[districtID].force].rFoodBeer;
-            DistrictSetSatisfactionByFood(districtID, -5);
+            DistrictSetSatisfactionByFood(districtID, Random.Range(-2, 1));
         }
         forceDic[districtDic[districtID].force].rFoodBeer -= spendBeer;
         switch (districtDic[districtID].rationBeer)
         {
-            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-8, -6)); break;
-            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-4, -2)); break;
+            case 0: DistrictSetSatisfactionByFood(districtID, Random.Range(-4, -2)); break;
+            case 50: DistrictSetSatisfactionByFood(districtID, Random.Range(-2, 1)); break;
             case 150: DistrictSetSatisfactionByFood(districtID, Random.Range(3, 5)); break;
             case 200: DistrictSetSatisfactionByFood(districtID, Random.Range(7, 9)); break;
         }
@@ -2645,13 +2649,13 @@ public class GameControl : MonoBehaviour
         if (spendWine > forceDic[districtDic[districtID].force].rFoodWine)
         {
             spendWine = forceDic[districtDic[districtID].force].rFoodWine;
-            DistrictSetSatisfactionByFood(districtID, -1);
+            //DistrictSetSatisfactionByFood(districtID, -1);
         }
         forceDic[districtDic[districtID].force].rFoodWine -= spendWine;
         switch (districtDic[districtID].rationWine)
         {
-            case 0: DistrictSetSatisfactionByFood(districtID, -2); break;
-            case 50: DistrictSetSatisfactionByFood(districtID, -1); break;
+            //case 0: DistrictSetSatisfactionByFood(districtID, -2); break;
+            //case 50: DistrictSetSatisfactionByFood(districtID, -1); break;
             case 150: DistrictSetSatisfactionByFood(districtID, 1); break;
             case 200: DistrictSetSatisfactionByFood(districtID, 2); break;
         }
@@ -2666,7 +2670,7 @@ public class GameControl : MonoBehaviour
                 PlayMainPanel.Instance.UpdateResourcesBlock();
             }
 
-            MessagePanel.Instance.AddMessage(districtDic[districtID].name+"的居民领取了食物补给 谷物*"+ spendCereal+ "蔬菜*"+spendVegetable + "肉类*" + spendMeat + "鱼类*" + spendFish + "水果*" + spendFruit + "啤酒*" + spendBeer + "红酒*" + spendWine);
+            MessagePanel.Instance.AddMessage("<color=#F3DE60>" + districtDic[districtID].name+ "</color>的居民领取了食物补给 "+ (spendCereal>0?("谷物*" + spendCereal):"")+ (spendVegetable > 0 ? ("蔬菜*" +spendVegetable) : "") + (spendMeat > 0 ? ("肉类*" + spendMeat) : "") + (spendFish > 0 ? ("鱼类*" + spendFish) : "") + (spendFruit > 0 ? ("水果*" + spendFruit) : "") + (spendBeer > 0 ? ("啤酒*" + spendBeer) : "") + (spendWine > 0 ? ("红酒*" + spendWine) : ""));
         }
 
        
@@ -2675,6 +2679,18 @@ public class GameControl : MonoBehaviour
     #endregion
 
     //居民满意度
+    public void DistrictSetSatisfactionInNewGame(short districtID)
+    {
+        districtDic[districtID].satisfaction = (short)((districtDic[districtID].satisfactionByFood +
+            districtDic[districtID].satisfactionByLive +
+            districtDic[districtID].satisfactionByPeopleTax +
+             districtDic[districtID].satisfactionByWork +
+              districtDic[districtID].satisfactionByEvent) * (1f + (float)districtDic[districtID].hpNow / districtDic[districtID].hp * 0.1f));
+
+        districtDic[districtID].satisfaction = (short)Mathf.Clamp(districtDic[districtID].satisfaction, 0, 1000);
+
+    }
+
     public void DistrictSetSatisfaction(short districtID)
     {
         districtDic[districtID].satisfaction =(short)(( districtDic[districtID].satisfactionByFood +
@@ -2719,6 +2735,18 @@ public class GameControl : MonoBehaviour
 
 
     //经济繁荣度
+    public void DistrictSetProsperousInNewGame(short districtID)
+    {
+        districtDic[districtID].prosperous = (short)((districtDic[districtID].prosperousByGoodsTax +
+              districtDic[districtID].prosperousByPassTax +
+              districtDic[districtID].level * 50 +
+              districtDic[districtID].worker +
+              districtDic[districtID].buildingList.Count * 2
+              ) *
+              (1f + (float)districtDic[districtID].hpNow / districtDic[districtID].hp * 0.1f)
+              );
+
+    }
     public void DistrictSetProsperous(short districtID)
     {
         districtDic[districtID].prosperous= (short)((districtDic[districtID].prosperousByGoodsTax +

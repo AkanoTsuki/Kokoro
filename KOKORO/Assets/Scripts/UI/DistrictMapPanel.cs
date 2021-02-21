@@ -28,6 +28,14 @@ public class DistrictMapPanel : BasePanel
     public List<Image> sceneBorderMidImage;
     public List<Image> sceneBorderDownImage;
 
+    public List<RectTransform> sceneGroundUpRt;
+    public Image sceneWallLeftUpImage;
+    public Image sceneWallLeftMidImage;
+    public Image sceneWallLeftDownImage;
+    public Image sceneWallRightUpImage;
+    public Image sceneWallRightMidImage;
+    public Image sceneWallRightDownImage;
+
     public RectTransform tipRt;
     public Text tipText;
     public RectTransform customerInfoRt;
@@ -304,6 +312,7 @@ public class DistrictMapPanel : BasePanel
             left_inventoryMainBtn.transform.localScale = Vector2.zero;
             left_inventoryScrollBtn.transform.localScale = Vector2.zero;
             left_marketBtn.transform.localScale = Vector2.zero;
+            //TODO:开发配置阶段建筑按钮都开启 正常为zero
             left_buildBtn.transform.localScale = Vector2.zero;
         }
     }
@@ -513,6 +522,99 @@ public class DistrictMapPanel : BasePanel
     {
         sceneImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/" +DataManager.mDistrictDict[districtID].ScenePic);
         sceneBgImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/" + DataManager.mDistrictDict[districtID].SceneBgPic);
+
+        if (districtID == 0 || districtID == 4)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (gc.districtDic[districtID].level > i)
+                {
+                    sceneGroundUpRt[i].localScale = Vector2.one;
+                }
+                else
+                {
+                    sceneGroundUpRt[i].localScale = Vector2.zero;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                sceneGroundUpRt[i].localScale = Vector2.zero;
+            }
+        }
+
+        switch (gc.districtDic[districtID].wallLevel)
+        {
+            case 0:
+                sceneWallLeftUpImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/Empty");
+                sceneWallLeftMidImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/Empty");
+                sceneWallLeftDownImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/Empty");
+                sceneWallRightUpImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/Empty");
+                sceneWallRightMidImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/Empty");
+                sceneWallRightDownImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/Empty");
+                break;
+            case 1: 
+                sceneWallLeftUpImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_wood_up");
+                sceneWallLeftMidImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_wood_mid");
+                sceneWallLeftDownImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_wood_mid");
+                sceneWallRightUpImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_wood_up");
+                sceneWallRightMidImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_wood_mid");
+                sceneWallRightDownImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_wood_mid");
+                break;
+            case 2:
+                sceneWallLeftUpImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_stone_up");
+                sceneWallLeftMidImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_stone_mid");
+                sceneWallLeftDownImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_stone_mid");
+                sceneWallRightUpImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_stone_up");
+                sceneWallRightMidImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_stone_mid");
+                sceneWallRightDownImage.sprite = Resources.Load<Sprite>("Image/DistrictBG/sw_stone_mid");
+                break;
+        }
+        switch (gc.districtDic[districtID].level)
+        {
+            case 1:
+                sceneWallLeftUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-320f, 64f);
+                sceneWallLeftMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-320f, -64f);
+                sceneWallLeftDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-320f, -192f);
+                sceneWallRightUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(320f, 64f);
+                sceneWallRightMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(320f, -64f);
+                sceneWallRightDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(320f, -192f);
+                break;
+            case 2:
+                sceneWallLeftUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-640f, 64f);
+                sceneWallLeftMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-640f, -64f);
+                sceneWallLeftDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-640f, -192f);
+                sceneWallRightUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(320f, 64f);
+                sceneWallRightMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(320f, -64f);
+                sceneWallRightDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(320f, -192f);
+                break;
+            case 3:
+                sceneWallLeftUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-640f, 64f);
+                sceneWallLeftMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-640f, -64f);
+                sceneWallLeftDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-640f, -192f);
+                sceneWallRightUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(640f, 64f);
+                sceneWallRightMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(640f, -64f);
+                sceneWallRightDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(640f, -192f);
+                break;
+            case 4:
+                sceneWallLeftUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-960f, 64f);
+                sceneWallLeftMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-960f, -64f);
+                sceneWallLeftDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-960f, -192f);
+                sceneWallRightUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(640f, 64f);
+                sceneWallRightMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(640f, -64f);
+                sceneWallRightDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(640f, -192f);
+                break;
+            case 5:
+                sceneWallLeftUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-960f, 64f);
+                sceneWallLeftMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-960f, -64f);
+                sceneWallLeftDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-960f, -96f);
+                sceneWallRightUpImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(960f, 64f);
+                sceneWallRightMidImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(960f, -192f);
+                sceneWallRightDownImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(960f, -192f);
+                break;
+        }
 
         for (int i = 0; i < 4; i++)
         {

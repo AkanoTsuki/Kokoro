@@ -155,16 +155,20 @@ public class DistrictMainPanel : BasePanel
     //基础信息栏目-更新
     public void UpdateBasicInfo(DistrictObject districtObject)
     {
-        contentText.text = "<color=#ECC74F>" + gc.OutputSignStr("★", districtObject.level) + gc.OutputSignStr("☆", DataManager.mDistrictDict[districtObject.id].MaxLevel - districtObject.level) + "</color>\n领主 " + gc.forceDic[districtObject.force].leader + "\n耐久值 " + districtObject.hpNow + "/" + districtObject.hp + "\n城防 " + districtObject.def + "\n\n建筑 " + districtObject.buildingList.Count +
-            "\n\n繁荣 " + districtObject.prosperous + "\n安全 " + districtObject.security;
+        contentText.text = "<color=#ECC74F>" + gc.OutputSignStr("★", districtObject.level) + gc.OutputSignStr("☆", DataManager.mDistrictDict[districtObject.id].MaxLevel - districtObject.level) + "</color>\n领主 " + gc.forceDic[districtObject.force].leader + "\n耐久值 " + districtObject.hpNow + "/" + districtObject.hp + "\n城防 " + districtObject.def+"[墙"+ districtObject .wallLevel+ "级]\n\n建筑 " + districtObject.buildingList.Count +
+            "\n\n安全 " + districtObject.security;
         hpImage.fillAmount = (float)districtObject.hpNow / districtObject.hp;
+
+        prosperousText.text = "繁荣度 <color=#FFFFFF>" + districtObject.prosperous + "</color>";
     }
 
     //居民栏目-更新
     public void UpdatePeopleInfo(DistrictObject districtObject)
     {
         peopleText.text = "居民 " + districtObject.people + "/" + districtObject.peopleLimit + "<color=#76ee00> [英雄 " + districtObject.heroList.Count + "]</color>"+
-            "\n工作 " + districtObject.worker+ "\n空闲 " + (districtObject.people- districtObject.worker) + "\n满意度 " + districtObject.satisfaction;
+            "\n工作 " + districtObject.worker+ "\n空闲 " + (districtObject.people- districtObject.worker) ;
+
+        satisfactionText.text = "满意度 <color=#FFFFFF>" + districtObject.satisfaction + "</color>";
     }
 
     //财政收支栏目-上月-更新
