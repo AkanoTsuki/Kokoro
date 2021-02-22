@@ -84,6 +84,7 @@ public enum LabelType
     AdventureTeam,
     AdventurePart,
     Skill,
+    ShopItem
    // AreaMapDistrict
 }
 

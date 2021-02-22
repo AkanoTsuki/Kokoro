@@ -2217,6 +2217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76db1a7928ac704fa152733a7a1bc59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeMusic: 1
+  volumeSound: 1
   timeFlowSpeed: 1
   timeS: 0
   timeHour: 0
@@ -2269,6 +2271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MusicPlayer: {fileID: 559004353}
   SoundPlayer: {fileID: 559004352}
+  nowMusic: 
 --- !u!4 &559004351
 Transform:
   m_ObjectHideFlags: 0
