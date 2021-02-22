@@ -253,6 +253,7 @@ public class GameControlInNewGame : MonoBehaviour
 
     void InitBuilding()
     {
+        //gc.buildingIndex = 1;
         DataManager.NewGameInit();
         foreach (KeyValuePair<int, DevelopInitBuilding> kvp in DataManager.dBuildingDict)
         {
@@ -264,9 +265,10 @@ public class GameControlInNewGame : MonoBehaviour
             DataManager.mBuildingDict[pid].EWind, DataManager.mBuildingDict[pid].EFire, DataManager.mBuildingDict[pid].EWater, DataManager.mBuildingDict[pid].EGround, DataManager.mBuildingDict[pid].ELight, DataManager.mBuildingDict[pid].EDark,
             new List<BuildingTaskObject> { }, -1, 1));
 
-            gc.buildingIndex++;
+            //Debug.Log("kvp.Value.ID="+ kvp.Value.ID);
+            //gc.buildingIndex++;
         }
-        gc.buildingIndex = DataManager.dBuildingDict.Count;
+        gc.buildingIndex = DataManager.dBuildingDict.Count+ 1;
 
         foreach (KeyValuePair<string, DevelopInitGrid> kvp in DataManager.dGridDict)
         {
