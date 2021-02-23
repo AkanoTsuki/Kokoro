@@ -40,6 +40,7 @@ public class GameControl : MonoBehaviour
     public Dictionary<StuffType, bool> forgeAddUnlock = new Dictionary<StuffType, bool>();
     public int logIndex = 0;
     //public byte forceFlag = 0;
+    public List<int> consumableNum=new List<int>();
 
     public List<byte> itemPanel_rankSelected = new List<byte>();
     public List<byte> itemPanel_levelSelected = new List<byte>();
@@ -89,6 +90,7 @@ public class GameControl : MonoBehaviour
         public int eventIndex = 0;
         public int heroIndex = 0;
         public int itemIndex = 0;
+       
         public int skillIndex = 0;
         public int customerIndex = 0;
         public int buildingIndex = 0;
@@ -97,6 +99,7 @@ public class GameControl : MonoBehaviour
         public bool[] buildingUnlock = new bool[78];
         public Dictionary<StuffType, bool> forgeAddUnlock = new Dictionary<StuffType, bool>();
         public int logIndex = 0;
+        public List<int> consumableNum = new List<int>();
         //public byte forceFlag = 0;
 
         public List<byte> itemPanel_rankSelected = new List<byte>();
@@ -155,6 +158,7 @@ public class GameControl : MonoBehaviour
         t.eventIndex = this.eventIndex;
         t.heroIndex = this.heroIndex;
         t.itemIndex = this.itemIndex;
+
         t.skillIndex = this.skillIndex;
         t.customerIndex = this.customerIndex;
         t.buildingIndex = this.buildingIndex;
@@ -226,6 +230,7 @@ public class GameControl : MonoBehaviour
             this.eventIndex = t1.eventIndex;
             this.heroIndex = t1.heroIndex;
             this.itemIndex = t1.itemIndex;
+
             this.skillIndex = t1.skillIndex;
             this.customerIndex = t1.customerIndex;
             this.buildingIndex = t1.buildingIndex;
@@ -242,6 +247,7 @@ public class GameControl : MonoBehaviour
             this.skillPanel_typeSelected = t1.skillPanel_typeSelected;
 
             this.itemDic = t1.itemDic;
+
             this.heroDic = t1.heroDic;
             this.districtDic = t1.districtDic;
             this.districtGridDic = t1.districtGridDic;
@@ -309,7 +315,7 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    #region 【通用方法】生成英雄、道具、技能,英雄升级,英雄改名,招募，解雇,发工资
+    #region 【方法】生成英雄,英雄升级,英雄改名,招募，解雇,发工资
     public void HeroChangeName(int heroID, string newName)
     {
         heroDic[heroID].name = newName;
@@ -604,7 +610,10 @@ public class GameControl : MonoBehaviour
     }
 
 
-    public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject,int buildingID, List<int> heroObjectIDList)
+    #endregion
+
+    #region 【方法】生成装备物品
+    public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject, int buildingID, List<int> heroObjectIDList)
     {
         //随机提升等级，每个等级提升基础数据5%，上限5
         byte upLevel = 0;
@@ -629,7 +638,7 @@ public class GameControl : MonoBehaviour
         List<ItemAttribute> attrList = new List<ItemAttribute> { };
 
         //模板基础属性及等级修正
-        if (DataManager.mItemDict[itemID].Hp != 0) { attrList.Add(new ItemAttribute(Attribute.Hp, AttributeSource.Basic,-1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].Hp * upRate))); }
+        if (DataManager.mItemDict[itemID].Hp != 0) { attrList.Add(new ItemAttribute(Attribute.Hp, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].Hp * upRate))); }
         if (DataManager.mItemDict[itemID].Mp != 0) { attrList.Add(new ItemAttribute(Attribute.Mp, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].Mp * upRate))); }
         if (DataManager.mItemDict[itemID].HpRenew != 0) { attrList.Add(new ItemAttribute(Attribute.HpRenew, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].HpRenew * upRate))); }
         if (DataManager.mItemDict[itemID].MpRenew != 0) { attrList.Add(new ItemAttribute(Attribute.MpRenew, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].AtkMax * upRate))); }
@@ -690,7 +699,7 @@ public class GameControl : MonoBehaviour
             name = DataManager.mLemmaDict[lemmaID].Name + "的 " + name;
 
             // Debug.Log("lemmaID=" + lemmaID+ " rank="+ rank);
-            
+
 
             if (DataManager.mLemmaDict[lemmaID].Hp.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Hp, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].Hp[rank] * upRate))); }
             if (DataManager.mLemmaDict[lemmaID].Mp.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Mp, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].Mp[rank] * upRate))); }
@@ -847,25 +856,35 @@ public class GameControl : MonoBehaviour
                 }
             }
 
-            attrList.Add(new ItemAttribute(Attribute.Skill, AttributeSource.LemmaAdd, skillID,skillAddType, value));
+            attrList.Add(new ItemAttribute(Attribute.Skill, AttributeSource.LemmaAdd, skillID, skillAddType, value));
         }
 
         //插孔
-        List<byte> slotLevel = new List<byte> { } ;
-        List<int> slotItemID=new List<int> { };
+        List<byte> slotLevel = new List<byte> { };
+        List<int> slotItemID = new List<int> { };
         ran = Random.Range(0, 100);
         if (ran < 20)//10%概率
         {
             slotLevel.Add((byte)Random.Range(1, 5));
             slotItemID.Add(-1);
         }
-        else if (ran >= 20 && ran < 95)
+        else if (ran >= 20 && ran < 50)
         {
             slotLevel.Add((byte)Random.Range(1, 5));
             slotItemID.Add(-1);
             slotLevel.Add((byte)Random.Range(1, 5));
             slotItemID.Add(-1);
         }
+        else if (ran >= 50 && ran < 95)
+        {
+            slotLevel.Add(4);
+            slotItemID.Add(3);
+            slotLevel.Add(3);
+            slotItemID.Add(22);
+            slotLevel.Add(3);
+            slotItemID.Add(-1);
+        }
+
         Debug.Log("slotLevel.Count=" + slotLevel.Count);
         //TODO:依据建筑附加材料生成属性
 
@@ -875,6 +894,21 @@ public class GameControl : MonoBehaviour
             DataManager.mItemDict[itemID].Des + (",于" + timeYear + "年" + timeMonth + "月" + (districtObject != null ? ("在" + districtObject.name + "制作") : "获得")), DataManager.mItemDict[itemID].Cost, districtObject != null ? districtObject.id : (short)-1, false, -1, EquipPart.None);
     }
 
+    #endregion
+
+    #region 【方法】生成消耗品道具
+    public void ConsumableChange(short ConsumableID, int num)
+    {
+        if (consumableNum[ConsumableID] + num < 0)
+        {
+            MessagePanel.Instance.AddMessage("数量不足");
+            return;
+        }
+        consumableNum[ConsumableID] += num;
+    }
+    #endregion
+
+    #region 【方法】生成技能
     public SkillObject GenerateSkillByRandom(short skillID, short districtID)
     {
         string name = DataManager.mSkillDict[skillID].Name;
@@ -981,9 +1015,6 @@ public class GameControl : MonoBehaviour
     {
         return new SkillObject(skillIndex, DataManager.mSkillDict[skillID].Name, skillID, 0, 0, 0, 0, 0, 5000, -2, false, -1, 0);
     }
-
-
-
     #endregion
 
     #region 【方法】建筑物建设

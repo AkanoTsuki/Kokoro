@@ -84,8 +84,9 @@ public enum LabelType
     AdventureTeam,
     AdventurePart,
     Skill,
-    ShopItem
-   // AreaMapDistrict
+    ShopItem,
+    Consumable
+    // AreaMapDistrict
 }
 
 public enum Element
@@ -107,6 +108,12 @@ public enum HeroType
     Producer,
     Maker,
     Backman
+}
+
+public enum ConsumableType
+{
+    Drug,
+    SlotStone
 }
 
 public enum ItemTypeBig
@@ -244,7 +251,8 @@ public enum AttributeSource
 {
     Basic,
     RandomAdd,
-    LemmaAdd
+    LemmaAdd,
+    SlotAdd
 }
 
 public enum AdventureState
@@ -523,6 +531,60 @@ public class ItemObject
     public EquipPart heroPart { get { return HeroPart; } set { HeroPart = value; } }
 }
 
+//消耗物品原型
+[System.Serializable]
+public class ConsumablePrototype : ISerializationCallbackReceiver
+{
+    public int ID;
+    public string Name;
+    public string Pic;
+    public ConsumableType Type;
+    public string TypeStr;
+    public string Des;
+    public List<Attribute> AttributeType;
+    public List<string> AttributeTypeStr;
+    public List<short> SkillID;
+    public List<AttributeSkill> SkillAddType;
+    public List<string> SkillAddTypeStr;
+    public List<int> Value;
+
+
+    public void OnAfterDeserialize()
+    {
+        ConsumableType type = (ConsumableType)Enum.Parse(typeof(ConsumableType), TypeStr);
+        Type = type;
+
+        for (int i = 0; i < AttributeTypeStr.Count; i++)
+        {
+            Attribute attributeType = (Attribute)Enum.Parse(typeof(Attribute), AttributeTypeStr[i]);
+            AttributeType.Add(attributeType);
+        }
+        for (int i = 0; i < SkillAddTypeStr.Count; i++)
+        {
+            AttributeSkill skillAddType = (AttributeSkill)Enum.Parse(typeof(AttributeSkill), SkillAddTypeStr[i]);
+            SkillAddType.Add(skillAddType);
+        }
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+////消耗物品实例
+//public class ConsumableObject
+//{
+//    private short ObjectID;
+//    private int Num;
+//    public ConsumableObject(int objectID, short num)
+//    {
+//        this.ObjectID = objectID;
+//        this.Num = num;
+//    }
+//    public int objectID { get { return ObjectID; } }
+//    public short num { get { return Num; } set { Num = value; } }
+//}
 
 //技能原型
 [System.Serializable]

@@ -163,8 +163,12 @@ public class GameControlInNewGame : MonoBehaviour
             gc.dungeonList.Add(new DungeonObject(i, DungeonStage.Open, new List<byte> { }, 1));
         }
 
+        for (short i = 0; i < DataManager.mConsumableDict.Count; i++)
+        {
+            gc.consumableNum.Add(0);
+        }
 
-        gc.buildingUnlock = new bool[78];
+            gc.buildingUnlock = new bool[78];
         //gc.buildingUnlock[0]= true;
         //gc.buildingUnlock[3]= true;
         //gc.buildingUnlock[9]= true;

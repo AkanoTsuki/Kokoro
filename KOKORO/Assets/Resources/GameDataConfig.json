@@ -6006,7 +6006,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadH",
       "Des": "象征着勇气的头盔",
-      "SuiteID": -1,
+      "SuiteID": 2,
       "Cost": 1750,
       "Rank": 5,
       "Hp": 0,
@@ -6096,7 +6096,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadH",
       "Des": "裁决官的头盔",
-      "SuiteID": -1,
+      "SuiteID": 3,
       "Cost": 2800,
       "Rank": 6,
       "Hp": 0,
@@ -6186,7 +6186,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadH",
       "Des": "未如其它优秀头盔一样闪耀着光芒，不过也正好说明了它经历了千百次残酷的战斗",
-      "SuiteID": 2,
+      "SuiteID": 4,
       "Cost": 3350,
       "Rank": 7,
       "Hp": 0,
@@ -6231,7 +6231,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadH",
       "Des": "原材料中参入了相当比例的黄金，故而整个头盔都闪烁华丽的光芒",
-      "SuiteID": 3,
+      "SuiteID": 5,
       "Cost": 5000,
       "Rank": 8,
       "Hp": 0,
@@ -6321,7 +6321,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadH",
       "Des": "英雄王“布罗德”装备的强大战盔",
-      "SuiteID": -1,
+      "SuiteID": 6,
       "Cost": 6000,
       "Rank": 9,
       "Hp": 0,
@@ -6366,7 +6366,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 7,
       "Cost": 6500,
       "Rank": 9,
       "Hp": 0,
@@ -6411,7 +6411,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadH",
       "Des": "散发出魔神之力的强大战盔，震慑附近一切的生物",
-      "SuiteID": -1,
+      "SuiteID": 8,
       "Cost": 20000,
       "Rank": 10,
       "Hp": 0,
@@ -6636,7 +6636,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadL",
       "Des": "水手们使用的头巾，据说戴着就不会晕船",
-      "SuiteID": -1,
+      "SuiteID": 9,
       "Cost": 750,
       "Rank": 3,
       "Hp": 0,
@@ -6681,7 +6681,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadL",
       "Des": "船长普遍戴的样式帽子，在船上是身份的象征",
-      "SuiteID": -1,
+      "SuiteID": 10,
       "Cost": 1000,
       "Rank": 4,
       "Hp": 0,
@@ -6726,7 +6726,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadL",
       "Des": "海洋上令人恐惧的标识",
-      "SuiteID": -1,
+      "SuiteID": 11,
       "Cost": 1500,
       "Rank": 5,
       "Hp": 0,
@@ -6771,7 +6771,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadL",
       "Des": "教会使徒穿着的兜帽，给人一种神秘的感觉",
-      "SuiteID": -1,
+      "SuiteID": 12,
       "Cost": 1750,
       "Rank": 5,
       "Hp": 0,
@@ -6816,7 +6816,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadL",
       "Des": "教会审判者穿着的兜帽",
-      "SuiteID": -1,
+      "SuiteID": 13,
       "Cost": 2500,
       "Rank": 6,
       "Hp": 0,
@@ -6906,7 +6906,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadL",
       "Des": "秘术师佩戴的帽子，除了防御能力出色，还很引人注目",
-      "SuiteID": -1,
+      "SuiteID": 14,
       "Cost": 3500,
       "Rank": 7,
       "Hp": 0,
@@ -6996,7 +6996,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 15,
       "Cost": 5500,
       "Rank": 8,
       "Hp": 0,
@@ -7041,7 +7041,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HeadL",
       "Des": "注入邪神意念的头冠，据说一般直视它会很快处于精神崩溃的状态",
-      "SuiteID": -1,
+      "SuiteID": 16,
       "Cost": 6500,
       "Rank": 9,
       "Hp": 0,
@@ -7356,7 +7356,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 2,
       "Cost": 2250,
       "Rank": 5,
       "Hp": 0,
@@ -7446,7 +7446,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 3,
       "Cost": 3800,
       "Rank": 6,
       "Hp": 0,
@@ -7536,7 +7536,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyH",
       "Des": "",
-      "SuiteID": 2,
+      "SuiteID": 4,
       "Cost": 4800,
       "Rank": 7,
       "Hp": 0,
@@ -7581,7 +7581,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyH",
       "Des": "",
-      "SuiteID": 3,
+      "SuiteID": 5,
       "Cost": 6000,
       "Rank": 8,
       "Hp": 0,
@@ -7671,7 +7671,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 6,
       "Cost": 8500,
       "Rank": 9,
       "Hp": 0,
@@ -7716,7 +7716,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 7,
       "Cost": 10000,
       "Rank": 9,
       "Hp": 0,
@@ -7761,7 +7761,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyH",
       "Des": "魔神混沌力量附着的终极铠甲，绝大部分攻击都无法穿透",
-      "SuiteID": -1,
+      "SuiteID": 8,
       "Cost": 40000,
       "Rank": 10,
       "Hp": 0,
@@ -7986,7 +7986,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyL",
       "Des": "水手穿着的麻布服装，看起来普通，不过缺十分耐水",
-      "SuiteID": -1,
+      "SuiteID": 9,
       "Cost": 1000,
       "Rank": 3,
       "Hp": 0,
@@ -8031,7 +8031,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 10,
       "Cost": 1500,
       "Rank": 4,
       "Hp": 0,
@@ -8076,7 +8076,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 11,
       "Cost": 2000,
       "Rank": 5,
       "Hp": 0,
@@ -8121,7 +8121,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyL",
       "Des": "教会使徒穿着的衣服",
-      "SuiteID": -1,
+      "SuiteID": 12,
       "Cost": 2500,
       "Rank": 5,
       "Hp": 0,
@@ -8166,7 +8166,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 13,
       "Cost": 3500,
       "Rank": 6,
       "Hp": 0,
@@ -8256,7 +8256,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 14,
       "Cost": 5000,
       "Rank": 7,
       "Hp": 0,
@@ -8346,7 +8346,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 15,
       "Cost": 7500,
       "Rank": 8,
       "Hp": 0,
@@ -8391,7 +8391,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BodyL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 16,
       "Cost": 10000,
       "Rank": 9,
       "Hp": 0,
@@ -8661,7 +8661,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 3,
       "Cost": 2500,
       "Rank": 6,
       "Hp": 0,
@@ -8751,7 +8751,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandH",
       "Des": "",
-      "SuiteID": 2,
+      "SuiteID": 4,
       "Cost": 4550,
       "Rank": 7,
       "Hp": 0,
@@ -8796,7 +8796,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandH",
       "Des": "",
-      "SuiteID": 3,
+      "SuiteID": 5,
       "Cost": 5550,
       "Rank": 8,
       "Hp": 0,
@@ -8841,7 +8841,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 7,
       "Cost": 6000,
       "Rank": 9,
       "Hp": 0,
@@ -8886,7 +8886,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandH",
       "Des": "带有巨大魔神破坏力的护腕，在抵御对方攻击的同时，毁灭对方",
-      "SuiteID": -1,
+      "SuiteID": 8,
       "Cost": 20000,
       "Rank": 10,
       "Hp": 0,
@@ -9021,7 +9021,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 10,
       "Cost": 380,
       "Rank": 4,
       "Hp": 0,
@@ -9066,7 +9066,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 11,
       "Cost": 1000,
       "Rank": 5,
       "Hp": 0,
@@ -9111,7 +9111,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 13,
       "Cost": 2000,
       "Rank": 6,
       "Hp": 0,
@@ -9201,7 +9201,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 15,
       "Cost": 5000,
       "Rank": 8,
       "Hp": 0,
@@ -9246,7 +9246,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "HandL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 16,
       "Cost": 6000,
       "Rank": 9,
       "Hp": 0,
@@ -9471,7 +9471,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BackH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 2,
       "Cost": 2750,
       "Rank": 5,
       "Hp": 50,
@@ -9516,7 +9516,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BackH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 3,
       "Cost": 3500,
       "Rank": 6,
       "Hp": 65,
@@ -9561,7 +9561,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BackH",
       "Des": "",
-      "SuiteID": 2,
+      "SuiteID": 4,
       "Cost": 4500,
       "Rank": 7,
       "Hp": 80,
@@ -9651,7 +9651,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BackH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 7,
       "Cost": 8000,
       "Rank": 9,
       "Hp": 125,
@@ -9696,7 +9696,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BackH",
       "Des": "激发佩戴者源源不断的生命力，宛如不死的魔神",
-      "SuiteID": -1,
+      "SuiteID": 8,
       "Cost": 20000,
       "Rank": 10,
       "Hp": 100,
@@ -9741,7 +9741,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BackL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 12,
       "Cost": 2500,
       "Rank": 5,
       "Hp": 0,
@@ -9786,7 +9786,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BackL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 14,
       "Cost": 4500,
       "Rank": 7,
       "Hp": 0,
@@ -9876,7 +9876,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "BackL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 16,
       "Cost": 8000,
       "Rank": 9,
       "Hp": 0,
@@ -10101,7 +10101,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 2,
       "Cost": 1750,
       "Rank": 5,
       "Hp": 0,
@@ -10191,7 +10191,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 3,
       "Cost": 2800,
       "Rank": 6,
       "Hp": 0,
@@ -10281,7 +10281,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootH",
       "Des": "踏遍了无数战场的战靴",
-      "SuiteID": 2,
+      "SuiteID": 4,
       "Cost": 3350,
       "Rank": 7,
       "Hp": 0,
@@ -10326,7 +10326,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootH",
       "Des": "",
-      "SuiteID": 3,
+      "SuiteID": 5,
       "Cost": 5000,
       "Rank": 8,
       "Hp": 0,
@@ -10416,7 +10416,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 6,
       "Cost": 6000,
       "Rank": 9,
       "Hp": 0,
@@ -10461,7 +10461,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootH",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 7,
       "Cost": 6500,
       "Rank": 9,
       "Hp": 0,
@@ -10506,7 +10506,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootH",
       "Des": "每踏一步都会使大地颤抖，并留下魔神恐怖的足迹",
-      "SuiteID": -1,
+      "SuiteID": 8,
       "Cost": 20000,
       "Rank": 10,
       "Hp": 0,
@@ -10731,7 +10731,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 9,
       "Cost": 750,
       "Rank": 3,
       "Hp": 0,
@@ -10776,7 +10776,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 10,
       "Cost": 1000,
       "Rank": 4,
       "Hp": 0,
@@ -10821,7 +10821,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 11,
       "Cost": 1500,
       "Rank": 5,
       "Hp": 0,
@@ -10866,7 +10866,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 12,
       "Cost": 1750,
       "Rank": 5,
       "Hp": 0,
@@ -10911,7 +10911,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 13,
       "Cost": 2500,
       "Rank": 6,
       "Hp": 0,
@@ -11001,7 +11001,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 14,
       "Cost": 3500,
       "Rank": 7,
       "Hp": 0,
@@ -11091,7 +11091,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 15,
       "Cost": 5500,
       "Rank": 8,
       "Hp": 0,
@@ -11136,7 +11136,7 @@
       "TypeBigStr": "Armor",
       "TypeSmallStr": "FootL",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 16,
       "Cost": 6500,
       "Rank": 9,
       "Hp": 0,
@@ -11271,7 +11271,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 2,
       "Cost": 1000,
       "Rank": 5,
       "Hp": 90,
@@ -11451,7 +11451,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": 2,
+      "SuiteID": 4,
       "Cost": 2700,
       "Rank": 7,
       "Hp": 175,
@@ -11496,7 +11496,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": 3,
+      "SuiteID": 5,
       "Cost": 3800,
       "Rank": 8,
       "Hp": 200,
@@ -11586,7 +11586,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 6,
       "Cost": 5000,
       "Rank": 9,
       "Hp": 300,
@@ -11631,7 +11631,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 7,
       "Cost": 5500,
       "Rank": 9,
       "Hp": 400,
@@ -11676,7 +11676,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 8,
       "Cost": 20000,
       "Rank": 10,
       "Hp": 300,
@@ -11856,7 +11856,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 11,
       "Cost": 750,
       "Rank": 5,
       "Hp": 0,
@@ -11901,7 +11901,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 12,
       "Cost": 1000,
       "Rank": 5,
       "Hp": 0,
@@ -11946,7 +11946,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 13,
       "Cost": 1500,
       "Rank": 6,
       "Hp": 0,
@@ -12036,7 +12036,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 14,
       "Cost": 2500,
       "Rank": 7,
       "Hp": 0,
@@ -12081,7 +12081,7 @@
       "TypeBigStr": "Jewelry",
       "TypeSmallStr": "Neck",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 16,
       "Cost": 5500,
       "Rank": 9,
       "Hp": 0,
@@ -12756,7 +12756,7 @@
       "TypeBigStr": "Subhand",
       "TypeSmallStr": "Shield",
       "Des": "",
-      "SuiteID": 2,
+      "SuiteID": 4,
       "Cost": 3500,
       "Rank": 7,
       "Hp": 0,
@@ -12801,7 +12801,7 @@
       "TypeBigStr": "Subhand",
       "TypeSmallStr": "Shield",
       "Des": "",
-      "SuiteID": 3,
+      "SuiteID": 5,
       "Cost": 4800,
       "Rank": 8,
       "Hp": 0,
@@ -12891,7 +12891,7 @@
       "TypeBigStr": "Subhand",
       "TypeSmallStr": "Shield",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 6,
       "Cost": 6500,
       "Rank": 9,
       "Hp": 0,
@@ -12936,7 +12936,7 @@
       "TypeBigStr": "Subhand",
       "TypeSmallStr": "Shield",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 7,
       "Cost": 8000,
       "Rank": 9,
       "Hp": 0,
@@ -12981,7 +12981,7 @@
       "TypeBigStr": "Subhand",
       "TypeSmallStr": "Shield",
       "Des": "",
-      "SuiteID": -1,
+      "SuiteID": 8,
       "Cost": 20000,
       "Rank": 10,
       "Hp": 0,
@@ -13153,6 +13153,573 @@
       "GoldGet": 0,
       "ExpGet": 0,
       "ItemGet": 0
+    }
+  ],
+  "ItemSuite": [
+    {
+      "ID": 0,
+      "Name": "守卫者",
+      "PartID": [
+        109,
+        139,
+        186,
+        200
+      ],
+      "NeedPart": [
+        2,
+        4
+      ],
+      "AttributeTypeStr": [
+        "Def",
+        "Hp"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        15,
+        30
+      ]
+    },
+    {
+      "ID": 1,
+      "Name": "骑士荣光",
+      "PartID": [
+        110,
+        140,
+        168,
+        187,
+        201
+      ],
+      "NeedPart": [
+        3,
+        5
+      ],
+      "AttributeTypeStr": [
+        "AtkMax",
+        "Def"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        25,
+        35
+      ]
+    },
+    {
+      "ID": 2,
+      "Name": "勇气之证",
+      "PartID": [
+        112,
+        142,
+        189,
+        203,
+        229
+      ],
+      "NeedPart": [
+        3,
+        5
+      ],
+      "AttributeTypeStr": [
+        "CriD",
+        "FireDam"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        20,
+        20
+      ]
+    },
+    {
+      "ID": 3,
+      "Name": "裁决者",
+      "PartID": [
+        114,
+        144,
+        171,
+        190,
+        205
+      ],
+      "NeedPart": [
+        3,
+        5
+      ],
+      "AttributeTypeStr": [
+        "AtkMax",
+        "AtkMin"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        40,
+        40
+      ]
+    },
+    {
+      "ID": 4,
+      "Name": "历战者",
+      "PartID": [
+        116,
+        146,
+        173,
+        191,
+        207,
+        233,
+        262
+      ],
+      "NeedPart": [
+        3,
+        5,
+        7
+      ],
+      "AttributeTypeStr": [
+        "Hp",
+        "AtkMax",
+        "ExpGet"
+      ],
+      "SkillID": [
+        -1,
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None",
+        "None"
+      ],
+      "Value": [
+        115,
+        55,
+        10
+      ]
+    },
+    {
+      "ID": 5,
+      "Name": "英雄之证",
+      "PartID": [
+        117,
+        147,
+        174,
+        208,
+        234,
+        263
+      ],
+      "NeedPart": [
+        2,
+        4,
+        6
+      ],
+      "AttributeTypeStr": [
+        "CriD",
+        "CriR",
+        "CriD"
+      ],
+      "SkillID": [
+        -1,
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None",
+        "None"
+      ],
+      "Value": [
+        80,
+        15,
+        30
+      ]
+    },
+    {
+      "ID": 6,
+      "Name": "传说",
+      "PartID": [
+        119,
+        149,
+        210,
+        236,
+        265
+      ],
+      "NeedPart": [
+        3,
+        5
+      ],
+      "AttributeTypeStr": [
+        "Hp",
+        "AtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        240,
+        80
+      ]
+    },
+    {
+      "ID": 7,
+      "Name": "武神降临",
+      "PartID": [
+        120,
+        150,
+        175,
+        193,
+        211,
+        237,
+        266
+      ],
+      "NeedPart": [
+        2,
+        5,
+        7
+      ],
+      "AttributeTypeStr": [
+        "AtkMax",
+        "Def",
+        "Hit"
+      ],
+      "SkillID": [
+        -1,
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None",
+        "None"
+      ],
+      "Value": [
+        100,
+        105,
+        50
+      ]
+    },
+    {
+      "ID": 8,
+      "Name": "魔神之怒",
+      "PartID": [
+        121,
+        151,
+        176,
+        194,
+        212,
+        238,
+        267
+      ],
+      "NeedPart": [
+        2,
+        4,
+        5,
+        7
+      ],
+      "AttributeTypeStr": [
+        "DarkDam",
+        "Def",
+        "CriD",
+        "AtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None",
+        "None",
+        "None"
+      ],
+      "Value": [
+        50,
+        120,
+        50,
+        200
+      ]
+    },
+    {
+      "ID": 9,
+      "Name": "引导者",
+      "PartID": [
+        126,
+        156,
+        217
+      ],
+      "NeedPart": [
+        2,
+        3
+      ],
+      "AttributeTypeStr": [
+        "MDef",
+        "Mp"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        10,
+        30
+      ]
+    },
+    {
+      "ID": 10,
+      "Name": "大航海家",
+      "PartID": [
+        127,
+        157,
+        179,
+        218
+      ],
+      "NeedPart": [
+        2,
+        4
+      ],
+      "AttributeTypeStr": [
+        "WaterDam",
+        "Mp"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        15,
+        30
+      ]
+    },
+    {
+      "ID": 11,
+      "Name": "海盗王",
+      "PartID": [
+        128,
+        158,
+        180,
+        219,
+        242
+      ],
+      "NeedPart": [
+        3,
+        5
+      ],
+      "AttributeTypeStr": [
+        "CriD",
+        "MAtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        10,
+        25
+      ]
+    },
+    {
+      "ID": 12,
+      "Name": "使徒",
+      "PartID": [
+        129,
+        159,
+        195,
+        220,
+        243
+      ],
+      "NeedPart": [
+        3,
+        5
+      ],
+      "AttributeTypeStr": [
+        "DarkRes",
+        "MAtkMin"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        25,
+        30
+      ]
+    },
+    {
+      "ID": 13,
+      "Name": "异端杀手",
+      "PartID": [
+        130,
+        160,
+        181,
+        221,
+        244
+      ],
+      "NeedPart": [
+        3,
+        5
+      ],
+      "AttributeTypeStr": [
+        "MAtkMax",
+        "MAtkMin"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        40,
+        40
+      ]
+    },
+    {
+      "ID": 14,
+      "Name": "秘境",
+      "PartID": [
+        132,
+        162,
+        196,
+        223,
+        246
+      ],
+      "NeedPart": [
+        3,
+        5
+      ],
+      "AttributeTypeStr": [
+        "GroundDam",
+        "WindDam"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        35,
+        55
+      ]
+    },
+    {
+      "ID": 15,
+      "Name": "大天使",
+      "PartID": [
+        134,
+        164,
+        183,
+        225
+      ],
+      "NeedPart": [
+        2,
+        3,
+        4
+      ],
+      "AttributeTypeStr": [
+        "LightDam",
+        "GoldGet",
+        "MDef"
+      ],
+      "SkillID": [
+        -1,
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None",
+        "None"
+      ],
+      "Value": [
+        35,
+        20,
+        170
+      ]
+    },
+    {
+      "ID": 16,
+      "Name": "邪神诅咒",
+      "PartID": [
+        135,
+        165,
+        184,
+        198,
+        226,
+        247
+      ],
+      "NeedPart": [
+        2,
+        4,
+        6
+      ],
+      "AttributeTypeStr": [
+        "DarkDam",
+        "MAtkMin",
+        "MAtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None",
+        "None"
+      ],
+      "Value": [
+        35,
+        100,
+        150
+      ]
     }
   ],
   "District": [
@@ -119231,126 +119798,166 @@
       "Des": ""
     }
   ],
-  "ItemSuite": [
+  "Consumable": [
     {
       "ID": 0,
-      "Name": "守卫者",
-      "PartID": [
-        109,
-        139,
-        186,
-        200
-      ],
-      "NeedPart": [
-        2,
-        4
-      ],
+      "Name": "迅捷之石I",
+      "Pic": "icon992",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含风元素的晶石碎片，可用作镶嵌",
       "AttributeTypeStr": [
-        "Def",
-        "Hp"
+        "Hit"
       ],
       "SkillID": [
-        -1,
         -1
       ],
       "SkillAddTypeStr": [
-        "None",
         "None"
       ],
       "Value": [
-        15,
-        30
-      ]
-    },
-    {
-      "ID": 1,
-      "Name": "骑士荣光",
-      "PartID": [
-        110,
-        140,
-        168,
-        187,
-        201
-      ],
-      "NeedPart": [
-        3,
-        5
-      ],
-      "AttributeTypeStr": [
-        "AtkMax",
-        "Def"
-      ],
-      "SkillID": [
-        -1,
-        -1
-      ],
-      "SkillAddTypeStr": [
-        "None",
-        "None"
-      ],
-      "Value": [
-        25,
-        35
-      ]
-    },
-    {
-      "ID": 2,
-      "Name": "历战者",
-      "PartID": [
-        116,
-        146,
-        173,
-        191,
-        207,
-        233,
-        262
-      ],
-      "NeedPart": [
-        3,
-        5,
-        7
-      ],
-      "AttributeTypeStr": [
-        "Hp",
-        "AtkMax",
-        "ExpGet"
-      ],
-      "SkillID": [
-        -1,
-        -1,
-        -1
-      ],
-      "SkillAddTypeStr": [
-        "None",
-        "None",
-        "None"
-      ],
-      "Value": [
-        115,
-        55,
         10
       ]
     },
     {
-      "ID": 3,
-      "Name": "英雄之证",
-      "PartID": [
-        117,
-        147,
-        174,
-        208,
-        234,
-        263
-      ],
-      "NeedPart": [
-        2,
-        4,
-        6
-      ],
+      "ID": 1,
+      "Name": "迅捷之石II",
+      "Pic": "icon993",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含风元素的晶石块，可用作镶嵌",
       "AttributeTypeStr": [
-        "CriD",
-        "CriR",
-        "CriD"
+        "Hit"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        20
+      ]
+    },
+    {
+      "ID": 2,
+      "Name": "迅捷之石III",
+      "Pic": "icon994",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含风元素的高级晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Hit"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        30
+      ]
+    },
+    {
+      "ID": 3,
+      "Name": "迅捷之石IV",
+      "Pic": "icon995",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含大量风元素的极品晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Hit",
+        "WindDam"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        40,
+        20
+      ]
+    },
+    {
+      "ID": 4,
+      "Name": "勇气之石I",
+      "Pic": "icon976",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含火元素的晶石碎片，可用作镶嵌",
+      "AttributeTypeStr": [
+        "AtkMin",
+        "AtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        10,
+        10
+      ]
+    },
+    {
+      "ID": 5,
+      "Name": "勇气之石II",
+      "Pic": "icon977",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含火元素的晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "AtkMin",
+        "AtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        20,
+        20
+      ]
+    },
+    {
+      "ID": 6,
+      "Name": "勇气之石III",
+      "Pic": "icon978",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含火元素的高级晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "AtkMin",
+        "AtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        30,
+        30
+      ]
+    },
+    {
+      "ID": 7,
+      "Name": "勇气之石IV",
+      "Pic": "icon979",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含大量火元素的极品晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "AtkMin",
+        "AtkMax",
+        "FireDam"
       ],
       "SkillID": [
         -1,
@@ -119363,9 +119970,395 @@
         "None"
       ],
       "Value": [
-        80,
-        15,
+        40,
+        40,
+        20
+      ]
+    },
+    {
+      "ID": 8,
+      "Name": "智慧之石I",
+      "Pic": "icon980",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含水元素的晶石碎片，可用作镶嵌",
+      "AttributeTypeStr": [
+        "MAtkMin",
+        "MAtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        10,
+        10
+      ]
+    },
+    {
+      "ID": 9,
+      "Name": "智慧之石II",
+      "Pic": "icon981",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含水元素的晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "MAtkMin",
+        "MAtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        20,
+        20
+      ]
+    },
+    {
+      "ID": 10,
+      "Name": "智慧之石III",
+      "Pic": "icon982",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含水元素的高级晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "MAtkMin",
+        "MAtkMax"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        30,
         30
+      ]
+    },
+    {
+      "ID": 11,
+      "Name": "智慧之石IV",
+      "Pic": "icon983",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含大量水元素的极品晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "MAtkMin",
+        "MAtkMax",
+        "WaterDam"
+      ],
+      "SkillID": [
+        -1,
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None",
+        "None"
+      ],
+      "Value": [
+        40,
+        40,
+        20
+      ]
+    },
+    {
+      "ID": 12,
+      "Name": "坚毅之石I",
+      "Pic": "icon1000",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含地元素的晶石碎片，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Def"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        10
+      ]
+    },
+    {
+      "ID": 13,
+      "Name": "坚毅之石II",
+      "Pic": "icon1001",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含地元素的晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Def"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        20
+      ]
+    },
+    {
+      "ID": 14,
+      "Name": "坚毅之石III",
+      "Pic": "icon1002",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含地元素的高级晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Def"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        30
+      ]
+    },
+    {
+      "ID": 15,
+      "Name": "坚毅之石IV",
+      "Pic": "icon1003",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含大量地元素的极品晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Def",
+        "GroundDam"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        40,
+        20
+      ]
+    },
+    {
+      "ID": 16,
+      "Name": "荣耀之石I",
+      "Pic": "icon984",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含光元素的晶石碎片，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Hp",
+        "Mp"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        20,
+        20
+      ]
+    },
+    {
+      "ID": 17,
+      "Name": "荣耀之石II",
+      "Pic": "icon985",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含光元素的晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Hp",
+        "Mp"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        50,
+        50
+      ]
+    },
+    {
+      "ID": 18,
+      "Name": "荣耀之石III",
+      "Pic": "icon986",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含光元素的高级晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Hp",
+        "Mp"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        100,
+        100
+      ]
+    },
+    {
+      "ID": 19,
+      "Name": "荣耀之石IV",
+      "Pic": "icon987",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含大量光元素的极品晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Hp",
+        "Mp",
+        "LightDam"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None",
+        "None"
+      ],
+      "Value": [
+        150,
+        150,
+        20
+      ]
+    },
+    {
+      "ID": 20,
+      "Name": "邪恶之石I",
+      "Pic": "icon988",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含暗元素的晶石碎片，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Dod"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        10
+      ]
+    },
+    {
+      "ID": 21,
+      "Name": "邪恶之石II",
+      "Pic": "icon989",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含暗元素的晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Dod"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        20
+      ]
+    },
+    {
+      "ID": 22,
+      "Name": "邪恶之石III",
+      "Pic": "icon990",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含暗元素的高级晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Dod"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        30
+      ]
+    },
+    {
+      "ID": 23,
+      "Name": "邪恶之石IV",
+      "Pic": "icon991",
+      "TypeStr": "SlotStone",
+      "Des": "蕴含大量暗元素的极品晶石块，可用作镶嵌",
+      "AttributeTypeStr": [
+        "Dod",
+        "DarkDam"
+      ],
+      "SkillID": [
+        -1,
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None",
+        "None"
+      ],
+      "Value": [
+        40,
+        20
+      ]
+    },
+    {
+      "ID": 24,
+      "Name": "生命药水",
+      "Pic": "icon273",
+      "TypeStr": "Drug",
+      "Des": "",
+      "AttributeTypeStr": [
+        "Hp"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        20
+      ]
+    },
+    {
+      "ID": 25,
+      "Name": "魔法药水",
+      "Pic": "icon274",
+      "TypeStr": "Drug",
+      "Des": "",
+      "AttributeTypeStr": [
+        "Mp"
+      ],
+      "SkillID": [
+        -1
+      ],
+      "SkillAddTypeStr": [
+        "None"
+      ],
+      "Value": [
+        20
       ]
     }
   ]
