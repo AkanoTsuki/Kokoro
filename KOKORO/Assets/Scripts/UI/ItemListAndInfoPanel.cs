@@ -557,13 +557,11 @@ public class ItemListAndInfoPanel : BasePanel
         string strLemma = "";
         string strBasicFirst = "";
         List<int> atkValue = new List<int> { 0, 0, 0, 0, 0 };
-        //Debug.Log(" itemObject.attr.Count=" + itemObject.attr.Count);
         for (int i = 0; i < itemObject.attr.Count; i++)
         {
 
             if (itemObject.attr[i].attrS == AttributeSource.Basic)
             {
-                //Debug.Log(" itemObject.attr[i].attr="+ itemObject.attr[i].attr);
                 if (DataManager.mItemDict[itemObject.prototypeID].TypeBig == ItemTypeBig.Weapon)
                 {
                     switch (itemObject.attr[i].attr)
@@ -573,7 +571,7 @@ public class ItemListAndInfoPanel : BasePanel
                         case Attribute.MAtkMin: atkValue[2] = itemObject.attr[i].value; break;
                         case Attribute.MAtkMax: atkValue[3] = itemObject.attr[i].value; break;
                         case Attribute.Spd: atkValue[4] = itemObject.attr[i].value; break;
-                        default: strBasic += GetAttrLineStr(itemObject.attr[i].attr, itemObject.attr[i].value) + "\n"; break;
+                        default: strBasic += "\n"+ GetAttrLineStr(itemObject.attr[i]); break;
                     }
                 }
                 else if (DataManager.mItemDict[itemObject.prototypeID].TypeBig == ItemTypeBig.Armor)
@@ -582,12 +580,12 @@ public class ItemListAndInfoPanel : BasePanel
                     {
                         case Attribute.Def: atkValue[0] = itemObject.attr[i].value; break;
                         case Attribute.MDef: atkValue[1] = itemObject.attr[i].value; break;
-                        default: strBasic += GetAttrLineStr(itemObject.attr[i].attr, itemObject.attr[i].value) + "\n"; break;
+                        default: strBasic += "\n" + GetAttrLineStr(itemObject.attr[i]) ; break;
                     }
                 }
                 else
                 { 
-                    strBasic += GetAttrLineStr(itemObject.attr[i].attr, itemObject.attr[i].value) + "\n"; 
+                    strBasic += "\n"+ GetAttrLineStr(itemObject.attr[i]) ; 
                 }
 
 
@@ -596,7 +594,7 @@ public class ItemListAndInfoPanel : BasePanel
             else if (itemObject.attr[i].attrS == AttributeSource.LemmaAdd)
             {
                // Debug.Log(" LemmaAdd");
-                strLemma += GetAttrLineStr(itemObject.attr[i].attr, itemObject.attr[i].value)  + "\n";
+                strLemma += "\n"+ GetAttrLineStr(itemObject.attr[i])  ;
             }
         }
 
@@ -605,50 +603,107 @@ public class ItemListAndInfoPanel : BasePanel
         {
             if (atkValue[0] != 0 && atkValue[1] != 0)
             {
-                strBasicFirst += "物理攻击 " + atkValue[0] + " - " + atkValue[1] + "\n";
+                strBasicFirst += "\n"+ "物理攻击 " + atkValue[0] + " - " + atkValue[1] ;
             }
             if (atkValue[2] != 0 && atkValue[3] != 0)
             {
-                strBasicFirst += "魔法攻击 " + atkValue[2] + " - " + atkValue[3] + "\n";
+                strBasicFirst += "\n" + "魔法攻击 " + atkValue[2] + " - " + atkValue[3] ;
             }
             if (atkValue[4] != 0 )
             {
-                strBasicFirst += "攻击速度 " + atkValue[4] + "\n";
+                strBasicFirst += "\n" + "攻击速度 " + atkValue[4] ;
             }
         }
         else if (DataManager.mItemDict[itemObject.prototypeID].TypeBig == ItemTypeBig.Armor)
         {
             if (atkValue[0] != 0)
             {
-                strBasicFirst += "物理防御 " + atkValue[0] + "\n";
+                strBasicFirst += "\n" + "物理防御 " + atkValue[0] ;
             }
             if (atkValue[1] != 0)
             {
-                strBasicFirst += "魔法防御 " + atkValue[1]+ "\n";
+                strBasicFirst += "\n" + "魔法防御 " + atkValue[1];
             }
         }
+        //插槽部分
+        Debug.Log("itemObject.slotLevel.Count=" + itemObject.slotLevel.Count);
+        string strSlot = "";
+        for(int i=0;i< itemObject.slotLevel.Count;i++)
+        {
+            switch (itemObject.slotLevel[i])
+            {
+                case 1: strSlot += "\n〇 一级孔槽<color=red>(未镶嵌)</color>"; break;
+                case 2: strSlot += "\n〇 二级孔槽<color=red>(未镶嵌)</color>"; break;
+                case 3: strSlot += "\n〇 三级孔槽<color=red>(未镶嵌)</color>"; break;
+                case 4: strSlot += "\n〇 四级孔槽<color=red>(未镶嵌)</color>"; break;
+            }
+        }
+        if (strSlot != "")
+        {
+            strSlot = "\n"+ strSlot;
+        }
 
-        strBasic = strBasicFirst + strBasic+ "\n<color=#53C2FF>" + strLemma+"</color>";
-        str += "\n" + strBasic + "──────────────\n[#"+ itemObject .objectID+ "]" + itemObject.des + "\n价值 "+ itemObject.cost;
+        //套装部分
+        string strSuite = "";
+        //Debug.
+        if (DataManager.mItemDict[itemObject.prototypeID].SuiteID != -1)
+        {
+            strSuite = "\n套装:" + DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].Name ;
+            for (int i = 0; i < DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].PartID.Count; i++)
+            {
+                if (itemObject.prototypeID != DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].PartID[i])
+                {
+                    strSuite += "\n  <color=#14A200>" + DataManager.mItemDict[DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].PartID[i]].Name + "</color>";
+                }
+                else
+                {
+                    strSuite += "\n  " + DataManager.mItemDict[DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].PartID[i]].Name;
+                }
+                
+            }
+
+            for (int i = 0; i < DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].NeedPart.Count; i++)
+            {
+                ItemAttribute itemAttribute = new ItemAttribute(DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].AttributeType[i],
+                    AttributeSource.LemmaAdd,
+                    DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].SkillID[i],
+                    DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].SkillAddType[i],
+                    DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].Value[i]);
+                strSuite += "\n[" + DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].NeedPart[i] + "件]" + GetAttrLineStr(itemAttribute);
+            }
+        }
+        if (strSuite != "")
+        {
+            strSuite = "\n<color=#62FF4C>" + strSuite + "</color>";
+        }
+
+
+        if (strLemma != "")
+        {
+            strLemma = "\n<color=#53C2FF>" + strLemma + "</color>";
+        }
+
+       
+        str += strBasicFirst + strBasic + strLemma + strSlot + strSuite + "\n──────────────\n[#" + itemObject .objectID+ "]" + itemObject.des + "\n价值 "+ itemObject.cost;
 
         info_desText.text = str;
     }
     
     //物品详情-更新（辅助方法：输出属性行）
-    string GetAttrLineStr(Attribute attribute, int value)
+    string GetAttrLineStr( ItemAttribute  itemAttribute)
     {
         string str;
         string strValue;
-        if (value > 0)
+        if (itemAttribute.value > 0)
         {
-            strValue = " +" + value;
+            strValue = " +" + itemAttribute.value;
         }
         else
         {
-            strValue = " " + value;
+            strValue = " " + itemAttribute.value;
         }
 
-        switch (attribute)
+        switch (itemAttribute.attr)
         {
             case Attribute.Hp: str = "体力上限" + strValue; break;
             case Attribute.Mp: str = "魔力上限" + strValue; break;
@@ -696,9 +751,52 @@ public class ItemListAndInfoPanel : BasePanel
             case Attribute.WorkMakeArmor: str = "防具制作能力" + strValue; break;
             case Attribute.WorkMakeJewelry: str = "饰品制作能力" + strValue; break;
             case Attribute.WorkSundry: str = "打杂能力" + strValue; break;
+            case Attribute.Skill:
+
+                if (DataManager.mSkillDict[itemAttribute.skillID].FlagDamage)
+                {
+                    switch (itemAttribute.skillAddType)
+                    {
+                        case AttributeSkill.Damage: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "的伤害提升" + itemAttribute.value + "%"; break;
+                        case AttributeSkill.CriDamage: str ="使用"+ DataManager.mSkillDict[itemAttribute.skillID].Name + "造成暴击时伤害提升" + itemAttribute.value + "%"; break;
+                        case AttributeSkill.Probability: str = DataManager.mSkillDict[itemAttribute.skillID].Name+"的触发几率提升" + itemAttribute.value + "%"; break;
+                        case AttributeSkill.CostMp: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "消耗MP减少" + itemAttribute.value + "%"; break;
+                        case AttributeSkill.IgnoreDef: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "有" + itemAttribute.value + "%几率无视目标的物理防御"; break;
+                        case AttributeSkill.IgnoreMDef: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "有" + itemAttribute.value + "%几率无视目标的魔法防御"; break;
+                        case AttributeSkill.SuckHp: str = DataManager.mSkillDict[itemAttribute.skillID].Name+ "造成伤害时转化伤害值的" + itemAttribute.value + "%为体力"; break;
+                        case AttributeSkill.SuckMp: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "造成伤害时转化伤害值的" + itemAttribute.value + "%为魔力"; break;
+                        case AttributeSkill.TargetNum: str = DataManager.mSkillDict[itemAttribute.skillID].Name+"的影响目标数量增加" + itemAttribute.value ; break;
+                        case AttributeSkill.Invincible: str = "使用" + DataManager.mSkillDict[itemAttribute.skillID].Name+"后有" + itemAttribute.value + "%几率在下一回合无敌"; break;
+                        default: str = "未定义技能类型"; break;
+                    }
+                }
+                else if (DataManager.mSkillDict[itemAttribute.skillID].Cure > 0)
+                {
+                    switch (itemAttribute.skillAddType)
+                    {
+                        case AttributeSkill.Damage: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "的回复量提升" + itemAttribute.value + "%"; break;
+                        case AttributeSkill.Probability: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "的触发几率提升" + itemAttribute.value + "%"; break;
+                        case AttributeSkill.CostMp: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "消耗MP减少" + itemAttribute.value + "%"; break;
+                        case AttributeSkill.Ap: str = "使用" + DataManager.mSkillDict[itemAttribute.skillID].Name + "后加快行动"; break;
+                        case AttributeSkill.Invincible: str = "使用" + DataManager.mSkillDict[itemAttribute.skillID].Name + "后有" + itemAttribute.value + "%几率在下一回合无敌"; break;
+                        default: str = "未定义技能类型"; break;
+                    }
+                }
+                else
+                {
+                    switch (itemAttribute.skillAddType)
+                    {
+                        case AttributeSkill.Probability: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "的触发几率提升" + itemAttribute.value + "%"; break;
+                        case AttributeSkill.CostMp: str = DataManager.mSkillDict[itemAttribute.skillID].Name + "消耗MP减少" + itemAttribute.value + "%"; break;
+                        case AttributeSkill.Invincible: str = "使用" + DataManager.mSkillDict[itemAttribute.skillID].Name + "后有" + itemAttribute.value + "%几率在下一回合无敌"; break;
+                        default: str = "未定义技能类型"; break;
+                    }
+                }
+                break;
+
             default: str = "未定义类型"; break;
         }
-        if (value < 0)
+        if (itemAttribute.value < 0)
         {
             str = "<color=#FF554F>" + str + "</color>";
         }

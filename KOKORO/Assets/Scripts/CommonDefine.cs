@@ -220,7 +220,24 @@ public enum Attribute
     WorkMakeArmor, 
     WorkMakeJewelry,
     WorkMakeScroll,
-    WorkSundry
+    WorkSundry,
+    Skill
+}
+
+public enum AttributeSkill
+{
+    None,
+    Damage,//治疗时可以作为加血加成
+    CostMp,
+    Probability,
+    IgnoreDef,
+    IgnoreMDef,
+    Ap,//加快进行下一次动作
+    Invincible,//无敌状态1回合
+    CriDamage,//暴击时伤害提升
+    TargetNum,
+    SuckHp,//吸血
+    SuckMp//吸蓝
 }
 
 public enum AttributeSource
@@ -337,15 +354,57 @@ public class ItemAttribute
     private Attribute Attr;
     private AttributeSource AttrS;
     private int Value;
-    public ItemAttribute(Attribute attr, AttributeSource attrS, int value)
+    private short SkillID;
+    private AttributeSkill SkillAddType;
+    public ItemAttribute(Attribute attr, AttributeSource attrS, short skillID, AttributeSkill skillAddType, int value)
     {
         this.Attr = attr;
         this.AttrS = attrS;
+        this.SkillID = skillID;
+        this.SkillAddType = skillAddType;
         this.Value = value;
     }
     public Attribute attr { get { return Attr; } }
     public AttributeSource attrS { get { return AttrS; } }
     public int value { get { return Value; } }
+    public short skillID { get { return SkillID; } }
+    public AttributeSkill skillAddType { get { return SkillAddType; } }
+}
+
+//物品套装原型
+[System.Serializable]
+public class ItemSuitePrototype : ISerializationCallbackReceiver
+{
+    public int ID;
+    public string Name;
+    public List<short> PartID;
+    public List<byte> NeedPart;
+    public List<Attribute> AttributeType;
+    public List<string> AttributeTypeStr;
+    public List<short> SkillID;
+    public List<AttributeSkill> SkillAddType;
+    public List<string> SkillAddTypeStr;
+    public List<int> Value;
+
+
+    public void OnAfterDeserialize()
+    {
+        for (int i = 0; i < AttributeTypeStr.Count; i++)
+        {
+            Attribute attributeType = (Attribute)Enum.Parse(typeof(Attribute), AttributeTypeStr[i]);
+            AttributeType.Add(attributeType);
+        }
+        for (int i = 0; i < SkillAddTypeStr.Count; i++)
+        {
+            AttributeSkill skillAddType = (AttributeSkill)Enum.Parse(typeof(AttributeSkill), SkillAddTypeStr[i]);
+            SkillAddType.Add(skillAddType);
+        }
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 //物品原型
@@ -360,6 +419,7 @@ public class ItemPrototype: ISerializationCallbackReceiver
     public string TypeBigStr;
     public string TypeSmallStr;
     public string Des;
+    public short SuiteID;
     public int Cost;
     public byte Rank;
     public int Hp;
@@ -420,13 +480,15 @@ public class ItemObject
     private byte Rank;
     private byte Level;
     private List<ItemAttribute> Attr;
+    private List<byte> SlotLevel;
+    private List<int> SlotItemID;
     private string Des;
     private int Cost;
     private short DistrictID;//如果是装备，存储在哪个地区的制品仓库，-1为整体收藏库
     private bool IsGoods;//是否商品（DistrictID！=-1）
     private int HeroID;//装备在哪个英雄身上，-1为未装备
     private EquipPart HeroPart;//（HeroID！=-1）
-    public ItemObject(int objectID, int prototypeID, string name, string pic, byte rank, byte level, List<ItemAttribute> attr, string des, int cost, short districtID, bool isGoods, int heroID, EquipPart heroPart)
+    public ItemObject(int objectID, int prototypeID, string name, string pic, byte rank, byte level, List<ItemAttribute> attr, List<byte> slotLevel, List<int> slotItemID, string des, int cost, short districtID, bool isGoods, int heroID, EquipPart heroPart)
     {
         this.ObjectID = objectID;
         this.PrototypeID = prototypeID;
@@ -435,6 +497,8 @@ public class ItemObject
         this.Rank = rank;
         this.Level = level;
         this.Attr = attr;
+        this.SlotLevel = slotLevel;
+        this.SlotItemID = slotItemID;
         this.Des = des;
         this.Cost = cost;
         this.DistrictID = districtID;
@@ -449,6 +513,8 @@ public class ItemObject
     public byte rank { get { return Rank; } }
     public byte level { get { return Level; } set { Level = value; } }
     public List<ItemAttribute> attr { get { return Attr; } }
+    public List<byte> slotLevel { get { return SlotLevel; } set { SlotLevel = value; } }
+    public List<int> slotItemID { get { return SlotItemID; } set { SlotItemID = value; } }
     public string des { get { return Des; } }
     public int cost { get { return Cost; } }
     public short districtID { get { return DistrictID; } set { DistrictID = value; } }
@@ -850,6 +916,7 @@ public class HeroObject
     private int EquipNeck;
     private int EquipFinger1;
     private int EquipFinger2;
+    private List<short> EquipSuitePart;//长度10，对应各装备部位，-1为该部位不是套装
     private List<int> Skill;
     private int WorkerInBuilding;
     private short AdventureInTeam;
@@ -885,7 +952,7 @@ public class HeroObject
         byte workPlanting, byte workFeeding, byte workFishing, byte workHunting, byte workMining, byte workQuarrying, byte workFelling, byte workBuild,
         byte workMakeWeapon, byte workMakeArmor, byte workMakeJewelry, byte workMakeScroll,
         byte workSundry,
-        int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<int> skill,
+        int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<short> equipSuitePart, List<int> skill,
         int workerInBuilding, short adventureInTeam, short inDistrict, short force,
         int countMakeWeapon, int countMakeArmor, int countMakeJewelry, int countMakeScroll, int countKill, int countDeath, int countAdventure, int countAdventureDone,
         int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone, Dictionary<short, HeroSkill> skillInfo, List<short> characteristic, List<string> log
@@ -969,6 +1036,7 @@ public class HeroObject
         this.EquipNeck = equipNeck;
         this.EquipFinger1 = equipFinger1;
         this.EquipFinger2 = equipFinger2;
+        this.EquipSuitePart = equipSuitePart;
         this.Skill = skill;
         this.WorkerInBuilding = workerInBuilding;
         this.AdventureInTeam = adventureInTeam;
@@ -1072,6 +1140,7 @@ public class HeroObject
     public int equipNeck { get { return EquipNeck; } set { EquipNeck = value; } }
     public int equipFinger1 { get { return EquipFinger1; } set { EquipFinger1 = value; } }
     public int equipFinger2 { get { return EquipFinger2; } set { EquipFinger2 = value; } }
+    public List<short> equipSuitePart { get { return EquipSuitePart; } set { EquipSuitePart = value; } }
     public List<int> skill { get { return Skill; } set { Skill = value; } }
     public int workerInBuilding { get { return WorkerInBuilding; } set { WorkerInBuilding = value; } }
     public short adventureInTeam { get { return AdventureInTeam; } set { AdventureInTeam = value; } }

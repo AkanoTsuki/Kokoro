@@ -1132,6 +1132,8 @@ public class BuildingPanel : BasePanel
         {
             setForge_typeDd.value = 0;
         }
+        Debug.Log("setForge_typeDd.value="+ setForge_typeDd.value);
+
 
         setForge_levelDd.ClearOptions();
         for (int i = 0; i < buildingObject.level; i++)

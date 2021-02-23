@@ -351,6 +351,41 @@ public class HeroPanel : BasePanel
         short goldGetEquipAdd = 0;
         short itemGetEquipAdd = 0;
 
+        int hpSuiteAdd = 0;
+        int mpSuiteAdd = 0;
+        short hpRenewSuiteAdd = 0;
+        short mpRenewSuiteAdd = 0;
+        short atkMinSuiteAdd = 0;
+        short atkMaxSuiteAdd = 0;
+        short mAtkMinSuiteAdd = 0;
+        short mAtkMaxSuiteAdd = 0;
+        short defSuiteAdd = 0;
+        short mDefSuiteAdd = 0;
+        short hitSuiteAdd = 0;
+        short dodSuiteAdd = 0;
+        short criRSuiteAdd = 0;
+        short criDSuiteAdd = 0;
+        short spdSuiteAdd = 0;
+        short windDamSuiteAdd = 0;
+        short fireDamSuiteAdd = 0;
+        short waterDamSuiteAdd = 0;
+        short groundDamSuiteAdd = 0;
+        short lightDamSuiteAdd = 0;
+        short darkDamSuiteAdd = 0;
+        short windResSuiteAdd = 0;
+        short fireResSuiteAdd = 0;
+        short waterResSuiteAdd = 0;
+        short groundResSuiteAdd = 0;
+        short lightResSuiteAdd = 0;
+        short darkResSuiteAdd = 0;
+        short dizzyResSuiteAdd = 0;
+        short confusionResSuiteAdd = 0;
+        short poisonResSuiteAdd = 0;
+        short sleepResSuiteAdd = 0;
+        short expGetSuiteAdd = 0;
+        short goldGetSuiteAdd = 0;
+        short itemGetSuiteAdd = 0;
+
         int hpEquipAddNew = 0;
         int mpEquipAddNew = 0;
         short hpRenewEquipAddNew = 0;
@@ -386,8 +421,118 @@ public class HeroPanel : BasePanel
         short goldGetEquipAddNew = 0;
         short itemGetEquipAddNew = 0;
 
+        int hpSuiteAddNew = 0;
+        int mpSuiteAddNew = 0;
+        short hpRenewSuiteAddNew = 0;
+        short mpRenewSuiteAddNew = 0;
+        short atkMinSuiteAddNew = 0;
+        short atkMaxSuiteAddNew = 0;
+        short mAtkMinSuiteAddNew = 0;
+        short mAtkMaxSuiteAddNew = 0;
+        short defSuiteAddNew = 0;
+        short mDefSuiteAddNew = 0;
+        short hitSuiteAddNew = 0;
+        short dodSuiteAddNew = 0;
+        short criRSuiteAddNew = 0;
+        short criDSuiteAddNew = 0;
+        short spdSuiteAddNew = 0;
+        short windDamSuiteAddNew = 0;
+        short fireDamSuiteAddNew = 0;
+        short waterDamSuiteAddNew = 0;
+        short groundDamSuiteAddNew = 0;
+        short lightDamSuiteAddNew = 0;
+        short darkDamSuiteAddNew = 0;
+        short windResSuiteAddNew = 0;
+        short fireResSuiteAddNew = 0;
+        short waterResSuiteAddNew = 0;
+        short groundResSuiteAddNew = 0;
+        short lightResSuiteAddNew = 0;
+        short darkResSuiteAddNew = 0;
+        short dizzyResSuiteAddNew = 0;
+        short confusionResSuiteAddNew = 0;
+        short poisonResSuiteAddNew = 0;
+        short sleepResSuiteAddNew = 0;
+        short expGetSuiteAddNew = 0;
+        short goldGetSuiteAddNew = 0;
+        short itemGetSuiteAddNew = 0;
+
         int equipItemID = -1;
-        
+
+        //计算当前的suite加成
+        List<short> suiteIDList = new List<short> { };
+        List<byte> suiteNumList = new List<byte> { };
+        for (int i = 0; i < heroObject.equipSuitePart.Count; i++)
+        {
+            if (heroObject.equipSuitePart[i] != -1)
+            {
+                if (!suiteIDList.Contains(heroObject.equipSuitePart[i]))
+                {
+                    suiteIDList.Add(heroObject.equipSuitePart[i]);
+                    suiteNumList.Add(1);
+                }
+                else
+                {
+                    suiteNumList[suiteIDList.IndexOf(heroObject.equipSuitePart[i])]++;
+                }
+            }
+        }
+
+        for (int i = 0; i < suiteIDList.Count; i++)
+        {
+            for (int j = 0; j < DataManager.mItemSuiteDict[suiteIDList[i]].NeedPart.Count; j++)
+            {
+                if (suiteNumList[i] >= DataManager.mItemSuiteDict[suiteIDList[i]].NeedPart[j])
+                {
+                    switch (DataManager.mItemSuiteDict[suiteIDList[i]].AttributeType[j])
+                    {
+                        case Attribute.Hp: hpSuiteAdd += DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Mp: mpSuiteAdd += DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.HpRenew: hpRenewSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.MpRenew: mpRenewSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.AtkMin: atkMinSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.AtkMax: atkMaxSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.MAtkMin: mAtkMinSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.MAtkMax: mAtkMaxSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Def: defSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.MDef: mDefSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Hit: hitSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Dod: dodSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.CriR: criRSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.CriD: criDSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Spd: spdSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.WindDam: windDamSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.FireDam: fireDamSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.WaterDam: waterDamSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.GroundDam: groundDamSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.LightDam: lightDamSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.DarkDam: darkDamSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.WindRes: windResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.FireRes: fireResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.WaterRes: waterResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.GroundRes: groundResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.LightRes: lightResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.DarkRes: darkResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.DizzyRes: dizzyResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.ConfusionRes: confusionResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.PoisonRes: poisonResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.SleepRes: sleepResSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.ExpGet: expGetSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.GoldGet: goldGetSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.ItemGet: itemGetSuiteAdd += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                    }
+
+                }
+            }
+        }
+
+        //计算替换后suite加成
+        List<short> temp_equipSuitePart = new List<short> { };
+        for (int i = 0; i < heroObject.equipSuitePart.Count; i++)
+        {
+            temp_equipSuitePart.Add(heroObject.equipSuitePart[i]);
+        }
+
+
 
         if (heroObject.equipWeapon != -1)
         {
@@ -475,6 +620,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[0] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None&& heroObject.equipWeapon != -1)
         {
@@ -607,6 +753,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[1] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None && heroObject.equipSubhand != -1)
         {
@@ -739,6 +886,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[2] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None&& heroObject.equipHead != -1)
         {
@@ -871,6 +1019,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[3] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None&& heroObject.equipBody != -1)
         {
@@ -1003,6 +1152,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[4] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None&& heroObject.equipHand != -1)
         {
@@ -1135,6 +1285,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[5] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None&& heroObject.equipBack != -1)
         {
@@ -1180,6 +1331,7 @@ public class HeroPanel : BasePanel
                 }
             }
         }
+
 
         if (heroObject.equipFoot != -1)
         {
@@ -1267,6 +1419,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[6] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None&& heroObject.equipFoot != -1)
         {
@@ -1312,6 +1465,7 @@ public class HeroPanel : BasePanel
                 }
             }
         }
+     
 
         if (heroObject.equipNeck != -1)
         {
@@ -1399,6 +1553,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[7] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None&& heroObject.equipNeck != -1)
         {
@@ -1444,6 +1599,7 @@ public class HeroPanel : BasePanel
                 }
             }
         }
+ 
 
         if (heroObject.equipFinger1 != -1)
         {
@@ -1531,6 +1687,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[8] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None&& heroObject.equipFinger1 != -1)
         {
@@ -1663,6 +1820,7 @@ public class HeroPanel : BasePanel
                     case Attribute.ItemGet: itemGetEquipAddNew += (short)itemObject.attr[i].value; break;
                 }
             }
+            temp_equipSuitePart[9] = DataManager.mItemDict[itemObject.prototypeID].SuiteID;
         }
         else if (equipPart != EquipPart.None&& heroObject.equipFinger2 != -1)
         {
@@ -1709,36 +1867,102 @@ public class HeroPanel : BasePanel
             }
         }
 
+
+        //计算suite新的，部分2
+        for (int i = 0; i < temp_equipSuitePart.Count; i++)
+        {
+            if (temp_equipSuitePart[i] != -1)
+            {
+                if (!suiteIDList.Contains(temp_equipSuitePart[i]))
+                {
+                    suiteIDList.Add(temp_equipSuitePart[i]);
+                    suiteNumList.Add(1);
+                }
+                else
+                {
+                    suiteNumList[suiteIDList.IndexOf(temp_equipSuitePart[i])]++;
+                }
+            }
+        }
+
+        for (int i = 0; i < suiteIDList.Count; i++)
+        {
+            for (int j = 0; j < DataManager.mItemSuiteDict[suiteIDList[i]].NeedPart.Count; j++)
+            {
+                if (suiteNumList[i] >= DataManager.mItemSuiteDict[suiteIDList[i]].NeedPart[j])
+                {
+                    switch (DataManager.mItemSuiteDict[suiteIDList[i]].AttributeType[j])
+                    {
+                        case Attribute.Hp: hpSuiteAddNew += DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Mp: mpSuiteAddNew += DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.HpRenew: hpRenewSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.MpRenew: mpRenewSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.AtkMin: atkMinSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.AtkMax: atkMaxSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.MAtkMin: mAtkMinSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.MAtkMax: mAtkMaxSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Def: defSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.MDef: mDefSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Hit: hitSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Dod: dodSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.CriR: criRSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.CriD: criDSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.Spd: spdSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.WindDam: windDamSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.FireDam: fireDamSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.WaterDam: waterDamSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.GroundDam: groundDamSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.LightDam: lightDamSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.DarkDam: darkDamSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.WindRes: windResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.FireRes: fireResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.WaterRes: waterResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.GroundRes: groundResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.LightRes: lightResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.DarkRes: darkResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.DizzyRes: dizzyResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.ConfusionRes: confusionResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.PoisonRes: poisonResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.SleepRes: sleepResSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.ExpGet: expGetSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.GoldGet: goldGetSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                        case Attribute.ItemGet: itemGetSuiteAddNew += (short)DataManager.mItemSuiteDict[suiteIDList[i]].Value[j]; break;
+                    }
+
+                }
+            }
+        }
+
         if (page == 1)
         {
-            infoFight_des1Text.text = "体力上限 " + ((equipPart==EquipPart.None)? OutputAttrStr(heroObject.hp,hpEquipAdd): OutputAttrChangeStr (heroObject.hp, hpEquipAdd,hpEquipAddNew, "")) +
-                "\n体力恢复 " + ((equipPart == EquipPart.None) ? OutputAttrStr( heroObject.hpRenew,hpRenewEquipAdd) : OutputAttrChangeStr(heroObject.hpRenew, hpRenewEquipAdd, hpRenewEquipAddNew, "")) +
-                "\n物攻 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMin,atkMinEquipAdd) : OutputAttrChangeStr(heroObject.atkMin, atkMinEquipAdd, atkMinEquipAddNew, "")) + " - " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMax,atkMaxEquipAdd) : OutputAttrChangeStr(heroObject.atkMax, atkMaxEquipAdd, atkMaxEquipAddNew, "")) +
-                "\n魔攻 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mAtkMin,mAtkMinEquipAdd) : OutputAttrChangeStr(heroObject.mAtkMin, mAtkMinEquipAdd, mAtkMinEquipAddNew, "")) + " - " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mAtkMax,mAtkMaxEquipAdd) : OutputAttrChangeStr(heroObject.mAtkMax, mAtkMaxEquipAdd, mAtkMaxEquipAddNew, "")) +
-                "\n物防 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.def,defEquipAdd) : OutputAttrChangeStr(heroObject.def, defEquipAdd, defEquipAddNew, "")) +
-                "\n命中 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.hit,hitEquipAdd) : OutputAttrChangeStr(heroObject.hit, hitEquipAdd, hitEquipAddNew, "")) +
-                "\n闪避 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dod,dodEquipAdd) : OutputAttrChangeStr(heroObject.dod, dodEquipAdd, dodEquipAddNew, "")) +
-                "\n速度 " + ((equipPart == EquipPart.None) ? (heroObject.equipWeapon==-1? heroObject.spd.ToString(): spdEquipAdd.ToString()) : OutputAttrChangeStrBySpd((heroObject.equipWeapon == -1 ? heroObject.spd: spdEquipAdd),spdEquipAddNew)) +
-                "\n风系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.windDam,windDamEquipAdd) + "%" : OutputAttrChangeStr(heroObject.windDam, windDamEquipAdd, windDamEquipAddNew, "%"))  +
-                "\n火系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.fireDam,fireDamEquipAdd) + "%" : OutputAttrChangeStr(heroObject.fireDam, fireDamEquipAdd, fireDamEquipAddNew, "%"))  +
-                "\n水系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.waterDam,waterDamEquipAdd) + "%" : OutputAttrChangeStr(heroObject.waterDam, waterDamEquipAdd, waterDamEquipAddNew, "%"))  +
-                "\n地系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.groundDam,groundDamEquipAdd) + "%" : OutputAttrChangeStr(heroObject.groundDam, groundDamEquipAdd, groundDamEquipAddNew, "%"))  +
-                "\n光系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.lightDam,lightDamEquipAdd) + "%" : OutputAttrChangeStr(heroObject.lightDam, lightDamEquipAdd, lightDamEquipAddNew, "%"))  +
-                "\n暗系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.darkDam,darkDamEquipAdd) + "%" : OutputAttrChangeStr(heroObject.darkDam, darkDamEquipAdd, darkDamEquipAddNew, "%")) ;
-            infoFight_des2Text.text = "魔力上限 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mp,mpEquipAdd) : OutputAttrChangeStr(heroObject.mp, mpEquipAdd, mpEquipAddNew, "")) +
-                "\n魔力恢复 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mpRenew,mpRenewEquipAdd) : OutputAttrChangeStr(heroObject.mpRenew, mpRenewEquipAdd, mpRenewEquipAddNew, "")) +
+            infoFight_des1Text.text = "体力上限 " + ((equipPart==EquipPart.None)? OutputAttrStr(heroObject.hp,hpEquipAdd+ hpSuiteAdd) : OutputAttrChangeStr (heroObject.hp, hpEquipAdd + hpSuiteAdd, hpEquipAddNew+ hpSuiteAddNew, "")) +
+                "\n体力恢复 " + ((equipPart == EquipPart.None) ? OutputAttrStr( heroObject.hpRenew,hpRenewEquipAdd+ hpRenewSuiteAdd) : OutputAttrChangeStr(heroObject.hpRenew, hpRenewEquipAdd + hpRenewSuiteAdd, hpRenewEquipAddNew+ hpRenewSuiteAddNew, "")) +
+                "\n物攻 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMin,atkMinEquipAdd+ atkMinSuiteAdd) : OutputAttrChangeStr(heroObject.atkMin, atkMinEquipAdd + atkMinSuiteAdd, atkMinEquipAddNew+ atkMinSuiteAddNew, "")) + " - " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMax,atkMaxEquipAdd+ atkMaxSuiteAdd) : OutputAttrChangeStr(heroObject.atkMax, atkMaxEquipAdd+ atkMaxSuiteAdd, atkMaxEquipAddNew+ atkMaxSuiteAddNew, "")) +
+                "\n魔攻 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mAtkMin,mAtkMinEquipAdd+ mAtkMinSuiteAdd) : OutputAttrChangeStr(heroObject.mAtkMin, mAtkMinEquipAdd + mAtkMinSuiteAdd, mAtkMinEquipAddNew+ mAtkMinSuiteAddNew, "")) + " - " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mAtkMax,mAtkMaxEquipAdd+ mAtkMaxSuiteAdd) : OutputAttrChangeStr(heroObject.mAtkMax, mAtkMaxEquipAdd+ mAtkMaxSuiteAdd, mAtkMaxEquipAddNew+ mAtkMaxSuiteAddNew, "")) +
+                "\n物防 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.def,defEquipAdd+ defSuiteAdd) : OutputAttrChangeStr(heroObject.def, defEquipAdd + defSuiteAdd, defEquipAddNew+ defSuiteAddNew, "")) +
+                "\n命中 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.hit,hitEquipAdd+ hitSuiteAdd) : OutputAttrChangeStr(heroObject.hit, hitEquipAdd + hitSuiteAdd, hitEquipAddNew+ hitSuiteAddNew, "")) +
+                "\n闪避 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dod,dodEquipAdd+ dodSuiteAdd) : OutputAttrChangeStr(heroObject.dod, dodEquipAdd + dodSuiteAdd, dodEquipAddNew+ dodSuiteAddNew, "")) +
+                "\n速度 " + ((equipPart == EquipPart.None) ? (heroObject.equipWeapon==-1? heroObject.spd.ToString():( spdEquipAdd+ spdSuiteAdd).ToString()) : OutputAttrChangeStrBySpd((heroObject.equipWeapon == -1 ? heroObject.spd: (spdEquipAdd + spdSuiteAdd)),spdEquipAddNew+ spdSuiteAddNew)) +
+                "\n风系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.windDam,windDamEquipAdd+ windDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.windDam, windDamEquipAdd + windDamSuiteAdd, windDamEquipAddNew+ windDamSuiteAddNew, "%"))  +
+                "\n火系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.fireDam,fireDamEquipAdd+ fireDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.fireDam, fireDamEquipAdd + fireDamSuiteAdd, fireDamEquipAddNew+ fireDamSuiteAddNew, "%"))  +
+                "\n水系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.waterDam,waterDamEquipAdd+ waterDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.waterDam, waterDamEquipAdd + waterDamSuiteAdd, waterDamEquipAddNew+ waterDamSuiteAddNew, "%"))  +
+                "\n地系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.groundDam,groundDamEquipAdd+ groundDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.groundDam, groundDamEquipAdd + groundDamSuiteAdd, groundDamEquipAddNew+ groundDamSuiteAddNew, "%"))  +
+                "\n光系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.lightDam,lightDamEquipAdd+ lightDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.lightDam, lightDamEquipAdd + lightDamSuiteAdd, lightDamEquipAddNew+ lightDamSuiteAddNew, "%"))  +
+                "\n暗系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.darkDam,darkDamEquipAdd+ darkDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.darkDam, darkDamEquipAdd + darkDamSuiteAdd, darkDamEquipAddNew+ darkDamSuiteAddNew, "%")) ;
+            infoFight_des2Text.text = "魔力上限 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mp,mpEquipAdd+ mpSuiteAdd) : OutputAttrChangeStr(heroObject.mp, mpEquipAdd + mpSuiteAdd, mpEquipAddNew+ mpSuiteAddNew, "")) +
+                "\n魔力恢复 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mpRenew,mpRenewEquipAdd+ mpRenewSuiteAdd) : OutputAttrChangeStr(heroObject.mpRenew, mpRenewEquipAdd + mpRenewSuiteAdd, mpRenewEquipAddNew+ mpRenewSuiteAddNew, "")) +
                 "\n " +
                 "\n " +
-                "\n魔防 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mDef,mDefEquipAdd) : OutputAttrChangeStr(heroObject.mDef, mDefEquipAdd, mDefEquipAddNew, "")) +
-                "\n暴击 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.criR,criREquipAdd) : OutputAttrChangeStr(heroObject.criR, criREquipAdd, criREquipAddNew, "")) +
-                "\n爆伤 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.criD,criDEquipAdd) + "%" : OutputAttrChangeStr(heroObject.criD, criDEquipAdd, criDEquipAddNew, "%"))  +
+                "\n魔防 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mDef,mDefEquipAdd+ mDefSuiteAdd) : OutputAttrChangeStr(heroObject.mDef, mDefEquipAdd + mDefSuiteAdd, mDefEquipAddNew+ mDefSuiteAddNew, "")) +
+                "\n暴击 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.criR,criREquipAdd+ criRSuiteAdd) : OutputAttrChangeStr(heroObject.criR, criREquipAdd + criRSuiteAdd, criREquipAddNew+ criRSuiteAddNew, "")) +
+                "\n爆伤 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.criD,criDEquipAdd+ criDSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.criD, criDEquipAdd + criDSuiteAdd, criDEquipAddNew+ criDSuiteAddNew, "%"))  +
                 "\n " +
-                "\n风系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.windRes,windResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.windRes, windResEquipAdd, windResEquipAddNew, "%"))  +
-                "\n火系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.fireRes,fireResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.fireRes, fireResEquipAdd, fireResEquipAddNew, "%")) +
-                "\n水系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.waterRes,waterResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.waterRes, waterResEquipAdd, waterResEquipAddNew, "%"))  +
-                "\n地系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.groundRes,groundResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.groundRes, groundResEquipAdd, groundResEquipAddNew, "%"))  +
-                "\n光系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.lightRes,lightResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.lightRes, lightResEquipAdd, lightResEquipAddNew, "%")) +
-                "\n暗系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.darkRes,darkResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.darkRes, darkResEquipAdd, darkResEquipAddNew, "%")) ;
+                "\n风系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.windRes,windResEquipAdd+ windResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.windRes, windResEquipAdd + windResSuiteAdd, windResEquipAddNew+ windResSuiteAddNew, "%"))  +
+                "\n火系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.fireRes,fireResEquipAdd+ fireResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.fireRes, fireResEquipAdd + fireResSuiteAdd, fireResEquipAddNew+ fireResSuiteAddNew, "%")) +
+                "\n水系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.waterRes,waterResEquipAdd+ waterResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.waterRes, waterResEquipAdd + waterResSuiteAdd, waterResEquipAddNew+ waterResSuiteAddNew, "%"))  +
+                "\n地系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.groundRes,groundResEquipAdd+ groundResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.groundRes, groundResEquipAdd + groundResSuiteAdd, groundResEquipAddNew+ groundResSuiteAddNew, "%"))  +
+                "\n光系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.lightRes,lightResEquipAdd+ lightResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.lightRes, lightResEquipAdd + lightResSuiteAdd, lightResEquipAddNew+ lightResSuiteAddNew, "%")) +
+                "\n暗系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.darkRes,darkResEquipAdd+ darkResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.darkRes, darkResEquipAdd + darkResSuiteAdd, darkResEquipAddNew+ darkResSuiteAddNew, "%")) ;
             infoFight_page2Btn.interactable = true;
             infoFight_page2Btn.onClick.RemoveAllListeners();
             infoFight_page2Btn.onClick.AddListener(delegate () { UpdateFightInfo(heroObject,equipPart,itemObject, 2); });
@@ -1746,13 +1970,13 @@ public class HeroPanel : BasePanel
         }
         else if((page == 2))
         {
-            infoFight_des1Text.text = "眩晕抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dizzyRes,dizzyResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.dizzyRes, dizzyResEquipAdd, dizzyResEquipAddNew, "%")) +
-                "\n混乱抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.confusionRes,confusionResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.confusionRes, confusionResEquipAdd, confusionResEquipAddNew, "%")) +
-                "\n中毒抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.poisonRes,poisonResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.poisonRes, poisonResEquipAdd, poisonResEquipAddNew, "%"))  +
-                "\n睡眠抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.sleepRes,sleepResEquipAdd) + "%" : OutputAttrChangeStr(heroObject.sleepRes, sleepResEquipAdd, sleepResEquipAddNew, "%"))  +
-                "\n经验值获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.expGet,expGetEquipAdd) + "%" : OutputAttrChangeStr(heroObject.expGet, expGetEquipAdd, expGetEquipAddNew, "%"))  +
-                "\n金币获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.goldGet,goldGetEquipAdd) + "%" : OutputAttrChangeStr(heroObject.goldGet, goldGetEquipAdd, goldGetEquipAddNew, "%"))  +
-                "\n稀有物品掉落加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.itemGet,itemGetEquipAdd) + "%" : OutputAttrChangeStr(heroObject.itemGet, itemGetEquipAdd, itemGetEquipAddNew, "%")) ;
+            infoFight_des1Text.text = "眩晕抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dizzyRes,dizzyResEquipAdd+ dizzyResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.dizzyRes, dizzyResEquipAdd + dizzyResSuiteAdd, dizzyResEquipAddNew+ dizzyResSuiteAddNew, "%")) +
+                "\n混乱抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.confusionRes,confusionResEquipAdd+ confusionResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.confusionRes, confusionResEquipAdd + confusionResSuiteAdd, confusionResEquipAddNew+ confusionResSuiteAddNew, "%")) +
+                "\n中毒抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.poisonRes,poisonResEquipAdd+ poisonResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.poisonRes, poisonResEquipAdd + poisonResSuiteAdd, poisonResEquipAddNew+ poisonResSuiteAddNew, "%"))  +
+                "\n睡眠抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.sleepRes,sleepResEquipAdd+ sleepResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.sleepRes, sleepResEquipAdd + sleepResSuiteAdd, sleepResEquipAddNew+ sleepResSuiteAddNew, "%"))  +
+                "\n经验值获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.expGet,expGetEquipAdd+ expGetSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.expGet, expGetEquipAdd + expGetSuiteAdd, expGetEquipAddNew+ expGetSuiteAddNew, "%"))  +
+                "\n金币获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.goldGet,goldGetEquipAdd+ goldGetSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.goldGet, goldGetEquipAdd + goldGetSuiteAdd, goldGetEquipAddNew+ goldGetSuiteAddNew, "%"))  +
+                "\n稀有物品掉落加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.itemGet,itemGetEquipAdd+ itemGetSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.itemGet, itemGetEquipAdd + itemGetSuiteAdd, itemGetEquipAddNew+ itemGetSuiteAddNew, "%")) ;
             infoFight_des2Text.text = "";
 
             infoFight_page1Btn.interactable = true;

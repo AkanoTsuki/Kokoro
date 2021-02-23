@@ -403,7 +403,7 @@ public class GameControl : MonoBehaviour
             (short)hp, (short)mp, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workMakeScroll, workSundry,
-          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<int> { -1, -1, -1, -1 }, -1, -1, districtID, force,
+          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<short> { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }, new List<int> { -1, -1, -1, -1 }, -1, -1, districtID, force,
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<short, HeroSkill>(), characteristicList, new List<string> { });
 
     }
@@ -629,47 +629,47 @@ public class GameControl : MonoBehaviour
         List<ItemAttribute> attrList = new List<ItemAttribute> { };
 
         //模板基础属性及等级修正
-        if (DataManager.mItemDict[itemID].Hp != 0) { attrList.Add(new ItemAttribute(Attribute.Hp, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].Hp * upRate))); }
-        if (DataManager.mItemDict[itemID].Mp != 0) { attrList.Add(new ItemAttribute(Attribute.Mp, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].Mp * upRate))); }
-        if (DataManager.mItemDict[itemID].HpRenew != 0) { attrList.Add(new ItemAttribute(Attribute.HpRenew, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].HpRenew * upRate))); }
-        if (DataManager.mItemDict[itemID].MpRenew != 0) { attrList.Add(new ItemAttribute(Attribute.MpRenew, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMax * upRate))); }
+        if (DataManager.mItemDict[itemID].Hp != 0) { attrList.Add(new ItemAttribute(Attribute.Hp, AttributeSource.Basic,-1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].Hp * upRate))); }
+        if (DataManager.mItemDict[itemID].Mp != 0) { attrList.Add(new ItemAttribute(Attribute.Mp, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].Mp * upRate))); }
+        if (DataManager.mItemDict[itemID].HpRenew != 0) { attrList.Add(new ItemAttribute(Attribute.HpRenew, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].HpRenew * upRate))); }
+        if (DataManager.mItemDict[itemID].MpRenew != 0) { attrList.Add(new ItemAttribute(Attribute.MpRenew, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].AtkMax * upRate))); }
 
-        if (DataManager.mItemDict[itemID].AtkMax != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMax * upRate))); }
-        if (DataManager.mItemDict[itemID].AtkMin != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMin, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].AtkMin * upRate))); }
-        if (DataManager.mItemDict[itemID].MAtkMax != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMax, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].MAtkMax * upRate))); }
-        if (DataManager.mItemDict[itemID].MAtkMin != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMin, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].MAtkMin * upRate))); }
+        if (DataManager.mItemDict[itemID].AtkMax != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].AtkMax * upRate))); }
+        if (DataManager.mItemDict[itemID].AtkMin != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMin, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].AtkMin * upRate))); }
+        if (DataManager.mItemDict[itemID].MAtkMax != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMax, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].MAtkMax * upRate))); }
+        if (DataManager.mItemDict[itemID].MAtkMin != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMin, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].MAtkMin * upRate))); }
 
-        if (DataManager.mItemDict[itemID].Def != 0) { attrList.Add(new ItemAttribute(Attribute.Def, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].Def * upRate))); }
-        if (DataManager.mItemDict[itemID].MDef != 0) { attrList.Add(new ItemAttribute(Attribute.MDef, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].MDef * upRate))); }
+        if (DataManager.mItemDict[itemID].Def != 0) { attrList.Add(new ItemAttribute(Attribute.Def, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].Def * upRate))); }
+        if (DataManager.mItemDict[itemID].MDef != 0) { attrList.Add(new ItemAttribute(Attribute.MDef, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].MDef * upRate))); }
 
-        if (DataManager.mItemDict[itemID].Hit != 0) { attrList.Add(new ItemAttribute(Attribute.Hit, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].Hit * upRate))); }
-        if (DataManager.mItemDict[itemID].Dod != 0) { attrList.Add(new ItemAttribute(Attribute.Dod, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].Dod * upRate))); }
-        if (DataManager.mItemDict[itemID].CriR != 0) { attrList.Add(new ItemAttribute(Attribute.CriR, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].CriR * upRate))); }
-        if (DataManager.mItemDict[itemID].CriD != 0) { attrList.Add(new ItemAttribute(Attribute.CriD, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].CriD * upRate))); }
-        if (DataManager.mItemDict[itemID].Spd != 0) { attrList.Add(new ItemAttribute(Attribute.Spd, AttributeSource.Basic, DataManager.mItemDict[itemID].Spd)); }
+        if (DataManager.mItemDict[itemID].Hit != 0) { attrList.Add(new ItemAttribute(Attribute.Hit, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].Hit * upRate))); }
+        if (DataManager.mItemDict[itemID].Dod != 0) { attrList.Add(new ItemAttribute(Attribute.Dod, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].Dod * upRate))); }
+        if (DataManager.mItemDict[itemID].CriR != 0) { attrList.Add(new ItemAttribute(Attribute.CriR, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].CriR * upRate))); }
+        if (DataManager.mItemDict[itemID].CriD != 0) { attrList.Add(new ItemAttribute(Attribute.CriD, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].CriD * upRate))); }
+        if (DataManager.mItemDict[itemID].Spd != 0) { attrList.Add(new ItemAttribute(Attribute.Spd, AttributeSource.Basic, -1, AttributeSkill.None, DataManager.mItemDict[itemID].Spd)); }
 
-        if (DataManager.mItemDict[itemID].WindDam != 0) { attrList.Add(new ItemAttribute(Attribute.WindDam, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].WindDam * upRate))); }
-        if (DataManager.mItemDict[itemID].FireDam != 0) { attrList.Add(new ItemAttribute(Attribute.FireDam, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].FireDam * upRate))); }
-        if (DataManager.mItemDict[itemID].WaterDam != 0) { attrList.Add(new ItemAttribute(Attribute.WaterDam, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].WaterDam * upRate))); }
-        if (DataManager.mItemDict[itemID].GroundDam != 0) { attrList.Add(new ItemAttribute(Attribute.GroundDam, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].GroundDam * upRate))); }
-        if (DataManager.mItemDict[itemID].LightDam != 0) { attrList.Add(new ItemAttribute(Attribute.LightDam, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].LightDam * upRate))); }
-        if (DataManager.mItemDict[itemID].DarkDam != 0) { attrList.Add(new ItemAttribute(Attribute.DarkDam, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].DarkDam * upRate))); }
+        if (DataManager.mItemDict[itemID].WindDam != 0) { attrList.Add(new ItemAttribute(Attribute.WindDam, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].WindDam * upRate))); }
+        if (DataManager.mItemDict[itemID].FireDam != 0) { attrList.Add(new ItemAttribute(Attribute.FireDam, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].FireDam * upRate))); }
+        if (DataManager.mItemDict[itemID].WaterDam != 0) { attrList.Add(new ItemAttribute(Attribute.WaterDam, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].WaterDam * upRate))); }
+        if (DataManager.mItemDict[itemID].GroundDam != 0) { attrList.Add(new ItemAttribute(Attribute.GroundDam, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].GroundDam * upRate))); }
+        if (DataManager.mItemDict[itemID].LightDam != 0) { attrList.Add(new ItemAttribute(Attribute.LightDam, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].LightDam * upRate))); }
+        if (DataManager.mItemDict[itemID].DarkDam != 0) { attrList.Add(new ItemAttribute(Attribute.DarkDam, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].DarkDam * upRate))); }
 
-        if (DataManager.mItemDict[itemID].WindRes != 0) { attrList.Add(new ItemAttribute(Attribute.WindRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].WindRes * upRate))); }
-        if (DataManager.mItemDict[itemID].FireRes != 0) { attrList.Add(new ItemAttribute(Attribute.FireRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].FireRes * upRate))); }
-        if (DataManager.mItemDict[itemID].WaterRes != 0) { attrList.Add(new ItemAttribute(Attribute.WaterRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].WaterRes * upRate))); }
-        if (DataManager.mItemDict[itemID].GroundRes != 0) { attrList.Add(new ItemAttribute(Attribute.GroundRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].GroundRes * upRate))); }
-        if (DataManager.mItemDict[itemID].LightRes != 0) { attrList.Add(new ItemAttribute(Attribute.LightRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].LightRes * upRate))); }
-        if (DataManager.mItemDict[itemID].DarkRes != 0) { attrList.Add(new ItemAttribute(Attribute.DarkRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].DarkRes * upRate))); }
+        if (DataManager.mItemDict[itemID].WindRes != 0) { attrList.Add(new ItemAttribute(Attribute.WindRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].WindRes * upRate))); }
+        if (DataManager.mItemDict[itemID].FireRes != 0) { attrList.Add(new ItemAttribute(Attribute.FireRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].FireRes * upRate))); }
+        if (DataManager.mItemDict[itemID].WaterRes != 0) { attrList.Add(new ItemAttribute(Attribute.WaterRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].WaterRes * upRate))); }
+        if (DataManager.mItemDict[itemID].GroundRes != 0) { attrList.Add(new ItemAttribute(Attribute.GroundRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].GroundRes * upRate))); }
+        if (DataManager.mItemDict[itemID].LightRes != 0) { attrList.Add(new ItemAttribute(Attribute.LightRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].LightRes * upRate))); }
+        if (DataManager.mItemDict[itemID].DarkRes != 0) { attrList.Add(new ItemAttribute(Attribute.DarkRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].DarkRes * upRate))); }
 
-        if (DataManager.mItemDict[itemID].DizzyRes != 0) { attrList.Add(new ItemAttribute(Attribute.DizzyRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].DizzyRes * upRate))); }
-        if (DataManager.mItemDict[itemID].ConfusionRes != 0) { attrList.Add(new ItemAttribute(Attribute.ConfusionRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].ConfusionRes * upRate))); }
-        if (DataManager.mItemDict[itemID].PoisonRes != 0) { attrList.Add(new ItemAttribute(Attribute.PoisonRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].PoisonRes * upRate))); }
-        if (DataManager.mItemDict[itemID].SleepRes != 0) { attrList.Add(new ItemAttribute(Attribute.SleepRes, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].SleepRes * upRate))); }
+        if (DataManager.mItemDict[itemID].DizzyRes != 0) { attrList.Add(new ItemAttribute(Attribute.DizzyRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].DizzyRes * upRate))); }
+        if (DataManager.mItemDict[itemID].ConfusionRes != 0) { attrList.Add(new ItemAttribute(Attribute.ConfusionRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].ConfusionRes * upRate))); }
+        if (DataManager.mItemDict[itemID].PoisonRes != 0) { attrList.Add(new ItemAttribute(Attribute.PoisonRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].PoisonRes * upRate))); }
+        if (DataManager.mItemDict[itemID].SleepRes != 0) { attrList.Add(new ItemAttribute(Attribute.SleepRes, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].SleepRes * upRate))); }
 
-        if (DataManager.mItemDict[itemID].ExpGet != 0) { attrList.Add(new ItemAttribute(Attribute.ExpGet, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].ExpGet * upRate))); }
-        if (DataManager.mItemDict[itemID].GoldGet != 0) { attrList.Add(new ItemAttribute(Attribute.GoldGet, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].GoldGet * upRate))); }
-        if (DataManager.mItemDict[itemID].ItemGet != 0) { attrList.Add(new ItemAttribute(Attribute.ItemGet, AttributeSource.Basic, (int)(DataManager.mItemDict[itemID].ItemGet * upRate))); }
+        if (DataManager.mItemDict[itemID].ExpGet != 0) { attrList.Add(new ItemAttribute(Attribute.ExpGet, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].ExpGet * upRate))); }
+        if (DataManager.mItemDict[itemID].GoldGet != 0) { attrList.Add(new ItemAttribute(Attribute.GoldGet, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].GoldGet * upRate))); }
+        if (DataManager.mItemDict[itemID].ItemGet != 0) { attrList.Add(new ItemAttribute(Attribute.ItemGet, AttributeSource.Basic, -1, AttributeSkill.None, (int)(DataManager.mItemDict[itemID].ItemGet * upRate))); }
 
         //追加词条
         byte rank = (byte)(DataManager.mItemDict[itemID].Rank - 1);
@@ -692,56 +692,186 @@ public class GameControl : MonoBehaviour
             // Debug.Log("lemmaID=" + lemmaID+ " rank="+ rank);
             
 
-            if (DataManager.mLemmaDict[lemmaID].Hp.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Hp, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].Hp[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].Mp.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Mp, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].Mp[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].HpRenew.Count != 0) { attrList.Add(new ItemAttribute(Attribute.HpRenew, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].HpRenew[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].MpRenew.Count != 0) { attrList.Add(new ItemAttribute(Attribute.MpRenew, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].MpRenew[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].Hp.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Hp, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].Hp[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].Mp.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Mp, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].Mp[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].HpRenew.Count != 0) { attrList.Add(new ItemAttribute(Attribute.HpRenew, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].HpRenew[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].MpRenew.Count != 0) { attrList.Add(new ItemAttribute(Attribute.MpRenew, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].MpRenew[rank] * upRate))); }
 
-            if (DataManager.mLemmaDict[lemmaID].AtkMax.Count != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].AtkMax[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].AtkMin.Count != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMin, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].AtkMin[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].MAtkMax.Count != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMax, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].MAtkMax[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].MAtkMin.Count != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMin, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].MAtkMin[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].AtkMax.Count != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMax, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].AtkMax[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].AtkMin.Count != 0) { attrList.Add(new ItemAttribute(Attribute.AtkMin, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].AtkMin[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].MAtkMax.Count != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMax, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].MAtkMax[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].MAtkMin.Count != 0) { attrList.Add(new ItemAttribute(Attribute.MAtkMin, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].MAtkMin[rank] * upRate))); }
 
-            if (DataManager.mLemmaDict[lemmaID].Def.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Def, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].Def[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].MDef.Count != 0) { attrList.Add(new ItemAttribute(Attribute.MDef, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].MDef[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].Def.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Def, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].Def[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].MDef.Count != 0) { attrList.Add(new ItemAttribute(Attribute.MDef, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].MDef[rank] * upRate))); }
 
 
-            if (DataManager.mLemmaDict[lemmaID].Hit.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Hit, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].Hit[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].Dod.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Dod, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].Dod[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].CriR.Count != 0) { attrList.Add(new ItemAttribute(Attribute.CriR, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].CriR[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].CriD.Count != 0) { attrList.Add(new ItemAttribute(Attribute.CriD, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].CriD[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].Spd.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Spd, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].Spd[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].Hit.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Hit, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].Hit[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].Dod.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Dod, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].Dod[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].CriR.Count != 0) { attrList.Add(new ItemAttribute(Attribute.CriR, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].CriR[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].CriD.Count != 0) { attrList.Add(new ItemAttribute(Attribute.CriD, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].CriD[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].Spd.Count != 0) { attrList.Add(new ItemAttribute(Attribute.Spd, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].Spd[rank] * upRate))); }
 
-            if (DataManager.mLemmaDict[lemmaID].WindDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.WindDam, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].WindDam[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].FireDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.FireDam, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].FireDam[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].WaterDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.WaterDam, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].WaterDam[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].GroundDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.GroundDam, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].GroundDam[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].LightDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.LightDam, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].LightDam[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].DarkDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.DarkDam, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].DarkDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].WindDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.WindDam, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].WindDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].FireDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.FireDam, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].FireDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].WaterDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.WaterDam, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].WaterDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].GroundDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.GroundDam, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].GroundDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].LightDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.LightDam, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].LightDam[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].DarkDam.Count != 0) { attrList.Add(new ItemAttribute(Attribute.DarkDam, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].DarkDam[rank] * upRate))); }
 
-            if (DataManager.mLemmaDict[lemmaID].WindRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.WindRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].WindRes[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].FireRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.FireRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].FireRes[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].WaterRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.WaterRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].WaterRes[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].GroundRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.GroundRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].GroundRes[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].LightRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.LightRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].LightRes[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].DarkRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.DarkRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].DarkRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].WindRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.WindRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].WindRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].FireRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.FireRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].FireRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].WaterRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.WaterRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].WaterRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].GroundRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.GroundRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].GroundRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].LightRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.LightRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].LightRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].DarkRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.DarkRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].DarkRes[rank] * upRate))); }
 
-            if (DataManager.mLemmaDict[lemmaID].DizzyRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.DizzyRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].DizzyRes[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].ConfusionRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.ConfusionRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].ConfusionRes[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].PoisonRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.PoisonRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].PoisonRes[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].SleepRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.SleepRes, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].SleepRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].DizzyRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.DizzyRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].DizzyRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].ConfusionRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.ConfusionRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].ConfusionRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].PoisonRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.PoisonRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].PoisonRes[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].SleepRes.Count != 0) { attrList.Add(new ItemAttribute(Attribute.SleepRes, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].SleepRes[rank] * upRate))); }
 
-            if (DataManager.mLemmaDict[lemmaID].ExpGet.Count != 0) { attrList.Add(new ItemAttribute(Attribute.ExpGet, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].ExpGet[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].GoldGet.Count != 0) { attrList.Add(new ItemAttribute(Attribute.GoldGet, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].GoldGet[rank] * upRate))); }
-            if (DataManager.mLemmaDict[lemmaID].ItemGet.Count != 0) { attrList.Add(new ItemAttribute(Attribute.ItemGet, AttributeSource.LemmaAdd, (int)(DataManager.mLemmaDict[lemmaID].ItemGet[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].ExpGet.Count != 0) { attrList.Add(new ItemAttribute(Attribute.ExpGet, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].ExpGet[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].GoldGet.Count != 0) { attrList.Add(new ItemAttribute(Attribute.GoldGet, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].GoldGet[rank] * upRate))); }
+            if (DataManager.mLemmaDict[lemmaID].ItemGet.Count != 0) { attrList.Add(new ItemAttribute(Attribute.ItemGet, AttributeSource.LemmaAdd, -1, AttributeSkill.None, (int)(DataManager.mLemmaDict[lemmaID].ItemGet[rank] * upRate))); }
 
         }
 
+        //技能强化词条
+        ran = Random.Range(0, 100);
+        if (ran < 10)//10%概率
+        {
+
+            short skillID = (short)Random.Range(0, DataManager.mSkillDict.Count);
+            AttributeSkill skillAddType;
+            int value;
+            ran = Random.Range(0, 100);
+
+            if (DataManager.mSkillDict[skillID].FlagDamage)
+            {
+                if (ran < 20)
+                {
+                    skillAddType = AttributeSkill.Damage;
+                    value = Random.Range(10, 20);
+                }
+                else if (ran >= 20 && ran < 35)
+                {
+                    skillAddType = AttributeSkill.CriDamage;
+                    value = Random.Range(20, 50);
+                }
+                else if (ran >= 35 && ran < 45)
+                {
+                    skillAddType = AttributeSkill.Probability;
+                    value = Random.Range(5, 10);
+                }
+                else if (ran >= 45 && ran < 55)
+                {
+                    skillAddType = AttributeSkill.CostMp;
+                    value = Random.Range(10, 30);
+                }
+                else if (ran >= 55 && ran < 60)
+                {
+                    skillAddType = AttributeSkill.IgnoreDef;
+                    value = Random.Range(15, 30);
+                }
+                else if (ran >= 60 && ran < 75)
+                {
+                    skillAddType = AttributeSkill.IgnoreMDef;
+                    value = Random.Range(15, 30);
+                }
+                else if (ran >= 75 && ran < 85)
+                {
+                    skillAddType = AttributeSkill.SuckHp;
+                    value = Random.Range(10, 30);
+                }
+                else if (ran >= 85 && ran < 90)
+                {
+                    skillAddType = AttributeSkill.SuckMp;
+                    value = Random.Range(1, 5);
+                }
+                else if (ran >= 90 && ran < 95)
+                {
+                    skillAddType = AttributeSkill.TargetNum;
+                    value = Random.Range(1, 5);
+                }
+                else
+                {
+                    skillAddType = AttributeSkill.Invincible;
+                    value = Random.Range(10, 15);
+                }
+            }
+            else if (DataManager.mSkillDict[skillID].Cure > 0)
+            {
+                if (ran < 60)
+                {
+                    skillAddType = AttributeSkill.Damage;
+                    value = Random.Range(10, 20);
+                }
+                else if (ran >= 60 && ran < 70)
+                {
+                    skillAddType = AttributeSkill.Probability;
+                    value = Random.Range(5, 10);
+                }
+                else if (ran >= 70 && ran < 85)
+                {
+                    skillAddType = AttributeSkill.CostMp;
+                    value = Random.Range(10, 30);
+                }
+                else if (ran >= 85 && ran < 95)
+                {
+                    skillAddType = AttributeSkill.Ap;
+                    value = 50;
+                }
+                else
+                {
+                    skillAddType = AttributeSkill.Invincible;
+                    value = Random.Range(10, 15);
+                }
+            }
+            else
+            {
+                if (ran < 70)
+                {
+                    skillAddType = AttributeSkill.Probability;
+                    value = Random.Range(5, 10);
+                }
+                else if (ran >= 70 && ran < 95)
+                {
+                    skillAddType = AttributeSkill.CostMp;
+                    value = Random.Range(10, 30);
+                }
+                else
+                {
+                    skillAddType = AttributeSkill.Invincible;
+                    value = Random.Range(10, 15);
+                }
+            }
+
+            attrList.Add(new ItemAttribute(Attribute.Skill, AttributeSource.LemmaAdd, skillID,skillAddType, value));
+        }
+
+        //插孔
+        List<byte> slotLevel = new List<byte> { } ;
+        List<int> slotItemID=new List<int> { };
+        ran = Random.Range(0, 100);
+        if (ran < 20)//10%概率
+        {
+            slotLevel.Add((byte)Random.Range(1, 5));
+            slotItemID.Add(-1);
+        }
+        else if (ran >= 20 && ran < 95)
+        {
+            slotLevel.Add((byte)Random.Range(1, 5));
+            slotItemID.Add(-1);
+            slotLevel.Add((byte)Random.Range(1, 5));
+            slotItemID.Add(-1);
+        }
+        Debug.Log("slotLevel.Count=" + slotLevel.Count);
         //TODO:依据建筑附加材料生成属性
 
 
 
-        return new ItemObject(itemIndex, itemID, name, DataManager.mItemDict[itemID].Pic, DataManager.mItemDict[itemID].Rank, upLevel, attrList,
+        return new ItemObject(itemIndex, itemID, name, DataManager.mItemDict[itemID].Pic, DataManager.mItemDict[itemID].Rank, upLevel, attrList, slotLevel, slotItemID,
             DataManager.mItemDict[itemID].Des + (",于" + timeYear + "年" + timeMonth + "月" + (districtObject != null ? ("在" + districtObject.name + "制作") : "获得")), DataManager.mItemDict[itemID].Cost, districtObject != null ? districtObject.id : (short)-1, false, -1, EquipPart.None);
     }
 
@@ -2678,6 +2808,7 @@ public class GameControl : MonoBehaviour
 
     #endregion
 
+    #region 【方法】居民满意度,经济繁荣度
     //居民满意度
     public void DistrictSetSatisfactionInNewGame(short districtID)
     {
@@ -2774,7 +2905,7 @@ public class GameControl : MonoBehaviour
         districtDic[districtID].prosperousByPassTax += (short)value;
         districtDic[districtID].prosperousByPassTax = (short)Mathf.Clamp(districtDic[districtID].prosperousByPassTax, 0, 150);
     }
-
+    #endregion
 
     #region 【方法】英雄装备/卸下，技能配置
     public void HeroEquipSet(int heroID, EquipPart equipPart, int itemID)
@@ -2807,6 +2938,7 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
                 heroDic[heroID].equipWeapon = itemID;
+                heroDic[heroID].equipSuitePart[0] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID;
                 break;
             case EquipPart.Subhand:
                 if (heroDic[heroID].equipSubhand != -1)
@@ -2821,6 +2953,7 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
                 heroDic[heroID].equipSubhand = itemID;
+                heroDic[heroID].equipSuitePart[1] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID;
                 break;
             case EquipPart.Head:
                 if (heroDic[heroID].equipHead != -1)
@@ -2835,6 +2968,7 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
                 heroDic[heroID].equipHead = itemID;
+                heroDic[heroID].equipSuitePart[2] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID;
                 break;
             case EquipPart.Body:
                 if (heroDic[heroID].equipBody != -1)
@@ -2849,6 +2983,7 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
                 heroDic[heroID].equipBody = itemID;
+                heroDic[heroID].equipSuitePart[3] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID;
                 break;
             case EquipPart.Hand:
                 if (heroDic[heroID].equipHand != -1)
@@ -2863,6 +2998,7 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
                 heroDic[heroID].equipHand = itemID;
+                heroDic[heroID].equipSuitePart[4] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID;
                 break;
             case EquipPart.Back:
                 if (heroDic[heroID].equipBack != -1)
@@ -2877,6 +3013,7 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
                 heroDic[heroID].equipBack = itemID;
+                heroDic[heroID].equipSuitePart[5] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID;
                 break;
             case EquipPart.Foot:
                 if (heroDic[heroID].equipFoot != -1)
@@ -2890,7 +3027,9 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateButtonItemNum();
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
-                heroDic[heroID].equipFoot = itemID; break;
+                heroDic[heroID].equipFoot = itemID;
+                heroDic[heroID].equipSuitePart[6] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID; 
+                break;
             case EquipPart.Neck:
                 if (heroDic[heroID].equipNeck != -1)
                 {
@@ -2903,7 +3042,9 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateButtonItemNum();
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
-                heroDic[heroID].equipNeck = itemID; break;
+                heroDic[heroID].equipNeck = itemID;
+                heroDic[heroID].equipSuitePart[7] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID; 
+                break;
             case EquipPart.Finger1:
                 if (heroDic[heroID].equipFinger1 != -1)
                 {
@@ -2916,7 +3057,9 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateButtonItemNum();
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
-                heroDic[heroID].equipFinger1 = itemID; break;
+                heroDic[heroID].equipFinger1 = itemID; 
+                heroDic[heroID].equipSuitePart[8] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID; 
+                break;
             case EquipPart.Finger2:
                 if (heroDic[heroID].equipFinger2 != -1)
                 {
@@ -2929,7 +3072,9 @@ public class GameControl : MonoBehaviour
                     PlayMainPanel.Instance.UpdateButtonItemNum();
                     PlayMainPanel.Instance.UpdateInventoryNum();
                 }
-                heroDic[heroID].equipFinger2 = itemID; break;
+                heroDic[heroID].equipFinger2 = itemID;
+                heroDic[heroID].equipSuitePart[9] = DataManager.mItemDict[itemDic[itemID].prototypeID].SuiteID;
+                break;
             default: break;
         }
         itemDic[itemID].heroID = heroID;
@@ -2957,52 +3102,63 @@ public class GameControl : MonoBehaviour
                 if (heroDic[heroID].equipWeapon == -1) { return; }
                 itemDic[heroDic[heroID].equipWeapon].heroID = -1;
                 itemDic[heroDic[heroID].equipWeapon].heroPart = EquipPart.None;
-                heroDic[heroID].equipWeapon = -1; break;
+                heroDic[heroID].equipWeapon = -1;
+                heroDic[heroID].equipSuitePart[0] = -1;
+                break;
             case EquipPart.Subhand:
                 if (heroDic[heroID].equipSubhand == -1) { return; }
                 itemDic[heroDic[heroID].equipSubhand].heroID = -1;
                 itemDic[heroDic[heroID].equipSubhand].heroPart = EquipPart.None;
-                heroDic[heroID].equipSubhand = -1; break;
+                heroDic[heroID].equipSubhand = -1;
+                heroDic[heroID].equipSuitePart[1] = -1; break;
             case EquipPart.Head:
                 if (heroDic[heroID].equipHead == -1) { return; }
                 itemDic[heroDic[heroID].equipHead].heroID = -1;
                 itemDic[heroDic[heroID].equipHead].heroPart = EquipPart.None;
-                heroDic[heroID].equipHead = -1; break;
+                heroDic[heroID].equipHead = -1;
+                heroDic[heroID].equipSuitePart[2] = -1; break;
             case EquipPart.Body:
                 if (heroDic[heroID].equipBody == -1) { return; }
                 itemDic[heroDic[heroID].equipBody].heroID = -1;
                 itemDic[heroDic[heroID].equipBody].heroPart = EquipPart.None;
-                heroDic[heroID].equipBody = -1; break;
+                heroDic[heroID].equipBody = -1;
+                heroDic[heroID].equipSuitePart[3] = -1; break;
             case EquipPart.Hand:
                 if (heroDic[heroID].equipHand == -1) { return; }
                 itemDic[heroDic[heroID].equipHand].heroID = -1;
                 itemDic[heroDic[heroID].equipHand].heroPart = EquipPart.None;
-                heroDic[heroID].equipHand = -1; break;
+                heroDic[heroID].equipHand = -1;
+                heroDic[heroID].equipSuitePart[4] = -1; break;
             case EquipPart.Back:
                 if (heroDic[heroID].equipBack == -1) { return; }
                 itemDic[heroDic[heroID].equipBack].heroID = -1;
                 itemDic[heroDic[heroID].equipBack].heroPart = EquipPart.None;
-                heroDic[heroID].equipBack = -1; break;
+                heroDic[heroID].equipBack = -1;
+                heroDic[heroID].equipSuitePart[5] = -1; break;
             case EquipPart.Foot:
                 if (heroDic[heroID].equipFoot == -1) { return; }
                 itemDic[heroDic[heroID].equipFoot].heroID = -1;
                 itemDic[heroDic[heroID].equipFoot].heroPart = EquipPart.None;
-                heroDic[heroID].equipFoot = -1; break;
+                heroDic[heroID].equipFoot = -1;
+                heroDic[heroID].equipSuitePart[6] = -1; break;
             case EquipPart.Neck:
                 if (heroDic[heroID].equipNeck == -1) { return; }
                 itemDic[heroDic[heroID].equipNeck].heroID = -1;
                 itemDic[heroDic[heroID].equipNeck].heroPart = EquipPart.None;
-                heroDic[heroID].equipNeck = -1; break;
+                heroDic[heroID].equipNeck = -1;
+                heroDic[heroID].equipSuitePart[7] = -1; break;
             case EquipPart.Finger1:
                 if (heroDic[heroID].equipFinger1 == -1) { return; }
                 itemDic[heroDic[heroID].equipFinger1].heroID = -1;
                 itemDic[heroDic[heroID].equipFinger1].heroPart = EquipPart.None;
-                heroDic[heroID].equipFinger1 = -1; break;
+                heroDic[heroID].equipFinger1 = -1;
+                heroDic[heroID].equipSuitePart[8] = -1; break;
             case EquipPart.Finger2:
                 if (heroDic[heroID].equipFinger2 == -1) { return; }
                 itemDic[heroDic[heroID].equipFinger2].heroID = -1;
                 itemDic[heroDic[heroID].equipFinger2].heroPart = EquipPart.None;
-                heroDic[heroID].equipFinger2 = -1; break;
+                heroDic[heroID].equipFinger2 = -1;
+                heroDic[heroID].equipSuitePart[9] = -1; break;
         }
         forceDic[0].rProductNow++;
         HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
@@ -7977,7 +8133,7 @@ public class GameControl : MonoBehaviour
         }
         return outputUp;
     }
-    //基础+装备加成
+    //基础+装备加成+套装
     public int GetHeroAttr(Attribute attribute, int heroID)
     {
         int equipAdd = 0;
@@ -8083,43 +8239,76 @@ public class GameControl : MonoBehaviour
             }
         }
 
+        int suiteAdd = 0;
+        List<short> suiteIDList = new List<short> { };
+        List<byte> suiteNumList = new List<byte> { };
+        for (int i = 0; i < heroDic[heroID].equipSuitePart.Count; i++)
+        {
+            if (heroDic[heroID].equipSuitePart[i] != -1)
+            {
+                if (!suiteIDList.Contains(heroDic[heroID].equipSuitePart[i]))
+                {
+                    suiteIDList.Add(heroDic[heroID].equipSuitePart[i]);
+                    suiteNumList.Add(1);
+                }
+                else
+                {
+                    suiteNumList[suiteIDList.IndexOf(heroDic[heroID].equipSuitePart[i])]++;
+                }
+            }         
+        }
+
+        for (int i = 0; i < suiteIDList.Count; i++)
+        {
+            for (int j = 0; j < DataManager.mItemSuiteDict[suiteIDList[i]].NeedPart.Count; j++)
+            {
+                if (suiteNumList[i] >= DataManager.mItemSuiteDict[suiteIDList[i]].NeedPart[j])
+                {
+                    if (DataManager.mItemSuiteDict[suiteIDList[i]].AttributeType[j] == attribute)
+                    {
+                        suiteAdd += DataManager.mItemSuiteDict[suiteIDList[i]].Value[j];
+                    }
+                }
+            }
+        }
+
 
         switch (attribute)
         {
-            case Attribute.Hp: return (int)heroDic[heroID].hp + equipAdd;
-            case Attribute.Mp: return (int)heroDic[heroID].mp + equipAdd;
-            case Attribute.HpRenew: return (int)heroDic[heroID].hpRenew + equipAdd;
-            case Attribute.MpRenew: return (int)heroDic[heroID].mpRenew + equipAdd;
-            case Attribute.AtkMin: return (int)heroDic[heroID].atkMin + equipAdd;
-            case Attribute.AtkMax: return (int)heroDic[heroID].atkMax + equipAdd;
-            case Attribute.MAtkMin: return (int)heroDic[heroID].mAtkMin + equipAdd;
-            case Attribute.MAtkMax: return (int)heroDic[heroID].mAtkMax + equipAdd;
-            case Attribute.Def: return (int)heroDic[heroID].def + equipAdd;
-            case Attribute.MDef: return (int)heroDic[heroID].mDef + equipAdd;
-            case Attribute.Hit: return (int)heroDic[heroID].hit + equipAdd;
-            case Attribute.Dod: return (int)heroDic[heroID].dod + equipAdd;
-            case Attribute.CriR: return (int)heroDic[heroID].criR + equipAdd;
-            case Attribute.CriD: return (int)heroDic[heroID].criD + equipAdd;
-            case Attribute.Spd: return (heroDic[heroID].equipWeapon == -1) ? (heroDic[heroID].spd + equipAdd) : equipAdd;
-            case Attribute.WindDam: return heroDic[heroID].windDam + equipAdd;
-            case Attribute.FireDam: return heroDic[heroID].fireDam + equipAdd;
-            case Attribute.WaterDam: return heroDic[heroID].waterDam + equipAdd;
-            case Attribute.GroundDam: return heroDic[heroID].groundDam + equipAdd;
-            case Attribute.LightDam: return heroDic[heroID].lightDam + equipAdd;
-            case Attribute.DarkDam: return heroDic[heroID].darkDam + equipAdd;
-            case Attribute.WindRes: return heroDic[heroID].windRes + equipAdd;
-            case Attribute.FireRes: return heroDic[heroID].fireRes + equipAdd;
-            case Attribute.WaterRes: return heroDic[heroID].waterRes + equipAdd;
-            case Attribute.GroundRes: return heroDic[heroID].groundRes + equipAdd;
-            case Attribute.LightRes: return heroDic[heroID].lightRes + equipAdd;
-            case Attribute.DarkRes: return heroDic[heroID].darkRes + equipAdd;
-            case Attribute.DizzyRes: return heroDic[heroID].dizzyRes + equipAdd;
-            case Attribute.ConfusionRes: return heroDic[heroID].confusionRes + equipAdd;
-            case Attribute.PoisonRes: return heroDic[heroID].poisonRes + equipAdd;
-            case Attribute.SleepRes: return heroDic[heroID].sleepRes + equipAdd;
-            case Attribute.GoldGet: return heroDic[heroID].goldGet + equipAdd;
-            case Attribute.ExpGet: return heroDic[heroID].expGet + equipAdd;
-            case Attribute.ItemGet: return heroDic[heroID].itemGet + equipAdd;
+            case Attribute.Hp: return (int)heroDic[heroID].hp + equipAdd+suiteAdd;
+            case Attribute.Mp: return (int)heroDic[heroID].mp + equipAdd+suiteAdd;
+            case Attribute.HpRenew: return (int)heroDic[heroID].hpRenew + equipAdd+suiteAdd;
+            case Attribute.MpRenew: return (int)heroDic[heroID].mpRenew + equipAdd+suiteAdd;
+            case Attribute.AtkMin: return (int)heroDic[heroID].atkMin + equipAdd+suiteAdd;
+            case Attribute.AtkMax: return (int)heroDic[heroID].atkMax + equipAdd+suiteAdd;
+            case Attribute.MAtkMin: return (int)heroDic[heroID].mAtkMin + equipAdd+suiteAdd;
+            case Attribute.MAtkMax: return (int)heroDic[heroID].mAtkMax + equipAdd+suiteAdd;
+            case Attribute.Def: return (int)heroDic[heroID].def + equipAdd+suiteAdd;
+            case Attribute.MDef: return (int)heroDic[heroID].mDef + equipAdd+suiteAdd;
+            case Attribute.Hit: return (int)heroDic[heroID].hit + equipAdd+suiteAdd;
+            case Attribute.Dod: return (int)heroDic[heroID].dod + equipAdd+suiteAdd;
+            case Attribute.CriR: return (int)heroDic[heroID].criR + equipAdd+suiteAdd;
+            case Attribute.CriD: return (int)heroDic[heroID].criD + equipAdd+suiteAdd;
+            case Attribute.Spd: return (heroDic[heroID].equipWeapon == -1) ? (heroDic[heroID].spd + equipAdd + suiteAdd) : (equipAdd + suiteAdd);
+            case Attribute.WindDam: return heroDic[heroID].windDam + equipAdd+suiteAdd;
+            case Attribute.FireDam: return heroDic[heroID].fireDam + equipAdd+suiteAdd;
+            case Attribute.WaterDam: return heroDic[heroID].waterDam + equipAdd+suiteAdd;
+            case Attribute.GroundDam: return heroDic[heroID].groundDam + equipAdd+suiteAdd;
+            case Attribute.LightDam: return heroDic[heroID].lightDam + equipAdd+suiteAdd;
+            case Attribute.DarkDam: return heroDic[heroID].darkDam + equipAdd+suiteAdd;
+            case Attribute.WindRes: return heroDic[heroID].windRes + equipAdd+suiteAdd;
+            case Attribute.FireRes: return heroDic[heroID].fireRes + equipAdd+suiteAdd;
+            case Attribute.WaterRes: return heroDic[heroID].waterRes + equipAdd+suiteAdd;
+            case Attribute.GroundRes: return heroDic[heroID].groundRes + equipAdd+suiteAdd;
+            case Attribute.LightRes: return heroDic[heroID].lightRes + equipAdd+suiteAdd;
+            case Attribute.DarkRes: return heroDic[heroID].darkRes + equipAdd+suiteAdd;
+            case Attribute.DizzyRes: return heroDic[heroID].dizzyRes + equipAdd+suiteAdd;
+            case Attribute.ConfusionRes: return heroDic[heroID].confusionRes + equipAdd+suiteAdd;
+            case Attribute.PoisonRes: return heroDic[heroID].poisonRes + equipAdd+suiteAdd;
+            case Attribute.SleepRes: return heroDic[heroID].sleepRes + equipAdd+suiteAdd;
+            case Attribute.GoldGet: return heroDic[heroID].goldGet + equipAdd+suiteAdd;
+            case Attribute.ExpGet: return heroDic[heroID].expGet + equipAdd+suiteAdd;
+            case Attribute.ItemGet: return heroDic[heroID].itemGet + equipAdd+suiteAdd;
             default: return 0;
         }
 
