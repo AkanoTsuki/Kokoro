@@ -38,6 +38,8 @@ public class GameControlInPlay : MonoBehaviour
 
         UIManager.Instance.InitPanel(UIPanelType.ItemListAndInfo);
         ItemListAndInfoPanel.Instance.OnHide();
+        UIManager.Instance.InitPanel(UIPanelType.ConsumableListAndInfo);
+        ConsumableListAndInfoPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.SkillListAndInfo);
         SkillListAndInfoPanel.Instance.OnHide();
         UIManager.Instance.InitPanel(UIPanelType.AdventureTeam);
@@ -167,6 +169,8 @@ public class GameControlInPlay : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             gc.forceDic[0].gold += 50000;
+
+            gc.ConsumableChange((short)Random.Range(0, DataManager.mConsumableDict.Count - 1), 5);
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
@@ -454,6 +458,8 @@ public class GameControlInPlay : MonoBehaviour
         }
     }
 
+
+
     public void OpenSkillListAndInfo()
     {
         if (SkillListAndInfoPanel.Instance.isShow)
@@ -465,6 +471,9 @@ public class GameControlInPlay : MonoBehaviour
             SkillListAndInfoPanel.Instance.OnShow(gc.nowCheckingDistrictID, null, 76, -104);
         }
     }
+
+ 
+
 
     public void OpenAdventureMain()
     {
@@ -547,6 +556,18 @@ public class GameControlInPlay : MonoBehaviour
         else
         {
             SkillListAndInfoPanel.Instance.OnShow(-1,null, 76, -104);
+        }
+    }
+
+    public void OpenInventoryConsumable()
+    {
+        if (ConsumableListAndInfoPanel.Instance.isShow)
+        {
+            ConsumableListAndInfoPanel.Instance.OnHide();
+        }
+        else
+        {
+            ConsumableListAndInfoPanel.Instance.OnShow(76, -104);
         }
     }
 

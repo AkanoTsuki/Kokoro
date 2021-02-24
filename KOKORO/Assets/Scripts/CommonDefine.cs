@@ -537,6 +537,9 @@ public class ConsumablePrototype : ISerializationCallbackReceiver
 {
     public int ID;
     public string Name;
+    public int Cost;
+    public byte Rank;
+    public byte SlotLevel;
     public string Pic;
     public ConsumableType Type;
     public string TypeStr;

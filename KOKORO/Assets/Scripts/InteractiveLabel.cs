@@ -74,6 +74,10 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             ItemListAndInfoPanel.Instance.UpdateInfo(gc.itemDic[index]);
         }
+        else if (labelType == LabelType.Consumable)
+        {
+            ConsumableListAndInfoPanel.Instance.UpdateInfo(index);
+        }
         else if (labelType == LabelType.HeroInSelect)
         {
             HeroPanel.Instance.OnShow(gc.heroDic[index], false,  (int)(BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing),
@@ -117,6 +121,14 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 return;
             }
             ItemListAndInfoPanel.Instance.UpdateInfo(gc.itemDic[ItemListAndInfoPanel.Instance.nowItemID]);
+        }
+        else if (labelType == LabelType.Consumable)
+        {
+            if (ConsumableListAndInfoPanel.Instance.nowItemID == -1)
+            {
+                return;
+            }
+            ConsumableListAndInfoPanel.Instance.UpdateInfo(ConsumableListAndInfoPanel.Instance.nowItemID);
         }
         else if (labelType == LabelType.HeroInSelect)
         {

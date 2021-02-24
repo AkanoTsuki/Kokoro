@@ -65,6 +65,9 @@ public class PlayMainPanel : BasePanel
     public Button left_inventoryScrollBtn;
     public RectTransform left_inventoryScrollNumRt;
     public Text left_inventoryScrollNumText;
+    public Button left_inventoryConsumableBtn;
+    public RectTransform left_inventoryConsumableNumRt;
+    public Text left_inventoryConsumableNumText;
     public Button left_fiscalBtn;
     public Button left_technologyBtn;
     public RectTransform left_technologyTipRt;
@@ -110,6 +113,7 @@ public class PlayMainPanel : BasePanel
 
         left_inventoryEquipBtn.onClick.AddListener(delegate () { gci.OpenInventoryEquip(); AudioControl.Instance.PlaySound("system_button"); });
         left_inventoryScrollBtn.onClick.AddListener(delegate () { gci.OpenInventorySkill(); AudioControl.Instance.PlaySound("system_button"); });
+        left_inventoryConsumableBtn.onClick.AddListener(delegate () { gci.OpenInventoryConsumable(); AudioControl.Instance.PlaySound("system_button"); });
         left_technologyBtn.onClick.AddListener(delegate () { gci.OpenTechnology(); AudioControl.Instance.PlaySound("system_button"); });
         left_diplomacyBtn.onClick.AddListener(delegate () { gci.OpenDiplomacy(); AudioControl.Instance.PlaySound("system_button"); });
         left_heroBtn.onClick.AddListener(delegate () { gci.OpenHeroSelect(-1); AudioControl.Instance.PlaySound("system_button"); });
@@ -151,6 +155,7 @@ public class PlayMainPanel : BasePanel
 
         UpdateButtonItemNum();
         UpdateButtonSkillNum();
+        UpdateButtonConsumableNum();
         UpdateButtonHeroNum();
 
         HideResourcesBlock();
@@ -392,6 +397,33 @@ public class PlayMainPanel : BasePanel
         }
 
     }
+
+    //左侧区域-功能按钮组-收藏卷轴按钮-数字文本-更新
+    public void UpdateButtonConsumableNum()
+    {
+        int num = 0;
+        for (int i = 0; i < gc.consumableNum.Count; i++)
+        {
+            if (gc.consumableNum[i] > 0)
+            {
+                num++;
+            }
+        }
+
+
+        if (num > 0)
+        {
+            left_inventoryConsumableNumText.text = num.ToString();
+            left_inventoryConsumableNumRt.sizeDelta = new Vector2(left_inventoryConsumableNumText.preferredWidth + 8f, 20f);
+        }
+        else
+        {
+            left_inventoryConsumableNumText.text = "";
+            left_inventoryConsumableNumRt.sizeDelta = Vector2.zero;
+        }
+
+    }
+
 
     //左侧区域-功能按钮组-英雄按钮-数字文本-更新
     public void UpdateButtonHeroNum()

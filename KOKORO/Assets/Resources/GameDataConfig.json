@@ -2099,7 +2099,7 @@
       "HpRenew": 0,
       "MpRenew": 0,
       "AtkMin": 200,
-      "AtkMax": 300,
+      "AtkMax": 220,
       "MAtkMin": 0,
       "MAtkMax": 0,
       "Def": 0,
@@ -2143,8 +2143,8 @@
       "Mp": 0,
       "HpRenew": 0,
       "MpRenew": 0,
-      "AtkMin": 300,
-      "AtkMax": 350,
+      "AtkMin": 260,
+      "AtkMax": 310,
       "MAtkMin": 0,
       "MAtkMax": 0,
       "Def": 0,
@@ -119804,6 +119804,9 @@
       "Name": "迅捷之石I",
       "Pic": "icon992",
       "TypeStr": "SlotStone",
+      "Rank": 2,
+      "SlotLevel": 1,
+      "Cost": 100,
       "Des": "蕴含风元素的晶石碎片，可用作镶嵌",
       "AttributeTypeStr": [
         "Hit"
@@ -119823,6 +119826,9 @@
       "Name": "迅捷之石II",
       "Pic": "icon993",
       "TypeStr": "SlotStone",
+      "Rank": 4,
+      "SlotLevel": 2,
+      "Cost": 500,
       "Des": "蕴含风元素的晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Hit"
@@ -119842,6 +119848,9 @@
       "Name": "迅捷之石III",
       "Pic": "icon994",
       "TypeStr": "SlotStone",
+      "Rank": 6,
+      "SlotLevel": 3,
+      "Cost": 1500,
       "Des": "蕴含风元素的高级晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Hit"
@@ -119861,6 +119870,9 @@
       "Name": "迅捷之石IV",
       "Pic": "icon995",
       "TypeStr": "SlotStone",
+      "Rank": 8,
+      "SlotLevel": 4,
+      "Cost": 5000,
       "Des": "蕴含大量风元素的极品晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Hit",
@@ -119884,6 +119896,9 @@
       "Name": "勇气之石I",
       "Pic": "icon976",
       "TypeStr": "SlotStone",
+      "Rank": 2,
+      "SlotLevel": 1,
+      "Cost": 100,
       "Des": "蕴含火元素的晶石碎片，可用作镶嵌",
       "AttributeTypeStr": [
         "AtkMin",
@@ -119907,6 +119922,9 @@
       "Name": "勇气之石II",
       "Pic": "icon977",
       "TypeStr": "SlotStone",
+      "Rank": 4,
+      "SlotLevel": 2,
+      "Cost": 500,
       "Des": "蕴含火元素的晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "AtkMin",
@@ -119930,6 +119948,9 @@
       "Name": "勇气之石III",
       "Pic": "icon978",
       "TypeStr": "SlotStone",
+      "Rank": 6,
+      "SlotLevel": 3,
+      "Cost": 1500,
       "Des": "蕴含火元素的高级晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "AtkMin",
@@ -119953,6 +119974,9 @@
       "Name": "勇气之石IV",
       "Pic": "icon979",
       "TypeStr": "SlotStone",
+      "Rank": 8,
+      "SlotLevel": 4,
+      "Cost": 5000,
       "Des": "蕴含大量火元素的极品晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "AtkMin",
@@ -119980,6 +120004,9 @@
       "Name": "智慧之石I",
       "Pic": "icon980",
       "TypeStr": "SlotStone",
+      "Rank": 2,
+      "SlotLevel": 1,
+      "Cost": 100,
       "Des": "蕴含水元素的晶石碎片，可用作镶嵌",
       "AttributeTypeStr": [
         "MAtkMin",
@@ -120003,6 +120030,9 @@
       "Name": "智慧之石II",
       "Pic": "icon981",
       "TypeStr": "SlotStone",
+      "Rank": 4,
+      "SlotLevel": 2,
+      "Cost": 500,
       "Des": "蕴含水元素的晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "MAtkMin",
@@ -120026,6 +120056,9 @@
       "Name": "智慧之石III",
       "Pic": "icon982",
       "TypeStr": "SlotStone",
+      "Rank": 6,
+      "SlotLevel": 3,
+      "Cost": 1500,
       "Des": "蕴含水元素的高级晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "MAtkMin",
@@ -120049,6 +120082,9 @@
       "Name": "智慧之石IV",
       "Pic": "icon983",
       "TypeStr": "SlotStone",
+      "Rank": 8,
+      "SlotLevel": 4,
+      "Cost": 5000,
       "Des": "蕴含大量水元素的极品晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "MAtkMin",
@@ -120076,6 +120112,9 @@
       "Name": "坚毅之石I",
       "Pic": "icon1000",
       "TypeStr": "SlotStone",
+      "Rank": 2,
+      "SlotLevel": 1,
+      "Cost": 100,
       "Des": "蕴含地元素的晶石碎片，可用作镶嵌",
       "AttributeTypeStr": [
         "Def"
@@ -120095,6 +120134,9 @@
       "Name": "坚毅之石II",
       "Pic": "icon1001",
       "TypeStr": "SlotStone",
+      "Rank": 4,
+      "SlotLevel": 2,
+      "Cost": 500,
       "Des": "蕴含地元素的晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Def"
@@ -120114,6 +120156,9 @@
       "Name": "坚毅之石III",
       "Pic": "icon1002",
       "TypeStr": "SlotStone",
+      "Rank": 6,
+      "SlotLevel": 3,
+      "Cost": 1500,
       "Des": "蕴含地元素的高级晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Def"
@@ -120133,6 +120178,9 @@
       "Name": "坚毅之石IV",
       "Pic": "icon1003",
       "TypeStr": "SlotStone",
+      "Rank": 8,
+      "SlotLevel": 4,
+      "Cost": 5000,
       "Des": "蕴含大量地元素的极品晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Def",
@@ -120156,12 +120204,16 @@
       "Name": "荣耀之石I",
       "Pic": "icon984",
       "TypeStr": "SlotStone",
+      "Rank": 2,
+      "SlotLevel": 1,
+      "Cost": 100,
       "Des": "蕴含光元素的晶石碎片，可用作镶嵌",
       "AttributeTypeStr": [
         "Hp",
         "Mp"
       ],
       "SkillID": [
+        -1,
         -1
       ],
       "SkillAddTypeStr": [
@@ -120178,12 +120230,16 @@
       "Name": "荣耀之石II",
       "Pic": "icon985",
       "TypeStr": "SlotStone",
+      "Rank": 4,
+      "SlotLevel": 2,
+      "Cost": 500,
       "Des": "蕴含光元素的晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Hp",
         "Mp"
       ],
       "SkillID": [
+        -1,
         -1
       ],
       "SkillAddTypeStr": [
@@ -120200,12 +120256,16 @@
       "Name": "荣耀之石III",
       "Pic": "icon986",
       "TypeStr": "SlotStone",
+      "Rank": 6,
+      "SlotLevel": 3,
+      "Cost": 1500,
       "Des": "蕴含光元素的高级晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Hp",
         "Mp"
       ],
       "SkillID": [
+        -1,
         -1
       ],
       "SkillAddTypeStr": [
@@ -120222,6 +120282,9 @@
       "Name": "荣耀之石IV",
       "Pic": "icon987",
       "TypeStr": "SlotStone",
+      "Rank": 8,
+      "SlotLevel": 4,
+      "Cost": 5000,
       "Des": "蕴含大量光元素的极品晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Hp",
@@ -120229,6 +120292,7 @@
         "LightDam"
       ],
       "SkillID": [
+        -1,
         -1,
         -1
       ],
@@ -120248,6 +120312,9 @@
       "Name": "邪恶之石I",
       "Pic": "icon988",
       "TypeStr": "SlotStone",
+      "Rank": 2,
+      "SlotLevel": 1,
+      "Cost": 100,
       "Des": "蕴含暗元素的晶石碎片，可用作镶嵌",
       "AttributeTypeStr": [
         "Dod"
@@ -120267,6 +120334,9 @@
       "Name": "邪恶之石II",
       "Pic": "icon989",
       "TypeStr": "SlotStone",
+      "Rank": 4,
+      "SlotLevel": 2,
+      "Cost": 500,
       "Des": "蕴含暗元素的晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Dod"
@@ -120286,6 +120356,9 @@
       "Name": "邪恶之石III",
       "Pic": "icon990",
       "TypeStr": "SlotStone",
+      "Rank": 6,
+      "SlotLevel": 3,
+      "Cost": 1500,
       "Des": "蕴含暗元素的高级晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Dod"
@@ -120305,6 +120378,9 @@
       "Name": "邪恶之石IV",
       "Pic": "icon991",
       "TypeStr": "SlotStone",
+      "Rank": 8,
+      "SlotLevel": 4,
+      "Cost": 5000,
       "Des": "蕴含大量暗元素的极品晶石块，可用作镶嵌",
       "AttributeTypeStr": [
         "Dod",
@@ -120328,6 +120404,9 @@
       "Name": "生命药水",
       "Pic": "icon273",
       "TypeStr": "Drug",
+      "Rank": 2,
+      "SlotLevel": 0,
+      "Cost": 100,
       "Des": "",
       "AttributeTypeStr": [
         "Hp"
@@ -120347,6 +120426,9 @@
       "Name": "魔法药水",
       "Pic": "icon274",
       "TypeStr": "Drug",
+      "Rank": 2,
+      "SlotLevel": 0,
+      "Cost": 100,
       "Des": "",
       "AttributeTypeStr": [
         "Mp"

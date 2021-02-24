@@ -27,6 +27,7 @@ public enum UIPanelType
     AdventureSend,
     Diplomacy,
     Progress,
-    SystemSet
+    SystemSet,
+    ConsumableListAndInfo
 
 }

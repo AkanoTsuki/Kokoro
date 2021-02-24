@@ -1077,6 +1077,9 @@ public class BuildingPanel : BasePanel
     //订单任务栏目-更新
     public void UpdateSetForgePart(BuildingObject buildingObject)
     {
+        Debug.Log("前 setForge_typeDd.value=" + setForge_typeDd.value);
+        Debug.Log("前 setForge_levelDd.value=" + setForge_levelDd.value);
+
         HideSetForgeAddBlock();
         UpdateSetForgePartNum();
         switch (buildingObject.prototypeID)
@@ -1132,7 +1135,7 @@ public class BuildingPanel : BasePanel
         {
             setForge_typeDd.value = 0;
         }
-        Debug.Log("setForge_typeDd.value="+ setForge_typeDd.value);
+     
 
 
         setForge_levelDd.ClearOptions();
@@ -1150,6 +1153,12 @@ public class BuildingPanel : BasePanel
             setForge_levelDd.value = 0;
         }
         UpdateSetForgeOutputInput(buildingObject.id, setForge_typeDd.value, setForge_levelDd.value);
+
+
+        Debug.Log("后 setForge_typeDd.value=" + setForge_typeDd.value);
+        Debug.Log("后 setForge_levelDd.value=" + setForge_levelDd.value);
+        setForgeType = setForge_typeDd.value;
+        setForgeLevel = setForge_levelDd.value;
 
         for (int i = 0; i < forgeAddStuff.Count; i++)
         {

@@ -51,6 +51,8 @@ public class DistrictMapPanel : BasePanel
     public Button left_inventoryScrollBtn;
     public RectTransform left_inventoryScrollNumRt;
     public Text left_inventoryScrollNumText;
+
+
     public Button left_marketBtn;
     public Button left_buildBtn;
 

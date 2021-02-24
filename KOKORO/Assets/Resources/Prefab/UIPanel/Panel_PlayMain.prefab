@@ -5213,7 +5213,7 @@ GameObject:
   - component: {fileID: 7584217436662840196}
   - component: {fileID: 2985136843671462467}
   m_Layer: 5
-  m_Name: Button_InventoryEquip
+  m_Name: Button_InventoryItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14532,7 +14532,7 @@ GameObject:
   - component: {fileID: 8518234742989746472}
   - component: {fileID: 7173863961766492724}
   m_Layer: 5
-  m_Name: Button_InventoryItem
+  m_Name: Button_InventoryConsumable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15188,6 +15188,9 @@ MonoBehaviour:
   left_inventoryScrollBtn: {fileID: 132823357367245100}
   left_inventoryScrollNumRt: {fileID: 5586636318318858768}
   left_inventoryScrollNumText: {fileID: 6338064773182937559}
+  left_inventoryConsumableBtn: {fileID: 7173863961766492724}
+  left_inventoryConsumableNumRt: {fileID: 3091070108729330172}
+  left_inventoryConsumableNumText: {fileID: 8858596981976804750}
   left_fiscalBtn: {fileID: 7746319518811328662}
   left_technologyBtn: {fileID: 6010529519205065908}
   left_technologyTipRt: {fileID: 5133031750511930184}

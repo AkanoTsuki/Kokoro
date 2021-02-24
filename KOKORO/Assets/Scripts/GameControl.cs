@@ -167,6 +167,7 @@ public class GameControl : MonoBehaviour
         t.buildingUnlock = this.buildingUnlock;
         t.forgeAddUnlock = this.forgeAddUnlock;
         t.logIndex = this.logIndex;
+        t.consumableNum = this.consumableNum;
         // t.forceFlag = this.forceFlag;
         t.itemPanel_rankSelected = this.itemPanel_rankSelected;
         t.itemPanel_levelSelected = this.itemPanel_levelSelected;
@@ -239,6 +240,7 @@ public class GameControl : MonoBehaviour
             this.buildingUnlock = t1.buildingUnlock;
             this.forgeAddUnlock = t1.forgeAddUnlock;
             this.logIndex = t1.logIndex;
+            this.consumableNum = t1.consumableNum;
             // this.forceFlag = t1.forceFlag;
             this.itemPanel_rankSelected = t1.itemPanel_rankSelected;
             this.itemPanel_levelSelected = t1.itemPanel_levelSelected;
@@ -612,7 +614,7 @@ public class GameControl : MonoBehaviour
 
     #endregion
 
-    #region 【方法】生成装备物品
+    #region 【方法】生成装备物品，镶嵌，强化
     public ItemObject GenerateItemByRandom(int itemID, DistrictObject districtObject, int buildingID, List<int> heroObjectIDList)
     {
         //随机提升等级，每个等级提升基础数据5%，上限5
@@ -894,17 +896,41 @@ public class GameControl : MonoBehaviour
             DataManager.mItemDict[itemID].Des + (",于" + timeYear + "年" + timeMonth + "月" + (districtObject != null ? ("在" + districtObject.name + "制作") : "获得")), DataManager.mItemDict[itemID].Cost, districtObject != null ? districtObject.id : (short)-1, false, -1, EquipPart.None);
     }
 
+    public void EquipmentInlay(int itemID,byte slotIndex, short consumableID)
+    {
+        if (itemDic[itemID].slotItemID[slotIndex]!=-1)
+        {
+            MessagePanel.Instance.AddMessage("孔槽已嵌有晶石，请移除后在进行操作");
+            return;
+        }
+        if (itemDic[itemID].slotLevel[slotIndex] < DataManager.mConsumableDict[consumableID].SlotLevel)
+        {
+            MessagePanel.Instance.AddMessage("孔槽无法嵌入高级晶石");
+            return;
+        }
+
+
+        itemDic[itemID].slotItemID[slotIndex] = consumableID;
+        ConsumableChange(consumableID, -1);
+    }
     #endregion
 
-    #region 【方法】生成消耗品道具
-    public void ConsumableChange(short ConsumableID, int num)
+    #region 【方法】消耗品道具
+    public void ConsumableChange(short consumableID, int num)
     {
-        if (consumableNum[ConsumableID] + num < 0)
+        if (consumableNum[consumableID] + num < 0)
         {
             MessagePanel.Instance.AddMessage("数量不足");
             return;
         }
-        consumableNum[ConsumableID] += num;
+        consumableNum[consumableID] += num;
+
+        if (ConsumableListAndInfoPanel.Instance.isShow)
+        {
+            ConsumableListAndInfoPanel.Instance.UpdateList();
+            ConsumableListAndInfoPanel.Instance.UpdateInfo(ConsumableListAndInfoPanel.Instance.nowItemID);
+        }
+        PlayMainPanel.Instance.UpdateButtonConsumableNum();
     }
     #endregion
 
@@ -4243,8 +4269,8 @@ public class GameControl : MonoBehaviour
 
     public void DeleteCustomer(int customerID)
     {
-        Debug.Log("customerID=" + customerID);
-        Debug.Log("customerDic[customerID].districtID=" + customerDic[customerID].districtID);
+        //Debug.Log("customerID=" + customerID);
+        //Debug.Log("customerDic[customerID].districtID=" + customerDic[customerID].districtID);
         // Debug.Log("satisfaction=" + customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID]);
         float nowAllSat = (float)(customerRecordDic[timeYear + "/" + timeMonth].satisfaction[customerDic[customerID].districtID] * customerRecordDic[timeYear + "/" + timeMonth].comeNum[customerDic[customerID].districtID] + customerDic[customerID].satisfaction);
 

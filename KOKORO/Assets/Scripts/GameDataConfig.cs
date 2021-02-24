@@ -214,7 +214,7 @@ public class GameDataConfig : MonoBehaviour
         DataManager.Init();
         DataManager.InitCreateHeroRankDict();
 
-        //Debug.Log(DataManager.mItemSuiteDict[1].Name);
+        Debug.Log(DataManager.mConsumableDict[1].Name);
         //Debug.Log(DataManager.mBuildingDict[5].Name);
         //Debug.Log(DataManager.mMonsterDict[1].Name);
        //Debug.Log(DataManager.mDistrictDict.Count);
