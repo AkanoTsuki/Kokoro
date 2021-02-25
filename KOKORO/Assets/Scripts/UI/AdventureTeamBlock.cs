@@ -34,7 +34,8 @@ public class AdventureTeamBlock : MonoBehaviour
     public List<RectTransform> dungeon_side1ApBgRt;
     public List<Text> dungeon_side1ApText;
     public List<Image> dungeon_side1ApImage;
-
+    public List<Image> dungeon_side0SharpnessImage;
+    public List<Image> dungeon_side0SharpnessBgImage;
 
     public List<GameObject> dungeon_side0BuffsGo;
     public List<GameObject> dungeon_side1BuffsGo;

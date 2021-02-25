@@ -6026,7 +6026,7 @@ public class GameControl : MonoBehaviour
                                                                 actionBar, skillIndex, hpNow, mpNow, sharpnessNow, buff));
             }
 
-            int heroCount = fightMenberObjects.Count;
+            //int heroCount = fightMenberObjects.Count;
 
             //创建怪物ID列表
             adventureTeamList[teamID].enemyIDList.Clear();
@@ -6194,6 +6194,7 @@ public class GameControl : MonoBehaviour
         AdventureMainPanel.Instance.UpdateSceneRoleHpMp(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.ShowSceneRoleAp(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.UpdateSceneRoleAp(teamID, fightMenberObjects);
+        AdventureMainPanel.Instance.UpdateSceneRoleSharpness(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.UpdateSceneRoleText(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.HideSceneRoleBuff(teamID);
         AdventureMainPanel.Instance.UpdateSceneRoleBuff(teamID, fightMenberObjects);
@@ -6382,6 +6383,10 @@ public class GameControl : MonoBehaviour
                                                 }
 
                                                 int damage = Random.Range(damageMin, damageMax + 1);
+
+                                                //斩味修正伤害
+                                                damage = (int)(damage * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber[i])));
+                             
 
                                                 int damageWithElement = 0;
 
@@ -6910,6 +6915,10 @@ public class GameControl : MonoBehaviour
                                         int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
                                         int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
                                         int damage = Random.Range(damageMin, damageMax + 1);
+
+                                        //斩味修正伤害
+                                        damage = (int)(damage * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber[i])));
+
                                         int ranCri = Random.Range(0, 100);
                                         if (ranCri < actionMenber[i].criR)
                                         {
@@ -7233,21 +7242,26 @@ public class GameControl : MonoBehaviour
         if (sp != null)
         {
             //消耗锋利度(技能)
-            if (Random.Range(0, 100) < 70)
+            if (actionMenber.side == 0 && sp.FlagDamage)
             {
-                switch (sp.Rank)
+                if (Random.Range(0, 100) < 50)
                 {
-                    case 1: actionMenber.sharpnessNow-=1;break;
-                    case 2: actionMenber.sharpnessNow -= 1; break;
-                    case 3:actionMenber.sharpnessNow -= 2; break;
-                    case 4:actionMenber.sharpnessNow -= 3; break;
-                }
+                    switch (sp.Rank)
+                    {
+                        case 1: actionMenber.sharpnessNow -= 2; break;
+                        case 2: actionMenber.sharpnessNow -= 2; break;
+                        case 3: actionMenber.sharpnessNow -= 3; break;
+                        case 4: actionMenber.sharpnessNow -= 5; break;
+                    }
 
-                if (actionMenber.sharpnessNow < 0)
-                {
-                    actionMenber.sharpnessNow = 0;
+                    if (actionMenber.sharpnessNow < 0)
+                    {
+                        actionMenber.sharpnessNow = 0;
+                    }
                 }
+                AdventureMainPanel.Instance.UpdateSceneRoleSharpnessSingle(teamID, actionMenber);
             }
+           
 
             if (sp.Rank == 4)
             {
@@ -7261,14 +7275,19 @@ public class GameControl : MonoBehaviour
         else
         {
             //消耗锋利度(普通攻击)
-            if (Random.Range(0, 100) < 70)
+            if (actionMenber.side == 0)
             {
-                actionMenber.sharpnessNow--;
-                if (actionMenber.sharpnessNow < 0)
+                if (Random.Range(0, 100) < 70)
                 {
-                    actionMenber.sharpnessNow = 0;
+                    actionMenber.sharpnessNow -= 5;
+                    if (actionMenber.sharpnessNow < 0)
+                    {
+                        actionMenber.sharpnessNow = 0;
+                    }
+                    AdventureMainPanel.Instance.UpdateSceneRoleSharpnessSingle(teamID, actionMenber);
                 }
             }
+        
 
             AudioControl.Instance.PlaySound("attack_weapon_7");
            
@@ -7396,7 +7415,7 @@ public class GameControl : MonoBehaviour
             effectName = "sword_1";
         }
         AudioControl.Instance.PlaySound("damage01");
-        Debug.Log("damage01");
+        //Debug.Log("damage01");
         List<int> damageList = new List<int> { };
         int damageTotal = 0;
         string damageTotalStr = "";
@@ -8030,16 +8049,16 @@ public class GameControl : MonoBehaviour
 
     #region 【辅助方法集】获取值
 
-    byte GetSharpnessLevel(FightMenberObject fightMenberObject)
+   public byte GetSharpnessLevel(FightMenberObject fightMenberObject)
     {
         if (fightMenberObject.side == 1)
         {
-            return 0;
+            return 3;
         }
 
         if (heroDic[fightMenberObject.objectID].equipWeapon == -1)
         {
-            return 0;
+            return 3;
         }
 
         byte total = 0;
@@ -8053,6 +8072,22 @@ public class GameControl : MonoBehaviour
         }
         return 6;
     }
+
+    float GetSharpnessModifyDamage(int level)
+    {
+        switch (level)
+        {
+            case 0:return 0.7f;
+            case 1: return 0.85f;
+            case 2: return 0.9f;
+            case 3: return 1f;
+            case 4: return 1.05f;
+            case 5: return 1.1f;
+            case 6: return 1.25f;
+            default:return 1f;
+        }
+    }
+
 
     public int GetHeroNum(short forceID)
     {

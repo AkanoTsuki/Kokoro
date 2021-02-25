@@ -207,6 +207,7 @@ public class AdventureMainPanel : BasePanel
             UpdateSceneRoleFormations(teamID);
             HideSceneRoleHpMp(teamID);
             HideSceneRoleAp(teamID);
+            HideSceneRoleSharpness(teamID);
             HideSceneRoleBuff(teamID);
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
@@ -237,6 +238,7 @@ public class AdventureMainPanel : BasePanel
             UpdateSceneRoleFormations(teamID);
             HideSceneRoleHpMp(teamID);
             HideSceneRoleAp(teamID);
+            HideSceneRoleSharpness(teamID);
             HideSceneRoleBuff(teamID);
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
@@ -266,6 +268,7 @@ public class AdventureMainPanel : BasePanel
             UpdateSceneRoleFormations(teamID);
             HideSceneRoleHpMp(teamID);
             HideSceneRoleAp(teamID);
+            HideSceneRoleSharpness(teamID);
             HideSceneRoleBuff(teamID);
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
@@ -312,6 +315,7 @@ public class AdventureMainPanel : BasePanel
                 case AdventureAction.Walk:
                     HideSceneRoleHpMp(teamID);
                     HideSceneRoleAp(teamID);
+                    HideSceneRoleSharpness(teamID);
                     HideSceneRoleBuff(teamID);
                     UpdateSceneRole(teamID);//
                     HideElementPoint(teamID);
@@ -322,6 +326,7 @@ public class AdventureMainPanel : BasePanel
                     UpdateSceneRoleHpMp(teamID, gc.fightMenberObjectSS[teamID]);
                     ShowSceneRoleAp(teamID, gc.fightMenberObjectSS[teamID]);
                     UpdateSceneRoleAp(teamID, gc.fightMenberObjectSS[teamID]);
+                    UpdateSceneRoleSharpness(teamID, gc.fightMenberObjectSS[teamID]);
                     UpdateSceneRoleBuff(teamID, gc.fightMenberObjectSS[teamID]);
                     UpdateSceneRole(teamID);
                     UpdateSceneEnemy(teamID);
@@ -335,6 +340,7 @@ public class AdventureMainPanel : BasePanel
                 case AdventureAction.SpringMp:
                     HideSceneRoleHpMp(teamID);
                     HideSceneRoleAp(teamID);
+                    HideSceneRoleSharpness(teamID);
                     HideSceneRoleBuff(teamID);
                     UpdateSceneRole(teamID);
                     UpdateSceneEnemy(teamID);
@@ -377,6 +383,7 @@ public class AdventureMainPanel : BasePanel
             UpdateSceneRoleFormations(teamID);
             HideSceneRoleHpMp(teamID);
             HideSceneRoleAp(teamID);
+            HideSceneRoleSharpness(teamID);
             HideSceneRoleBuff(teamID);
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
@@ -412,6 +419,7 @@ public class AdventureMainPanel : BasePanel
             UpdateSceneRoleFormations(teamID);
             HideSceneRoleHpMp(teamID);
             HideSceneRoleAp(teamID);
+            HideSceneRoleSharpness(teamID);
             HideSceneRoleBuff(teamID);
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
@@ -445,6 +453,7 @@ public class AdventureMainPanel : BasePanel
             UpdateSceneRoleFormations(teamID);
             HideSceneRoleHpMp(teamID);
             HideSceneRoleAp(teamID);
+            HideSceneRoleSharpness(teamID);
             HideSceneRoleBuff(teamID);
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
@@ -826,6 +835,101 @@ public class AdventureMainPanel : BasePanel
         for (byte i = 3; i < 6; i++)
         {
             adventureTeamBlock.dungeon_side1ApBgRt[i].localScale = Vector2.zero;
+        }
+    }
+
+    //动画场景-人物武器锋利度（全部己方）-更新（用作初始化）
+    public void UpdateSceneRoleSharpness(byte teamID, List<FightMenberObject> fightMenberObjects)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        HideSceneRoleSharpness(teamID);
+        for (byte i = 0; i < fightMenberObjects.Count; i++)
+        {
+            if (fightMenberObjects[i].side == 0)
+            {
+                if (gc.heroDic[fightMenberObjects[i].objectID].equipWeapon == -1)
+                {
+                    adventureTeamBlock.dungeon_side0SharpnessBgImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_none_bg");
+                    adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_none");
+                }
+                else
+                {
+                    switch (DataManager.mItemDict[ gc.itemDic[ gc.heroDic[fightMenberObjects[i].objectID].equipWeapon].prototypeID].TypeSmall)
+                    {
+                        case ItemTypeSmall.Sword: 
+                            adventureTeamBlock.dungeon_side0SharpnessBgImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_sword_bg");
+                            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_sword");
+                            break;
+                        case ItemTypeSmall.Axe:
+                            adventureTeamBlock.dungeon_side0SharpnessBgImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_axe_bg");
+                            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_axe");
+                            break;
+                        case ItemTypeSmall.Spear:
+                            adventureTeamBlock.dungeon_side0SharpnessBgImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_spear_bg");
+                            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_spear"); 
+                            break;
+                        case ItemTypeSmall.Hammer:
+                            adventureTeamBlock.dungeon_side0SharpnessBgImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_hammer_bg");
+                            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_hammer");
+                            break;
+                        case ItemTypeSmall.Bow:
+                            adventureTeamBlock.dungeon_side0SharpnessBgImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_bow_bg");
+                            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_bow");
+                            break;
+                        case ItemTypeSmall.Staff:
+                            adventureTeamBlock.dungeon_side0SharpnessBgImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_staff_bg");
+                            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_staff"); 
+                            break;
+                    }
+                }
+               
+
+                UpdateSceneRoleSharpnessSingle(teamID, fightMenberObjects[i]);
+            }
+        }
+    }
+
+    //动画场景-人物武器锋利度（单个人物）-更新
+    public void UpdateSceneRoleSharpnessSingle(byte teamID, FightMenberObject fightMenberObject)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        byte sharpnessLevel = gc.GetSharpnessLevel(fightMenberObject);
+        switch (gc.GetSharpnessLevel(fightMenberObject))
+        {
+            case 0:adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].color = new Color(250 / 255f, 63 / 255f, 63 / 255f, 0.85f);break;
+            case 1: adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].color = new Color(226 / 255f, 132 / 255f, 14 / 255f, 0.85f); break;
+            case 2: adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].color = new Color(226 / 255f, 197 / 255f, 14 / 255f, 0.85f); break;
+            case 3: adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].color = new Color(17 / 255f, 188 / 255f, 31 / 255f, 0.85f); break;
+            case 4: adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].color = new Color(14 / 255f, 173 / 255f, 226 / 255f, 0.85f); break;
+            case 5: adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0.85f); break;
+            case 6: adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].color = new Color(140 / 255f, 83 / 255f, 190 / 255f, 0.85f); break;
+        }
+        if (gc.heroDic[fightMenberObject.objectID].equipWeapon != -1)
+        {
+            byte tc = 0;
+            Debug.Log("sharpnessLevel=" + sharpnessLevel);
+            for (byte i = 0; i < sharpnessLevel; i++)
+            {
+                tc += DataManager.mItemDict[gc.itemDic[gc.heroDic[fightMenberObject.objectID].equipWeapon].prototypeID].Sharpness[i];
+            }
+            Debug.Log(" "+( fightMenberObject.sharpnessNow - tc)+" "+ DataManager.mItemDict[gc.itemDic[gc.heroDic[fightMenberObject.objectID].equipWeapon].prototypeID].Sharpness[sharpnessLevel]);
+            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].fillAmount = (float)(fightMenberObject.sharpnessNow - tc) / (float)DataManager.mItemDict[gc.itemDic[gc.heroDic[fightMenberObject.objectID].equipWeapon].prototypeID].Sharpness[sharpnessLevel];
+        }
+        else
+        {
+            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].fillAmount = 1f;
+        }
+
+    }
+
+    //动画场景-人物武器锋利度（全部）-隐藏
+    public void HideSceneRoleSharpness(byte teamID)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        for (byte i = 0; i < 3; i++)
+        {
+            adventureTeamBlock.dungeon_side0SharpnessBgImage[i].color = Color.clear;
+            adventureTeamBlock.dungeon_side0SharpnessImage[i].color = Color.clear;
         }
     }
 
