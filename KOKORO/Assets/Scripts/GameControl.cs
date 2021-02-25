@@ -3136,7 +3136,7 @@ public class GameControl : MonoBehaviour
         }
         itemDic[itemID].heroID = heroID;
         itemDic[itemID].heroPart = equipPart;
-
+        HeroPanel.Instance.UpdateFightInfo(heroDic[heroID], EquipPart.None, null, 1);
         HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
         ItemListAndInfoPanel.Instance.OnHide();
 
@@ -3219,6 +3219,7 @@ public class GameControl : MonoBehaviour
         }
         forceDic[0].rProductNow++;
         HeroPanel.Instance.UpdateEquip(heroDic[heroID], equipPart);
+
         if (ItemListAndInfoPanel.Instance.isShow)
         {
             ItemListAndInfoPanel.Instance.UpdateAllInfoToEquip(equipPart);
@@ -3271,7 +3272,7 @@ public class GameControl : MonoBehaviour
             skillDic[skillID].heroID = heroID;
         }
 
-
+        HeroPanel.Instance.UpdateFightInfo(heroDic[heroID], EquipPart.None, null, 1);
         HeroPanel.Instance.UpdateSkill(heroDic[heroID], index);
         SkillListAndInfoPanel.Instance.OnHide();
         AudioControl.Instance.PlaySound("system_equip");
@@ -6002,19 +6003,27 @@ public class GameControl : MonoBehaviour
                 short sleepRes = (short)GetHeroAttr(Attribute.SleepRes, heroID);
 
                 ItemTypeSmall weaponType = ItemTypeSmall.None;
+                byte sharpnessNow = 0;
                 if (heroDic[heroID].equipWeapon != -1)
                 {
                     weaponType = DataManager.mItemDict[itemDic[heroDic[heroID].equipWeapon].prototypeID].TypeSmall;
+                    //byte sharpnessTotal = 0;
+                    for (byte j = 0; j < DataManager.mItemDict[itemDic[heroDic[heroID].equipWeapon].prototypeID].Sharpness.Count; j++)
+                    {
+                        sharpnessNow += DataManager.mItemDict[itemDic[heroDic[heroID].equipWeapon].prototypeID].Sharpness[j];
+                    }
                 }
 
                 short actionBar = 0;
                 byte skillIndex = 0;//当前招式位置
                 int hpNow = adventureTeamList[teamID].heroHpList[i];
                 int mpNow = adventureTeamList[teamID].heroMpList[i];
+
+
                 List<FightBuff> buff = new List<FightBuff> { };
                 fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name, level, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
                                                                 windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, weaponType,
-                                                                actionBar, skillIndex, hpNow, mpNow, buff));
+                                                                actionBar, skillIndex, hpNow, mpNow, sharpnessNow, buff));
             }
 
             int heroCount = fightMenberObjects.Count;
@@ -6144,11 +6153,12 @@ public class GameControl : MonoBehaviour
                 byte skillIndex = 0;//当前招式位置
                 int hpNow = hp;
                 int mpNow = mp;
+
                 List<FightBuff> buff = new List<FightBuff> { };
 
                 fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name, (short)level, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
                                                           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, ItemTypeSmall.None,
-                                                          actionBar, skillIndex, hpNow, mpNow, buff));
+                                                          actionBar, skillIndex, hpNow, mpNow,255, buff));
 
                 //enemyIDTempList.Add(monsterID);
             }
@@ -7217,8 +7227,28 @@ public class GameControl : MonoBehaviour
             HeroSkillGetExp(actionMenber.objectID, sp.ID, 30);
         }
 
+       
+       
+
         if (sp != null)
         {
+            //消耗锋利度(技能)
+            if (Random.Range(0, 100) < 70)
+            {
+                switch (sp.Rank)
+                {
+                    case 1: actionMenber.sharpnessNow-=1;break;
+                    case 2: actionMenber.sharpnessNow -= 1; break;
+                    case 3:actionMenber.sharpnessNow -= 2; break;
+                    case 4:actionMenber.sharpnessNow -= 3; break;
+                }
+
+                if (actionMenber.sharpnessNow < 0)
+                {
+                    actionMenber.sharpnessNow = 0;
+                }
+            }
+
             if (sp.Rank == 4)
             {
                 AdventureMainPanel.Instance.ShowTalk(teamID, actionMenber.side, actionMenber.sideIndex, "绝技 <color=#698BFF>" + sp.Name + "</color>");
@@ -7230,6 +7260,16 @@ public class GameControl : MonoBehaviour
         }
         else
         {
+            //消耗锋利度(普通攻击)
+            if (Random.Range(0, 100) < 70)
+            {
+                actionMenber.sharpnessNow--;
+                if (actionMenber.sharpnessNow < 0)
+                {
+                    actionMenber.sharpnessNow = 0;
+                }
+            }
+
             AudioControl.Instance.PlaySound("attack_weapon_7");
            
         }
@@ -7989,6 +8029,30 @@ public class GameControl : MonoBehaviour
     #endregion
 
     #region 【辅助方法集】获取值
+
+    byte GetSharpnessLevel(FightMenberObject fightMenberObject)
+    {
+        if (fightMenberObject.side == 1)
+        {
+            return 0;
+        }
+
+        if (heroDic[fightMenberObject.objectID].equipWeapon == -1)
+        {
+            return 0;
+        }
+
+        byte total = 0;
+        for (byte i = 0; i < DataManager.mItemDict[heroDic[fightMenberObject.objectID].equipWeapon].Sharpness.Count; i++)
+        {
+            total += DataManager.mItemDict[heroDic[fightMenberObject.objectID].equipWeapon].Sharpness[i];
+            if (fightMenberObject.sharpnessNow < total)
+            {
+                return i;
+            }
+        }
+        return 6;
+    }
 
     public int GetHeroNum(short forceID)
     {

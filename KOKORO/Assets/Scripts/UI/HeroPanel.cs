@@ -523,6 +523,7 @@ public class HeroPanel : BasePanel
 
                 }
             }
+            Debug.Log("前  i="+i+" suiteIDList=" + suiteIDList[i]+ " suiteNumList=" + suiteNumList[i] );
         }
 
         //计算替换后suite加成
@@ -1869,6 +1870,8 @@ public class HeroPanel : BasePanel
 
 
         //计算suite新的，部分2
+        suiteIDList.Clear();
+        suiteNumList.Clear();
         for (int i = 0; i < temp_equipSuitePart.Count; i++)
         {
             if (temp_equipSuitePart[i] != -1)
@@ -1931,10 +1934,41 @@ public class HeroPanel : BasePanel
 
                 }
             }
+
+            Debug.Log("后  i=" + i + " suiteIDList=" + suiteIDList[i] + " suiteNumList=" + suiteNumList[i]);
         }
 
         if (page == 1)
         {
+            string spdStr = "";
+            if (equipPart != EquipPart.None)//切换准备模式
+            {
+                if (equipPart == EquipPart.Weapon)//切换的是武器
+                {
+                    if (heroObject.equipWeapon == -1)
+                    {
+                        spdStr = OutputAttrChangeStrBySpd(heroObject.spd, spdEquipAddNew + spdSuiteAddNew);
+                    }
+                    else
+                    {
+                        spdStr = OutputAttrChangeStrBySpd(spdEquipAdd + spdSuiteAdd, spdEquipAddNew + spdSuiteAddNew);
+                    }
+                }
+                else
+                {
+                    if (heroObject.equipWeapon == -1)
+                    {
+                        spdStr = OutputAttrChangeStrBySpd(heroObject.spd, heroObject.spd+spdEquipAddNew + spdSuiteAddNew);
+                    }
+                    else
+                    {
+                        spdStr = OutputAttrChangeStrBySpd(spdEquipAdd + spdSuiteAdd, spdEquipAddNew + spdSuiteAddNew);
+                    }
+                }
+            }
+
+
+
             infoFight_des1Text.text = "体力上限 " + ((equipPart==EquipPart.None)? OutputAttrStr(heroObject.hp,hpEquipAdd+ hpSuiteAdd) : OutputAttrChangeStr (heroObject.hp, hpEquipAdd + hpSuiteAdd, hpEquipAddNew+ hpSuiteAddNew, "")) +
                 "\n体力恢复 " + ((equipPart == EquipPart.None) ? OutputAttrStr( heroObject.hpRenew,hpRenewEquipAdd+ hpRenewSuiteAdd) : OutputAttrChangeStr(heroObject.hpRenew, hpRenewEquipAdd + hpRenewSuiteAdd, hpRenewEquipAddNew+ hpRenewSuiteAddNew, "")) +
                 "\n物攻 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMin,atkMinEquipAdd+ atkMinSuiteAdd) : OutputAttrChangeStr(heroObject.atkMin, atkMinEquipAdd + atkMinSuiteAdd, atkMinEquipAddNew+ atkMinSuiteAddNew, "")) + " - " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMax,atkMaxEquipAdd+ atkMaxSuiteAdd) : OutputAttrChangeStr(heroObject.atkMax, atkMaxEquipAdd+ atkMaxSuiteAdd, atkMaxEquipAddNew+ atkMaxSuiteAddNew, "")) +
@@ -1942,7 +1976,7 @@ public class HeroPanel : BasePanel
                 "\n物防 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.def,defEquipAdd+ defSuiteAdd) : OutputAttrChangeStr(heroObject.def, defEquipAdd + defSuiteAdd, defEquipAddNew+ defSuiteAddNew, "")) +
                 "\n命中 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.hit,hitEquipAdd+ hitSuiteAdd) : OutputAttrChangeStr(heroObject.hit, hitEquipAdd + hitSuiteAdd, hitEquipAddNew+ hitSuiteAddNew, "")) +
                 "\n闪避 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dod,dodEquipAdd+ dodSuiteAdd) : OutputAttrChangeStr(heroObject.dod, dodEquipAdd + dodSuiteAdd, dodEquipAddNew+ dodSuiteAddNew, "")) +
-                "\n速度 " + ((equipPart == EquipPart.None) ? (heroObject.equipWeapon==-1? heroObject.spd.ToString():( spdEquipAdd+ spdSuiteAdd).ToString()) : OutputAttrChangeStrBySpd((heroObject.equipWeapon == -1 ? heroObject.spd: (spdEquipAdd + spdSuiteAdd)),spdEquipAddNew+ spdSuiteAddNew)) +
+                "\n速度 " + ((equipPart == EquipPart.None) ? (heroObject.equipWeapon==-1? heroObject.spd.ToString():( spdEquipAdd+ spdSuiteAdd).ToString()) : spdStr) +
                 "\n风系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.windDam,windDamEquipAdd+ windDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.windDam, windDamEquipAdd + windDamSuiteAdd, windDamEquipAddNew+ windDamSuiteAddNew, "%"))  +
                 "\n火系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.fireDam,fireDamEquipAdd+ fireDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.fireDam, fireDamEquipAdd + fireDamSuiteAdd, fireDamEquipAddNew+ fireDamSuiteAddNew, "%"))  +
                 "\n水系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.waterDam,waterDamEquipAdd+ waterDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.waterDam, waterDamEquipAdd + waterDamSuiteAdd, waterDamEquipAddNew+ waterDamSuiteAddNew, "%"))  +

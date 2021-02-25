@@ -426,6 +426,7 @@ public class ItemPrototype: ISerializationCallbackReceiver
     public ItemTypeSmall TypeSmall;
     public string TypeBigStr;
     public string TypeSmallStr;
+    public List<byte> Sharpness;
     public string Des;
     public short SuiteID;
     public int Cost;
@@ -2096,6 +2097,7 @@ public class FightMenberObject
     private byte SkillIndex;//当前招式位置
     private int HpNow;
     private int MpNow;
+    private byte SharpnessNow;
     private List<FightBuff> Buff;
 
 
@@ -2106,7 +2108,7 @@ public class FightMenberObject
         short windDam, short fireDam, short waterDam, short groundDam, short lightDam, short darkDam,
         short windRes, short fireRes, short waterRes, short groundRes, short lightRes, short darkRes,
         short dizzyRes, short confusionRes, short poisonRes, short sleepRes, ItemTypeSmall weaponType,
-       short actionBar, byte skillIndex,int hpNow, int mpNow,  List<FightBuff> buff)
+       short actionBar, byte skillIndex,int hpNow, int mpNow, byte sharpnessNow, List<FightBuff> buff)
     {
         this.ID = id;
         this.ObjectID = objectID;
@@ -2149,6 +2151,7 @@ public class FightMenberObject
         this.ActionBar = actionBar;
         this.HpNow = hpNow;
         this.MpNow = mpNow;
+        this.SharpnessNow = sharpnessNow;
         this.Buff = buff;
 
 }
@@ -2194,6 +2197,7 @@ public class FightMenberObject
     public byte skillIndex { get { return SkillIndex; } set { SkillIndex = value; } }
     public int hpNow { get { return HpNow; } set { HpNow = value; } }
     public int mpNow { get { return MpNow; } set { MpNow = value; } }
+    public byte sharpnessNow { get { return SharpnessNow; } set { SharpnessNow = value; } }
     public List<FightBuff> buff { get { return Buff; } set { Buff = value; } }
 }
 

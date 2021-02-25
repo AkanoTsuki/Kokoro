@@ -19,9 +19,10 @@ public class ItemListAndInfoPanel : BasePanel
     public Image info_picText;
     public Text info_nameText;
     public Text info_desText;
-    //public RectTransform info_slotRt;
+   
     public List<Image> info_slotImage;
-
+    public RectTransform info_sharpnessBgRt;
+    public List<RectTransform> info_sharpnessRt;
 
     public Text tipText;
     public List<Button> funcBtn;
@@ -172,7 +173,9 @@ public class ItemListAndInfoPanel : BasePanel
 
         batch_cancelBtn.onClick.AddListener(delegate () { HideBatch(); });
 
-        closeBtn.onClick.AddListener(delegate () { OnHide(); });      
+        closeBtn.onClick.AddListener(delegate () { OnHide(); });
+
+        info_sharpnessBgRt.anchoredPosition = new Vector2(0, 5000f); 
     }
 
     //主面板显示-地区库房查询
@@ -278,7 +281,7 @@ public class ItemListAndInfoPanel : BasePanel
         funcBtn[0].onClick.RemoveAllListeners();
         funcBtn[0].onClick.AddListener(delegate () {
             gc.HeroEquipSet(heroID, equipPart, nowItemID);
-            HeroPanel.Instance.UpdateFightInfo(gc.heroDic[heroID], EquipPart.None, null, 1);
+         
         });
         HideFuncBtn(3);
         closeBtn.GetComponent<RectTransform>().localScale = Vector3.one;
@@ -555,7 +558,12 @@ public class ItemListAndInfoPanel : BasePanel
         }
 
         int lineCount = 2;
-    
+        int lineCountS = 7;
+
+
+
+
+
 
         string strBasic = "";
         string strLemma = "";
@@ -610,30 +618,54 @@ public class ItemListAndInfoPanel : BasePanel
         {
             if (atkValue[0] != 0 && atkValue[1] != 0)
             {
-                strBasicFirst += "\n"+ "物理攻击 " + atkValue[0] + " - " + atkValue[1] ; lineCount++;
+                strBasicFirst += "\n物理攻击 " + atkValue[0] + " - " + atkValue[1]; lineCount++; lineCountS++;
             }
             if (atkValue[2] != 0 && atkValue[3] != 0)
             {
-                strBasicFirst += "\n" + "魔法攻击 " + atkValue[2] + " - " + atkValue[3] ; lineCount++;
+                strBasicFirst += "\n魔法攻击 " + atkValue[2] + " - " + atkValue[3]; lineCount++; lineCountS++;
             }
-            if (atkValue[4] != 0 )
+
+
+            if (atkValue[4] != 0)
             {
-                strBasicFirst += "\n" + "攻击速度 " + atkValue[4] ; lineCount++;
+                strBasicFirst += "\n攻击速度 " + atkValue[4]; lineCount++;
             }
         }
         else if (DataManager.mItemDict[itemObject.prototypeID].TypeBig == ItemTypeBig.Armor)
         {
             if (atkValue[0] != 0)
             {
-                strBasicFirst += "\n" + "物理防御 " + atkValue[0] ; lineCount++;
+                strBasicFirst += "\n物理防御 " + atkValue[0]; lineCount++;
             }
             if (atkValue[1] != 0)
             {
-                strBasicFirst += "\n" + "魔法防御 " + atkValue[1]; lineCount++;
+                strBasicFirst += "\n魔法防御 " + atkValue[1]; lineCount++;
             }
+
+
         }
+        
+
+        //锋利度部分
+        if (DataManager.mItemDict[itemObject.prototypeID].TypeBig == ItemTypeBig.Weapon)
+        {
+            strBasicFirst += "\n锋利等级 "; lineCount++;
+            info_sharpnessBgRt.anchoredPosition = new Vector2(72f, -16f * lineCountS);
+
+            int totalSharpness = 0;
+            for (int i = 0; i < DataManager.mItemDict[itemObject.prototypeID].Sharpness.Count; i++)
+            {
+                info_sharpnessRt[i].sizeDelta = new Vector2(DataManager.mItemDict[itemObject.prototypeID].Sharpness[i] * 128f / 255f, 10f);
+                totalSharpness += DataManager.mItemDict[itemObject.prototypeID].Sharpness[i];
+            }
+            info_sharpnessBgRt.sizeDelta = new Vector2(totalSharpness * (128f / 255f)+4f, 14f);
 
 
+        }
+        else
+        {
+            info_sharpnessBgRt.anchoredPosition = new Vector2(0, 5000f);
+        }
 
 
         //插槽部分
@@ -654,19 +686,19 @@ public class ItemListAndInfoPanel : BasePanel
                 switch (itemObject.slotLevel[i])
                 {
                     case 1:
-                        strSlot += "\n   一级孔槽<color=#F36540>(未镶嵌)</color>"; lineCount++;
+                        strSlot += "\n   <color=#A6A6A1>一级孔槽</color><color=#F36540>(未镶嵌)</color>"; lineCount++;
                         info_slotImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon1020");
                         break;
                     case 2:
-                        strSlot += "\n   二级孔槽<color=#F36540>(未镶嵌)</color>"; lineCount++;
+                        strSlot += "\n   <color=#A6A6A1>二级孔槽</color><color=#F36540>(未镶嵌)</color>"; lineCount++;
                         info_slotImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon1021");
                         break;
                     case 3:
-                        strSlot += "\n   三级孔槽<color=#F36540>(未镶嵌)</color>"; lineCount++;
+                        strSlot += "\n   <color=#A6A6A1>三级孔槽</color><color=#F36540>(未镶嵌)</color>"; lineCount++;
                         info_slotImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon1022");
                         break;
                     case 4:
-                        strSlot += "\n   四级孔槽<color=#F36540>(未镶嵌)</color>"; lineCount++;
+                        strSlot += "\n   <color=#A6A6A1>四级孔槽</color><color=#F36540>(未镶嵌)</color>"; lineCount++;
                         info_slotImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon1023");
                         break;
                 }
@@ -695,7 +727,7 @@ public class ItemListAndInfoPanel : BasePanel
 
         //套装部分
         string strSuite = "";
-        //Debug.
+ 
         if (DataManager.mItemDict[itemObject.prototypeID].SuiteID != -1)
         {
             strSuite = "\n套装:" + DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].Name +"\n";
@@ -861,6 +893,7 @@ public class ItemListAndInfoPanel : BasePanel
         {
             info_slotImage[i].sprite = Resources.Load<Sprite>("Image/Empty");
         }
+        info_sharpnessBgRt.anchoredPosition = new Vector2(0, 5000f);
         info_picText.sprite = Resources.Load<Sprite>("Image/Empty");
         info_nameText.text = "";
         info_desText.text = "";
