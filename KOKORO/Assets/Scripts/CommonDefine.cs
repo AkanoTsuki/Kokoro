@@ -2098,6 +2098,7 @@ public class FightMenberObject
     private int HpNow;
     private int MpNow;
     private byte SharpnessNow;
+    private short WeaponPID;
     private List<FightBuff> Buff;
 
 
@@ -2108,7 +2109,7 @@ public class FightMenberObject
         short windDam, short fireDam, short waterDam, short groundDam, short lightDam, short darkDam,
         short windRes, short fireRes, short waterRes, short groundRes, short lightRes, short darkRes,
         short dizzyRes, short confusionRes, short poisonRes, short sleepRes, ItemTypeSmall weaponType,
-       short actionBar, byte skillIndex,int hpNow, int mpNow, byte sharpnessNow, List<FightBuff> buff)
+       short actionBar, byte skillIndex,int hpNow, int mpNow, byte sharpnessNow, short weaponPID, List<FightBuff> buff)
     {
         this.ID = id;
         this.ObjectID = objectID;
@@ -2152,6 +2153,7 @@ public class FightMenberObject
         this.HpNow = hpNow;
         this.MpNow = mpNow;
         this.SharpnessNow = sharpnessNow;
+        this.WeaponPID = weaponPID;
         this.Buff = buff;
 
 }
@@ -2198,6 +2200,7 @@ public class FightMenberObject
     public int hpNow { get { return HpNow; } set { HpNow = value; } }
     public int mpNow { get { return MpNow; } set { MpNow = value; } }
     public byte sharpnessNow { get { return SharpnessNow; } set { SharpnessNow = value; } }
+    public short weaponPID { get { return WeaponPID; } set { WeaponPID = value; } }
     public List<FightBuff> buff { get { return Buff; } set { Buff = value; } }
 }
 

@@ -847,6 +847,7 @@ public class AdventureMainPanel : BasePanel
         {
             if (fightMenberObjects[i].side == 0)
             {
+                adventureTeamBlock.dungeon_side0SharpnessBgImage[fightMenberObjects[i].sideIndex].color = Color.white;
                 if (gc.heroDic[fightMenberObjects[i].objectID].equipWeapon == -1)
                 {
                     adventureTeamBlock.dungeon_side0SharpnessBgImage[fightMenberObjects[i].sideIndex].sprite = Resources.Load<Sprite>("Image/Other/icon_weaponType_none_bg");
@@ -894,7 +895,7 @@ public class AdventureMainPanel : BasePanel
     {
         AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
         byte sharpnessLevel = gc.GetSharpnessLevel(fightMenberObject);
-        switch (gc.GetSharpnessLevel(fightMenberObject))
+        switch (sharpnessLevel)
         {
             case 0:adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].color = new Color(250 / 255f, 63 / 255f, 63 / 255f, 0.85f);break;
             case 1: adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].color = new Color(226 / 255f, 132 / 255f, 14 / 255f, 0.85f); break;
@@ -907,13 +908,18 @@ public class AdventureMainPanel : BasePanel
         if (gc.heroDic[fightMenberObject.objectID].equipWeapon != -1)
         {
             byte tc = 0;
-            Debug.Log("sharpnessLevel=" + sharpnessLevel);
+            Debug.Log(fightMenberObject.name+"sharpnessLevel=" + sharpnessLevel);
+            string teststr = "";
             for (byte i = 0; i < sharpnessLevel; i++)
             {
-                tc += DataManager.mItemDict[gc.itemDic[gc.heroDic[fightMenberObject.objectID].equipWeapon].prototypeID].Sharpness[i];
+                tc += DataManager.mItemDict[fightMenberObject.weaponPID].Sharpness[i];
+                teststr += "," + DataManager.mItemDict[fightMenberObject.weaponPID].Sharpness[i];
             }
-            Debug.Log(" "+( fightMenberObject.sharpnessNow - tc)+" "+ DataManager.mItemDict[gc.itemDic[gc.heroDic[fightMenberObject.objectID].equipWeapon].prototypeID].Sharpness[sharpnessLevel]);
-            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].fillAmount = (float)(fightMenberObject.sharpnessNow - tc) / (float)DataManager.mItemDict[gc.itemDic[gc.heroDic[fightMenberObject.objectID].equipWeapon].prototypeID].Sharpness[sharpnessLevel];
+            //Debug.Log("teststr=" + teststr);
+            //Debug.Log("fightMenberObject.sharpnessNow=" + fightMenberObject.sharpnessNow);
+            //Debug.Log("tc=" + tc);
+            //Debug.Log(" "+( fightMenberObject.sharpnessNow - tc)+" "+ DataManager.mItemDict[fightMenberObject.weaponPID].Sharpness[sharpnessLevel]);
+            adventureTeamBlock.dungeon_side0SharpnessImage[fightMenberObject.sideIndex].fillAmount = (float)(fightMenberObject.sharpnessNow - tc) / (float)DataManager.mItemDict[fightMenberObject.weaponPID].Sharpness[sharpnessLevel];
         }
         else
         {

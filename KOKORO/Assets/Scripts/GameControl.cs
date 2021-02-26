@@ -6003,14 +6003,15 @@ public class GameControl : MonoBehaviour
                 short sleepRes = (short)GetHeroAttr(Attribute.SleepRes, heroID);
 
                 ItemTypeSmall weaponType = ItemTypeSmall.None;
+                short weaponPID = (short)itemDic[heroDic[heroID].equipWeapon].prototypeID;
                 byte sharpnessNow = 0;
                 if (heroDic[heroID].equipWeapon != -1)
                 {
-                    weaponType = DataManager.mItemDict[itemDic[heroDic[heroID].equipWeapon].prototypeID].TypeSmall;
+                    weaponType = DataManager.mItemDict[weaponPID].TypeSmall;
                     //byte sharpnessTotal = 0;
-                    for (byte j = 0; j < DataManager.mItemDict[itemDic[heroDic[heroID].equipWeapon].prototypeID].Sharpness.Count; j++)
+                    for (byte j = 0; j < DataManager.mItemDict[weaponPID].Sharpness.Count; j++)
                     {
-                        sharpnessNow += DataManager.mItemDict[itemDic[heroDic[heroID].equipWeapon].prototypeID].Sharpness[j];
+                        sharpnessNow += DataManager.mItemDict[weaponPID].Sharpness[j];
                     }
                 }
 
@@ -6023,7 +6024,7 @@ public class GameControl : MonoBehaviour
                 List<FightBuff> buff = new List<FightBuff> { };
                 fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name, level, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
                                                                 windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, weaponType,
-                                                                actionBar, skillIndex, hpNow, mpNow, sharpnessNow, buff));
+                                                                actionBar, skillIndex, hpNow, mpNow, sharpnessNow, weaponPID,buff));
             }
 
             //int heroCount = fightMenberObjects.Count;
@@ -6158,7 +6159,7 @@ public class GameControl : MonoBehaviour
 
                 fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name, (short)level, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
                                                           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, ItemTypeSmall.None,
-                                                          actionBar, skillIndex, hpNow, mpNow,255, buff));
+                                                          actionBar, skillIndex, hpNow, mpNow,255,-1, buff));
 
                 //enemyIDTempList.Add(monsterID);
             }
@@ -6170,7 +6171,7 @@ public class GameControl : MonoBehaviour
                     monsterNameList += fightMenberObjects[i].name + "(Lv." + fightMenberObjects[i].level + ") ";
                 }
             }
-            Debug.Log("fightMenberObjects.Count=" + fightMenberObjects.Count  + " ,adventureTeamList[teamID].enemyIDList.Count=" + adventureTeamList[teamID].enemyIDList.Count);
+            //Debug.Log("fightMenberObjects.Count=" + fightMenberObjects.Count  + " ,adventureTeamList[teamID].enemyIDList.Count=" + adventureTeamList[teamID].enemyIDList.Count);
             Debug.Log("遭遇了" + monsterNameList + ",开始战斗！");
             adventureTeamList[teamID].action = AdventureAction.Fight;
             adventureTeamList[teamID].fightRound = 1;
@@ -6185,7 +6186,7 @@ public class GameControl : MonoBehaviour
             }
         }
 
-        Debug.Log("fightMenberObjects.Count="+fightMenberObjects.Count);
+        //Debug.Log("fightMenberObjects.Count="+fightMenberObjects.Count);
         AdventureMainPanel.Instance.UpdateSceneRoleFormations(teamID);
         AdventureMainPanel.Instance.UpdateSceneRole(teamID);
 
@@ -6217,7 +6218,7 @@ public class GameControl : MonoBehaviour
         while (adventureTeamList[teamID].fightRound <= RoundLimit)
         {
 
-            //选取行动槽满(200)的战斗成员
+            //选取行动槽满(10000)的战斗成员
             while (actionMenber.Count == 0)
             {
                 yield return new WaitForSeconds(0.02f);
@@ -8060,13 +8061,18 @@ public class GameControl : MonoBehaviour
         {
             return 3;
         }
-
+        //Debug.Log("GetSharpnessLevel() fightMenberObject.sharpnessNow=" + fightMenberObject.sharpnessNow);
+        //Debug.Log("GetSharpnessLevel() weaponname=" + itemDic[heroDic[fightMenberObject.objectID].equipWeapon].name);
         byte total = 0;
-        for (byte i = 0; i < DataManager.mItemDict[heroDic[fightMenberObject.objectID].equipWeapon].Sharpness.Count; i++)
+        //string teststr = "";
+        for (byte i = 0; i < DataManager.mItemDict[fightMenberObject.weaponPID].Sharpness.Count; i++)
         {
-            total += DataManager.mItemDict[heroDic[fightMenberObject.objectID].equipWeapon].Sharpness[i];
-            if (fightMenberObject.sharpnessNow < total)
+            total += DataManager.mItemDict[fightMenberObject.weaponPID].Sharpness[i];
+
+            //Debug.Log("GetSharpnessLevel() total=" + total+" list:"+ DataManager.mItemDict[fightMenberObject.weaponPID].Sharpness[i]);
+            if (fightMenberObject.sharpnessNow <= total)
             {
+             
                 return i;
             }
         }
