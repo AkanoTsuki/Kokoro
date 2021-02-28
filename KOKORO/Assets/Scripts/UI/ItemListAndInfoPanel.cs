@@ -669,8 +669,8 @@ public class ItemListAndInfoPanel : BasePanel
 
 
         //插槽部分
-        Debug.Log("itemObject.slotLevel.Count=" + itemObject.slotLevel.Count);
-        Debug.Log("lineCount=" + lineCount);
+        //Debug.Log("itemObject.slotLevel.Count=" + itemObject.slotLevel.Count);
+        //Debug.Log("lineCount=" + lineCount);
         //info_slotRt.anchoredPosition = new Vector2(14f, -96f + (-16f * lineCount));
         string strSlot = "";
         for (int i = 0; i < info_slotImage.Count; i++)

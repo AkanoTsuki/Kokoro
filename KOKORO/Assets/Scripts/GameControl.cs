@@ -1154,31 +1154,32 @@ public class GameControl : MonoBehaviour
         //value0:地区实例ID value1:建筑实例ID 
         ExecuteEventAdd(new ExecuteEventObject(ExecuteEventType.BuildingUpgrade, standardTime, standardTime + needTime, new List<List<int>> { new List<int> { districtID }, new List<int> { buildingID } }));
     }
-    public void CreateBuildEvent(short BuildingPrototypeID, short posX, short posY, byte layer, List<int> xList, List<int> yList)
+    public bool CreateBuildEvent(short BuildingPrototypeID, short posX, short posY, byte layer, List<int> xList, List<int> yList)
     {
         //Debug.Log("CreateBuildEvent() BuildingPrototypeID=" + BuildingPrototypeID);
+        Debug.Log("CreateBuildEvent()  初始");
         //再次判断是应对面板打开的时候，相关数据已经产生变化
         if (DataManager.mBuildingDict[BuildingPrototypeID].NeedWood > forceDic[0].rStuffWood)
         {
             BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
-            return;
+            return false;
         }
         if (DataManager.mBuildingDict[BuildingPrototypeID].NeedStone > forceDic[0].rStuffStone)
         {
             BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
-            return;
+            return false;
         }
         if (DataManager.mBuildingDict[BuildingPrototypeID].NeedMetal > forceDic[0].rStuffMetal)
         {
             BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
-            return;
+            return false;
         }
         if (DataManager.mBuildingDict[BuildingPrototypeID].NeedGold > forceDic[0].gold)
         {
             BuildPanel.Instance.UpdateAllInfo(BuildPanel.Instance.nowTypePanel);
-            return;
+            return false;
         }
-
+        Debug.Log("CreateBuildEvent()  符合条件");
         short buildingId = BuildingPrototypeID;
 
         List<string> grid = new List<string> { };
@@ -1222,7 +1223,7 @@ public class GameControl : MonoBehaviour
             DistrictMapPanel.Instance.UpdateBaselineResourcesText(nowCheckingDistrictID);
         }
 
-
+        return true;
     }
 
     public void CreateBuildingUpgradeEvent(int buildingID)
@@ -4775,14 +4776,14 @@ public class GameControl : MonoBehaviour
 
             targetPos = new Vector2((buildingDic[buildingID].positionX + DataManager.mBuildingDict[buildingDic[buildingID].prototypeID].DoorPosition + (buildingDic[buildingID].positionY < 64 ? (1 + buildingDic[buildingID].customerList.Count) * -1 : buildingDic[buildingID].customerList.Count)) * 16f, customerDic[customerID].layer * -16f + roleHeight);
 
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+            go.GetComponent<AnimatiorControlByCustomer>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
             go.transform.DOLocalMove(targetPos, 5f);
 
             yield return new WaitForSeconds(5f);
             go.transform.DOComplete();
 
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim(buildingDic[buildingID].doorInLine);
-            go.GetComponent<AnimatiorControlByNPC>().Stop();
+            go.GetComponent<AnimatiorControlByCustomer>().SetAnim(buildingDic[buildingID].doorInLine);
+            go.GetComponent<AnimatiorControlByCustomer>().Stop();
 
         }
         else
@@ -4791,7 +4792,7 @@ public class GameControl : MonoBehaviour
 
             go.GetComponent<RectTransform>().anchoredPosition = startPos;
 
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+            go.GetComponent<AnimatiorControlByCustomer>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
             go.transform.DOLocalMove(targetPos, 5f);
 
             yield return new WaitForSeconds(5f);
@@ -4825,12 +4826,12 @@ public class GameControl : MonoBehaviour
         Vector2 startPos = go.transform.localPosition;
         Vector2 targetPos = new Vector2((buildingDic[buildingID].positionX + DataManager.mBuildingDict[buildingDic[buildingID].prototypeID].DoorPosition + (buildingDic[buildingID].positionY < 64 ? (1 + waitIndex) * -1 : waitIndex)) * 16f, customerDic[customerID].layer * -16f + roleHeight);
 
-        go.GetComponent<AnimatiorControlByNPC>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+        go.GetComponent<AnimatiorControlByCustomer>().SetAnim((startPos.x > targetPos.x) ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
         //go.GetComponent<AnimatiorControlByNPC>().Play();
         go.transform.DOLocalMove(targetPos, 1f);
         yield return new WaitForSeconds(1f);
         go.transform.DOComplete();
-        go.GetComponent<AnimatiorControlByNPC>().Stop();
+        go.GetComponent<AnimatiorControlByCustomer>().Stop();
     }
 
     IEnumerator CustomerWait(int customerID)
@@ -4844,7 +4845,7 @@ public class GameControl : MonoBehaviour
         customerRecordDic[timeYear + "/" + timeMonth].backNum[customerDic[customerID].districtID]++;
 
         go.transform.DOComplete();
-        go.GetComponent<AnimatiorControlByNPC>().Stop();
+        go.GetComponent<AnimatiorControlByCustomer>().Stop();
 
 
         yield return new WaitForSeconds(2.0f);
@@ -4878,20 +4879,20 @@ public class GameControl : MonoBehaviour
 
         if (go.transform.localPosition.x > doorPosX)
         {
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkLeft);
+            go.GetComponent<AnimatiorControlByCustomer>().SetAnim(AnimStatus.WalkLeft);
             go.transform.DOLocalMove(go.transform.localPosition + Vector3.left * (go.transform.localPosition.x - doorPosX), 1f);
         }
         else
         {
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkRight);
+            go.GetComponent<AnimatiorControlByCustomer>().SetAnim(AnimStatus.WalkRight);
             go.transform.DOLocalMove(go.transform.localPosition + Vector3.right * (doorPosX - go.transform.localPosition.x - 8f), 1f);
         }
         yield return new WaitForSeconds(1f);
 
-        go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkUp);
+        go.GetComponent<AnimatiorControlByCustomer>().SetAnim(AnimStatus.WalkUp);
         go.transform.DOLocalMove(go.transform.localPosition + Vector3.up * 10f, 1f);
         yield return new WaitForSeconds(1f);
-        go.GetComponent<AnimatiorControlByNPC>().SetAnim(AnimStatus.WalkDown);
+        go.GetComponent<AnimatiorControlByCustomer>().SetAnim(AnimStatus.WalkDown);
         go.transform.DOLocalMove(go.transform.localPosition + Vector3.down * 10f, 1f);
 
         yield return new WaitForSeconds(1f);
@@ -4910,12 +4911,12 @@ public class GameControl : MonoBehaviour
         go.transform.DOComplete();
         int ran = Random.Range(0, 2);
 
-        go.GetComponent<AnimatiorControlByNPC>().SetAnim(ran == 0 ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
+        go.GetComponent<AnimatiorControlByCustomer>().SetAnim(ran == 0 ? AnimStatus.WalkLeft : AnimStatus.WalkRight);
         go.transform.DOLocalMove(new Vector2(ran == 0 ? 0 : 2008, go.transform.localPosition.y), 10f);
         yield return new WaitForSeconds(10f);
         go.transform.DOComplete();
-        go.GetComponent<AnimatiorControlByNPC>().Stop();
-        go.GetComponent<AnimatiorControlByNPC>().enabled = false;
+        go.GetComponent<AnimatiorControlByCustomer>().Stop();
+        go.GetComponent<AnimatiorControlByCustomer>().enabled = false;
         DistrictMapPanel.Instance.customerGoPool.Add(go);
         DistrictMapPanel.Instance.customerGoDic.Remove(customerID);
     }

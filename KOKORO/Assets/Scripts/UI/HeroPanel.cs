@@ -523,7 +523,7 @@ public class HeroPanel : BasePanel
 
                 }
             }
-            Debug.Log("前  i="+i+" suiteIDList=" + suiteIDList[i]+ " suiteNumList=" + suiteNumList[i] );
+            //Debug.Log("前  i="+i+" suiteIDList=" + suiteIDList[i]+ " suiteNumList=" + suiteNumList[i] );
         }
 
         //计算替换后suite加成
@@ -1935,7 +1935,7 @@ public class HeroPanel : BasePanel
                 }
             }
 
-            Debug.Log("后  i=" + i + " suiteIDList=" + suiteIDList[i] + " suiteNumList=" + suiteNumList[i]);
+            //Debug.Log("后  i=" + i + " suiteIDList=" + suiteIDList[i] + " suiteNumList=" + suiteNumList[i]);
         }
 
         if (page == 1)

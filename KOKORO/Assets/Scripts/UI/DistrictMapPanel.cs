@@ -143,7 +143,7 @@ public class DistrictMapPanel : BasePanel
     public Canvas canvas;//画布
     public RectTransform contentRt;//坐标
     public List<Transform> layer;
-    bool isChoose = false;
+    public bool isChoose = false;
     Vector2 wantBuidingPos;
     Vector2 wantBuidingPos_Temp;
     List<int> x = new List<int>();
@@ -507,8 +507,16 @@ public class DistrictMapPanel : BasePanel
         ClickBuildingPos = Input.mousePosition;
 
         HideTip();
-        gc.CreateBuildEvent(wantBuidingPID, (short)wantBuidingPosX, (short)wantBuidingPosY, (byte)layerIndex,x,y);
-        SetBuilding(gc.buildingIndex-1,true,-1);
+        if (gc.CreateBuildEvent(wantBuidingPID, (short)wantBuidingPosX, (short)wantBuidingPosY, (byte)layerIndex, x, y))
+        {
+            SetBuilding(gc.buildingIndex - 1, true, -1);
+          
+        }
+        else
+        {
+            MessagePanel.Instance.AddMessage("资源不足，取消建造");
+        }
+
         Destroy(wantBuidingGo);
     }
 
@@ -675,6 +683,8 @@ public class DistrictMapPanel : BasePanel
     //据点场景-建筑物块-创建
     void SetBuilding(int buildingID, bool isNew, int index)
     {
+        //Debug.Log("SetBuilding() buildingID=" + buildingID);
+
         GameObject go;
 
         if (isNew)
@@ -720,9 +730,11 @@ public class DistrictMapPanel : BasePanel
         go.name = buildingID.ToString();
         go.transform.SetParent(layer[gc.buildingDic[buildingID].layer].transform);
 
-        go.GetComponent<RectTransform>().sizeDelta = new Vector2(DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeX * 16f, DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeY * 16f);
+        go.GetComponent<RectTransform>().sizeDelta = new Vector2(DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeX * 16f, 
+                                                                DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeY * 16f);
 
-        go.GetComponent<RectTransform>().anchoredPosition = new Vector2(gc.buildingDic[buildingID].positionX * 16f, (gc.buildingDic[buildingID].positionY - (DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeY - DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase)) * -16f);
+        go.GetComponent<RectTransform>().anchoredPosition = new Vector2(gc.buildingDic[buildingID].positionX * 16f, 
+                                                                        (gc.buildingDic[buildingID].positionY - (DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeY - DataManager.mBuildingDict[gc.buildingDic[buildingID].prototypeID].SizeYBase)) * -16f);
         Transform baseTf = go.transform.GetChild(0);
         Transform nameBgTf = go.transform.GetChild(1);
         Transform nameTf = go.transform.GetChild(1).GetChild(0);
@@ -903,12 +915,12 @@ public class DistrictMapPanel : BasePanel
             if (kvp.Value.districtID == districtID)
             {
                 customerGoDic[kvp.Key].transform.localScale = new Vector2(1f,1.25f);
-                customerGoDic[kvp.Key].GetComponent<AnimatiorControlByNPC>().isShow = true;
+                customerGoDic[kvp.Key].GetComponent<AnimatiorControlByCustomer>().isShow = true;
             }
             else
             {
                 customerGoDic[kvp.Key].transform.localScale = Vector2.zero;
-                customerGoDic[kvp.Key].GetComponent<AnimatiorControlByNPC>().isShow = false;
+                customerGoDic[kvp.Key].GetComponent<AnimatiorControlByCustomer>().isShow = false;
             }
         }
     }
@@ -922,7 +934,7 @@ public class DistrictMapPanel : BasePanel
         {
             go = customerGoPool[0];
             customerGoPool.RemoveAt(0);
-            go.GetComponent<AnimatiorControlByNPC>().enabled = true;
+            go.GetComponent<AnimatiorControlByCustomer>().enabled = true;
         }
         else
         {
@@ -931,15 +943,15 @@ public class DistrictMapPanel : BasePanel
         customerGoDic.Add(customerID, go);
 
         go.name = "Customer_" + customerID;
-        go.GetComponent<AnimatiorControlByNPC>().customerID = customerID;
-        go.GetComponent<AnimatiorControlByNPC>().SetCharaFrames(gc.customerDic[customerID].pic);
+        go.GetComponent<AnimatiorControlByCustomer>().customerID = customerID;
+        go.GetComponent<AnimatiorControlByCustomer>().SetCharaFrames(gc.customerDic[customerID].pic);
  
 
         if (gc.customerDic[customerID].buildingID != -1)
         {
             int buildingID = gc.customerDic[customerID].buildingID;      
             gc.customerDic[customerID].layer =(byte)( gc.buildingDic[buildingID].layer+1);
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim(gc.buildingDic[buildingID].doorInLine);
+            go.GetComponent<AnimatiorControlByCustomer>().SetAnim(gc.buildingDic[buildingID].doorInLine);
         }
         else
         {
@@ -951,21 +963,21 @@ public class DistrictMapPanel : BasePanel
                 gc.customerDic[customerID].layer = (byte)layerIndex;
             }
     
-            go.GetComponent<AnimatiorControlByNPC>().SetAnim(Random.Range(0,2)==0? AnimStatus.WalkLeft: AnimStatus.WalkRight);
+            go.GetComponent<AnimatiorControlByCustomer>().SetAnim(Random.Range(0,2)==0? AnimStatus.WalkLeft: AnimStatus.WalkRight);
 
         }
-        go.GetComponent<AnimatiorControlByNPC>().Stop();
+        go.GetComponent<AnimatiorControlByCustomer>().Stop();
         go.transform.SetParent(layer[gc.customerDic[customerID].layer].transform);
 
         if (nowDistrict == gc.customerDic[customerID].districtID)
         {
             go.transform.localScale = new Vector2(1f, 1.25f);
-            go.transform.GetComponent<AnimatiorControlByNPC>().isShow = true;
+            go.transform.GetComponent<AnimatiorControlByCustomer>().isShow = true;
         }
         else
         {
             go.transform.localScale = Vector2.zero;
-            go.transform.GetComponent<AnimatiorControlByNPC>().isShow = false;
+            go.transform.GetComponent<AnimatiorControlByCustomer>().isShow = false;
         }
 
         SetCustomerPos(customerID);

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 846158870439425133}
   - component: {fileID: 1188402384733575995}
   - component: {fileID: 6502974444621654816}
+  - component: {fileID: 3334326312909129705}
+  - component: {fileID: 6446733076223685995}
   m_Layer: 5
   m_Name: Block_DisBuilding
   m_TagString: Untagged
@@ -121,6 +123,33 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3334326312909129705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296882842176413132}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 1
+--- !u!114 &6446733076223685995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296882842176413132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828a1e1ea744e2a46af295ec26a0647f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3319074565576941961
 GameObject:
   m_ObjectHideFlags: 0
