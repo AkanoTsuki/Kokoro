@@ -16,12 +16,13 @@ public class AnimatiorControlByNpc : MonoBehaviour
 
     short needTimes = 0;//次数-1为loop
 
-    List<string> randomAnimNameList;
-    List<byte> randomAnimRateList;
-    List<short> randomAnimTimesList;
+    List<string> randomAnimNameList=new List<string>();
+    List<byte> randomAnimRateList=new List<byte>();
+    List<short> randomAnimTimesList=new List<short>();
 
     public bool isHero = false;
 
+     bool canRandom = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -65,7 +66,7 @@ public class AnimatiorControlByNpc : MonoBehaviour
                     }
                     else
                     {
-                        if (Random.Range(0, 100) < 10)
+                        if (canRandom&&Random.Range(0, 100) < 10)
                         {
                             GetRandomAnim();
                         }
@@ -88,10 +89,14 @@ public class AnimatiorControlByNpc : MonoBehaviour
         isPlay = false;
     }
 
-    public void SetCharaFrames(string name,int width,int height)
+    public void SetCharaFrames(string name,int width,int height,bool canRandom)
     {
         charaName = name;
         GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+        randomAnimNameList.Clear();
+        randomAnimRateList.Clear();
+        randomAnimTimesList.Clear();
+        this.canRandom = canRandom;
         //GetComponent<RectTransform>().anchoredPosition = new Vector2(posX, posY);
     }
 
@@ -128,6 +133,7 @@ public class AnimatiorControlByNpc : MonoBehaviour
 
     public void SetAnim(string animStatus, short times)
     {
+        Debug.Log("SetAnim() animStatus=" + animStatus);
         if (animStatus != "Idle")
         {
             setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/" + animStatus);
@@ -136,7 +142,22 @@ public class AnimatiorControlByNpc : MonoBehaviour
         else//默认
         {
             setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/SayYes");
+            Debug.Log("SetAnim() setFrames.Length=" + setFrames.Length);
+            if (setFrames.Length == 0)//用于动物
+            {
+                int ran = Random.Range(0, 4);
+                switch (ran)
+                {
+                    case 0: setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Up"); break;
+                    case 1: setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Left"); break;
+                    case 2: setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Right"); break;
+                    case 3: setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Down"); break;
+                }
+                Debug.Log("SetAnim() setFrames.Length=" + setFrames.Length);
+            }
+           
             needFrames = new Sprite[1];
+            Debug.Log("SetAnim() needFrames.Length=" + needFrames.Length);
         }
 
 
@@ -164,6 +185,10 @@ public class AnimatiorControlByNpc : MonoBehaviour
                 break;
         
             case "Pic":
+            case "Walk_Up":
+            case "Walk_Left":
+            case "Walk_Right":
+            case "Walk_Down":
                 fps = 1.0f;
                 needFrames[0] = setFrames[0];
                 //isLoop = true;
@@ -172,7 +197,10 @@ public class AnimatiorControlByNpc : MonoBehaviour
                 currentIndex = 0;
                 Play();
                 break;
+          
             default:
+                Debug.Log("charaName=" + charaName + " animStatus=" + animStatus + " needFrames.Length=" + needFrames.Length + " setFrames.Length=" + setFrames.Length);
+
                 fps = 8.0f;
                 for (int i = 0; i < needFrames.Length; i++)
                 {

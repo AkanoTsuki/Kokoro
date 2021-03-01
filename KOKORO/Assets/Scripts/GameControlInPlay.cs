@@ -606,7 +606,7 @@ public class GameControlInPlay : MonoBehaviour
         foreach (KeyValuePair<int, BuildingObject> kvp in gc.buildingDic)
         {
             string strgrid = "";
-
+            string strnpc = "";
             for (int i = 0; i < kvp.Value.gridList.Count; i++)
             {
                 strgrid += "\""+ kvp.Value.gridList[i] + "\",";
@@ -619,7 +619,129 @@ public class GameControlInPlay : MonoBehaviour
                 count1++;
             }
             strgrid = strgrid.Substring(0, strgrid.Length - 1);
-            
+
+
+            short buildingId = kvp.Value.prototypeID;
+            List<string> npcPicList = new List<string>();
+            Debug.Log("DataManager.mBuildingDict[buildingId].BgPic=" + DataManager.mBuildingDict[buildingId].BgPic);
+            switch (DataManager.mBuildingDict[buildingId].BgPic)
+            {
+                case "DBG_HouseSmall_1":
+                case "DBG_HouseSmall_2":
+                case "DBG_HouseSmall_3":
+                    for (int i = 0; i < 4; i++)
+                    {
+                        npcPicList.Add(DataManager.mNpcName[Random.Range(0, DataManager.mNpcName.Length - 1)]);
+                    }
+                    break;
+                case "DBG_HouseMiddle_1":
+                case "DBG_HouseMiddle_2":
+                case "DBG_HouseMiddle_3":
+                case "DBG_HouseBig_1":
+                case "DBG_HouseBig_2":
+                case "DBG_HouseBig_3":
+                    for (int i = 0; i < 6; i++)
+                    {
+                        npcPicList.Add(DataManager.mNpcName[Random.Range(0, DataManager.mNpcName.Length - 1)]);
+                    }
+                    break;
+                case "DBG_WheatField":
+                case "DBG_VegetableField":
+                case "DBG_Orchard":
+                case "DBG_FlaxField":
+                    for (int i = 0; i < 6; i++)
+                    {
+                        npcPicList.Add("npc_farmer1");
+                    }
+                    break;
+                case "DBG_Lair":
+                    npcPicList.Add("npc_animal_cow1");
+                    npcPicList.Add("npc_animal_cow1");
+                    npcPicList.Add("npc_animal_cow2");
+                    for (int i = 3; i < 6; i++)
+                    {
+                        npcPicList.Add("npc_farmer1");
+                    }
+                    break;
+                case "DBG_Fishpond":
+                    for (int i = 0; i < 6; i++)
+                    {
+                        npcPicList.Add("npc_other1_17");
+                    }
+                    break;
+                case "DBG_Outside":
+                    for (int i = 0; i < 6; i++)
+                    {
+                        npcPicList.Add("npc_other1_01");
+                    }
+                    break;
+                case "DBG_IronMine":
+                case "DBG_Quarry":
+                    for (int i = 0; i < 6; i++)
+                    {
+                        npcPicList.Add("npc_other2_04");
+                    }
+                    break;
+
+                case "DBG_Base1":
+                case "DBG_Base2":
+                case "DBG_Base3":
+                case "DBG_Base4":
+                case "DBG_Base5":
+                    npcPicList.Add("npc_knight" + gc.forceDic[gc.districtDic[kvp.Value.districtID].force].flagIndex);
+                    npcPicList.Add("npc_knight" + gc.forceDic[gc.districtDic[kvp.Value.districtID].force].flagIndex);
+                    break;
+                case "DBG_WeaponShop":
+                    npcPicList.Add("npc_other1_24");
+                    for (int i = 0; i < 4; i++)
+                    {
+                        npcPicList.Add("npc_blacksmith");
+                    }
+                    break;
+                case "DBG_ArmorShop":
+                    npcPicList.Add("npc_other1_30");
+                    break;
+                case "DBG_JewelryShop":
+                    npcPicList.Add("npc_other2_13");
+                    break;
+                case "DBG_Warehouse":
+                    npcPicList.Add("npc_other2_10");
+                    break;
+                case "DBG_Arena":
+                    npcPicList.Add("npc_other2_10");
+                    npcPicList.Add("npc_other1_07");
+                    npcPicList.Add("npc_other2_21");
+                    npcPicList.Add("npc_other2_17");
+                    npcPicList.Add("npc_other2_06");
+                    npcPicList.Add("npc_other2_02");
+                    npcPicList.Add("npc_other2_01");
+                    break;
+                case "DBG_Monastery":
+                    npcPicList.Add("npc_other2_12");
+                    npcPicList.Add("npc_other2_15");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        npcPicList.Add(DataManager.mNpcName[Random.Range(0, DataManager.mNpcName.Length - 1)]);
+                    }
+                    break;
+                case "DBG_Inn":
+                    npcPicList.Add("npc_other1_02");
+                    npcPicList.Add("npc_other1_23");
+                    break;
+                case "DBG_ScrollShop":
+                    npcPicList.Add("npc_other2_08");
+                    break;
+            }
+            for (int i = 0; i < npcPicList.Count; i++)
+            {
+                strnpc += "\"" + npcPicList[i] + "\",";
+            }
+            Debug.Log("strnpc="+ strnpc);
+            if (strnpc != "")
+            {
+                strnpc = strnpc.Substring(0, strnpc.Length - 1);
+            }
+          
 
             str2 += "{" +
                    "\"ID\":" + kvp.Value.id + "," +
@@ -628,6 +750,7 @@ public class GameControlInPlay : MonoBehaviour
                      "\"PositionX\":" + kvp.Value.positionX + "," +
                       "\"PositionY\":" + kvp.Value.positionY + "," +
                        "\"Layer\":" + kvp.Value.layer + "," +
+                        "\"NpcList\":[" + strnpc + "]" + "," +
                           "\"GridList\":[" + strgrid + "]" +
                    "},";
             count2++;

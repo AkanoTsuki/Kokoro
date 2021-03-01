@@ -98786,6 +98786,18 @@
       "Name": "小型住宅",
       "MainPic": "HouseSmall_1",
       "BgPic": "DBG_HouseSmall_1",
+      "NpcPosX": [
+        140,
+        339,
+        200,
+        340
+      ],
+      "NpcPosY": [
+        118,
+        180,
+        166,
+        84
+      ],
       "SizeX": 5,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -98816,6 +98828,18 @@
       "Name": "舒适小型住宅",
       "MainPic": "HouseSmall_2",
       "BgPic": "DBG_HouseSmall_2",
+      "NpcPosX": [
+        197,
+        370,
+        168,
+        318
+      ],
+      "NpcPosY": [
+        118,
+        200,
+        185,
+        94
+      ],
       "SizeX": 5,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -98846,6 +98870,18 @@
       "Name": "豪华小型住宅",
       "MainPic": "HouseSmall_3",
       "BgPic": "DBG_HouseSmall_3",
+      "NpcPosX": [
+        166,
+        370,
+        190,
+        318
+      ],
+      "NpcPosY": [
+        118,
+        200,
+        196,
+        94
+      ],
       "SizeX": 5,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -98876,6 +98912,22 @@
       "Name": "中型住宅",
       "MainPic": "HouseMiddle_1",
       "BgPic": "DBG_HouseMiddle_1",
+      "NpcPosX": [
+        84,
+        432,
+        112,
+        318,
+        200,
+        380
+      ],
+      "NpcPosY": [
+        88,
+        200,
+        196,
+        167,
+        120,
+        78
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -98906,6 +98958,22 @@
       "Name": "舒适中型住宅",
       "MainPic": "HouseMiddle_2",
       "BgPic": "DBG_HouseMiddle_2",
+      "NpcPosX": [
+        84,
+        432,
+        112,
+        318,
+        200,
+        380
+      ],
+      "NpcPosY": [
+        88,
+        172,
+        196,
+        167,
+        120,
+        98
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -98936,6 +99004,22 @@
       "Name": "豪华中型住宅",
       "MainPic": "HouseMiddle_3",
       "BgPic": "DBG_HouseMiddle_3",
+      "NpcPosX": [
+        118,
+        432,
+        138,
+        272,
+        186,
+        380
+      ],
+      "NpcPosY": [
+        88,
+        180,
+        202,
+        167,
+        96,
+        98
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -98966,6 +99050,22 @@
       "Name": "大型住宅",
       "MainPic": "HouseBig_1",
       "BgPic": "DBG_HouseBig_1",
+      "NpcPosX": [
+        94,
+        412,
+        76,
+        304,
+        132,
+        406
+      ],
+      "NpcPosY": [
+        38,
+        162,
+        141,
+        122,
+        200,
+        87
+      ],
       "SizeX": 7,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -98996,6 +99096,22 @@
       "Name": "舒适大型住宅",
       "MainPic": "HouseBig_2",
       "BgPic": "DBG_HouseBig_2",
+      "NpcPosX": [
+        94,
+        412,
+        157,
+        323,
+        100,
+        382
+      ],
+      "NpcPosY": [
+        38,
+        200,
+        141,
+        122,
+        200,
+        87
+      ],
       "SizeX": 7,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99026,6 +99142,22 @@
       "Name": "豪华大型住宅",
       "MainPic": "HouseBig_3",
       "BgPic": "DBG_HouseBig_3",
+      "NpcPosX": [
+        94,
+        412,
+        157,
+        323,
+        100,
+        382
+      ],
+      "NpcPosY": [
+        38,
+        200,
+        141,
+        122,
+        200,
+        87
+      ],
       "SizeX": 7,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99056,6 +99188,22 @@
       "Name": "麦田",
       "MainPic": "WheatField",
       "BgPic": "DBG_WheatField",
+      "NpcPosX": [
+        94,
+        412,
+        129,
+        315,
+        38,
+        222
+      ],
+      "NpcPosY": [
+        38,
+        173,
+        141,
+        65,
+        104,
+        8
+      ],
       "SizeX": 3,
       "SizeY": 4,
       "SizeYBase": 3,
@@ -99086,6 +99234,22 @@
       "Name": "菜田",
       "MainPic": "VegetableField",
       "BgPic": "DBG_VegetableField",
+      "NpcPosX": [
+        126,
+        412,
+        113,
+        315,
+        296,
+        432
+      ],
+      "NpcPosY": [
+        62,
+        173,
+        171,
+        65,
+        121,
+        8
+      ],
       "SizeX": 3,
       "SizeY": 4,
       "SizeYBase": 3,
@@ -99116,6 +99280,22 @@
       "Name": "果园",
       "MainPic": "Orchard",
       "BgPic": "DBG_Orchard",
+      "NpcPosX": [
+        126,
+        412,
+        113,
+        366,
+        262,
+        432
+      ],
+      "NpcPosY": [
+        62,
+        173,
+        171,
+        65,
+        121,
+        8
+      ],
       "SizeX": 3,
       "SizeY": 4,
       "SizeYBase": 3,
@@ -99146,6 +99326,22 @@
       "Name": "亚麻田",
       "MainPic": "FlaxField",
       "BgPic": "DBG_FlaxField",
+      "NpcPosX": [
+        126,
+        412,
+        113,
+        366,
+        262,
+        480
+      ],
+      "NpcPosY": [
+        66,
+        173,
+        178,
+        65,
+        121,
+        74
+      ],
       "SizeX": 3,
       "SizeY": 4,
       "SizeYBase": 3,
@@ -99176,6 +99372,22 @@
       "Name": "牛圈",
       "MainPic": "Lair",
       "BgPic": "DBG_Lair",
+      "NpcPosX": [
+        126,
+        336,
+        184,
+        355,
+        188,
+        433
+      ],
+      "NpcPosY": [
+        66,
+        82,
+        125,
+        146,
+        171,
+        168
+      ],
       "SizeX": 5,
       "SizeY": 6,
       "SizeYBase": 6,
@@ -99206,6 +99418,22 @@
       "Name": "羊圈",
       "MainPic": "SheepFold",
       "BgPic": "DBG_Lair",
+      "NpcPosX": [
+        126,
+        336,
+        184,
+        355,
+        188,
+        433
+      ],
+      "NpcPosY": [
+        66,
+        82,
+        125,
+        146,
+        171,
+        168
+      ],
       "SizeX": 5,
       "SizeY": 6,
       "SizeYBase": 6,
@@ -99236,6 +99464,22 @@
       "Name": "渔场",
       "MainPic": "Fishpond",
       "BgPic": "DBG_Fishpond",
+      "NpcPosX": [
+        126,
+        336,
+        253,
+        356,
+        126,
+        466
+      ],
+      "NpcPosY": [
+        66,
+        77,
+        70,
+        165,
+        182,
+        168
+      ],
       "SizeX": 3,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99266,6 +99510,22 @@
       "Name": "初级伐木场",
       "MainPic": "LoggingCamp_1",
       "BgPic": "DBG_Outside",
+      "NpcPosX": [
+        113,
+        336,
+        218,
+        380,
+        126,
+        466
+      ],
+      "NpcPosY": [
+        101,
+        65,
+        70,
+        171,
+        182,
+        168
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99296,6 +99556,22 @@
       "Name": "中级伐木场",
       "MainPic": "LoggingCamp_2",
       "BgPic": "DBG_Outside",
+      "NpcPosX": [
+        113,
+        336,
+        218,
+        380,
+        126,
+        466
+      ],
+      "NpcPosY": [
+        101,
+        65,
+        70,
+        171,
+        182,
+        168
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99326,6 +99602,22 @@
       "Name": "高级伐木场",
       "MainPic": "LoggingCamp_3",
       "BgPic": "DBG_Outside",
+      "NpcPosX": [
+        113,
+        336,
+        218,
+        380,
+        126,
+        466
+      ],
+      "NpcPosY": [
+        101,
+        65,
+        70,
+        171,
+        182,
+        168
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99356,6 +99648,22 @@
       "Name": "初级矿场",
       "MainPic": "IronMine_1",
       "BgPic": "DBG_IronMine",
+      "NpcPosX": [
+        137,
+        302,
+        241,
+        405,
+        48,
+        486
+      ],
+      "NpcPosY": [
+        95,
+        65,
+        118,
+        159,
+        154,
+        95
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99386,6 +99694,22 @@
       "Name": "中级矿场",
       "MainPic": "IronMine_2",
       "BgPic": "DBG_IronMine",
+      "NpcPosX": [
+        137,
+        302,
+        241,
+        405,
+        48,
+        486
+      ],
+      "NpcPosY": [
+        95,
+        65,
+        118,
+        159,
+        154,
+        95
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99416,6 +99740,22 @@
       "Name": "高级矿场",
       "MainPic": "IronMine_3",
       "BgPic": "DBG_IronMine",
+      "NpcPosX": [
+        137,
+        302,
+        241,
+        405,
+        48,
+        486
+      ],
+      "NpcPosY": [
+        95,
+        65,
+        118,
+        159,
+        154,
+        95
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99446,6 +99786,22 @@
       "Name": "初级采石场",
       "MainPic": "Quarry_1",
       "BgPic": "DBG_Quarry",
+      "NpcPosX": [
+        210,
+        357,
+        226,
+        405,
+        68,
+        460
+      ],
+      "NpcPosY": [
+        49,
+        8,
+        160,
+        159,
+        182,
+        95
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99476,6 +99832,22 @@
       "Name": "中级采石场",
       "MainPic": "Quarry_2",
       "BgPic": "DBG_Quarry",
+      "NpcPosX": [
+        210,
+        357,
+        226,
+        405,
+        68,
+        460
+      ],
+      "NpcPosY": [
+        49,
+        8,
+        160,
+        159,
+        182,
+        95
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99506,6 +99878,22 @@
       "Name": "高级采石场",
       "MainPic": "Quarry_3",
       "BgPic": "DBG_Quarry",
+      "NpcPosX": [
+        210,
+        357,
+        226,
+        405,
+        68,
+        460
+      ],
+      "NpcPosY": [
+        49,
+        8,
+        160,
+        159,
+        182,
+        95
+      ],
       "SizeX": 7,
       "SizeY": 5,
       "SizeYBase": 4,
@@ -99535,7 +99923,9 @@
       "ID": 25,
       "Name": "啤酒酿造厂",
       "MainPic": "Brewery",
-      "BgPic": "DBG_Outside",
+      "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 6,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -99565,7 +99955,9 @@
       "ID": 26,
       "Name": "葡萄酒酿造厂",
       "MainPic": "Winery",
-      "BgPic": "DBG_Outside",
+      "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 6,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -99596,6 +99988,24 @@
       "Name": "乡公所",
       "MainPic": "Base_1",
       "BgPic": "DBG_Base1",
+      "NpcPosX": [
+        198,
+        316,
+        162,
+        474,
+        71,
+        432,
+        283
+      ],
+      "NpcPosY": [
+        95,
+        95,
+        192,
+        178,
+        59,
+        116,
+        155
+      ],
       "SizeX": 12,
       "SizeY": 10,
       "SizeYBase": 6,
@@ -99626,6 +100036,24 @@
       "Name": "镇政府",
       "MainPic": "Base_2",
       "BgPic": "DBG_Base2",
+      "NpcPosX": [
+        198,
+        316,
+        162,
+        474,
+        71,
+        432,
+        283
+      ],
+      "NpcPosY": [
+        95,
+        95,
+        192,
+        178,
+        59,
+        116,
+        155
+      ],
       "SizeX": 12,
       "SizeY": 10,
       "SizeYBase": 6,
@@ -99656,6 +100084,24 @@
       "Name": "城堡",
       "MainPic": "Base_3",
       "BgPic": "DBG_Base3",
+      "NpcPosX": [
+        198,
+        316,
+        162,
+        474,
+        71,
+        432,
+        283
+      ],
+      "NpcPosY": [
+        95,
+        95,
+        192,
+        178,
+        59,
+        116,
+        155
+      ],
       "SizeX": 12,
       "SizeY": 10,
       "SizeYBase": 6,
@@ -99686,6 +100132,24 @@
       "Name": "大城堡",
       "MainPic": "Base_4",
       "BgPic": "DBG_Base4",
+      "NpcPosX": [
+        198,
+        316,
+        162,
+        474,
+        71,
+        432,
+        283
+      ],
+      "NpcPosY": [
+        95,
+        95,
+        192,
+        178,
+        59,
+        116,
+        155
+      ],
       "SizeX": 12,
       "SizeY": 10,
       "SizeYBase": 6,
@@ -99716,6 +100180,24 @@
       "Name": "宫殿",
       "MainPic": "Base_5",
       "BgPic": "DBG_Base5",
+      "NpcPosX": [
+        198,
+        316,
+        162,
+        474,
+        71,
+        432,
+        283
+      ],
+      "NpcPosY": [
+        95,
+        95,
+        192,
+        178,
+        59,
+        116,
+        155
+      ],
       "SizeX": 12,
       "SizeY": 10,
       "SizeYBase": 6,
@@ -99746,6 +100228,22 @@
       "Name": "初级武器屋",
       "MainPic": "WeaponShop_1",
       "BgPic": "DBG_WeaponShop",
+      "NpcPosX": [
+        273,
+        463,
+        463,
+        463,
+        111,
+        333
+      ],
+      "NpcPosY": [
+        97,
+        85,
+        123,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99776,6 +100274,22 @@
       "Name": "中级武器屋",
       "MainPic": "WeaponShop_2",
       "BgPic": "DBG_WeaponShop",
+      "NpcPosX": [
+        273,
+        463,
+        463,
+        463,
+        111,
+        333
+      ],
+      "NpcPosY": [
+        97,
+        85,
+        123,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99806,6 +100320,22 @@
       "Name": "高级武器屋",
       "MainPic": "WeaponShop_3",
       "BgPic": "DBG_WeaponShop",
+      "NpcPosX": [
+        273,
+        463,
+        463,
+        463,
+        111,
+        333
+      ],
+      "NpcPosY": [
+        97,
+        85,
+        123,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99836,6 +100366,22 @@
       "Name": "大级武器屋",
       "MainPic": "WeaponShop_4",
       "BgPic": "DBG_WeaponShop",
+      "NpcPosX": [
+        273,
+        463,
+        463,
+        463,
+        111,
+        333
+      ],
+      "NpcPosY": [
+        97,
+        85,
+        123,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99866,6 +100412,22 @@
       "Name": "宗级武器屋",
       "MainPic": "WeaponShop_5",
       "BgPic": "DBG_WeaponShop",
+      "NpcPosX": [
+        273,
+        463,
+        463,
+        463,
+        111,
+        333
+      ],
+      "NpcPosY": [
+        97,
+        85,
+        123,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99896,6 +100458,22 @@
       "Name": "初级防具屋",
       "MainPic": "ArmorShop_1",
       "BgPic": "DBG_ArmorShop",
+      "NpcPosX": [
+        273,
+        411,
+        463,
+        426,
+        111,
+        29
+      ],
+      "NpcPosY": [
+        88,
+        67,
+        114,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99926,6 +100504,22 @@
       "Name": "中级防具屋",
       "MainPic": "ArmorShop_2",
       "BgPic": "DBG_ArmorShop",
+      "NpcPosX": [
+        273,
+        411,
+        463,
+        426,
+        111,
+        29
+      ],
+      "NpcPosY": [
+        88,
+        67,
+        114,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99956,6 +100550,22 @@
       "Name": "高级防具屋",
       "MainPic": "ArmorShop_3",
       "BgPic": "DBG_ArmorShop",
+      "NpcPosX": [
+        273,
+        411,
+        463,
+        426,
+        111,
+        29
+      ],
+      "NpcPosY": [
+        88,
+        67,
+        114,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -99986,6 +100596,22 @@
       "Name": "大师防具屋",
       "MainPic": "ArmorShop_4",
       "BgPic": "DBG_ArmorShop",
+      "NpcPosX": [
+        273,
+        411,
+        463,
+        426,
+        111,
+        29
+      ],
+      "NpcPosY": [
+        88,
+        67,
+        114,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -100016,6 +100642,22 @@
       "Name": "宗师防具屋",
       "MainPic": "ArmorShop_5",
       "BgPic": "DBG_ArmorShop",
+      "NpcPosX": [
+        273,
+        411,
+        463,
+        426,
+        111,
+        29
+      ],
+      "NpcPosY": [
+        88,
+        67,
+        114,
+        180,
+        142,
+        166
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -100046,6 +100688,22 @@
       "Name": "初级饰品屋",
       "MainPic": "JewelryShop_1",
       "BgPic": "DBG_JewelryShop",
+      "NpcPosX": [
+        254,
+        351,
+        470,
+        426,
+        113,
+        45
+      ],
+      "NpcPosY": [
+        66,
+        88,
+        132,
+        198,
+        169,
+        197
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -100076,6 +100734,22 @@
       "Name": "中级饰品屋",
       "MainPic": "JewelryShop_2",
       "BgPic": "DBG_JewelryShop",
+      "NpcPosX": [
+        254,
+        351,
+        470,
+        426,
+        113,
+        45
+      ],
+      "NpcPosY": [
+        66,
+        88,
+        132,
+        198,
+        169,
+        197
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -100106,6 +100780,22 @@
       "Name": "高级饰品屋",
       "MainPic": "JewelryShop_3",
       "BgPic": "DBG_JewelryShop",
+      "NpcPosX": [
+        254,
+        351,
+        470,
+        426,
+        113,
+        45
+      ],
+      "NpcPosY": [
+        66,
+        88,
+        132,
+        198,
+        169,
+        197
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -100136,6 +100826,22 @@
       "Name": "大师饰品屋",
       "MainPic": "JewelryShop_4",
       "BgPic": "DBG_JewelryShop",
+      "NpcPosX": [
+        254,
+        351,
+        470,
+        426,
+        113,
+        45
+      ],
+      "NpcPosY": [
+        66,
+        88,
+        132,
+        198,
+        169,
+        197
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -100166,6 +100872,22 @@
       "Name": "宗师饰品屋",
       "MainPic": "JewelryShop_5",
       "BgPic": "DBG_JewelryShop",
+      "NpcPosX": [
+        254,
+        351,
+        470,
+        426,
+        113,
+        45
+      ],
+      "NpcPosY": [
+        66,
+        88,
+        132,
+        198,
+        169,
+        197
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -100196,6 +100918,14 @@
       "Name": "食品仓库",
       "MainPic": "Warehouse_Food",
       "BgPic": "DBG_Warehouse",
+      "NpcPosX": [
+        273,
+        321
+      ],
+      "NpcPosY": [
+        78,
+        166
+      ],
       "SizeX": 6,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -100226,6 +100956,14 @@
       "Name": "材料仓库",
       "MainPic": "Warehouse_Stuff",
       "BgPic": "DBG_Warehouse",
+      "NpcPosX": [
+        273,
+        321
+      ],
+      "NpcPosY": [
+        78,
+        166
+      ],
       "SizeX": 6,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -100256,6 +100994,14 @@
       "Name": "装备仓库",
       "MainPic": "Warehouse_Produt",
       "BgPic": "DBG_Warehouse",
+      "NpcPosX": [
+        273,
+        321
+      ],
+      "NpcPosY": [
+        78,
+        166
+      ],
       "SizeX": 6,
       "SizeY": 5,
       "SizeYBase": 3,
@@ -100286,6 +101032,8 @@
       "Name": "剑士公会",
       "MainPic": "SwordsmenGuild",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 5,
@@ -100316,6 +101064,8 @@
       "Name": "枪兵训练场",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100346,6 +101096,8 @@
       "Name": "斧头帮",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100376,6 +101128,24 @@
       "Name": "角斗场",
       "MainPic": "Arena",
       "BgPic": "DBG_Arena",
+      "NpcPosX": [
+        203,
+        238,
+        376,
+        503,
+        49,
+        4,
+        439
+      ],
+      "NpcPosY": [
+        99,
+        2,
+        26,
+        21,
+        27,
+        76,
+        26
+      ],
       "SizeX": 7,
       "SizeY": 8,
       "SizeYBase": 6,
@@ -100406,6 +101176,8 @@
       "Name": "靶场",
       "MainPic": "ShootingRange",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 8,
       "SizeY": 6,
       "SizeYBase": 4,
@@ -100436,6 +101208,24 @@
       "Name": "修道院",
       "MainPic": "Monastery",
       "BgPic": "DBG_Monastery",
+      "NpcPosX": [
+        203,
+        264,
+        370,
+        207,
+        119,
+        32,
+        480
+      ],
+      "NpcPosY": [
+        79,
+        73,
+        112,
+        154,
+        180,
+        22,
+        138
+      ],
       "SizeX": 9,
       "SizeY": 10,
       "SizeYBase": 6,
@@ -100466,6 +101256,8 @@
       "Name": "金属冶炼厂",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100496,6 +101288,8 @@
       "Name": "纺织屋",
       "MainPic": "TextileMill",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -100526,6 +101320,8 @@
       "Name": "宝石鉴定所",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100556,6 +101352,8 @@
       "Name": "旗帜",
       "MainPic": "Flag",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 1,
       "SizeY": 2,
       "SizeYBase": 1,
@@ -100586,6 +101384,8 @@
       "Name": "路灯",
       "MainPic": "StreetLight",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 1,
       "SizeY": 3,
       "SizeYBase": 1,
@@ -100616,6 +101416,8 @@
       "Name": "水池",
       "MainPic": "Pool",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 3,
       "SizeY": 2,
       "SizeYBase": 2,
@@ -100646,6 +101448,8 @@
       "Name": "树",
       "MainPic": "Tree",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 2,
       "SizeY": 4,
       "SizeYBase": 1,
@@ -100676,6 +101480,8 @@
       "Name": "圣像",
       "MainPic": "Pax",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 2,
       "SizeY": 3,
       "SizeYBase": 1,
@@ -100706,6 +101512,8 @@
       "Name": "墓碑",
       "MainPic": "Tombstone",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 1,
       "SizeY": 2,
       "SizeYBase": 1,
@@ -100736,6 +101544,24 @@
       "Name": "旅馆",
       "MainPic": "AssemblyHouse",
       "BgPic": "DBG_Inn",
+      "NpcPosX": [
+        438,
+        264,
+        86,
+        46,
+        379,
+        468,
+        400
+      ],
+      "NpcPosY": [
+        66,
+        73,
+        112,
+        138,
+        117,
+        148,
+        195
+      ],
       "SizeX": 7,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -100766,6 +101592,8 @@
       "Name": "气象台",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100796,6 +101624,8 @@
       "Name": "市集",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100826,6 +101656,8 @@
       "Name": "磨坊",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100856,6 +101688,8 @@
       "Name": "熔炉",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100886,6 +101720,8 @@
       "Name": "起重塔",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100916,6 +101752,8 @@
       "Name": "马厩",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100946,6 +101784,8 @@
       "Name": "林业小屋",
       "MainPic": "",
       "BgPic": "Empty",
+      "NpcPosX": [],
+      "NpcPosY": [],
       "SizeX": 0,
       "SizeY": 0,
       "SizeYBase": 0,
@@ -100976,6 +101816,22 @@
       "Name": "初级秘术公会",
       "MainPic": "ScrollShop_1",
       "BgPic": "DBG_ScrollShop",
+      "NpcPosX": [
+        254,
+        426,
+        372,
+        372,
+        81,
+        144
+      ],
+      "NpcPosY": [
+        133,
+        2,
+        132,
+        179,
+        43,
+        139
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -101006,6 +101862,22 @@
       "Name": "中级秘术公会",
       "MainPic": "ScrollShop_2",
       "BgPic": "DBG_ScrollShop",
+      "NpcPosX": [
+        254,
+        426,
+        372,
+        372,
+        81,
+        144
+      ],
+      "NpcPosY": [
+        133,
+        2,
+        132,
+        179,
+        43,
+        139
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -101036,6 +101908,22 @@
       "Name": "高级秘术公会",
       "MainPic": "ScrollShop_3",
       "BgPic": "DBG_ScrollShop",
+      "NpcPosX": [
+        254,
+        426,
+        372,
+        372,
+        81,
+        144
+      ],
+      "NpcPosY": [
+        133,
+        2,
+        132,
+        179,
+        43,
+        139
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -101066,6 +101954,22 @@
       "Name": "大师秘术公会",
       "MainPic": "ScrollShop_4",
       "BgPic": "DBG_ScrollShop",
+      "NpcPosX": [
+        254,
+        426,
+        372,
+        372,
+        81,
+        144
+      ],
+      "NpcPosY": [
+        133,
+        2,
+        132,
+        179,
+        43,
+        139
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,
@@ -101096,6 +102000,22 @@
       "Name": "宗师秘术公会",
       "MainPic": "ScrollShop_5",
       "BgPic": "DBG_ScrollShop",
+      "NpcPosX": [
+        254,
+        426,
+        372,
+        372,
+        81,
+        144
+      ],
+      "NpcPosY": [
+        133,
+        2,
+        132,
+        179,
+        43,
+        139
+      ],
       "SizeX": 9,
       "SizeY": 7,
       "SizeYBase": 4,

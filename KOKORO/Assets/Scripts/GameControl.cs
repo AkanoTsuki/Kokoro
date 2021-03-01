@@ -1259,6 +1259,10 @@ public class GameControl : MonoBehaviour
                 break;
 
             case "DBG_Base1":
+            case "DBG_Base2":
+            case "DBG_Base3":
+            case "DBG_Base4":
+            case "DBG_Base5":
                 npcPicList.Add("npc_knight" + forceDic[districtDic[nowCheckingDistrictID].force].flagIndex);
                 npcPicList.Add("npc_knight" + forceDic[districtDic[nowCheckingDistrictID].force].flagIndex);
                 break;
@@ -1530,6 +1534,7 @@ public class GameControl : MonoBehaviour
         if (type == "Stop")
         {
             buildingDic[buildingID].isOpen = false;
+
             MessagePanel.Instance.AddMessage("接到停工命令，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
@@ -1599,6 +1604,7 @@ public class GameControl : MonoBehaviour
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
         {
             BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+            BuildingPanel.Instance.UpdateSceneRolePic(buildingDic[buildingID]);
         }
         if (DistrictMapPanel.Instance.isShow && nowCheckingDistrictID == districtID)
         {
@@ -1625,6 +1631,7 @@ public class GameControl : MonoBehaviour
         if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
         {
             BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+            BuildingPanel.Instance.UpdateSceneRolePic(buildingDic[buildingID]);
             if (BuildingPanel.Instance.IsShowOutputInfoPart)
             {
                 BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
@@ -1644,10 +1651,12 @@ public class GameControl : MonoBehaviour
         if (buildingDic[buildingID].taskList.Count == 0)
         {
             buildingDic[buildingID].isOpen = false;
+       
             MessagePanel.Instance.AddMessage("全部生产任务都完成了，生产停止");
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
                 BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateSceneRolePic(buildingDic[buildingID]);
                 if (BuildingPanel.Instance.IsShowOutputInfoPart)
                 {
                     BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
@@ -1668,6 +1677,7 @@ public class GameControl : MonoBehaviour
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
                 BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateSceneRolePic(buildingDic[buildingID]);
                 if (BuildingPanel.Instance.IsShowOutputInfoPart)
                 {
                     BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
@@ -1704,6 +1714,7 @@ public class GameControl : MonoBehaviour
             if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
             {
                 BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+                BuildingPanel.Instance.UpdateSceneRolePic(buildingDic[buildingID]);
                 if (BuildingPanel.Instance.IsShowOutputInfoPart)
                 {
                     BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
@@ -1745,6 +1756,7 @@ public class GameControl : MonoBehaviour
                     if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
                     {
                         BuildingPanel.Instance.UpdateBasicPart(buildingDic[buildingID]);
+                        BuildingPanel.Instance.UpdateSceneRolePic(buildingDic[buildingID]);
                         if (BuildingPanel.Instance.IsShowOutputInfoPart)
                         {
                             BuildingPanel.Instance.UpdateOutputInfoPart(buildingDic[buildingID]);
@@ -1966,6 +1978,10 @@ public class GameControl : MonoBehaviour
     public void DeleteProduceResourceEvent(int buildingID)
     {
         buildingDic[buildingID].isOpen = false;
+        if (BuildingPanel.Instance.isShow && BuildingPanel.Instance.nowCheckingBuildingID == buildingID)
+        {
+            BuildingPanel.Instance.UpdateSceneRolePic(buildingDic[buildingID]);
+        }          
     }
 
     public void DistrictItemOrSkillAdd(short districtID, int buildingID)

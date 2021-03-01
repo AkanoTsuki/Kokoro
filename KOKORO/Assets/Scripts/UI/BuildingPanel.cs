@@ -201,12 +201,20 @@ public class BuildingPanel : BasePanel
     //动画场景-背景、人物更新
     public void UpdateSceneRolePic(BuildingObject buildingObject)
     {
+        string text = "";
+        for (int i = 0; i < buildingObject.npcPicList.Count; i++)
+        {
+            text += "," + buildingObject.npcPicList[i];
+        }
+
+        Debug.Log("npcPicList=" + text);
+
         int roleIndex = 0;
 
 
         for (int i = 0; i < DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosX.Count; i++)
         {
-            bgRoleAcList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosX[i], DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosY[i]);
+            bgRoleAcList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosX[i], -DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosY[i]);
         }
         for (int i = DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosX.Count; i < bgRoleAcList.Count; i++)
         {
@@ -217,27 +225,32 @@ public class BuildingPanel : BasePanel
         {
             bgImage.sprite = Resources.Load("Image/DistrictBG/" + DataManager.mBuildingDict[buildingObject.prototypeID].BgPic, typeof(Sprite)) as Sprite;
 
-            for (int i = 0; i < buildingObject.npcPicList.Count; i++)
-            {
-                bgRoleAcList[i].SetCharaFrames(buildingObject.npcPicList[i], 56, 54);
-                roleIndex++;
-            }
+           
 
             switch (DataManager.mBuildingDict[buildingObject.prototypeID].BgPic)
             {
                 case "DBG_WeaponShop":
-                    if (buildingObject.isOpen)
+                    bgRoleAcList[0].SetCharaFrames(buildingObject.npcPicList[0], 56, 54,true);
+                    bgRoleAcList[0].SetAnim("Idle", -1);
+                    roleIndex++;
+                    bgRoleAcList[1].SetCharaFrames(buildingObject.npcPicList[1], 56, 54, false);
+                    bgRoleAcList[1].SetAnim(buildingObject.isOpen?("Beat" + Random.Range(1, 3)): "Beat_Free", -1);
+                    roleIndex++;
+                    if (buildingObject.level >= 3)
                     {
-                        bgRoleAcList[1].SetAnim("Beat" + Random.Range(1, 3), -1);
-                        bgRoleAcList[2].SetAnim("Beat" + Random.Range(1, 3), -1);
-                        bgRoleAcList[3].SetAnim("Beat" + Random.Range(1, 3), -1);
+                        bgRoleAcList[roleIndex].SetCharaFrames(buildingObject.npcPicList[roleIndex], 56, 54, false);
+                        bgRoleAcList[roleIndex].SetAnim(buildingObject.isOpen ? ("Beat" + Random.Range(1, 3)) : "Beat_Free", -1);
+                        roleIndex++;
                     }
-                    else
+                    if (buildingObject.level >= 5)
                     {
-                        bgRoleAcList[1].SetAnim("Beat_Free", -1);
-                        bgRoleAcList[2].SetAnim("Beat_Free", -1);
-                        bgRoleAcList[3].SetAnim("Beat_Free", -1);
+                        bgRoleAcList[roleIndex].SetCharaFrames(buildingObject.npcPicList[roleIndex], 56, 54, false);
+                        bgRoleAcList[roleIndex].SetAnim(buildingObject.isOpen ? ("Beat" + Random.Range(1, 3)) : "Beat_Free", -1);
+                        roleIndex++;
                     }
+                    bgRoleAcList[roleIndex].SetCharaFrames(buildingObject.npcPicList[roleIndex], 56, 54, false);
+                    bgRoleAcList[roleIndex].SetAnim(buildingObject.isOpen ? "Water" : "Water_Empty", -1);
+                    roleIndex++;
                     break;
                 case "DBG_WheatField":
                 case "DBG_VegetableField":
@@ -245,69 +258,70 @@ public class BuildingPanel : BasePanel
                 case "DBG_FlaxField":
                     for (int i = 0; i < Mathf.Min(5, buildingObject.workerNow); i++)
                     {
-                        //bgRoleAcList[i].SetCharaFrames("npc_farmer1", 56, 54);
+                        bgRoleAcList[i].SetCharaFrames("npc_farmer1", 56, 54, true);
                         bgRoleAcList[i].SetAnim("Wipe", -1);
                         bgRoleAcList[i].SetRandomAnim(new List<string> { }, new List<byte> { }, new List<short> { });
                         roleIndex++;
                     }
                     break;
+                case "DBG_Lair":
+                    for (int i = 0; i <3; i++)
+                    {
+                        bgRoleAcList[i].SetCharaFrames(buildingObject.npcPicList[0], 56, 54, true);
+                        bgRoleAcList[i].SetAnim("Idle", -1);
+                        roleIndex++;
+                    }
+                    for (int i = 3; i < Mathf.Min(3, buildingObject.workerNow)+3; i++)
+                    {
+                        bgRoleAcList[i].SetCharaFrames("npc_farmer1", 56, 54, true);
+                        bgRoleAcList[i].SetAnim("Idle", -1);
+                        bgRoleAcList[i].SetRandomAnim(new List<string> { "Wipe", "Sit", "Watering" }, new List<byte> { 20, 5, 15 }, new List<short> { 5, 1, 5 });
+                        roleIndex++;
+                    }
+                    break;
                 case "DBG_Inn":
+                    bgRoleAcList[0].SetCharaFrames(buildingObject.npcPicList[0], 56, 54, true);
+                    bgRoleAcList[0].SetAnim("Idle", -1);
+                    roleIndex++;
+                    bgRoleAcList[1].SetCharaFrames(buildingObject.npcPicList[1], 56, 54, true);
+                    bgRoleAcList[1].SetAnim("Idle", -1);
+                    roleIndex++;
                     for (int i = 2; i < gc.districtDic[buildingObject.districtID].recruitList.Count+2; i++)
                     {
-                        bgRoleAcList[i].SetCharaFrames(gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic, 39, 54);
+                        bgRoleAcList[i].SetCharaFrames(gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic, 39, 54, true);
                         bgRoleAcList[i].SetAnim("Pic", -1);
                         bgRoleAcList[i].SetRandomAnim(new List<string> { "SayYes", "Laugh", "Surprise" }, new List<byte> { 20, 5, 15 }, new List<short> { 5, 5, 5 });
-                        //bgRoleImageList[i].sprite= Resources.Load("Image/RolePic/" + gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
+                        roleIndex++;
+                    }
+                    break;
+                case "DBG_Base1":
+                case "DBG_Base2":
+                case "DBG_Base3":
+                case "DBG_Base4":
+                case "DBG_Base5":
+                    for (int i = 0; i < buildingObject.npcPicList.Count; i++)
+                    {
+                        bgRoleAcList[i].SetCharaFrames(buildingObject.npcPicList[i], 56, 54, true);
+                        bgRoleAcList[i].SetAnim("Idle", -1);
+                        bgRoleAcList[i].SetRandomAnim(new List<string> { "SayYes" }, new List<byte> { 60 }, new List<short> { 5 });
+                        roleIndex++;
+                    }
+                    break;
+
+
+                default:
+                    for (int i = 0; i < buildingObject.npcPicList.Count; i++)
+                    {
+                        bgRoleAcList[i].SetCharaFrames(buildingObject.npcPicList[i], 56, 54, true);
+                        bgRoleAcList[i].SetAnim("Idle", -1);
+                        bgRoleAcList[i].SetRandomAnim(new List<string> { "SayYes"}, new List<byte> { 60 }, new List<short> {  5 });
                         roleIndex++;
                     }
                     break;
             }
 
 
-            switch (buildingObject.panelType)
-            {
-                case "Forge":
-                    bgRoleAcList[0].SetCharaFrames("npc_blacksmith", 56,54);
-
-                    if (buildingObject.isOpen)
-                    {
-                        bgRoleAcList[0].SetAnim("Beat" + Random.Range(1, 3),-1);
-                    }
-                    else
-                    {
-                        bgRoleAcList[0].SetAnim("Beat_Free",-1);
-                    }
-
-                    roleIndex++;
-                    break;
-                case "Resource":
-                    for (int i=0;i<Mathf.Min(5, buildingObject.workerNow);i++)
-                    {
-                        bgRoleAcList[i].SetCharaFrames("npc_farmer1", 56, 54);
-                        bgRoleAcList[i].SetAnim("Wipe",-1);
-                        bgRoleAcList[i].SetRandomAnim(new List<string> { }, new List<byte> {  }, new List<short> {  });
-                        roleIndex++;
-                    }
-
-
-                    break;
-                case "House":
-                    break;
-                case "Municipal":
-                    break;
-                case "Inn":
-
-                    for (int i = 0; i < gc.districtDic[buildingObject.districtID].recruitList.Count; i++)
-                    {
-                        bgRoleAcList[i].SetCharaFrames(gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic, 39, 54);
-                        bgRoleAcList[i].SetAnim("Pic",-1);
-                        bgRoleAcList[i].SetRandomAnim(new List<string> { "SayYes", "Laugh", "Surprise" }, new List<byte> { 20, 5, 15 }, new List<short> { 5, 5, 5 });
-                        //bgRoleImageList[i].sprite= Resources.Load("Image/RolePic/" + gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
-                        roleIndex++;
-                    }
-                    break;
-                default: break;
-            }
+     
         }
         else
         {
