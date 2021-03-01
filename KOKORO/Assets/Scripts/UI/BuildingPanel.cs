@@ -202,18 +202,72 @@ public class BuildingPanel : BasePanel
     public void UpdateSceneRolePic(BuildingObject buildingObject)
     {
         int roleIndex = 0;
-        List<int> x;//位置列表
-        List<int> y;
+
+
+        for (int i = 0; i < DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosX.Count; i++)
+        {
+            bgRoleAcList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosX[i], DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosY[i]);
+        }
+        for (int i = DataManager.mBuildingDict[buildingObject.prototypeID].NpcPosX.Count; i < bgRoleAcList.Count; i++)
+        {
+            bgRoleAcList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 5000);
+        }
+
         if (buildingObject.buildProgress == 1)
         {
             bgImage.sprite = Resources.Load("Image/DistrictBG/" + DataManager.mBuildingDict[buildingObject.prototypeID].BgPic, typeof(Sprite)) as Sprite;
+
+            for (int i = 0; i < buildingObject.npcPicList.Count; i++)
+            {
+                bgRoleAcList[i].SetCharaFrames(buildingObject.npcPicList[i], 56, 54);
+                roleIndex++;
+            }
+
+            switch (DataManager.mBuildingDict[buildingObject.prototypeID].BgPic)
+            {
+                case "DBG_WeaponShop":
+                    if (buildingObject.isOpen)
+                    {
+                        bgRoleAcList[1].SetAnim("Beat" + Random.Range(1, 3), -1);
+                        bgRoleAcList[2].SetAnim("Beat" + Random.Range(1, 3), -1);
+                        bgRoleAcList[3].SetAnim("Beat" + Random.Range(1, 3), -1);
+                    }
+                    else
+                    {
+                        bgRoleAcList[1].SetAnim("Beat_Free", -1);
+                        bgRoleAcList[2].SetAnim("Beat_Free", -1);
+                        bgRoleAcList[3].SetAnim("Beat_Free", -1);
+                    }
+                    break;
+                case "DBG_WheatField":
+                case "DBG_VegetableField":
+                case "DBG_Orchard":
+                case "DBG_FlaxField":
+                    for (int i = 0; i < Mathf.Min(5, buildingObject.workerNow); i++)
+                    {
+                        //bgRoleAcList[i].SetCharaFrames("npc_farmer1", 56, 54);
+                        bgRoleAcList[i].SetAnim("Wipe", -1);
+                        bgRoleAcList[i].SetRandomAnim(new List<string> { }, new List<byte> { }, new List<short> { });
+                        roleIndex++;
+                    }
+                    break;
+                case "DBG_Inn":
+                    for (int i = 2; i < gc.districtDic[buildingObject.districtID].recruitList.Count+2; i++)
+                    {
+                        bgRoleAcList[i].SetCharaFrames(gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic, 39, 54);
+                        bgRoleAcList[i].SetAnim("Pic", -1);
+                        bgRoleAcList[i].SetRandomAnim(new List<string> { "SayYes", "Laugh", "Surprise" }, new List<byte> { 20, 5, 15 }, new List<short> { 5, 5, 5 });
+                        //bgRoleImageList[i].sprite= Resources.Load("Image/RolePic/" + gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;
+                        roleIndex++;
+                    }
+                    break;
+            }
+
+
             switch (buildingObject.panelType)
             {
                 case "Forge":
-                    //bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
-                    //bgRoleImageList[0].sprite = Resources.Load("Image/RolePic/chara3_7/Pic", typeof(Sprite)) as Sprite;
-
-                    bgRoleAcList[0].SetCharaFrames("npc_blacksmith", 56,54, 290, -88);
+                    bgRoleAcList[0].SetCharaFrames("npc_blacksmith", 56,54);
 
                     if (buildingObject.isOpen)
                     {
@@ -227,11 +281,9 @@ public class BuildingPanel : BasePanel
                     roleIndex++;
                     break;
                 case "Resource":
-                   x = new List<int> { 139, 57, 290, 487, 339 };
-                     y = new List<int> { -88, -115, -88, -139, -180 };
                     for (int i=0;i<Mathf.Min(5, buildingObject.workerNow);i++)
                     {
-                        bgRoleAcList[i].SetCharaFrames("npc_farmer1", 56, 54, x[i], y[i]);
+                        bgRoleAcList[i].SetCharaFrames("npc_farmer1", 56, 54);
                         bgRoleAcList[i].SetAnim("Wipe",-1);
                         bgRoleAcList[i].SetRandomAnim(new List<string> { }, new List<byte> {  }, new List<short> {  });
                         roleIndex++;
@@ -244,20 +296,10 @@ public class BuildingPanel : BasePanel
                 case "Municipal":
                     break;
                 case "Inn":
-                    Debug.Log("gc.districtDic[buildingObject.districtID].recruitList.Count=" + gc.districtDic[buildingObject.districtID].recruitList.Count);
-                 
-
-                    //bgRoleImageList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(139, -88);
-                    //bgRoleImageList[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(57, -115);
-                    //bgRoleImageList[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -88);
-                    //bgRoleImageList[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(487, -139);
-                    //bgRoleImageList[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(339, -180);
-                    x = new List<int> { 139, 57, 290, 487, 339 };
-                    y = new List<int> { -88, -115, -88, -139, -180 };
 
                     for (int i = 0; i < gc.districtDic[buildingObject.districtID].recruitList.Count; i++)
                     {
-                        bgRoleAcList[i].SetCharaFrames(gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic, 39, 54, x[i], y[i]);
+                        bgRoleAcList[i].SetCharaFrames(gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic, 39, 54);
                         bgRoleAcList[i].SetAnim("Pic",-1);
                         bgRoleAcList[i].SetRandomAnim(new List<string> { "SayYes", "Laugh", "Surprise" }, new List<byte> { 20, 5, 15 }, new List<short> { 5, 5, 5 });
                         //bgRoleImageList[i].sprite= Resources.Load("Image/RolePic/" + gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic + "/Pic", typeof(Sprite)) as Sprite;

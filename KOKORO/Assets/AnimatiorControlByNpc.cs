@@ -88,11 +88,11 @@ public class AnimatiorControlByNpc : MonoBehaviour
         isPlay = false;
     }
 
-    public void SetCharaFrames(string name,int width,int height,int posX,int posY)
+    public void SetCharaFrames(string name,int width,int height)
     {
         charaName = name;
         GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-        GetComponent<RectTransform>().anchoredPosition = new Vector2(posX, posY);
+        //GetComponent<RectTransform>().anchoredPosition = new Vector2(posX, posY);
     }
 
     public void SetRandomAnim(List<string> name, List<byte> rate, List<short> times)

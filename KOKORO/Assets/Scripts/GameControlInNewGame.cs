@@ -264,7 +264,7 @@ public class GameControlInNewGame : MonoBehaviour
    
             short pid = kvp.Value.PrototypeID;
 
-            gc.buildingDic.Add(kvp.Value.ID, new BuildingObject(kvp.Value.ID, kvp.Value.PrototypeID, kvp.Value.DistrictID, DataManager.mBuildingDict[pid].Name, DataManager.mBuildingDict[pid].MainPic, kvp.Value.PositionX, kvp.Value.PositionY, kvp.Value.Layer, kvp.Value.PositionX > 64 ? AnimStatus.WalkLeft : AnimStatus.WalkRight, DataManager.mBuildingDict[pid].PanelType, DataManager.mBuildingDict[pid].Des, DataManager.mBuildingDict[pid].Level, DataManager.mBuildingDict[pid].Expense, DataManager.mBuildingDict[pid].UpgradeTo, false, false, kvp.Value.GridList, new List<int> { }, new List<int> { },
+            gc.buildingDic.Add(kvp.Value.ID, new BuildingObject(kvp.Value.ID, kvp.Value.PrototypeID, kvp.Value.DistrictID, DataManager.mBuildingDict[pid].Name, DataManager.mBuildingDict[pid].MainPic,kvp.Value.NpcList, kvp.Value.PositionX, kvp.Value.PositionY, kvp.Value.Layer, kvp.Value.PositionX > 64 ? AnimStatus.WalkLeft : AnimStatus.WalkRight, DataManager.mBuildingDict[pid].PanelType, DataManager.mBuildingDict[pid].Des, DataManager.mBuildingDict[pid].Level, DataManager.mBuildingDict[pid].Expense, DataManager.mBuildingDict[pid].UpgradeTo, false, false, kvp.Value.GridList, new List<int> { }, new List<int> { },
             DataManager.mBuildingDict[pid].People, DataManager.mBuildingDict[pid].Worker, 0,
             DataManager.mBuildingDict[pid].EWind, DataManager.mBuildingDict[pid].EFire, DataManager.mBuildingDict[pid].EWater, DataManager.mBuildingDict[pid].EGround, DataManager.mBuildingDict[pid].ELight, DataManager.mBuildingDict[pid].EDark,
             new List<BuildingTaskObject> { }, -1, 1));

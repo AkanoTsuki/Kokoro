@@ -1551,6 +1551,8 @@ public class BuildingPrototype : ISerializationCallbackReceiver
     public string Name;
     public string MainPic;
     public string BgPic;
+    public List<short> NpcPosX;
+    public List<short> NpcPosY;
     public byte SizeX;
     public byte SizeY;
     public byte SizeYBase;
@@ -1597,6 +1599,7 @@ public class BuildingObject
     private short PrototypeID;
     private string Name;
     private string MainPic;
+    private List<string> NpcPicList;
     private short PositionX; //基准点，没包括16f
     private short PositionY;
     private byte Layer;
@@ -1627,7 +1630,7 @@ public class BuildingObject
     private byte BuildProgress;//0建设中 1已完成 2升级中
    // private List<StuffType> ForgeAddStuff;
   //  private short ForgeNum;//生产数量 -1为不限制
-    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, short positionX,  short positionY, byte layer, AnimStatus doorInLine, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, bool isSale, List<string> gridList,
+    public BuildingObject(int id, short prototypeID, short districtID,string name, string mainPic, List<string> npcPicList, short positionX,  short positionY, byte layer, AnimStatus doorInLine, string panelType, string des, byte level, int expense, short upgradeTo, bool isOpen, bool isSale, List<string> gridList,
         List<int> heroList, List<int> customerList, 
          short people, short worker, short workerNow,
         byte eWind, byte eFire, byte eWater, byte eGround, byte eLight, byte eDark,
@@ -1638,6 +1641,7 @@ public class BuildingObject
         this.DistrictID = districtID;
         this.Name = name;
         this.MainPic = mainPic;
+        this.NpcPicList = npcPicList;
         this.PositionX = positionX;
         this.PositionY = positionY;
         this.Layer = layer;
@@ -1674,6 +1678,7 @@ public class BuildingObject
     public short districtID { get { return DistrictID; } }
     public string name{ get { return Name; } set { Name = value; } }
     public string mainPic { get { return MainPic; } set { MainPic = value; } }
+    public List<string> npcPicList { get { return NpcPicList; } set { NpcPicList = value; } }
     public short positionX { get { return PositionX; } }
     public short positionY { get { return PositionY; } }
     public byte layer { get { return Layer; } }
@@ -3089,6 +3094,7 @@ public class DevelopInitBuilding
     public short PositionX;
     public short PositionY;
     public byte Layer;
+    public List<string> NpcList;
     public List<string> GridList;
 }
 

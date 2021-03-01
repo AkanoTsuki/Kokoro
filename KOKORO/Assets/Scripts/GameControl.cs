@@ -1197,7 +1197,115 @@ public class GameControl : MonoBehaviour
 
         districtDic[nowCheckingDistrictID].buildingList.Add(buildingIndex);
 
-        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, posX, posY, layer, posX > 64 ? AnimStatus.WalkLeft : AnimStatus.WalkRight, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false, false, grid, new List<int> { }, new List<int> { }, 
+        //List<string> npcList;
+        List<string> npcPicList = new List<string>();
+        switch (DataManager.mBuildingDict[buildingId].BgPic)
+        {
+            case "DBG_HouseSmall_1":
+            case "DBG_HouseSmall_2":
+            case "DBG_HouseSmall_3":
+                for (int i = 0; i < 4; i++)
+                {
+                    npcPicList.Add(DataManager.mNpcName[Random.Range(0, DataManager.mNpcName.Length - 1)]);
+                }
+                break;
+            case "DBG_HouseMiddle_1":
+            case "DBG_HouseMiddle_2":
+            case "DBG_HouseMiddle_3":
+            case "DBG_HouseBig_1":
+            case "DBG_HouseBig_2":
+            case "DBG_HouseBig_3":
+                for (int i = 0; i < 6; i++)
+                {
+                    npcPicList.Add(DataManager.mNpcName[Random.Range(0, DataManager.mNpcName.Length - 1)]);
+                }
+                break;
+            case "DBG_WheatField":
+            case "DBG_VegetableField":
+            case "DBG_Orchard":
+            case "DBG_FlaxField":
+                for (int i = 0; i < 6; i++)
+                {
+                    npcPicList.Add("npc_farmer1");
+                }
+                break;
+            case "DBG_Lair":
+                npcPicList.Add("npc_animal_cow1");
+                npcPicList.Add("npc_animal_cow1");
+                npcPicList.Add("npc_animal_cow2");
+                for (int i = 3; i < 6; i++)
+                {
+                    npcPicList.Add("npc_farmer1");
+                }
+                break;
+            case "DBG_Fishpond":
+                for (int i = 0; i < 6; i++)
+                {
+                    npcPicList.Add("npc_other1_17");
+                }
+                break;
+            case "DBG_Outside":
+                for (int i = 0; i < 6; i++)
+                {
+                    npcPicList.Add("npc_other1_01");
+                }
+                break;
+            case "DBG_IronMine":
+            case "DBG_Quarry":
+                for (int i = 0; i < 6; i++)
+                {
+                    npcPicList.Add("npc_other2_04");
+                }
+                break;
+
+            case "DBG_Base1":
+                npcPicList.Add("npc_knight" + forceDic[districtDic[nowCheckingDistrictID].force].flagIndex);
+                npcPicList.Add("npc_knight" + forceDic[districtDic[nowCheckingDistrictID].force].flagIndex);
+                break;
+            case "DBG_WeaponShop":
+                npcPicList.Add("npc_other1_24");
+                for (int i = 0; i < 4; i++)
+                {
+                    npcPicList.Add("npc_blacksmith");
+                }
+                break;
+            case "DBG_ArmorShop":
+                npcPicList.Add("npc_other1_30");
+                break;
+            case "DBG_JewelryShop":
+                npcPicList.Add("npc_other2_13");
+                break;
+            case "DBG_Warehouse":
+                npcPicList.Add("npc_other2_10");
+                break;
+            case "DBG_Arena":
+                npcPicList.Add("npc_other2_10");
+                npcPicList.Add("npc_other1_07");
+                npcPicList.Add("npc_other2_21");
+                npcPicList.Add("npc_other2_17");
+                npcPicList.Add("npc_other2_06");
+                npcPicList.Add("npc_other2_02");
+                npcPicList.Add("npc_other2_01");
+                break;
+            case "DBG_Monastery":
+                npcPicList.Add("npc_other2_12");
+                npcPicList.Add("npc_other2_15");
+                for (int i = 0; i < 5; i++)
+                {
+                    npcPicList.Add(DataManager.mNpcName[Random.Range(0, DataManager.mNpcName.Length - 1)]);
+                }
+                break;
+            case "DBG_Inn":
+                npcPicList.Add("npc_other1_02");
+                npcPicList.Add("npc_other1_23");
+                break;
+            case "DBG_ScrollShop":
+                npcPicList.Add("npc_other2_08");
+                break;
+        }
+
+
+        buildingDic.Add(buildingIndex, new BuildingObject(buildingIndex, buildingId, nowCheckingDistrictID, DataManager.mBuildingDict[buildingId].Name, DataManager.mBuildingDict[buildingId].MainPic, npcPicList, posX, posY, layer, posX > 64 ? AnimStatus.WalkLeft : AnimStatus.WalkRight, DataManager.mBuildingDict[buildingId].PanelType, DataManager.mBuildingDict[buildingId].Des, DataManager.mBuildingDict[buildingId].Level, DataManager.mBuildingDict[buildingId].Expense, DataManager.mBuildingDict[buildingId].UpgradeTo, false, false, grid, new List<int> { }, new List<int> { }, 
             DataManager.mBuildingDict[buildingId].People, DataManager.mBuildingDict[buildingId].Worker, 0,
             DataManager.mBuildingDict[buildingId].EWind, DataManager.mBuildingDict[buildingId].EFire, DataManager.mBuildingDict[buildingId].EWater, DataManager.mBuildingDict[buildingId].EGround, DataManager.mBuildingDict[buildingId].ELight, DataManager.mBuildingDict[buildingId].EDark,
             new List<BuildingTaskObject> { },-1, 0));
