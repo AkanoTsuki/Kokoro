@@ -78,6 +78,8 @@ public class ConsumableListAndInfoPanel : BasePanel
         isShow = true;
     }
 
+
+
     //主面板关闭
     public override void OnHide()
     {

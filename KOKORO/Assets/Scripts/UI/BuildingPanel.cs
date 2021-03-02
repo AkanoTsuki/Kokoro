@@ -70,6 +70,28 @@ public class BuildingPanel : BasePanel
     public List<Text> recruit_growTextList;
     public List<Radar> recruit_radarList;
 
+    public RectTransform strengthenRt;
+    public Image strengthen_targetPicImage;
+    public Text strengthen_targetNameText;
+    public Button strengthen_targetBtn;
+    public List<Image> strengthen_itemImageList;
+    public List<Text> strengthen_itemTextList;
+    public List<Button> strengthen_itemBtnList;
+    public List<RectTransform> strengthen_itemSelectedRtList;
+    public Text strengthen_infoText;
+    public Text strengthen_goldCostText;
+    public Button strengthen_doBtn;
+
+    public RectTransform inlayRt;
+    public Image inlay_targetPicImage;
+    public Text inlay_targetNameText;
+    public Button inlay_targetBtn;
+    public List<Image> inlay_itemImageList;
+    public List<Text> inlay_itemTextList;
+    public List<Button> inlay_itemBtnList;
+    public List<Text> inlay_itemBtnTextList;
+    public Text inlay_goldCostText;
+
     public List<Button> totalSet_btnList;
     public Button totalSet_backBtn;
 
@@ -96,12 +118,22 @@ public class BuildingPanel : BasePanel
     public bool IsShowHistoryInfoPart = false;
     public bool IsShowSetForgePart = false;
     public bool IsShowRecruitPart = false;
+    public bool IsShowStrengthenPart = false;
+    public bool IsShowInlayPart = false;
+
     //运行变量-订单栏目
     public List<StuffType> forgeAddStuff = new List<StuffType> { StuffType.None, StuffType.None, StuffType.None};
     public short setForgePartNum = -1;
     public int setForgeTypeSmall = 0;
     public int setForgeType = 0;
     public int setForgeLevel = 0;
+
+    //运行变量-强化栏目
+    public int strengthenTargetID = -1;//装备实例ID
+    public int strengthenItemID = -1;//消耗品强化石模板ID
+
+    public int inlayTargetID = -1;//装备实例ID
+    public List<int> inlayItemID =new List<int> { -1,-1,-1};//消耗品镶嵌石模板ID
 
     //对象池
     List<GameObject> forgeGoPool = new List<GameObject>();
@@ -147,6 +179,9 @@ public class BuildingPanel : BasePanel
         setForge_numAdd1.onClick.AddListener(delegate () { gc.ChangeProduceEquipNum(nowCheckingBuildingID, 1); });
         setForge_numAdd10.onClick.AddListener(delegate () { gc.ChangeProduceEquipNum(nowCheckingBuildingID, 10); });
         setForge_numSetInfinite.onClick.AddListener(delegate () { gc.SetProduceEquipNum(nowCheckingBuildingID, -1); });
+
+        //TODO
+        strengthen_targetBtn.onClick.AddListener(delegate () { gc.SetProduceEquipNum(nowCheckingBuildingID, -1); });
 
         setWorker_minusBtn.onClick.AddListener(delegate () { gc.BuildingWorkerMinus(nowCheckingBuildingID); });
 
@@ -273,7 +308,7 @@ public class BuildingPanel : BasePanel
                     }
                     for (int i = 3; i < Mathf.Min(3, buildingObject.workerNow)+3; i++)
                     {
-                        bgRoleAcList[i].SetCharaFrames("npc_farmer1", 56, 54, true);
+                        bgRoleAcList[i].SetCharaFrames(buildingObject.npcPicList[i], 56, 54, true);
                         bgRoleAcList[i].SetAnim("Idle", -1);
                         bgRoleAcList[i].SetRandomAnim(new List<string> { "Wipe", "Sit", "Watering" }, new List<byte> { 20, 5, 15 }, new List<short> { 5, 1, 5 });
                         roleIndex++;
@@ -1153,6 +1188,147 @@ public class BuildingPanel : BasePanel
         IsShowHistoryInfoPart = false;
     }
 
+    //装备强化栏目-显示
+    public void ShowStrengthenPart(BuildingObject buildingObject, int x, int y)
+    {
+        UpdateStrengthenPart(buildingObject);
+
+        strengthenRt.anchoredPosition = new Vector2(x, y);
+        strengthenRt.gameObject.SetActive(true);
+        IsShowStrengthenPart = true;
+    }
+
+    public void UpdateStrengthenPart(BuildingObject buildingObject)
+    {
+        if (strengthenTargetID != -1)
+        {
+            strengthen_targetPicImage.sprite = Resources.Load<Sprite>("Image/ItemPic/" + gc.itemDic[strengthenTargetID].pic);
+            inlay_targetNameText.text = gc.itemDic[strengthenTargetID].name;
+
+            if (gc.itemDic[strengthenTargetID].level >= 10)
+            {
+                for (int i = 0; i < strengthen_itemImageList.Count; i++)
+                {
+                    strengthen_itemImageList[i].GetComponent<RectTransform>().localScale = Vector2.zero;
+                }
+            }
+            else
+            {
+                strengthen_itemImageList[0].GetComponent<RectTransform>().localScale = Vector2.one;
+                switch (DataManager.mItemDict[gc.itemDic[strengthenTargetID].prototypeID].TypeBig)
+                {
+                    case ItemTypeBig.Weapon:
+                        strengthen_itemImageList[0].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[26].Pic);
+                        strengthen_itemTextList[0].text = DataManager.mConsumableDict[26].Name + "(持有:" + gc.consumableNum[26] + ")\n强化成功率 " + DataManager.mConsumableDict[26].Value[gc.itemDic[strengthenTargetID].level] + "%";
+                        break;
+                    case ItemTypeBig.Armor:
+                    case ItemTypeBig.Subhand:
+                        strengthen_itemImageList[0].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[29].Pic);
+                        strengthen_itemTextList[0].text = DataManager.mConsumableDict[29].Name + "(持有:" + gc.consumableNum[29] + ")\n强化成功率 " + DataManager.mConsumableDict[29].Value[gc.itemDic[strengthenTargetID].level] + "%";
+                        break;
+                    case ItemTypeBig.Jewelry:
+                        strengthen_itemImageList[0].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[32].Pic);
+                        strengthen_itemTextList[0].text = DataManager.mConsumableDict[32].Name + "(持有:" + gc.consumableNum[32] + ")\n强化成功率 " + DataManager.mConsumableDict[32].Value[gc.itemDic[strengthenTargetID].level] + "%";
+                        break;
+                }
+
+
+
+                if (gc.itemDic[strengthenTargetID].level >= 4)
+                {
+                    strengthen_itemImageList[1].GetComponent<RectTransform>().localScale = Vector2.one;
+                    switch (DataManager.mItemDict[gc.itemDic[strengthenTargetID].prototypeID].TypeBig)
+                    {
+                        case ItemTypeBig.Weapon:
+                            strengthen_itemImageList[1].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[27].Pic);
+                            strengthen_itemTextList[1].text = DataManager.mConsumableDict[27].Name + "(持有:" + gc.consumableNum[27] + ")\n强化成功率 " + DataManager.mConsumableDict[27].Value[gc.itemDic[strengthenTargetID].level] + "%";
+                            break;
+                        case ItemTypeBig.Armor:
+                        case ItemTypeBig.Subhand:
+                            strengthen_itemImageList[1].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[30].Pic);
+                            strengthen_itemTextList[1].text = DataManager.mConsumableDict[30].Name + "(持有:" + gc.consumableNum[30] + ")\n强化成功率 " + DataManager.mConsumableDict[30].Value[gc.itemDic[strengthenTargetID].level] + "%";
+                            break;
+                        case ItemTypeBig.Jewelry:
+                            strengthen_itemImageList[1].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[33].Pic);
+                            strengthen_itemTextList[1].text = DataManager.mConsumableDict[33].Name + "(持有:" + gc.consumableNum[33] + ")\n强化成功率 " + DataManager.mConsumableDict[33].Value[gc.itemDic[strengthenTargetID].level] + "%";
+                            break;
+                    }
+                }
+                else
+                {
+                    strengthen_itemImageList[1].GetComponent<RectTransform>().localScale = Vector2.zero;
+                }
+
+                if (gc.itemDic[strengthenTargetID].level >= 7)
+                {
+                    strengthen_itemImageList[2].GetComponent<RectTransform>().localScale = Vector2.one;
+                    switch (DataManager.mItemDict[gc.itemDic[strengthenTargetID].prototypeID].TypeBig)
+                    {
+                        case ItemTypeBig.Weapon:
+                            strengthen_itemImageList[2].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[28].Pic);
+                            strengthen_itemTextList[2].text = DataManager.mConsumableDict[28].Name + "(持有:" + gc.consumableNum[28] + ")\n强化成功率 " + DataManager.mConsumableDict[28].Value[gc.itemDic[strengthenTargetID].level] + "%";
+                            break;
+                        case ItemTypeBig.Armor:
+                        case ItemTypeBig.Subhand:
+                            strengthen_itemImageList[2].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[31].Pic);
+                            strengthen_itemTextList[2].text = DataManager.mConsumableDict[31].Name + "(持有:" + gc.consumableNum[31] + ")\n强化成功率 " + DataManager.mConsumableDict[31].Value[gc.itemDic[strengthenTargetID].level] + "%";
+                            break;
+                        case ItemTypeBig.Jewelry:
+                            strengthen_itemImageList[2].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[34].Pic);
+                            strengthen_itemTextList[2].text = DataManager.mConsumableDict[34].Name + "(持有:" + gc.consumableNum[34] + ")\n强化成功率 " + DataManager.mConsumableDict[34].Value[gc.itemDic[strengthenTargetID].level] + "%";
+                            break;
+                    }
+                }
+                else
+                {
+                    strengthen_itemImageList[2].GetComponent<RectTransform>().localScale = Vector2.zero;
+                }
+            }
+
+        }
+        else
+        {
+            strengthen_targetPicImage.sprite = Resources.Load<Sprite>("Image/Empty");
+            inlay_targetNameText.text = "";
+
+            for (int i = 0; i < strengthen_itemImageList.Count; i++)
+            {
+                strengthen_itemImageList[i].GetComponent<RectTransform>().localScale = Vector2.zero;
+            }
+        }
+
+
+       
+
+
+    }
+
+    public void HideStrengthenPart()
+    {
+        strengthenRt.gameObject.SetActive(false);
+        IsShowStrengthenPart = false;
+    }
+
+    //装备镶嵌栏目-显示
+    public void ShowInlayPart(BuildingObject buildingObject, int x, int y)
+    {
+        UpdateInlayPart(buildingObject);
+
+        inlayRt.anchoredPosition = new Vector2(x, y);
+        inlayRt.gameObject.SetActive(true);
+        IsShowInlayPart = true;
+    }
+
+    public void UpdateInlayPart(BuildingObject buildingObject)
+    {
+
+    }
+
+    public void HideInlayPart()
+    {
+        inlayRt.gameObject.SetActive(false);
+        IsShowInlayPart = false;
+    }
 
     //订单任务栏目-显示
     public void ShowSetForgePart(BuildingObject buildingObject,int x,int y)

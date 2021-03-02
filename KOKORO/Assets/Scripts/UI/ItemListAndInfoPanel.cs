@@ -295,6 +295,33 @@ public class ItemListAndInfoPanel : BasePanel
         isShow = true;
     }
 
+    //主面板显示-选择强化装备
+    public void OnShowByChoose(int x, int y)
+    {
+        nowDistrictID = -1;
+        nowEquipPart = EquipPart.None;
+        titleText.text = "物品选择";
+
+        funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[0].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
+        funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "选择";
+        funcBtn[0].onClick.RemoveAllListeners();
+        funcBtn[0].onClick.AddListener(delegate () { /**/ });
+
+        HideFuncBtn(3);
+        closeBtn.GetComponent<RectTransform>().localScale = Vector3.one;
+
+        UpdateAllInfo(-1, 2);
+
+        HideBatch();
+
+        SetAnchoredPosition(x, y);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        transform.SetAsLastSibling();
+        isShow = true;
+    }
+
     //主面板关闭
     public override void OnHide()
     {

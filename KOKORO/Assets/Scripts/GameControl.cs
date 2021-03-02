@@ -896,6 +896,42 @@ public class GameControl : MonoBehaviour
             DataManager.mItemDict[itemID].Des + (",于" + timeYear + "年" + timeMonth + "月" + (districtObject != null ? ("在" + districtObject.name + "制作") : "获得")), DataManager.mItemDict[itemID].Cost, districtObject != null ? districtObject.id : (short)-1, false, -1, EquipPart.None);
     }
 
+    public void EquipmentStrengthen(int itemID,short consumableID)
+    {
+        if (consumableNum[consumableID]<=0)
+        {
+            MessagePanel.Instance.AddMessage("强化材料不足");
+            return;
+        }
+
+
+        int successRate = DataManager.mConsumableDict[consumableID].Value[itemDic[itemID].level];
+        int ran = Random.Range(0, 100);
+        if (ran < successRate)
+        {
+            itemDic[itemID].level++;
+            MessagePanel.Instance.AddMessage(itemDic[itemID].name+"强化成功(+"+(itemDic[itemID].level-1)+"→+"+ itemDic[itemID].level+")");
+        }
+        else
+        {
+            MessagePanel.Instance.AddMessage(itemDic[itemID].name + "强化失败");
+        }
+
+        ConsumableChange(consumableID, -1);
+    }
+
+    public void EquipmentStrengthenChooseItem(int itemID)
+    {
+        BuildingPanel.Instance.strengthenTargetID = itemID;
+        BuildingPanel.Instance.UpdateStrengthenPart(buildingDic[BuildingPanel.Instance.nowCheckingBuildingID]);
+        ItemListAndInfoPanel.Instance.OnHide();
+    }
+
+    public void EquipmentStrengthenChooseConsumable(int consumableID)
+    {
+
+    }
+
     public void EquipmentInlay(int itemID,byte slotIndex, short consumableID)
     {
         if (itemDic[itemID].slotItemID[slotIndex]!=-1)
@@ -1230,9 +1266,10 @@ public class GameControl : MonoBehaviour
                 }
                 break;
             case "DBG_Lair":
-                npcPicList.Add("npc_animal_cow1");
-                npcPicList.Add("npc_animal_cow1");
-                npcPicList.Add("npc_animal_cow2");
+                for (int i = 0; i < 3; i++)
+                {
+                    npcPicList.Add("npc_animal_" + (DataManager.mBuildingDict[buildingId].MainPic == "Lair" ? "cow" : "sheep") + Random.Range(1, 3));
+                }
                 for (int i = 3; i < 6; i++)
                 {
                     npcPicList.Add("npc_farmer1");
