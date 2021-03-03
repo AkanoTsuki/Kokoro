@@ -23,11 +23,7 @@ public class AnimatiorControlByNpc : MonoBehaviour
     public bool isHero = false;
 
      bool canRandom = true;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     void Update()
     {
@@ -44,8 +40,6 @@ public class AnimatiorControlByNpc : MonoBehaviour
                 {
                     currentIndex = 0;
 
-
-
                     if (needTimes != -1)
                     {
                         needTimes--;
@@ -59,10 +53,7 @@ public class AnimatiorControlByNpc : MonoBehaviour
                             {
                                 SetAnim("Idle", -1);
                             }
-
                         }
-
-
                     }
                     else
                     {
@@ -133,7 +124,7 @@ public class AnimatiorControlByNpc : MonoBehaviour
 
     public void SetAnim(string animStatus, short times)
     {
-        Debug.Log("SetAnim() animStatus=" + animStatus);
+        //Debug.Log("SetAnim() animStatus=" + animStatus);
         if (animStatus != "Idle")
         {
             setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/" + animStatus);
@@ -142,7 +133,7 @@ public class AnimatiorControlByNpc : MonoBehaviour
         else//默认
         {
             setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/SayYes");
-            Debug.Log("SetAnim() setFrames.Length=" + setFrames.Length);
+            //Debug.Log("SetAnim() setFrames.Length=" + setFrames.Length);
             if (setFrames.Length == 0)//用于动物
             {
                 int ran = Random.Range(0, 4);
@@ -153,11 +144,11 @@ public class AnimatiorControlByNpc : MonoBehaviour
                     case 2: setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Right"); break;
                     case 3: setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/Walk_Down"); break;
                 }
-                Debug.Log("SetAnim() setFrames.Length=" + setFrames.Length);
+                //Debug.Log("SetAnim() setFrames.Length=" + setFrames.Length);
             }
            
             needFrames = new Sprite[1];
-            Debug.Log("SetAnim() needFrames.Length=" + needFrames.Length);
+            //Debug.Log("SetAnim() needFrames.Length=" + needFrames.Length);
         }
 
 
@@ -193,13 +184,13 @@ public class AnimatiorControlByNpc : MonoBehaviour
                 needFrames[0] = setFrames[0];
                 //isLoop = true;
                 gameObject.GetComponent<Image>().sprite = needFrames[0];
-                Debug.Log("gameObject.GetComponent<Image>().sprite=" + gameObject.GetComponent<Image>().sprite);
+                //Debug.Log("gameObject.GetComponent<Image>().sprite=" + gameObject.GetComponent<Image>().sprite);
                 currentIndex = 0;
                 Play();
                 break;
           
             default:
-                Debug.Log("charaName=" + charaName + " animStatus=" + animStatus + " needFrames.Length=" + needFrames.Length + " setFrames.Length=" + setFrames.Length);
+                //Debug.Log("charaName=" + charaName + " animStatus=" + animStatus + " needFrames.Length=" + needFrames.Length + " setFrames.Length=" + setFrames.Length);
 
                 fps = 8.0f;
                 for (int i = 0; i < needFrames.Length; i++)

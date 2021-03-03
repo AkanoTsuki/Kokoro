@@ -62,6 +62,42 @@ public class ConsumableListAndInfoPanel : BasePanel
         isShow = true;
     }
 
+    //主面板显示-选择强化装备
+    public void OnShowByChoose(string type, int buidingID, int index,int x, int y)
+    {
+        nowItemID = -1;
+        UpdateSelectedPos(new Vector2(0, 5000));
+        GetComponent<RectTransform>().sizeDelta = new Vector2(712f, 520f);
+        listRt.localScale = Vector2.one;
+        UpdateList();
+        ClearInfo();
+
+        funcBtn[0].GetComponent<RectTransform>().localScale = Vector2.one;
+        funcBtn[0].GetComponent<Image>().color = new Color(132 / 255f, 236 / 255f, 137 / 255f, 255 / 255f);
+        funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "选择";
+        funcBtn[0].onClick.RemoveAllListeners();
+        funcBtn[0].onClick.AddListener(delegate () {
+            if (type == "strengthen")
+            {
+                BuildingPanel.Instance.strengthenItemID[index] =(short) nowItemID;
+                BuildingPanel.Instance.UpdateStrengthenPart(gc.buildingDic[buidingID]);
+            }
+            else if (type == "inlay")
+            {
+                BuildingPanel.Instance.inlayItemID[index] = (short)nowItemID;
+                BuildingPanel.Instance.UpdateInlayPart(gc.buildingDic[buidingID]);
+            }
+            OnHide();
+        });
+        HideFuncBtn(3);
+
+        SetAnchoredPosition(x, y);
+        GetComponent<CanvasGroup>().alpha = 1f;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        transform.SetAsLastSibling();
+        isShow = true;
+    }
+
     //主面板显示-查看物品详情
     public void OnShow(int itemID, int x, int y)
     {

@@ -113,7 +113,8 @@ public enum HeroType
 public enum ConsumableType
 {
     Drug,
-    SlotStone
+    SlotStone,
+    StrengthenStone
 }
 
 public enum ItemTypeBig
@@ -490,14 +491,14 @@ public class ItemObject
     private byte Level;
     private List<ItemAttribute> Attr;
     private List<byte> SlotLevel;
-    private List<int> SlotItemID;
+    private List<short> SlotItemID;
     private string Des;
     private int Cost;
     private short DistrictID;//如果是装备，存储在哪个地区的制品仓库，-1为整体收藏库
     private bool IsGoods;//是否商品（DistrictID！=-1）
     private int HeroID;//装备在哪个英雄身上，-1为未装备
     private EquipPart HeroPart;//（HeroID！=-1）
-    public ItemObject(int objectID, int prototypeID, string name, string pic, byte rank, byte level, List<ItemAttribute> attr, List<byte> slotLevel, List<int> slotItemID, string des, int cost, short districtID, bool isGoods, int heroID, EquipPart heroPart)
+    public ItemObject(int objectID, int prototypeID, string name, string pic, byte rank, byte level, List<ItemAttribute> attr, List<byte> slotLevel, List<short> slotItemID, string des, int cost, short districtID, bool isGoods, int heroID, EquipPart heroPart)
     {
         this.ObjectID = objectID;
         this.PrototypeID = prototypeID;
@@ -523,7 +524,7 @@ public class ItemObject
     public byte level { get { return Level; } set { Level = value; } }
     public List<ItemAttribute> attr { get { return Attr; } }
     public List<byte> slotLevel { get { return SlotLevel; } set { SlotLevel = value; } }
-    public List<int> slotItemID { get { return SlotItemID; } set { SlotItemID = value; } }
+    public List<short> slotItemID { get { return SlotItemID; } set { SlotItemID = value; } }
     public string des { get { return Des; } }
     public int cost { get { return Cost; } }
     public short districtID { get { return DistrictID; } set { DistrictID = value; } }

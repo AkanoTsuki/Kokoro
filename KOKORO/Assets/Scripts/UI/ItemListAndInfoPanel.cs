@@ -296,7 +296,7 @@ public class ItemListAndInfoPanel : BasePanel
     }
 
     //主面板显示-选择强化装备
-    public void OnShowByChoose(int x, int y)
+    public void OnShowByChoose(string type,int buidingID, int x, int y)
     {
         nowDistrictID = -1;
         nowEquipPart = EquipPart.None;
@@ -306,7 +306,20 @@ public class ItemListAndInfoPanel : BasePanel
         funcBtn[0].GetComponent<Image>().color = new Color(243 / 255f, 160 / 255f, 135 / 255f, 255 / 255f);
         funcBtn[0].transform.GetChild(0).GetComponent<Text>().text = "选择";
         funcBtn[0].onClick.RemoveAllListeners();
-        funcBtn[0].onClick.AddListener(delegate () { /**/ });
+        funcBtn[0].onClick.AddListener(delegate () {
+            if (type == "strengthen")
+            {
+                BuildingPanel.Instance.strengthenTargetID = nowItemID;
+                BuildingPanel.Instance.UpdateStrengthenPart(gc.buildingDic[buidingID]);
+            }
+            else if (type == "inlay")
+            {
+                BuildingPanel.Instance.inlayTargetID = nowItemID;
+                BuildingPanel.Instance.UpdateInlayPart(gc.buildingDic[buidingID]);
+            }
+    
+            OnHide();
+        });
 
         HideFuncBtn(3);
         closeBtn.GetComponent<RectTransform>().localScale = Vector3.one;
@@ -407,7 +420,7 @@ public class ItemListAndInfoPanel : BasePanel
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + row * 224f, -4 + col * -22f);
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObjects[i].pic);
-            go.transform.GetChild(1).GetComponent<Text>().text = "<color=#"+ gc.OutputItemRankColorString(itemObjects[i].rank) + ">"+itemObjects[i].name+"</color>";
+            go.transform.GetChild(1).GetComponent<Text>().text = "<color=#"+ gc.OutputItemRankColorString(itemObjects[i].rank) + ">"+itemObjects[i].name+(itemObjects[i].level==0?"":(" +"+ itemObjects[i].level)) +"</color>";
             go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.Item;
             go.transform.GetComponent<InteractiveLabel>().index = itemObjects[i].objectID;
         }
@@ -526,7 +539,7 @@ public class ItemListAndInfoPanel : BasePanel
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f + row * 224f, -4 + col * -22f);
 
             go.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObjects[i].pic);
-            go.transform.GetChild(1).GetComponent<Text>().text = "<color=#" + gc.OutputItemRankColorString(itemObjects[i].rank) + ">" + itemObjects[i].name + "</color>";
+            go.transform.GetChild(1).GetComponent<Text>().text = "<color=#" + gc.OutputItemRankColorString(itemObjects[i].rank) + ">" + itemObjects[i].name + (itemObjects[i].level == 0 ? "" : (" +" + itemObjects[i].level)) + "</color>";
             go.transform.GetComponent<InteractiveLabel>().index = itemObjects[i].objectID;
             go.transform.GetComponent<InteractiveLabel>().labelType = LabelType.ItemToSet;
             int index = i;
@@ -555,7 +568,7 @@ public class ItemListAndInfoPanel : BasePanel
         }
 
         info_picText.sprite = Resources.Load<Sprite>("Image/ItemPic/" + itemObject.pic);
-        info_nameText.text = "<color=#"+gc.OutputItemRankColorString(itemObject.rank) +">"+itemObject.name+"</color>\n"+gc.OutputSignStr("★", itemObject.rank);
+        info_nameText.text = "<color=#"+gc.OutputItemRankColorString(itemObject.rank) +">"+itemObject.name+ (itemObject.level == 0 ? "" : (" +" + itemObject.level)) + "</color>\n"+gc.OutputSignStr("★", itemObject.rank);
         string str = "";
 
 
@@ -610,7 +623,7 @@ public class ItemListAndInfoPanel : BasePanel
                         case Attribute.MAtkMin: atkValue[2] = itemObject.attr[i].value; break;
                         case Attribute.MAtkMax: atkValue[3] = itemObject.attr[i].value; break;
                         case Attribute.Spd: atkValue[4] = itemObject.attr[i].value; break;
-                        default: strBasic += "\n"+ GetAttrLineStr(itemObject.attr[i]); lineCount++; break;
+                        default: strBasic += "\n"+ gc.OutputAttrLineStr(itemObject.attr[i]); lineCount++; break;
                     }
                 }
                 else if (DataManager.mItemDict[itemObject.prototypeID].TypeBig == ItemTypeBig.Armor)
@@ -619,12 +632,12 @@ public class ItemListAndInfoPanel : BasePanel
                     {
                         case Attribute.Def: atkValue[0] = itemObject.attr[i].value; break;
                         case Attribute.MDef: atkValue[1] = itemObject.attr[i].value; break;
-                        default: strBasic += "\n" + GetAttrLineStr(itemObject.attr[i]) ; lineCount++; break;
+                        default: strBasic += "\n" + gc.OutputAttrLineStr(itemObject.attr[i]) ; lineCount++; break;
                     }
                 }
                 else
                 { 
-                    strBasic += "\n"+ GetAttrLineStr(itemObject.attr[i]) ; lineCount++;
+                    strBasic += "\n"+ gc.OutputAttrLineStr(itemObject.attr[i]) ; lineCount++;
                 }
 
 
@@ -633,7 +646,7 @@ public class ItemListAndInfoPanel : BasePanel
             else if (itemObject.attr[i].attrS == AttributeSource.LemmaAdd)
             {
                // Debug.Log(" LemmaAdd");
-                strLemma += "\n"+ GetAttrLineStr(itemObject.attr[i])  ; lineCount++;
+                strLemma += "\n"+ gc.OutputAttrLineStr(itemObject.attr[i])  ; lineCount++;
             }
         }
         if (strLemma != "")
@@ -740,7 +753,7 @@ public class ItemListAndInfoPanel : BasePanel
                         DataManager.mConsumableDict[itemObject.slotItemID[i]].SkillID[j],
                         DataManager.mConsumableDict[itemObject.slotItemID[i]].SkillAddType[j],
                         DataManager.mConsumableDict[itemObject.slotItemID[i]].Value[j]);
-                    strSlot += "\n   " + GetAttrLineStr(itemAttribute); lineCount++;
+                    strSlot += "\n   " + gc.OutputAttrLineStr(itemAttribute); lineCount++;
                 }
                 info_slotImage[i].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mConsumableDict[itemObject.slotItemID[i]].Pic);
             }
@@ -782,7 +795,7 @@ public class ItemListAndInfoPanel : BasePanel
                     DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].SkillID[i],
                     DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].SkillAddType[i],
                     DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].Value[i]);
-                strSuite += "\n[" + DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].NeedPart[i] + "件]" + GetAttrLineStr(itemAttribute);
+                strSuite += "\n[" + DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].NeedPart[i] + "件]" + gc.OutputAttrLineStr(itemAttribute);
             }
         }
         if (strSuite != "")
@@ -799,119 +812,6 @@ public class ItemListAndInfoPanel : BasePanel
         info_desText.text = str;
     }
     
-    //物品详情-更新（辅助方法：输出属性行）
-    string GetAttrLineStr( ItemAttribute  itemAttribute)
-    {
-        string str;
-        string strValue;
-        if (itemAttribute.value > 0)
-        {
-            strValue = " +" + itemAttribute.value;
-        }
-        else
-        {
-            strValue = " " + itemAttribute.value;
-        }
-
-        switch (itemAttribute.attr)
-        {
-            case Attribute.Hp: str = "体力上限" + strValue; break;
-            case Attribute.Mp: str = "魔力上限" + strValue; break;
-            case Attribute.HpRenew: str = "体力恢复" + strValue + "%"; break;
-            case Attribute.MpRenew: str = "魔力恢复" + strValue + "%"; break;
-            case Attribute.AtkMin: str = "最小物攻" + strValue; break;
-            case Attribute.AtkMax: str = "最大物攻" + strValue; break;
-            case Attribute.MAtkMin: str = "最小魔攻" + strValue; break;
-            case Attribute.MAtkMax: str = "最大魔攻" + strValue; break;
-            case Attribute.Def: str = "物防" + strValue; break;
-            case Attribute.MDef: str = "魔防" + strValue; break;
-            case Attribute.Hit: str = "命中" + strValue; break;
-            case Attribute.Dod: str = "闪避" + strValue; break;
-            case Attribute.CriR: str = "暴击" + strValue; break;
-            case Attribute.CriD: str = "暴击伤害" + strValue + "%"; break;
-            case Attribute.Spd: str = "速度" + strValue; break;
-            case Attribute.WindDam: str = "风系伤害" + strValue + "%"; break;
-            case Attribute.FireDam: str = "火系伤害" + strValue + "%"; break;
-            case Attribute.WaterDam: str = "水系伤害" + strValue + "%"; break;
-            case Attribute.GroundDam: str = "地系伤害" + strValue + "%"; break;
-            case Attribute.LightDam: str = "光系伤害" + strValue + "%"; break;
-            case Attribute.DarkDam: str = "暗系伤害" + strValue + "%"; break;
-            case Attribute.WindRes: str = "风系抗性" + strValue + "%"; break;
-            case Attribute.FireRes: str = "火系抗性" + strValue + "%"; break;
-            case Attribute.WaterRes: str = "水系抗性" + strValue + "%"; break;
-            case Attribute.GroundRes: str = "地系抗性" + strValue + "%"; break;
-            case Attribute.LightRes: str = "光系抗性" + strValue + "%"; break;
-            case Attribute.DarkRes: str = "暗系抗性" + strValue + "%"; break;
-            case Attribute.DizzyRes: str = "眩晕抗性" + strValue + "%"; break;
-            case Attribute.ConfusionRes: str = "混乱抗性" + strValue + "%"; break;
-            case Attribute.PoisonRes: str = "中毒抗性" + strValue + "%"; break;
-            case Attribute.SleepRes: str = "睡眠抗性" + strValue + "%"; break;
-            case Attribute.GoldGet: str = "金币加成" + strValue + "%"; break;
-            case Attribute.ExpGet: str = "经验值加成" + strValue + "%"; break;
-            case Attribute.ItemGet: str = "稀有掉落加成" + strValue + "%"; break;
-            case Attribute.WorkPlanting: str = "种植能力" + strValue; break;
-            case Attribute.WorkFeeding: str = "饲养能力" + strValue; break;
-            case Attribute.WorkFishing: str = "钓鱼能力" + strValue; break;
-            case Attribute.WorkHunting: str = "打猎能力" + strValue; break;
-            case Attribute.WorkMining: str = "采石能力" + strValue; break;
-            case Attribute.WorkQuarrying: str = "挖矿能力" + strValue; break;
-            case Attribute.WorkFelling: str = "伐木能力" + strValue; break;
-            case Attribute.WorkBuild: str = "建筑能力" + strValue; break;
-            case Attribute.WorkMakeWeapon: str = "武器锻造能力" + strValue; break;
-            case Attribute.WorkMakeArmor: str = "防具制作能力" + strValue; break;
-            case Attribute.WorkMakeJewelry: str = "饰品制作能力" + strValue; break;
-            case Attribute.WorkSundry: str = "打杂能力" + strValue; break;
-            case Attribute.Skill:
-
-                if (DataManager.mSkillDict[itemAttribute.skillID].FlagDamage)
-                {
-                    switch (itemAttribute.skillAddType)
-                    {
-                        case AttributeSkill.Damage: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name+"]</color>的伤害提升" + itemAttribute.value + "%"; break;
-                        case AttributeSkill.CriDamage: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>造成暴击时伤害提升" + itemAttribute.value + "%"; break;
-                        case AttributeSkill.Probability: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name+ "]</color>的触发几率提升" + itemAttribute.value + "%"; break;
-                        case AttributeSkill.CostMp: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>消耗MP减少" + itemAttribute.value + "%"; break;
-                        case AttributeSkill.IgnoreDef: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>" + itemAttribute.value + "%几率无视目标物防"; break;
-                        case AttributeSkill.IgnoreMDef: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>" + itemAttribute.value + "%几率无视目标魔防"; break;
-                        case AttributeSkill.SuckHp: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name+ "]</color>伤害" + itemAttribute.value + "%转化为体力"; break;
-                        case AttributeSkill.SuckMp: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>伤害" + itemAttribute.value + "%转化为魔力"; break;
-                        case AttributeSkill.TargetNum: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name+ "]</color>的影响目标数量增加" + itemAttribute.value ; break;
-                        case AttributeSkill.Invincible: str = "使用<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name+ "]</color>后有" + itemAttribute.value + "%几率在下一回合无敌"; break;
-                        default: str = "未定义技能类型"; break;
-                    }
-                }
-                else if (DataManager.mSkillDict[itemAttribute.skillID].Cure > 0)
-                {
-                    switch (itemAttribute.skillAddType)
-                    {
-                        case AttributeSkill.Damage: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>的回复量提升" + itemAttribute.value + "%"; break;
-                        case AttributeSkill.Probability: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>的触发几率提升" + itemAttribute.value + "%"; break;
-                        case AttributeSkill.CostMp: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>消耗MP减少" + itemAttribute.value + "%"; break;
-                        case AttributeSkill.Ap: str = "使用<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>后加快行动"; break;
-                        case AttributeSkill.Invincible: str = "使用<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>后有" + itemAttribute.value + "%几率在下一回合无敌"; break;
-                        default: str = "未定义技能类型"; break;
-                    }
-                }
-                else
-                {
-                    switch (itemAttribute.skillAddType)
-                    {
-                        case AttributeSkill.Probability: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>的触发几率提升" + itemAttribute.value + "%"; break;
-                        case AttributeSkill.CostMp: str = "<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>消耗MP减少" + itemAttribute.value + "%"; break;
-                        case AttributeSkill.Invincible: str = "使用<color=#EDBDFF>[" + DataManager.mSkillDict[itemAttribute.skillID].Name + "]</color>后有" + itemAttribute.value + "%几率在下一回合无敌"; break;
-                        default: str = "未定义技能类型"; break;
-                    }
-                }
-                break;
-
-            default: str = "未定义类型"; break;
-        }
-        if (itemAttribute.value < 0)
-        {
-            str = "<color=#FF554F>" + str + "</color>";
-        }
-        return str;
-    }
     
     //物品详情-清空
     public void ClearInfo()
