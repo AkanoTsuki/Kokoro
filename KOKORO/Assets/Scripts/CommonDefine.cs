@@ -85,7 +85,9 @@ public enum LabelType
     AdventurePart,
     Skill,
     ShopItem,
-    Consumable
+    Consumable,
+    BuildingStrengthen,
+    BuildingInlay
     // AreaMapDistrict
 }
 
@@ -112,6 +114,7 @@ public enum HeroType
 
 public enum ConsumableType
 {
+    None,
     Drug,
     SlotStone,
     StrengthenStone
@@ -362,20 +365,23 @@ public class ItemAttribute
 {
     private Attribute Attr;
     private AttributeSource AttrS;
+    private byte SlotIndex;
     private int Value;
     private short SkillID;
     private AttributeSkill SkillAddType;
-    public ItemAttribute(Attribute attr, AttributeSource attrS, short skillID, AttributeSkill skillAddType, int value)
+    public ItemAttribute(Attribute attr, AttributeSource attrS, byte slotIndex, short skillID, AttributeSkill skillAddType, int value)
     {
         this.Attr = attr;
         this.AttrS = attrS;
+        this.SlotIndex = slotIndex;
         this.SkillID = skillID;
         this.SkillAddType = skillAddType;
         this.Value = value;
     }
     public Attribute attr { get { return Attr; } }
     public AttributeSource attrS { get { return AttrS; } }
-    public int value { get { return Value; } }
+    public byte slotIndex { get { return SlotIndex; } }
+    public int value { get { return Value; } set { Value = value; } }
     public short skillID { get { return SkillID; } }
     public AttributeSkill skillAddType { get { return SkillAddType; } }
 }

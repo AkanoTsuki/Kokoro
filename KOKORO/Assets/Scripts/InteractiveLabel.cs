@@ -96,6 +96,29 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
             }
   
         }
+        else if (labelType == LabelType.BuildingStrengthen)
+        {
+            if (index != -1)
+            {
+                if (!ItemListAndInfoPanel.Instance.isChooseTarget)
+                {
+                    ItemListAndInfoPanel.Instance.OnShow(index, 1178, -104);
+                }
+            
+            }
+
+        }
+        else if (labelType == LabelType.BuildingInlay)
+        {
+            if (index != -1)
+            {
+                if (!ItemListAndInfoPanel.Instance.isChooseTarget)
+                {
+                    ItemListAndInfoPanel.Instance.OnShow(index, 1178, -104);
+                }
+            }
+
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -143,12 +166,27 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 return;
             }
 
-            HeroPanel.Instance.OnShow(gc.heroDic[HeroPanel.Instance.nowSelectedHeroID], HeroPanel.Instance.nowEquipState,  (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y));
+            HeroPanel.Instance.OnShow(gc.heroDic[HeroPanel.Instance.nowSelectedHeroID], HeroPanel.Instance.nowEquipState, (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y));
 
         }
         else if (labelType == LabelType.EquipmentLook)
         {
             ItemListAndInfoPanel.Instance.OnHide();
+        }
+        else if (labelType == LabelType.BuildingStrengthen)
+        {
+            if (!ItemListAndInfoPanel.Instance.isChooseTarget)
+            {
+                ItemListAndInfoPanel.Instance.OnHide();
+            }
+
+        }
+        else if (labelType == LabelType.BuildingInlay)
+        {
+            if (!ItemListAndInfoPanel.Instance.isChooseTarget)
+            {
+                ItemListAndInfoPanel.Instance.OnHide();
+            }
         }
     }
 }

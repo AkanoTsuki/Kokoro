@@ -360,6 +360,8 @@ public class PlayMainPanel : BasePanel
             }
         }
 
+        Debug.Log("num="+ num);
+
         if (num > 0)
         {
             left_inventoryEquipNumText.text = num.ToString();

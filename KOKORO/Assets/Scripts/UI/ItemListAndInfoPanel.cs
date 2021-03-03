@@ -106,7 +106,9 @@ public class ItemListAndInfoPanel : BasePanel
     public int nowItemID = -1;
     public EquipPart nowEquipPart = EquipPart.None;
     public short nowDistrictID = -1;
-   
+
+    public bool isChooseTarget = false;//用于选择强化镶嵌目标的标记
+
     //对象池
     List<GameObject> itemGoPool=new List<GameObject>();
 
@@ -317,7 +319,7 @@ public class ItemListAndInfoPanel : BasePanel
                 BuildingPanel.Instance.inlayTargetID = nowItemID;
                 BuildingPanel.Instance.UpdateInlayPart(gc.buildingDic[buidingID]);
             }
-    
+            isChooseTarget = false;
             OnHide();
         });
 
@@ -749,7 +751,7 @@ public class ItemListAndInfoPanel : BasePanel
                 for (int j = 0; j < DataManager.mConsumableDict[itemObject.slotItemID[i]].AttributeType.Count; j++)
                 {
                     ItemAttribute itemAttribute = new ItemAttribute(DataManager.mConsumableDict[itemObject.slotItemID[i]].AttributeType[j],
-                        AttributeSource.SlotAdd,
+                        AttributeSource.SlotAdd, 0,
                         DataManager.mConsumableDict[itemObject.slotItemID[i]].SkillID[j],
                         DataManager.mConsumableDict[itemObject.slotItemID[i]].SkillAddType[j],
                         DataManager.mConsumableDict[itemObject.slotItemID[i]].Value[j]);
@@ -791,7 +793,7 @@ public class ItemListAndInfoPanel : BasePanel
             for (int i = 0; i < DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].NeedPart.Count; i++)
             {
                 ItemAttribute itemAttribute = new ItemAttribute(DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].AttributeType[i],
-                    AttributeSource.LemmaAdd,
+                    AttributeSource.LemmaAdd, 0,
                     DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].SkillID[i],
                     DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].SkillAddType[i],
                     DataManager.mItemSuiteDict[DataManager.mItemDict[itemObject.prototypeID].SuiteID].Value[i]);

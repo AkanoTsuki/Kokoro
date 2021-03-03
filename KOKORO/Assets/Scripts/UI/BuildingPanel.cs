@@ -137,7 +137,7 @@ public class BuildingPanel : BasePanel
 
     public int inlayTargetID = -1;//装备实例ID
     public List<short> inlayItemID =new List<short> { -1,-1,-1};//消耗品镶嵌石模板ID
-    public int inlayChooseIndex = -1;
+    //public int inlayChooseIndex = -1;
 
     //对象池
     List<GameObject> forgeGoPool = new List<GameObject>();
@@ -150,8 +150,7 @@ public class BuildingPanel : BasePanel
 
     void Start()
     {
-        strengthenItemID = new List<short> { -1, -1, -1 };
-        inlayItemID = new List<short> { -1, -1, -1 };
+      
         forgeAddStuff = new List<StuffType> { StuffType.None, StuffType.None, StuffType.None };
 
         totalSet_backBtn.onClick.AddListener(delegate () {
@@ -189,11 +188,26 @@ public class BuildingPanel : BasePanel
         setForge_numSetInfinite.onClick.AddListener(delegate () { gc.SetProduceEquipNum(nowCheckingBuildingID, -1); });
 
         //TODO
-        strengthen_targetBtn.onClick.AddListener(delegate () { ItemListAndInfoPanel.Instance.OnShowByChoose("strengthen", nowCheckingBuildingID,76,-104); });
+        strengthen_targetBtn.onClick.AddListener(delegate () {
+            if (ConsumableListAndInfoPanel.Instance.isShow)
+            {
+                ConsumableListAndInfoPanel.Instance.OnHide();
+            }
+            ItemListAndInfoPanel.Instance.isChooseTarget = true;
+            ItemListAndInfoPanel.Instance.OnShowByChoose("strengthen", nowCheckingBuildingID,76,-104); }
+        );
         strengthen_itemBtnList[0].onClick.AddListener(delegate () { strengthenChooseIndex = 0;UpdateStrengthenPart(gc.buildingDic[nowCheckingBuildingID]); });
         strengthen_itemBtnList[1].onClick.AddListener(delegate () { strengthenChooseIndex = 1; UpdateStrengthenPart(gc.buildingDic[nowCheckingBuildingID]); });
         strengthen_itemBtnList[2].onClick.AddListener(delegate () { strengthenChooseIndex = 2; UpdateStrengthenPart(gc.buildingDic[nowCheckingBuildingID]); });
 
+        inlay_targetBtn.onClick.AddListener(delegate () {
+            if (ConsumableListAndInfoPanel.Instance.isShow)
+            {
+                ConsumableListAndInfoPanel.Instance.OnHide();
+            }
+            ItemListAndInfoPanel.Instance.isChooseTarget = true;
+            ItemListAndInfoPanel.Instance.OnShowByChoose("inlay", nowCheckingBuildingID, 76, -104); 
+        });
         inlay_itemChooseBtnList[0].onClick.AddListener(delegate () { ConsumableListAndInfoPanel.Instance.OnShowByChoose("inlay", nowCheckingBuildingID, 0, 76, -104);});
         inlay_itemChooseBtnList[1].onClick.AddListener(delegate () { ConsumableListAndInfoPanel.Instance.OnShowByChoose("inlay", nowCheckingBuildingID, 1, 76, -104); });
         inlay_itemChooseBtnList[2].onClick.AddListener(delegate () { ConsumableListAndInfoPanel.Instance.OnShowByChoose("inlay", nowCheckingBuildingID, 2, 76, -104); });
@@ -612,7 +626,7 @@ public class BuildingPanel : BasePanel
                         HideHistoryInfoPart();
                         HideRecruitPart();
                         HideStrengthenPart();
-                        ShowInlayPart(buildingObject, 728, -12);
+                        ShowInlayPart(buildingObject, 700, -12);
                         totalSet_backBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     });
                     buttonIndex++;
@@ -1249,6 +1263,8 @@ public class BuildingPanel : BasePanel
     //装备强化栏目-显示
     public void ShowStrengthenPart(BuildingObject buildingObject, int x, int y)
     {
+        strengthenItemID = new List<short> { -1, -1, -1 };
+   
         strengthenTargetID = -1;
         strengthenChooseIndex = -1;
         UpdateStrengthenPart(buildingObject);
@@ -1260,6 +1276,7 @@ public class BuildingPanel : BasePanel
 
     public void UpdateStrengthenPart(BuildingObject buildingObject)
     {
+        strengthen_targetPicImage.GetComponent<InteractiveLabel>().index = strengthenTargetID;
         if (strengthenTargetID != -1)
         {
             strengthen_targetPicImage.sprite = Resources.Load<Sprite>("Image/ItemPic/" + gc.itemDic[strengthenTargetID].pic);
@@ -1299,6 +1316,7 @@ public class BuildingPanel : BasePanel
                 }
             }
 
+            strengthen_goldCostText.text = "费用 " + (gc.itemDic[strengthenTargetID].level+1) * 100 + "金币";
         }
         else
         {
@@ -1309,8 +1327,12 @@ public class BuildingPanel : BasePanel
             {
                 strengthen_itemImageList[i].GetComponent<RectTransform>().localScale = Vector2.zero;
             }
+
+            strengthen_goldCostText.text = "";
         }
 
+
+       
 
         strengthen_doBtn.onClick.RemoveAllListeners();
         strengthen_doBtn.onClick.AddListener(delegate () {
@@ -1363,7 +1385,9 @@ public class BuildingPanel : BasePanel
     //装备镶嵌栏目-显示
     public void ShowInlayPart(BuildingObject buildingObject, int x, int y)
     {
+        inlayItemID = new List<short> { -1, -1, -1 };
         inlayTargetID = -1;
+
         UpdateInlayPart(buildingObject);
 
         inlayRt.anchoredPosition = new Vector2(x, y);
@@ -1373,11 +1397,12 @@ public class BuildingPanel : BasePanel
 
     public void UpdateInlayPart(BuildingObject buildingObject)
     {
-       
+        inlay_targetPicImage.GetComponent<InteractiveLabel>().index = inlayTargetID;
         if (inlayTargetID != -1)
         {
             inlay_targetPicImage.sprite = Resources.Load<Sprite>("Image/ItemPic/" + gc.itemDic[inlayTargetID].pic);
             inlay_targetNameText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[inlayTargetID].rank) + ">" + gc.itemDic[inlayTargetID].name+(gc.itemDic[inlayTargetID].level==0?"":(" +"+ gc.itemDic[inlayTargetID].level)) + "</color>";
+            
 
             for (byte i = 0; i < gc.itemDic[inlayTargetID].slotItemID.Count; i++)
             {
@@ -1389,46 +1414,30 @@ public class BuildingPanel : BasePanel
                     for (int j = 0; j < DataManager.mConsumableDict[gc.itemDic[inlayTargetID].slotItemID[i]].AttributeType.Count; j++)
                     {
                         ItemAttribute itemAttribute = new ItemAttribute(DataManager.mConsumableDict[gc.itemDic[inlayTargetID].slotItemID[i]].AttributeType[j],
-                            AttributeSource.SlotAdd,
+                            AttributeSource.SlotAdd, 0,
                             DataManager.mConsumableDict[gc.itemDic[inlayTargetID].slotItemID[i]].SkillID[j],
                             DataManager.mConsumableDict[gc.itemDic[inlayTargetID].slotItemID[i]].SkillAddType[j],
                             DataManager.mConsumableDict[gc.itemDic[inlayTargetID].slotItemID[i]].Value[j]);
-                        strSlot += "\n" + gc.OutputAttrLineStr(itemAttribute); 
+                        strSlot += "\n " + gc.OutputAttrLineStr(itemAttribute); 
                     }
 
-                    inlay_itemTextList[i].text ="["+ gc.itemDic[inlayTargetID].slotLevel[i] + "]-"+ DataManager.mConsumableDict[gc.itemDic[inlayTargetID].slotItemID[i]].Name+ strSlot; 
+                    inlay_itemTextList[i].text ="["+ gc.itemDic[inlayTargetID].slotLevel[i] + "]-"+ DataManager.mConsumableDict[gc.itemDic[inlayTargetID].slotItemID[i]].Name+ "<color=#F3EE89>" + strSlot+"</color>"; 
                     inlay_itemChooseBtnList[i].GetComponent<RectTransform>().localScale = Vector2.zero;
-                    inlay_itemDoBtnTextList[i].text = "卸下";
+                    inlay_itemDoBtnTextList[i].text = "解除";
                     inlay_itemDoBtnList[i].GetComponent<RectTransform>().localScale = Vector2.one;
                     inlay_itemDoBtnList[i].onClick.RemoveAllListeners();
+                    byte index = i;
                     inlay_itemDoBtnList[i].onClick.AddListener(delegate () {
-                        gc.EquipmentUnlay(inlayTargetID, i);
+                        gc.EquipmentUnlay(inlayTargetID, index);
                     });
                 }
                 else
                 {
                     if (inlayItemID[i] == -1)//未镶嵌且未选择宝石
                     {
+                        inlay_itemImageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon102"+(gc.itemDic[inlayTargetID].slotLevel[i]-1));
+                        inlay_itemTextList[i].text = "["+ gc.itemDic[inlayTargetID].slotLevel[i] + "]-未镶嵌";
 
-                        switch (gc.itemDic[inlayTargetID].slotLevel[i])
-                        {
-                            case 1:
-                                inlay_itemImageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon1020");
-                                inlay_itemTextList[i].text = "[1]-未镶嵌";
-                                break;
-                            case 2:
-                                inlay_itemImageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon1021");
-                                inlay_itemTextList[i].text = "[2]-未镶嵌";
-                                break;
-                            case 3:
-                                inlay_itemImageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon1022");
-                                inlay_itemTextList[i].text = "[3]-未镶嵌";
-                                break;
-                            case 4:
-                                inlay_itemImageList[i].sprite = Resources.Load<Sprite>("Image/Other/icon1023");
-                                inlay_itemTextList[i].text = "[4]-未镶嵌";
-                                break;
-                        }
 
                         inlay_itemChooseBtnTextList[i].text = "选择";
                         inlay_itemChooseBtnList[i].GetComponent<RectTransform>().localScale = Vector2.one;
@@ -1442,32 +1451,15 @@ public class BuildingPanel : BasePanel
                         for (int j = 0; j < DataManager.mConsumableDict[inlayItemID[i]].AttributeType.Count; j++)
                         {
                             ItemAttribute itemAttribute = new ItemAttribute(DataManager.mConsumableDict[inlayItemID[i]].AttributeType[j],
-                                AttributeSource.SlotAdd,
+                                AttributeSource.SlotAdd, 0,
                                 DataManager.mConsumableDict[inlayItemID[i]].SkillID[j],
                                 DataManager.mConsumableDict[inlayItemID[i]].SkillAddType[j],
                                 DataManager.mConsumableDict[inlayItemID[i]].Value[j]);
-                            strSlot += "\n" + gc.OutputAttrLineStr(itemAttribute);
+                            strSlot += "\n " + gc.OutputAttrLineStr(itemAttribute);
                         }
 
-                        switch (gc.itemDic[inlayTargetID].slotLevel[i])
-                        {
-                            case 1:
+                        inlay_itemTextList[i].text = "["+ gc.itemDic[inlayTargetID].slotLevel[i] + "]-未镶嵌(选择:<i>" + DataManager.mConsumableDict[inlayItemID[i]].Name + "</i>)<color=#F3EE89><i>" + strSlot + "</i></color>";
 
-                                inlay_itemTextList[i].text = "[1]-未镶嵌(选择:" + DataManager.mConsumableDict[inlayItemID[i]].Name + ")" + strSlot ;
-                                break;
-                            case 2:
-                               
-                                inlay_itemTextList[i].text = "[2]-未镶嵌(选择:" + DataManager.mConsumableDict[inlayItemID[i]].Name + ")" + strSlot ;
-                                break;
-                            case 3:
-                                
-                                inlay_itemTextList[i].text = "[3]-未镶嵌(选择:" + DataManager.mConsumableDict[inlayItemID[i]].Name + ")" + strSlot ;
-                                break;
-                            case 4:
-                               
-                                inlay_itemTextList[i].text = "[4]-未镶嵌(选择:" + DataManager.mConsumableDict[inlayItemID[i]].Name + ")" + strSlot;
-                                break;
-                        }
                  
 
                         inlay_itemChooseBtnTextList[i].text = "重选";
@@ -1476,8 +1468,10 @@ public class BuildingPanel : BasePanel
                         inlay_itemDoBtnTextList[i].text = "镶嵌";
                         inlay_itemDoBtnList[i].GetComponent<RectTransform>().localScale = Vector2.one;
                         inlay_itemDoBtnList[i].onClick.RemoveAllListeners();
+                        byte index = i;
                         inlay_itemDoBtnList[i].onClick.AddListener(delegate () {
-                            gc.EquipmentInlay(inlayTargetID, i, inlayItemID[i]);
+                            //Debug.Log("inlayTargetID=" + inlayTargetID + " index=" + index + " inlayItemID[index]=" + inlayItemID[index]);
+                            gc.EquipmentInlay(inlayTargetID, index, inlayItemID[index]);
                         });
                     }
                 }
@@ -1486,6 +1480,7 @@ public class BuildingPanel : BasePanel
             {
                 inlay_itemImageList[i].GetComponent<RectTransform>().localScale = Vector2.zero;
             }
+            inlay_goldCostText.text = "费用 100金币";
         }
         else
         {
@@ -1496,6 +1491,7 @@ public class BuildingPanel : BasePanel
             {
                 inlay_itemImageList[i].GetComponent<RectTransform>().localScale = Vector2.zero;
             }
+            inlay_goldCostText.text = "";
         }
     }
 
