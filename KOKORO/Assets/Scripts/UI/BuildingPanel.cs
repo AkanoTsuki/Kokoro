@@ -74,6 +74,7 @@ public class BuildingPanel : BasePanel
     public Image strengthen_targetPicImage;
     public Text strengthen_targetNameText;
     public Button strengthen_targetBtn;
+    public GameObject strengthen_targetEffectGo;
     public List<Image> strengthen_itemImageList;
     public List<Text> strengthen_itemTextList;
     public List<Button> strengthen_itemBtnList;
@@ -2000,4 +2001,10 @@ public class BuildingPanel : BasePanel
         pullDownBlockRt.localScale = Vector2.zero;
     }
 
+
+    public void ShowEffect(GameObject go, string effectName)
+    {
+        go.GetComponent<MomentEffect>().isInAdventureMainPanel = false;
+        go.GetComponent<MomentEffect>().Play(effectName, Vector2.zero);
+    }
 }

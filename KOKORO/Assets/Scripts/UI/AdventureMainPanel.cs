@@ -1415,6 +1415,7 @@ public class AdventureMainPanel : BasePanel
             targetLocation = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().dungeon_side1Go[index].GetComponent<RectTransform>().anchoredPosition;
         }
         go.GetComponent<RectTransform>().sizeDelta = new Vector2(96f * size, 96f * size);
+        //go.GetComponent<MomentEffect>().isInAdventureMainPanel = true;
         go.GetComponent<MomentEffect>().Play(effectName, targetLocation);
     }
 

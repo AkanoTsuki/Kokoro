@@ -964,12 +964,13 @@ public class GameControl : MonoBehaviour
                 }
             }
 
-
+            BuildingPanel.Instance.ShowEffect(BuildingPanel.Instance.strengthen_targetEffectGo, "FX003");
             MessagePanel.Instance.AddMessage(itemDic[itemID].name+"强化成功(+"+(itemDic[itemID].level-1)+"→+"+ itemDic[itemID].level+")");
             AudioControl.Instance.PlaySound("system_success");
         }
         else
         {
+            BuildingPanel.Instance.ShowEffect(BuildingPanel.Instance.strengthen_targetEffectGo, "FX001");
             MessagePanel.Instance.AddMessage(itemDic[itemID].name + "强化失败");
             AudioControl.Instance.PlaySound("system_fail");
         }
@@ -6256,10 +6257,11 @@ public class GameControl : MonoBehaviour
                 short sleepRes = (short)GetHeroAttr(Attribute.SleepRes, heroID);
 
                 ItemTypeSmall weaponType = ItemTypeSmall.None;
-                short weaponPID = (short)itemDic[heroDic[heroID].equipWeapon].prototypeID;
+                short weaponPID = -1;
                 byte sharpnessNow = 0;
                 if (heroDic[heroID].equipWeapon != -1)
                 {
+                    weaponPID = (short)itemDic[heroDic[heroID].equipWeapon].prototypeID;
                     weaponType = DataManager.mItemDict[weaponPID].TypeSmall;
                     //byte sharpnessTotal = 0;
                     for (byte j = 0; j < DataManager.mItemDict[weaponPID].Sharpness.Count; j++)

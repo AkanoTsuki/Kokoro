@@ -10,6 +10,8 @@ public class MomentEffect : MonoBehaviour
     bool isPlay = false;
     Sprite[] needFrames;
 
+    public bool isInAdventureMainPanel=false;
+
     void Update()
     {
         if (isPlay)
@@ -27,7 +29,11 @@ public class MomentEffect : MonoBehaviour
 
                     isPlay = false;
                     GetComponent<RectTransform>().anchoredPosition=new Vector2(0, 5000);
-                    AdventureMainPanel.Instance.effectPool.Add(gameObject);
+                    if (isInAdventureMainPanel)
+                    { 
+                        AdventureMainPanel.Instance.effectPool.Add(gameObject); 
+                    }
+               
                 }
             }
         }

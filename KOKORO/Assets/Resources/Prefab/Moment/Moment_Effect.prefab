@@ -87,3 +87,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12dfb06108576e041a8d42f1c321a4bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInAdventureMainPanel: 1
