@@ -340,7 +340,11 @@ public enum AnimStatus
     ChestOpen,
     AttackLoop,
     WalkUp,
-    WalkDown
+    WalkDown,
+    Laugh,
+    Surprise,
+    SayNo,
+    SayYes
 }
 
 public enum LogType

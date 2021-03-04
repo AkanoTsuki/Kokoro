@@ -355,7 +355,11 @@ public class BuildingPanel : BasePanel
                     roleIndex++;
                     for (int i = 2; i < gc.districtDic[buildingObject.districtID].recruitList.Count+2; i++)
                     {
-                        bgRoleAcList[i].SetCharaFrames(gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i]].pic, 39, 54, true);
+                        //Debug.Log("i=" + i);
+                        //Debug.Log("buildingObject.districtID=" + buildingObject.districtID);
+                        //Debug.Log("gc.districtDic[buildingObject.districtID].recruitList.Count=" + gc.districtDic[buildingObject.districtID].recruitList.Count);
+                        //Debug.Log("gc.districtDic[buildingObject.districtID].recruitList[i]=" + gc.districtDic[buildingObject.districtID].recruitList[i]);
+                        bgRoleAcList[i].SetCharaFrames(gc.heroDic[gc.districtDic[buildingObject.districtID].recruitList[i-2]].pic, 39, 54, true);
                         bgRoleAcList[i].SetAnim("Pic", -1);
                         bgRoleAcList[i].SetRandomAnim(new List<string> { "SayYes", "Laugh", "Surprise" }, new List<byte> { 20, 5, 15 }, new List<short> { 5, 5, 5 });
                         roleIndex++;

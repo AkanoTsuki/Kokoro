@@ -5752,7 +5752,11 @@ public class GameControl : MonoBehaviour
             PlayMainPanel.Instance.UpdateButtonItemNum();
         }
 
-       
+
+        AdventureState endAdventureState = adventureTeamList[teamID].state;
+    
+
+
         adventureTeamList[teamID].state = AdventureState.NotSend;
         adventureTeamList[teamID].action = AdventureAction.None;
 
@@ -5762,6 +5766,7 @@ public class GameControl : MonoBehaviour
         }
 
         AdventureMainPanel.Instance.UpdateTeam(teamID);
+        AdventureMainPanel.Instance.SetAllRoleAnimInEnd(teamID, endAdventureState);
     }
 
     public void CreateAdventureEvent(byte teamID)

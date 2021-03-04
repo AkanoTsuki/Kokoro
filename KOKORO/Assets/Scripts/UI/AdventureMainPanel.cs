@@ -682,6 +682,78 @@ public class AdventureMainPanel : BasePanel
         }
     }
 
+    //用作任务完成英雄动画
+    public void SetAllRoleAnimInEnd(byte teamID, AdventureState endAdventureState)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        for (byte i = 0; i < gc.adventureTeamList[teamID].heroIDList.Count; i++)
+        {
+
+            if (endAdventureState == AdventureState.Done)
+            {
+                if (Random.Range(0, 5) < 4)
+                {
+                    switch (Random.Range(0, 5))
+                    {
+                        case 0: ShowTalk(teamID, 0, i, "好啊"); break;
+                        case 1: ShowTalk(teamID, 0, i, "胜利"); break;
+                        case 2: ShowTalk(teamID, 0, i, "icon_talk_love"); break;
+                        case 3: ShowTalk(teamID, 0, i, "icon_talk_happy"); break;
+                        case 4: ShowTalk(teamID, 0, i, "顺利回来了"); break;
+                    }
+                }
+
+                if (Random.Range(0, 5) < 4)
+                {
+                    adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(Random.Range(0, 2) == 0 ? AnimStatus.Laugh : AnimStatus.SayYes);
+                }
+
+            }
+            else if (endAdventureState == AdventureState.Fail)
+            {
+                if (Random.Range(0, 5) < 2)
+                {
+                    switch (Random.Range(0, 5))
+                    {
+                        case 0: ShowTalk(teamID, 0, i, "哎呀"); break;
+                        case 1: ShowTalk(teamID, 0, i, "好疼"); break;
+                        case 2: ShowTalk(teamID, 0, i, "icon_talk_sad"); break;
+                        case 3: ShowTalk(teamID, 0, i, "icon_talk_exclamation"); break;
+                        case 4: ShowTalk(teamID, 0, i, "全军覆没"); break;
+                    }
+                }
+                if (Random.Range(0, 5) < 2)
+                {
+                    adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(Random.Range(0, 2) == 0 ? AnimStatus.Surprise : AnimStatus.SayNo);
+                }
+                   
+            }
+            else if (endAdventureState == AdventureState.Retreat)
+            {
+                if (Random.Range(0, 5) < 3)
+                {
+                    switch (Random.Range(0, 5))
+                    {
+                        case 0: ShowTalk(teamID, 0, i, "唔.."); break;
+                        case 1: ShowTalk(teamID, 0, i, "撤退回来了"); break;
+                        case 2: ShowTalk(teamID, 0, i, "icon_talk_question"); break;
+                        case 3: ShowTalk(teamID, 0, i, "icon_talk_exclamation"); break;
+                        case 4: ShowTalk(teamID, 0, i, "好惊险"); break;
+                    }
+                }
+                if (Random.Range(0, 5) < 3)
+                {
+                    adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(Random.Range(0, 2) == 0 ? AnimStatus.Surprise : AnimStatus.SayNo);
+                }
+                    
+            }
+
+
+
+
+        }
+    }
+
     //动画场景-人物图片资源集、动作（己方）-更新配置（辅助方法）
     void InitHeroCharaFrames(byte teamID)
     {

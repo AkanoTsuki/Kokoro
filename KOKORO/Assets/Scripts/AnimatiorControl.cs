@@ -24,10 +24,15 @@ public class AnimatiorControl : MonoBehaviour
 
 
     Sprite[] needFrames = new Sprite[3];
+    Sprite[] setFrames;
 
     bool isPlay = false;
     bool isLoop = false;
+    bool isFighting = false;
+    short times = -1;
     public string charaName = "chara1_1";
+
+
 
     void Start()
     {
@@ -52,10 +57,25 @@ public class AnimatiorControl : MonoBehaviour
                 if (currentIndex > needFrames.Length-1)
                 {
                     currentIndex = 0;
-                    if (!isLoop)
+                    if (times > 0)
                     {
-                        SetAnim(AnimStatus.Idle);
+                        times--;
                     }
+                    else
+                    {
+                        if (!isLoop)
+                        {
+                            if (isFighting)
+                            {
+                                SetAnim(AnimStatus.Idle);
+                            }
+                            else
+                            {
+                                SetAnim(AnimStatus.Front);
+                            }
+                        }
+                    }
+                    
                 }
             }
         }
@@ -130,6 +150,8 @@ public class AnimatiorControl : MonoBehaviour
 
               
                 isLoop = true;
+                isFighting = false;
+                times = -1;
                 break;
             case AnimStatus.WalkRight:
                 needFrames[0] = walk_RightFrames[0];
@@ -137,12 +159,16 @@ public class AnimatiorControl : MonoBehaviour
                 needFrames[2] = walk_RightFrames[1];
                 gameObject.GetComponent<Image>().sprite = needFrames[0];
                 isLoop = true;
+                isFighting = false;
+                times = -1;
                 break;
             case AnimStatus.Idle:
                 needFrames[0] = idleFrames[0];
                 needFrames[1] = idleFrames[2];
                 needFrames[2] = idleFrames[1];
                 isLoop = true;
+                isFighting = true;
+                times = -1;
                 break;
             case AnimStatus.Attack:
                 needFrames[0] = attackFrames[0];
@@ -158,24 +184,32 @@ public class AnimatiorControl : MonoBehaviour
                 }
 
                 isLoop = false;
+                isFighting = true;
+                times = -1;
                 break;
             case AnimStatus.AttackLoop:
                 needFrames[0] = attackFrames[0];
                 needFrames[1] = attackFrames[2];
                 needFrames[2] = attackFrames[1];
                 isLoop = true;
+                isFighting = true;
+                times = -1;
                 break;
             case AnimStatus.Bow:
                 needFrames[0] = bowFrames[0];
                 needFrames[1] = bowFrames[2];
                 needFrames[2] = bowFrames[1];
                 isLoop = false;
+                isFighting = true;
+                times = -1;
                 break;
             case AnimStatus.Magic:
                 needFrames[0] = magicFrames[0];
                 needFrames[1] = magicFrames[2];
                 needFrames[2] = magicFrames[1];
                 isLoop = false;
+                isFighting = true;
+                times = -1;
                 break;
             case AnimStatus.Hit:
                 needFrames[0] = hitFrames[0];
@@ -185,6 +219,8 @@ public class AnimatiorControl : MonoBehaviour
                 transform.GetComponent<Image>().DOColor(Color.red, 0.3f);
                 transform.GetComponent<Image>().DOColor(Color.white, 0.3f).SetDelay(0.3f);
                 isLoop = false;
+                isFighting = true;
+                times = -1;
                 break;
             case AnimStatus.Death:
                 needFrames[0] = deathFrames[0];
@@ -193,11 +229,15 @@ public class AnimatiorControl : MonoBehaviour
               
                 gameObject.GetComponent<Image>().sprite = needFrames[0];
                 isLoop = true;
+                isFighting = true;
+                times = -1;
                 break;
             case AnimStatus.Front:
                 needFrames[0] = walk_DownFrames[1];
                 gameObject.GetComponent<Image>().sprite = needFrames[0];
                 isLoop = true;
+                isFighting = false;
+                times = -1;
                 break;
             case AnimStatus.ChestOpen:
                 needFrames[0] = idleFrames[0];
@@ -206,6 +246,8 @@ public class AnimatiorControl : MonoBehaviour
                 needFrames[3] = idleFrames[3];
                 gameObject.GetComponent<Image>().sprite = needFrames[0];
                 isLoop = true;
+                isFighting = false;
+                times = -1;
                 break;
             case AnimStatus.SpringAppear:
                 needFrames[0] = idleFrames[0];
@@ -214,6 +256,30 @@ public class AnimatiorControl : MonoBehaviour
                 gameObject.GetComponent<Image>().DOFade(1f, 0.5f);
                 gameObject.GetComponent<Image>().DOFade(0f, 0.5f).SetDelay(2f);
                 isLoop = true;
+                isFighting = false;
+                times = -1;
+                break;
+            case AnimStatus.Laugh:
+            case AnimStatus.Surprise:
+            case AnimStatus.SayYes:
+            case AnimStatus.SayNo:
+                setFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + charaName + "/"+ animStatus.ToString());
+                if (setFrames.Length > 0)
+                {
+                    needFrames = new Sprite[setFrames.Length];
+                    needFrames[0] = setFrames[0];
+                    needFrames[1] = setFrames[1];
+                    needFrames[2] = setFrames[2];
+                    gameObject.GetComponent<Image>().sprite = needFrames[0];
+                    isLoop = false;
+                    isFighting = false;
+                    times =(short) Random.Range(2,4);
+                    fps =Random.Range( 4f,4.5f);
+                }
+                else
+                {
+                    return;
+                }
                 break;
 
         }
@@ -247,7 +313,10 @@ public class AnimatiorControl : MonoBehaviour
 
     }
 
-    
 
+    public void SetAnim(string animStatus, short times)
+    {
+        
+    }
 
 }
