@@ -1036,15 +1036,15 @@ public class AdventureMainPanel : BasePanel
     public void UpdateSceneRoleHalo(byte teamID, List<FightMenberObject> fightMenberObjects)
     {
         //AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
-        //HideSceneRoleHalo(teamID);
+        HideSceneRoleHalo(teamID);//性能有浪费，待优化
         for (byte i = 0; i < fightMenberObjects.Count; i++)
         {
             if (fightMenberObjects[i].side == 0)
             {
                 UpdateSceneRoleHaloSingle(teamID, fightMenberObjects[i]);
             }
-
         }
+
     }
     public void UpdateSceneRoleHaloSingle(byte teamID, FightMenberObject fightMenberObject)
     {
@@ -1054,8 +1054,8 @@ public class AdventureMainPanel : BasePanel
         if (gc.heroDic[fightMenberObject.objectID].halo != -1 && fightMenberObject.haloStatus)
         {
             adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<RectTransform>().localScale = Vector2.one;
-            adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<LoopEffect>().Play(DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].Pic);
-            Debug.Log("UpdateSceneRoleHaloSingle() gc.heroDic[fightMenberObject.objectID].halo="+ gc.heroDic[fightMenberObject.objectID].halo);
+            adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<LoopEffect>().Play("Halo/"+DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].Pic, DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].PicPosY, DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].PicScale);
+            //Debug.Log("UpdateSceneRoleHaloSingle() gc.heroDic[fightMenberObject.objectID].halo="+ gc.heroDic[fightMenberObject.objectID].halo);
         }
         else
         {

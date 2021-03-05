@@ -593,6 +593,9 @@ public class HaloPrototype : ISerializationCallbackReceiver
     public int ID;
     public string Name;
     public string Pic;
+    public int PicPosY;
+    public float PicScale;
+    public string Des;
     public List<Element> NeedElementType;
     public List<string> NeedElementTypeStr;
     public List<byte> NeedElementPoint;

@@ -406,8 +406,12 @@ public class GameControl : MonoBehaviour
         }
 
         short salary = (short)(Random.Range(50, 150) * groupRate);
-        short halo = (short)Random.Range(0, DataManager.mHaloDict.Count - 1);
 
+        //TODO测试 好看的halo
+        List<short> testHalo = new List<short> { 0,2,3,4,5,6,7,8,9,15,16,17,29,30,31,32,37,38,39,40,48,52};
+
+        short halo = (short)Random.Range(0, testHalo.Count - 1);
+        halo = 15;
         return new HeroObject(heroID, name, heroTypeID, 1, 0, sexCode, pic, salary,groupRate, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
             (short)hp, (short)mp, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
@@ -6462,6 +6466,7 @@ public class GameControl : MonoBehaviour
         AdventureMainPanel.Instance.UpdateSceneRoleBuff(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.HideElementPoint(teamID);
         AdventureMainPanel.Instance.UpdateElementPoint(teamID);
+        AdventureDungeonCheckHalo(teamID);
         AdventureMainPanel.Instance.UpdateSceneRoleHalo(teamID, fightMenberObjects);
 
         if (AdventureTeamPanel.Instance.isShow && AdventureTeamPanel.Instance.nowTeam == teamID)
@@ -7788,6 +7793,8 @@ public class GameControl : MonoBehaviour
             if (targetMenber.side == 0)
             {
                 heroDic[targetMenber.objectID].countDeath++;
+                targetMenber.haloStatus = false;
+                AdventureMainPanel.Instance.UpdateSceneRoleHaloSingle(teamID, targetMenber);
             }
             else if (targetMenber.side == 1)
             {
@@ -7798,7 +7805,7 @@ public class GameControl : MonoBehaviour
 
     void AdventureDungeonElementChange(byte teamID, List<int> addType, byte addValue)
     {
-        short MinPoint = 100;
+        short MinPoint = 80;
 
         List<byte> oldEPList = new List<byte> { adventureTeamList[teamID].dungeonEPWind, adventureTeamList[teamID].dungeonEPFire, adventureTeamList[teamID].dungeonEPWater, adventureTeamList[teamID].dungeonEPGround, adventureTeamList[teamID].dungeonEPLight, adventureTeamList[teamID].dungeonEPDark };
 
@@ -7839,46 +7846,53 @@ public class GameControl : MonoBehaviour
             AdventureMainPanel.Instance.UpdateElementPoint(teamID);
 
             //检测光环是否触发
-            for (int i = 0; i < fightMenberObjectSS[teamID].Count; i++)
-            {
-                if (fightMenberObjectSS[teamID][i].side == 0 && fightMenberObjectSS[teamID][i].hpNow > 0)
-                {
-                    Debug.Log(" heroDic[fightMenberObjectSS[teamID][i].objectID].halo=" + heroDic[fightMenberObjectSS[teamID][i].objectID].halo);
-                    short haloID = heroDic[fightMenberObjectSS[teamID][i].objectID].halo;
-                    if (haloID != -1)
-                    {
-                        bool can = true;
-                        for (int j = 0; j < DataManager.mHaloDict[haloID].NeedElementType.Count; j++)
-                        {
-                            switch (DataManager.mHaloDict[haloID].NeedElementType[j])
-                            {
-                                case Element.Wind:if (adventureTeamList[teamID].dungeonEPWind < DataManager.mHaloDict[haloID].NeedElementPoint[j]){can = false;}break;
-                                case Element.Fire: if (adventureTeamList[teamID].dungeonEPFire < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
-                                case Element.Water: if (adventureTeamList[teamID].dungeonEPWater < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
-                                case Element.Ground: if (adventureTeamList[teamID].dungeonEPGround < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
-                                case Element.Light: if (adventureTeamList[teamID].dungeonEPLight < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
-                                case Element.Dark: if (adventureTeamList[teamID].dungeonEPDark < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
-                            }
-                        }
-                        Debug.Log("can="+ can);
-                        Debug.Log(DataManager.mHaloDict[haloID].NeedHpNow);
-                        if (DataManager.mHaloDict[haloID].NeedHpNow != -1)
-                        {
-                            if (fightMenberObjectSS[teamID][i].hpNow >= DataManager.mHaloDict[haloID].NeedHpNow)
-                            {
-                                can = false;
-                            }
-                        }
-                        Debug.Log(fightMenberObjectSS[teamID][i].name + " fightMenberObjectSS[teamID][i].haloStatus=" + fightMenberObjectSS[teamID][i].haloStatus);
-                        fightMenberObjectSS[teamID][i].haloStatus = can;
-                        AdventureMainPanel.Instance.UpdateSceneRoleHaloSingle(teamID, fightMenberObjectSS[teamID][i]);
-                    }
-
-                    
-                }
-            }
+            AdventureDungeonCheckHalo(teamID);
         }
 
+    }
+
+    void AdventureDungeonCheckHalo(byte teamID)
+    {
+        for (int i = 0; i < fightMenberObjectSS[teamID].Count; i++)
+        {
+            if (fightMenberObjectSS[teamID][i].side == 0 && fightMenberObjectSS[teamID][i].hpNow > 0)
+            {
+                Debug.Log(" heroDic[fightMenberObjectSS[teamID][i].objectID].halo=" + heroDic[fightMenberObjectSS[teamID][i].objectID].halo);
+                short haloID = heroDic[fightMenberObjectSS[teamID][i].objectID].halo;
+                if (haloID != -1)
+                {
+                    bool can = true;
+                    for (int j = 0; j < DataManager.mHaloDict[haloID].NeedElementType.Count; j++)
+                    {
+                        Debug.Log("DataManager.mHaloDict[haloID].NeedElementType[j]=" + DataManager.mHaloDict[haloID].NeedElementType[j]);
+                        Debug.Log("DataManager.mHaloDict[haloID].NeedElementPoint[j]=" + DataManager.mHaloDict[haloID].NeedElementPoint[j]);
+                        switch (DataManager.mHaloDict[haloID].NeedElementType[j])
+                        {
+                            case Element.Wind: if (adventureTeamList[teamID].dungeonEPWind < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                            case Element.Fire: if (adventureTeamList[teamID].dungeonEPFire < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                            case Element.Water: if (adventureTeamList[teamID].dungeonEPWater < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                            case Element.Ground: if (adventureTeamList[teamID].dungeonEPGround < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                            case Element.Light: if (adventureTeamList[teamID].dungeonEPLight < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                            case Element.Dark: if (adventureTeamList[teamID].dungeonEPDark < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                        }
+                    }
+                    Debug.Log("can=" + can);
+                    Debug.Log(DataManager.mHaloDict[haloID].NeedHpNow);
+                    if (DataManager.mHaloDict[haloID].NeedHpNow != -1)
+                    {
+                        if (fightMenberObjectSS[teamID][i].hpNow >= DataManager.mHaloDict[haloID].NeedHpNow)
+                        {
+                            can = false;
+                        }
+                    }
+                    Debug.Log(fightMenberObjectSS[teamID][i].name + " fightMenberObjectSS[teamID][i].haloStatus=" + fightMenberObjectSS[teamID][i].haloStatus);
+                    fightMenberObjectSS[teamID][i].haloStatus = can;
+                    AdventureMainPanel.Instance.UpdateSceneRoleHaloSingle(teamID, fightMenberObjectSS[teamID][i]);
+                }
+
+
+            }
+        }
     }
 
     int CheckFightOver(List<FightMenberObject> fightMenberObjects)
@@ -8254,7 +8268,8 @@ public class GameControl : MonoBehaviour
         if (AdventureMainPanel.Instance.isShow && AdventureMainPanel.Instance.nowCheckingTeamID == travellerDic[travellerID].team)
         {
             Debug.Log("AdventureBackDone() team="+ travellerDic[travellerID].team);
-            AdventureMainPanel.Instance.UpdateTeam((byte)travellerDic[travellerID].team);
+            //AdventureMainPanel.Instance.UpdateTeam((byte)travellerDic[travellerID].team);
+            AdventureMainPanel.Instance.OnHide();
         }
     }
 

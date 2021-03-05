@@ -32,11 +32,14 @@ public class LoopEffect : MonoBehaviour
         }
     }
 
-    public void Play(string name)
+    public void Play(string name,int posY,float scale)
     {
         currentIndex = 0;
         //GetComponent<RectTransform>().anchoredPosition = location;
         needFrames = Resources.LoadAll<Sprite>("Image/Effect/" + name);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, posY);
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(needFrames[0].texture.width / (float)needFrames.Length* scale, needFrames[0].texture.height * scale);
+
         isPlay = true;
     }
     public void Stop()

@@ -178,6 +178,20 @@ public class GameControlInPlay : MonoBehaviour
             gc.forceDic[0].rStuffStone += 5000;
             gc.forceDic[0].rStuffMetal += 5000;
         }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            for (int i = 0; i < gc.fightMenberObjectSS[0].Count; i++)
+            {
+                if (gc.fightMenberObjectSS[0][i].side == 0)
+                {
+                    gc.fightMenberObjectSS[0][i].haloStatus = true;
+                    AdventureMainPanel.Instance.UpdateSceneRoleHaloSingle(0, gc.fightMenberObjectSS[0][i]);
+                    break;
+                }
+            }
+            
+        }
     }
    
     public void TimeFlow()
