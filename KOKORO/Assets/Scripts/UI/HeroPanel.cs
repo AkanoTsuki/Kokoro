@@ -299,7 +299,10 @@ public class HeroPanel : BasePanel
         {
             str += " <color=#F3CE59>[" + DataManager.mCharacteristicDict[heroObject.characteristic[i]].Name+ "]</color>";
         }
-        
+        if (heroObject.halo != -1)
+        {
+            str += " <color=#F3CE59>[" + DataManager.mHaloDict[heroObject.halo].Name + "]</color>";
+        }
         
         infoText.text = "Lv." + heroObject.level+"<color=#"+ DataManager.mHeroDict[heroObject.prototypeID].Color+ ">"+ DataManager.mHeroDict[heroObject.prototypeID].Name +
             "</color>[升级经验值<color=#FFFFFF>" + ((int)System.Math.Pow(1.05f, heroObject.level)*200-heroObject .exp)+

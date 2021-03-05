@@ -406,13 +406,14 @@ public class GameControl : MonoBehaviour
         }
 
         short salary = (short)(Random.Range(50, 150) * groupRate);
+        short halo = (short)Random.Range(0, DataManager.mHaloDict.Count - 1);
 
         return new HeroObject(heroID, name, heroTypeID, 1, 0, sexCode, pic, salary,groupRate, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
             (short)hp, (short)mp, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workMakeScroll, workSundry,
           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<short> { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }, new List<int> { -1, -1, -1, -1 }, -1, -1, districtID, force,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<short, HeroSkill>(), characteristicList, new List<string> { });
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<short, HeroSkill>(), characteristicList, new List<string> { }, halo);
 
     }
 
@@ -6284,7 +6285,7 @@ public class GameControl : MonoBehaviour
                 List<FightBuff> buff = new List<FightBuff> { };
                 fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name, level, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
                                                                 windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, weaponType,
-                                                                actionBar, skillIndex, hpNow, mpNow, sharpnessNow, weaponPID,buff));
+                                                                actionBar, skillIndex, hpNow, mpNow, sharpnessNow, weaponPID,buff,false));
             }
 
             //int heroCount = fightMenberObjects.Count;
@@ -6419,7 +6420,7 @@ public class GameControl : MonoBehaviour
 
                 fightMenberObjects.Add(new FightMenberObject(id, objectID, side, i, name, (short)level, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
                                                           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, ItemTypeSmall.None,
-                                                          actionBar, skillIndex, hpNow, mpNow,255,-1, buff));
+                                                          actionBar, skillIndex, hpNow, mpNow,255,-1, buff,false));
 
                 //enemyIDTempList.Add(monsterID);
             }
@@ -6456,11 +6457,12 @@ public class GameControl : MonoBehaviour
         AdventureMainPanel.Instance.ShowSceneRoleAp(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.UpdateSceneRoleAp(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.UpdateSceneRoleSharpness(teamID, fightMenberObjects);
-        AdventureMainPanel.Instance.UpdateSceneRoleText(teamID, fightMenberObjects);
+        AdventureMainPanel.Instance.UpdateSceneRoleApText(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.HideSceneRoleBuff(teamID);
         AdventureMainPanel.Instance.UpdateSceneRoleBuff(teamID, fightMenberObjects);
         AdventureMainPanel.Instance.HideElementPoint(teamID);
         AdventureMainPanel.Instance.UpdateElementPoint(teamID);
+        AdventureMainPanel.Instance.UpdateSceneRoleHalo(teamID, fightMenberObjects);
 
         if (AdventureTeamPanel.Instance.isShow && AdventureTeamPanel.Instance.nowTeam == teamID)
         {
@@ -7529,7 +7531,11 @@ public class GameControl : MonoBehaviour
                 AdventureMainPanel.Instance.ShowTalk(teamID, actionMenber.side, actionMenber.sideIndex, "绝技 <color=#698BFF>" + sp.Name + "</color>");
             }
 
-            AudioControl.Instance.PlaySound(sp.Sound);
+            if (AdventureMainPanel.Instance.nowCheckingTeamID == teamID)
+            {
+                AudioControl.Instance.PlaySound(sp.Sound);
+            }
+          
 
             AdventureDungeonElementChange(teamID, sp.Element, (byte)(sp.Rank * 10));
         }
@@ -7548,9 +7554,12 @@ public class GameControl : MonoBehaviour
                     AdventureMainPanel.Instance.UpdateSceneRoleSharpnessSingle(teamID, actionMenber);
                 }
             }
-        
 
-            AudioControl.Instance.PlaySound("attack_weapon_7");
+            if (AdventureMainPanel.Instance.nowCheckingTeamID == teamID)
+            {
+                AudioControl.Instance.PlaySound("attack_weapon_7");
+            }
+           
            
         }
 
@@ -7675,7 +7684,11 @@ public class GameControl : MonoBehaviour
         {
             effectName = "sword_1";
         }
-        AudioControl.Instance.PlaySound("damage01");
+        if (AdventureMainPanel.Instance.nowCheckingTeamID == teamID)
+        {
+            AudioControl.Instance.PlaySound("damage01");
+        }
+       
         //Debug.Log("damage01");
         List<int> damageList = new List<int> { };
         int damageTotal = 0;
@@ -7824,6 +7837,46 @@ public class GameControl : MonoBehaviour
         {
             Debug.Log("更新地图元素");
             AdventureMainPanel.Instance.UpdateElementPoint(teamID);
+
+            //检测光环是否触发
+            for (int i = 0; i < fightMenberObjectSS[teamID].Count; i++)
+            {
+                if (fightMenberObjectSS[teamID][i].side == 0 && fightMenberObjectSS[teamID][i].hpNow > 0)
+                {
+                    Debug.Log(" heroDic[fightMenberObjectSS[teamID][i].objectID].halo=" + heroDic[fightMenberObjectSS[teamID][i].objectID].halo);
+                    short haloID = heroDic[fightMenberObjectSS[teamID][i].objectID].halo;
+                    if (haloID != -1)
+                    {
+                        bool can = true;
+                        for (int j = 0; j < DataManager.mHaloDict[haloID].NeedElementType.Count; j++)
+                        {
+                            switch (DataManager.mHaloDict[haloID].NeedElementType[j])
+                            {
+                                case Element.Wind:if (adventureTeamList[teamID].dungeonEPWind < DataManager.mHaloDict[haloID].NeedElementPoint[j]){can = false;}break;
+                                case Element.Fire: if (adventureTeamList[teamID].dungeonEPFire < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                                case Element.Water: if (adventureTeamList[teamID].dungeonEPWater < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                                case Element.Ground: if (adventureTeamList[teamID].dungeonEPGround < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                                case Element.Light: if (adventureTeamList[teamID].dungeonEPLight < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                                case Element.Dark: if (adventureTeamList[teamID].dungeonEPDark < DataManager.mHaloDict[haloID].NeedElementPoint[j]) { can = false; } break;
+                            }
+                        }
+                        Debug.Log("can="+ can);
+                        Debug.Log(DataManager.mHaloDict[haloID].NeedHpNow);
+                        if (DataManager.mHaloDict[haloID].NeedHpNow != -1)
+                        {
+                            if (fightMenberObjectSS[teamID][i].hpNow >= DataManager.mHaloDict[haloID].NeedHpNow)
+                            {
+                                can = false;
+                            }
+                        }
+                        Debug.Log(fightMenberObjectSS[teamID][i].name + " fightMenberObjectSS[teamID][i].haloStatus=" + fightMenberObjectSS[teamID][i].haloStatus);
+                        fightMenberObjectSS[teamID][i].haloStatus = can;
+                        AdventureMainPanel.Instance.UpdateSceneRoleHaloSingle(teamID, fightMenberObjectSS[teamID][i]);
+                    }
+
+                    
+                }
+            }
         }
 
     }

@@ -124027,5 +124027,55 @@
         35
       ]
     }
+  ],
+  "Halo": [
+    {
+      "ID": 0,
+      "Name": "热血光环",
+      "Pic": "arrow_1",
+      "NeedElementTypeStr": [
+        "Fire"
+      ],
+      "NeedElementPoint": [
+        1
+      ],
+      "NeedHpNow": -1,
+      "DamageUp": 10,
+      "Offset": 0,
+      "EDamageUp": 0,
+      "EOffset": 0,
+      "HitUp": 0,
+      "DodUp": 0,
+      "CriRUp": 0,
+      "CriDUp": 0,
+      "SpdUp": 0,
+      "SuckBlood": 0,
+      "DamageReflection": 0,
+      "Detonate": 0
+    },
+    {
+      "ID": 1,
+      "Name": "吸血光环",
+      "Pic": "diamond_2",
+      "NeedElementTypeStr": [
+        "Wind"
+      ],
+      "NeedElementPoint": [
+        1
+      ],
+      "NeedHpNow": -1,
+      "DamageUp": 0,
+      "Offset": 0,
+      "EDamageUp": 0,
+      "EOffset": 0,
+      "HitUp": 0,
+      "DodUp": 0,
+      "CriRUp": 0,
+      "CriDUp": 0,
+      "SpdUp": 0,
+      "SuckBlood": 10,
+      "DamageReflection": 0,
+      "Detonate": 0
+    }
   ]
 }

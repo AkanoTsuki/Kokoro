@@ -587,6 +587,45 @@ public class ConsumablePrototype : ISerializationCallbackReceiver
     }
 }
 
+[System.Serializable]
+public class HaloPrototype : ISerializationCallbackReceiver
+{
+    public int ID;
+    public string Name;
+    public string Pic;
+    public List<Element> NeedElementType;
+    public List<string> NeedElementTypeStr;
+    public List<byte> NeedElementPoint;
+    public int NeedHpNow;
+    public byte DamageUp;
+    public byte Offset;
+    public byte EDamageUp;
+    public byte EOffset;
+    public byte HitUp;
+    public byte DodUp;
+    public byte CriRUp;
+    public byte CriDUp;
+    public byte SpdUp;
+    public byte SuckBlood;
+    public byte DamageReflection;
+    public byte Detonate;
+    public void OnAfterDeserialize()
+    {
+
+        for (int i = 0; i < NeedElementTypeStr.Count; i++)
+        {
+            Element elementType = (Element)Enum.Parse(typeof(Element), NeedElementTypeStr[i]);
+            NeedElementType.Add(elementType);
+        }
+
+    }
+
+    public void OnBeforeSerialize()
+    {
+        throw new NotImplementedException();
+    }
+}
+
 ////消耗物品实例
 //public class ConsumableObject
 //{
@@ -1017,6 +1056,7 @@ public class HeroObject
     private Dictionary<short,HeroSkill> SkillInfo;
     private List<short> Characteristic;
     private List<string> Log;
+    private short Halo;
     public HeroObject(int id, string name, short prototypeID, short level, int exp,byte sex,string pic, short salary, float groupRate,
         float hp, float mp, float hpRenew, float mpRenew,
         float atkMin, float atkMax, float mAtkMin, float mAtkMax, float def, float mDef,
@@ -1032,7 +1072,7 @@ public class HeroObject
         int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<short> equipSuitePart, List<int> skill,
         int workerInBuilding, short adventureInTeam, short inDistrict, short force,
         int countMakeWeapon, int countMakeArmor, int countMakeJewelry, int countMakeScroll, int countKill, int countDeath, int countAdventure, int countAdventureDone,
-        int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone, Dictionary<short, HeroSkill> skillInfo, List<short> characteristic, List<string> log
+        int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone, Dictionary<short, HeroSkill> skillInfo, List<short> characteristic, List<string> log, short halo
         )
     {
         this.ID = id;
@@ -1137,6 +1177,7 @@ public class HeroObject
         this.SkillInfo = skillInfo;
         this.Characteristic = characteristic;
         this.Log = log;
+        this.Halo = halo;
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } set { Name = value; } }
@@ -1241,6 +1282,7 @@ public class HeroObject
     public Dictionary<short, HeroSkill> skillInfo  { get { return SkillInfo; } set { SkillInfo = value; } }
     public List<short> characteristic { get { return Characteristic; } set { Characteristic = value; } }
     public List<string> log { get { return Log; } set { Log = value; } }
+    public short halo { get { return Halo; } set { Halo = value; } }
 }
 
 public class HeroSkill
@@ -2116,7 +2158,7 @@ public class FightMenberObject
     private byte SharpnessNow;
     private short WeaponPID;
     private List<FightBuff> Buff;
-
+    private bool HaloStatus;//光环能力是否触发
 
     public FightMenberObject(int id, int objectID, byte side, byte sideIndex, string name, short level,
          int hp, int mp, short hpRenew, short mpRenew,
@@ -2125,7 +2167,7 @@ public class FightMenberObject
         short windDam, short fireDam, short waterDam, short groundDam, short lightDam, short darkDam,
         short windRes, short fireRes, short waterRes, short groundRes, short lightRes, short darkRes,
         short dizzyRes, short confusionRes, short poisonRes, short sleepRes, ItemTypeSmall weaponType,
-       short actionBar, byte skillIndex,int hpNow, int mpNow, byte sharpnessNow, short weaponPID, List<FightBuff> buff)
+       short actionBar, byte skillIndex,int hpNow, int mpNow, byte sharpnessNow, short weaponPID, List<FightBuff> buff, bool haloStatus)
     {
         this.ID = id;
         this.ObjectID = objectID;
@@ -2171,8 +2213,8 @@ public class FightMenberObject
         this.SharpnessNow = sharpnessNow;
         this.WeaponPID = weaponPID;
         this.Buff = buff;
-
-}
+        this.HaloStatus = haloStatus;
+    }
     public int id { get { return ID; } }
     public int objectID { get { return ObjectID; } }
     public byte side { get { return Side; } }
@@ -2218,6 +2260,7 @@ public class FightMenberObject
     public byte sharpnessNow { get { return SharpnessNow; } set { SharpnessNow = value; } }
     public short weaponPID { get { return WeaponPID; } set { WeaponPID = value; } }
     public List<FightBuff> buff { get { return Buff; } set { Buff = value; } }
+    public bool haloStatus { get { return HaloStatus; } set { HaloStatus = value; } }
 }
 
 public class FightBuff

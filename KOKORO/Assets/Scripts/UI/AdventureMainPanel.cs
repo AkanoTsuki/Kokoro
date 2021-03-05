@@ -119,13 +119,17 @@ public class AdventureMainPanel : BasePanel
             go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 0f);
             if (i == teamID)
             {               
-                go.SetActive(true);
+                //go.SetActive(true);
+                go.GetComponent<CanvasGroup>().alpha = 1f;
+                go.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 UpdateTeam(i);
                 HideGets(i);
             }
             else
             {
-                go.SetActive(false);
+                //go.SetActive(false);
+                go.GetComponent<CanvasGroup>().alpha = 0f;
+                go.GetComponent<CanvasGroup>().blocksRaycasts = false;
                 UpdateTeam(i);
             }
             if (i < adventureTeamBlocks.Count)
@@ -213,7 +217,7 @@ public class AdventureMainPanel : BasePanel
             UpdateSceneRole(teamID);
             HideElementPoint(teamID);
             HideProgress(teamID);
-
+            HideSceneRoleHalo(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
@@ -244,7 +248,7 @@ public class AdventureMainPanel : BasePanel
             UpdateSceneRole(teamID);
             HideElementPoint(teamID);
             HideProgress(teamID);
-
+            HideSceneRoleHalo(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
@@ -276,7 +280,7 @@ public class AdventureMainPanel : BasePanel
             //TeamLogAdd()
             UpdateLogContent(teamID);
             UpdateProgress(teamID);
-            //go.GetComponent<AdventureTeamBlock>().contentText.text = gc.adventureTeamList[teamID].log;
+            HideSceneRoleHalo(teamID);
 
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
@@ -319,19 +323,20 @@ public class AdventureMainPanel : BasePanel
                     HideSceneRoleBuff(teamID);
                     UpdateSceneRole(teamID);//
                     HideElementPoint(teamID);
-                   
+                    HideSceneRoleHalo(teamID);
 
                     break;
                 case AdventureAction.Fight:
                     UpdateSceneRoleHpMp(teamID, gc.fightMenberObjectSS[teamID]);
                     ShowSceneRoleAp(teamID, gc.fightMenberObjectSS[teamID]);
                     UpdateSceneRoleAp(teamID, gc.fightMenberObjectSS[teamID]);
+                    UpdateSceneRoleApText(teamID, gc.fightMenberObjectSS[teamID]);
                     UpdateSceneRoleSharpness(teamID, gc.fightMenberObjectSS[teamID]);
                     UpdateSceneRoleBuff(teamID, gc.fightMenberObjectSS[teamID]);
                     UpdateSceneRole(teamID);
                     UpdateSceneEnemy(teamID);
                     UpdateElementPoint(teamID);
-
+                    UpdateSceneRoleHalo(teamID, gc.fightMenberObjectSS[teamID]);
                     break;
                 case AdventureAction.GetSomething:
                 case AdventureAction.TrapHp:
@@ -345,9 +350,9 @@ public class AdventureMainPanel : BasePanel
                     UpdateSceneRole(teamID);
                     UpdateSceneEnemy(teamID);
                     HideElementPoint(teamID);
+                    HideSceneRoleHalo(teamID);
                     break;
             }
-
 
 
 
@@ -385,6 +390,7 @@ public class AdventureMainPanel : BasePanel
             HideSceneRoleAp(teamID);
             HideSceneRoleSharpness(teamID);
             HideSceneRoleBuff(teamID);
+            HideSceneRoleHalo(teamID);
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
             HideElementPoint(teamID);
@@ -421,6 +427,7 @@ public class AdventureMainPanel : BasePanel
             HideSceneRoleAp(teamID);
             HideSceneRoleSharpness(teamID);
             HideSceneRoleBuff(teamID);
+            HideSceneRoleHalo(teamID);
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
             HideElementPoint(teamID);
@@ -455,6 +462,7 @@ public class AdventureMainPanel : BasePanel
             HideSceneRoleAp(teamID);
             HideSceneRoleSharpness(teamID);
             HideSceneRoleBuff(teamID);
+            HideSceneRoleHalo(teamID);
             UpdateTeamHero(teamID);
             UpdateSceneRole(teamID);
             HideElementPoint(teamID);
@@ -572,11 +580,24 @@ public class AdventureMainPanel : BasePanel
         {
             for (int i = 0; i < gc.adventureTeamList[teamID].enemyIDList.Count; i++)
             {
-
+                int hp = 0;
+                for (int j = 0; j < gc.fightMenberObjectSS[teamID].Count; j++)
+                {
+                    if (gc.fightMenberObjectSS[teamID][j].side == 1 && gc.fightMenberObjectSS[teamID][j].sideIndex == i)
+                    {
+                        hp = gc.fightMenberObjectSS[teamID][j].hpNow;
+                        break;
+                    }
+                }
                 //TODO:怪物图集处理
+                
                 adventureTeamBlock.dungeon_side1Go[i].GetComponent<AnimatiorControl>().SetCharaFramesSimple(DataManager.mMonsterDict[gc.adventureTeamList[teamID].enemyIDList[i]].Pic);
-                adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite = Resources.Load("Image/RolePic/" + DataManager.mMonsterDict[gc.adventureTeamList[teamID].enemyIDList[i]].Pic + "/Pic", typeof(Sprite)) as Sprite;
+                adventureTeamBlock.dungeon_side1Go[i].GetComponent<Image>().sprite = Resources.Load("Image/RolePic/" + DataManager.mMonsterDict[gc.adventureTeamList[teamID].enemyIDList[i]].Pic + "/Walk_Left", typeof(Sprite)) as Sprite;
                 adventureTeamBlock.dungeon_side1Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.WalkLeft);
+                if (hp <= 0) 
+                { 
+                    adventureTeamBlock.dungeon_side1Go[i].GetComponent<AnimatiorControl>().Stop();
+                }
 
             }
             for (int i = gc.adventureTeamList[teamID].enemyIDList.Count; i < 6; i++)
@@ -854,7 +875,7 @@ public class AdventureMainPanel : BasePanel
     }
 
     //动画场景-人物AP条文本（全部）-更新
-    public void UpdateSceneRoleText(byte teamID, List<FightMenberObject> fightMenberObjects)
+    public void UpdateSceneRoleApText(byte teamID, List<FightMenberObject> fightMenberObjects)
     {
         for (byte i = 0; i < fightMenberObjects.Count; i++)
         {
@@ -980,7 +1001,7 @@ public class AdventureMainPanel : BasePanel
         if (gc.heroDic[fightMenberObject.objectID].equipWeapon != -1)
         {
             byte tc = 0;
-            Debug.Log(fightMenberObject.name+"sharpnessLevel=" + sharpnessLevel);
+            //Debug.Log(fightMenberObject.name+"sharpnessLevel=" + sharpnessLevel);
             string teststr = "";
             for (byte i = 0; i < sharpnessLevel; i++)
             {
@@ -1011,6 +1032,47 @@ public class AdventureMainPanel : BasePanel
         }
     }
 
+    //动画场景-人物光环（全部己方）-更新（用作初始化）
+    public void UpdateSceneRoleHalo(byte teamID, List<FightMenberObject> fightMenberObjects)
+    {
+        //AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        //HideSceneRoleHalo(teamID);
+        for (byte i = 0; i < fightMenberObjects.Count; i++)
+        {
+            if (fightMenberObjects[i].side == 0)
+            {
+                UpdateSceneRoleHaloSingle(teamID, fightMenberObjects[i]);
+            }
+
+        }
+    }
+    public void UpdateSceneRoleHaloSingle(byte teamID, FightMenberObject fightMenberObject)
+    {
+       
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+
+        if (gc.heroDic[fightMenberObject.objectID].halo != -1 && fightMenberObject.haloStatus)
+        {
+            adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<RectTransform>().localScale = Vector2.one;
+            adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<LoopEffect>().Play(DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].Pic);
+            Debug.Log("UpdateSceneRoleHaloSingle() gc.heroDic[fightMenberObject.objectID].halo="+ gc.heroDic[fightMenberObject.objectID].halo);
+        }
+        else
+        {
+            adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<RectTransform>().localScale = Vector2.zero;
+            adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<LoopEffect>().Stop();
+        }
+    }
+
+    public void HideSceneRoleHalo(byte teamID)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        for (byte i = 0; i < 3; i++)
+        {
+            adventureTeamBlock.dungeon_side0HaloGo[i].GetComponent<RectTransform>().localScale = Vector2.zero;
+            adventureTeamBlock.dungeon_side0HaloGo[i].GetComponent<LoopEffect>().Stop();
+        }
+    }
 
     //动画场景-人物BUFF组（全部）-更新
     public void UpdateSceneRoleBuff(byte teamID, List<FightMenberObject> fightMenberObjects)
