@@ -123075,85 +123075,99 @@
     {
       "ID": 0,
       "Name": "高效",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Work",
       "Des": "提升制作速度"
     },
     {
       "ID": 1,
       "Name": "节约",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Work",
       "Des": "制作时有几率减少原料消耗"
     },
     {
       "ID": 2,
       "Name": "热情",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Work",
       "Des": "有几率提升强化等级"
     },
     {
       "ID": 3,
       "Name": "果断",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Work",
       "Des": "提升装备附加物理攻击的数值"
     },
     {
       "ID": 4,
       "Name": "沉静",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Work",
       "Des": "提升装备附加魔法攻击的数值"
     },
     {
       "ID": 5,
       "Name": "坚强",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Work",
       "Des": "提升装备附加防御的数值"
     },
     {
       "ID": 6,
       "Name": "不屈",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Fight",
       "Des": "被击倒时有几率恢复1点体力并再次投入战斗"
     },
     {
       "ID": 7,
       "Name": "自爆",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Fight",
       "Des": "被击倒时对敌人造成伤害"
     },
     {
       "ID": 8,
       "Name": "风专注",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 9,
       "Name": "火专注",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 10,
       "Name": "水专注",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 11,
       "Name": "地专注",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 12,
       "Name": "光专注",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 13,
       "Name": "暗专注",
-      "Type": "",
+      "Pic": "icon148",
+      "Type": "Fight",
       "Des": ""
     }
   ],
@@ -124032,9 +124046,10 @@
     {
       "ID": 0,
       "Name": "专注",
-      "Pic": "Block",
-      "PicPosY": 8,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Block",
+      "EffectPosY": 8,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Water"
@@ -124059,9 +124074,10 @@
     {
       "ID": 1,
       "Name": "御魔",
-      "Pic": "Box",
-      "PicPosY": -12,
-      "PicScale": 1.2,
+      "Pic": "icon913",
+      "Effect": "Box",
+      "EffectPosY": -12,
+      "EffectScale": 1.2,
       "Des": "元素抗性",
       "NeedElementTypeStr": [
         "Water"
@@ -124086,9 +124102,10 @@
     {
       "ID": 2,
       "Name": "未定义",
-      "Pic": "Bubble",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Bubble",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Water"
@@ -124113,9 +124130,10 @@
     {
       "ID": 3,
       "Name": "愤怒",
-      "Pic": "Circle",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Circle",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -124140,9 +124158,10 @@
     {
       "ID": 4,
       "Name": "狂暴",
-      "Pic": "Claw",
-      "PicPosY": 6,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Claw",
+      "EffectPosY": 6,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -124167,9 +124186,10 @@
     {
       "ID": 5,
       "Name": "未定义",
-      "Pic": "Consume0",
-      "PicPosY": 8,
-      "PicScale": 1.3,
+      "Pic": "icon913",
+      "Effect": "Consume0",
+      "EffectPosY": 8,
+      "EffectScale": 1.3,
       "Des": "体力增强",
       "NeedElementTypeStr": [
         "Wind"
@@ -124194,9 +124214,10 @@
     {
       "ID": 6,
       "Name": "未定义",
-      "Pic": "Consume1",
-      "PicPosY": 8,
-      "PicScale": 1.3,
+      "Pic": "icon913",
+      "Effect": "Consume1",
+      "EffectPosY": 8,
+      "EffectScale": 1.3,
       "Des": "魔力增强",
       "NeedElementTypeStr": [
         "Water"
@@ -124221,9 +124242,10 @@
     {
       "ID": 7,
       "Name": "七彩",
-      "Pic": "Consume2",
-      "PicPosY": 8,
-      "PicScale": 1.3,
+      "Pic": "icon913",
+      "Effect": "Consume2",
+      "EffectPosY": 8,
+      "EffectScale": 1.3,
       "Des": "",
       "NeedElementTypeStr": [
         "Wind",
@@ -124250,9 +124272,10 @@
     {
       "ID": 8,
       "Name": "暗影",
-      "Pic": "Dark",
-      "PicPosY": 8,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Dark",
+      "EffectPosY": 8,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Dark"
@@ -124277,9 +124300,10 @@
     {
       "ID": 9,
       "Name": "未定义",
-      "Pic": "Electric",
-      "PicPosY": 8,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Electric",
+      "EffectPosY": 8,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Wind"
@@ -124304,9 +124328,10 @@
     {
       "ID": 10,
       "Name": "未定义",
-      "Pic": "ExplodeA",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "ExplodeA",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -124331,9 +124356,10 @@
     {
       "ID": 11,
       "Name": "未定义",
-      "Pic": "ExplodeB",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "ExplodeB",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Dark"
@@ -124358,9 +124384,10 @@
     {
       "ID": 12,
       "Name": "未定义",
-      "Pic": "ExplodeC",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "ExplodeC",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Water"
@@ -124385,9 +124412,10 @@
     {
       "ID": 13,
       "Name": "未定义",
-      "Pic": "ExplodeD",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "ExplodeD",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Wind"
@@ -124412,9 +124440,10 @@
     {
       "ID": 14,
       "Name": "未定义",
-      "Pic": "ExplodeE",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "ExplodeE",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Ground"
@@ -124439,9 +124468,10 @@
     {
       "ID": 15,
       "Name": "烈火",
-      "Pic": "Fire0",
-      "PicPosY": 8,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Fire0",
+      "EffectPosY": 8,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -124466,9 +124496,10 @@
     {
       "ID": 16,
       "Name": "业火",
-      "Pic": "Fire1",
-      "PicPosY": 8,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Fire1",
+      "EffectPosY": 8,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -124493,9 +124524,10 @@
     {
       "ID": 17,
       "Name": "炎火",
-      "Pic": "Fire2",
-      "PicPosY": 8,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Fire2",
+      "EffectPosY": 8,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -124520,9 +124552,10 @@
     {
       "ID": 18,
       "Name": "未定义",
-      "Pic": "Flame",
-      "PicPosY": 4,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Flame",
+      "EffectPosY": 4,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -124547,9 +124580,10 @@
     {
       "ID": 19,
       "Name": "未定义",
-      "Pic": "FlameAlt",
-      "PicPosY": 4,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "FlameAlt",
+      "EffectPosY": 4,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -124574,9 +124608,10 @@
     {
       "ID": 20,
       "Name": "未定义",
-      "Pic": "Glint",
-      "PicPosY": 8,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Glint",
+      "EffectPosY": 8,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Wind"
@@ -124601,9 +124636,10 @@
     {
       "ID": 21,
       "Name": "冷淡",
-      "Pic": "Heal0Back",
-      "PicPosY": 8,
-      "PicScale": 1.2,
+      "Pic": "icon913",
+      "Effect": "Heal0Back",
+      "EffectPosY": 8,
+      "EffectScale": 1.2,
       "Des": "",
       "NeedElementTypeStr": [
         "Light"
@@ -124628,9 +124664,10 @@
     {
       "ID": 22,
       "Name": "未定义",
-      "Pic": "Heal0Fore",
-      "PicPosY": 6,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Heal0Fore",
+      "EffectPosY": 6,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Light"
@@ -124655,9 +124692,10 @@
     {
       "ID": 23,
       "Name": "热情",
-      "Pic": "Heal1Back",
-      "PicPosY": 8,
-      "PicScale": 1.2,
+      "Pic": "icon913",
+      "Effect": "Heal1Back",
+      "EffectPosY": 8,
+      "EffectScale": 1.2,
       "Des": "",
       "NeedElementTypeStr": [
         "Light"
@@ -124682,9 +124720,10 @@
     {
       "ID": 24,
       "Name": "未定义",
-      "Pic": "Heal1Fore",
-      "PicPosY": 6,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Heal1Fore",
+      "EffectPosY": 6,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Light"
@@ -124709,9 +124748,10 @@
     {
       "ID": 25,
       "Name": "冰墙",
-      "Pic": "Ice0",
-      "PicPosY": 8,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Ice0",
+      "EffectPosY": 8,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Water"
@@ -124736,9 +124776,10 @@
     {
       "ID": 26,
       "Name": "冰暴",
-      "Pic": "Ice1",
-      "PicPosY": 8,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Ice1",
+      "EffectPosY": 8,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Water"
@@ -124763,9 +124804,10 @@
     {
       "ID": 27,
       "Name": "冰柱",
-      "Pic": "Ice2",
-      "PicPosY": 8,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Ice2",
+      "EffectPosY": 8,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Water"
@@ -124790,9 +124832,10 @@
     {
       "ID": 28,
       "Name": "未定义",
-      "Pic": "Lightning",
-      "PicPosY": 6,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Lightning",
+      "EffectPosY": 6,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Wind"
@@ -124817,9 +124860,10 @@
     {
       "ID": 29,
       "Name": "未定义",
-      "Pic": "NuclearA0",
-      "PicPosY": 0,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "NuclearA0",
+      "EffectPosY": 0,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Dark"
@@ -124844,9 +124888,10 @@
     {
       "ID": 30,
       "Name": "未定义",
-      "Pic": "NuclearA1",
-      "PicPosY": 0,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "NuclearA1",
+      "EffectPosY": 0,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -124871,9 +124916,10 @@
     {
       "ID": 31,
       "Name": "未定义",
-      "Pic": "NuclearB0",
-      "PicPosY": 0,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "NuclearB0",
+      "EffectPosY": 0,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Dark",
@@ -124900,9 +124946,10 @@
     {
       "ID": 32,
       "Name": "未定义",
-      "Pic": "NuclearB1",
-      "PicPosY": 0,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "NuclearB1",
+      "EffectPosY": 0,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Dark",
@@ -124929,9 +124976,10 @@
     {
       "ID": 33,
       "Name": "引导",
-      "Pic": "Path",
-      "PicPosY": 6,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Path",
+      "EffectPosY": 6,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Wind"
@@ -124956,9 +125004,10 @@
     {
       "ID": 34,
       "Name": "猛毒",
-      "Pic": "Poison",
-      "PicPosY": 8,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Poison",
+      "EffectPosY": 8,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Dark"
@@ -124983,9 +125032,10 @@
     {
       "ID": 35,
       "Name": "坚固",
-      "Pic": "Select0",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Select0",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire",
@@ -125012,9 +125062,10 @@
     {
       "ID": 36,
       "Name": "反射",
-      "Pic": "Select1",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Select1",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire",
@@ -125041,9 +125092,10 @@
     {
       "ID": 37,
       "Name": "未定义",
-      "Pic": "Shield0",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Shield0",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -125068,9 +125120,10 @@
     {
       "ID": 38,
       "Name": "未定义",
-      "Pic": "Shield1",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Shield1",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Water"
@@ -125095,9 +125148,10 @@
     {
       "ID": 39,
       "Name": "未定义",
-      "Pic": "Shield2",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Shield2",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Dark"
@@ -125122,9 +125176,10 @@
     {
       "ID": 40,
       "Name": "未定义",
-      "Pic": "Shield3",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Shield3",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Light"
@@ -125149,9 +125204,10 @@
     {
       "ID": 41,
       "Name": "未定义",
-      "Pic": "Sick",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Sick",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Wind"
@@ -125176,9 +125232,10 @@
     {
       "ID": 42,
       "Name": "未定义",
-      "Pic": "Slash0",
-      "PicPosY": -2,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Slash0",
+      "EffectPosY": -2,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Dark"
@@ -125203,9 +125260,10 @@
     {
       "ID": 43,
       "Name": "未定义",
-      "Pic": "SlimeSplatter0",
-      "PicPosY": 8,
-      "PicScale": 1.2,
+      "Pic": "icon913",
+      "Effect": "SlimeSplatter0",
+      "EffectPosY": 8,
+      "EffectScale": 1.2,
       "Des": "",
       "NeedElementTypeStr": [
         "Ground"
@@ -125230,9 +125288,10 @@
     {
       "ID": 45,
       "Name": "未定义",
-      "Pic": "Spark0",
-      "PicPosY": 6,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Spark0",
+      "EffectPosY": 6,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire",
@@ -125259,9 +125318,10 @@
     {
       "ID": 46,
       "Name": "未定义",
-      "Pic": "Spark1",
-      "PicPosY": 6,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Spark1",
+      "EffectPosY": 6,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Water",
@@ -125288,9 +125348,10 @@
     {
       "ID": 47,
       "Name": "未定义",
-      "Pic": "Star",
-      "PicPosY": 12,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Star",
+      "EffectPosY": 12,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Dark"
@@ -125315,9 +125376,10 @@
     {
       "ID": 48,
       "Name": "集中",
-      "Pic": "Teleport0",
-      "PicPosY": 0,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Teleport0",
+      "EffectPosY": 0,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Light"
@@ -125342,9 +125404,10 @@
     {
       "ID": 49,
       "Name": "未定义",
-      "Pic": "Teleport1",
-      "PicPosY": 0,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Teleport1",
+      "EffectPosY": 0,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Light",
@@ -125371,9 +125434,10 @@
     {
       "ID": 50,
       "Name": "未定义",
-      "Pic": "Teleport2",
-      "PicPosY": 0,
-      "PicScale": 2,
+      "Pic": "icon913",
+      "Effect": "Teleport2",
+      "EffectPosY": 0,
+      "EffectScale": 2,
       "Des": "",
       "NeedElementTypeStr": [
         "Wind",
@@ -125400,9 +125464,10 @@
     {
       "ID": 51,
       "Name": "聚火",
-      "Pic": "Warp0",
-      "PicPosY": 6,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Warp0",
+      "EffectPosY": 6,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire"
@@ -125427,9 +125492,10 @@
     {
       "ID": 52,
       "Name": "散炎",
-      "Pic": "Warp1",
-      "PicPosY": 6,
-      "PicScale": 1,
+      "Pic": "icon913",
+      "Effect": "Warp1",
+      "EffectPosY": 6,
+      "EffectScale": 1,
       "Des": "",
       "NeedElementTypeStr": [
         "Fire",
@@ -125456,9 +125522,10 @@
     {
       "ID": 53,
       "Name": "水龙",
-      "Pic": "Water",
-      "PicPosY": 4,
-      "PicScale": 1.5,
+      "Pic": "icon913",
+      "Effect": "Water",
+      "EffectPosY": 4,
+      "EffectScale": 1.5,
       "Des": "",
       "NeedElementTypeStr": [
         "Water"

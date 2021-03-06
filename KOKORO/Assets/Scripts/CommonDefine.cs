@@ -87,7 +87,8 @@ public enum LabelType
     ShopItem,
     Consumable,
     BuildingStrengthen,
-    BuildingInlay
+    BuildingInlay,
+    HeroIcon
     // AreaMapDistrict
 }
 
@@ -593,8 +594,9 @@ public class HaloPrototype : ISerializationCallbackReceiver
     public int ID;
     public string Name;
     public string Pic;
-    public int PicPosY;
-    public float PicScale;
+    public string Effect;
+    public int EffectPosY;
+    public float EffectScale;
     public string Des;
     public List<Element> NeedElementType;
     public List<string> NeedElementTypeStr;
@@ -1060,6 +1062,8 @@ public class HeroObject
     private List<short> Characteristic;
     private List<string> Log;
     private short Halo;
+    private bool ForceLeader;
+    private short Job;//职衔 -1为无
     public HeroObject(int id, string name, short prototypeID, short level, int exp,byte sex,string pic, short salary, float groupRate,
         float hp, float mp, float hpRenew, float mpRenew,
         float atkMin, float atkMax, float mAtkMin, float mAtkMax, float def, float mDef,
@@ -1075,7 +1079,8 @@ public class HeroObject
         int equipWeapon, int equipSubhand, int equipHead, int equipBody, int equipHand, int equipBack, int equipFoot, int equipNeck, int equipFinger1, int equipFinger2, List<short> equipSuitePart, List<int> skill,
         int workerInBuilding, short adventureInTeam, short inDistrict, short force,
         int countMakeWeapon, int countMakeArmor, int countMakeJewelry, int countMakeScroll, int countKill, int countDeath, int countAdventure, int countAdventureDone,
-        int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone, Dictionary<short, HeroSkill> skillInfo, List<short> characteristic, List<string> log, short halo
+        int countUseWind, int countUseFire, int countUseWater, int countUseGround, int countUseLight, int countUseDark, int countUseNone, Dictionary<short, HeroSkill> skillInfo, List<short> characteristic, List<string> log, short halo,
+        bool forceLeader, short job
         )
     {
         this.ID = id;
@@ -1181,6 +1186,8 @@ public class HeroObject
         this.Characteristic = characteristic;
         this.Log = log;
         this.Halo = halo;
+        this.ForceLeader = forceLeader;
+        this.Job = job;
     }
     public int id { get { return ID; } }
     public string name { get { return Name; } set { Name = value; } }
@@ -1286,6 +1293,8 @@ public class HeroObject
     public List<short> characteristic { get { return Characteristic; } set { Characteristic = value; } }
     public List<string> log { get { return Log; } set { Log = value; } }
     public short halo { get { return Halo; } set { Halo = value; } }
+    public bool forceLeader { get { return ForceLeader; } set { ForceLeader = value; } }
+    public short job { get { return Job; } set { Job = value; } }
 }
 
 public class HeroSkill
@@ -1325,6 +1334,7 @@ public class CharacteristicPrototype
 {
     public short ID;
     public string Name;
+    public string Pic;
     public string Type;
     public string Des;
 
@@ -1931,6 +1941,7 @@ public class AdventureTeamObject
     private List<int> HeroIDList;
     private List<int> HeroHpList;
     private List<int> HeroMpList;
+    private List<int> HeroDamageList;
     private List<int> EnemyIDList;
     private byte NowDay;
     private int StandardTimeStart;//本次冒险开始时间
@@ -1962,7 +1973,7 @@ public class AdventureTeamObject
     private List<string> Log;
     private List<AdventurePartObject> Part;
     public AdventureTeamObject(byte id, short districtID,short dungeonID, short dungeonEVWind, short dungeonEVFire, short dungeonEVWater, short dungeonEVGround, short dungeonEVLight, short dungeonEVDark, byte dungeonEPWind, byte dungeonEPFire, byte dungeonEPWater, byte dungeonEPGround, byte dungeonEPLight, byte dungeonEPDark,
-        List<string> scenePicList, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, List<int> enemyIDList, byte nowDay, int standardTimeStart, AdventureState state, AdventureAction action, int fightRound,
+        List<string> scenePicList, List<int> heroIDList, List<int> heroHpList, List<int> heroMpList, List<int> heroDamageList, List<int> enemyIDList, byte nowDay, int standardTimeStart, AdventureState state, AdventureAction action, int fightRound,
         short getExp, short getGold, short getCereal, short getVegetable, short getFruit, short getMeat, short getFish, short getWood, short getMetal, short getStone, short getLeather, short getCloth,short getTwine, short getBone,
         short getWind, short getFire, short getWater, short getGround, short getLight, short getDark,
         List<int> getItemList, short killNum, List<string> log, List<AdventurePartObject> part)
@@ -1986,6 +1997,7 @@ public class AdventureTeamObject
         this.HeroIDList = heroIDList;
         this.HeroHpList = heroHpList;
         this.HeroMpList = heroMpList;
+        this.HeroDamageList = heroDamageList;
         this.EnemyIDList = enemyIDList;
         this.NowDay = nowDay;
         this.StandardTimeStart = standardTimeStart;
@@ -2036,6 +2048,7 @@ public class AdventureTeamObject
     public List<int> heroIDList { get { return HeroIDList; } set { HeroIDList = value; } }
     public List<int> heroHpList { get { return HeroHpList; } set { HeroHpList = value; } }
     public List<int> heroMpList { get { return HeroMpList; } set { HeroMpList = value; } }
+    public List<int> heroDamageList { get { return HeroDamageList; } set { HeroDamageList = value; } }
     public List<int> enemyIDList { get { return EnemyIDList; } set { EnemyIDList = value; } }
     public byte nowDay { get { return NowDay; } set { NowDay = value; } }
     public int standardTimeStart { get { return StandardTimeStart; } set { StandardTimeStart = value; } }

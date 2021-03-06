@@ -15,6 +15,13 @@ public class HeroPanel : BasePanel
     public Image sexImage;
     public Text infoText;
 
+    public List<Image> iconImage;
+    public RectTransform icon_infoRt;
+    public Text icon_infoNameText;
+    public Text icon_infoDesText;
+    //public RectTransform icon_infoNeedElementRt;
+    public List<Image> icon_infoNeedElementImage;
+
     public Button title_changeNameBtn;
     public RectTransform title_changeNameRt;
     public InputField title_changeNameIf;
@@ -278,12 +285,18 @@ public class HeroPanel : BasePanel
     public void UpdateAllInfo( HeroObject heroObject)
     {
         HideChangeName();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            UpdateIcon(heroObject.id);
+        }
+    
         UpdateBasicInfo(heroObject);
         UpdateFightInfo(heroObject, EquipPart.None, null, 1);
         UpdateWorkInfo(heroObject);
         UpdateEquipAll(heroObject);
         UpdateSkillAll(heroObject);
 
+        HideIconInfo();
         HideSkillPage();
         HideDataAndHistoryPage();
     }
@@ -2439,5 +2452,145 @@ public class HeroPanel : BasePanel
     public void HideChangeName()
     {
         title_changeNameRt.localScale = Vector2.zero;
+    }
+
+    void UpdateIcon(int heroID)
+    {
+        int index = 0;
+
+        if (gc.heroDic[heroID].halo != -1)
+        {
+            iconImage[index].GetComponent<RectTransform>().localScale = Vector2.one;
+            iconImage[index].sprite = Resources.Load<Sprite>("Image/Other/"+DataManager.mHaloDict[gc.heroDic[heroID].halo].Pic);
+            iconImage[index].GetComponent<InteractiveLabel>().iconType = "halo";
+            iconImage[index].GetComponent<InteractiveLabel>().heroID = heroID;
+            iconImage[index].GetComponent<InteractiveLabel>().index = gc.heroDic[heroID].halo;
+            index++;
+        }
+        for (int i = 0; i < gc.heroDic[heroID].characteristic.Count; i++)
+        {
+            iconImage[index].GetComponent<RectTransform>().localScale = Vector2.one;
+            iconImage[index].sprite = Resources.Load<Sprite>("Image/Other/" + DataManager.mCharacteristicDict[gc.heroDic[heroID].characteristic[i]].Pic);
+            iconImage[index].GetComponent<InteractiveLabel>().iconType = "characteristic";
+            iconImage[index].GetComponent<InteractiveLabel>().heroID = heroID;
+            iconImage[index].GetComponent<InteractiveLabel>().index = gc.heroDic[heroID].characteristic[i];
+            index++;
+        }
+        if (gc.heroDic[heroID].job != -1)
+        {
+            iconImage[index].GetComponent<RectTransform>().localScale = Vector2.one;
+            iconImage[index].sprite = Resources.Load<Sprite>("Image/Other/icon876");
+            iconImage[index].GetComponent<InteractiveLabel>().iconType = "job";
+            index++;
+        }
+
+        if (gc.heroDic[heroID].forceLeader)
+        {
+            iconImage[index].GetComponent<RectTransform>().localScale = Vector2.one;
+            iconImage[index].sprite = Resources.Load<Sprite>("Image/Other/icon237");
+            iconImage[index].GetComponent<InteractiveLabel>().iconType = "leader";
+            iconImage[index].GetComponent<InteractiveLabel>().heroID = heroID;
+            index++;
+        }
+
+        for (int i = index; i < iconImage.Count; i++)
+        {
+            iconImage[i].GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+    }
+
+    //图标详情-显示，更新信息
+    public void ShowIconInfo(string type,int heroID, int id, float x)
+    {
+        icon_infoRt.anchoredPosition = new Vector2(x, -30);
+        string str = "";
+        switch (type)            
+        {
+            case "halo":
+                icon_infoNameText.text = DataManager.mHaloDict[id].Name;
+                str = "战斗天赋\n\n触发条件";
+                string strNeedElement = "";
+                for (int i = 0; i < DataManager.mHaloDict[id].NeedElementType.Count; i++)
+                {
+                    switch (DataManager.mHaloDict[id].NeedElementType[i])
+                    {
+                        case Element.Wind:icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon912"); break;
+                        case Element.Fire: icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon913"); break;
+                        case Element.Water: icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon914"); break;
+                        case Element.Ground: icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon919"); break;
+                        case Element.Light: icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon917"); break;
+                        case Element.Dark: icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Other/icon916"); break;
+                    }
+                    strNeedElement += "   " + DataManager.mHaloDict[id].NeedElementPoint[i];
+                }
+                for (int i = DataManager.mHaloDict[id].NeedElementType.Count; i < icon_infoNeedElementImage.Count; i++)
+                {
+                    icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Empty");
+                }
+
+                if (strNeedElement != "")
+                {
+                    str += "\n " + strNeedElement;
+                }
+
+                if (DataManager.mHaloDict[id].NeedHpNow != -1)
+                {
+                    str += "\n 生命值低于" + DataManager.mHaloDict[id].NeedHpNow+"%";
+                }
+
+                str += "\n";
+
+                if (DataManager.mHaloDict[id].DamageUp != 0) { str += "\n 伤害提升" + DataManager.mHaloDict[id].DamageUp + "%"; }
+                if (DataManager.mHaloDict[id].Offset != 0) { str += "\n 伤害抵消" + DataManager.mHaloDict[id].Offset + "%"; }
+                if (DataManager.mHaloDict[id].EDamageUp != 0) { str += "\n 元素伤害提升" + DataManager.mHaloDict[id].EDamageUp + "%"; }
+                if (DataManager.mHaloDict[id].EOffset != 0) { str += "\n 元素伤害抵消" + DataManager.mHaloDict[id].EOffset + "%"; }
+                if (DataManager.mHaloDict[id].HitUp != 0) { str += "\n 命中值提升" + DataManager.mHaloDict[id].HitUp + "%"; }
+                if (DataManager.mHaloDict[id].DodUp != 0) { str += "\n 闪避值提升" + DataManager.mHaloDict[id].DodUp + "%"; }
+                if (DataManager.mHaloDict[id].CriRUp != 0) { str += "\n 暴击几率提升" + DataManager.mHaloDict[id].CriRUp + "%"; }
+                if (DataManager.mHaloDict[id].CriDUp != 0) { str += "\n 暴击伤害提升" + DataManager.mHaloDict[id].CriDUp + "%"; }
+                if (DataManager.mHaloDict[id].SpdUp != 0) { str += "\n 速度提升" + DataManager.mHaloDict[id].SpdUp + "%"; }
+                if (DataManager.mHaloDict[id].SuckBlood != 0) { str += "\n 对敌方造成伤害的" + DataManager.mHaloDict[id].SuckBlood + "%转化为自身体力"; }
+                if (DataManager.mHaloDict[id].DamageReflection != 0) { str += "\n 受到攻击伤害时对攻击者造成" + DataManager.mHaloDict[id].DamageReflection + "%的反击伤害"; }
+                if (DataManager.mHaloDict[id].Detonate != 0) { str += "\n 倒下时对敌方全体造成自身最大体力" + DataManager.mHaloDict[id].Detonate + "%的伤害"; }
+
+                break;
+            case "characteristic":
+                icon_infoNameText.text = DataManager.mCharacteristicDict[id].Name;
+                switch (DataManager.mCharacteristicDict[id].Type)
+                {
+                    case "Work":str = "\n工作天赋"; break;
+                    case "Fight": str = "\n战斗天赋"; break;
+                }
+                str += "\n\n"+ DataManager.mCharacteristicDict[id].Des;
+                for (int i = 0; i < icon_infoNeedElementImage.Count; i++)
+                {
+                    icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Empty");
+                }
+                break;
+            case "job":
+                icon_infoNameText.text = "职衔";
+                for (int i = 0; i < icon_infoNeedElementImage.Count; i++)
+                {
+                    icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Empty");
+                }
+                break;
+            case "leader":
+                icon_infoNameText.text = "领袖";
+                str = gc.forceDic[gc.heroDic[heroID].force].name + "的统治者";
+                for (int i = 0; i < icon_infoNeedElementImage.Count; i++)
+                {
+                    icon_infoNeedElementImage[i].sprite = Resources.Load<Sprite>("Image/Empty");
+                }
+                break;
+
+        }
+        icon_infoDesText.text = str;
+        icon_infoRt.sizeDelta = new Vector2(168f, icon_infoDesText.preferredHeight + 28f);
+    }
+
+    //图标详情-关闭
+    public void HideIconInfo()
+    {
+        icon_infoRt.anchoredPosition = new Vector2(0, 5000);
     }
 }

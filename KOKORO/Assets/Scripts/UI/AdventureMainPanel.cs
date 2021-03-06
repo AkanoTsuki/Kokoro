@@ -218,6 +218,7 @@ public class AdventureMainPanel : BasePanel
             HideElementPoint(teamID);
             HideProgress(teamID);
             HideSceneRoleHalo(teamID);
+            HideDamageData(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
@@ -249,6 +250,7 @@ public class AdventureMainPanel : BasePanel
             HideElementPoint(teamID);
             HideProgress(teamID);
             HideSceneRoleHalo(teamID);
+            HideDamageData(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
@@ -281,7 +283,7 @@ public class AdventureMainPanel : BasePanel
             UpdateLogContent(teamID);
             UpdateProgress(teamID);
             HideSceneRoleHalo(teamID);
-
+            HideDamageData(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -308,7 +310,7 @@ public class AdventureMainPanel : BasePanel
             adventureTeamBlock.dungeon_destinationRt.localScale = Vector2.zero;
             adventureTeamBlock.dungeon_campRt.localScale = Vector2.zero;
 
-
+            ShowDamageData(teamID);
             UpdateProgress(teamID);
           
             UpdateTeamHero(teamID);
@@ -396,6 +398,7 @@ public class AdventureMainPanel : BasePanel
             HideElementPoint(teamID);
             UpdateLogContent(teamID);
             UpdateProgress(teamID);
+            ShowDamageData(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -433,6 +436,7 @@ public class AdventureMainPanel : BasePanel
             HideElementPoint(teamID);
             UpdateLogContent(teamID);
             UpdateProgress(teamID);
+            ShowDamageData(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -468,6 +472,7 @@ public class AdventureMainPanel : BasePanel
             HideElementPoint(teamID);
             UpdateLogContent(teamID);
             UpdateProgress(teamID);
+            ShowDamageData(teamID);
             adventureTeamBlock.detailBtn.GetComponent<RectTransform>().localScale = Vector2.one;
             adventureTeamBlock.retreatBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
             adventureTeamBlock.startBtn.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -1054,7 +1059,7 @@ public class AdventureMainPanel : BasePanel
         if (gc.heroDic[fightMenberObject.objectID].halo != -1 && fightMenberObject.haloStatus)
         {
             adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<RectTransform>().localScale = Vector2.one;
-            adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<LoopEffect>().Play("Halo/"+DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].Pic, DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].PicPosY, DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].PicScale);
+            adventureTeamBlock.dungeon_side0HaloGo[fightMenberObject.sideIndex].GetComponent<LoopEffect>().Play("Halo/"+DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].Effect, DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].EffectPosY, DataManager.mHaloDict[gc.heroDic[fightMenberObject.objectID].halo].EffectScale);
             //Debug.Log("UpdateSceneRoleHaloSingle() gc.heroDic[fightMenberObject.objectID].halo="+ gc.heroDic[fightMenberObject.objectID].halo);
         }
         else
@@ -1735,5 +1740,79 @@ public class AdventureMainPanel : BasePanel
     public void HideGets(byte teamID)
     {
         adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().getsRt.localScale = Vector2.zero;
+    }
+
+    //伤害数据面板-显示
+    public void ShowDamageData(byte teamID)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().damageDataRt.localScale = Vector2.one;
+
+        for (byte i = 0; i < gc.adventureTeamList[teamID].heroIDList.Count; i++)
+        {
+            adventureTeamBlock.damageData_heroRt[i].localScale = Vector2.one;
+            adventureTeamBlock.damageData_picImage[i].sprite = Resources.Load<Sprite>("Image/RolePic/"+gc.heroDic[gc.adventureTeamList[teamID].heroIDList[i]].pic +"/Pic");
+
+        }
+        for (int i = gc.adventureTeamList[teamID].heroIDList.Count; i < adventureTeamBlock.damageData_heroRt.Count; i++)
+        {
+            adventureTeamBlock.damageData_heroRt[i].localScale = Vector2.zero;
+        }
+        UpdateDamageData(teamID);
+    }
+
+    public void UpdateDamageData(byte teamID)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+       
+        //indexList
+        List<int> indexList = new List<int>();
+        for (byte i = 0; i < gc.adventureTeamList[teamID].heroIDList.Count; i++)
+        {
+            adventureTeamBlock.damageData_valueText[i].text = gc.adventureTeamList[teamID].heroDamageList[i].ToString();
+
+
+            if (indexList.Count == 0)
+            {
+                indexList.Add(i);
+            }
+            else
+            {
+                bool isInsert = false;
+                for (int j = 0; j < indexList.Count; j++)
+                {
+                    if (gc.adventureTeamList[teamID].heroDamageList[i]> gc.adventureTeamList[teamID].heroDamageList[indexList[j]])
+                    {
+                        indexList.Insert(j, i);
+                         isInsert = true;
+                        break;
+                    }
+                }
+                if (isInsert == false)
+                {
+                    indexList.Add(i);
+                }
+            }
+          
+        }
+        //indexList.Reverse();
+
+
+        for (byte i = 0; i < indexList.Count; i++)
+        {
+            //adventureTeamBlock.damageData_heroRt[indexList[i]].anchoredPosition = new Vector2(0, -22f * i);
+            adventureTeamBlock.damageData_heroRt[indexList[i]].DOLocalMoveY(-22f * i, 0.5f);
+        }
+
+    }
+
+    //public void UpdateDamageDataSingle(byte teamID,byte heroIndex)
+    //{
+        
+    //}
+
+    public void HideDamageData(byte teamID)
+    {
+        adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().damageDataRt.localScale = Vector2.zero;
     }
 }

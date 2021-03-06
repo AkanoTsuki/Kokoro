@@ -409,15 +409,15 @@ public class GameControl : MonoBehaviour
 
         //TODO测试 好看的halo
         List<short> testHalo = new List<short> { 0,2,3,4,5,6,7,8,9,15,16,17,29,30,31,32,37,38,39,40,48,52};
-
         short halo = (short)Random.Range(0, testHalo.Count - 1);
         halo = 15;
+
         return new HeroObject(heroID, name, heroTypeID, 1, 0, sexCode, pic, salary,groupRate, hp, mp, hpRenew, mpRenew, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR, criD, spd,
             (short)hp, (short)mp, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workMakeScroll, workSundry,
           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<short> { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }, new List<int> { -1, -1, -1, -1 }, -1, -1, districtID, force,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<short, HeroSkill>(), characteristicList, new List<string> { }, halo);
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<short, HeroSkill>(), characteristicList, new List<string> { }, halo,false,-1);
 
     }
 
@@ -5368,13 +5368,14 @@ public class GameControl : MonoBehaviour
         adventureTeamList[teamID].heroIDList.Clear();
         adventureTeamList[teamID].heroHpList.Clear();
         adventureTeamList[teamID].heroMpList.Clear();
+        adventureTeamList[teamID].heroDamageList.Clear();
         for (int i = 0; i < heroIDList.Count; i++)
         {
             adventureTeamList[teamID].heroIDList.Add(heroIDList[i]);
 
             adventureTeamList[teamID].heroHpList.Add(GetHeroAttr(Attribute.Hp, heroIDList[i]));
             adventureTeamList[teamID].heroMpList.Add(GetHeroAttr(Attribute.Mp, heroIDList[i]));
-
+            adventureTeamList[teamID].heroDamageList.Add(0);
             districtDic[heroDic[heroIDList[i]].inDistrict].heroList.Remove(heroIDList[i]);
             heroDic[heroIDList[i]].inDistrict = -1;
             heroDic[heroIDList[i]].adventureInTeam = teamID;
@@ -5415,6 +5416,7 @@ public class GameControl : MonoBehaviour
         {
             adventureTeamList[teamID].heroHpList[i] = GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]);
             adventureTeamList[teamID].heroMpList[i] = GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]);
+            adventureTeamList[teamID].heroDamageList[i] = 0;
         }
         adventureTeamList[teamID].enemyIDList.Clear();
 
@@ -6613,8 +6615,8 @@ public class GameControl : MonoBehaviour
 
                                         if (sp.FlagDamage)
                                         {
-
-                                            if (IsHit(actionMenber[i].hit, targetMenber[j].dod))
+                                           
+                                            if (IsHit(actionMenber[i], targetMenber[j]))
                                             {
                                                 int damageMin = System.Math.Max(0, (int)(actionMenber[i].atkMin * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMin * (sp.MAtk / 100f) - targetMenber[j].mDef));
                                                 int damageMax = System.Math.Max(0, (int)(actionMenber[i].atkMax * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMax * (sp.MAtk / 100f) - targetMenber[j].mDef));
@@ -6652,8 +6654,18 @@ public class GameControl : MonoBehaviour
 
                                                 int damage = Random.Range(damageMin, damageMax + 1);
 
+                                                float haloDamageUp = 0f;
+                                                if (actionMenber[i].haloStatus)
+                                                {
+                                                    haloDamageUp += DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].DamageUp / 100f;
+                                                }
+                                                if (targetMenber[j].haloStatus)
+                                                {
+                                                    haloDamageUp -= DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].Offset / 100f;
+                                                }
+
                                                 //斩味修正伤害
-                                                damage = (int)(damage * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber[i])));
+                                                damage = (int)(damage*(1f+ haloDamageUp) * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber[i])));
                              
 
                                                 int damageWithElement = 0;
@@ -6691,12 +6703,30 @@ public class GameControl : MonoBehaviour
                                                     }
                                                 }
 
-                                                damageWithElement = (int)((1f + skillLevelUp) * damageWithElement);
-
-                                                int ranCri = Random.Range(0, 100);
-                                                if (ranCri < actionMenber[i].criR)
+                                                float haloElementDamageUp = 0f;
+                                                if (actionMenber[i].haloStatus)
                                                 {
-                                                    damageWithElement = (int)(damageWithElement * (actionMenber[i].criD / 100f));
+                                                    haloElementDamageUp += DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].EDamageUp/100f;
+                                                }
+                                                if (targetMenber[j].haloStatus)
+                                                {
+                                                    haloElementDamageUp -= DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].EOffset / 100f;
+                                                }
+
+                                                damageWithElement = (int)((1f + skillLevelUp+ haloElementDamageUp) * damageWithElement);
+
+
+
+                                             
+                                                if (IsCri(actionMenber[i]))
+                                                {
+                                                    byte criDUp = 0;
+                                                    if (actionMenber[i].haloStatus)
+                                                    {
+                                                        criDUp= DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].CriDUp;
+                                                    }
+
+                                                    damageWithElement = (int)(damageWithElement * ((actionMenber[i].criD+ criDUp) / 100f));
                                                 }
 
 
@@ -7178,7 +7208,7 @@ public class GameControl : MonoBehaviour
                                 List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
                                 if (targetMenber.Count > 0)
                                 {
-                                    if (IsHit(actionMenber[i].hit, targetMenber[0].dod))
+                                    if (IsHit(actionMenber[i], targetMenber[0]))
                                     {
                                         int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
                                         int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
@@ -7187,11 +7217,19 @@ public class GameControl : MonoBehaviour
                                         //斩味修正伤害
                                         damage = (int)(damage * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber[i])));
 
-                                        int ranCri = Random.Range(0, 100);
-                                        if (ranCri < actionMenber[i].criR)
+ 
+                                        if (IsCri(actionMenber[i]))
                                         {
-                                            damage = (int)(damage * (actionMenber[i].criD / 100f));
+                                            byte criDUp = 0;
+                                            if (actionMenber[i].haloStatus)
+                                            {
+                                                criDUp = DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].CriDUp;
+                                            }
+
+                                            damage = (int)(damage * ((actionMenber[i].criD  + criDUp) / 100f));
                                         }
+
+
                                         StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1, 1f));
 
                                     }
@@ -7213,15 +7251,20 @@ public class GameControl : MonoBehaviour
                             if (targetMenber.Count > 0)
                             {
 
-                                if (IsHit(actionMenber[i].hit, targetMenber[0].dod))
+                                if (IsHit(actionMenber[i], targetMenber[0]))
                                 {
                                     int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
                                     int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
                                     int damage = Random.Range(damageMin, damageMax + 1);
-                                    int ranCri = Random.Range(0, 100);
-                                    if (ranCri < actionMenber[i].criR)
+                                    if (IsCri(actionMenber[i]))
                                     {
-                                        damage = (int)(damage * (actionMenber[i].criD / 100f));
+                                        byte criDUp = 0;
+                                        if (actionMenber[i].haloStatus)
+                                        {
+                                            criDUp = DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].CriDUp;
+                                        }
+
+                                        damage = (int)(damage * ((actionMenber[i].criD + criDUp) / 100f));
                                     }
 
                                     StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1, 1f));
@@ -7244,15 +7287,20 @@ public class GameControl : MonoBehaviour
                         List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
                         if (targetMenber.Count > 0)
                         {
-                            if (IsHit(actionMenber[i].hit, targetMenber[0].dod))
+                            if (IsHit(actionMenber[i], targetMenber[0]))
                             {
                                 int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
                                 int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
                                 int damage = Random.Range(damageMin, damageMax + 1);
-                                int ranCri = Random.Range(0, 100);
-                                if (ranCri < actionMenber[i].criR)
+                                if (IsCri(actionMenber[i]))
                                 {
-                                    damage = (int)(damage * (actionMenber[i].criD / 100f));
+                                    byte criDUp = 0;
+                                    if (actionMenber[i].haloStatus)
+                                    {
+                                        criDUp = DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].CriDUp;
+                                    }
+
+                                    damage = (int)(damage * ((actionMenber[i].criD + criDUp) / 100f));
                                 }
 
                                 StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1, 1f));
@@ -7744,6 +7792,11 @@ public class GameControl : MonoBehaviour
         }
 
         //造成伤害
+      
+        if (damageTotal > targetMenber.hpNow)
+        {
+            damageTotal = targetMenber.hpNow;
+        }
         targetMenber.hpNow -= damageTotal;
 
         if (targetMenber.hpNow <= (int)(targetMenber.hp * 0.2f))
@@ -7776,14 +7829,65 @@ public class GameControl : MonoBehaviour
             }
         }
 
-        if (targetMenber.hpNow < 0)
+        if (actionMenber != null)
         {
-            targetMenber.hpNow = 0;
+            if (actionMenber.side==0)
+            {
+                adventureTeamList[teamID].heroDamageList[actionMenber.sideIndex] += damageTotal;
+                AdventureMainPanel.Instance.UpdateDamageData(teamID);
+            }
+        }
+
+        if (actionMenber!=null&& targetMenber!=null)
+        {
+            //halo吸血
+            if (actionMenber.haloStatus)
+            {
+                if (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].SuckBlood != 0)
+                {
+                    TakeCure(teamID, round, actionMenber, null, null, Attribute.Hp, (int)(damageTotal * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].SuckBlood / 100f)), 1);
+                }
+            }
+            //halo反伤
+            if (targetMenber.haloStatus)
+            {
+                if (DataManager.mHaloDict[heroDic[targetMenber.objectID].halo].DamageReflection != 0)
+                {
+                    TakeDamage(teamID, round, null, actionMenber, null, (int)(damageTotal * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].SuckBlood / 100f)), 1, 1f);
+                }
+            }
+        }    
+       
+
+
+        if (targetMenber.hpNow <= 0)
+        {
+            //halo自爆
+            if (targetMenber.haloStatus)
+            {
+                for (int i = 0; i < fightMenberObjectSS[teamID].Count; i++)
+                {
+                    if (fightMenberObjectSS[teamID][i].side != targetMenber.side && fightMenberObjectSS[teamID][i].hpNow > 0)
+                    {
+                        TakeDamage(teamID, round, null, fightMenberObjectSS[teamID][i], null, (int)(targetMenber.hp * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].Detonate / 100f)), 1, 1f);
+                    }
+                }
+
+            }
+
+            //targetMenber.hpNow = 0;
             AdventureMainPanel.Instance.UpdateSceneRoleApTextSingle(teamID, targetMenber);
         }
         AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, targetMenber);
         AdventureMainPanel.Instance.UpdateHeroHpMpSingle(teamID, targetMenber);
-        AdventureTeamLogAdd(teamID, "[回合" + round + "]" + OutputNameWithColor(actionMenber) + (sp != null ? "用<color=#4FA3C1>" + sp.Name + "</color>" : "普通攻击") + "对" + OutputNameWithColor(targetMenber) + "造成<color=#EC838F>" + damageTotalStr + "</color>点伤害");
+        if (actionMenber != null)
+        {
+            AdventureTeamLogAdd(teamID, "[回合" + round + "]" + OutputNameWithColor(actionMenber) + (sp != null ? "用<color=#4FA3C1>" + sp.Name + "</color>" : "普通攻击") + "对" + OutputNameWithColor(targetMenber) + "造成<color=#EC838F>" + damageTotalStr + "</color>点伤害");
+        }
+        else
+        {
+            AdventureTeamLogAdd(teamID, "[回合" + round + "]"  + OutputNameWithColor(targetMenber) + "受到了<color=#EC838F>" + damageTotalStr + "</color>点伤害");
+        }
 
         if (targetMenber.hpNow == 0)
         {
@@ -8429,11 +8533,40 @@ public class GameControl : MonoBehaviour
 
     }
 
-    public bool IsHit(short hit, short dod)
+    public bool IsHit(FightMenberObject actionMenber, FightMenberObject targetMenber )
     {
-        int hitRate = System.Math.Max((int)((float)hit / (hit + dod) * 100), 90);
+        float hitUp = 0f;
+        float dodUp = 0f;
+        if (actionMenber.haloStatus)
+        {
+            hitUp = DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].HitUp / 100f;
+        }
+        if (targetMenber.haloStatus)
+        {
+            dodUp = DataManager.mHaloDict[heroDic[targetMenber.objectID].halo].DodUp / 100f;
+        }
+
+
+        int hitRate = System.Math.Max((int)(((float)actionMenber.hit*(1f+ hitUp)) / (actionMenber.hit * (1f + hitUp) + targetMenber.dod * (1f + dodUp)) * 100), 90);
         int ranHit = Random.Range(0, 100);
         if (ranHit < hitRate)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool IsCri(FightMenberObject actionMenber)
+    {
+        float criRUp = 0f;
+        if (actionMenber.haloStatus)
+        {
+            criRUp = DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].CriRUp / 100f;
+        }
+        int ranCri = Random.Range(0, 100);
+        if (ranCri < (int)(actionMenber.criR*(1f+ criRUp)))
         {
             return true;
         }

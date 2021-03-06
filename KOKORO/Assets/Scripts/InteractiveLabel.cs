@@ -8,6 +8,9 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public LabelType labelType;
     public int index;
 
+    //英雄面板ICON类型
+    public string iconType;
+
     //英雄装备专用变量
     public EquipPart equipPart;
     public int heroID;
@@ -63,12 +66,12 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (labelType == LabelType.NewGameHero)
         {
             GameControlInNewGame gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInNewGame>();
-            HeroPanel.Instance.OnShow(gci.temp_HeroList[index], false,  374, -32);
+            HeroPanel.Instance.OnShow(gci.temp_HeroList[index], false, 374, -32);
         }
         else if (labelType == LabelType.NewGameLeader)
         {
             GameControlInNewGame gci = GameObject.Find("GameManagerInScene").GetComponent<GameControlInNewGame>();
-            HeroPanel.Instance.OnShow(gci.temp_Leader, false,  374, -32);
+            HeroPanel.Instance.OnShow(gci.temp_Leader, false, 374, -32);
         }
         else if (labelType == LabelType.Item)
         {
@@ -80,21 +83,21 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
         else if (labelType == LabelType.HeroInSelect)
         {
-            HeroPanel.Instance.OnShow(gc.heroDic[index], false,  (int)(BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing),
+            HeroPanel.Instance.OnShow(gc.heroDic[index], false, (int)(BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing),
                (int)BuildingPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
         }
         else if (labelType == LabelType.HeroInSelectToCheck)
         {
-            HeroPanel.Instance.OnShow(gc.heroDic[index], false,  (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y));
+            HeroPanel.Instance.OnShow(gc.heroDic[index], false, (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.x + HeroSelectPanel.Instance.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)(HeroSelectPanel.Instance.GetComponent<RectTransform>().anchoredPosition.y));
         }
         else if (labelType == LabelType.EquipmentLook)
         {
-            if(index!=-1)
+            if (index != -1)
             {
                 ItemListAndInfoPanel.Instance.OnShow(index, (int)(HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.x + HeroPanel.Instance.gameObject.GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing),
      (int)HeroPanel.Instance.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
             }
-  
+
         }
         else if (labelType == LabelType.BuildingStrengthen)
         {
@@ -104,7 +107,7 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 {
                     ItemListAndInfoPanel.Instance.OnShow(index, 1178, -104);
                 }
-            
+
             }
 
         }
@@ -118,6 +121,10 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 }
             }
 
+        }
+        else if (labelType == LabelType.HeroIcon)
+        {
+            HeroPanel.Instance.ShowIconInfo(iconType, heroID, index, GetComponent<RectTransform>().anchoredPosition.x + 56f);
         }
     }
 
@@ -187,6 +194,10 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
             {
                 ItemListAndInfoPanel.Instance.OnHide();
             }
+        }
+        else if (labelType == LabelType.HeroIcon)
+        {
+            HeroPanel.Instance.HideIconInfo();
         }
     }
 }

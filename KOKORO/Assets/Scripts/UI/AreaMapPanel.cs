@@ -138,7 +138,8 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
 
     //据点信息浮动块-显示、更新
     public void ShowDistrictInfoBlock( int id,int x, int y)
-    {      
+    {
+        HideTravellerInfoBlock();
         if ( districtInfoBlockID == id)
         {
             HideDistrictInfoBlock();
@@ -265,6 +266,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     //地牢信息浮动块-显示
     public void ShowDungeonInfoBlock(int id, int x, int y)
     {
+        HideTravellerInfoBlock();
         if (dungeonInfoBlockID == id)
         {
             HideDungeonInfoBlock();
@@ -654,7 +656,7 @@ public class AreaMapPanel : BasePanel, IBeginDragHandler, IDragHandler, IEndDrag
     {
         dungeonGo[dungeonID].GetComponent<Button>().onClick.RemoveAllListeners();
         dungeonGo[dungeonID].GetComponent<Button>().onClick.AddListener(delegate () {
-
+     
             if (dungeonInfoBlockID != dungeonID)
             {
                 float x = Screen.width / 2f - dungeonGo[dungeonID].GetComponent<RectTransform>().anchoredPosition.x;

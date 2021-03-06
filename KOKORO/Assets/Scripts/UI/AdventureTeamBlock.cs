@@ -48,6 +48,11 @@ public class AdventureTeamBlock : MonoBehaviour
     public Image dungeon_destinationImage;
     //public Button dungeon_selectBtn;
 
+    public RectTransform damageDataRt;
+    public List<RectTransform> damageData_heroRt;
+    public List<Image> damageData_picImage;
+    public List<Text> damageData_valueText;
+
     public List<Image> hero_picImage;
     public List<Text> hero_nameText;
     public List<Text> hero_hpmpText;
