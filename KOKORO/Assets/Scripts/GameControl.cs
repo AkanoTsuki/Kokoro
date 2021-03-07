@@ -5761,8 +5761,29 @@ public class GameControl : MonoBehaviour
 
 
         AdventureState endAdventureState = adventureTeamList[teamID].state;
-    
 
+        //可能是多余的清零，开始时会重置，这里是为了getsicon的显示
+        adventureTeamList[teamID].getExp = 0;
+        adventureTeamList[teamID].getGold = 0;
+        adventureTeamList[teamID].getCereal = 0;
+        adventureTeamList[teamID].getVegetable = 0;
+        adventureTeamList[teamID].getFruit = 0;
+        adventureTeamList[teamID].getMeat = 0;
+        adventureTeamList[teamID].getFish = 0;
+        adventureTeamList[teamID].getWood = 0;
+        adventureTeamList[teamID].getMetal = 0;
+        adventureTeamList[teamID].getStone = 0;
+        adventureTeamList[teamID].getLeather = 0;
+        adventureTeamList[teamID].getCloth = 0;
+        adventureTeamList[teamID].getTwine = 0;
+        adventureTeamList[teamID].getBone = 0;
+        adventureTeamList[teamID].getWind = 0;
+        adventureTeamList[teamID].getFire = 0;
+        adventureTeamList[teamID].getWater = 0;
+        adventureTeamList[teamID].getGround = 0;
+        adventureTeamList[teamID].getLight = 0;
+        adventureTeamList[teamID].getDark = 0;
+        adventureTeamList[teamID].getItemList.Clear();
 
         adventureTeamList[teamID].state = AdventureState.NotSend;
         adventureTeamList[teamID].action = AdventureAction.None;
@@ -5955,9 +5976,11 @@ public class GameControl : MonoBehaviour
         yield return new WaitForSeconds(1f);
         short getNum = 0;
         string log = "";
+        string type = "";
         switch (adventureEvent)
         {
             case AdventureEvent.Gold:
+                type = "Gold";
                 getNum = (short)Random.Range(100, 500);
                 adventureTeamList[teamID].getGold += getNum;
                 log = "[获得金币]金币 " + getNum;
@@ -5965,12 +5988,13 @@ public class GameControl : MonoBehaviour
             case AdventureEvent.Item:
                 break;
             case AdventureEvent.Resource:
-
+               
                 int ran = Random.Range(0, DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].ResourceType.Count);
 
                 StuffType resourceType = DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].ResourceType[ran];
                 int resourceValue = DataManager.mDungeonDict[adventureTeamList[teamID].dungeonID].ResourceValue[ran];
-                //Debug.Log("ran=" + ran + " resourceType=" + resourceType + " resourceValue");
+                type = resourceType.ToString();
+               //Debug.Log("ran=" + ran + " resourceType=" + resourceType + " resourceValue");
                 getNum = (short)(resourceValue * Random.Range(0.5f, 1.5f));
                 switch (resourceType)
                 {
@@ -6054,6 +6078,8 @@ public class GameControl : MonoBehaviour
 
 
         yield return new WaitForSeconds(1f);
+
+        AdventureMainPanel.Instance.ShowDropsIcon(teamID, new List<string> { type } , new List<short> { }, new Vector2(320, -135));
 
         CreateAdventureEventPartLog(teamID, adventureEvent, true, "探险队发现了一些东西\n" + log);
 
@@ -7445,6 +7471,7 @@ public class GameControl : MonoBehaviour
             string getStr = "";
             short getExp = 0;
             short getGold = 0;
+            List<short> getItemList = new List<short>();
             for (int i = 0; i < fightMenberObjects.Count; i++)
             {
                 if (fightMenberObjects[i].side == 1)
@@ -7463,14 +7490,14 @@ public class GameControl : MonoBehaviour
                             {
                                 adventureTeamList[teamID].getItemList.Add(DataManager.mMonsterDict[fightMenberObjects[i].objectID].ItemDrop[j]);
                                 getStr += "[" + DataManager.mItemDict[DataManager.mMonsterDict[fightMenberObjects[i].objectID].ItemDrop[j]].Name + "] ";
+                                getItemList.Add(DataManager.mMonsterDict[fightMenberObjects[i].objectID].ItemDrop[j]);
                             }
                         }
                     }
-
-
                 }
-
             }
+
+            AdventureMainPanel.Instance.ShowDropsIcon(teamID, (getGold != 0 ? new List<string> { "Gold" } : new List<string> { }), getItemList ,Vector2.zero);
 
             AdventureTeamLogAdd(teamID, "战斗胜利！获得[经验值" + getExp + "][金币" + getGold + "] " + getStr);
 
@@ -7834,7 +7861,7 @@ public class GameControl : MonoBehaviour
             if (actionMenber.side==0)
             {
                 adventureTeamList[teamID].heroDamageList[actionMenber.sideIndex] += damageTotal;
-                AdventureMainPanel.Instance.UpdateDamageData(teamID);
+                AdventureMainPanel.Instance.UpdateDamageData(teamID, actionMenber.sideIndex);
             }
         }
 
@@ -7853,7 +7880,7 @@ public class GameControl : MonoBehaviour
             {
                 if (DataManager.mHaloDict[heroDic[targetMenber.objectID].halo].DamageReflection != 0)
                 {
-                    TakeDamage(teamID, round, null, actionMenber, null, (int)(damageTotal * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].SuckBlood / 100f)), 1, 1f);
+                    TakeDamage(teamID, round, null, actionMenber, null, (int)(damageTotal * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].DamageReflection / 100f)), 1, 1f);
                 }
             }
         }    
@@ -7865,14 +7892,19 @@ public class GameControl : MonoBehaviour
             //halo自爆
             if (targetMenber.haloStatus)
             {
-                for (int i = 0; i < fightMenberObjectSS[teamID].Count; i++)
+                if (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].Detonate != 0)
                 {
-                    if (fightMenberObjectSS[teamID][i].side != targetMenber.side && fightMenberObjectSS[teamID][i].hpNow > 0)
+                    for (int i = 0; i < fightMenberObjectSS[teamID].Count; i++)
                     {
-                        TakeDamage(teamID, round, null, fightMenberObjectSS[teamID][i], null, (int)(targetMenber.hp * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].Detonate / 100f)), 1, 1f);
+                        if (fightMenberObjectSS[teamID][i].side != targetMenber.side && fightMenberObjectSS[teamID][i].hpNow > 0)
+                        {
+                            Debug.Log("actionMenber.objectID=" + actionMenber.objectID);
+                            Debug.Log("heroDic[actionMenber.objectID].halo=" + heroDic[actionMenber.objectID].halo);
+                            Debug.Log("i=" + i);
+                            TakeDamage(teamID, round, null, fightMenberObjectSS[teamID][i], null, (int)(targetMenber.hp * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].Detonate / 100f)), 1, 1f);
+                        }
                     }
                 }
-
             }
 
             //targetMenber.hpNow = 0;
@@ -8289,6 +8321,8 @@ public class GameControl : MonoBehaviour
         dungeonList[adventureTeamList[teamID].dungeonID].teamList.Remove(teamID);
         AreaMapPanel.Instance.UpdateDungeonSingle(adventureTeamList[teamID].dungeonID);
 
+        
+
         string pic = heroDic[adventureTeamList[teamID].heroIDList[0]].pic;
 
         List<int> heroListTemp = new List<int>();
@@ -8307,7 +8341,18 @@ public class GameControl : MonoBehaviour
 
         adventureTeamList[teamID].state = AdventureState.Backing;
         PlayMainPanel.Instance.UpdateAdventureSingle(teamID);
-        AreaMapPanel.Instance.UpdateDungeonInfoBlock(adventureTeamList[teamID].dungeonID);
+
+        if (dungeonList[adventureTeamList[teamID].dungeonID].teamList.Count > 0)
+        {
+            AreaMapPanel.Instance.UpdateDungeonInfoBlock(adventureTeamList[teamID].dungeonID);
+        }
+        else
+        {
+            AreaMapPanel.Instance.HideDungeonInfoBlock();
+        }
+      
+
+
 
         if (AdventureMainPanel.Instance.isShow && AdventureMainPanel.Instance.nowCheckingTeamID == teamID)
         {
@@ -9074,6 +9119,25 @@ public class GameControl : MonoBehaviour
             default: return "";
         }
     }
+
+    public Color OutputItemRankColor(byte rank)
+    {
+        switch (rank)
+        {
+            case 1: return new Color(179 / 255f, 179 / 255f, 179 / 255f,1f);
+            case 2: return new Color(205 / 255f, 201 / 255f, 201 / 255f, 1f);
+            case 3: return new Color(50 / 255f, 205 / 255f, 50 / 255f, 1f) ;
+            case 4: return new Color(92 / 255f, 172 / 255f, 238 / 255f, 1f);
+            case 5: return new Color(67 / 255f, 110 / 255f, 238 / 255f, 1f);
+            case 6: return new Color(205 / 255f, 0 / 255f, 205 / 255f, 1f);
+            case 7: return new Color(255 / 255f, 140 / 255f, 0 / 255f, 1f);
+            case 8: return new Color(238 / 255f, 44 / 255f, 44 / 255f, 1f);
+            case 9: return new Color(238 / 255f, 201 / 255f, 0 / 255f, 1f);
+            case 10: return new Color(238 / 255f, 173 / 255f, 14 / 255f, 1f);
+            default: return Color.white;
+        }
+    }
+
 
     public string OutputSeasonStr(int month, bool color)
     {

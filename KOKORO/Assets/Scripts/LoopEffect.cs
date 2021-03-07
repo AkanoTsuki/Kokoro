@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class LoopEffect : MonoBehaviour
 {
-    private float fps = 10.0f;
+    private float fps = 15.0f;
     private float time = 0;
     private int currentIndex = 0;
     bool isPlay = false;
@@ -42,6 +42,16 @@ public class LoopEffect : MonoBehaviour
 
         isPlay = true;
     }
+    public void PlayRoleWalkRight(string name)
+    {
+        currentIndex = 0;
+        //GetComponent<RectTransform>().anchoredPosition = location;
+        needFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + name+ "/Walk_Right");
+        //gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(needFrames[0].texture.width / (float)needFrames.Length , needFrames[0].texture.height );
+
+        isPlay = true;
+    }
+
     public void Stop()
     {
         isPlay = false;

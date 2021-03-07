@@ -88,8 +88,15 @@ public enum LabelType
     Consumable,
     BuildingStrengthen,
     BuildingInlay,
-    HeroIcon
+    HeroIcon,
+    GetsInAdventure
     // AreaMapDistrict
+}
+
+public enum AreaMapIconType
+{
+    District,
+    Dungeon
 }
 
 public enum Element

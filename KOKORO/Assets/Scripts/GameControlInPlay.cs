@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GameControlInPlay : MonoBehaviour
 {
     GameControl gc;
+
+    //进度条
+    public GameObject progressBgGo;
+    public Slider progressSlider;
+    //进度条进度显示文字  
+    public Text ProgressSliderText;
 
     //运行变量
     public List<LogObject> needShowMessageList = new List<LogObject> { };
@@ -12,11 +18,17 @@ public class GameControlInPlay : MonoBehaviour
 
     void Start()
     {
+       // progressSlider.value = 0.81f;
+       // ProgressSliderText.text = "81%";
+
         gc = GameObject.Find("GameManager").GetComponent<GameControl>();
 
         UIManager.Instance.SceneUIInit();
         UIManager.Instance.InitPanel(UIPanelType.AreaMap);
         AreaMapPanel.Instance.OnShow(-288, 818);
+
+       // progressBgGo.transform.SetAsLastSibling();
+
         UIManager.Instance.InitPanel(UIPanelType.DistrictMain);
         DistrictMainPanel.Instance.SetAnchoredPosition(0, -436);
         DistrictMainPanel.Instance.OnHide();
@@ -91,6 +103,9 @@ public class GameControlInPlay : MonoBehaviour
         SystemSetPanel.Instance.SetAnchoredPosition(0, 0);
         SystemSetPanel.Instance.OnHide();
 
+       // progressSlider.value = 0.9f;
+       // ProgressSliderText.text = "90%";
+
         for (byte i = 0; i < gc.adventureTeamList.Count; i++)
         {
             if (gc.adventureTeamList[i].state == AdventureState.Doing)
@@ -121,7 +136,9 @@ public class GameControlInPlay : MonoBehaviour
 
         gc.CreateRecruiter(1); gc.CreateRecruiter(1); gc.CreateRecruiter(1);
 
-
+        //progressSlider.value = 1f;
+       // ProgressSliderText.text = "100%";
+       // progressBgGo.SetActive(false);
     }
 
     void Update()

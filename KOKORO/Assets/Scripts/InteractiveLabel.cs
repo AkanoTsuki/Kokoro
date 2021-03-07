@@ -126,6 +126,10 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             HeroPanel.Instance.ShowIconInfo(iconType, heroID, index, GetComponent<RectTransform>().anchoredPosition.x + 56f);
         }
+        else if (labelType == LabelType.GetsInAdventure)
+        {
+            AdventureMainPanel.Instance.ShowGetsIconInfo((byte)heroID, GetComponent<RectTransform>().anchoredPosition.x,iconType,index);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -198,6 +202,10 @@ public class InteractiveLabel : MonoBehaviour, IPointerEnterHandler, IPointerExi
         else if (labelType == LabelType.HeroIcon)
         {
             HeroPanel.Instance.HideIconInfo();
+        }
+        else if (labelType == LabelType.GetsInAdventure)
+        {
+            AdventureMainPanel.Instance.HideGetsIconInfo((byte)heroID);
         }
     }
 }

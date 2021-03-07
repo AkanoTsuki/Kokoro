@@ -42,7 +42,9 @@ public class GameControlInStartMenu : MonoBehaviour
     public void ToContinue()
     {
         gc.Load();
-        SceneManager.LoadScene("A3_Play");
+        GameControlInLoading.sceneName = "A3_Play";
+        SceneManager.LoadScene("A4_Loading");
+        //SceneManager.LoadScene("A3_Play");
     }
 
     void SetButtonState()

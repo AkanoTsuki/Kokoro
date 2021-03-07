@@ -2479,7 +2479,7 @@ public class HeroPanel : BasePanel
         if (gc.heroDic[heroID].job != -1)
         {
             iconImage[index].GetComponent<RectTransform>().localScale = Vector2.one;
-            iconImage[index].sprite = Resources.Load<Sprite>("Image/Other/icon876");
+            iconImage[index].sprite = Resources.Load<Sprite>("Image/Other/icon239");
             iconImage[index].GetComponent<InteractiveLabel>().iconType = "job";
             index++;
         }
@@ -2487,7 +2487,7 @@ public class HeroPanel : BasePanel
         if (gc.heroDic[heroID].forceLeader)
         {
             iconImage[index].GetComponent<RectTransform>().localScale = Vector2.one;
-            iconImage[index].sprite = Resources.Load<Sprite>("Image/Other/icon237");
+            iconImage[index].sprite = Resources.Load<Sprite>("Image/Other/icon401");
             iconImage[index].GetComponent<InteractiveLabel>().iconType = "leader";
             iconImage[index].GetComponent<InteractiveLabel>().heroID = heroID;
             index++;

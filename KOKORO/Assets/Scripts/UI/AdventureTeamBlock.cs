@@ -7,6 +7,11 @@ public class AdventureTeamBlock : MonoBehaviour
     public Text titleText;
 
     public Text dungeon_nameText;
+    public GameObject dungeon_getsIconGo;
+    public GameObject dungeon_dropsIconGo;
+    public RectTransform dungeon_getsIconInfoRt;
+    public Text dungeon_getsIconInfoText;
+
     public Text dungeon_progressText;
 
     public List<Image> dungeon_elementImage;
@@ -70,4 +75,8 @@ public class AdventureTeamBlock : MonoBehaviour
 
     public RectTransform freeRt;
 
+
+    //对象池
+    public List<GameObject> getsIconPool = new List<GameObject>();//在用
+    public List<GameObject> dropsIconPool = new List<GameObject>();//在用
 }

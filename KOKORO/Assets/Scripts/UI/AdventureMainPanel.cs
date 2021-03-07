@@ -16,16 +16,21 @@ public class AdventureMainPanel : BasePanel
     public Button closeBtn;
     #endregion
 
+    //配置常量
+    //Color damageValueColor = new Color(1f, 0.47f, 0.47f, 1f);
+
     //运行变量
     List<AdventureTeamBlock> adventureTeamBlocks = new List<AdventureTeamBlock>();
     List<float> rollCount = new List<float> { 0f, 0f, 0f, 0f, 0f };
     public short nowCheckingTeamID = -1;
-
+    List<byte> getsCount = new List<byte> { 0, 0, 0 };
+    float timeCount;
     //对象池
     List<GameObject> adventureTeamGo = new List<GameObject>();
     public List<GameObject> effectPool = new List<GameObject>();
     public List<GameObject> numPool = new List<GameObject>();
     public List<GameObject> talkPool = new List<GameObject>();
+    
 
     void Awake()
     {
@@ -68,7 +73,7 @@ public class AdventureMainPanel : BasePanel
 
         GetComponent<CanvasGroup>().alpha = 1f;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
-        Instance.enabled = true;
+        //Instance.enabled = true;
         isShow = true;
     }
 
@@ -93,7 +98,7 @@ public class AdventureMainPanel : BasePanel
 
         GetComponent<CanvasGroup>().alpha = 0f;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
-        Instance.enabled = false;
+        //Instance.enabled = false;
         isShow = false;
     }
 
@@ -124,6 +129,7 @@ public class AdventureMainPanel : BasePanel
                 go.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 UpdateTeam(i);
                 HideGets(i);
+                HideGetsIconInfo(i);
             }
             else
             {
@@ -184,6 +190,8 @@ public class AdventureMainPanel : BasePanel
             /*详情*/
             AdventureTeamPanel.Instance.OnShow(teamID, (int)(GetComponent<RectTransform>().anchoredPosition.x+GetComponent<RectTransform>().sizeDelta.x + GameControl.spacing), (int)GetComponent<RectTransform>().anchoredPosition.y);
         });
+
+        UpdateGetsIconList(teamID);
 
         if (gc.adventureTeamList[teamID].state == AdventureState.Free)
         {
@@ -703,7 +711,7 @@ public class AdventureMainPanel : BasePanel
             else if (gc.adventureTeamList[teamID].state == AdventureState.Retreat)
             {
                 adventureTeamBlock.dungeon_side0Go[i].GetComponent<AnimatiorControl>().SetAnim(AnimStatus.WalkLeft);
-                adventureTeamBlock.dungeon_side0Go[i].transform.DOLocalMoveX(adventureTeamBlock.dungeon_side0Go[i].transform.localPosition.x - 300f, 2f);
+                adventureTeamBlock.dungeon_side0Go[i].transform.DOLocalMoveX(adventureTeamBlock.dungeon_side0Go[i].transform.localPosition.x - 360f, 2f);
             }
         }
     }
@@ -1758,10 +1766,10 @@ public class AdventureMainPanel : BasePanel
         {
             adventureTeamBlock.damageData_heroRt[i].localScale = Vector2.zero;
         }
-        UpdateDamageData(teamID);
+        UpdateDamageData(teamID,-1);
     }
 
-    public void UpdateDamageData(byte teamID)
+    public void UpdateDamageData(byte teamID,int sideIndex)
     {
         AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
        
@@ -1770,7 +1778,15 @@ public class AdventureMainPanel : BasePanel
         for (byte i = 0; i < gc.adventureTeamList[teamID].heroIDList.Count; i++)
         {
             adventureTeamBlock.damageData_valueText[i].text = gc.adventureTeamList[teamID].heroDamageList[i].ToString();
-
+            if (sideIndex == i)
+            {
+                adventureTeamBlock.damageData_valueText[i].GetComponent<RectTransform>().DOComplete();
+                adventureTeamBlock.damageData_valueText[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(22f, 0);
+                adventureTeamBlock.damageData_valueText[i].color = Color.red;
+                adventureTeamBlock.damageData_valueText[i].GetComponent<RectTransform>().DOLocalJump(new Vector2(22f, 0), 3f, 3, 1.5f);
+                adventureTeamBlock.damageData_valueText[i].DOColor(Color.white, 1.5f);
+            }
+           
 
             if (indexList.Count == 0)
             {
@@ -1806,13 +1822,274 @@ public class AdventureMainPanel : BasePanel
 
     }
 
-    //public void UpdateDamageDataSingle(byte teamID,byte heroIndex)
-    //{
-        
-    //}
-
     public void HideDamageData(byte teamID)
     {
         adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().damageDataRt.localScale = Vector2.zero;
+    }
+
+
+    public void UpdateGetsIconList(byte teamID)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+
+        int index = 0;
+        //GameObject go; 
+        if (gc.adventureTeamList[teamID].getGold != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Gold", gc.adventureTeamList[teamID].getGold, "Other/icon362", Color.yellow, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getCereal != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Cereal", gc.adventureTeamList[teamID].getCereal, "Other/icon318", Color.green, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getVegetable != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Vegetable", gc.adventureTeamList[teamID].getVegetable, "Other/icon296", Color.green, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getFruit != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Fruit", gc.adventureTeamList[teamID].getFruit, "Other/icon312", Color.green, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getMeat != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Meat", gc.adventureTeamList[teamID].getMeat, "Other/icon323", Color.green, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getFish != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Fish", gc.adventureTeamList[teamID].getFish, "Other/icon868", Color.green, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getWood != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Wood", gc.adventureTeamList[teamID].getWood, "Other/icon959", Color.grey, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getStone != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Stone", gc.adventureTeamList[teamID].getStone, "Other/icon858", Color.grey, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getMetal != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Metal", gc.adventureTeamList[teamID].getMetal, "Other/icon961", Color.grey, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getLeather != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Leather", gc.adventureTeamList[teamID].getLeather, "Other/icon956", Color.grey, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getCloth != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Cloth", gc.adventureTeamList[teamID].getCloth, "Other/icon426", Color.grey, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getTwine != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Twine", gc.adventureTeamList[teamID].getTwine, "Other/icon397", Color.grey, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getBone != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Bone", gc.adventureTeamList[teamID].getBone, "Other/icon892", Color.grey, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getWind != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Wind", gc.adventureTeamList[teamID].getWind, "Other/icon920", Color.gray, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getFire != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Fire", gc.adventureTeamList[teamID].getFire, "Other/icon921", Color.gray, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getWater != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Water", gc.adventureTeamList[teamID].getWater, "Other/icon922", Color.gray, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getGround != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Ground", gc.adventureTeamList[teamID].getGround, "Other/icon927", Color.gray, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getLight != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Light", gc.adventureTeamList[teamID].getLight, "Other/icon925", Color.gray, index);
+            index++;
+        }
+        if (gc.adventureTeamList[teamID].getDark != 0)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Dark", gc.adventureTeamList[teamID].getDark, "Other/icon924", Color.gray, index);
+            index++;
+        }
+        for (int i = 0; i < gc.adventureTeamList[teamID].getItemList.Count; i++)
+        {
+            SetGetsIcon(teamID, adventureTeamBlock.getsIconPool, adventureTeamBlock.dungeon_getsIconGo, "Item", gc.adventureTeamList[teamID].getItemList[i], "ItemPic/"+DataManager.mItemDict[gc.adventureTeamList[teamID].getItemList[i]].Pic,gc.OutputItemRankColor(DataManager.mItemDict[gc.adventureTeamList[teamID].getItemList[i]].Rank) , index);
+            index++;
+        }
+
+
+        for (int i = index; i < adventureTeamBlock.getsIconPool.Count; i++)
+        {
+            adventureTeamBlock.getsIconPool[i].GetComponent<RectTransform>().localScale = Vector2.zero;
+        }
+    }
+
+    void SetGetsIcon(byte teamID,List<GameObject> pool, GameObject parentGo,  string iconType, int value,string pic, Color borderColor, int index)
+    {
+        GameObject go;
+        if (index < pool.Count)
+        {
+            go = pool[index];
+            go.GetComponent<RectTransform>().localScale = Vector2.one;
+        }
+        else
+        {
+            go = Instantiate(Resources.Load("Prefab/UILabel/Label_GetsInAdventure")) as GameObject;
+            go.transform.SetParent(parentGo.transform);
+            pool.Add(go);
+        }
+        go.GetComponent<RectTransform>().anchoredPosition = new Vector2(18f * index, 0f);
+
+        go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/"+ pic);
+        go.transform.GetChild(0).GetComponent<Image>().color = borderColor;
+        go.GetComponent<InteractiveLabel>().iconType = iconType;
+        go.GetComponent<InteractiveLabel>().index = value;
+        go.GetComponent<InteractiveLabel>().heroID = teamID;
+    }
+
+    public void ShowGetsIconInfo(byte teamID,  float posX,string type,int value)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        adventureTeamBlock.dungeon_getsIconInfoRt.anchoredPosition = new Vector2(posX, -19f);
+        adventureTeamBlock.dungeon_getsIconInfoText.text = "";
+
+        switch (type)
+        {
+            case "Gold": adventureTeamBlock.dungeon_getsIconInfoText.text = "金币 *" + value; break;
+            case "Cereal": adventureTeamBlock.dungeon_getsIconInfoText.text = "谷物 *" + value; break;
+            case "Vegetable": adventureTeamBlock.dungeon_getsIconInfoText.text = "蔬菜 *" + value; break;
+            case "Fruit": adventureTeamBlock.dungeon_getsIconInfoText.text = "水果 *" + value; break;
+            case "Meat": adventureTeamBlock.dungeon_getsIconInfoText.text = "肉类 *" + value; break;
+            case "Fish": adventureTeamBlock.dungeon_getsIconInfoText.text = "鱼类 *" + value; break;
+            case "Wood": adventureTeamBlock.dungeon_getsIconInfoText.text = "木材 *" + value; break;
+            case "Stone": adventureTeamBlock.dungeon_getsIconInfoText.text = "石料 *" + value; break;
+            case "Metal": adventureTeamBlock.dungeon_getsIconInfoText.text = "金属 *" + value; break;
+            case "Leather": adventureTeamBlock.dungeon_getsIconInfoText.text = "皮革 *" + value; break;
+            case "Cloth": adventureTeamBlock.dungeon_getsIconInfoText.text = "布料 *" + value; break;
+            case "Twine": adventureTeamBlock.dungeon_getsIconInfoText.text = "麻绳 *" + value; break;
+            case "Bone": adventureTeamBlock.dungeon_getsIconInfoText.text = "骨块 *" + value; break;
+            case "Wind": adventureTeamBlock.dungeon_getsIconInfoText.text = "风粉尘 *" + value; break;
+            case "Fire": adventureTeamBlock.dungeon_getsIconInfoText.text = "火粉尘 *" + value; break;
+            case "Water": adventureTeamBlock.dungeon_getsIconInfoText.text = "水粉尘 *" + value; break;
+            case "Ground": adventureTeamBlock.dungeon_getsIconInfoText.text = "地粉尘 *" + value; break;
+            case "Light": adventureTeamBlock.dungeon_getsIconInfoText.text = "光粉尘 *" + value; break;
+            case "Dark": adventureTeamBlock.dungeon_getsIconInfoText.text = "暗粉尘 *" + value; break;
+            case "Item": adventureTeamBlock.dungeon_getsIconInfoText.text =DataManager.mItemDict[value].Name+ "(未鉴定)" ; break;
+        }
+    }
+    public void HideGetsIconInfo(byte teamID)
+    {
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        adventureTeamBlock.dungeon_getsIconInfoRt.anchoredPosition = new Vector2(0f, 5000f);
+    }
+
+    public void ShowDropsIcon(byte teamID, List<string> type, List<short> itemList,Vector2 pos)
+    {
+        Debug.Log("ShowDropsIcon() type.count" + type.Count);
+
+
+        AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
+        byte index = 0;
+
+        for (int i = 0; i < type.Count; i++)
+        {
+            Debug.Log("type[i]=" + type[i]);
+            switch (type[i])
+            {
+                case "Gold": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon362", index, pos); break;
+                case "Cereal": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon318", index, pos); break;
+                case "Vegetable": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon296", index, pos); break;
+                case "Fruit": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon312", index, pos); break;
+                case "Meat": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon323", index, pos); break;
+                case "Fish": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon868", index, pos); break;
+                case "Wood": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon959", index, pos); break;
+                case "Stone": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon858", index, pos); break;
+                case "Metal": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon961", index, pos); break;
+                case "Leather": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon956", index, pos); break;
+                case "Cloth": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon426", index, pos); break;
+                case "Twine": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon397", index, pos); break;
+                case "Bone": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon892", index, pos); break;
+                case "Wind": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon920", index, pos); break;
+                case "Fire": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon921", index, pos); break;
+                case "Water": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon922", index, pos); break;
+                case "Ground": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon927", index, pos); break;
+                case "Light": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon925", index, pos); break;
+                case "Dark": SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo, "Other/icon924", index, pos); break;
+            }
+            index++;
+        }
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            SetDropsIcon(teamID, adventureTeamBlock.dropsIconPool, adventureTeamBlock.dungeon_dropsIconGo,"ItemPic/"+ DataManager.mItemDict[itemList[i]].Pic, index, pos);
+            index++;
+        }
+
+        for (int i = index; i < adventureTeamBlock.dropsIconPool.Count; i++)
+        {
+            adventureTeamBlock.dropsIconPool[i].GetComponent<Image>().color = Color.clear ;
+        }
+        getsCount[teamID] = index;
+   
+        DOTween.To(() => timeCount, a => timeCount = a, 1, 2.3f).OnComplete(() => 
+        
+        GetsIconGoAnim(adventureTeamBlock.dungeon_getsIconGo.transform)
+        );
+        //adventureTeamBlock.dungeon_getsIconGo.transform.DOComplete();
+        //adventureTeamBlock.dungeon_getsIconGo.transform.localScale = Vector2.one;
+        //adventureTeamBlock.dungeon_getsIconGo.transform.DOScale(Vector2.one * 1.1f, 0.2f).SetLoops(6, LoopType.Yoyo);
+    }
+    void GetsIconGoAnim(Transform transform)
+    {
+        transform.DOComplete();
+       transform.localScale = Vector2.one;
+       transform.DOScale(Vector2.one * 1.1f, 0.2f).SetLoops(6, LoopType.Yoyo);
+    }
+
+
+    void SetDropsIcon(byte teamID, List<GameObject> pool, GameObject parentGo, string pic, int index ,Vector2 pos)
+    {
+   
+        GameObject go;
+        if (index < pool.Count)
+        {
+            go = pool[index];
+            go.GetComponent<RectTransform>().DOComplete();
+            //go.GetComponent<RectTransform>().localScale = Vector2.one;
+        }
+        else
+        {
+            go = Instantiate(Resources.Load("Prefab/UILabel/Label_DropsInAdventure")) as GameObject;
+            go.transform.SetParent(parentGo.transform);
+            pool.Add(go);
+        }
+     
+        go.GetComponent<RectTransform>().anchoredPosition = pos!=Vector2.zero?pos: new Vector2(Random.Range(300, 360), Random.Range(-120, -150));
+        go.GetComponent<RectTransform>().sizeDelta = new Vector2(32f, 32f);
+        go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/" + pic);
+        go.GetComponent<Image>().color = Color.white;
+
+        go.GetComponent<RectTransform>().DOLocalMove(new Vector2(16f* getsCount[teamID], -2f), 2.5f);
+        go.GetComponent<RectTransform>().DOSizeDelta(new Vector2(16f, 16f), 2.5f);
+        go.GetComponent<Image>().DOColor(Color.clear,4f);
+
+        //adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>()
     }
 }

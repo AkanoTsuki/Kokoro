@@ -252,7 +252,9 @@ public class GameControlInNewGame : MonoBehaviour
 
 
         gc.Save();
-        SceneManager.LoadScene("A3_Play");
+        //SceneManager.LoadScene("A3_Play");
+        GameControlInLoading.sceneName = "A3_Play";
+        SceneManager.LoadScene("A4_Loading");
     }
 
     void InitBuilding()

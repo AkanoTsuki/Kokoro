@@ -104311,10 +104311,30 @@
       "SleepRes": 0,
       "GoldDrop": 50,
       "ExpDrop": 500,
-      "ItemDrop": [],
-      "ItemDropRate": [],
-      "ItemDropNumMin": [],
-      "ItemDropNumMax": []
+      "ItemDrop": [
+        4,
+        5,
+        139,
+        140
+      ],
+      "ItemDropRate": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "ItemDropNumMin": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "ItemDropNumMax": [
+        1,
+        1,
+        1,
+        1
+      ]
     },
     {
       "ID": 9,
@@ -104362,10 +104382,22 @@
       "SleepRes": 0,
       "GoldDrop": 50,
       "ExpDrop": 550,
-      "ItemDrop": [],
-      "ItemDropRate": [],
-      "ItemDropNumMin": [],
-      "ItemDropNumMax": []
+      "ItemDrop": [
+        54,
+        55
+      ],
+      "ItemDropRate": [
+        10,
+        10
+      ],
+      "ItemDropNumMin": [
+        1,
+        1
+      ],
+      "ItemDropNumMax": [
+        1,
+        1
+      ]
     },
     {
       "ID": 10,
@@ -123075,98 +123107,98 @@
     {
       "ID": 0,
       "Name": "高效",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_87",
       "Type": "Work",
       "Des": "提升制作速度"
     },
     {
       "ID": 1,
       "Name": "节约",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_02",
       "Type": "Work",
       "Des": "制作时有几率减少原料消耗"
     },
     {
       "ID": 2,
       "Name": "热情",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_85",
       "Type": "Work",
       "Des": "有几率提升强化等级"
     },
     {
       "ID": 3,
       "Name": "果断",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_78",
       "Type": "Work",
       "Des": "提升装备附加物理攻击的数值"
     },
     {
       "ID": 4,
       "Name": "沉静",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_21",
       "Type": "Work",
       "Des": "提升装备附加魔法攻击的数值"
     },
     {
       "ID": 5,
       "Name": "坚强",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_15",
       "Type": "Work",
       "Des": "提升装备附加防御的数值"
     },
     {
       "ID": 6,
       "Name": "不屈",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_107",
       "Type": "Fight",
       "Des": "被击倒时有几率恢复1点体力并再次投入战斗"
     },
     {
       "ID": 7,
       "Name": "自爆",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_83",
       "Type": "Fight",
       "Des": "被击倒时对敌人造成伤害"
     },
     {
       "ID": 8,
       "Name": "风专注",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_45",
       "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 9,
       "Name": "火专注",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_31",
       "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 10,
       "Name": "水专注",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_34",
       "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 11,
       "Name": "地专注",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_36",
       "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 12,
       "Name": "光专注",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_26",
       "Type": "Fight",
       "Des": ""
     },
     {
       "ID": 13,
       "Name": "暗专注",
-      "Pic": "icon148",
+      "Pic": "icon_standalone_38",
       "Type": "Fight",
       "Des": ""
     }
@@ -124046,7 +124078,7 @@
     {
       "ID": 0,
       "Name": "专注",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_61",
       "Effect": "Block",
       "EffectPosY": 8,
       "EffectScale": 1.5,
@@ -124074,7 +124106,7 @@
     {
       "ID": 1,
       "Name": "御魔",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_05",
       "Effect": "Box",
       "EffectPosY": -12,
       "EffectScale": 1.2,
@@ -124102,7 +124134,7 @@
     {
       "ID": 2,
       "Name": "未定义",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_49",
       "Effect": "Bubble",
       "EffectPosY": 12,
       "EffectScale": 2,
@@ -124130,7 +124162,7 @@
     {
       "ID": 3,
       "Name": "愤怒",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_29",
       "Effect": "Circle",
       "EffectPosY": 12,
       "EffectScale": 2,
@@ -124158,7 +124190,7 @@
     {
       "ID": 4,
       "Name": "狂暴",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_28",
       "Effect": "Claw",
       "EffectPosY": 6,
       "EffectScale": 1,
@@ -124186,7 +124218,7 @@
     {
       "ID": 5,
       "Name": "未定义",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_52",
       "Effect": "Consume0",
       "EffectPosY": 8,
       "EffectScale": 1.3,
@@ -124214,7 +124246,7 @@
     {
       "ID": 6,
       "Name": "未定义",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_51",
       "Effect": "Consume1",
       "EffectPosY": 8,
       "EffectScale": 1.3,
@@ -124242,7 +124274,7 @@
     {
       "ID": 7,
       "Name": "七彩",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_131",
       "Effect": "Consume2",
       "EffectPosY": 8,
       "EffectScale": 1.3,
@@ -124272,7 +124304,7 @@
     {
       "ID": 8,
       "Name": "暗影",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_53",
       "Effect": "Dark",
       "EffectPosY": 8,
       "EffectScale": 1.5,
@@ -124468,7 +124500,7 @@
     {
       "ID": 15,
       "Name": "烈火",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_31",
       "Effect": "Fire0",
       "EffectPosY": 8,
       "EffectScale": 1.5,
@@ -124496,7 +124528,7 @@
     {
       "ID": 16,
       "Name": "业火",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_41",
       "Effect": "Fire1",
       "EffectPosY": 8,
       "EffectScale": 1.5,
@@ -124524,7 +124556,7 @@
     {
       "ID": 17,
       "Name": "炎火",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_60",
       "Effect": "Fire2",
       "EffectPosY": 8,
       "EffectScale": 1.5,
@@ -124636,7 +124668,7 @@
     {
       "ID": 21,
       "Name": "冷淡",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_110",
       "Effect": "Heal0Back",
       "EffectPosY": 8,
       "EffectScale": 1.2,
@@ -124692,7 +124724,7 @@
     {
       "ID": 23,
       "Name": "热情",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_110",
       "Effect": "Heal1Back",
       "EffectPosY": 8,
       "EffectScale": 1.2,
@@ -124748,7 +124780,7 @@
     {
       "ID": 25,
       "Name": "冰墙",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_32",
       "Effect": "Ice0",
       "EffectPosY": 8,
       "EffectScale": 1.5,
@@ -124776,7 +124808,7 @@
     {
       "ID": 26,
       "Name": "冰暴",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_34",
       "Effect": "Ice1",
       "EffectPosY": 8,
       "EffectScale": 1.5,
@@ -124804,7 +124836,7 @@
     {
       "ID": 27,
       "Name": "冰柱",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_42",
       "Effect": "Ice2",
       "EffectPosY": 8,
       "EffectScale": 1.5,
@@ -124832,7 +124864,7 @@
     {
       "ID": 28,
       "Name": "未定义",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_43",
       "Effect": "Lightning",
       "EffectPosY": 6,
       "EffectScale": 1,
@@ -124976,7 +125008,7 @@
     {
       "ID": 33,
       "Name": "引导",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_18",
       "Effect": "Path",
       "EffectPosY": 6,
       "EffectScale": 2,
@@ -125004,7 +125036,7 @@
     {
       "ID": 34,
       "Name": "猛毒",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_102",
       "Effect": "Poison",
       "EffectPosY": 8,
       "EffectScale": 1.5,
@@ -125032,7 +125064,7 @@
     {
       "ID": 35,
       "Name": "坚固",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_13",
       "Effect": "Select0",
       "EffectPosY": 12,
       "EffectScale": 2,
@@ -125062,7 +125094,7 @@
     {
       "ID": 36,
       "Name": "反射",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_56",
       "Effect": "Select1",
       "EffectPosY": 12,
       "EffectScale": 2,
@@ -125376,7 +125408,7 @@
     {
       "ID": 48,
       "Name": "集中",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_82",
       "Effect": "Teleport0",
       "EffectPosY": 0,
       "EffectScale": 1,
@@ -125464,7 +125496,7 @@
     {
       "ID": 51,
       "Name": "聚火",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_27",
       "Effect": "Warp0",
       "EffectPosY": 6,
       "EffectScale": 1,
@@ -125492,7 +125524,7 @@
     {
       "ID": 52,
       "Name": "散炎",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_47",
       "Effect": "Warp1",
       "EffectPosY": 6,
       "EffectScale": 1,
@@ -125522,7 +125554,7 @@
     {
       "ID": 53,
       "Name": "水龙",
-      "Pic": "icon913",
+      "Pic": "icon_standalone_44",
       "Effect": "Water",
       "EffectPosY": 4,
       "EffectScale": 1.5,

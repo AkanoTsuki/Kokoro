@@ -22,6 +22,9 @@ public class MessagePanel : BasePanel
     int count = 0;
     int mode = 86;
 
+    //对象池
+    List<GameObject> messagePool = new List<GameObject>();
+
     void Awake()
     {
         Instance = this;
