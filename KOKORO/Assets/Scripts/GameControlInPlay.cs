@@ -137,8 +137,9 @@ public class GameControlInPlay : MonoBehaviour
         gc.CreateRecruiter(1); gc.CreateRecruiter(1); gc.CreateRecruiter(1);
 
         //progressSlider.value = 1f;
-       // ProgressSliderText.text = "100%";
-       // progressBgGo.SetActive(false);
+        // ProgressSliderText.text = "100%";
+        // progressBgGo.SetActive(false);
+       
     }
 
     void Update()

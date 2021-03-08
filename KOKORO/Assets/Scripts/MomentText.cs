@@ -41,7 +41,7 @@ public class MomentText : MonoBehaviour
         GetComponent<Text>().text = content;
         GetComponent<RectTransform>().anchoredPosition = location;
         GetComponent<RectTransform>().localScale = Vector2.one;
-        GetComponent<Text>().color = Color.white;
+        //GetComponent<Text>().color = Color.white;
 
         int fx = Random.Range(0, 2) == 0 ? -1 : 1;
         int firstXOffest = Random.Range(-20 * fx, 20 * fx);
@@ -56,10 +56,10 @@ public class MomentText : MonoBehaviour
        
         s.Append(GetComponent<RectTransform>().DOJumpAnchorPos(location+new Vector2(secondXOffest, Random.Range(0, 6)), 5, 1, 0.3f));
         s.AppendCallback(SetFree);
-        s.Insert(0f, GetComponent<Text>().DOFade(0f, s.Duration()));
+        //s.Insert(0f, GetComponent<Text>().DOFade(0f, s.Duration()));
         s.Insert(0.2f, GetComponent<RectTransform>().DOScale(Vector2.one*1.3f, 0.5f));
-        s.Insert(0.9f, GetComponent<RectTransform>().DOScale(Vector2.one, 0.5f));
-        //GetComponent<RectTransform>().DOJumpAnchorPos(new Vector2(Random.Range(-20, 20), 20), 5, 2, 2f).onComplete(SetFree);
+        s.Insert(0.8f, GetComponent<RectTransform>().DOScale(Vector2.one, 0.3f));
+
 
     }
 

@@ -41,6 +41,7 @@ public class AdventureMainPanel : BasePanel
     void Start()
     {
         closeBtn.onClick.AddListener(delegate () { OnHide(); });
+        DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(200, 200);
     }
 
     void Update()
@@ -879,11 +880,11 @@ public class AdventureMainPanel : BasePanel
         AdventureTeamBlock adventureTeamBlock = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>();
         if (fightMenberObject.side == 0)
         {
-            adventureTeamBlock.dungeon_side0ApImage[fightMenberObject.sideIndex].fillAmount = fightMenberObject.actionBar /10000f;
+            adventureTeamBlock.dungeon_side0ApImage[fightMenberObject.sideIndex].fillAmount = fightMenberObject.actionBar /5000f;
         }
         else if (fightMenberObject.side == 1)
         {
-            adventureTeamBlock.dungeon_side1ApImage[fightMenberObject.sideIndex].fillAmount = fightMenberObject.actionBar / 10000f;
+            adventureTeamBlock.dungeon_side1ApImage[fightMenberObject.sideIndex].fillAmount = fightMenberObject.actionBar / 5000f;
         }
     }
 
@@ -905,7 +906,7 @@ public class AdventureMainPanel : BasePanel
             if (fightMenberObject.hpNow > 0)
             {
                 adventureTeamBlock.dungeon_side0ApText[fightMenberObject.sideIndex].text = "AP";
-                adventureTeamBlock.dungeon_side0ApImage[fightMenberObject.sideIndex].fillAmount = fightMenberObject.actionBar / 10000f;
+                adventureTeamBlock.dungeon_side0ApImage[fightMenberObject.sideIndex].fillAmount = fightMenberObject.actionBar / 5000f;
             }
             else
             {
@@ -919,7 +920,7 @@ public class AdventureMainPanel : BasePanel
             if (fightMenberObject.hpNow > 0)
             {
                 adventureTeamBlock.dungeon_side1ApText[fightMenberObject.sideIndex].text = "AP";
-                adventureTeamBlock.dungeon_side1ApImage[fightMenberObject.sideIndex].fillAmount = fightMenberObject.actionBar / 10000f;
+                adventureTeamBlock.dungeon_side1ApImage[fightMenberObject.sideIndex].fillAmount = fightMenberObject.actionBar / 5000f;
             }
             else
             {
