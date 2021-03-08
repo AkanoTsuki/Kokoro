@@ -6148,7 +6148,7 @@ public class GameControl : MonoBehaviour
                     }
                     AdventureTeamLogAdd(teamID, "[触发陷阱]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>损失10%体力");
                     AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "weapon_2", 1f);
-                    AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#F86A43>-" + (int)(GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
+                    AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#F86A43>-" + (int)(GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>",false);
                 }
                 log = "探险队行进时触发陷阱，队伍成员的体力下降了";
                 break;
@@ -6162,9 +6162,9 @@ public class GameControl : MonoBehaviour
                     }
                     AdventureTeamLogAdd(teamID, "[触发陷阱]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>损失10%魔力");
                     AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "weapon_2", 1f);
-                    AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#D76FFA>-" + (int)(GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
+                    AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#D76FFA>-" + (int)(GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>", false);
                 }
-                log = "探险队行进时触发陷阱，队伍成员的魔下降了";
+                log = "探险队行进时触发陷阱，队伍成员的魔力下降了";
                 break;
             case AdventureEvent.SpringHp:
                 for (byte i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
@@ -6176,7 +6176,7 @@ public class GameControl : MonoBehaviour
                     }
                     AdventureTeamLogAdd(teamID, "[生命之泉]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>恢复10%体力");
                     AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "impact_6", 1f);
-                    AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#6EFB6F>+" + (int)(GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
+                    AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#6EFB6F>+" + (int)(GetHeroAttr(Attribute.Hp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>", false);
                 }
                 log = "探险队行进时发现生命之泉，队伍成员的体力恢复了";
                 break;
@@ -6190,7 +6190,7 @@ public class GameControl : MonoBehaviour
                     }
                     AdventureTeamLogAdd(teamID, "[智慧之泉]<color=#72FF53>" + heroDic[adventureTeamList[teamID].heroIDList[i]].name + "</color>恢复10%魔力");
                     AdventureMainPanel.Instance.ShowEffect(teamID, 0, i, "impact_5", 1f);
-                    AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#6FAAFA>+" + (int)(GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>");
+                    AdventureMainPanel.Instance.ShowDamageText(teamID, 0, i, "<color=#6FAAFA>+" + (int)(GetHeroAttr(Attribute.Mp, adventureTeamList[teamID].heroIDList[i]) * 0.1f) + "</color>", false);
                 }
                 log = "探险队行进时发现智慧之泉，队伍成员的魔力恢复了";
                 break;
@@ -6228,7 +6228,7 @@ public class GameControl : MonoBehaviour
 
         List<FightMenberObject> fightMenberObjects = new List<FightMenberObject>();
 
-        Debug.Log("fightMenberObjects.Count=" + fightMenberObjects.Count );
+        //Debug.Log("fightMenberObjects.Count=" + fightMenberObjects.Count );
 
         if (adventureTeamList[teamID].action == AdventureAction.Fight)//继续之前的战斗
         {
@@ -6240,16 +6240,7 @@ public class GameControl : MonoBehaviour
 
             Debug.Log(" 新开的战斗 teamID=" + teamID + " fightMenberObjectSS.Count=" + fightMenberObjectSS.Count);
             fightMenberObjects = fightMenberObjectSS[teamID];
-            //if (teamID < fightMenberObjectSS.Count)
-            //{
-            //    fightMenberObjectSS[teamID] = new List<FightMenberObject>();
-            //    fightMenberObjects = fightMenberObjectSS[teamID];
-            //}
-            //else
-            //{
-            //    fightMenberObjectSS.Add(fightMenberObjects);
 
-            //}
 
             //读取队伍成员和怪物列表，转化为战斗成员实例
             for (byte i = 0; i < adventureTeamList[teamID].heroIDList.Count; i++)
@@ -6383,32 +6374,8 @@ public class GameControl : MonoBehaviour
                     name += "精英";
                 }
 
-                //string NameModifyStr = "";
-                //for (int j = 0; j < enemyIDTempList.Count; j++)
-                //{
-                //    // Debug.Log("enemyRankList[i]=" + enemyRankList[i] + " enemyRankList[j]=" + enemyRankList[j]);
-                //    if (enemyIDTempList[j] == monsterID && enemyRankList[i] == enemyRankList[j])
-                //    {
-                //        sameNameCount++;
-                //    }
-                //}
-
-                //if (sameNameCount == 1)
-                //{
-                //    fightMenberObjects[heroCount].name += "A";
-                //    NameModifyStr = "B";
-
-                //}
-                //else if (sameNameCount == 2)
-                //{
-                //    NameModifyStr = "C";
-                //}
-
-                //name += NameModifyStr;
 
                 float levelModify = level * DataManager.mMonsterDict[monsterID].GroupRate;
-
-
 
 
                 int hp = (int)(DataManager.mMonsterDict[monsterID].Hp * (1f + levelModify) * enemyRankList[i]);
@@ -6513,7 +6480,7 @@ public class GameControl : MonoBehaviour
         while (adventureTeamList[teamID].fightRound <= RoundLimit)
         {
 
-            //选取行动槽满(10000)的战斗成员
+            //选取行动槽满(8000)的战斗成员
             while (actionMenber.Count == 0)
             {
                 yield return new WaitForSeconds(0.02f);
@@ -6522,13 +6489,12 @@ public class GameControl : MonoBehaviour
                     if (fightMenberObjects[i].hpNow > 0)
                     {
                         fightMenberObjects[i].actionBar += fightMenberObjects[i].spd;
-                        if (fightMenberObjects[i].actionBar >= 10000)
+                        if (fightMenberObjects[i].actionBar >= 8000)
                         {
                             actionMenber.Add(fightMenberObjects[i]);
-                            fightMenberObjects[i].actionBar = (short)(fightMenberObjects[i].actionBar - 10000);
+                            fightMenberObjects[i].actionBar = (short)(fightMenberObjects[i].actionBar - 8000);
                         }
-                        AdventureMainPanel.Instance.UpdateSceneRoleApSingle(teamID, fightMenberObjects[i]);
-                        
+                        AdventureMainPanel.Instance.UpdateSceneRoleApSingle(teamID, fightMenberObjects[i]);    
                     }
                 }
             }
@@ -6539,7 +6505,6 @@ public class GameControl : MonoBehaviour
                 {
                     break;
                 }
-
 
                 //行动前执行BUFF效果（同时减掉回合数）
                 bool canAction = true;
@@ -6562,7 +6527,6 @@ public class GameControl : MonoBehaviour
                                 actionMenber[i].hpNow = 0;
                                 AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber[i]) + "被打倒了！");
                             }
-
                             break;
                         case FightBuffType.Sleep:
                             canAction = false;
@@ -6585,21 +6549,17 @@ public class GameControl : MonoBehaviour
                     {
                         StartCoroutine(TakeCure(teamID, adventureTeamList[teamID].fightRound, null, actionMenber[i], null, Attribute.Mp, (int)(actionMenber[i].mp * (actionMenber[i].mpRenew / 100f)), 1));
                     }
-
                 }
 
 
                 if (actionMenber[i].hpNow > 0 && canAction)
                 {
                     byte skillIndex = actionMenber[i].skillIndex;
-
                     int skillID = -1;
 
                     if (actionMenber[i].side == 0)
                     {
                         skillID = heroDic[actionMenber[i].objectID].skill[skillIndex];
-
-                        //  if(heroDic[actionMenber[i].objectID].skillInfo.ContainsKey())
                     }
                     else if (actionMenber[i].side == 1)
                     {
@@ -6609,737 +6569,636 @@ public class GameControl : MonoBehaviour
 
                     if (skillID != -1)
                     {
-                        SkillObject so = skillDic[skillID];
-                        SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
-                        float skillLevelUp = 0f;
-                        if (actionMenber[i].side == 0)
-                        {
-                            if (heroDic[actionMenber[i].objectID].skillInfo.ContainsKey(so.prototypeID))
-                            {
-                                skillLevelUp = 0.1f * (heroDic[actionMenber[i].objectID].skillInfo[so.prototypeID].level - 1);
-                            }
-                        }
+                        //SkillObject so = skillDic[skillID];
+                        //SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
+                        //float skillLevelUp = 0f;
+                        //if (actionMenber[i].side == 0)
+                        //{
+                        //    if (heroDic[actionMenber[i].objectID].skillInfo.ContainsKey(so.prototypeID))
+                        //    {
+                        //        skillLevelUp = 0.1f * (heroDic[actionMenber[i].objectID].skillInfo[so.prototypeID].level - 1);
+                        //    }
+                        //}
                         if (GetSkillMpCost(skillID) <= actionMenber[i].mpNow)
                         {
-                            int ran = Random.Range(0, 100);
-                            if (ran < GetSkillProbability(skillID))
+                            //int ran = Random.Range(0, 100);
+                            if (Random.Range(0, 100) < GetSkillProbability(skillID))
                             {
                                 Debug.Log("[" + adventureTeamList[teamID].fightRound + "]" + actionMenber[i].name + "发动技能");
-                                StartCoroutine(Attack(teamID, actionMenber[i], sp));
+                                SkillAttack(teamID, actionMenber[i], fightMenberObjects, skillID);
+                                //StartCoroutine(Attack(teamID, actionMenber[i], sp));
 
-                                actionMenber[i].mpNow -= GetSkillMpCost(skillID);
-                                AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, actionMenber[i]);
-                                AdventureMainPanel.Instance.UpdateHeroHpMpSingle(teamID, actionMenber[i]);
-                                //选取目标
-                                List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], sp);
+                                //actionMenber[i].mpNow -= GetSkillMpCost(skillID);
+                                //AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, actionMenber[i]);
+                                //AdventureMainPanel.Instance.UpdateHeroHpMpSingle(teamID, actionMenber[i]);
+                                ////选取目标
+                                //List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], sp);
 
-                                if (targetMenber.Count > 0)
-                                {
-                                    //对目标行动
-                                    for (int j = 0; j < targetMenber.Count; j++)
-                                    {
-
-                                        if (sp.FlagDamage)
-                                        {
+                                //if (targetMenber.Count > 0)
+                                //{
+                                //    //对目标行动
+                                //    for (int j = 0; j < targetMenber.Count; j++)
+                                //    {
+                                //        if (sp.FlagDamage)
+                                //        {
                                            
-                                            if (IsHit(actionMenber[i], targetMenber[j]))
-                                            {
-                                                int damageMin = System.Math.Max(0, (int)(actionMenber[i].atkMin * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMin * (sp.MAtk / 100f) - targetMenber[j].mDef));
-                                                int damageMax = System.Math.Max(0, (int)(actionMenber[i].atkMax * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMax * (sp.MAtk / 100f) - targetMenber[j].mDef));
+                                //            if (IsHit(actionMenber[i], targetMenber[j]))
+                                //            {
+                                //                int damageMin = System.Math.Max(0, (int)(actionMenber[i].atkMin * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMin * (sp.MAtk / 100f) - targetMenber[j].mDef));
+                                //                int damageMax = System.Math.Max(0, (int)(actionMenber[i].atkMax * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber[i].mAtkMax * (sp.MAtk / 100f) - targetMenber[j].mDef));
 
-                                                if (sp.Sword != 0 && actionMenber[i].weaponType == ItemTypeSmall.Sword)
-                                                {
-                                                    damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
-                                                    damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
-                                                }
-                                                if (sp.Axe != 0 && actionMenber[i].weaponType == ItemTypeSmall.Axe)
-                                                {
-                                                    damageMin = (int)(damageMin * (1f + (sp.Axe / 100f)));
-                                                    damageMax = (int)(damageMax * (1f + (sp.Axe / 100f)));
-                                                }
-                                                if (sp.Spear != 0 && actionMenber[i].weaponType == ItemTypeSmall.Spear)
-                                                {
-                                                    damageMin = (int)(damageMin * (1f + (sp.Spear / 100f)));
-                                                    damageMax = (int)(damageMax * (1f + (sp.Spear / 100f)));
-                                                }
-                                                if (sp.Hammer != 0 && actionMenber[i].weaponType == ItemTypeSmall.Hammer)
-                                                {
-                                                    damageMin = (int)(damageMin * (1f + (sp.Hammer / 100f)));
-                                                    damageMax = (int)(damageMax * (1f + (sp.Hammer / 100f)));
-                                                }
-                                                if (sp.Bow != 0 && actionMenber[i].weaponType == ItemTypeSmall.Bow)
-                                                {
-                                                    damageMin = (int)(damageMin * (1f + (sp.Bow / 100f)));
-                                                    damageMax = (int)(damageMax * (1f + (sp.Bow / 100f)));
-                                                }
-                                                if (sp.Staff != 0 && actionMenber[i].weaponType == ItemTypeSmall.Staff)
-                                                {
-                                                    damageMin = (int)(damageMin * (1f + (sp.Staff / 100f)));
-                                                    damageMax = (int)(damageMax * (1f + (sp.Staff / 100f)));
-                                                }
+                                //                if (sp.Sword != 0 && actionMenber[i].weaponType == ItemTypeSmall.Sword)
+                                //                {
+                                //                    damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
+                                //                    damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
+                                //                }
+                                //                if (sp.Axe != 0 && actionMenber[i].weaponType == ItemTypeSmall.Axe)
+                                //                {
+                                //                    damageMin = (int)(damageMin * (1f + (sp.Axe / 100f)));
+                                //                    damageMax = (int)(damageMax * (1f + (sp.Axe / 100f)));
+                                //                }
+                                //                if (sp.Spear != 0 && actionMenber[i].weaponType == ItemTypeSmall.Spear)
+                                //                {
+                                //                    damageMin = (int)(damageMin * (1f + (sp.Spear / 100f)));
+                                //                    damageMax = (int)(damageMax * (1f + (sp.Spear / 100f)));
+                                //                }
+                                //                if (sp.Hammer != 0 && actionMenber[i].weaponType == ItemTypeSmall.Hammer)
+                                //                {
+                                //                    damageMin = (int)(damageMin * (1f + (sp.Hammer / 100f)));
+                                //                    damageMax = (int)(damageMax * (1f + (sp.Hammer / 100f)));
+                                //                }
+                                //                if (sp.Bow != 0 && actionMenber[i].weaponType == ItemTypeSmall.Bow)
+                                //                {
+                                //                    damageMin = (int)(damageMin * (1f + (sp.Bow / 100f)));
+                                //                    damageMax = (int)(damageMax * (1f + (sp.Bow / 100f)));
+                                //                }
+                                //                if (sp.Staff != 0 && actionMenber[i].weaponType == ItemTypeSmall.Staff)
+                                //                {
+                                //                    damageMin = (int)(damageMin * (1f + (sp.Staff / 100f)));
+                                //                    damageMax = (int)(damageMax * (1f + (sp.Staff / 100f)));
+                                //                }
 
-                                                int damage = Random.Range(damageMin, damageMax + 1);
+                                //                int damage = Random.Range(damageMin, damageMax + 1);
 
-                                                float haloDamageUp = 0f;
-                                                if (actionMenber[i].haloStatus)
-                                                {
-                                                    haloDamageUp += DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].DamageUp / 100f;
-                                                }
-                                                if (targetMenber[j].haloStatus)
-                                                {
-                                                    haloDamageUp -= DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].Offset / 100f;
-                                                }
+                                //                float haloDamageUp = 0f;
+                                //                if (actionMenber[i].haloStatus)
+                                //                {
+                                //                    haloDamageUp += DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].DamageUp / 100f;
+                                //                }
+                                //                if (targetMenber[j].haloStatus)
+                                //                {
+                                //                    haloDamageUp -= DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].Offset / 100f;
+                                //                }
 
-                                                //斩味修正伤害
-                                                damage = (int)(damage*(1f+ haloDamageUp) * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber[i])));
+                                //                //斩味修正伤害
+                                //                damage = (int)(damage*(1f+ haloDamageUp) * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber[i])));
                              
 
-                                                int damageWithElement = 0;
+                                //                int damageWithElement = 0;
 
 
-                                                if (sp.Element.Contains(0))
-                                                {
-                                                    damageWithElement = damage;
-                                                }
-                                                else
-                                                {
-                                                    if (sp.Element.Contains(1))
-                                                    {
-                                                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].windDam + sp.Wind + adventureTeamList[teamID].dungeonEPWind * 20 - targetMenber[j].windRes) / 100f)));
-                                                    }
-                                                    if (sp.Element.Contains(2))
-                                                    {
-                                                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].fireDam + sp.Fire + adventureTeamList[teamID].dungeonEPFire * 20 - targetMenber[j].fireRes) / 100f)));
-                                                    }
-                                                    if (sp.Element.Contains(3))
-                                                    {
-                                                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].waterDam + sp.Water + adventureTeamList[teamID].dungeonEPWater * 20 - targetMenber[j].waterRes) / 100f)));
-                                                    }
-                                                    if (sp.Element.Contains(4))
-                                                    {
-                                                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].groundDam + sp.Ground + adventureTeamList[teamID].dungeonEPGround * 20 - targetMenber[j].groundRes) / 100f)));
-                                                    }
-                                                    if (sp.Element.Contains(5))
-                                                    {
-                                                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].lightDam + sp.Light + adventureTeamList[teamID].dungeonEPLight * 20 - targetMenber[j].lightRes) / 100f)));
-                                                    }
-                                                    if (sp.Element.Contains(6))
-                                                    {
-                                                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].darkDam + sp.Dark + adventureTeamList[teamID].dungeonEPDark * 20 - targetMenber[j].darkRes) / 100f)));
-                                                    }
-                                                }
+                                //                if (sp.Element.Contains(0))
+                                //                {
+                                //                    damageWithElement = damage;
+                                //                }
+                                //                else
+                                //                {
+                                //                    if (sp.Element.Contains(1))
+                                //                    {
+                                //                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].windDam + sp.Wind + adventureTeamList[teamID].dungeonEPWind * 20 - targetMenber[j].windRes) / 100f)));
+                                //                    }
+                                //                    if (sp.Element.Contains(2))
+                                //                    {
+                                //                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].fireDam + sp.Fire + adventureTeamList[teamID].dungeonEPFire * 20 - targetMenber[j].fireRes) / 100f)));
+                                //                    }
+                                //                    if (sp.Element.Contains(3))
+                                //                    {
+                                //                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].waterDam + sp.Water + adventureTeamList[teamID].dungeonEPWater * 20 - targetMenber[j].waterRes) / 100f)));
+                                //                    }
+                                //                    if (sp.Element.Contains(4))
+                                //                    {
+                                //                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].groundDam + sp.Ground + adventureTeamList[teamID].dungeonEPGround * 20 - targetMenber[j].groundRes) / 100f)));
+                                //                    }
+                                //                    if (sp.Element.Contains(5))
+                                //                    {
+                                //                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].lightDam + sp.Light + adventureTeamList[teamID].dungeonEPLight * 20 - targetMenber[j].lightRes) / 100f)));
+                                //                    }
+                                //                    if (sp.Element.Contains(6))
+                                //                    {
+                                //                        damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber[i].darkDam + sp.Dark + adventureTeamList[teamID].dungeonEPDark * 20 - targetMenber[j].darkRes) / 100f)));
+                                //                    }
+                                //                }
 
-                                                float haloElementDamageUp = 0f;
-                                                if (actionMenber[i].haloStatus)
-                                                {
-                                                    haloElementDamageUp += DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].EDamageUp/100f;
-                                                }
-                                                if (targetMenber[j].haloStatus)
-                                                {
-                                                    haloElementDamageUp -= DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].EOffset / 100f;
-                                                }
+                                //                float haloElementDamageUp = 0f;
+                                //                if (actionMenber[i].haloStatus)
+                                //                {
+                                //                    haloElementDamageUp += DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].EDamageUp/100f;
+                                //                }
+                                //                if (targetMenber[j].haloStatus)
+                                //                {
+                                //                    haloElementDamageUp -= DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].EOffset / 100f;
+                                //                }
 
-                                                damageWithElement = (int)((1f + skillLevelUp+ haloElementDamageUp) * damageWithElement);
+                                //                damageWithElement = (int)((1f + skillLevelUp+ haloElementDamageUp) * damageWithElement);
 
 
 
                                              
-                                                if (IsCri(actionMenber[i]))
-                                                {
-                                                    byte criDUp = 0;
-                                                    if (actionMenber[i].haloStatus)
-                                                    {
-                                                        criDUp= DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].CriDUp;
-                                                    }
+                                //                if (IsCri(actionMenber[i]))
+                                //                {
+                                //                    byte criDUp = 0;
+                                //                    if (actionMenber[i].haloStatus)
+                                //                    {
+                                //                        criDUp= DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].CriDUp;
+                                //                    }
 
-                                                    damageWithElement = (int)(damageWithElement * ((actionMenber[i].criD+ criDUp) / 100f));
-                                                }
-
-
-                                                byte damageTimes = 1;
-                                                if (so.comboMax != 0)
-                                                {
-                                                    for (byte k = 0; k < so.comboMax; k++)
-                                                    {
-                                                        int ranCombo = Random.Range(0, 100);
-                                                        if (ranCombo < so.comboRate)
-                                                        {
-                                                            damageTimes++;
-                                                        }
-                                                        else
-                                                        {
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-
-                                                StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[j], sp, damageWithElement, damageTimes, 1f + skillLevelUp));
+                                //                    damageWithElement = (int)(damageWithElement * ((actionMenber[i].criD+ criDUp) / 100f));
+                                //                }
 
 
-                                            }
-                                            else//未命中
-                                            {
-                                                Miss(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[j]);
-                                            }
+                                //                byte damageTimes = 1;
+                                //                if (so.comboMax != 0)
+                                //                {
+                                //                    for (byte k = 0; k < so.comboMax; k++)
+                                //                    {
+                                //                        int ranCombo = Random.Range(0, 100);
+                                //                        if (ranCombo < so.comboRate)
+                                //                        {
+                                //                            damageTimes++;
+                                //                        }
+                                //                        else
+                                //                        {
+                                //                            break;
+                                //                        }
+                                //                    }
+                                //                }
+
+                                //                StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[j], sp, damageWithElement, damageTimes, 1f + skillLevelUp));
 
 
-                                        }
-
-                                        if (sp.FlagDebuff)
-                                        {
-                                            if (sp.Dizzy != 0)
-                                            {
-                                                int hitRate = System.Math.Max(0, (int)(sp.Dizzy * (1f + skillLevelUp)) - targetMenber[j].dizzyRes);
-                                                int ranHit = Random.Range(0, 100);
-                                                if (ranHit < hitRate)
-                                                {
-                                                    bool buffExist = false;
-                                                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                    {
-                                                        if (targetMenber[j].buff[k].type == FightBuffType.Dizzy)
-                                                        {
-                                                            targetMenber[j].buff[k].round = (byte)sp.DizzyValue;
-                                                            buffExist = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                    if (!buffExist)
-                                                    {
-                                                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Dizzy, 0, (byte)sp.DizzyValue));
-                                                    }
-
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "眩晕了");
-                                                }
-                                                else
-                                                {
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "眩晕效果未生效");
-                                                }
-                                            }
-                                            if (sp.Confusion != 0)
-                                            {
-                                                int hitRate = System.Math.Max(0, (int)(sp.Confusion * (1f + skillLevelUp)) - targetMenber[j].confusionRes);
-                                                int ranHit = Random.Range(0, 100);
-                                                if (ranHit < hitRate)
-                                                {
-                                                    bool buffExist = false;
-                                                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                    {
-                                                        if (targetMenber[j].buff[k].type == FightBuffType.Confusion)
-                                                        {
-                                                            targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
-                                                            buffExist = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                    if (!buffExist)
-                                                    {
-                                                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Confusion, 0, (byte)sp.DizzyValue));
-                                                    }
-
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "混乱了");
-                                                }
-                                                else
-                                                {
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "混乱效果未生效");
-                                                }
-                                            }
-                                            if (sp.Sleep != 0)
-                                            {
-                                                int hitRate = System.Math.Max(0, (int)(sp.Sleep * (1f + skillLevelUp)) - targetMenber[j].sleepRes);
-                                                int ranHit = Random.Range(0, 100);
-                                                if (ranHit < hitRate)
-                                                {
-                                                    bool buffExist = false;
-                                                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                    {
-                                                        if (targetMenber[j].buff[k].type == FightBuffType.Sleep)
-                                                        {
-                                                            targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
-                                                            buffExist = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                    if (!buffExist)
-                                                    {
-                                                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Sleep, 0, (byte)sp.SleepValue));
-                                                    }
-
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "睡眠了");
-                                                }
-                                                else
-                                                {
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "睡眠效果未生效");
-                                                }
-                                            }
-                                            if (sp.Poison != 0)
-                                            {
-                                                int hitRate = System.Math.Max(0, (int)(sp.Poison * (1f + skillLevelUp)) - targetMenber[j].poisonRes);
-                                                int ranHit = Random.Range(0, 100);
-                                                if (ranHit < hitRate)
-                                                {
-                                                    bool buffExist = false;
-                                                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                    {
-                                                        if (targetMenber[j].buff[k].type == FightBuffType.Poison)
-                                                        {
-                                                            targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
-                                                            buffExist = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                    if (!buffExist)
-                                                    {
-                                                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Poison, 0, (byte)sp.PoisonValue));
-                                                    }
-
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "中毒了");
-                                                }
-                                                else
-                                                {
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "中毒效果未生效");
-                                                }
-                                            }
-                                            AdventureMainPanel.Instance.UpdateSceneRoleBuffSingle(teamID, targetMenber[j]);
-                                        }
-
-                                        if (sp.Cure != 0)
-                                        {
-                                            int cure = (int)(targetMenber[j].hp * (sp.Cure / 100f));
-                                            cure = (int)(cure * (1f + skillLevelUp));
-
-                                            byte damageTimes = 1;
-                                            if (so.comboMax != 0)
-                                            {
-                                                for (byte k = 0; k < so.comboMax; k++)
-                                                {
-                                                    int ranCombo = Random.Range(0, 100);
-                                                    if (ranCombo < so.comboRate)
-                                                    {
-                                                        damageTimes++;
-                                                    }
-                                                    else
-                                                    {
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            StartCoroutine(TakeCure(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[j], sp, Attribute.Hp, cure, damageTimes));
+                                //            }
+                                //            else//未命中
+                                //            {
+                                //                Miss(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[j]);
+                                //            }
 
 
-                                        }
+                                //        }
 
-                                        if (sp.FlagBuff)
-                                        {
-                                            if (sp.UpAtk != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpAtk)
-                                                    {
-                                                        targetMenber[j].buff[k].round = 2;
-                                                        buffExist = true;
-                                                        break;
-                                                    }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpAtk, (byte)(sp.UpAtk * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].atkMin += (short)(targetMenber[j].atkMin * (sp.UpAtk * (1f + skillLevelUp) / 100f));
-                                                    targetMenber[j].atkMax += (short)(targetMenber[j].atkMax * (sp.UpAtk * (1f + skillLevelUp) / 100f));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理攻击提升了");
-                                                }
-                                            }
-                                            if (sp.UpMAtk != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpMAtk) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMAtk, (byte)(sp.UpMAtk * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].mAtkMin += (short)(targetMenber[j].mAtkMin * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
-                                                    targetMenber[j].mAtkMax += (short)(targetMenber[j].mAtkMax * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法攻击提升了");
-                                                }
-                                            }
-                                            if (sp.UpDef != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDef) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDef, (byte)(sp.UpDef * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].def += (short)(targetMenber[j].def * (sp.UpDef * (1f + skillLevelUp) / 100f));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理防御提升了");
-                                                }
-                                            }
-                                            if (sp.UpMDef != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpMDef) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMDef, (byte)(sp.UpMDef * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].mDef += (short)(targetMenber[j].mDef * (sp.UpMDef * (1f + skillLevelUp) / 100f));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法防御提升了");
-                                                }
-                                            }
-                                            if (sp.UpHit != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpHit) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpHit, (byte)(sp.UpHit * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].hit += (short)(targetMenber[j].hit * (sp.UpHit * (1f + skillLevelUp) / 100f));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "命中提升了");
-                                                }
-                                            }
-                                            if (sp.UpDod != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDod) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDod, (byte)(sp.UpDod * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].dod += (short)(targetMenber[j].dod * (sp.UpDod * (1f + skillLevelUp) / 100f));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "闪避提升了");
-                                                }
-                                            }
-                                            if (sp.UpCriD != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpCriD) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpCriD, (byte)(sp.UpCriD * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].criD += (short)(targetMenber[j].criD * (sp.UpCriD * (1f + skillLevelUp) / 100f));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暴击伤害提升了");
-                                                }
-                                            }
+                                //        if (sp.FlagDebuff)
+                                //        {
+                                //            if (sp.Dizzy != 0)
+                                //            {
+                                //                int hitRate = System.Math.Max(0, (int)(sp.Dizzy * (1f + skillLevelUp)) - targetMenber[j].dizzyRes);
+                                //                int ranHit = Random.Range(0, 100);
+                                //                if (ranHit < hitRate)
+                                //                {
+                                //                    bool buffExist = false;
+                                //                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                    {
+                                //                        if (targetMenber[j].buff[k].type == FightBuffType.Dizzy)
+                                //                        {
+                                //                            targetMenber[j].buff[k].round = (byte)sp.DizzyValue;
+                                //                            buffExist = true;
+                                //                            break;
+                                //                        }
+                                //                    }
+                                //                    if (!buffExist)
+                                //                    {
+                                //                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Dizzy, 0, (byte)sp.DizzyValue));
+                                //                    }
 
-                                            if (sp.UpWindDam != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWindDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindDam, (byte)(sp.UpWindDam * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].windDam += (short)(sp.UpWindDam * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系伤害提升了");
-                                                }
-                                            }
-                                            if (sp.UpFireDam != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpFireDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireDam, (byte)(sp.UpFireDam * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].fireDam += (short)(sp.UpFireDam * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系伤害提升了");
-                                                }
-                                            }
-                                            if (sp.UpWaterDam != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWaterDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterDam, (byte)(sp.UpWaterDam * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].waterDam += (short)(sp.UpWaterDam * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系伤害提升了");
-                                                }
-                                            }
-                                            if (sp.UpGroundDam != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpGroundDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundDam, (byte)(sp.UpGroundDam * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].groundDam += (short)(sp.UpGroundDam * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系伤害提升了");
-                                                }
-                                            }
-                                            if (sp.UpLightDam != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpLightDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightDam, (byte)(sp.UpLightDam * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].lightDam += (short)(sp.UpLightDam * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系伤害提升了");
-                                                }
-                                            }
-                                            if (sp.UpDarkDam != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDarkDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkDam, (byte)(sp.UpDarkDam * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].darkDam += (short)(sp.UpDarkDam * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系伤害提升了");
-                                                }
-                                            }
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "眩晕了");
+                                //                }
+                                //                else
+                                //                {
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "眩晕效果未生效");
+                                //                }
+                                //            }
+                                //            if (sp.Confusion != 0)
+                                //            {
+                                //                int hitRate = System.Math.Max(0, (int)(sp.Confusion * (1f + skillLevelUp)) - targetMenber[j].confusionRes);
+                                //                int ranHit = Random.Range(0, 100);
+                                //                if (ranHit < hitRate)
+                                //                {
+                                //                    bool buffExist = false;
+                                //                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                    {
+                                //                        if (targetMenber[j].buff[k].type == FightBuffType.Confusion)
+                                //                        {
+                                //                            targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
+                                //                            buffExist = true;
+                                //                            break;
+                                //                        }
+                                //                    }
+                                //                    if (!buffExist)
+                                //                    {
+                                //                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Confusion, 0, (byte)sp.DizzyValue));
+                                //                    }
 
-                                            if (sp.UpWindRes != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWindRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindRes, (byte)(sp.UpWindRes * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].windRes += (short)(sp.UpWindRes * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系抗性提升了");
-                                                }
-                                            }
-                                            if (sp.UpFireRes != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpFireRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireRes, (byte)(sp.UpFireRes * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].fireRes += (short)(sp.UpFireRes * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系抗性提升了");
-                                                }
-                                            }
-                                            if (sp.UpWaterRes != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpWaterRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterRes, (byte)(sp.UpWaterRes * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].waterRes += (short)(sp.UpWaterRes * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系抗性提升了");
-                                                }
-                                            }
-                                            if (sp.UpGroundRes != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpGroundRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundRes, (byte)(sp.UpGroundRes * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].groundRes += (short)(sp.UpGroundRes * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系抗性提升了");
-                                                }
-                                            }
-                                            if (sp.UpLightRes != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpLightRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightRes, (byte)(sp.UpLightRes * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].lightRes += (short)(sp.UpLightRes * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系抗性提升了");
-                                                }
-                                            }
-                                            if (sp.UpDarkRes != 0)
-                                            {
-                                                bool buffExist = false;
-                                                for (int k = 0; k < targetMenber[j].buff.Count; k++)
-                                                {
-                                                    if (targetMenber[j].buff[k].type == FightBuffType.UpDarkRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
-                                                }
-                                                if (!buffExist)
-                                                {
-                                                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkRes, (byte)(sp.UpDarkRes * (1f + skillLevelUp)), 2));
-                                                    targetMenber[j].darkRes += (short)(sp.UpDarkRes * (1f + skillLevelUp));
-                                                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系抗性提升了");
-                                                }
-                                            }
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "混乱了");
+                                //                }
+                                //                else
+                                //                {
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "混乱效果未生效");
+                                //                }
+                                //            }
+                                //            if (sp.Sleep != 0)
+                                //            {
+                                //                int hitRate = System.Math.Max(0, (int)(sp.Sleep * (1f + skillLevelUp)) - targetMenber[j].sleepRes);
+                                //                int ranHit = Random.Range(0, 100);
+                                //                if (ranHit < hitRate)
+                                //                {
+                                //                    bool buffExist = false;
+                                //                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                    {
+                                //                        if (targetMenber[j].buff[k].type == FightBuffType.Sleep)
+                                //                        {
+                                //                            targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
+                                //                            buffExist = true;
+                                //                            break;
+                                //                        }
+                                //                    }
+                                //                    if (!buffExist)
+                                //                    {
+                                //                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Sleep, 0, (byte)sp.SleepValue));
+                                //                    }
 
-                                            AdventureMainPanel.Instance.UpdateSceneRoleBuffSingle(teamID, targetMenber[j]);
-                                        }
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "睡眠了");
+                                //                }
+                                //                else
+                                //                {
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "睡眠效果未生效");
+                                //                }
+                                //            }
+                                //            if (sp.Poison != 0)
+                                //            {
+                                //                int hitRate = System.Math.Max(0, (int)(sp.Poison * (1f + skillLevelUp)) - targetMenber[j].poisonRes);
+                                //                int ranHit = Random.Range(0, 100);
+                                //                if (ranHit < hitRate)
+                                //                {
+                                //                    bool buffExist = false;
+                                //                    for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                    {
+                                //                        if (targetMenber[j].buff[k].type == FightBuffType.Poison)
+                                //                        {
+                                //                            targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
+                                //                            buffExist = true;
+                                //                            break;
+                                //                        }
+                                //                    }
+                                //                    if (!buffExist)
+                                //                    {
+                                //                        targetMenber[j].buff.Add(new FightBuff(FightBuffType.Poison, 0, (byte)sp.PoisonValue));
+                                //                    }
 
-                                        //TODO:[待优化设计]夺金设计概率
-                                        if (so.gold != 0 && targetMenber[j].side == 1)
-                                        {
-                                            int ranGold = Random.Range(0, 100);
-                                            if (ranGold < 30)
-                                            {
-                                                short gold = (short)(DataManager.mMonsterDict[targetMenber[j].objectID].GoldDrop * (so.gold / 100f));
-                                                adventureTeamList[teamID].getGold += gold;
-                                                AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber[i]) + "从" + OutputNameWithColor(targetMenber[j]) + "夺得" + gold + "金币");
-                                            }
-                                        }
-                                    }
-                                }
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "中毒了");
+                                //                }
+                                //                else
+                                //                {
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "中毒效果未生效");
+                                //                }
+                                //            }
+                                //            AdventureMainPanel.Instance.UpdateSceneRoleBuffSingle(teamID, targetMenber[j]);
+                                //        }
 
-                             
+                                //        if (sp.Cure != 0)
+                                //        {
+                                //            int cure = (int)(targetMenber[j].hp * (sp.Cure / 100f));
+                                //            cure = (int)(cure * (1f + skillLevelUp));
 
+                                //            byte damageTimes = 1;
+                                //            if (so.comboMax != 0)
+                                //            {
+                                //                for (byte k = 0; k < so.comboMax; k++)
+                                //                {
+                                //                    int ranCombo = Random.Range(0, 100);
+                                //                    if (ranCombo < so.comboRate)
+                                //                    {
+                                //                        damageTimes++;
+                                //                    }
+                                //                    else
+                                //                    {
+                                //                        break;
+                                //                    }
+                                //                }
+                                //            }
+                                //            StartCoroutine(TakeCure(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[j], sp, Attribute.Hp, cure, damageTimes));
+
+
+                                //        }
+
+                                //        if (sp.FlagBuff)
+                                //        {
+                                //            if (sp.UpAtk != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpAtk)
+                                //                    {
+                                //                        targetMenber[j].buff[k].round = 2;
+                                //                        buffExist = true;
+                                //                        break;
+                                //                    }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpAtk, (byte)(sp.UpAtk * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].atkMin += (short)(targetMenber[j].atkMin * (sp.UpAtk * (1f + skillLevelUp) / 100f));
+                                //                    targetMenber[j].atkMax += (short)(targetMenber[j].atkMax * (sp.UpAtk * (1f + skillLevelUp) / 100f));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理攻击提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpMAtk != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpMAtk) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMAtk, (byte)(sp.UpMAtk * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].mAtkMin += (short)(targetMenber[j].mAtkMin * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
+                                //                    targetMenber[j].mAtkMax += (short)(targetMenber[j].mAtkMax * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法攻击提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpDef != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpDef) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDef, (byte)(sp.UpDef * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].def += (short)(targetMenber[j].def * (sp.UpDef * (1f + skillLevelUp) / 100f));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理防御提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpMDef != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpMDef) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMDef, (byte)(sp.UpMDef * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].mDef += (short)(targetMenber[j].mDef * (sp.UpMDef * (1f + skillLevelUp) / 100f));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法防御提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpHit != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpHit) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpHit, (byte)(sp.UpHit * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].hit += (short)(targetMenber[j].hit * (sp.UpHit * (1f + skillLevelUp) / 100f));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "命中提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpDod != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpDod) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDod, (byte)(sp.UpDod * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].dod += (short)(targetMenber[j].dod * (sp.UpDod * (1f + skillLevelUp) / 100f));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "闪避提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpCriD != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpCriD) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpCriD, (byte)(sp.UpCriD * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].criD += (short)(targetMenber[j].criD * (sp.UpCriD * (1f + skillLevelUp) / 100f));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暴击伤害提升了");
+                                //                }
+                                //            }
+
+                                //            if (sp.UpWindDam != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpWindDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindDam, (byte)(sp.UpWindDam * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].windDam += (short)(sp.UpWindDam * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系伤害提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpFireDam != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpFireDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireDam, (byte)(sp.UpFireDam * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].fireDam += (short)(sp.UpFireDam * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系伤害提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpWaterDam != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpWaterDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterDam, (byte)(sp.UpWaterDam * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].waterDam += (short)(sp.UpWaterDam * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系伤害提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpGroundDam != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpGroundDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundDam, (byte)(sp.UpGroundDam * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].groundDam += (short)(sp.UpGroundDam * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系伤害提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpLightDam != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpLightDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightDam, (byte)(sp.UpLightDam * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].lightDam += (short)(sp.UpLightDam * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系伤害提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpDarkDam != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpDarkDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkDam, (byte)(sp.UpDarkDam * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].darkDam += (short)(sp.UpDarkDam * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系伤害提升了");
+                                //                }
+                                //            }
+
+                                //            if (sp.UpWindRes != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpWindRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindRes, (byte)(sp.UpWindRes * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].windRes += (short)(sp.UpWindRes * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系抗性提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpFireRes != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpFireRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireRes, (byte)(sp.UpFireRes * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].fireRes += (short)(sp.UpFireRes * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系抗性提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpWaterRes != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpWaterRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterRes, (byte)(sp.UpWaterRes * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].waterRes += (short)(sp.UpWaterRes * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系抗性提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpGroundRes != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpGroundRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundRes, (byte)(sp.UpGroundRes * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].groundRes += (short)(sp.UpGroundRes * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系抗性提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpLightRes != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpLightRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightRes, (byte)(sp.UpLightRes * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].lightRes += (short)(sp.UpLightRes * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系抗性提升了");
+                                //                }
+                                //            }
+                                //            if (sp.UpDarkRes != 0)
+                                //            {
+                                //                bool buffExist = false;
+                                //                for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                                //                {
+                                //                    if (targetMenber[j].buff[k].type == FightBuffType.UpDarkRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                                //                }
+                                //                if (!buffExist)
+                                //                {
+                                //                    targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkRes, (byte)(sp.UpDarkRes * (1f + skillLevelUp)), 2));
+                                //                    targetMenber[j].darkRes += (short)(sp.UpDarkRes * (1f + skillLevelUp));
+                                //                    AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系抗性提升了");
+                                //                }
+                                //            }
+
+                                //            AdventureMainPanel.Instance.UpdateSceneRoleBuffSingle(teamID, targetMenber[j]);
+                                //        }
+
+                                //        //TODO:[待优化设计]夺金设计概率
+                                //        if (so.gold != 0 && targetMenber[j].side == 1)
+                                //        {
+                                //            int ranGold = Random.Range(0, 100);
+                                //            if (ranGold < 30)
+                                //            {
+                                //                short gold = (short)(DataManager.mMonsterDict[targetMenber[j].objectID].GoldDrop * (so.gold / 100f));
+                                //                adventureTeamList[teamID].getGold += gold;
+                                //                AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber[i]) + "从" + OutputNameWithColor(targetMenber[j]) + "夺得" + gold + "金币");
+                                //            }
+                                //        }
+                                //    }
+                                //}
                             }
                             else//技能概率未触发，普通攻击
                             {
                                 Debug.Log("[" + adventureTeamList[teamID].fightRound + "]" + actionMenber[i].name + "技能概率未触发，普通攻击");
-                                StartCoroutine(Attack(teamID, actionMenber[i], null));
-                                //选取目标
-                                List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
-                                if (targetMenber.Count > 0)
-                                {
-                                    if (IsHit(actionMenber[i], targetMenber[0]))
-                                    {
-                                        int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
-                                        int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
-                                        int damage = Random.Range(damageMin, damageMax + 1);
-
-                                        //斩味修正伤害
-                                        damage = (int)(damage * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber[i])));
-
- 
-                                        if (IsCri(actionMenber[i]))
-                                        {
-                                            byte criDUp = 0;
-                                            if (actionMenber[i].haloStatus)
-                                            {
-                                                criDUp = DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].CriDUp;
-                                            }
-
-                                            damage = (int)(damage * ((actionMenber[i].criD  + criDUp) / 100f));
-                                        }
-
-
-                                        StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1, 1f));
-
-                                    }
-                                    else//未命中
-                                    {
-                                        Miss(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0]);
-                                    }
-                                }
-                               
+                                NormalAttack(teamID, actionMenber[i], fightMenberObjects);
                             }
-
                         }
                         else//MP不足，普通攻击
                         {
                             Debug.Log("[" + adventureTeamList[teamID].fightRound + "]" + actionMenber[i].name + "MP不足，普通攻击");
-                            StartCoroutine(Attack(teamID, actionMenber[i], null));
-                            //选取目标
-                            List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
-                            if (targetMenber.Count > 0)
-                            {
-
-                                if (IsHit(actionMenber[i], targetMenber[0]))
-                                {
-                                    int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
-                                    int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
-                                    int damage = Random.Range(damageMin, damageMax + 1);
-                                    if (IsCri(actionMenber[i]))
-                                    {
-                                        byte criDUp = 0;
-                                        if (actionMenber[i].haloStatus)
-                                        {
-                                            criDUp = DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].CriDUp;
-                                        }
-
-                                        damage = (int)(damage * ((actionMenber[i].criD + criDUp) / 100f));
-                                    }
-
-                                    StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1, 1f));
-
-                                }
-                                else//未命中
-                                {
-                                    Miss(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0]);
-                                }
-                            }
-                           
+                            NormalAttack(teamID, actionMenber[i], fightMenberObjects);
                         }
-
                     }
                     else//普通攻击
                     {
                         Debug.Log("[" + adventureTeamList[teamID].fightRound + "]" + actionMenber[i].name + "发动设置的普通攻击");
-                        StartCoroutine(Attack(teamID, actionMenber[i], null));
-                        //选取目标
-                        List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber[i], null);
-                        if (targetMenber.Count > 0)
-                        {
-                            if (IsHit(actionMenber[i], targetMenber[0]))
-                            {
-                                int damageMin = System.Math.Max(0, actionMenber[i].atkMin - targetMenber[0].def);
-                                int damageMax = System.Math.Max(0, actionMenber[i].atkMax - targetMenber[0].def);
-                                int damage = Random.Range(damageMin, damageMax + 1);
-                                if (IsCri(actionMenber[i]))
-                                {
-                                    byte criDUp = 0;
-                                    if (actionMenber[i].haloStatus)
-                                    {
-                                        criDUp = DataManager.mHaloDict[heroDic[actionMenber[i].objectID].halo].CriDUp;
-                                    }
-
-                                    damage = (int)(damage * ((actionMenber[i].criD + criDUp) / 100f));
-                                }
-
-                                StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0], null, damage, 1, 1f));
-
-                            }
-                            else//未命中
-                            {
-                                Miss(teamID, adventureTeamList[teamID].fightRound, actionMenber[i], targetMenber[0]);
-                            }
-
-                        }
-                        
-
+                        NormalAttack(teamID, actionMenber[i], fightMenberObjects);
                     }
 
                     adventureTeamList[teamID].fightRound++;
@@ -7448,9 +7307,7 @@ public class GameControl : MonoBehaviour
             CheckFightOverResult = 1;
         }
 
-        Debug.Log("战斗结束1");
         yield return new WaitForSeconds(1.5f);
-        Debug.Log("战斗结束2");
 
         string log = "行进过程中遇到了敌人:";
 
@@ -7461,9 +7318,6 @@ public class GameControl : MonoBehaviour
                 log += fightMenberObjects[i].name + "(Lv." + fightMenberObjects[i].level + ")";
             }
         }
-
-
-
 
         if (CheckFightOverResult == 0)
         {
@@ -7557,10 +7411,656 @@ public class GameControl : MonoBehaviour
         }
 
     }
+    void SkillAttack(byte teamID, FightMenberObject actionMenber, List<FightMenberObject> fightMenberObjects,int skillID)
+    {
+        SkillObject so = skillDic[skillID];
+        SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
+        float skillLevelUp = 0f;
+        if (actionMenber.side == 0)
+        {
+            if (heroDic[actionMenber.objectID].skillInfo.ContainsKey(so.prototypeID))
+            {
+                skillLevelUp = 0.1f * (heroDic[actionMenber.objectID].skillInfo[so.prototypeID].level - 1);
+            }
+        }
+        StartCoroutine(Attack(teamID, actionMenber, sp));
+
+        actionMenber.mpNow -= GetSkillMpCost(skillID);
+        AdventureMainPanel.Instance.UpdateSceneRoleHpMpSingle(teamID, actionMenber);
+        AdventureMainPanel.Instance.UpdateHeroHpMpSingle(teamID, actionMenber);
+        //选取目标
+        List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber, sp);
+
+        if (targetMenber.Count > 0)
+        {
+            //对目标行动
+            for (int j = 0; j < targetMenber.Count; j++)
+            {
+                if (sp.FlagDamage)
+                {
+
+                    if (IsHit(actionMenber, targetMenber[j]))
+                    {
+                        int damageMin = System.Math.Max(0, (int)(actionMenber.atkMin * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber.mAtkMin * (sp.MAtk / 100f) - targetMenber[j].mDef));
+                        int damageMax = System.Math.Max(0, (int)(actionMenber.atkMax * (sp.Atk / 100f) - targetMenber[j].def)) + System.Math.Max(0, (int)(actionMenber.mAtkMax * (sp.MAtk / 100f) - targetMenber[j].mDef));
+
+                        if (sp.Sword != 0 && actionMenber.weaponType == ItemTypeSmall.Sword)
+                        {
+                            damageMin = (int)(damageMin * (1f + (sp.Sword / 100f)));
+                            damageMax = (int)(damageMax * (1f + (sp.Sword / 100f)));
+                        }
+                        if (sp.Axe != 0 && actionMenber.weaponType == ItemTypeSmall.Axe)
+                        {
+                            damageMin = (int)(damageMin * (1f + (sp.Axe / 100f)));
+                            damageMax = (int)(damageMax * (1f + (sp.Axe / 100f)));
+                        }
+                        if (sp.Spear != 0 && actionMenber.weaponType == ItemTypeSmall.Spear)
+                        {
+                            damageMin = (int)(damageMin * (1f + (sp.Spear / 100f)));
+                            damageMax = (int)(damageMax * (1f + (sp.Spear / 100f)));
+                        }
+                        if (sp.Hammer != 0 && actionMenber.weaponType == ItemTypeSmall.Hammer)
+                        {
+                            damageMin = (int)(damageMin * (1f + (sp.Hammer / 100f)));
+                            damageMax = (int)(damageMax * (1f + (sp.Hammer / 100f)));
+                        }
+                        if (sp.Bow != 0 && actionMenber.weaponType == ItemTypeSmall.Bow)
+                        {
+                            damageMin = (int)(damageMin * (1f + (sp.Bow / 100f)));
+                            damageMax = (int)(damageMax * (1f + (sp.Bow / 100f)));
+                        }
+                        if (sp.Staff != 0 && actionMenber.weaponType == ItemTypeSmall.Staff)
+                        {
+                            damageMin = (int)(damageMin * (1f + (sp.Staff / 100f)));
+                            damageMax = (int)(damageMax * (1f + (sp.Staff / 100f)));
+                        }
+
+                        int damage = Random.Range(damageMin, damageMax + 1);
+
+                        float haloDamageUp = 0f;
+                        if (actionMenber.haloStatus)
+                        {
+                            haloDamageUp += DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].DamageUp / 100f;
+                        }
+                        if (targetMenber[j].haloStatus)
+                        {
+                            haloDamageUp -= DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].Offset / 100f;
+                        }
+
+                        //斩味修正伤害
+                        damage = (int)(damage * (1f + haloDamageUp) * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber)));
+
+
+                        int damageWithElement = 0;
+
+
+                        if (sp.Element.Contains(0))
+                        {
+                            damageWithElement = damage;
+                        }
+                        else
+                        {
+                            if (sp.Element.Contains(1))
+                            {
+                                damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber.windDam + sp.Wind + adventureTeamList[teamID].dungeonEPWind * 20 - targetMenber[j].windRes) / 100f)));
+                            }
+                            if (sp.Element.Contains(2))
+                            {
+                                damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber.fireDam + sp.Fire + adventureTeamList[teamID].dungeonEPFire * 20 - targetMenber[j].fireRes) / 100f)));
+                            }
+                            if (sp.Element.Contains(3))
+                            {
+                                damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber.waterDam + sp.Water + adventureTeamList[teamID].dungeonEPWater * 20 - targetMenber[j].waterRes) / 100f)));
+                            }
+                            if (sp.Element.Contains(4))
+                            {
+                                damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber.groundDam + sp.Ground + adventureTeamList[teamID].dungeonEPGround * 20 - targetMenber[j].groundRes) / 100f)));
+                            }
+                            if (sp.Element.Contains(5))
+                            {
+                                damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber.lightDam + sp.Light + adventureTeamList[teamID].dungeonEPLight * 20 - targetMenber[j].lightRes) / 100f)));
+                            }
+                            if (sp.Element.Contains(6))
+                            {
+                                damageWithElement += System.Math.Max(0, (int)(damage * (1f + (actionMenber.darkDam + sp.Dark + adventureTeamList[teamID].dungeonEPDark * 20 - targetMenber[j].darkRes) / 100f)));
+                            }
+                        }
+
+                        float haloElementDamageUp = 0f;
+                        if (actionMenber.haloStatus)
+                        {
+                            haloElementDamageUp += DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].EDamageUp / 100f;
+                        }
+                        if (targetMenber[j].haloStatus)
+                        {
+                            haloElementDamageUp -= DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].EOffset / 100f;
+                        }
+
+                        damageWithElement = (int)((1f + skillLevelUp + haloElementDamageUp) * damageWithElement);
+
+
+
+                        bool isCri = IsCri(actionMenber);
+                        if (isCri)
+                        {
+                            byte criDUp = 0;
+                            if (actionMenber.haloStatus)
+                            {
+                                criDUp = DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].CriDUp;
+                            }
+
+                            damageWithElement = (int)(damageWithElement * ((actionMenber.criD + criDUp) / 100f));
+                        }
+
+
+                        byte damageTimes = 1;
+                        if (so.comboMax != 0)
+                        {
+                            for (byte k = 0; k < so.comboMax; k++)
+                            {
+                                int ranCombo = Random.Range(0, 100);
+                                if (ranCombo < so.comboRate)
+                                {
+                                    damageTimes++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber, targetMenber[j], sp, damageWithElement, damageTimes, 1f + skillLevelUp, isCri));
+
+
+                    }
+                    else//未命中
+                    {
+                        Miss(teamID, adventureTeamList[teamID].fightRound, actionMenber, targetMenber[j]);
+                    }
+
+
+                }
+
+                if (sp.FlagDebuff)
+                {
+                    if (sp.Dizzy != 0)
+                    {
+                        int hitRate = System.Math.Max(0, (int)(sp.Dizzy * (1f + skillLevelUp)) - targetMenber[j].dizzyRes);
+                        int ranHit = Random.Range(0, 100);
+                        if (ranHit < hitRate)
+                        {
+                            bool buffExist = false;
+                            for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                            {
+                                if (targetMenber[j].buff[k].type == FightBuffType.Dizzy)
+                                {
+                                    targetMenber[j].buff[k].round = (byte)sp.DizzyValue;
+                                    buffExist = true;
+                                    break;
+                                }
+                            }
+                            if (!buffExist)
+                            {
+                                targetMenber[j].buff.Add(new FightBuff(FightBuffType.Dizzy, 0, (byte)sp.DizzyValue));
+                            }
+
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "眩晕了");
+                        }
+                        else
+                        {
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "眩晕效果未生效");
+                        }
+                    }
+                    if (sp.Confusion != 0)
+                    {
+                        int hitRate = System.Math.Max(0, (int)(sp.Confusion * (1f + skillLevelUp)) - targetMenber[j].confusionRes);
+                        int ranHit = Random.Range(0, 100);
+                        if (ranHit < hitRate)
+                        {
+                            bool buffExist = false;
+                            for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                            {
+                                if (targetMenber[j].buff[k].type == FightBuffType.Confusion)
+                                {
+                                    targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
+                                    buffExist = true;
+                                    break;
+                                }
+                            }
+                            if (!buffExist)
+                            {
+                                targetMenber[j].buff.Add(new FightBuff(FightBuffType.Confusion, 0, (byte)sp.DizzyValue));
+                            }
+
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "混乱了");
+                        }
+                        else
+                        {
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "混乱效果未生效");
+                        }
+                    }
+                    if (sp.Sleep != 0)
+                    {
+                        int hitRate = System.Math.Max(0, (int)(sp.Sleep * (1f + skillLevelUp)) - targetMenber[j].sleepRes);
+                        int ranHit = Random.Range(0, 100);
+                        if (ranHit < hitRate)
+                        {
+                            bool buffExist = false;
+                            for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                            {
+                                if (targetMenber[j].buff[k].type == FightBuffType.Sleep)
+                                {
+                                    targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
+                                    buffExist = true;
+                                    break;
+                                }
+                            }
+                            if (!buffExist)
+                            {
+                                targetMenber[j].buff.Add(new FightBuff(FightBuffType.Sleep, 0, (byte)sp.SleepValue));
+                            }
+
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "睡眠了");
+                        }
+                        else
+                        {
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "睡眠效果未生效");
+                        }
+                    }
+                    if (sp.Poison != 0)
+                    {
+                        int hitRate = System.Math.Max(0, (int)(sp.Poison * (1f + skillLevelUp)) - targetMenber[j].poisonRes);
+                        int ranHit = Random.Range(0, 100);
+                        if (ranHit < hitRate)
+                        {
+                            bool buffExist = false;
+                            for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                            {
+                                if (targetMenber[j].buff[k].type == FightBuffType.Poison)
+                                {
+                                    targetMenber[j].buff[k].round = (byte)sp.ConfusionValue;
+                                    buffExist = true;
+                                    break;
+                                }
+                            }
+                            if (!buffExist)
+                            {
+                                targetMenber[j].buff.Add(new FightBuff(FightBuffType.Poison, 0, (byte)sp.PoisonValue));
+                            }
+
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "中毒了");
+                        }
+                        else
+                        {
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + "中毒效果未生效");
+                        }
+                    }
+                    AdventureMainPanel.Instance.UpdateSceneRoleBuffSingle(teamID, targetMenber[j]);
+                }
+
+                if (sp.Cure != 0)
+                {
+                    int cure = (int)(targetMenber[j].hp * (sp.Cure / 100f));
+                    cure = (int)(cure * (1f + skillLevelUp));
+
+                    byte damageTimes = 1;
+                    if (so.comboMax != 0)
+                    {
+                        for (byte k = 0; k < so.comboMax; k++)
+                        {
+                            int ranCombo = Random.Range(0, 100);
+                            if (ranCombo < so.comboRate)
+                            {
+                                damageTimes++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    StartCoroutine(TakeCure(teamID, adventureTeamList[teamID].fightRound, actionMenber, targetMenber[j], sp, Attribute.Hp, cure, damageTimes));
+
+
+                }
+
+                if (sp.FlagBuff)
+                {
+                    if (sp.UpAtk != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpAtk)
+                            {
+                                targetMenber[j].buff[k].round = 2;
+                                buffExist = true;
+                                break;
+                            }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpAtk, (byte)(sp.UpAtk * (1f + skillLevelUp)), 2));
+                            targetMenber[j].atkMin += (short)(targetMenber[j].atkMin * (sp.UpAtk * (1f + skillLevelUp) / 100f));
+                            targetMenber[j].atkMax += (short)(targetMenber[j].atkMax * (sp.UpAtk * (1f + skillLevelUp) / 100f));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理攻击提升了");
+                        }
+                    }
+                    if (sp.UpMAtk != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpMAtk) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMAtk, (byte)(sp.UpMAtk * (1f + skillLevelUp)), 2));
+                            targetMenber[j].mAtkMin += (short)(targetMenber[j].mAtkMin * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
+                            targetMenber[j].mAtkMax += (short)(targetMenber[j].mAtkMax * (sp.UpMAtk * (1f + skillLevelUp) / 100f));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法攻击提升了");
+                        }
+                    }
+                    if (sp.UpDef != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpDef) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDef, (byte)(sp.UpDef * (1f + skillLevelUp)), 2));
+                            targetMenber[j].def += (short)(targetMenber[j].def * (sp.UpDef * (1f + skillLevelUp) / 100f));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "物理防御提升了");
+                        }
+                    }
+                    if (sp.UpMDef != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpMDef) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpMDef, (byte)(sp.UpMDef * (1f + skillLevelUp)), 2));
+                            targetMenber[j].mDef += (short)(targetMenber[j].mDef * (sp.UpMDef * (1f + skillLevelUp) / 100f));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "魔法防御提升了");
+                        }
+                    }
+                    if (sp.UpHit != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpHit) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpHit, (byte)(sp.UpHit * (1f + skillLevelUp)), 2));
+                            targetMenber[j].hit += (short)(targetMenber[j].hit * (sp.UpHit * (1f + skillLevelUp) / 100f));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "命中提升了");
+                        }
+                    }
+                    if (sp.UpDod != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpDod) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDod, (byte)(sp.UpDod * (1f + skillLevelUp)), 2));
+                            targetMenber[j].dod += (short)(targetMenber[j].dod * (sp.UpDod * (1f + skillLevelUp) / 100f));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "闪避提升了");
+                        }
+                    }
+                    if (sp.UpCriD != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpCriD) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpCriD, (byte)(sp.UpCriD * (1f + skillLevelUp)), 2));
+                            targetMenber[j].criD += (short)(targetMenber[j].criD * (sp.UpCriD * (1f + skillLevelUp) / 100f));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暴击伤害提升了");
+                        }
+                    }
+
+                    if (sp.UpWindDam != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpWindDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindDam, (byte)(sp.UpWindDam * (1f + skillLevelUp)), 2));
+                            targetMenber[j].windDam += (short)(sp.UpWindDam * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系伤害提升了");
+                        }
+                    }
+                    if (sp.UpFireDam != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpFireDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireDam, (byte)(sp.UpFireDam * (1f + skillLevelUp)), 2));
+                            targetMenber[j].fireDam += (short)(sp.UpFireDam * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系伤害提升了");
+                        }
+                    }
+                    if (sp.UpWaterDam != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpWaterDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterDam, (byte)(sp.UpWaterDam * (1f + skillLevelUp)), 2));
+                            targetMenber[j].waterDam += (short)(sp.UpWaterDam * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系伤害提升了");
+                        }
+                    }
+                    if (sp.UpGroundDam != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpGroundDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundDam, (byte)(sp.UpGroundDam * (1f + skillLevelUp)), 2));
+                            targetMenber[j].groundDam += (short)(sp.UpGroundDam * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系伤害提升了");
+                        }
+                    }
+                    if (sp.UpLightDam != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpLightDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightDam, (byte)(sp.UpLightDam * (1f + skillLevelUp)), 2));
+                            targetMenber[j].lightDam += (short)(sp.UpLightDam * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系伤害提升了");
+                        }
+                    }
+                    if (sp.UpDarkDam != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpDarkDam) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkDam, (byte)(sp.UpDarkDam * (1f + skillLevelUp)), 2));
+                            targetMenber[j].darkDam += (short)(sp.UpDarkDam * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系伤害提升了");
+                        }
+                    }
+
+                    if (sp.UpWindRes != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpWindRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWindRes, (byte)(sp.UpWindRes * (1f + skillLevelUp)), 2));
+                            targetMenber[j].windRes += (short)(sp.UpWindRes * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "风系抗性提升了");
+                        }
+                    }
+                    if (sp.UpFireRes != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpFireRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpFireRes, (byte)(sp.UpFireRes * (1f + skillLevelUp)), 2));
+                            targetMenber[j].fireRes += (short)(sp.UpFireRes * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "火系抗性提升了");
+                        }
+                    }
+                    if (sp.UpWaterRes != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpWaterRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpWaterRes, (byte)(sp.UpWaterRes * (1f + skillLevelUp)), 2));
+                            targetMenber[j].waterRes += (short)(sp.UpWaterRes * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "水系抗性提升了");
+                        }
+                    }
+                    if (sp.UpGroundRes != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpGroundRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpGroundRes, (byte)(sp.UpGroundRes * (1f + skillLevelUp)), 2));
+                            targetMenber[j].groundRes += (short)(sp.UpGroundRes * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "地系抗性提升了");
+                        }
+                    }
+                    if (sp.UpLightRes != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpLightRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpLightRes, (byte)(sp.UpLightRes * (1f + skillLevelUp)), 2));
+                            targetMenber[j].lightRes += (short)(sp.UpLightRes * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "光系抗性提升了");
+                        }
+                    }
+                    if (sp.UpDarkRes != 0)
+                    {
+                        bool buffExist = false;
+                        for (int k = 0; k < targetMenber[j].buff.Count; k++)
+                        {
+                            if (targetMenber[j].buff[k].type == FightBuffType.UpDarkRes) { targetMenber[j].buff[k].round = 2; buffExist = true; break; }
+                        }
+                        if (!buffExist)
+                        {
+                            targetMenber[j].buff.Add(new FightBuff(FightBuffType.UpDarkRes, (byte)(sp.UpDarkRes * (1f + skillLevelUp)), 2));
+                            targetMenber[j].darkRes += (short)(sp.UpDarkRes * (1f + skillLevelUp));
+                            AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber[j]) + "暗系抗性提升了");
+                        }
+                    }
+
+                    AdventureMainPanel.Instance.UpdateSceneRoleBuffSingle(teamID, targetMenber[j]);
+                }
+
+                //TODO:[待优化设计]夺金设计概率
+                if (so.gold != 0 && targetMenber[j].side == 1)
+                {
+                    int ranGold = Random.Range(0, 100);
+                    if (ranGold < 30)
+                    {
+                        short gold = (short)(DataManager.mMonsterDict[targetMenber[j].objectID].GoldDrop * (so.gold / 100f));
+                        adventureTeamList[teamID].getGold += gold;
+                        AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(actionMenber) + "从" + OutputNameWithColor(targetMenber[j]) + "夺得" + gold + "金币");
+                    }
+                }
+            }
+        }
+    }
+
+    void NormalAttack(byte teamID,FightMenberObject actionMenber, List<FightMenberObject> fightMenberObjects)
+    {
+        StartCoroutine(Attack(teamID, actionMenber, null));
+        //选取目标
+        List<FightMenberObject> targetMenber = GetTargetManbers(fightMenberObjects, actionMenber, null);
+        if (targetMenber.Count > 0)
+        {
+            if (IsHit(actionMenber, targetMenber[0]))
+            {
+                int damageMin = System.Math.Max(0, actionMenber.atkMin - targetMenber[0].def);
+                int damageMax = System.Math.Max(0, actionMenber.atkMax - targetMenber[0].def);
+                int damage = Random.Range(damageMin, damageMax + 1);
+                //斩味修正伤害
+                damage = (int)(damage * GetSharpnessModifyDamage(GetSharpnessLevel(actionMenber)));
+                bool isCri = IsCri(actionMenber);
+                if (isCri)
+                {
+                    byte criDUp = 0;
+                    if (actionMenber.haloStatus)
+                    {
+                        criDUp = DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].CriDUp;
+                    }
+
+                    damage = (int)(damage * ((actionMenber.criD + criDUp) / 100f));
+                }
+
+                StartCoroutine(TakeDamage(teamID, adventureTeamList[teamID].fightRound, actionMenber, targetMenber[0], null, damage, 1, 1f, isCri));
+
+            }
+            else//未命中
+            {
+                Miss(teamID, adventureTeamList[teamID].fightRound, actionMenber, targetMenber[0]);
+            }
+
+        }
+    }
 
     void Miss(byte teamID, int round, FightMenberObject actionMenber, FightMenberObject targetMenber)
     {
-        AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "闪避");
+        AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "闪避", false);
         AdventureTeamLogAdd(teamID, "[回合" + adventureTeamList[teamID].fightRound + "]" + OutputNameWithColor(targetMenber) + "避开了" + OutputNameWithColor(actionMenber) + "的攻击");
     }
 
@@ -7705,7 +8205,7 @@ public class GameControl : MonoBehaviour
 
 
             AdventureMainPanel.Instance.ShowEffect(teamID, targetMenber.side, targetMenber.sideIndex, effectName, size);
-            AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "<b><color=#" + color + ">+" + cureSingle + "</color></b>");
+            AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "<b><color=#" + color + ">+" + cureSingle + "</color></b>", false);
             yield return new WaitForSeconds(0.5f);
             cureTotalStr += cureSingle + "/";
         }
@@ -7752,7 +8252,7 @@ public class GameControl : MonoBehaviour
 
     }
 
-    IEnumerator TakeDamage(byte teamID, int round, FightMenberObject actionMenber, FightMenberObject targetMenber, SkillPrototype sp, int damage, byte times, float size)
+    IEnumerator TakeDamage(byte teamID, int round, FightMenberObject actionMenber, FightMenberObject targetMenber, SkillPrototype sp, int damage, byte times, float size,bool isCri)
     {
         string effectName;
         // float size = 1f;
@@ -7781,7 +8281,25 @@ public class GameControl : MonoBehaviour
 
 
             AdventureMainPanel.Instance.ShowEffect(teamID, targetMenber.side, targetMenber.sideIndex, effectName, size);
-            AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, damage > 0 ? ("<b><color=#F86A43>-" + damageSingle + "</color></b>") : "格挡");
+            if (damage > 0)
+            {
+                if (isCri)
+                {
+                    AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "<color=#FF9D13>暴击</color>", true);
+
+                }
+
+                //todo:测试看效果，实际上应该只有1条
+                AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "<b><color=#F86A43>-" + damageSingle + "</color></b>", true);
+                yield return new WaitForSeconds(0.2f);
+                AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "<b><color=#F86A43>-" + damageSingle + "</color></b>", true);
+                yield return new WaitForSeconds(0.2f);
+                AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex, "<b><color=#F86A43>-" + damageSingle + "</color></b>", true);
+            }
+            else
+            {
+                AdventureMainPanel.Instance.ShowDamageText(teamID, targetMenber.side, targetMenber.sideIndex,"格挡",false);
+            }
             AdventureMainPanel.Instance.SetAnim(teamID, targetMenber.side, targetMenber.sideIndex, AnimStatus.Hit);
             yield return new WaitForSeconds(0.5f);
             damageTotalStr += damageSingle + "/";
@@ -7880,7 +8398,7 @@ public class GameControl : MonoBehaviour
             {
                 if (DataManager.mHaloDict[heroDic[targetMenber.objectID].halo].DamageReflection != 0)
                 {
-                    TakeDamage(teamID, round, null, actionMenber, null, (int)(damageTotal * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].DamageReflection / 100f)), 1, 1f);
+                    StartCoroutine(TakeDamage(teamID, round, null, actionMenber, null, (int)(damageTotal * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].DamageReflection / 100f)), 1, 1f,false));
                 }
             }
         }    
@@ -7901,7 +8419,7 @@ public class GameControl : MonoBehaviour
                             Debug.Log("actionMenber.objectID=" + actionMenber.objectID);
                             Debug.Log("heroDic[actionMenber.objectID].halo=" + heroDic[actionMenber.objectID].halo);
                             Debug.Log("i=" + i);
-                            TakeDamage(teamID, round, null, fightMenberObjectSS[teamID][i], null, (int)(targetMenber.hp * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].Detonate / 100f)), 1, 1f);
+                            StartCoroutine(TakeDamage(teamID, round, null, fightMenberObjectSS[teamID][i], null, (int)(targetMenber.hp * (DataManager.mHaloDict[heroDic[actionMenber.objectID].halo].Detonate / 100f)), 1, 1f,false));
                         }
                     }
                 }

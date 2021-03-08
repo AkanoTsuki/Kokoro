@@ -1508,7 +1508,7 @@ public class AdventureMainPanel : BasePanel
 
 
     //动画场景-显示伤害数字
-    public void ShowDamageText(byte teamID, byte side, byte index, string content)
+    public void ShowDamageText(byte teamID, byte side, byte index, string content,bool needJump)
     {
         GameObject go;
         if (numPool.Count > 0)
@@ -1532,8 +1532,14 @@ public class AdventureMainPanel : BasePanel
             targetLocation = adventureTeamGo[teamID].GetComponent<AdventureTeamBlock>().dungeon_side1Go[index].GetComponent<RectTransform>().anchoredPosition;
         }
 
-    
-        go.GetComponent<MomentText>().Play(content, targetLocation);
+        if (needJump)
+        {
+            go.GetComponent<MomentText>().PlayJump(content, targetLocation);
+        }
+        else
+        {
+            go.GetComponent<MomentText>().Play(content, targetLocation);
+        }
     }
 
     //动画场景-显示技能特效
