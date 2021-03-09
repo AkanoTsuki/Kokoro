@@ -2094,9 +2094,9 @@ public class HeroPanel : BasePanel
             "  <color=#FFBD58>建筑</color> " + gc.OutputWorkValueToRank(heroObject.workBuild) +
             "  <color=#62D5EE>管理</color> " + gc.OutputWorkValueToRank(heroObject.workSundry)+
             "\n<color=#F0A0FF>武器锻造</color> " + gc.OutputWorkValueToRank(heroObject.workMakeWeapon) +
-            "        <color=#F0A0FF>防具制作</color> " + gc.OutputWorkValueToRank(heroObject.workMakeArmor) +
+            "      <color=#F0A0FF>防具制作</color> " + gc.OutputWorkValueToRank(heroObject.workMakeArmor) +
             "\n<color=#F0A0FF>饰品制作</color> " + gc.OutputWorkValueToRank(heroObject.workMakeJewelry) +
-            "        <color=#F0A0FF>卷轴研究</color> " + gc.OutputWorkValueToRank(heroObject.workMakeScroll) ;
+            "      <color=#F0A0FF>卷轴研究</color> " + gc.OutputWorkValueToRank(heroObject.workMakeScroll) ;
     }
 
     //能力页面-装备栏目-更新
@@ -2122,7 +2122,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipWeapon != -1)
                 {
                     equip_weaponText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipWeapon].rank) + ">"+ gc.itemDic[heroObject.equipWeapon].name+ (gc.itemDic[heroObject.equipWeapon].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipWeapon].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipWeapon].rank)+ "</color>";
-                    equip_weaponImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipWeapon].pic, typeof(Sprite)) as Sprite;
+                    equip_weaponImage.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipWeapon].pic, typeof(Sprite)) as Sprite;
                     equip_weaponUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_weaponUnSetBtn.onClick.RemoveAllListeners();
                     equip_weaponUnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Weapon); });
@@ -2130,7 +2130,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_weaponText.text = "主手<color=#FF9786>（未装备）</color>";
-                    equip_weaponImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_weaponImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_weaponUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_weaponBtn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipWeapon;
@@ -2140,7 +2140,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipSubhand != -1)
                 {
                     equip_subhandText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipSubhand].rank) + ">" + gc.itemDic[heroObject.equipSubhand].name + (gc.itemDic[heroObject.equipSubhand].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipSubhand].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipSubhand].rank) + "</color>";
-                    equip_subhandImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipSubhand].pic, typeof(Sprite)) as Sprite;
+                    equip_subhandImage.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipSubhand].pic, typeof(Sprite)) as Sprite;
                     equip_subhandUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_subhandUnSetBtn.onClick.RemoveAllListeners();
                     equip_subhandUnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Subhand); });
@@ -2148,7 +2148,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_subhandText.text = "副手<color=#FF9786>（未装备）</color>";
-                    equip_subhandImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_subhandImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_subhandUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_subhandBtn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipSubhand;
@@ -2158,7 +2158,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipHead != -1)
                 {
                     equip_headText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipHead].rank) + ">" + gc.itemDic[heroObject.equipHead].name + (gc.itemDic[heroObject.equipHead].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipHead].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipHead].rank) + "</color>";
-                    equip_headImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipHead].pic, typeof(Sprite)) as Sprite;
+                    equip_headImage.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipHead].pic, typeof(Sprite)) as Sprite;
                     equip_headUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_headUnSetBtn.onClick.RemoveAllListeners();
                     equip_headUnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Head); });
@@ -2166,7 +2166,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_headText.text = "头部防具<color=#FF9786>（未装备）</color>";
-                    equip_headImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_headImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_headUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_headBtn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipHead;
@@ -2176,7 +2176,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipBody != -1)
                 {
                     equip_bodyText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipBody].rank) + ">" + gc.itemDic[heroObject.equipBody].name + (gc.itemDic[heroObject.equipBody].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipBody].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipBody].rank) + "</color>";
-                    equip_bodyImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipBody].pic, typeof(Sprite)) as Sprite;
+                    equip_bodyImage.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipBody].pic, typeof(Sprite)) as Sprite;
                     equip_bodyUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_bodyUnSetBtn.onClick.RemoveAllListeners();
                     equip_bodyUnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Body); });
@@ -2184,7 +2184,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_bodyText.text = "身体防具<color=#FF9786>（未装备）</color>";
-                    equip_bodyImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_bodyImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_bodyUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_bodyBtn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipBody;
@@ -2194,7 +2194,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipHand != -1)
                 {
                     equip_handText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipHand].rank) + ">" + gc.itemDic[heroObject.equipHand].name + (gc.itemDic[heroObject.equipHand].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipHand].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipHand].rank) + "</color>";
-                    equip_handImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipHand].pic, typeof(Sprite)) as Sprite;
+                    equip_handImage.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipHand].pic, typeof(Sprite)) as Sprite;
                     equip_handUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_handUnSetBtn.onClick.RemoveAllListeners();
                     equip_handUnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Hand); });
@@ -2202,7 +2202,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_handText.text = "手部防具<color=#FF9786>（未装备）</color>";
-                    equip_handImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_handImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_handUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_handBtn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipHand;
@@ -2212,7 +2212,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipBack != -1)
                 {
                     equip_backText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipBack].rank) + ">" + gc.itemDic[heroObject.equipBack].name + (gc.itemDic[heroObject.equipBack].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipBack].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipBack].rank) + "</color>";
-                    equip_backImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipBack].pic, typeof(Sprite)) as Sprite;
+                    equip_backImage.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipBack].pic, typeof(Sprite)) as Sprite;
                     equip_backUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_backUnSetBtn.onClick.RemoveAllListeners();
                     equip_backUnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Back); });
@@ -2220,7 +2220,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_backText.text = "背部防具<color=#FF9786>（未装备）</color>";
-                    equip_backImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_backImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_backUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_backBtn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipBack;
@@ -2230,7 +2230,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipFoot != -1)
                 {
                     equip_footText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipFoot].rank) + ">" + gc.itemDic[heroObject.equipFoot].name + (gc.itemDic[heroObject.equipFoot].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipFoot].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipFoot].rank) + "</color>";
-                    equip_footImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipFoot].pic, typeof(Sprite)) as Sprite;
+                    equip_footImage.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipFoot].pic, typeof(Sprite)) as Sprite;
                     equip_footUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_footUnSetBtn.onClick.RemoveAllListeners();
                     equip_footUnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Foot); });
@@ -2238,7 +2238,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_footText.text = "腿部防具<color=#FF9786>（未装备）</color>";
-                    equip_footImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_footImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_footUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_footBtn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipFoot;
@@ -2248,7 +2248,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipNeck != -1)
                 {
                     equip_neckText.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipNeck].rank) + ">" + gc.itemDic[heroObject.equipNeck].name + (gc.itemDic[heroObject.equipNeck].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipNeck].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipNeck].rank) + "</color>";
-                    equip_neckImage.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipNeck].pic, typeof(Sprite)) as Sprite;
+                    equip_neckImage.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipNeck].pic, typeof(Sprite)) as Sprite;
                     equip_neckUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_neckUnSetBtn.onClick.RemoveAllListeners();
                     equip_neckUnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Neck); });
@@ -2256,7 +2256,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_neckText.text = "项链<color=#FF9786>（未装备）</color>";
-                    equip_neckImage.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_neckImage.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_neckUnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_neckBtn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipNeck;
@@ -2266,7 +2266,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipFinger1 != -1)
                 {
                     equip_finger1Text.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipFinger1].rank) + ">" + gc.itemDic[heroObject.equipFinger1].name + (gc.itemDic[heroObject.equipFinger1].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipFinger1].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipFinger1].rank) + "</color>";
-                    equip_finger1Image.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipFinger1].pic, typeof(Sprite)) as Sprite;
+                    equip_finger1Image.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipFinger1].pic, typeof(Sprite)) as Sprite;
                     equip_finger1UnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_finger1UnSetBtn.onClick.RemoveAllListeners();
                     equip_finger1UnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Finger1); });
@@ -2274,7 +2274,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_finger1Text.text = "戒指<color=#FF9786>（未装备）</color>";
-                    equip_finger1Image.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_finger1Image.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_finger1UnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_finger1Btn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipFinger1;
@@ -2284,7 +2284,7 @@ public class HeroPanel : BasePanel
                 if (heroObject.equipFinger2 != -1)
                 {
                     equip_finger2Text.text = "<color=#" + gc.OutputItemRankColorString(gc.itemDic[heroObject.equipFinger2].rank) + ">" + gc.itemDic[heroObject.equipFinger2].name + (gc.itemDic[heroObject.equipFinger2].level == 0 ? "" : (" +" + gc.itemDic[heroObject.equipFinger2].level)) + "</color>\n<color=#FFD700>" + gc.OutputSignStr("★", gc.itemDic[heroObject.equipFinger2].rank) + "</color>";
-                    equip_finger2Image.overrideSprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipFinger2].pic, typeof(Sprite)) as Sprite;
+                    equip_finger2Image.sprite = Resources.Load("Image/ItemPic/" + gc.itemDic[heroObject.equipFinger2].pic, typeof(Sprite)) as Sprite;
                     equip_finger2UnSetBtn.GetComponent<RectTransform>().localScale = Vector2.one;
                     equip_finger2UnSetBtn.onClick.RemoveAllListeners();
                     equip_finger2UnSetBtn.onClick.AddListener(delegate () { gc.HeroEquipUnSet(heroObject.id, EquipPart.Finger2); });
@@ -2292,7 +2292,7 @@ public class HeroPanel : BasePanel
                 else
                 {
                     equip_finger2Text.text = "戒指<color=#FF9786>（未装备）</color>";
-                    equip_finger2Image.overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+                    equip_finger2Image.sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
                     equip_finger2UnSetBtn.GetComponent<RectTransform>().localScale = Vector2.zero;
                 }
                 equip_finger2Btn.transform.GetComponent<InteractiveLabel>().index = heroObject.equipFinger2;
@@ -2313,14 +2313,14 @@ public class HeroPanel : BasePanel
     public void UpdateSkill(HeroObject heroObject, byte skillIndex)
     {
         skill_Btn[skillIndex].onClick.RemoveAllListeners();
-        skill_Btn[skillIndex].onClick.AddListener(delegate () { SkillListAndInfoPanel.Instance.OnShow(-1,null,heroObject.id,skillIndex,(int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ gameObject.GetComponent<RectTransform>().sizeDelta.x+GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y); });       
+        skill_Btn[skillIndex].onClick.AddListener(delegate () { SkillListAndInfoPanel.Instance.OnShow(-1,null,heroObject.id,skillIndex,(int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ gameObject.GetComponent<RectTransform>().sizeDelta.x+GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y); });
 
-        if (heroObject.skill[skillIndex] >=0)
+        if (heroObject.skill[skillIndex] >= 0)
         {
             SkillObject so = gc.skillDic[heroObject.skill[skillIndex]];
             SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
-            skill_bgImage[skillIndex].color = Color.white;
-            skill_Image[skillIndex].overrideSprite = Resources.Load("Image/SkillPic/" + sp.Pic, typeof(Sprite)) as Sprite;
+            skill_bgImage[skillIndex].color = new Color(skill_bgImage[skillIndex].color.r, skill_bgImage[skillIndex].color.g, skill_bgImage[skillIndex].color.b, 0.7f);
+            skill_Image[skillIndex].sprite = Resources.Load("Image/SkillPic/" + sp.Pic, typeof(Sprite)) as Sprite;
             skill_Btn[skillIndex].interactable = true;
 
             string str = "";
@@ -2355,22 +2355,30 @@ public class HeroPanel : BasePanel
                     probability = 100;
                 }
             }
-           // skill_Text[skillIndex].text = str + "\n" + probability + "%\n<color=#38B9FB>MP " + gc.GetSkillMpCost(so.id) + "</color>";
+            // skill_Text[skillIndex].text = str + "\n" + probability + "%\n<color=#38B9FB>MP " + gc.GetSkillMpCost(so.id) + "</color>";
             skill_Text[skillIndex].text = str;
             skill_textRt[skillIndex].sizeDelta = new Vector2(skill_Text[skillIndex].preferredWidth + 5f, 16f);
         }
-        else if (heroObject.skill[skillIndex] == -1)
+        else if (heroObject.skill[skillIndex] == -1)//已解锁 未配置
         {
-            skill_bgImage[skillIndex].color = Color.white;
-            skill_Image[skillIndex].overrideSprite = Resources.Load("Image/Other/icon007", typeof(Sprite)) as Sprite;
+            skill_bgImage[skillIndex].color = new Color(skill_bgImage[skillIndex].color.r, skill_bgImage[skillIndex].color.g, skill_bgImage[skillIndex].color.b, 0.7f);
+            skill_Image[skillIndex].sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
             skill_Btn[skillIndex].interactable = true;
             skill_Text[skillIndex].text = "";
-            skill_textRt[skillIndex].sizeDelta =  Vector2.zero;
+            skill_textRt[skillIndex].sizeDelta = Vector2.zero;
         }
-        else if (heroObject.skill[skillIndex] == -2)
+        else if (heroObject.skill[skillIndex] == -2)//可解锁 未解锁
+        {
+            skill_bgImage[skillIndex].color = new Color(skill_bgImage[skillIndex].color.r, skill_bgImage[skillIndex].color.g, skill_bgImage[skillIndex].color.b, 0.4f);
+            skill_Image[skillIndex].sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+            skill_Btn[skillIndex].interactable = false;
+            skill_Text[skillIndex].text = "";
+            skill_textRt[skillIndex].sizeDelta = Vector2.zero;
+        }
+        else if (heroObject.skill[skillIndex] == -3)//不可解锁
         {
             skill_bgImage[skillIndex].color = Color.clear;
-            skill_Image[skillIndex].overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+            skill_Image[skillIndex].sprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
             skill_Btn[skillIndex].interactable = false;
             skill_Text[skillIndex].text = "";
             skill_textRt[skillIndex].sizeDelta = Vector2.zero;
@@ -2387,26 +2395,33 @@ public class HeroPanel : BasePanel
 
     public void UpdateSkillGroupInfo(HeroObject heroObject, byte groupIndex)
     {
+        //规则
+        //星座位置符合，最终概率=（1f+符合个数*5%）
+        //元素相克相同绝对值 每点影响最终魔耗5% 伤害5%
+        //招式原型相同 2个起步 伤害提升10% 20%
+
         int probabilityTotal = 0;
         int mpTotal = 0;
         int hasCount = 0;
         int repelCount = 0;
         int sameCount = 0;
         int skillIndex;
-
+        int matchCount = 0;
+        int samePidCount = 0;
         List<int> elementList = new List<int> { };
+        List<int> spList = new List<int> { };
 
 
-
-        elementList.Clear();
         for (int j = 0; j < 3; j++)
         {
             skillIndex = groupIndex * 3 + j;
-            if (heroObject.skill[groupIndex * 3 + j] >= 0)
+            if (heroObject.skill[skillIndex] >= 0)
             {
                 hasCount++;
                 SkillObject so = gc.skillDic[heroObject.skill[skillIndex]];
                 SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
+
+                spList.Add(so.prototypeID);
 
                 int probability = sp.Probability;
                 if (so.rateModify != 0)
@@ -2429,6 +2444,30 @@ public class HeroPanel : BasePanel
                     elementList.Add(sp.Element[k]);
 
                 }
+
+                switch (groupIndex * 3 + j)
+                {
+                    case 0:
+                    case 4:
+                    case 8:
+                        if (sp.Element.Contains(2)) { matchCount++; }
+                        break;
+                    case 1:
+                    case 5:
+                    case 9:
+                        if (sp.Element.Contains(4)) { matchCount++; }
+                        break;
+                    case 2:
+                    case 6:
+                    case 10:
+                        if (sp.Element.Contains(1)) { matchCount++; }
+                        break;
+                    case 3:
+                    case 7:
+                    case 11:
+                        if (sp.Element.Contains(3)) { matchCount++; }
+                        break;
+                }
             }
         }
 
@@ -2447,23 +2486,72 @@ public class HeroPanel : BasePanel
             }
         }
 
+        if (spList.Count == 3)
+        {
+            if (spList[0] == spList[1] && spList[0] == spList[2])
+            {
+                samePidCount = 4;
+            }
+            else if (spList[0] == spList[1] || spList[0] == spList[2] || spList[1] == spList[2])
+            {
+                samePidCount = 2;
+            }
+        }
+        else if (spList.Count == 2)
+        {
+            if (spList[0] == spList[1] )
+            {
+                samePidCount = 2;
+            }
+        }
 
-        skill_infoText[groupIndex].text =(hasCount>0? (probabilityTotal / hasCount)+"%":"") + "% <color=#38B9FB>MP " + mpTotal + "</color>\n同" + sameCount + " 斥" + repelCount;
+
+        string str = "";
+        string strMpUp = "";
+
+        if (hasCount > 0)
+        {
+
+            if ((sameCount  - repelCount) > 0)
+            {
+                strMpUp = "↓" ;
+            }
+            else if ((sameCount  - repelCount) < 0)
+            {
+                strMpUp = "↑";
+            }
+
+            str = (int)(probabilityTotal*(1f+matchCount*0.05f) / hasCount) + "%"+(matchCount>0?"↑":"") +"  <color=#38B9FB>MP" + (int)(mpTotal *(1f+ -0.05f* (sameCount - repelCount))) + strMpUp + "</color>";
+            if ((sameCount+ samePidCount - repelCount) > 0)
+            {
+                str += "\n威力" + gc.OutputSignStr("+", sameCount - repelCount);
+            }
+            else if ((sameCount + samePidCount - repelCount) < 0)
+            {
+                str += "\n威力" + gc.OutputSignStr("-",  repelCount- sameCount- samePidCount);
+            }
+            skill_infoText[groupIndex].text = str;
+
+        }
+        else
+        {
+            skill_infoText[groupIndex].text = "<color=#FFFFFF>[普通攻击]</color>";
+        }
 
     }
 
-    bool isElementRepel(int a,int b)
+    bool isElementRepel(int a, int b)
     {
         switch (a)
         {
-            case 0:return false;
-            case 1:return b == 2 ? true : false;
+            case 0: return false;
+            case 1: return b == 2 ? true : false;
             case 2: return b == 3 ? true : false;
             case 3: return b == 4 ? true : false;
             case 4: return b == 1 ? true : false;
             case 5: return b == 6 ? true : false;
             case 6: return b == 5 ? true : false;
-            default:return false;
+            default: return false;
         }
     }
 
