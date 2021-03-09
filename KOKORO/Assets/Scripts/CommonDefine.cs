@@ -1045,7 +1045,7 @@ public class HeroObject
     private int EquipFinger1;
     private int EquipFinger2;
     private List<short> EquipSuitePart;//长度10，对应各装备部位，-1为该部位不是套装
-    private List<int> Skill;
+    private List<int> Skill;//长度12 -2未开启 -1已开启未指定 
     private int WorkerInBuilding;
     private short AdventureInTeam;
     private short InDistrict;

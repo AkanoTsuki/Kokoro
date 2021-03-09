@@ -416,7 +416,7 @@ public class GameControl : MonoBehaviour
             (short)hp, (short)mp, atkMin, atkMax, mAtkMin, mAtkMax, def, mDef, hit, dod, criR,
           windDam, fireDam, waterDam, groundDam, lightDam, darkDam, windRes, fireRes, waterRes, groundRes, lightRes, darkRes, dizzyRes, confusionRes, poisonRes, sleepRes, goldGet, expGet, itemGet,
           workPlanting, workFeeding, workFishing, workHunting, workMining, workQuarrying, workFelling, workBuild, workMakeWeapon, workMakeArmor, workMakeJewelry, workMakeScroll, workSundry,
-          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<short> { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }, new List<int> { -1, -1, -1, -1 }, -1, -1, districtID, force,
+          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, new List<short> { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }, new List<int> { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }, -1, -1, districtID, force,
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<short, HeroSkill>(), characteristicList, new List<string> { }, halo,false,-1);
 
     }
@@ -3533,6 +3533,7 @@ public class GameControl : MonoBehaviour
 
         HeroPanel.Instance.UpdateFightInfo(heroDic[heroID], EquipPart.None, null, 1);
         HeroPanel.Instance.UpdateSkill(heroDic[heroID], index);
+        HeroPanel.Instance.UpdateSkillGroupInfo(heroDic[heroID],(byte)(index/3));
         SkillListAndInfoPanel.Instance.OnHide();
         AudioControl.Instance.PlaySound("system_equip");
     }
@@ -6555,28 +6556,38 @@ public class GameControl : MonoBehaviour
                 if (actionMenber[i].hpNow > 0 && canAction)
                 {
                     byte skillIndex = actionMenber[i].skillIndex;
-                    int skillID = -1;
+
+                    List<int> skillID =new List<int> { };
 
                     if (actionMenber[i].side == 0)
                     {
-                        skillID = heroDic[actionMenber[i].objectID].skill[skillIndex];
+                        //skillID = ;
+                        for (int m = skillIndex * 3; m < skillIndex * 3 + 3; m++)
+                        {
+                            skillID.Add(heroDic[actionMenber[i].objectID].skill[m]);
+                        }
+
                     }
                     else if (actionMenber[i].side == 1)
                     {
-                        skillID = DataManager.mMonsterDict[actionMenber[i].objectID].SkillID[skillIndex];
+                        //skillID = DataManager.mMonsterDict[actionMenber[i].objectID].SkillID[skillIndex];
+                        for (int m = skillIndex * 3; m < skillIndex * 3 + 3; m++)
+                        {
+                            skillID.Add(DataManager.mMonsterDict[actionMenber[i].objectID].SkillID[m]);
+                        }
                     }
 
 
-                    if (skillID != -1)
+                    if (skillID[0] >=0 || skillID[1] >= 0 || skillID[2] >= 0)
                     {
 
-                        if (GetSkillMpCost(skillID) <= actionMenber[i].mpNow)
+                        if (GetSkillMpCostInGroup(skillID) <= actionMenber[i].mpNow)
                         {
                             //int ran = Random.Range(0, 100);
-                            if (Random.Range(0, 100) < GetSkillProbability(skillID))
+                            if (Random.Range(0, 100) < GetSkillProbabilityInGroup(skillID))
                             {
                                 Debug.Log("[" + adventureTeamList[teamID].fightRound + "]" + actionMenber[i].name + "发动技能");
-                                SkillAttack(teamID, actionMenber[i], fightMenberObjects, skillID);                                
+                                SkillGroupAttack(teamID, actionMenber[i], fightMenberObjects, skillID);                                
                             }
                             else//技能概率未触发，普通攻击
                             {
@@ -6806,6 +6817,18 @@ public class GameControl : MonoBehaviour
         }
 
     }
+    void SkillGroupAttack(byte teamID, FightMenberObject actionMenber, List<FightMenberObject> fightMenberObjects, List<int> skillID)
+    {
+        for (int i = 0; i < skillID.Count; i++)
+        {
+            if(skillID[i]>=0)
+            {
+                SkillAttack(teamID, actionMenber, fightMenberObjects, skillID[i]);
+            }
+       
+        }
+    }
+
     void SkillAttack(byte teamID, FightMenberObject actionMenber, List<FightMenberObject> fightMenberObjects,int skillID)
     {
         SkillObject so = skillDic[skillID];
@@ -8563,6 +8586,19 @@ public class GameControl : MonoBehaviour
         return mp;
     }
 
+    public int GetSkillMpCostInGroup(List<int> skillID)
+    {
+        int mp=0;
+        for (int i = 0; i < skillID.Count; i++)
+        {
+            if (skillID[i] >= 0)
+            {
+                mp += GetSkillMpCost(skillID[i]);
+            }
+        }
+        return mp;
+    }
+
     public int GetSkillProbability(int skillID)
     {
         SkillObject so = skillDic[skillID];
@@ -8581,6 +8617,21 @@ public class GameControl : MonoBehaviour
             }
         }
         return probability;
+    }
+
+    public int GetSkillProbabilityInGroup(List<int> skillID)
+    {
+        int probability = 0;
+        int count = 0;
+        for (int i = 0; i < skillID.Count; i++)
+        {
+            if (skillID[i] >= 0)
+            {
+                probability += GetSkillProbability(skillID[i]);
+                count++;
+            }
+        }
+        return probability/ count;
     }
 
     public int GetForceFoodAll(int forceID)

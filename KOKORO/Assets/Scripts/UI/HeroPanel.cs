@@ -78,9 +78,12 @@ public class HeroPanel : BasePanel
     public Button equip_finger2UnSetBtn;
 
     public RectTransform skillRt;
+    public List<Image> skill_bgImage;//12个
     public List<Button> skill_Btn;
     public List<Image> skill_Image;
+    public List<RectTransform> skill_textRt;
     public List<Text> skill_Text;
+    public List<Text> skill_infoText;//4个
 
     public RectTransform pageSkillRt;
     public GameObject pageSkill_listGo;
@@ -150,7 +153,7 @@ public class HeroPanel : BasePanel
         equipRt.localScale = Vector2.one;
         skillRt.localScale = Vector2.one;
 
-        GetComponent<RectTransform>().sizeDelta = new Vector2(559f,520f);
+        //GetComponent<RectTransform>().sizeDelta = new Vector2(559f,520f);
         SetAnchoredPosition(x, y);
         GetComponent<CanvasGroup>().alpha = 1f;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -169,7 +172,7 @@ public class HeroPanel : BasePanel
         equipRt.localScale = Vector2.zero;
         skillRt.localScale = Vector2.zero;
 
-        GetComponent<RectTransform>().sizeDelta = new Vector2(307f, 520f);
+        //GetComponent<RectTransform>().sizeDelta = new Vector2(307f, 520f);
         SetAnchoredPosition(x, y);
         GetComponent<CanvasGroup>().alpha = 1f;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -1985,20 +1988,25 @@ public class HeroPanel : BasePanel
 
 
 
-            infoFight_des1Text.text = "体力上限 " + ((equipPart==EquipPart.None)? OutputAttrStr(heroObject.hp,hpEquipAdd+ hpSuiteAdd) : OutputAttrChangeStr (heroObject.hp, hpEquipAdd + hpSuiteAdd, hpEquipAddNew+ hpSuiteAddNew, "")) +
-                "\n体力恢复 " + ((equipPart == EquipPart.None) ? OutputAttrStr( heroObject.hpRenew,hpRenewEquipAdd+ hpRenewSuiteAdd) : OutputAttrChangeStr(heroObject.hpRenew, hpRenewEquipAdd + hpRenewSuiteAdd, hpRenewEquipAddNew+ hpRenewSuiteAddNew, "")) +
-                "\n物攻 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMin,atkMinEquipAdd+ atkMinSuiteAdd) : OutputAttrChangeStr(heroObject.atkMin, atkMinEquipAdd + atkMinSuiteAdd, atkMinEquipAddNew+ atkMinSuiteAddNew, "")) + " - " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMax,atkMaxEquipAdd+ atkMaxSuiteAdd) : OutputAttrChangeStr(heroObject.atkMax, atkMaxEquipAdd+ atkMaxSuiteAdd, atkMaxEquipAddNew+ atkMaxSuiteAddNew, "")) +
-                "\n魔攻 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mAtkMin,mAtkMinEquipAdd+ mAtkMinSuiteAdd) : OutputAttrChangeStr(heroObject.mAtkMin, mAtkMinEquipAdd + mAtkMinSuiteAdd, mAtkMinEquipAddNew+ mAtkMinSuiteAddNew, "")) + " - " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mAtkMax,mAtkMaxEquipAdd+ mAtkMaxSuiteAdd) : OutputAttrChangeStr(heroObject.mAtkMax, mAtkMaxEquipAdd+ mAtkMaxSuiteAdd, mAtkMaxEquipAddNew+ mAtkMaxSuiteAddNew, "")) +
-                "\n物防 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.def,defEquipAdd+ defSuiteAdd) : OutputAttrChangeStr(heroObject.def, defEquipAdd + defSuiteAdd, defEquipAddNew+ defSuiteAddNew, "")) +
-                "\n命中 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.hit,hitEquipAdd+ hitSuiteAdd) : OutputAttrChangeStr(heroObject.hit, hitEquipAdd + hitSuiteAdd, hitEquipAddNew+ hitSuiteAddNew, "")) +
-                "\n闪避 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dod,dodEquipAdd+ dodSuiteAdd) : OutputAttrChangeStr(heroObject.dod, dodEquipAdd + dodSuiteAdd, dodEquipAddNew+ dodSuiteAddNew, "")) +
-                "\n速度 " + ((equipPart == EquipPart.None) ? (heroObject.equipWeapon==-1? heroObject.spd.ToString():( spdEquipAdd+ spdSuiteAdd).ToString()) : spdStr) +
-                "\n风系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.windDam,windDamEquipAdd+ windDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.windDam, windDamEquipAdd + windDamSuiteAdd, windDamEquipAddNew+ windDamSuiteAddNew, "%"))  +
-                "\n火系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.fireDam,fireDamEquipAdd+ fireDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.fireDam, fireDamEquipAdd + fireDamSuiteAdd, fireDamEquipAddNew+ fireDamSuiteAddNew, "%"))  +
-                "\n水系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.waterDam,waterDamEquipAdd+ waterDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.waterDam, waterDamEquipAdd + waterDamSuiteAdd, waterDamEquipAddNew+ waterDamSuiteAddNew, "%"))  +
-                "\n地系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.groundDam,groundDamEquipAdd+ groundDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.groundDam, groundDamEquipAdd + groundDamSuiteAdd, groundDamEquipAddNew+ groundDamSuiteAddNew, "%"))  +
-                "\n光系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.lightDam,lightDamEquipAdd+ lightDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.lightDam, lightDamEquipAdd + lightDamSuiteAdd, lightDamEquipAddNew+ lightDamSuiteAddNew, "%"))  +
-                "\n暗系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.darkDam,darkDamEquipAdd+ darkDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.darkDam, darkDamEquipAdd + darkDamSuiteAdd, darkDamEquipAddNew+ darkDamSuiteAddNew, "%")) ;
+            infoFight_des1Text.text = "体力上限 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.hp, hpEquipAdd + hpSuiteAdd) : OutputAttrChangeStr(heroObject.hp, hpEquipAdd + hpSuiteAdd, hpEquipAddNew + hpSuiteAddNew, "")) +
+                "\n体力恢复 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.hpRenew, hpRenewEquipAdd + hpRenewSuiteAdd) : OutputAttrChangeStr(heroObject.hpRenew, hpRenewEquipAdd + hpRenewSuiteAdd, hpRenewEquipAddNew + hpRenewSuiteAddNew, "")) +
+                "\n物攻 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMin, atkMinEquipAdd + atkMinSuiteAdd) : OutputAttrChangeStr(heroObject.atkMin, atkMinEquipAdd + atkMinSuiteAdd, atkMinEquipAddNew + atkMinSuiteAddNew, "")) + " - " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.atkMax, atkMaxEquipAdd + atkMaxSuiteAdd) : OutputAttrChangeStr(heroObject.atkMax, atkMaxEquipAdd + atkMaxSuiteAdd, atkMaxEquipAddNew + atkMaxSuiteAddNew, "")) +
+                "\n魔攻 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mAtkMin, mAtkMinEquipAdd + mAtkMinSuiteAdd) : OutputAttrChangeStr(heroObject.mAtkMin, mAtkMinEquipAdd + mAtkMinSuiteAdd, mAtkMinEquipAddNew + mAtkMinSuiteAddNew, "")) + " - " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mAtkMax, mAtkMaxEquipAdd + mAtkMaxSuiteAdd) : OutputAttrChangeStr(heroObject.mAtkMax, mAtkMaxEquipAdd + mAtkMaxSuiteAdd, mAtkMaxEquipAddNew + mAtkMaxSuiteAddNew, "")) +
+                "\n物防 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.def, defEquipAdd + defSuiteAdd) : OutputAttrChangeStr(heroObject.def, defEquipAdd + defSuiteAdd, defEquipAddNew + defSuiteAddNew, "")) +
+                "\n命中 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.hit, hitEquipAdd + hitSuiteAdd) : OutputAttrChangeStr(heroObject.hit, hitEquipAdd + hitSuiteAdd, hitEquipAddNew + hitSuiteAddNew, "")) +
+                "\n闪避 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dod, dodEquipAdd + dodSuiteAdd) : OutputAttrChangeStr(heroObject.dod, dodEquipAdd + dodSuiteAdd, dodEquipAddNew + dodSuiteAddNew, "")) +
+                "\n速度 " + ((equipPart == EquipPart.None) ? (heroObject.equipWeapon == -1 ? heroObject.spd.ToString() : (spdEquipAdd + spdSuiteAdd).ToString()) : spdStr) +
+                "\n风系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.windDam, windDamEquipAdd + windDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.windDam, windDamEquipAdd + windDamSuiteAdd, windDamEquipAddNew + windDamSuiteAddNew, "%")) +
+                "\n火系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.fireDam, fireDamEquipAdd + fireDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.fireDam, fireDamEquipAdd + fireDamSuiteAdd, fireDamEquipAddNew + fireDamSuiteAddNew, "%")) +
+                "\n水系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.waterDam, waterDamEquipAdd + waterDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.waterDam, waterDamEquipAdd + waterDamSuiteAdd, waterDamEquipAddNew + waterDamSuiteAddNew, "%")) +
+                "\n地系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.groundDam, groundDamEquipAdd + groundDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.groundDam, groundDamEquipAdd + groundDamSuiteAdd, groundDamEquipAddNew + groundDamSuiteAddNew, "%")) +
+                "\n光系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.lightDam, lightDamEquipAdd + lightDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.lightDam, lightDamEquipAdd + lightDamSuiteAdd, lightDamEquipAddNew + lightDamSuiteAddNew, "%")) +
+                "\n暗系伤害 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.darkDam, darkDamEquipAdd + darkDamSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.darkDam, darkDamEquipAdd + darkDamSuiteAdd, darkDamEquipAddNew + darkDamSuiteAddNew, "%")) +
+                "\n眩晕抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dizzyRes, dizzyResEquipAdd + dizzyResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.dizzyRes, dizzyResEquipAdd + dizzyResSuiteAdd, dizzyResEquipAddNew + dizzyResSuiteAddNew, "%")) +
+                "\n中毒抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.poisonRes, poisonResEquipAdd + poisonResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.poisonRes, poisonResEquipAdd + poisonResSuiteAdd, poisonResEquipAddNew + poisonResSuiteAddNew, "%")) +
+                "\n\n经验值获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.expGet, expGetEquipAdd + expGetSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.expGet, expGetEquipAdd + expGetSuiteAdd, expGetEquipAddNew + expGetSuiteAddNew, "%")) +
+                "\n金币获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.goldGet, goldGetEquipAdd + goldGetSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.goldGet, goldGetEquipAdd + goldGetSuiteAdd, goldGetEquipAddNew + goldGetSuiteAddNew, "%")) +
+                "\n稀有物品掉落加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.itemGet, itemGetEquipAdd + itemGetSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.itemGet, itemGetEquipAdd + itemGetSuiteAdd, itemGetEquipAddNew + itemGetSuiteAddNew, "%"));
             infoFight_des2Text.text = "魔力上限 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mp,mpEquipAdd+ mpSuiteAdd) : OutputAttrChangeStr(heroObject.mp, mpEquipAdd + mpSuiteAdd, mpEquipAddNew+ mpSuiteAddNew, "")) +
                 "\n魔力恢复 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.mpRenew,mpRenewEquipAdd+ mpRenewSuiteAdd) : OutputAttrChangeStr(heroObject.mpRenew, mpRenewEquipAdd + mpRenewSuiteAdd, mpRenewEquipAddNew+ mpRenewSuiteAddNew, "")) +
                 "\n " +
@@ -2012,7 +2020,10 @@ public class HeroPanel : BasePanel
                 "\n水系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.waterRes,waterResEquipAdd+ waterResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.waterRes, waterResEquipAdd + waterResSuiteAdd, waterResEquipAddNew+ waterResSuiteAddNew, "%"))  +
                 "\n地系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.groundRes,groundResEquipAdd+ groundResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.groundRes, groundResEquipAdd + groundResSuiteAdd, groundResEquipAddNew+ groundResSuiteAddNew, "%"))  +
                 "\n光系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.lightRes,lightResEquipAdd+ lightResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.lightRes, lightResEquipAdd + lightResSuiteAdd, lightResEquipAddNew+ lightResSuiteAddNew, "%")) +
-                "\n暗系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.darkRes,darkResEquipAdd+ darkResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.darkRes, darkResEquipAdd + darkResSuiteAdd, darkResEquipAddNew+ darkResSuiteAddNew, "%")) ;
+                "\n暗系抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.darkRes,darkResEquipAdd+ darkResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.darkRes, darkResEquipAdd + darkResSuiteAdd, darkResEquipAddNew+ darkResSuiteAddNew, "%")) +
+                "\n混乱抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.confusionRes, confusionResEquipAdd + confusionResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.confusionRes, confusionResEquipAdd + confusionResSuiteAdd, confusionResEquipAddNew + confusionResSuiteAddNew, "%")) +
+                "\n睡眠抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.sleepRes, sleepResEquipAdd + sleepResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.sleepRes, sleepResEquipAdd + sleepResSuiteAdd, sleepResEquipAddNew + sleepResSuiteAddNew, "%"));
+
             infoFight_page2Btn.interactable = true;
             infoFight_page2Btn.onClick.RemoveAllListeners();
             infoFight_page2Btn.onClick.AddListener(delegate () { UpdateFightInfo(heroObject,equipPart,itemObject, 2); });
@@ -2020,13 +2031,7 @@ public class HeroPanel : BasePanel
         }
         else if((page == 2))
         {
-            infoFight_des1Text.text = "眩晕抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.dizzyRes,dizzyResEquipAdd+ dizzyResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.dizzyRes, dizzyResEquipAdd + dizzyResSuiteAdd, dizzyResEquipAddNew+ dizzyResSuiteAddNew, "%")) +
-                "\n混乱抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.confusionRes,confusionResEquipAdd+ confusionResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.confusionRes, confusionResEquipAdd + confusionResSuiteAdd, confusionResEquipAddNew+ confusionResSuiteAddNew, "%")) +
-                "\n中毒抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.poisonRes,poisonResEquipAdd+ poisonResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.poisonRes, poisonResEquipAdd + poisonResSuiteAdd, poisonResEquipAddNew+ poisonResSuiteAddNew, "%"))  +
-                "\n睡眠抗性 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.sleepRes,sleepResEquipAdd+ sleepResSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.sleepRes, sleepResEquipAdd + sleepResSuiteAdd, sleepResEquipAddNew+ sleepResSuiteAddNew, "%"))  +
-                "\n经验值获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.expGet,expGetEquipAdd+ expGetSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.expGet, expGetEquipAdd + expGetSuiteAdd, expGetEquipAddNew+ expGetSuiteAddNew, "%"))  +
-                "\n金币获得加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.goldGet,goldGetEquipAdd+ goldGetSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.goldGet, goldGetEquipAdd + goldGetSuiteAdd, goldGetEquipAddNew+ goldGetSuiteAddNew, "%"))  +
-                "\n稀有物品掉落加成 " + ((equipPart == EquipPart.None) ? OutputAttrStr(heroObject.itemGet,itemGetEquipAdd+ itemGetSuiteAdd) + "%" : OutputAttrChangeStr(heroObject.itemGet, itemGetEquipAdd + itemGetSuiteAdd, itemGetEquipAddNew+ itemGetSuiteAddNew, "%")) ;
+            infoFight_des1Text.text = "";
             infoFight_des2Text.text = "";
 
             infoFight_page1Btn.interactable = true;
@@ -2082,16 +2087,16 @@ public class HeroPanel : BasePanel
         infoWork_desText.text = "<color=#FFBD58>种植</color> " + gc.OutputWorkValueToRank(heroObject.workPlanting) +
             "  <color=#FFBD58>饲养</color> " + gc.OutputWorkValueToRank(heroObject.workFeeding) +
             "  <color=#FFBD58>钓鱼</color> " + gc.OutputWorkValueToRank(heroObject.workFishing) +
-            "  <color=#FFBD58>打猎</color> " + gc.OutputWorkValueToRank(heroObject.workHunting) +
-            "\n<color=#FFBD58>伐木</color> " + gc.OutputWorkValueToRank(heroObject.workFelling) +
+            "\n<color=#FFBD58>打猎</color> " + gc.OutputWorkValueToRank(heroObject.workHunting) +
+            "  <color=#FFBD58>伐木</color> " + gc.OutputWorkValueToRank(heroObject.workFelling) +
             "  <color=#FFBD58>挖矿</color> " + gc.OutputWorkValueToRank(heroObject.workQuarrying) +
-            "  <color=#FFBD58>采石</color> " + gc.OutputWorkValueToRank(heroObject.workMining) +
+            "\n<color=#FFBD58>采石</color> " + gc.OutputWorkValueToRank(heroObject.workMining) +
             "  <color=#FFBD58>建筑</color> " + gc.OutputWorkValueToRank(heroObject.workBuild) +
+            "  <color=#62D5EE>管理</color> " + gc.OutputWorkValueToRank(heroObject.workSundry)+
             "\n<color=#F0A0FF>武器锻造</color> " + gc.OutputWorkValueToRank(heroObject.workMakeWeapon) +
             "        <color=#F0A0FF>防具制作</color> " + gc.OutputWorkValueToRank(heroObject.workMakeArmor) +
             "\n<color=#F0A0FF>饰品制作</color> " + gc.OutputWorkValueToRank(heroObject.workMakeJewelry) +
-            "        <color=#F0A0FF>卷轴研究</color> " + gc.OutputWorkValueToRank(heroObject.workMakeScroll) +
-            "\n<color=#62D5EE>管理</color> " + gc.OutputWorkValueToRank(heroObject.workSundry);
+            "        <color=#F0A0FF>卷轴研究</color> " + gc.OutputWorkValueToRank(heroObject.workMakeScroll) ;
     }
 
     //能力页面-装备栏目-更新
@@ -2298,10 +2303,11 @@ public class HeroPanel : BasePanel
     //能力页面-技能栏目-更新
     public void UpdateSkillAll(HeroObject heroObject)
     {
-        for (byte i = 0; i < 4; i++)
+        for (byte i = 0; i < heroObject.skill.Count; i++)
         {
             UpdateSkill(heroObject, i);
         }
+        UpdateSkillGroupInfoAll(heroObject);
     }
     //能力页面-技能栏目-单个技能-更新
     public void UpdateSkill(HeroObject heroObject, byte skillIndex)
@@ -2309,11 +2315,13 @@ public class HeroPanel : BasePanel
         skill_Btn[skillIndex].onClick.RemoveAllListeners();
         skill_Btn[skillIndex].onClick.AddListener(delegate () { SkillListAndInfoPanel.Instance.OnShow(-1,null,heroObject.id,skillIndex,(int)(gameObject.GetComponent<RectTransform>().anchoredPosition.x+ gameObject.GetComponent<RectTransform>().sizeDelta.x+GameControl.spacing), (int)gameObject.GetComponent<RectTransform>().anchoredPosition.y); });       
 
-        if (heroObject.skill[skillIndex] != -1)
+        if (heroObject.skill[skillIndex] >=0)
         {
             SkillObject so = gc.skillDic[heroObject.skill[skillIndex]];
             SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
+            skill_bgImage[skillIndex].color = Color.white;
             skill_Image[skillIndex].overrideSprite = Resources.Load("Image/SkillPic/" + sp.Pic, typeof(Sprite)) as Sprite;
+            skill_Btn[skillIndex].interactable = true;
 
             string str = "";
             for (int i = 0; i < sp.Element.Count; i++)
@@ -2347,12 +2355,115 @@ public class HeroPanel : BasePanel
                     probability = 100;
                 }
             }
-            skill_Text[skillIndex].text = str + "\n" + probability + "%\n<color=#38B9FB>MP " + gc.GetSkillMpCost(so.id) + "</color>";
+           // skill_Text[skillIndex].text = str + "\n" + probability + "%\n<color=#38B9FB>MP " + gc.GetSkillMpCost(so.id) + "</color>";
+            skill_Text[skillIndex].text = str;
+            skill_textRt[skillIndex].sizeDelta = new Vector2(skill_Text[skillIndex].preferredWidth + 5f, 16f);
         }
-        else
+        else if (heroObject.skill[skillIndex] == -1)
         {
+            skill_bgImage[skillIndex].color = Color.white;
             skill_Image[skillIndex].overrideSprite = Resources.Load("Image/Other/icon007", typeof(Sprite)) as Sprite;
-            skill_Text[skillIndex].text = "-";
+            skill_Btn[skillIndex].interactable = true;
+            skill_Text[skillIndex].text = "";
+            skill_textRt[skillIndex].sizeDelta =  Vector2.zero;
+        }
+        else if (heroObject.skill[skillIndex] == -2)
+        {
+            skill_bgImage[skillIndex].color = Color.clear;
+            skill_Image[skillIndex].overrideSprite = Resources.Load("Image/Empty", typeof(Sprite)) as Sprite;
+            skill_Btn[skillIndex].interactable = false;
+            skill_Text[skillIndex].text = "";
+            skill_textRt[skillIndex].sizeDelta = Vector2.zero;
+        }
+    }
+
+    public void UpdateSkillGroupInfoAll(HeroObject heroObject)
+    {
+        for (byte i = 0; i < skill_infoText.Count; i++)
+        {
+            UpdateSkillGroupInfo(heroObject, i);
+        }
+    }
+
+    public void UpdateSkillGroupInfo(HeroObject heroObject, byte groupIndex)
+    {
+        int probabilityTotal = 0;
+        int mpTotal = 0;
+        int hasCount = 0;
+        int repelCount = 0;
+        int sameCount = 0;
+        int skillIndex;
+
+        List<int> elementList = new List<int> { };
+
+
+
+        elementList.Clear();
+        for (int j = 0; j < 3; j++)
+        {
+            skillIndex = groupIndex * 3 + j;
+            if (heroObject.skill[groupIndex * 3 + j] >= 0)
+            {
+                hasCount++;
+                SkillObject so = gc.skillDic[heroObject.skill[skillIndex]];
+                SkillPrototype sp = DataManager.mSkillDict[so.prototypeID];
+
+                int probability = sp.Probability;
+                if (so.rateModify != 0)
+                {
+                    probability += so.rateModify;
+                    if (probability < 0)
+                    {
+                        probability = 0;
+                    }
+                    else if (probability > 0)
+                    {
+                        probability = 100;
+                    }
+                }
+                probabilityTotal += probability;
+                mpTotal += gc.GetSkillMpCost(so.id);
+
+                for (int k = 0; k < sp.Element.Count; k++)
+                {
+                    elementList.Add(sp.Element[k]);
+
+                }
+            }
+        }
+
+        for (int m = 0; m < elementList.Count; m++)
+        {
+            for (int n = m + 1; n < elementList.Count; n++)
+            {
+                if (elementList[m] == elementList[n])
+                {
+                    sameCount++;
+                }
+                else if (isElementRepel(elementList[m], elementList[n]))
+                {
+                    repelCount++;
+                }
+            }
+        }
+
+
+        skill_infoText[groupIndex].text =(hasCount>0? (probabilityTotal / hasCount)+"%":"") + "% <color=#38B9FB>MP " + mpTotal + "</color>\n同" + sameCount + " 斥" + repelCount;
+
+    }
+
+    bool isElementRepel(int a,int b)
+    {
+        switch (a)
+        {
+            case 0:return false;
+            case 1:return b == 2 ? true : false;
+            case 2: return b == 3 ? true : false;
+            case 3: return b == 4 ? true : false;
+            case 4: return b == 1 ? true : false;
+            case 5: return b == 6 ? true : false;
+            case 6: return b == 5 ? true : false;
+            default:return false;
         }
     }
 
