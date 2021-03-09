@@ -2448,7 +2448,7 @@ public class HeroPanel : BasePanel
         }
 
 
-        skill_infoText[groupIndex].text =(hasCount>0? (probabilityTotal / hasCount)+"%":"") + "<color=#38B9FB>MP " + mpTotal + "</color>\n同" + sameCount + " 斥" + repelCount;
+        skill_infoText[groupIndex].text =(hasCount>0? (probabilityTotal / hasCount)+"%":"") + "% <color=#38B9FB>MP " + mpTotal + "</color>\n同" + sameCount + " 斥" + repelCount;
 
     }
 
