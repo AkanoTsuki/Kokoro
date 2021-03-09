@@ -45,9 +45,7 @@ public class LoopEffect : MonoBehaviour
     public void PlayRoleWalkRight(string name)
     {
         currentIndex = 0;
-        //GetComponent<RectTransform>().anchoredPosition = location;
         needFrames = Resources.LoadAll<Sprite>("Image/RolePic/" + name+ "/Walk_Right");
-        //gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(needFrames[0].texture.width / (float)needFrames.Length , needFrames[0].texture.height );
 
         isPlay = true;
     }
